@@ -1,0 +1,2 @@
+copy "suica-MAIN.js"+"suica-object.js"+"suica-square.js"+"suica-point.js"+"suica-cube.js"+"suica-circle.js"+"suica-cone.js"+"suica-cylinder.js"+"suica-segment.js"+"suica-line.js"+"suica-sphere.js"+"suica-group.js" "suica.js" /b
+exit
