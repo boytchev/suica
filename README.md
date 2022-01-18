@@ -4,6 +4,7 @@ Mobile 3D made simple
 # Table of contents
 
 - [About](#about)
+- [Initialization(#initialization)
 
 
 # About
@@ -21,6 +22,10 @@ Suica is licensed under **GPL-3.0**. Latest complete version is **1.0.12** from 
 Three.js and other libraries will be included in this repository to safeguard against incompatibilities
 with future versions. They are not a part of Suica, but since version 2 they will be esential for it.
 
+# Initialization
+
+To use Suica its code must be included `<script src="suica.js"></script>`. Suica will wait for at most 10 seconds for the web page to load. When the web page is loaded, Suica will scan for all `<suica>` tags which are converted to `<canvas>` tags keeping their `id`, `width`, `height` and `style` attributes.
+
 ---
 
-December, 2021
+January, 2022
