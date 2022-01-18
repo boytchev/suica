@@ -3,8 +3,10 @@
 // CC-3.0-SA-NC
 //
 //
-// Suica
-//		Suica.version
+//		{suica.}background( color )
+//		{suica.}oxyz( length=30, color='black' )
+
+
 //		{Suica.}random(<from>,<to>)
 //		{Suica.}radians(<degrees>)
 //		{Suica.}unitVector(<vector>)
@@ -17,13 +19,10 @@
 //
 // mainAnimationLoop()
 //
-// {<canvas> =} new Suica(<canvas-id>)
-//		{<canvas>.}background(<color>)						default:[1,1,1]
 //		{<canvas>.}lookAt(<eye>,<target>,<up>)				default:[100,100,30],[0,0,0],[0,0,1]
 //		{<canvas>.}demo(<distance>{,<speed>{,<height>{,{<target>}}})
 //		{<canvas>.}perspective(<angle>,<near>,<far>)		default:30,1,40000
 //		{<canvas>.}orthographic(<near>,<far>)
-//		{<canvas>.}oxyz({<length>})
 //		
 //===================================================
 //
@@ -37,13 +36,15 @@ if( typeof THREE === 'undefined' ) throw 'error: Three.js must be loaded before 
 
 console.log( `Suica 2.0.0 (220118) :: r${THREE.REVISION}` );
 
-
-class SuicaCanvas extends HTMLElement
+class Suica extends HTMLElement
 {
+	static current;
+	
 	constructor( )
 	{
 		super( );
 	}
+
 	
 	connectedCallback( )
 	{
@@ -52,6 +53,8 @@ class SuicaCanvas extends HTMLElement
 		
 		this.createCanvas( ); // creates this.canvas
 		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
+		
+		Suica.current = this;
 	}
 	
 	
@@ -137,9 +140,50 @@ class SuicaCanvas extends HTMLElement
 		this.mesh.rotation.set( t, t/2, 0 );
 		this.renderer.render( this.scene, this.camera );
 	}
+	
+	
+	background( color )
+	{
+		this.scene.background = new THREE.Color( color );
+	}
+	
+	
+	oxyz( length=30, color='black' )
+	{
+		var axes = new THREE.AxesHelper( length )
+			axes.setColors( color, color, color );
+		this.scene.add( axes );
+	}
+	
+	static precheck()
+	{
+		if( !(Suica.current instanceof Suica) )
+			throw 'error: No Suica instance is active';
+	}
+	
+	
+	static tagId( id )
+	{
+		return document.getElementById( id );
+	}
 }
 
-customElements.define('suica-canvas', SuicaCanvas);
+customElements.define('suica-canvas', Suica);
+
+
+function background( color )
+{
+	Suica.precheck();
+	Suica.current.background( color );
+}
+
+function oxyz( length=30, color='black' )
+{
+	Suica.precheck();
+	Suica.current.oxyz( length, color );
+}
+
+tagId = Suica.tagId;
 
 
 //===================================================
@@ -149,68 +193,6 @@ customElements.define('suica-canvas', SuicaCanvas);
 //===================================================
 
 /*
-function suica( canvasId )
-{
-	// make sure body exists
-	if( !document.body )
-	{
-		if( Suica.waitingPeriod < Suica.waitingTimeout )
-		{
-			setTimeout( Suica.init, Suica.waitingPeriod );
-			Suica.waitingPeriod = 2*Suica.waitingPeriod;
-		}
-		else
-			console.warning( 'Suica was not able to identify when the page is completely loaded.' );
-
-		return;
-	} // !document.body
-}
-suica.waitingPeriod = 1;
-suica.waitingTimeout = 10*1000; // 10 seconds
-*/
-/*
-// library activation (wating for document.body)
-
-	static init()
-	{
-		if( !document.body )
-		{
-			if( Suica.waitingPeriod < Suica.waitingTimeout )
-			{
-				setTimeout( Suica.init, Suica.waitingPeriod );
-				Suica.waitingPeriod = 2*Suica.waitingPeriod;
-			}
-			else
-				console.warning( 'Suica was not able to identify when the page is completely loaded.' );
-
-			return;
-		} // !document.body
-		
-		console.log( `Suica ${Suica.VERSION} ` );
-		
-		var id = 1;
-		
-		for( var suica of document.getElementsByTagName( 'suica' ) )
-		{
-			var canvas = document.createElement( 'canvas' );
-				canvas.setAttribute( 'id', suica.getAttribute('id') || `suica${id++}` );
-				canvas.setAttribute( 'width', suica.getAttribute('width') || 300 );
-				canvas.setAttribute( 'height', suica.getAttribute('height') || 150 );
-				canvas.style = suica.style.cssText;
-
-			suica.after( canvas );
-			suica.style.display = 'none';
-			
-			window[canvas.getAttribute('id')] = new Suica( canvas );
-		}
-	}
-*/
-
-/*
-
-
-Suica.contextList = [];	// global list of all SUICA contexts
-Suica.lastContext = null;
 Suica.startTime = (new Date()).getTime(); // SUICA start time (in ms)
 Suica.time = 0;
 Suica.dTime = 0;
@@ -222,10 +204,6 @@ Suica.ALL = 4;
 Suica.NONPOINT = 5;
 
 Suica.PRECISION = 48;
-Suica.id = 0;
-
-
-
 
 Suica.prototype.perspective = function(angle,near,far)
 {
@@ -285,18 +263,6 @@ function lookAt(eye,target,up)
 }
 
 
-Suica.prototype.background = function(color)
-{
-	this.backgroundColor = color;
-}
-
-
-function background(color)
-{
-	if (Suica.lastContext) Suica.lastContext.background(color);
-}
-
-
 Suica.prototype.oxyz = function(length)
 {
 	if (!length) length=30;
@@ -333,192 +299,6 @@ function demo(distance,speed,height,target)
 	if( Suica.lastContext ) Suica.lastContext.demo(distance,speed,height,target);
 }
 
-
-Suica.prototype.identityMatrix = function()
-{
-	return new Float32Array( [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1] );
-}
-	
-
-Suica.prototype.identity = function()
-{
-	this.newModelMatrix = true;
-	this.modelMatrix = this.identityMatrix();
-}
-	
-
-Suica.prototype.scale = function(v)
-{
-	this.newModelMatrix = true;
-
-	var m = this.modelMatrix;
-
-	m[0] *= v[0];
-	m[1] *= v[0];
-	m[2] *= v[0];
-	
-	m[4] *= v[1];
-	m[5] *= v[1];
-	m[6] *= v[1];
-	
-	m[8] *= v[2];
-	m[9] *= v[2];
-	m[10] *= v[2];
-}
-
-
-Suica.prototype.translate = function(v)
-{
-	this.newModelMatrix = true;
-
-	var m = this.modelMatrix;
-
-	m[12] += m[0]*v[0]+m[4]*v[1]+m[8]*v[2];
-	m[13] += m[1]*v[0]+m[5]*v[1]+m[9]*v[2];
-	m[14] += m[2]*v[0]+m[6]*v[1]+m[10]*v[2];
-}
-
-
-Suica.prototype.yRotate = function(a)
-{
-	this.newModelMatrix = true;
-
-	var m = this.modelMatrix;
-
-//	a = radians(a);
-	var s = Math.sin(a);
-	var c = Math.cos(a);
-	
-	a = m[0]*s+m[8]*c;
-	m[0]=m[0]*c-m[8]*s;
-	m[8]=a;
-	
-	a = m[1]*s+m[9]*c;
-	m[1]=m[1]*c-m[9]*s;
-	m[9]=a;
-	
-	a = m[2]*s+m[10]*c;
-	m[2]=m[2]*c-m[10]*s;
-	m[10]=a;
-}
-
-Suica.prototype.zRotate = function(a)
-{
-	this.newModelMatrix = true;
-
-	var m = this.modelMatrix;
-
-//	a = radians(a);
-	var s = Math.sin(a);
-	var c = Math.cos(a);
-	
-	a = m[0]*s+m[4]*c;
-	m[0]=m[0]*c-m[4]*s;
-	m[4]=a;
-	
-	a = m[1]*s+m[5]*c;
-	m[1]=m[1]*c-m[5]*s;
-	m[5]=a;
-	
-	a = m[2]*s+m[6]*c;
-	m[2]=m[2]*c-m[6]*s;
-	m[6]=a;
-}
-
-
-Suica.prototype.matrixMultiply = function(a,b)
-{
-	var res=[];
-    var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];  
-    res[0] = b0*a[0] + b1*a[4] + b2*a[8] + b3*a[12];
-    res[1] = b0*a[1] + b1*a[5] + b2*a[9] + b3*a[13];
-    res[2] = b0*a[2] + b1*a[6] + b2*a[10] + b3*a[14];
-    res[3] = b0*a[3] + b1*a[7] + b2*a[11] + b3*a[15];
-
-    b0 = b[4]; b1 = b[5]; b2 = b[6]; b3 = b[7];
-    res[4] = b0*a[0] + b1*a[4] + b2*a[8] + b3*a[12];
-    res[5] = b0*a[1] + b1*a[5] + b2*a[9] + b3*a[13];
-    res[6] = b0*a[2] + b1*a[6] + b2*a[10] + b3*a[14];
-    res[7] = b0*a[3] + b1*a[7] + b2*a[11] + b3*a[15];
-
-    b0 = b[8]; b1 = b[9]; b2 = b[10]; b3 = b[11];
-    res[8] = b0*a[0] + b1*a[4] + b2*a[8] + b3*a[12];
-    res[9] = b0*a[1] + b1*a[5] + b2*a[9] + b3*a[13];
-    res[10] = b0*a[2] + b1*a[6] + b2*a[10] + b3*a[14];
-    res[11] = b0*a[3] + b1*a[7] + b2*a[11] + b3*a[15];
-
-    b0 = b[12]; b1 = b[13]; b2 = b[14]; b3 = b[15];
-    res[12] = b0*a[0] + b1*a[4] + b2*a[8] + b3*a[12];
-    res[13] = b0*a[1] + b1*a[5] + b2*a[9] + b3*a[13];
-    res[14] = b0*a[2] + b1*a[6] + b2*a[10] + b3*a[14];
-    res[15] = b0*a[3] + b1*a[7] + b2*a[11] + b3*a[15];
-    return res;
-};
-
-Suica.prototype.transposeInverse = function()
-{
-	var a = this.matrixMultiply(this.viewMatrix,this.modelMatrix);
-	
-    var b00 =  a[0]*a[5]  -  a[1]*a[4],
-        b01 =  a[0]*a[6]  -  a[2]*a[4],
-        b02 =  a[0]*a[7]  -  a[3]*a[4],
-        b03 =  a[1]*a[6]  -  a[2]*a[5],
-        b04 =  a[1]*a[7]  -  a[3]*a[5],
-        b05 =  a[2]*a[7]  -  a[3]*a[6],
-        b06 =  a[8]*a[13] -  a[9]*a[12],
-        b07 =  a[8]*a[14] - a[10]*a[12],
-        b08 =  a[8]*a[15] - a[11]*a[12],
-        b09 =  a[9]*a[14] - a[10]*a[13],
-        b10 =  a[9]*a[15] - a[11]*a[13],
-        b11 = a[10]*a[15] - a[11]*a[14],
-        det = 1/(b00*b11 - b01*b10 + b02*b09 + b03*b08 - b04*b07 + b05*b06);
-
-	this.normalMatrix[0] = (a[5] * b11 - a[6] * b10 + a[7] * b09) * det;
-    this.normalMatrix[1] = (a[6] * b08 - a[4] * b11 - a[7] * b07) * det;
-    this.normalMatrix[2] = (a[4] * b10 - a[5] * b08 + a[7] * b06) * det;
-
-    this.normalMatrix[3] = (a[2] * b10 - a[1] * b11 - a[3] * b09) * det;
-    this.normalMatrix[4] = (a[0] * b11 - a[2] * b08 + a[3] * b07) * det;
-    this.normalMatrix[5] = (a[1] * b08 - a[0] * b10 - a[3] * b06) * det;
-
-    this.normalMatrix[6] = (a[13] * b05 - a[14] * b04 + a[15] * b03) * det;
-    this.normalMatrix[7] = (a[14] * b02 - a[12] * b05 - a[15] * b01) * det;
-    this.normalMatrix[8] = (a[12] * b04 - a[13] * b02 + a[15] * b00) * det;
-	
-};
-
-Suica.prototype.cloneMatrix = function(a)
-{
-	var b = new Float32Array(a.length);
-	b.set(a);
-	return b;
-}
-
-
-Suica.prototype.pushMatrix = function()
-{
-	this.modelMatrixStack.push(this.cloneMatrix(this.modelMatrix));
-}
-
-
-Suica.prototype.popMatrix = function()
-{
-	this.newModelMatrix = true;
-	if (this.modelMatrix.length)
-		this.modelMatrix = this.modelMatrixStack.pop();
-	else
-		identity();
-}
-
-
-Suica.prototype.useModelMatrix = function()
-{
-	if (this.newModelMatrix)
-	{
-		this.newModelMatrix = false;
-		this.gl.uniformMatrix4fv(this.uModelMatrix,false,this.modelMatrix);
-	}
-}
 
 
 Suica.prototype.redrawFrame = function()
@@ -691,21 +471,6 @@ Suica.sameAs = function(obj)
 	}
 }
 
-Suica.scrollLeft = function() {
-	return Math.max (
-		window.pageXOffset ? window.pageXOffset : 0,
-		document.documentElement ? document.documentElement.scrollLeft : 0,
-		document.body ? document.body.scrollLeft : 0
-	);
-}
-
-Suica.scrollTop = function() {
-	return Math.max (
-		window.pageYOffset ? window.pageYOffset : 0,
-		document.documentElement ? document.documentElement.scrollTop : 0,
-		document.body ? document.body.scrollTop : 0
-	);
-}
 
 var random = Suica.random;
 var radians = Suica.radians;
@@ -716,6 +481,4 @@ var vectorPoints = Suica.vectorPoints;
 var sameAs = Suica.sameAs;
 
 mainAnimationLoop();
-
-Suica.version = '1.12 (151028)';
 */

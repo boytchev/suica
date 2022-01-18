@@ -5,6 +5,9 @@ Mobile 3D made simple
 
 - [About](#about)
 - [Initialization](#initialization)
+- [General methods](#general-methods)
+	- [Background color](#background-color)
+	- [Coordinate system](#coordinate-system)
 
 
 # About
@@ -24,7 +27,29 @@ with future versions. They are not a part of Suica, but since version 2 they wil
 
 # Initialization
 
-To use Suica its code must be included `<script src="suica.js"></script>`. Suica will wait for at most 10 seconds for the web page to load. When the web page is loaded, Suica will scan for all `<suica>` tags which are converted to `<canvas>` tags keeping their `id`, `width`, `height` and `style` attributes.
+Suica generates 3D images and animations in special tag `<suica-canvas>`.
+
+# General methods
+
+### Background color
+
+The background of Suica canvas could be set either as CSS property of the `<suica-canvas>` tag, or with the function `background`.
+
+```javascript
+background( 'yellow' );
+```
+
+### Coordinate system
+
+The function `oxyz` draws the coordinate system with specific length and color of axes. By default the length is 30 and the color is black.
+
+```javascript
+oxyz( );
+oxyz( 30 );
+oxyz( 30,'black' );
+```
+
+
 
 ---
 

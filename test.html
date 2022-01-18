@@ -22,8 +22,20 @@
 
 <body>
 	<h1>Test</h1>
-	<suica-canvas></suica-canvas>
+
+	<suica-canvas id="one"></suica-canvas>
+	<script>
+		background( 'pink' );
+		oxyz( 50, 'white' );
+	</script>
+
 	<hr>
-	<suica-canvas style="background: lime; width:30em;"></suica-canvas>
+	<suica-canvas id="p" style="background: lime; width:30em;"></suica-canvas>
+	<script>
+		background( 'cyan' );
+		
+		var one = tagId('one');
+		one.background( 'navy' );
+	</script>
 </body>
 </html>
