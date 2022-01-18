@@ -4,7 +4,7 @@ Mobile 3D made simple
 # Table of contents
 
 - [About](#about)
-- [Initialization(#initialization)
+- [Initialization](#initialization)
 
 
 # About

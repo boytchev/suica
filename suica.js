@@ -32,59 +32,144 @@
 //
 //===================================================
 
-class Suica
+
+if( typeof THREE === 'undefined' ) throw 'error: Three.js must be loaded before Suica.js';
+
+console.log( `Suica 2.0.0 (220118) :: r${THREE.REVISION}` );
+
+
+class SuicaCanvas extends HTMLElement
 {
-	static VERSION = '2.0.0 (220118)';
-	static waitingPeriod = 1;
-	static waitingTimeout = 10*1000; // 10 seconds
-	
-	constructor( canvas )
+	constructor( )
 	{
-		var rendererOptions = {alpha:true, antialias:true};
-
-		// canvas is HTMLCanvasElement or canvas Id
-		if( canvas instanceof HTMLCanvasElement )
-		{
-			rendererOptions.canvas = canvas;
-		}
-		else if( canvas = document.getElementById(canvas) )
-		{
-			rendererOptions.canvas = canvas;
-		}
+		super( );
+	}
+	
+	connectedCallback( )
+	{
+		this.style.display = 'inline-block';
+		this.style.boxSizing = 'border-box';
 		
-		// construct and setup the scene
+		this.createCanvas( ); // creates this.canvas
+		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
+	}
+	
+	
+	// create canvas element inside suica-canvas
+	
+	createCanvas()
+	{
+		// create a shadow root
+		this.attachShadow({mode: 'open'}); // sets and returns 'this.shadowRoot'
 
-		this.renderer = new THREE.WebGLRenderer( rendererOptions );
-		document.body.appendChild( this.renderer.domElement );
+		if( this.clientWidth < 1 )
+			this.style.width = (this.getAttribute('width') || 500) + 'px';
+
+		if( this.clientHeight < 1 )
+			this.style.height = (this.getAttribute('height') || 300) + 'px';
+		
+
+		// create canvas elements
+		this.canvas = document.createElement( 'canvas' );
+		this.canvas.width = this.clientWidth;
+		this.canvas.height = this.clientHeight;
+
+
+		// create some CSS to apply to the shadow dom
+		var style = document.createElement( 'style' );
+			style.textContent = `canvas {
+				border: none;
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+			}`;
+
+		// attach the created elements to the shadow DOM
+		this.shadowRoot.append( style, this.canvas );
+	}
+	
+	
+	
+	get canvasAspect( )
+	{
+		return this.canvas.width / this.canvas.height;
+	}
+	
+	
+	
+	// create Three.js renderer
+	
+	createRenderer( )
+	{
+		this.renderer = new THREE.WebGLRenderer( {
+							canvas: this.canvas,
+							alpha: true,
+							antialias: true
+						} );
 
 		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color( this.renderer.domElement.style.background );
-		
-		this.camera = new THREE.PerspectiveCamera( 40, this.renderer.domElement.width/this.renderer.domElement.height, 1, 1000 );
+		this.scene.background = new THREE.Color( getComputedStyle(this).backgroundColor );
+
+		this.camera = new THREE.PerspectiveCamera( 40, this.canvasAspect, 1, 1000 );
 		this.camera.position.set( 0, 0, 100 );
 		this.camera.lookAt( this.scene.position );
-			
+
+		this.renderer.render( this.scene, this.camera );
+		
 		var light = new THREE.PointLight( 'white', 1 );
 			light.position.set( 100, 150, 300 );
 			this.scene.add( light );
 			
-		var mesh = new THREE.Mesh(
+		this.mesh = new THREE.Mesh(
 			new THREE.BoxGeometry( 30, 30, 30 ),
 			new THREE.MeshLambertMaterial( {color: 'peru'} )
 		);
-		this.scene.add( mesh );
+		this.scene.add( this.mesh );
 		
-		this.renderer.render( this.scene, this.camera );
 		
 		var that = this;
 		this.renderer.setAnimationLoop( function(t){that.tick(t/1000)} );
-	} // Suica.constructor
+
+	}
 
 	tick( t )
 	{
-		this.scene.rotation.set( t, t/2, 0 );
+		this.mesh.rotation.set( t, t/2, 0 );
 		this.renderer.render( this.scene, this.camera );
 	}
+}
+
+customElements.define('suica-canvas', SuicaCanvas);
+
+
+//===================================================
+//
+// SUICA OBJECT
+//
+//===================================================
+
+/*
+function suica( canvasId )
+{
+	// make sure body exists
+	if( !document.body )
+	{
+		if( Suica.waitingPeriod < Suica.waitingTimeout )
+		{
+			setTimeout( Suica.init, Suica.waitingPeriod );
+			Suica.waitingPeriod = 2*Suica.waitingPeriod;
+		}
+		else
+			console.warning( 'Suica was not able to identify when the page is completely loaded.' );
+
+		return;
+	} // !document.body
+}
+suica.waitingPeriod = 1;
+suica.waitingTimeout = 10*1000; // 10 seconds
+*/
+/*
+// library activation (wating for document.body)
 
 	static init()
 	{
@@ -101,7 +186,7 @@ class Suica
 			return;
 		} // !document.body
 		
-		console.log( `Suica ${Suica.VERSION} ^..^` );
+		console.log( `Suica ${Suica.VERSION} ` );
 		
 		var id = 1;
 		
@@ -116,182 +201,19 @@ class Suica
 			suica.after( canvas );
 			suica.style.display = 'none';
 			
-			new Suica( canvas );
+			window[canvas.getAttribute('id')] = new Suica( canvas );
 		}
 	}
-} // class Suica
-
-
-Suica.init();
-
+*/
 
 /*
-//===================================================
-//
-// SUICA OBJECT
-//
-//===================================================
-var Suica = function( canvasId )
-{
-	// if no canvasId - use the first canvas
-	if (!canvasId)
-	{
-		var cvx;
-		var cvxs = document.getElementsByTagName('canvas');
-		if (!cvxs.length)
-		{	// no canvas? create one
-			cvx = document.createElement('canvas');
-			document.body.appendChild(cvx);
-		}
-		else
-			cvx = cvxs[0];
-		
-		// if no Id, create id
-		if (!cvx.id) cvx.id = 'suica_canvas';
 
-		canvasId = cvx.id;
-	}
-	
-	this.gl = Suica.getContext(canvasId,{
-				//preserveDrawingBuffer: true,
-				//premultipliedAlpha: false,
-				antialias: true,
-				alpha: true,
-			});
-	this.shaderProgram = Suica.getProgram(this.gl,vsSource,fsSource);
-	this.shaderProgramPoints = Suica.getProgram(this.gl,vsSource,fsSourcePoints);
-	this.shaderProgramSelect = Suica.getProgram(this.gl,vsSourceSelect,fsSourceSelect);
-
-	this.viewMatrix = this.identityMatrix();
-	this.modelMatrix = this.identityMatrix();
-	this.projectionMatrix = this.identityMatrix();
-
-	this.useShader(this.shaderProgram);
-
-	this.gl.enable(this.gl.DEPTH_TEST);
-	this.gl.enableVertexAttribArray(this.aXYZ);
-	this.gl.disable(this.gl.CULL_FACE);
-	this.gl.cullFace(this.gl.BACK);
-
-	
-	this.newModelMatrix = true;
-	this.modelMatrixStack = [];
-	this.normalMatrix = new Float32Array(9);
-
-	this.perspective(30,1,40000);
-	this.lookAt([100*Math.cos(Math.PI/6),100*Math.sin(Math.PI/6),30],[0,0,0], [0,0,1]);
-
-	this.demoViewPoint = null;
-	this.backgroundColor = [1,1,1];
-
-	this.nextFrame = null;
-	
-	Suica.contextList.push(this);
-	Suica.lastContext = this;
-
-	this.renderMode = Suica.ALL;
-	this.hasPoints = false; // temporary flag while drawing
-	
-	this.objectList = [];	// local list of all context objects
-}
-
-// switch shaders
-Suica.prototype.useShader = function(shader)
-{
-	if (shader==this.shaderProgram)
-	{
-		this.uProjectionMatrix	= this.gl.getUniformLocation(this.shaderProgram,"uProjectionMatrix");
-		this.uViewMatrix		= this.gl.getUniformLocation(this.shaderProgram,"uViewMatrix");
-		this.uModelMatrix		= this.gl.getUniformLocation(this.shaderProgram,"uModelMatrix");
-		this.uNormalMatrix		= this.gl.getUniformLocation(this.shaderProgram,"uNormalMatrix");
-		this.uUseNormal			= this.gl.getUniformLocation(this.shaderProgram,"uUseNormal");
-		this.uLight				= this.gl.getUniformLocation(this.shaderProgram,"uLight");
-		this.uPointSize			= this.gl.getUniformLocation(this.shaderProgram,"uPointSize");
-		this.uTexture			= this.gl.getUniformLocation(this.shaderProgram,"uTexture");
-		this.uSampler			= this.gl.getUniformLocation(this.shaderProgram,"uSampler");
-		this.uTexScale			= this.gl.getUniformLocation(this.shaderProgram,"uTexScale");
-		this.uTexOffset			= this.gl.getUniformLocation(this.shaderProgram,"uTexOffset");
-		this.uClipPlanes		= this.gl.getUniformLocation(this.shaderProgram,"uClipPlanes");
-		this.uClipPlane			= this.gl.getUniformLocation(this.shaderProgram,"uClipPlane");
-		this.aXYZ				= this.gl.getAttribLocation(this.shaderProgram,"aXYZ");
-		this.aNormal			= this.gl.getAttribLocation(this.shaderProgram,"aNormal");
-		this.aColor				= this.gl.getAttribLocation(this.shaderProgram,"aColor");
-		this.aTexCoord			= this.gl.getAttribLocation(this.shaderProgram,"aTexCoord");
-
-		this.gl.useProgram(shader);
-		this.gl.uniform1i(this.uUseNormal,false);
-		this.gl.uniformMatrix4fv(this.uProjectionMatrix,false,this.projectionMatrix);
-		this.gl.uniformMatrix4fv(this.uViewMatrix,false,this.viewMatrix);
-		this.gl.uniformMatrix4fv(this.uModelMatrix,false,this.modelMatrix);
-
-		Suica.normalRender = true;
-		return;
-	}
-
-	if (shader==this.shaderProgramPoints)
-	{
-		this.uProjectionMatrix	= this.gl.getUniformLocation(this.shaderProgramPoints,"uProjectionMatrix");
-		this.uViewMatrix		= this.gl.getUniformLocation(this.shaderProgramPoints,"uViewMatrix");
-		this.uModelMatrix		= this.gl.getUniformLocation(this.shaderProgramPoints,"uModelMatrix");
-		this.uNormalMatrix		= this.gl.getUniformLocation(this.shaderProgramPoints,"uNormalMatrix");
-		this.uUseNormal			= this.gl.getUniformLocation(this.shaderProgramPoints,"uUseNormal");
-		this.uLight				= this.gl.getUniformLocation(this.shaderProgramPoints,"uLight");
-		this.uPointSize			= this.gl.getUniformLocation(this.shaderProgramPoints,"uPointSize");
-		this.uTexture			= this.gl.getUniformLocation(this.shaderProgramPoints,"uTexture");
-		this.uSampler			= this.gl.getUniformLocation(this.shaderProgramPoints,"uSampler");
-		this.uTexScale			= this.gl.getUniformLocation(this.shaderProgramPoints,"uTexScale");
-		this.uTexOffset			= this.gl.getUniformLocation(this.shaderProgramPoints,"uTexOffset");
-		this.uClipPlanes		= this.gl.getUniformLocation(this.shaderProgramPoints,"uClipPlanes");
-		this.uClipPlane			= this.gl.getUniformLocation(this.shaderProgramPoints,"uClipPlane");
-		this.aXYZ				= this.gl.getAttribLocation(this.shaderProgramPoints,"aXYZ");
-		this.aNormal			= this.gl.getAttribLocation(this.shaderProgramPoints,"aNormal");
-		this.aColor				= this.gl.getAttribLocation(this.shaderProgramPoints,"aColor");
-		this.aTexCoord			= this.gl.getAttribLocation(this.shaderProgramPoints,"aTexCoord");
-
-		this.gl.useProgram(shader);
-		this.gl.uniform1i(this.uUseNormal,false);
-		this.gl.uniformMatrix4fv(this.uProjectionMatrix,false,this.projectionMatrix);
-		this.gl.uniformMatrix4fv(this.uViewMatrix,false,this.viewMatrix);
-		this.gl.uniformMatrix4fv(this.uModelMatrix,false,this.modelMatrix);
-
-		Suica.normalRender = true;
-		return;
-	}
-
-	if (shader==this.shaderProgramSelect)
-	{
-		this.gl.disableVertexAttribArray(this.aTexCoord);
-		this.gl.disableVertexAttribArray(this.aNormal);
-
-		this.uProjectionMatrix	= this.gl.getUniformLocation(this.shaderProgramSelect,"uProjectionMatrix");
-		this.uViewMatrix		= this.gl.getUniformLocation(this.shaderProgramSelect,"uViewMatrix");
-		this.uModelMatrix		= this.gl.getUniformLocation(this.shaderProgramSelect,"uModelMatrix");
-		this.uPointSize			= this.gl.getUniformLocation(this.shaderProgramSelect,"uPointSize");
-		this.uClipPlanes		= this.gl.getUniformLocation(this.shaderProgramSelect,"uClipPlanes");
-		this.uClipPlane			= this.gl.getUniformLocation(this.shaderProgramSelect,"uClipPlane");
-		this.aXYZ				= this.gl.getAttribLocation(this.shaderProgramSelect,"aXYZ");
-		this.aColor				= this.gl.getAttribLocation(this.shaderProgramSelect,"aColor");
-
-		this.gl.useProgram(this.shaderProgramSelect);
-		this.gl.uniformMatrix4fv(this.uProjectionMatrix,false,this.projectionMatrix);
-		this.gl.uniformMatrix4fv(this.uViewMatrix,false,this.viewMatrix);
-		this.gl.uniformMatrix4fv(this.uModelMatrix,false,this.modelMatrix);
-
-		Suica.normalRender = false;
-		return;
-	}
-	
-	console.log('suica.js: useShader(): invalid shader');
-}
 
 Suica.contextList = [];	// global list of all SUICA contexts
 Suica.lastContext = null;
 Suica.startTime = (new Date()).getTime(); // SUICA start time (in ms)
 Suica.time = 0;
 Suica.dTime = 0;
-Suica.FLOATS = Float32Array.BYTES_PER_ELEMENT; // should be 4
-
-Suica.normalRender = true; // false = render for object selection
 
 Suica.POINT = 1;
 Suica.LINE = 2;
@@ -302,65 +224,7 @@ Suica.NONPOINT = 5;
 Suica.PRECISION = 48;
 Suica.id = 0;
 
-Suica.getContext = function(canvasId)
-{
-	var canvas = document.getElementById(canvasId);
-	if (!canvas)
-	{
-		alert('Не е намерен елемент canvas с id='+canvasId+' [getContext]');
-		return null;
-	}
-	canvas.addEventListener('webglcontextlost',function(event){event.preventDefault();},false);
-	canvas.addEventListener('webglcontextrestored',function(event){console.log('Boo!');},false);
 
-	var context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-	if (!context)
-	{
-		alert('Не е създаден графичен контекст [getContext]');
-	}
-	
-	return context;
-}
-
-
-Suica.getShader = function(gl,source,type)
-{
-	var shader = gl.createShader(type);
-
-	gl.shaderSource(shader,source);
-	gl.compileShader(shader);
-	if (!gl.getShaderParameter(shader,gl.COMPILE_STATUS))
-	{
-		alert(gl.getShaderInfoLog(shader));
-		return null;
-	}
-	
-	return shader;
-}
-
-
-Suica.getProgram = function(gl,vsSource,fsSource)
-{
-	var vShader = Suica.getShader(gl,vsSource,gl.VERTEX_SHADER);
-	var fShader = Suica.getShader(gl,fsSource,gl.FRAGMENT_SHADER);
-
-	if (!vShader || !fShader) {return null;}
-	
-	var shaderProgram = gl.createProgram();
-	gl.bindAttribLocation(shaderProgram,0,"aXYZ");
-
-	gl.attachShader(shaderProgram,vShader);
-	gl.attachShader(shaderProgram,fShader);
-	gl.linkProgram(shaderProgram);
-
-	if (!gl.getProgramParameter(shaderProgram,gl.LINK_STATUS))
-	{
-		alert(gl.getProgramInfoLog(shaderProgram));
-		return null;
-	}
-
-	return shaderProgram;
-}
 
 
 Suica.prototype.perspective = function(angle,near,far)

@@ -9,16 +9,21 @@
 	
 	<script src="three.min.js"></script>
 	<script src="suica.js"></script>
+	
+	<style>
+		suica-canvas {
+			border: solid 1px black;
+			background: lightgray;
+			width: 20em;
+			height: 20em;
+		}
+	</style>
 </head>
 
 <body>
 	<h1>Test</h1>
-	
-	<suica width="300" height="300" style="border: solid 1em peru; background: lightgray;'">
-	</suica>
-
-	<suica width="200" height="300" style="border: solid 1em pink;">
-	</suica>
-
+	<suica-canvas></suica-canvas>
+	<hr>
+	<suica-canvas style="background: lime; width:30em;"></suica-canvas>
 </body>
 </html>
