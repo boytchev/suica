@@ -14,8 +14,8 @@
 		suica-canvas {
 			border: solid 1px black;
 			background: lightgray;
-			width: 20em;
-			height: 20em;
+			width: 15em;
+			height: 15em;
 		}
 	</style>
 </head>
@@ -23,19 +23,27 @@
 <body>
 	<h1>Test</h1>
 
-	<suica-canvas id="one"></suica-canvas>
+	<suica-canvas id="one">
+		<oxyz size="50" color="navy">
+		<oxyz size="20" color="green">
+		<background color="orange">
+	</suica-canvas>
 	<script>
+		console.log('execution 1');
 		background( 'pink' );
-		oxyz( 50, 'white' );
+		oxyz( 10, 'white' );
 	</script>
 
-	<hr>
-	<suica-canvas id="p" style="background: lime; width:30em;"></suica-canvas>
+	<suica-canvas id="p" style="background: lime; width:20em;"></suica-canvas>
 	<script>
+		console.log('execution 2');
 		background( 'cyan' );
 		
-		var one = tagId('one');
-		one.background( 'navy' );
+		//var one = tagId('one');
+		//one.background( 'navy' );
+	</script>
+	
+	<script>
 	</script>
 </body>
 </html>

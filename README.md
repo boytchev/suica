@@ -33,7 +33,21 @@ Suica generates 3D images and animations in special tag `<suica-canvas>`.
 
 ### Background color
 
-The background of Suica canvas could be set either as CSS property of the `<suica-canvas>` tag, or with the function `background`.
+The background of Suica canvas could be set either as CSS property of the `<suica-canvas>` tag, the `<background>` tag or with the function `background`.
+
+```html
+<suica-canvas style="background:yellow;">
+  :
+</suica-canvas>
+```
+
+```html
+<background color="yellow">
+```
+
+```javascript
+background( 'yellow' );
+```
 
 ```javascript
 background( 'yellow' );
@@ -46,7 +60,7 @@ The function `oxyz` draws the coordinate system with specific length and color o
 ```javascript
 oxyz( );
 oxyz( 30 );
-oxyz( 30,'black' );
+oxyz( 30, 'black' );
 ```
 
 

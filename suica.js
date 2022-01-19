@@ -2,11 +2,18 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
+//	<suica-canvas width="..." height="..." style="...">
+//		<background color="...">
+//		<oxyz size="..." color="...">
+//	</suica-canvas>
 //
+//	<script>
 //		{suica.}background( color )
 //		{suica.}oxyz( length=30, color='black' )
+//	</script>
+//
 
-
+// TO DO
 //		{Suica.}random(<from>,<to>)
 //		{Suica.}radians(<degrees>)
 //		{Suica.}unitVector(<vector>)
@@ -36,9 +43,14 @@ if( typeof THREE === 'undefined' ) throw 'error: Three.js must be loaded before 
 
 console.log( `Suica 2.0.0 (220118) :: r${THREE.REVISION}` );
 
+
+const DEBUG_CALLS = !false;
+
+
 class Suica extends HTMLElement
 {
 	static current;
+	static allSuicas = [];
 	
 	constructor( )
 	{
@@ -50,11 +62,17 @@ class Suica extends HTMLElement
 	{
 		this.style.display = 'inline-block';
 		this.style.boxSizing = 'border-box';
+		this.alreadyParsed = false; // internal tags are not processed yet
 		
 		this.createCanvas( ); // creates this.canvas
 		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
 		
+		this.parseTag = {};
+		this.parseTag.OXYZ = this.parseTagOXYZ;
+		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
+		
 		Suica.current = this;
+		Suica.allSuicas.push( this );
 	}
 	
 	
@@ -117,43 +135,92 @@ class Suica extends HTMLElement
 		this.camera.position.set( 0, 0, 100 );
 		this.camera.lookAt( this.scene.position );
 
-		this.renderer.render( this.scene, this.camera );
-		
 		var light = new THREE.PointLight( 'white', 1 );
 			light.position.set( 100, 150, 300 );
 			this.scene.add( light );
 			
-		this.mesh = new THREE.Mesh(
-			new THREE.BoxGeometry( 30, 30, 30 ),
-			new THREE.MeshLambertMaterial( {color: 'peru'} )
-		);
-		this.scene.add( this.mesh );
-		
-		
-		var that = this;
-		this.renderer.setAnimationLoop( function(t){that.tick(t/1000)} );
-
-	}
-
-	tick( t )
-	{
-		this.mesh.rotation.set( t, t/2, 0 );
 		this.renderer.render( this.scene, this.camera );
+
+		// this.mesh = new THREE.Mesh(
+			// new THREE.BoxGeometry( 30, 30, 30 ),
+			// new THREE.MeshLambertMaterial( {color: 'peru'} )
+		// );
+		// this.scene.add( this.mesh );
+		
+		
+		// var that = this;
+		// this.renderer.setAnimationLoop( function(t){that.tick(t/1000)} );
+
 	}
+
+	// tick( t )
+	// {
+		// this.mesh.rotation.set( t, t/2, 0 );
+		// this.renderer.render( this.scene, this.camera );
+	// }
+	
+	parseTagOXYZ( suica, elem )
+	{
+		suica.oxyz(
+			elem.getAttribute('size') || 30,
+			elem.getAttribute('color') || 'black'
+		);
+	}
+	
+	
+	parseTagBACKGROUND( suica, elem )
+	{
+		suica.background(
+			elem.getAttribute('color') || 'white'
+		);
+	}
+	
+	
+	parseTagsInElement( that, elem )
+	{
+		for( var i = 0; i<elem.children.length; i++ )
+		{
+			var tagName = elem.children[i].tagName;
+			if( that.parseTag[tagName] )
+				that.parseTag[tagName](that,elem.children[i]);
+			else
+				throw `error: unknown tag in <${this.tagName}>`;
+			that.parseTagsInElement( that, elem.children[i] );
+		}
+	}
+	
+	
+	parseTags( )
+	{
+		if( this.alreadyParsed ) return;
+		
+		this.alreadyParsed = true;
+		this.parseTagsInElement( this, this );
+	}
+	
 	
 	
 	background( color )
 	{
+		this.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.background( ${color} )`);
+		
 		this.scene.background = new THREE.Color( color );
+		this.renderer.render( this.scene, this.camera );
 	}
 	
 	
 	oxyz( length=30, color='black' )
 	{
+		this.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.oxyz( ${length}, ${color} )`);
+		
 		var axes = new THREE.AxesHelper( length )
 			axes.setColors( color, color, color );
 		this.scene.add( axes );
+		this.renderer.render( this.scene, this.camera );
 	}
+	
 	
 	static precheck()
 	{
@@ -185,6 +252,13 @@ function oxyz( length=30, color='black' )
 
 tagId = Suica.tagId;
 
+window.addEventListener( 'load', function()
+	{
+		for( var suica of Suica.allSuicas )
+			if( !suica.alreadyParsed )
+				suica.parseTags( );
+	}
+);
 
 //===================================================
 //
@@ -263,24 +337,6 @@ function lookAt(eye,target,up)
 }
 
 
-Suica.prototype.oxyz = function(length)
-{
-	if (!length) length=30;
-	
-	point( [0,0,0] ).custom({pointSize:6, color: [0,0,0]});
-	segment( [0,0,0], [length,0,0] ).custom({color: [0,0,0]});
-	segment( [0,0,0], [0,length,0] ).custom({color: [0,0,0]});
-	segment( [0,0,0], [0,0,length] ).custom({color: [0,0,0]});
-}
-
-
-function oxyz(length)
-{
-	if (Suica.lastContext)
-		Suica.lastContext.oxyz(length);
-}
-
-
 Suica.prototype.demo = function(distance,speed,height,target)
 {
 	distance = distance||100;
@@ -299,21 +355,6 @@ function demo(distance,speed,height,target)
 	if( Suica.lastContext ) Suica.lastContext.demo(distance,speed,height,target);
 }
 
-
-
-Suica.prototype.redrawFrame = function()
-{
-	this.gl.clearColor(this.backgroundColor[0],this.backgroundColor[1],this.backgroundColor[2],1);
-	this.gl.clear(this.gl.COLOR_BUFFER_BIT+this.gl.DEPTH_BUFFER_BIT);
-	if (this.demoViewPoint != null)
-	{
-		this.lookAt( [ this.demoViewPoint.distance*Math.sin(this.demoViewPoint.speed*Suica.time),
-					   this.demoViewPoint.distance*Math.cos(this.demoViewPoint.speed*Suica.time),
-					   this.demoViewPoint.distance*this.demoViewPoint.height],
-					 [0,0,this.demoViewPoint.distance*this.demoViewPoint.target], [0,0,1] );  
-	}
-	if (this.nextFrame) this.nextFrame();
-}
 
 Suica.prototype.objectAtPoint = function(x,y)
 {
@@ -480,5 +521,4 @@ var scalarProduct = Suica.scalarProduct;
 var vectorPoints = Suica.vectorPoints;
 var sameAs = Suica.sameAs;
 
-mainAnimationLoop();
 */
