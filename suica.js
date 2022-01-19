@@ -51,6 +51,10 @@ class Suica extends HTMLElement
 {
 	static current;
 	static allSuicas = [];
+	static DEFAULT = {
+		BACKGROUND: { COLOR: 'white' },
+		OXYZ: { COLOR: 'black', SIZE: 30 },
+	}
 	
 	constructor( )
 	{
@@ -162,8 +166,8 @@ class Suica extends HTMLElement
 	parseTagOXYZ( suica, elem )
 	{
 		suica.oxyz(
-			elem.getAttribute('size') || 30,
-			elem.getAttribute('color') || 'black'
+			elem.getAttribute('size') || Suica.DEFAULT.OXYZ.SIZE,
+			elem.getAttribute('color') || Suica.DEFAULT.OXYZ.COLOR
 		);
 	}
 	
@@ -171,7 +175,7 @@ class Suica extends HTMLElement
 	parseTagBACKGROUND( suica, elem )
 	{
 		suica.background(
-			elem.getAttribute('color') || 'white'
+			elem.getAttribute('color') || Suica.DEFAULT.BACKGROUND.COLOR
 		);
 	}
 	
@@ -200,7 +204,7 @@ class Suica extends HTMLElement
 	
 	
 	
-	background( color )
+	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 	{
 		this.parseTags();
 		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.background( ${color} )`);
@@ -210,12 +214,12 @@ class Suica extends HTMLElement
 	}
 	
 	
-	oxyz( length=30, color='black' )
+	oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 	{
 		this.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.oxyz( ${length}, ${color} )`);
+		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.oxyz( ${size}, ${color} )`);
 		
-		var axes = new THREE.AxesHelper( length )
+		var axes = new THREE.AxesHelper( size )
 			axes.setColors( color, color, color );
 		this.scene.add( axes );
 		this.renderer.render( this.scene, this.camera );
@@ -238,16 +242,16 @@ class Suica extends HTMLElement
 customElements.define('suica-canvas', Suica);
 
 
-function background( color )
+function background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 {
 	Suica.precheck();
 	Suica.current.background( color );
 }
 
-function oxyz( length=30, color='black' )
+function oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 {
 	Suica.precheck();
-	Suica.current.oxyz( length, color );
+	Suica.current.oxyz( size, color );
 }
 
 tagId = Suica.tagId;
