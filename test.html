@@ -23,24 +23,27 @@
 <body>
 	<h1>Test</h1>
 
-	<suica-canvas id="one">
-		<oxyz size="50" color="navy">
-		<oxyz>
-		<background color="orange">
-	</suica-canvas>
+	<suica-canvas id="one"></suica-canvas>
 	<script>
-		console.log('execution 1');
-		background( 'pink' );
-		oxyz( 10, 'white' );
+		oxyz( );
+		
+		animate(function ( t, dt )
+		{
+			one.scene.rotation.set(t,t/2,0);
+		});
 	</script>
 
-	<suica-canvas id="p" style="background: lime; width:20em;"></suica-canvas>
+	<suica-canvas id="p" style="background: lime; width:20em;">
+		<oxyz>
+		<animate src="loop">
+	</suica-canvas>
 	<script>
-		console.log('execution 2');
 		background( 'cyan' );
 		
-		//var one = tagId('one');
-		//one.background( 'navy' );
+		function loop( t, dt )
+		{
+			p.scene.rotation.set(t*2,1,0,'YXZ');
+		}
 	</script>
 	
 	<script>

@@ -27,7 +27,34 @@ with future versions. They are not a part of Suica, but since version 2 they wil
 
 # Initialization
 
-Suica generates 3D images and animations in special tag `<suica-canvas>`.
+Suica generates 3D images and animations in special tag `<suica-canvas>`. Supported attributes are `width` and `height` of the canvas (in pixels), `style` with CSS formating (`background` is used for canvas background, `width` and `height` can overwrite the `width` and `height` attributes), and `id`, which is created as global variable.
+
+```html
+<suica-canvas id="..." width="..." height="..." style="background:...; width:...; height:...;">
+  :
+</suica-canvas>
+```
+
+
+# General properties
+
+### animate
+
+Sets the animation user-defined function. This function is called every frame and has two parameters &ndash; total elapsed time `t` and elapsed time since previous frame `td`, bith measured in seconds.
+
+```html
+<animate src="loop">
+```
+
+```javascript
+animate( loop );
+
+function loop( t, dt )
+{
+   :
+}
+```
+
 
 # General methods
 
