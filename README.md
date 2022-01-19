@@ -6,8 +6,8 @@ Mobile 3D made simple
 - [About](#about)
 - [Initialization](#initialization)
 - [General methods](#general-methods)
-	- [Background color](#background-color)
-	- [Coordinate system](#coordinate-system)
+	- [background](#background)
+	- [oxyz](#oxyz)
 
 
 # About
@@ -31,7 +31,7 @@ Suica generates 3D images and animations in special tag `<suica-canvas>`.
 
 # General methods
 
-### Background color
+### background
 
 Sets the background color of a Suica canvas.
 
@@ -49,7 +49,7 @@ Sets the background color of a Suica canvas.
 background( 'white' );
 ```
 
-### Coordinate system
+### oxyz
 
 Draws the coordinate systems with specific length and color of axes.
 
