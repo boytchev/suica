@@ -8,6 +8,7 @@ Mobile 3D made simple
 - [General methods](#general-methods)
 	- [background](#background)
 	- [oxyz](#oxyz)
+	- [animate](#animate)
 
 
 # About
@@ -33,26 +34,6 @@ Suica generates 3D images and animations in special tag `<suica-canvas>`. Suppor
 <suica-canvas id="..." width="..." height="..." style="background:...; width:...; height:...;">
   :
 </suica-canvas>
-```
-
-
-# General properties
-
-### animate
-
-Sets the animation user-defined function. This function is called every frame and has two parameters &ndash; total elapsed time `t` and elapsed time since previous frame `td`, bith measured in seconds.
-
-```html
-<animate src="loop">
-```
-
-```javascript
-animate( loop );
-
-function loop( t, dt )
-{
-   :
-}
 ```
 
 
@@ -92,6 +73,22 @@ oxyz( 30, 'black' );
 <oxyz color="black">
 <oxyz size="30" color="black">
 ```
+
+### animate
+
+Sets the animation user-defined function. This function is called every frame and has two parameters &ndash; total elapsed time `t` and elapsed time since previous frame `td`, bith measured in seconds.
+
+```html
+<animate src="loop">
+```
+
+```javascript
+animate( loop );
+
+function loop( t, dt ) {...}
+```
+
+
 
 
 ---
