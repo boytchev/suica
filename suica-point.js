@@ -4,6 +4,9 @@
 //
 // {suica.}point( center, size, color )
 //		center
+//		x
+//		y
+//		z
 //		size
 //		color
 //		visible
@@ -22,42 +25,12 @@
 
 class Point extends THREE.Points
 {
-	// generate geometry and material for all points
-	static geometry;
-	static material;
-	
-	static {
-		var CANVAS_SIZE = 64;
-		var canvas = document.createElement('canvas');
-			canvas.width = CANVAS_SIZE;
-			canvas.height = CANVAS_SIZE;
-			
-		var context = canvas.getContext('2d');
-			context.fillStyle = 'white';
-			context.beginPath( );
-			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
-			context.fill( );
-
-		let vertices = new Float32Array( [0,0,0] );
-		let position = new THREE.BufferAttribute( vertices, 3 );
-		
-		this.geometry = new THREE.BufferGeometry( );
-		this.geometry.setAttribute( 'position', position );
-
-		this.material = new THREE.PointsMaterial( {
-				color: 'white',
-				size: 5,
-				sizeAttenuation: false,
-				map: new THREE.CanvasTexture( canvas ),
-				transparent: !true,
-				alphaTest: 0.2,
-			});
-
-	}
+	// a geometry shared by all points
+	static geometry = new THREE.BufferGeometry( ).setAttribute( 'position', new THREE.BufferAttribute( new Float32Array( [0,0,0] ), 3 ) );
 	
 	constructor( suica, center, size, color )
 	{
-		super( Point.geometry, Point.material.clone() );
+		super( Point.geometry, Suica.pointMaterial.clone() );
 		
 		this.suica = suica;
 		this.center = center;
@@ -67,14 +40,21 @@ class Point extends THREE.Points
 		suica.scene.add( this );
 	}
 	
+	// point coordinates [x,y,z]
+	get center ( )
+	{
+		return [this.position.x, this.position.y, this.position.z];
+	}
+	
 	set center ( center )
 	{
 		this.position.set( center[0], center[1], center[2] );
 	}
 	
-	get center ( )
+	// point x coordinate
+	get x ( )
 	{
-		return [this.position.x, this.position.y, this.position.z];
+		return this.position.x;
 	}
 	
 	set x ( x )
@@ -82,9 +62,10 @@ class Point extends THREE.Points
 		this.position.x = x;
 	}
 	
-	get x ( )
+	// point y coordinate
+	get y ( )
 	{
-		return this.position.x;
+		return this.position.y;
 	}
 	
 	set y ( y )
@@ -92,9 +73,10 @@ class Point extends THREE.Points
 		this.position.y = y;
 	}
 	
-	get y ( )
+	// point z coordinate
+	get z ( )
 	{
-		return this.position.y;
+		return this.position.z;
 	}
 	
 	set z ( z )
@@ -102,16 +84,10 @@ class Point extends THREE.Points
 		this.position.z = z;
 	}
 	
-	get z ( )
+	// point size
+	get size( )
 	{
-		return this.position.z;
-	}
-	
-
-	set color( col )
-	{
-		this.material.color = new THREE.Color( col );
-		this.material.needsUpdate = true;
+		return this.material.size;
 	}
 
 	set size( size )
@@ -120,9 +96,20 @@ class Point extends THREE.Points
 		this.material.needsUpdate = true;
 	}
 
-	get size( )
+	// point color
+	get color( )
 	{
-		return this.material.size;
+		this.suica.parser?.parseTags();
+		var col = this.material.color;
+		return [col.r, col.g, col.b];
+	}
+
+	set color( col )
+	{
+		if( DEBUG_CALLS ) console.log(`:: ${this.suica.id}.point.color = ${col}`);
+		this.suica.parser?.parseTags();
+		this.material.color = Suica.parseColor( col );
+		this.material.needsUpdate = true;
 	}
 
 	//set visible - inherited from THREE.Point

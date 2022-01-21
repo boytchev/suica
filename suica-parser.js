@@ -23,8 +23,9 @@ class HTMLParser
 	constructor( suica )
 	{
 		this.suica = suica;
-		
+
 		this.parseTag = {};
+		this.parseTag.CANVAS = this.parseTagCANVAS;
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ANIMATE = this.parseTagANIMATE;
@@ -36,10 +37,12 @@ class HTMLParser
 	// executed once - parses <suica-canvas>
 	parseTags( )
 	{
+		if( DEBUG_CALLS ) console.log(`:: ${this.suica.id}.parseTag( )`);
+
 		// unhook the parser
 		this.suica.parser = null;
-		
-		this.parseTagsInElement( this.suica, this.suica );
+
+		this.parseTagsInElement( this.suica, this.suica.suicaTag );
 		this.suica.render( );
 		
 	} // HTMLParser.parseTags
@@ -63,6 +66,13 @@ class HTMLParser
 	} // HTMLParser.parseTagsInElement
 		
 
+	// <canvas>
+	parseTagCANVAS( suica, elem )
+	{
+		// skip this tag
+	} // HTMLParser.parseTagCANVAS
+	
+	
 	// <oxyz size="..." color="...">
 	parseTagOXYZ( suica, elem )
 	{
@@ -85,7 +95,7 @@ class HTMLParser
 	// <animate src="...">
 	parseTagANIMATE( suica, elem )
 	{
-		suica.nextFrame = eval( elem.getAttribute('src') || Suica.DEFAULT.ANIMATE.SRC );
+		suica.nextFrame = elem.getAttribute('src') || Suica.DEFAULT.ANIMATE.SRC;
 	} // HTMLParser.parseTagANIMATE
 	
 	

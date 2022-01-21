@@ -13,7 +13,7 @@
 	<script src="suica-point.js"></script>
 	
 	<style>
-		suica-canvas {
+		suica {
 			border: solid 1px black;
 			background: lightgray;
 			width: 30em;
@@ -25,7 +25,7 @@
 <body>
 	<h1>Test</h1>
 
-	<suica-canvas id="one"></suica-canvas>
+	<suica id="one"></suica>
 	<script>
 		oxyz( );
 		
@@ -42,17 +42,22 @@
 		});
 	</script>
 
-	<suica-canvas id="two" style="background: lime; width:20em;">
+
+
+	<suica id="two" style="background: lime; width:20em;">
 		<oxyz>
 		<animate src="loop">
-		<point id="p" center="0,0,0" color="white" size="30">
-	</suica-canvas>
+		<point id="qaa" center="0.2,0.2,0.2" color="white" size="30">
+	</suica>
+	
 	<script>
+		qaa.color = [1,0.5,0];
+		
 		function loop( t, dt )
 		{
-			p.x = 30*Math.sin(t);
+			qaa.x = 30*Math.sin(t);
 			two.scene.rotation.set(t*2,1,0,'YXZ');
-			p.visible = (t%1)<0.5;
+			qaa.visible = (t%1)<0.5;
 		}
 	</script>
 	

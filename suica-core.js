@@ -2,12 +2,12 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica-canvas width="..." height="..." style="...">
+//	<suica width="..." height="..." style="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<animate src="...">
 //		<point id="..." center="..." color="..." size="...">
-//	</suica-canvas>
+//	</suica>
 //
 //	<script>
 //		{suica.}background( color= )
@@ -26,7 +26,8 @@
 //
 //===================================================
 
-
+			
+			
 
 
 // check prerequisites
@@ -43,15 +44,16 @@ const DEBUG_CALLS = !false;
 
 
 
+
 //========================================================================
 //
 // class Suica
 //
-// Implements custom tag <suica-canvas> and creates a tag <canvas> inside it
+// Implements custom tag <suica> and creates a tag <canvas> inside it
 //
 //========================================================================
 
-class Suica extends HTMLElement
+class Suica
 {
 	// current active Suica instance
 	static current;
@@ -68,27 +70,23 @@ class Suica extends HTMLElement
 	} // Suica.DEFAULT
 	
 	
-	constructor( )
+	constructor( suicaTag )
 	{
-		super( );
-	} // Suica.constructor
-
-	
-	// activated whenever <suica-canvas> is attached to DOM
-	connectedCallback( )
-	{
-		// fix styling of <suica-canvas>
-		this.style.display = 'inline-block';
-		this.style.boxSizing = 'border-box';
+		// fix styling of <suica>
+		suicaTag.style.display = 'inline-block';
+		suicaTag.style.boxSizing = 'border-box';
 		
 		// get or invent id
-		this.id = this.getAttribute('id') || `suica${Suica.allSuicas.length}`
+		this.id = suicaTag.getAttribute('id') || `suica${Suica.allSuicas.length}`
 		
+		this.suicaTag = suicaTag;
+
 		// create and initialize <canvas>
 		this.createCanvas( ); // creates this.canvas
 		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
+		this.createMaterials( );
 		
-		// define parsers for suica tags inside <suica-canvas>
+		// define parsers for suica tags inside <suica>
 		this.parser = new HTMLParser( this );
 		
 		// frame-based animation
@@ -99,39 +97,29 @@ class Suica extends HTMLElement
 		Suica.allSuicas.push( this ); // as one of all Suicas
 		window[this.id] = this; // as global variable
 		
-	} // Suica.connectedCallback
+	} // Suica.constructor
 	
 	
 	// create canvas element inside <suica-canvas>
 	createCanvas()
 	{
-		// create a shadow root
-		this.attachShadow({mode: 'open'}); // creates this.shadowRoot
-
 		// calculates size - if size is not defined in CSS,
 		// than use <suica-canvas> attributes, or default values
-		if( this.clientWidth < 1 )
-			this.style.width = (this.getAttribute('width') || 500) + 'px';
+		if( this.suicaTag.clientWidth < 1 )
+			this.suicaTag.style.width = (this.suicaTag.getAttribute('width') || 500) + 'px';
 
-		if( this.clientHeight < 1 )
-			this.style.height = (this.getAttribute('height') || 300) + 'px';
+		if( this.suicaTag.clientHeight < 1 )
+			this.suicaTag.style.height = (this.suicaTag.getAttribute('height') || 300) + 'px';
 
 		// create canvas elements
 		this.canvas = document.createElement( 'canvas' );
-		this.canvas.width = this.clientWidth;
-		this.canvas.height = this.clientHeight;
-
-		// create some CSS to apply to <canvas> in shadow dom's 
-		var style = document.createElement( 'style' );
-			style.textContent = `canvas {
-				border: none;
-				width: 100%;
-				height: 100%;
-				box-sizing: border-box;
-			}`;
-
-		// attach the created elements to the shadow DOM
-		this.shadowRoot.append( style, this.canvas );
+		this.canvas.width = this.suicaTag.clientWidth;
+		this.canvas.height = this.suicaTag.clientHeight;
+		this.canvas.style = `	border: none;
+								width: 100%;
+								height: 100%;
+								box-sizing: border-box;`;
+		this.suicaTag.appendChild( this.canvas );
 		
 	} // Suica.createCanvas
 	
@@ -164,7 +152,8 @@ class Suica extends HTMLElement
 
 		// scene with background from <suica-canvas>'s CSS
 		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color( getComputedStyle(this).backgroundColor );
+
+		this.scene.background = new THREE.Color( getComputedStyle(this.suicaTag).backgroundColor );
 
 		// default perspective camera
 		this.camera = new THREE.PerspectiveCamera( 40, this.canvasAspect, 1, 1000 );
@@ -185,7 +174,13 @@ class Suica extends HTMLElement
 			time /= 1000; // convert miliseconds to seconds
 			
 			if( that.nextFrame )
+			{
+				// OMG, I have never expected to use eval() in actual code, but here I am
+				if (typeof that.nextFrame === 'string' || that.nextFrame instanceof String)
+					that.nextFrame = window[that.nextFrame];
+				
 				that.nextFrame( time, time-that.lastTime );
+			}
 			
 			that.render( );
 
@@ -199,10 +194,37 @@ class Suica extends HTMLElement
 
 
 	
+	// create default materials for SUica objects
+	createMaterials( )
+	{
+		// point material
+		var CANVAS_SIZE = 64;
+		var canvas = document.createElement('canvas');
+			canvas.width = CANVAS_SIZE;
+			canvas.height = CANVAS_SIZE;
+			
+		var context = canvas.getContext('2d');
+			context.fillStyle = 'white';
+			context.beginPath( );
+			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
+			context.fill( );
+
+		Suica.pointMaterial = new THREE.PointsMaterial( {
+				color: 'white',
+				size: 5,
+				sizeAttenuation: false,
+				map: new THREE.CanvasTexture( canvas ),
+				transparent: !true,
+				alphaTest: 0.8,
+			});
+	}
+	
+	
+	
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.background( ${color} )`);
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.background( ${color} )`);
 		
 		this.scene.background = new THREE.Color( color );
 	}
@@ -211,7 +233,7 @@ class Suica extends HTMLElement
 	oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.oxyz( ${size}, ${color} )`);
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.oxyz( ${size}, ${color} )`);
 		
 		var axes = new THREE.AxesHelper( size )
 			axes.setColors( color, color, color );
@@ -222,7 +244,7 @@ class Suica extends HTMLElement
 	animate( src=Suica.DEFAULT.ANIMATE.SRC )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.animate( ${src} )`);
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.animate( ${src} )`);
 		
 		this.nextFrame = src;
 	}
@@ -234,14 +256,24 @@ class Suica extends HTMLElement
 			throw 'error: No Suica instance is active';
 	}
 	
+
+	static parseColor( color )
+	{
+		if( Array.isArray(color) )
+			return new THREE.Color( color[0], color[1]||0, color[2]||0 );
+		else
+			return new THREE.Color( color || 'white' );
+	}
+	
 	
 	point( center=Suica.DEFAULT.POINT.CENTER, size=Suica.DEFAULT.POINT.SIZE, color=Suica.DEFAULT.POINT.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.getAttribute('id')}.point( [${center}], ${color}, ${size} )`);
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.point( [${center}], ${color}, ${size} )`);
 
 		return new Point( this, center, size, color );
 	}
+
 }
 
 customElements.define('suica-canvas', Suica);
@@ -265,9 +297,21 @@ function animate( src=Suica.DEFAULT.ANIMATE.SRC )
 	Suica.current.animate( src );
 }
 
-window.addEventListener( 'load', function()
+
+// monitor creation of tags, we are interested in creation of
+// <script> because it might contain Suica tags; thus for each
+// <script> try to prase all unparsed Suicas
+//
+// idea from https://github.com/jspenguin2017/Snippets/blob/master/onbeforescriptexecute.html
+new MutationObserver( function( mutations )
 	{
-		for( var suica of Suica.allSuicas )
-			suica.parser?.parseTags();
-	}
-);
+		for( var parentElem of mutations )
+			for( var childElem of parentElem.addedNodes) 
+			{
+				if( childElem?.tagName=='SCRIPT' )
+					for( var suica of Suica.allSuicas )
+						suica.parser?.parseTags();
+				if( childElem?.tagName=='SUICA' )
+					new Suica( childElem );
+			}
+	}).observe( document, {childList: true, subtree: true} );
