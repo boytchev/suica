@@ -1,14 +1,17 @@
 # Suica
-Mobile 3D made simple
+Mobile 3D made simple.
 
-# Table of contents
-
-- [About](#about)
-- [Initialization](#initialization)
-- [General methods](#general-methods)
-	- [background](#background)
-	- [oxyz](#oxyz)
-	- [animate](#animate)
+As simple, as this ([live demo]((https://boytchev.github.io/suica/example-minimal.html))):
+```html
+<!DOCTYPE html>
+<body>
+	<script src="suica.js"></script>
+	<suica>
+		<demo>
+		<cube>
+	</suica>
+</body>
+```
 
 
 # About
@@ -23,71 +26,14 @@ at [Sofia University](https://www.uni-sofia.bg/index.php/eng).
 
 Suica is licensed under **GPL-3.0**. Latest complete version is **1.0.12** from October 2015.
 
-Three.js and other libraries will be included in this repository to safeguard against incompatibilities
+Three.js and other libraries are included in this repository to safeguard against incompatibilities
 with future versions. They are not a part of Suica, but since version 2 they will be esential for it.
 
-# Initialization
 
-Suica generates 3D images and animations in special tag `<suica-canvas>`. Supported attributes are `width` and `height` of the canvas (in pixels), `style` with CSS formating (`background` is used for canvas background, `width` and `height` can overwrite the `width` and `height` attributes), and `id`, which is created as global variable.
+# Documentation
 
-```html
-<suica-canvas id="..." width="..." height="..." style="background:...; width:...; height:...;">
-  :
-</suica-canvas>
-```
-
-
-# General methods
-
-### background
-
-Sets the background color of a Suica canvas.
-
-```html
-<suica-canvas style="background:white;">
-  :
-</suica-canvas>
-```
-
-```html
-<background color="white">
-```
-
-```javascript
-background( 'white' );
-```
-
-### oxyz
-
-Draws the coordinate systems with specific length and color of axes.
-
-```javascript
-oxyz( );
-oxyz( 30 );
-oxyz( 30, 'black' );
-```
-
-```html
-<oxyz>
-<oxyz size="30">
-<oxyz color="black">
-<oxyz size="30" color="black">
-```
-
-### animate
-
-Sets the animation user-defined function. This function is called every frame and has two parameters &ndash; total elapsed time `t` and elapsed time since previous frame `td`, bith measured in seconds.
-
-```html
-<animate src="loop">
-```
-
-```javascript
-animate( loop );
-
-function loop( t, dt ) {...}
-```
-
+[User guide](USER-GUIDE.md)
+[List of examples](EXAMPLES.md)
 
 
 

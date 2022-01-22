@@ -27,9 +27,11 @@ class HTMLParser
 		this.parseTag = {};
 		this.parseTag.CANVAS = this.parseTagCANVAS;
 		this.parseTag.OXYZ = this.parseTagOXYZ;
+		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ANIMATE = this.parseTagANIMATE;
 		this.parseTag.POINT = this.parseTagPOINT;
+		this.parseTag.CUBE = this.parseTagCUBE;
 		
 	} // HTMLParser.constructor
 
@@ -83,6 +85,16 @@ class HTMLParser
 	} // HTMLParser.parseTagOXYZ
 	
 	
+	// <demo distance="..." altitude="...">
+	parseTagDEMO( suica, elem )
+	{
+		suica.demo(
+			elem.getAttribute('distance') || Suica.DEFAULT.DEMO.DISTANCE,
+			elem.getAttribute('altitude') || Suica.DEFAULT.DEMO.ALTITUDE
+		);
+	} // HTMLParser.parseTagDEMO
+	
+	
 	// <background color="...">
 	parseTagBACKGROUND( suica, elem )
 	{
@@ -103,7 +115,7 @@ class HTMLParser
 	parseTagPOINT( suica, elem )
 	{
 		var p = suica.point(
-			elem.getAttribute('center').split(',') || Suica.DEFAULT.POINT.CENTER,
+			elem.getAttribute('center')?.split(',') || Suica.DEFAULT.POINT.CENTER,
 			elem.getAttribute('size') || Suica.DEFAULT.POINT.SIZE,
 			elem.getAttribute('color') || Suica.DEFAULT.POINT.COLOR
 		);
@@ -112,6 +124,21 @@ class HTMLParser
 		if( id ) window[id] = p;
 		
 	} // HTMLParser.parseTagPOINT
+	
+	
+	// <cube id="..." center="..." color="..." size="...">
+	parseTagCUBE( suica, elem )
+	{
+		var p = suica.cube(
+			elem.getAttribute('center')?.split(',') || Suica.DEFAULT.CUBE.CENTER,
+			elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE,
+			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
+		);
+		
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+		
+	} // HTMLParser.parseTagCUBE
 	
 	
 } // HTMLParser

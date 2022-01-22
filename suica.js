@@ -5,6 +5,7 @@
 //	<suica width="..." height="..." style="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
+//		<demo distance="..." altitude="...">
 //		<animate src="...">
 //		<point id="..." center="..." color="..." size="...">
 //	</suica>
@@ -12,6 +13,7 @@
 //	<script>
 //		{suica.}background( color= )
 //		{suica.}oxyz( size, color )
+//		{suica.}demo( distance, altitude )
 //		{suica.}animate( src )
 //		{suica.}point( center, size, color )
 //	</script>
@@ -23,19 +25,20 @@
 //	2.0.00 (220118)	initiation
 //	2.0.01 (220119)	custom tags, nested tags, background, oxyz, animate
 //	2.0.02 (220120) point
+//	2.0.03 (220122) autoload js files, cube
 //
 //===================================================
 
 			
 			
-
-
-// check prerequisites
-if( typeof THREE === 'undefined' ) throw 'error: Three.js must be loaded before Suica.js';
+document.write( '<script src="three.min.js"></script>' );
+document.write( '<script src="suica-parser.js"></script>' );
+document.write( '<script src="suica-point.js"></script>' );
+document.write( '<script src="suica-cube.js"></script>' );
 
 
 // show suica version
-console.log( `Suica 2.0.0 (220118) :: r${THREE.REVISION}` );
+console.log( `Suica 2.0.3 (220122)` );
 
 
 // control flags
@@ -65,8 +68,10 @@ class Suica
 	static DEFAULT = {
 		BACKGROUND: { COLOR: 'white' },
 		OXYZ: { COLOR: 'black', SIZE: 30 },
+		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ANIMATE: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:5 },
+		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30 },
 	} // Suica.DEFAULT
 	
 	
@@ -78,6 +83,7 @@ class Suica
 		
 		// get or invent id
 		this.id = suicaTag.getAttribute('id') || `suica${Suica.allSuicas.length}`
+		if( DEBUG_CALLS ) console.log(`Suica :: ${this.id}`);
 		
 		this.suicaTag = suicaTag;
 
@@ -92,6 +98,9 @@ class Suica
 		// frame-based animation
 		this.nextFrame = null;
 		
+		// automatic rotation
+		this.demoViewPoint = null;
+		
 		// register this suica instance
 		Suica.current = this; // as current Suica
 		Suica.allSuicas.push( this ); // as one of all Suicas
@@ -100,11 +109,11 @@ class Suica
 	} // Suica.constructor
 	
 	
-	// create canvas element inside <suica-canvas>
+	// create canvas element inside <suica>
 	createCanvas()
 	{
 		// calculates size - if size is not defined in CSS,
-		// than use <suica-canvas> attributes, or default values
+		// than use <suica> attributes, or default values
 		if( this.suicaTag.clientWidth < 1 )
 			this.suicaTag.style.width = (this.suicaTag.getAttribute('width') || 500) + 'px';
 
@@ -150,10 +159,16 @@ class Suica
 							antialias: true
 						} );
 
-		// scene with background from <suica-canvas>'s CSS
+		// scene with background from <suica>'s CSS
 		this.scene = new THREE.Scene();
 
-		this.scene.background = new THREE.Color( getComputedStyle(this.suicaTag).backgroundColor );
+		var color = this.suicaTag.getAttribute('background') || this.suicaTag.style.backgroundColor;
+		if( !color )
+		{
+			color = getComputedStyle(this.suicaTag).backgroundColor;
+			if( color == 'rgba(0, 0, 0, 0)' ) color = 'white';
+		}
+		this.scene.background = Suica.parseColor( color );
 
 		// default perspective camera
 		this.camera = new THREE.PerspectiveCamera( 40, this.canvasAspect, 1, 1000 );
@@ -172,6 +187,14 @@ class Suica
 		function loop( time )
 		{
 			time /= 1000; // convert miliseconds to seconds
+			
+			if( that.demoViewPoint )
+			{
+				that.camera.position.setFromCylindricalCoords( that.demoViewPoint.distance, time, that.demoViewPoint.altitude );
+				that.camera.lookAt( that.scene.position );
+				
+				that.light.position.copy( that.camera.position );
+			}
 			
 			if( that.nextFrame )
 			{
@@ -217,6 +240,10 @@ class Suica
 				transparent: !true,
 				alphaTest: 0.8,
 			});
+
+		Suica.solidMaterial = new THREE.MeshStandardMaterial( {
+				color: 'cornflowerblue',
+			});
 	}
 	
 	
@@ -238,6 +265,15 @@ class Suica
 		var axes = new THREE.AxesHelper( size )
 			axes.setColors( color, color, color );
 		this.scene.add( axes );
+	}
+	
+	
+	demo( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.demo( ${distance}, ${altitude} )`);
+		
+		this.demoViewPoint = {distance:distance, altitude:altitude};
 	}
 	
 	
@@ -273,10 +309,18 @@ class Suica
 
 		return new Point( this, center, size, color );
 	}
+	
+	
+	cube( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.cube( [${center}], ${color}, ${size} )`);
+
+		return new Cube( this, center, size, color );
+	}
 
 }
 
-customElements.define('suica-canvas', Suica);
 
 
 function background( color=Suica.DEFAULT.BACKGROUND.COLOR )
@@ -291,11 +335,19 @@ function oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 	Suica.current.oxyz( size, color );
 }
 
+function demo( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
+{
+	Suica.precheck();
+	Suica.current.demo( distance, altitude );
+}
+
 function animate( src=Suica.DEFAULT.ANIMATE.SRC )
 {
 	Suica.precheck();
 	Suica.current.animate( src );
 }
+
+
 
 
 // monitor creation of tags, we are interested in creation of
@@ -315,3 +367,10 @@ new MutationObserver( function( mutations )
 					new Suica( childElem );
 			}
 	}).observe( document, {childList: true, subtree: true} );
+
+window.addEventListener( 'load', function()
+	{
+		for( var suica of Suica.allSuicas )
+			suica.parser?.parseTags();
+	}
+);

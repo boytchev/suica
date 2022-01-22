@@ -7,10 +7,7 @@
 
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	
-	<script src="three.min.js"></script>
-	<script src="suica-core.js"></script>
-	<script src="suica-parser.js"></script>
-	<script src="suica-point.js"></script>
+	<script src="suica.js"></script>
 	
 	<style>
 		suica {
@@ -27,6 +24,20 @@
 
 	<suica id="one"></suica>
 	<script>
+		var canvas = document.createElement('canvas');
+			canvas.width = canvas.height = 32;
+		var context = canvas.getContext('2d');
+			context.strokeStyle = 'white';
+			context.lineWidth = 8;
+			context.clearRect(0,0,32,32);
+			context.beginPath( );
+				context.moveTo( 0, 0 );
+				context.lineTo( 32,32 );
+				context.moveTo( 0, 32 );
+				context.lineTo( 32, 0 );
+			context.stroke( );
+		var image = new THREE.CanvasTexture( canvas );
+	
 		oxyz( );
 		
 		for( var i=0; i<100; i++ )
@@ -34,6 +45,8 @@
 			var p = one.point( [Math.random()*60-30,Math.random()*60-30,Math.random()*60-30] );
 			p.color = Math.random()>0.5?'red':'yellow';
 			p.size = Math.random()>0.5?6:12;
+			
+			p.material.map = image;
 		}
 		
 		animate(function ( t, dt )
