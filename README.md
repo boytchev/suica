@@ -1,14 +1,14 @@
 # Suica
 Mobile 3D made simple.
 
-As simple, as this ([live demo]((https://boytchev.github.io/suica/example-minimal.html))):
+As simple, as this ([live demo](https://boytchev.github.io/suica/example-minimal.html)):
 ```html
 <!DOCTYPE html>
 <body>
-  <script src="suica.js"></script>
-  <suica>
-    <demo>
-    <cube>
+    <script src="suica.js"></script>
+    <suica>
+        <demo>
+        <cube>
   </suica>
 </body>
 ```
