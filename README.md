@@ -5,11 +5,11 @@ As simple, as this ([live demo]((https://boytchev.github.io/suica/example-minima
 ```html
 <!DOCTYPE html>
 <body>
-	<script src="suica.js"></script>
-	<suica>
-		<demo>
-		<cube>
-	</suica>
+  <script src="suica.js"></script>
+  <suica>
+    <demo>
+    <cube>
+  </suica>
 </body>
 ```
 
@@ -32,8 +32,8 @@ with future versions. They are not a part of Suica, but since version 2 they wil
 
 # Documentation
 
-[User guide](USER-GUIDE.md)
-[List of examples](EXAMPLES.md)
+- [User guide](USER-GUIDE.md)
+- [List of examples](EXAMPLES.md)
 
 
 
