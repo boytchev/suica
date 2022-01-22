@@ -1,0 +1,16 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+	margin: 0;
+	font-size: 1.5em;
+}
+
+
+p {
+	margin: 0.5em auto 1em auto;
+	padding-bottom: 1em;
+	border-bottom: dotted gray 1px;
+}
+

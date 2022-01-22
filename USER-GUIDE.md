@@ -1,9 +1,6 @@
-# Suica
-Mobile 3D made simple
-
 # Table of contents
 
-- [Initialization](#initialization)
+- [**Initialization**](#initialization)
 - [General methods](#general-methods)
 	- [background](#background)
 	- [oxyz](#oxyz)
@@ -14,36 +11,84 @@ Mobile 3D made simple
 
 # Initialization
 
-Suica generates 3D images and animations only inside the HTML tag `<suica>`.
-The properties of the canvas can be defined either as tag attributes or
-as CSS style.
-
-### Attributes
-
-- `id` &ndash; string for the name of the canvas
-- `width` &ndash; number for the width of the canvas (in pixels)
-- `height` &ndash; number for the height of the canvas (in pixels)
-- `background` &ndash; string for the background color ([details](#colors))
+Suica is a JavaScript library. It generates 3D images and animations in
+a canvas inside a non-standard HTML tag `<suica>`. The HTML template of
+a typical webpage with Suica might look like this:
 
 ```html
-<suica id="a" width="500" height="300" background="lightgray">
-	:
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script src="suica.js"></script>
+	</head>
+
+	<body>
+		<suica ...></suica>
+		<script>
+			// JavaScript code using Suica
+		</suica>
+	</body>
+</html>
+```
+
+The properties of the canvas can be defined either as tag attributes
+or as CSS properties.
+
+### Tag attributes
+
+The `<suica>` tag may have attributes. They are all optional.
+
+- `id` &ndash; unique indentifier used to address the canvas
+- `width` &ndash; number for the width of the canvas (in pixels)
+- `height` &ndash; number for the height of the canvas (in pixels)
+- `background` &ndash; a string for the background color ([details](#colors))
+
+|[Suica<br>attributes](https://boytchev.github.io/suica/examples/example-init-attr.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-attr.html)|
+|---|---|
+
+```html
+<suica width="500" height="300" background="linen">
+	<demo>
+	<cube>
 </suica>
 ```
 
+### Style properties
 
-Supported attributes are `width` and `height` of the canvas (in pixels),
-`style` with CSS formating, and `id`.
+The CSS style of `<suica>` also defines its properties. Suica extracts
+these CSS properties:
 
-The CSS rules
-, which is created as global variable.
+- `width` &ndash; width of the canvas (CSS format)
+- `height` &ndash; height of the canvas (CSS format)
+- `background` &ndash; background color ([details](#colors))
 
-(`background` is used for canvas background, `width` and `height` can overwrite the `width` and `height` attributes)
+The CSS properties for `<suica>` can be defined in a CSS file or
+in a `<style>` tag.
+
+|[Suica<br>CSS](https://boytchev.github.io/suica/examples/example-init-css.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css.html)|
+|---|---|
 
 ```html
-<suica-canvas id="..." width="..." height="..." style="background:...; width:...; height:...;">
-  :
-</suica-canvas>
+<style>
+	suica {
+		width: 500px;
+		height: 300px;
+		background: linen;
+	}
+</style>
+```
+
+The CSS properties for `<suica>` can be defined in its `<style>` attribute.
+
+
+|[Suica<br>Inline<br>CSS](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|
+|---|---|
+
+```html
+<suica style="width:500px; height:300px; background:linen;">
+ :
+</suica>
+</body>
 ```
 
 
