@@ -1,14 +1,14 @@
 # Suica
-Mobile 3D made simple. As simple, as this ([live demo](https://boytchev.github.io/suica/example-minimal.html)):
+Mobile 3D made simple. As simple, as this ([live demo](https://boytchev.github.io/suica/examples/minimal-example.html)):
 ```html
 <!DOCTYPE html>
-<body>
-    <script src="suica.js"></script>
-    <suica>
-        <demo>
-        <cube>
-  </suica>
-</body>
+
+<script src="suica.js"></script>
+
+<suica>
+    <demo>
+    <cube>
+</suica>
 ```
 
 [**Suica.js**](https://github.com/boytchev/suica) is a library that allows easy programming
