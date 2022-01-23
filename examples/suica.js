@@ -42,7 +42,7 @@ console.log( `Suica 2.0.3 (220122)` );
 
 
 // control flags
-const DEBUG_CALLS = !false;
+const DEBUG_CALLS = false;
 
 
 

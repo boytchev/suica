@@ -11,7 +11,7 @@
 //	</suica>
 //
 //	<script>
-//		{suica.}background( color= )
+//		{suica.}background( color )
 //		{suica.}oxyz( size, color )
 //		{suica.}demo( distance, altitude )
 //		{suica.}animate( src )

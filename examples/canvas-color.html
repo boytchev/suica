@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Suica Inline CSS</title>
+	<title>Canvas background color</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -14,15 +14,28 @@
 	<link rel="stylesheet" href="examples.css">
 	
 	<script src="suica.js"></script>
+	
+	<style>
+		suica {width: 11em;}
+	</style>
 </head>
 
 <body>
-	<h1>Example: Suica Inline CSS</h1>
-	<p>Setting canvas properties with inline CSS.</p>
+
+	<h1>Canvas background color<small>Setting background colors of canvas in four different ways.</small></h1>
 	
-	<suica style="width:500px; height:300px; background:linen;">
-		<demo>
-		<cube>
+	<suica background="cornsilk"></suica>
+	
+	<suica style="background: azure"></suica>
+	
+	<suica>
+		<background color="pink">
 	</suica>
+	
+	<suica></suica>
+	<script>
+		background( 'lavender' );
+	</script>
+	
 </body>
 </html>

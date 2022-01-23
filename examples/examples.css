@@ -3,14 +3,11 @@ body {
 }
 
 h1 {
-	margin: 0;
-	font-size: 1.5em;
+	font-size: 1.3em;
 }
 
-
-p {
-	margin: 0.5em auto 1em auto;
-	padding-bottom: 1em;
-	border-bottom: dotted gray 1px;
+h1 small {
+	display: block;
+	font-weight: normal;
+	font-size: 0.8em;
 }
-

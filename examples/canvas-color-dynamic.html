@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>CSS precedence</title>
+	<title>Dynamic background color</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -14,24 +14,25 @@
 	<link rel="stylesheet" href="examples.css">
 	
 	<script src="suica.js"></script>
-	
-	<style>
-		suica {
-			width: 600px;
-			height: 300px;
-			background: linen;
-		}
-	</style>
 </head>
 
 <body>
-	<h1>Example: CSS precedence</h1>
-	<p>Precedence of CSS properties over attributes.</p>
+
+	<h1>Dynamic background color<small>Changing the background color of canvas in an animation loop.</small></h1>
 	
-	
-	<suica width="200" height="200" background="azure">
-		<demo>
+	<suica>
 		<cube>
+		<demo>
 	</suica>
+	
+	<script>
+		animate( rainbow );
+		
+		function rainbow( t )
+		{
+			background( 'hsl('+Math.round((100*t)%360)+',100%,50%)' );
+		}
+	</script>
+	
 </body>
 </html>

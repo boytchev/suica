@@ -1,122 +1,133 @@
 # Table of contents
 
-- [Initialization](#initialization)
-- [General methods](#general-methods)
-	- [background](#background)
-	- [oxyz](#oxyz)
-	- [animate](#animate)
-- [Properties](#properties)
-	- [Colors](#colors)
+- [Minimal example](#minimal-example)
+- [Starting Suica](#starting-suica) <small>[ [name](#canvas-name), [size](#canvas-size), [color](#canvas-color) ]</small>
 - [Reference table](#reference-table)
 
 
-# Initialization
+# Minimal example
 
-Suica is a JavaScript library. It generates 3D images and animations in
-a canvas inside a non-standard HTML tag `<suica>`. The HTML template of
-a typical webpage with Suica might look like this:
+Suica provides a simple-to-write-and-easy-to-understand generation of basic 3D
+graphics. This is achieved by axiomatic functionality which is sufficient to
+build more complex 3D scenes and animations.  
+
+Here is a minimal example showing a rotating cube in the browser (click on the
+image to run the example):
+
+[<kbd><img src="examples/snapshots/minimal-example.jpg" width="150"></kbd>](https://boytchev.github.io/suica/examples/minimal-example.html)
+
+The complete code of this example is:
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<script src="suica.js"></script>
-	</head>
 
-	<body>
-		<suica ...></suica>
-		<script>
-			// JavaScript code using Suica
-		</suica>
-	</body>
-</html>
-```
+<script src="suica.js"></script>
 
-The properties of the canvas can be defined either as tag attributes
-or as CSS properties. 
-
-**Tag attributes** are defined for the `<suica>` tag. The following attributes
-are supported:
-
-- `id` &ndash; unique indentifier used to address the canvas
-- `width` &ndash; number for the width of the canvas (in pixels)
-- `height` &ndash; number for the height of the canvas (in pixels)
-- `background` &ndash; a string for the background color ([details](#colors))
-
-|[Suica<br>attributes](https://boytchev.github.io/suica/examples/example-init-attr.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-attr.html)|
-|---|---|
-
-```html
-<suica width="500" height="300" background="linen">
-	<demo>
+<suica>
 	<cube>
+	<demo>
 </suica>
 ```
 
-**CSS properties** for the tag `<suica>` can be used instead of
-attributes. This applies to all properties except the `id`:
+where `DOCTYPE` defines that the web page contains HTML5, `script` loads Suica,
+`suica` creates the drawing canvas, `cube` adds a cube in it and `demo`
+activates the demo mode.
 
-- `width` &ndash; width of the canvas (CSS format)
-- `height` &ndash; height of the canvas (CSS format)
-- `background` &ndash; background color ([details](#colors))
+_**Note**: Tools that check the validity of HTML in web pages should complain
+about this minimal example, as it contains non-standard tags, skips some
+essential tags and does not close all opened tags._
 
-The CSS properties for `<suica>` can be defined in CSS rules
-(in external CSS file or in tag `<style>`) or as inline CSS
-in the `style` attribute of `<suica>`.
 
-|[Suica<br>CSS](https://boytchev.github.io/suica/examples/example-init-css.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css.html)|[Suica<br>Inline<br>CSS](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|
-|---|---|---|---|
+
+# Starting Suica
+
+### Canvas name
+Suica is a JavaScript library. It generates 3D images and animations in a canvas
+inside the non-standard HTML tag `<suica>`. Each canvas created by Suica has a
+name. By default the names are `suica0`, `suica1`, `suica2` and so on. If the
+attribute `id` of `<suica>` is present, then its value is used as a name:
 
 ```html
-<style>
-	suica {
-		width: 500px;
-		height: 300px;
-		background: linen;
-	}
-</style>
+<suica id="one">
+```
+
+[<kbd><img src="examples/snapshots/canvas-name.jpg" width="150"></kbd>](https://boytchev.github.io/suica/examples/canvas-name.html)
+
+_**Note**: For each canvas Suica defines a global JS variable with the same
+name. This variable can be used to access canvas properties and methods._
+
+
+### Canvas size
+The size of the canvas is defined by `width` and `height` either as CSS
+properties (using CSS units), or as `<suica>` attributes (always in pixels).
+
+```html
+<suica style="width:15em; height:300px;">
 ```
 
 ```html
-<suica style="width:500px; height:300px; background:linen;">
- :
-</suica>
+<suica width="300" height="200">
 ```
 
-If the same propery is set as both attribute and CSS, the CSS value takes precedence.
+The following example defines two canvases with different sizes:
 
-|[CSS<br>Precedence](https://boytchev.github.io/suica/examples/example-init-css-precedence.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css-precedence.html)|
-|---|---|
+[<kbd><img src="examples/snapshots/canvas-size.jpg" width="150"></kbd>](https://boytchev.github.io/suica/examples/canvas-size.html)
+
+_**Note**: CSS sizes have precedence over sizes set as attribute._
 
 
-# General methods
+### Canvas color
 
-### background
-
-Sets the background color of a Suica canvas.
+The background color of a canvas can be set in four ways: as a CSS property, as
+a tag attribute; as a standalone HTML tag and as a function.
 
 ```html
-<suica-canvas style="background:white;">
-  :
-</suica-canvas>
+<suica style="background: linen;">
 ```
 
 ```html
-<background color="white">
+<suica background="linen">
+```
+
+```html
+<background color="linen">
 ```
 
 ```javascript
-background( 'white' );
+background('linen');
 ```
 
-### oxyz
+[<kbd><img src="examples/snapshots/canvas-color.jpg" width="150"></kbd>](https://boytchev.github.io/suica/examples/canvas-color.html)
 
-Draws the coordinate systems with specific length and color of axes.
+
+The `background` function is used to change the canvas background color after
+the creation of the canvas. The following example changes the color dynamically:
+
+[<kbd><img src="examples/snapshots/canvas-color-dynamic.jpg" width="150"></kbd>](https://boytchev.github.io/suica/examples/canvas-color-dynamic.html)
+
+
+### Coordinate system
+
+Suica uses Cartesian 3D coordinate system. The command `oxyz` draws an image of
+the coordinate system, so its origin and axes are visible. The command is
+available as HTML tag and JS function.
+
+Definition:
+
+```javascript
+oxyz( size, color );
+```
+
+```html
+<oxyz size="..." color="...">
+```
+
+Examples:
 
 ```javascript
 oxyz( );
 oxyz( 30 );
-oxyz( 30, 'black' );
+oxyz( 30, black );
 ```
 
 ```html
@@ -125,6 +136,9 @@ oxyz( 30, 'black' );
 <oxyz color="black">
 <oxyz size="30" color="black">
 ```
+
+[<kbd><img src="examples/snapshots/oxyz.jpg" width="150"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
+
 
 ### animate
 
@@ -148,13 +162,14 @@ TBD
 
 # Reference table
 
-| Element | HTML Tag | HTML Attribute | CSS Rule | JS Code |
+| Element | HTML Tag | HTML Attribute | CSS Property | JS Code |
 |---|:---:|:---:|:---:|:---:|
 | suica canvas | yes | | | |
 | suica canvas id | | yes | | |
 | suica canvas width | | yes | yes | |
 | suica canvas height | | yes | yes | |
-| suica canvas background |  | yes | yes | yes |
+| suica canvas background | yes | yes | yes | yes |
+| oxyz | yes | | | yes |
 
 
 ---
