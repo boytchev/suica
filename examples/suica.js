@@ -162,11 +162,10 @@ class Suica
 		// scene with background from <suica>'s CSS
 		this.scene = new THREE.Scene();
 
-		var color = this.suicaTag.getAttribute('background') || this.suicaTag.style.backgroundColor;
-		if( !color )
+		var color = getComputedStyle(this.suicaTag).backgroundColor;
+		if( color == 'rgba(0, 0, 0, 0)' )
 		{
-			color = getComputedStyle(this.suicaTag).backgroundColor;
-			if( color == 'rgba(0, 0, 0, 0)' ) color = 'white';
+			color = this.suicaTag.getAttribute('background') || 'white';
 		}
 		this.scene.background = Suica.parseColor( color );
 

@@ -1,12 +1,13 @@
 # Table of contents
 
-- [**Initialization**](#initialization)
+- [Initialization](#initialization)
 - [General methods](#general-methods)
 	- [background](#background)
 	- [oxyz](#oxyz)
 	- [animate](#animate)
 - [Properties](#properties)
 	- [Colors](#colors)
+- [Reference table](#reference-table)
 
 
 # Initialization
@@ -32,11 +33,10 @@ a typical webpage with Suica might look like this:
 ```
 
 The properties of the canvas can be defined either as tag attributes
-or as CSS properties.
+or as CSS properties. 
 
-### Tag attributes
-
-The `<suica>` tag may have attributes. They are all optional.
+**Tag attributes** are defined for the `<suica>` tag. The following attributes
+are supported:
 
 - `id` &ndash; unique indentifier used to address the canvas
 - `width` &ndash; number for the width of the canvas (in pixels)
@@ -53,20 +53,19 @@ The `<suica>` tag may have attributes. They are all optional.
 </suica>
 ```
 
-### Style properties
-
-The CSS style of `<suica>` also defines its properties. Suica extracts
-these CSS properties:
+**CSS properties** for the tag `<suica>` can be used instead of
+attributes. This applies to all properties except the `id`:
 
 - `width` &ndash; width of the canvas (CSS format)
 - `height` &ndash; height of the canvas (CSS format)
 - `background` &ndash; background color ([details](#colors))
 
-The CSS properties for `<suica>` can be defined in a CSS file or
-in a `<style>` tag.
+The CSS properties for `<suica>` can be defined in CSS rules
+(in external CSS file or in tag `<style>`) or as inline CSS
+in the `style` attribute of `<suica>`.
 
-|[Suica<br>CSS](https://boytchev.github.io/suica/examples/example-init-css.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css.html)|
-|---|---|
+|[Suica<br>CSS](https://boytchev.github.io/suica/examples/example-init-css.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css.html)|[Suica<br>Inline<br>CSS](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|
+|---|---|---|---|
 
 ```html
 <style>
@@ -78,18 +77,16 @@ in a `<style>` tag.
 </style>
 ```
 
-The CSS properties for `<suica>` can be defined in its `<style>` attribute.
-
-
-|[Suica<br>Inline<br>CSS](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css-inline.html)|
-|---|---|
-
 ```html
 <suica style="width:500px; height:300px; background:linen;">
  :
 </suica>
-</body>
 ```
+
+If the same propery is set as both attribute and CSS, the CSS value takes precedence.
+
+|[CSS<br>Precedence](https://boytchev.github.io/suica/examples/example-init-css-precedence.html)|[<img src="examples/snapshots/example-init.jpg" width="150">](https://boytchev.github.io/suica/examples/example-init-css-precedence.html)|
+|---|---|
 
 
 # General methods
@@ -148,6 +145,16 @@ TBD
 
 ### Colors
 TBD
+
+# Reference table
+
+| Element | HTML Tag | HTML Attribute | CSS Rule | JS Code |
+|---|:---:|:---:|:---:|:---:|
+| suica canvas | yes | | | |
+| suica canvas id | | yes | | |
+| suica canvas width | | yes | yes | |
+| suica canvas height | | yes | yes | |
+| suica canvas background |  | yes | yes | yes |
 
 
 ---
