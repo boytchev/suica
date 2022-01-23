@@ -1,11 +1,13 @@
-# Table of contents
+# Suica
+
+## Table of contents
 
 - [Minimal example](#minimal-example)
 - [Starting Suica](#starting-suica) <small>[ [name](#canvas-name), [size](#canvas-size), [color](#canvas-color) ]</small>
 - [Reference table](#reference-table)
 
 
-# Minimal example
+## Minimal example
 
 Suica provides a simple-to-write-and-easy-to-understand generation of basic 3D
 graphics. This is achieved by axiomatic functionality which is sufficient to
@@ -39,7 +41,7 @@ essential tags and does not close all opened tags._
 
 
 
-# Starting Suica
+## Starting Suica
 
 ### Canvas name
 Suica is a JavaScript library. It generates 3D images and animations in a canvas
@@ -154,13 +156,13 @@ animate( loop );
 function loop( t, dt ) {...}
 ```
 
-# Properties
+## Properties
 TBD
 
 ### Colors
 TBD
 
-# Reference table
+## Reference table
 
 | Element | HTML Tag | HTML Attribute | CSS Property | JS Code |
 |---|:---:|:---:|:---:|:---:|

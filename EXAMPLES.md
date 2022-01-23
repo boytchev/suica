@@ -1,8 +1,10 @@
-# Minimal example
+# Suica Examples
+
+## Minimal example
 
 [<kbd><img src="examples/snapshots/minimal-example.jpg" height="300"></kbd>](https://boytchev.github.io/suica/examples/minimal-example.html)
 
-# Starting Suica examples
+## Starting Suica examples
 
 [<kbd><img src="examples/snapshots/canvas-name.jpg" height="300"></kbd>](https://boytchev.github.io/suica/examples/canvas-name.html)
 
