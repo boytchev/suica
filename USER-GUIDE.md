@@ -207,71 +207,64 @@ TBD
 
 ### Code templates
 
-#### Tag &lt;suica&gt;
+**Tag &lt;suica&gt;** with attributes and inline style:
 
-&emsp; &dot; As tag atributes:
 ```html
 <suica id="𝑠𝑡𝑟𝑖𝑛𝑔" width="𝑛𝑢𝑚𝑏𝑒𝑟" height="𝑛𝑢𝑚𝑏𝑒𝑟" background="𝑐𝑜𝑙𝑜𝑟">
-```
-&emsp; &dot; As inline style:
-```html
+
 <suica id="𝑠𝑡𝑟𝑖𝑛𝑔" style="width: 𝑐𝑠𝑠-𝑛𝑢𝑚𝑏𝑒𝑟; height: 𝑐𝑠𝑠-𝑛𝑢𝑚𝑏𝑒𝑟; background: 𝑐𝑜𝑙𝑜𝑟;">
 ```
 
 
-#### Background color
-&emsp; &dot; As tag atribute:
+**Background color** as attribute, inline style, normal style and function:
 ```html
 <suica background="𝑐𝑜𝑙𝑜𝑟">
-```
-&emsp; &dot; As inline style:
-```html
+
 <suica style="background: 𝑐𝑜𝑙𝑜𝑟;">
-```
-&emsp; &dot; As style:
-```html
+
 <style>
    suica { background: 𝑐𝑜𝑙𝑜𝑟; }
 </style>
 <suica>
 ```
-&emsp; &dot; As function:
 ```js
 background( 𝑐𝑜𝑙𝑜𝑟 );
 ```
 
 
-#### Coordinate system
-&emsp; &dot; As tag:
+**Coordinate system** as tag and function:
 ```html
 <oxyz size="𝑛𝑢𝑚𝑏𝑒𝑟" color="𝑐𝑜𝑙𝑜𝑟">
 ```
-&emsp; &dot; As function:
 ```js
 oxyz( 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
 
 
-#### Demo mode
-&emsp; &dot; As tag:
+**Demo mode** as tag and function:
+As tag:
 ```html
 <demo distance="𝑛𝑢𝑚𝑏𝑒𝑟" altitude="𝑛𝑢𝑚𝑏𝑒𝑟">
 ```
-&emsp; &dot; As function:
 ```js
 demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
 ```
 
 
 
-#### Animation loop
-&emsp; &dot; As tag:
+**Animation loop** as tag and function:
 ```html
-<ontime src="𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛-𝑛𝑎𝑚𝑒">
+<ontime src="𝑛𝑎𝑚𝑒">
 ```
-&emsp; &dot; As function:
 ```js
-onTime( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛-𝑛𝑎𝑚𝑒 );
+onTime( 𝑛𝑎𝑚𝑒 );
+```
+
+
+
+**Animation loop function**:
+```js
+𝑛𝑎𝑚𝑒( 𝑡, 𝑑𝑡 );
 ```
 
 
