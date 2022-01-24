@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Canvas size</title>
+	<title>Background</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,13 +18,32 @@
 
 <body>
 
-	<h1>Canvas size<small>Setting canvas size with styles (left) or attributes (right).</small></h1>
+	<h1>Background<small>Setting the background color of a drawing canvas.</small></h1>
 	
-	<suica style="width:15em; height:300px;">
+	<suica width="250" background="linen">
+		<cube>
+		<demo>
 	</suica>
 	
-	<suica width="300" height="200">
+	<suica width="250">
+		<background color="azure">
+		<cube>
+		<demo>
 	</suica>
+	
+	<suica width="250">
+		<cube>
+		<demo>
+	</suica>
+
+	<script>
+		animate( rainbow );
+		
+		function rainbow( t )
+		{
+			background( 'hsl('+Math.round((100*t)%360)+',100%,50%)' );
+		}
+	</script>
 	
 </body>
 </html>

@@ -18,19 +18,23 @@
 
 <body>
 
-	<h1>Oxyz<small>Drawing the coordinate system.</small></h1>
+	<h1>Oxyz<small>Drawing default and custom coordinate systems.</small></h1>
 	
-	<suica width="300"></suica>
-	
-	<script >
-		oxyz( 40 );
-		demo( );
-	</script>
-	
-	<suica width="300">
-		<oxyz size="20" color="crimson">
+	<suica width="250">
+		<oxyz>
 		<demo>
 	</suica>
+	
+	<suica width="250">
+		<oxyz color="crimson">
+		<demo>
+	</suica>
+	
+	<suica width="250"></suica>
+	<script >
+		oxyz( 10, 'blue' );
+		demo( );
+	</script>
 	
 </body>
 </html>

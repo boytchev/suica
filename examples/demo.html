@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Canvas background color</title>
+	<title>Demo</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -14,27 +14,22 @@
 	<link rel="stylesheet" href="examples.css">
 	
 	<script src="suica.js"></script>
-	
-	<style>
-		suica {width: 11em;}
-	</style>
 </head>
 
 <body>
 
-	<h1>Canvas background color<small>Setting background colors of canvas in four different ways.</small></h1>
-	
-	<suica background="cornsilk"></suica>
-	
-	<suica style="background: azure"></suica>
+	<h1>Demo<small>Turning on demo mode &ndash; i.e. automatic rotation of the 3D scene.</small></h1>
 	
 	<suica>
-		<background color="pink">
+		<cube>
+		<demo altitude="0">
 	</suica>
 	
-	<suica></suica>
+	<suica width="200">
+		<cube>
+	</suica>
 	<script>
-		background( 'lavender' );
+		demo( 300 );
 	</script>
 	
 </body>

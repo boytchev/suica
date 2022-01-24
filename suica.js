@@ -165,7 +165,7 @@ class Suica
 		var color = getComputedStyle(this.suicaTag).backgroundColor;
 		if( color == 'rgba(0, 0, 0, 0)' )
 		{
-			color = this.suicaTag.getAttribute('background') || 'white';
+			color = this.suicaTag.getAttribute('background') || 'lightgray';
 		}
 		this.scene.background = Suica.parseColor( color );
 
