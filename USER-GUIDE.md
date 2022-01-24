@@ -8,6 +8,7 @@
 	- [Background color](#background-color)
 	- [Coordinate system](#coordinate-system)
 	- [Demo mode](#demo-mode)
+	- [Animation loop](#animation-loop)
 - [References](#reference-table)
 	- [Code templates](#code-templates)
 	- [Cross-table](#cross-table)
@@ -164,24 +165,37 @@ demo( 100, 0 );
 
 Example of turning on demo mode &ndash; i.e. automatic rotation of the 3D scene.
 
-[<kbd><img src="examples/snapshots/demo.jpg" width="150"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
+[<kbd><img src="examples/snapshots/demo.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
 
 
 
+### Animation loop
 
-### animate
+The animation approach of Suica is to react every time when the browser is ready
+to update the image on the canvas. The command `onTime` registers a user-defined
+function that reacts whenever a new frame is required.
 
-Sets the animation user-defined function. This function is called every frame and has two parameters &ndash; total elapsed time `t` and elapsed time since previous frame `td`, bith measured in seconds.
+The user-defined function may have two parameters &ndash; total elapsed time *t* (since the start of Suica); and elapsed time since the previous frame *td*. Both parameters provide time values measured in seconds.
+
+The `onTime` command is available as tag and function:
 
 ```html
-<animate src="loop">
+<ontime src="loop">
 ```
 
 ```javascript
-animate( loop );
+onTime( loop );
 
 function loop( t, dt ) {...}
 ```
+
+_**Note**: To remove already registered function use the function without a
+parameter: `ontime()`._
+
+The following example uses `onTime` to show the elapsed time *t* and *&Delta;t*:
+
+[<kbd><img src="examples/snapshots/ontime.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
+
 
 ### Colors
 TBD
@@ -249,6 +263,18 @@ demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
 ```
 
 
+
+#### Animation loop
+- As tag:
+```html
+<ontime src="𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛-𝑛𝑎𝑚𝑒">
+```
+- As function:
+```js
+onTime( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛-𝑛𝑎𝑚𝑒 );
+```
+
+
 ### Cross-table
 
 The cross-table elaborates the possible ways to set or modify given Suica element.
@@ -262,6 +288,7 @@ The cross-table elaborates the possible ways to set or modify given Suica elemen
 | Background color | yes | yes | yes | yes |
 | Coordinate system | yes | | | yes |
 | Demo mode | yes | | | yes |
+| Animation loop | yes | | | yes |
 
 
 

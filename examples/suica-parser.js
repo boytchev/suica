@@ -5,7 +5,7 @@
 //
 // <background color="...">
 // <oxyz size="..." color="...">
-// <animate src="...">
+// <ontime src="...">
 // <point id="..." center="..." color="..." size="...">
 //
 
@@ -25,13 +25,17 @@ class HTMLParser
 		this.suica = suica;
 
 		this.parseTag = {};
-		this.parseTag.CANVAS = this.parseTagCANVAS;
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
-		this.parseTag.ANIMATE = this.parseTagANIMATE;
+		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.CUBE = this.parseTagCUBE;
+		
+		this.parseTag.BUTTON = this.skipTag;
+		this.parseTag.CANVAS = this.skipTag;
+		this.parseTag.DIV = this.skipTag;
+		this.parseTag.SPAN = this.skipTag;
 		
 	} // HTMLParser.constructor
 
@@ -68,11 +72,12 @@ class HTMLParser
 	} // HTMLParser.parseTagsInElement
 		
 
-	// <canvas>
-	parseTagCANVAS( suica, elem )
+	// <canvas> <div>
+	skipTag( suica, elem )
 	{
+		if( DEBUG_CALLS ) console.log(`:: ${suica.id}.skipTag( ${elem.tagName } )`);
 		// skip this tag
-	} // HTMLParser.parseTagCANVAS
+	} // HTMLParser.skipTag
 	
 	
 	// <oxyz size="..." color="...">
@@ -104,11 +109,11 @@ class HTMLParser
 	} // HTMLParser.parseTagBACKGROUND
 	
 	
-	// <animate src="...">
-	parseTagANIMATE( suica, elem )
+	// <ontime src="...">
+	parseTagONTIME( suica, elem )
 	{
-		suica.nextFrame = elem.getAttribute('src') || Suica.DEFAULT.ANIMATE.SRC;
-	} // HTMLParser.parseTagANIMATE
+		suica.nextFrame = elem.getAttribute('src') || Suica.DEFAULT.ONTIME.SRC;
+	} // HTMLParser.parseTagONTIME
 	
 	
 	// <point id="..." center="..." color="..." size="...">

@@ -6,7 +6,7 @@
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
-//		<animate src="...">
+//		<ontime src="...">
 //		<point id="..." center="..." color="..." size="...">
 //	</suica>
 //
@@ -14,7 +14,7 @@
 //		{suica.}background( color )
 //		{suica.}oxyz( size, color )
 //		{suica.}demo( distance, altitude )
-//		{suica.}animate( src )
+//		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
 //	</script>
 //
@@ -26,6 +26,7 @@
 //	2.0.01 (220119)	custom tags, nested tags, background, oxyz, animate
 //	2.0.02 (220120) point
 //	2.0.03 (220122) autoload js files, cube
+//	2.0.04 (220124) demo, examples, onTime
 //
 //===================================================
 
@@ -69,7 +70,7 @@ class Suica
 		BACKGROUND: { COLOR: 'white' },
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
-		ANIMATE: { SRC: null },
+		ONTIME: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:5 },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30 },
 	} // Suica.DEFAULT
@@ -96,7 +97,7 @@ class Suica
 		this.parser = new HTMLParser( this );
 		
 		// frame-based animation
-		this.nextFrame = null;
+		this.onTimeHandler = null;
 		
 		// automatic rotation
 		this.demoViewPoint = null;
@@ -195,13 +196,13 @@ class Suica
 				that.light.position.copy( that.camera.position );
 			}
 			
-			if( that.nextFrame )
+			if( that.onTimeHandler )
 			{
 				// OMG, I have never expected to use eval() in actual code, but here I am
-				if (typeof that.nextFrame === 'string' || that.nextFrame instanceof String)
-					that.nextFrame = window[that.nextFrame];
+				if (typeof that.onTimeHandler === 'string' || that.onTimeHandler instanceof String)
+					that.onTimeHandler = window[that.onTimeHandler];
 				
-				that.nextFrame( time, time-that.lastTime );
+				that.onTimeHandler( time, time-that.lastTime );
 			}
 			
 			that.render( );
@@ -276,12 +277,12 @@ class Suica
 	}
 	
 	
-	animate( src=Suica.DEFAULT.ANIMATE.SRC )
+	onTime( src=Suica.DEFAULT.ONTIME.SRC )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.animate( ${src} )`);
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.onTime( ${src} )`);
 		
-		this.nextFrame = src;
+		this.onTimeHandler = src;
 	}
 	
 	
@@ -340,12 +341,16 @@ function demo( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO
 	Suica.current.demo( distance, altitude );
 }
 
-function animate( src=Suica.DEFAULT.ANIMATE.SRC )
+function onTime( src=Suica.DEFAULT.ONTIME.SRC )
 {
 	Suica.precheck();
-	Suica.current.animate( src );
+	Suica.current.onTime( src );
 }
 
+function element( id )
+{
+	return document.getElementById( id );
+}
 
 
 
