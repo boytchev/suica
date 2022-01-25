@@ -26,7 +26,7 @@
 //	2.0.01 (220119)	custom tags, nested tags, background, oxyz, animate
 //	2.0.02 (220120) point
 //	2.0.03 (220122) autoload js files, cube
-//	2.0.04 (220124) demo, examples, animate->onTime
+//	2.0.04 (220124) demo, examples, onTime
 //
 //===================================================
 
@@ -67,7 +67,7 @@ class Suica
 	
 	// default values for Suica commands
 	static DEFAULT = {
-		BACKGROUND: { COLOR: 'white' },
+		BACKGROUND: { COLOR: 'whitesmoke' },
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
@@ -166,7 +166,7 @@ class Suica
 		var color = getComputedStyle(this.suicaTag).backgroundColor;
 		if( color == 'rgba(0, 0, 0, 0)' )
 		{
-			color = this.suicaTag.getAttribute('background') || 'lightgray';
+			color = this.suicaTag.getAttribute('background') || Suica.DEFAULT.BACKGROUND.COLOR;
 		}
 		this.scene.background = Suica.parseColor( color );
 

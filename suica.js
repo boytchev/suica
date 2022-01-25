@@ -67,7 +67,7 @@ class Suica
 	
 	// default values for Suica commands
 	static DEFAULT = {
-		BACKGROUND: { COLOR: 'white' },
+		BACKGROUND: { COLOR: 'whitesmoke' },
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
@@ -166,7 +166,7 @@ class Suica
 		var color = getComputedStyle(this.suicaTag).backgroundColor;
 		if( color == 'rgba(0, 0, 0, 0)' )
 		{
-			color = this.suicaTag.getAttribute('background') || 'lightgray';
+			color = this.suicaTag.getAttribute('background') || Suica.DEFAULT.BACKGROUND.COLOR;
 		}
 		this.scene.background = Suica.parseColor( color );
 
