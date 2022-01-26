@@ -15,6 +15,7 @@
 	- [Colors](#colors)
 	- [Code templates](#code-templates)
 	- [Cross-table](#cross-table)
+	- [List of examples](examples/EXAMPLES.md)
 
 
 ## About
@@ -396,7 +397,9 @@ The cross-table elaborates the possible ways to set or modify given Suica elemen
 | &emsp; &ndash; image | | | | yes |
 
 
+### List of examples
 
+All examples are collected in a single page [here](examples/EXAMPLES.md)
 ---
 
 January, 2022

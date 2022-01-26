@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
 
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
 	
 	<script src="suica.js"></script>
 	
@@ -54,24 +55,6 @@
 		{
 			one.scene.rotation.set(t,t/2,0);
 		});
-	</script>
-
-
-	<suica id="two" style="background: lime; width:20em;">
-		<oxyz>
-		<demo>
-		<ontime src="loopa">
-		<point id="qaa" center="0.2,0.2,0.2" color="white" size="30">
-	</suica>
-	
-	<script>
-		qaa.color = [1,0.5,0];
-		
-		function loopa( t, dt )
-		{
-			qaa.x = 30*Math.sin(t);
-			qaa.visible = (t%1)<0.5;
-		}
 	</script>
 </body>
 </html>
