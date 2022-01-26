@@ -10,13 +10,9 @@
 //		size
 //		color
 //		visible
+//		image
 //
-//		
-//===================================================
-//
-// History
-//	2.0.00 (220118)	initiation
-//	2.0.01 (220119)	custom tags, nested tags, background, oxyz, animate
+// <point id="..." center="x,y,z" x="..." y="..." z="..." size="..." color="...">
 //
 //===================================================
 
@@ -28,6 +24,7 @@ class Point extends THREE.Points
 	// a geometry shared by all points
 	static geometry = new THREE.BufferGeometry( ).setAttribute( 'position', new THREE.BufferAttribute( new Float32Array( [0,0,0] ), 3 ) );
 	
+	
 	constructor( suica, center, size, color )
 	{
 		super( Point.geometry, Suica.pointMaterial.clone() );
@@ -38,7 +35,8 @@ class Point extends THREE.Points
 		this.size = size;
 		
 		suica.scene.add( this );
-	}
+	} // Point.constructor
+	
 	
 	// point coordinates [x,y,z]
 	get center ( )
@@ -51,16 +49,19 @@ class Point extends THREE.Points
 		this.position.set( center[0], center[1], center[2] );
 	}
 	
+	
 	// point x coordinate
 	get x ( )
 	{
 		return this.position.x;
 	}
 	
+	
 	set x ( x )
 	{
 		this.position.x = x;
 	}
+	
 	
 	// point y coordinate
 	get y ( )
@@ -68,10 +69,12 @@ class Point extends THREE.Points
 		return this.position.y;
 	}
 	
+	
 	set y ( y )
 	{
 		this.position.y = y;
 	}
+	
 	
 	// point z coordinate
 	get z ( )
@@ -79,10 +82,12 @@ class Point extends THREE.Points
 		return this.position.z;
 	}
 	
+	
 	set z ( z )
 	{
 		this.position.z = z;
 	}
+	
 	
 	// point size
 	get size( )
@@ -90,11 +95,13 @@ class Point extends THREE.Points
 		return this.material.size;
 	}
 
+
 	set size( size )
 	{
 		this.material.size = size;
 		this.material.needsUpdate = true;
 	}
+
 
 	// point color
 	get color( )

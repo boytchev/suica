@@ -1,0 +1,2 @@
+copy ..\*.js .
+rem exit

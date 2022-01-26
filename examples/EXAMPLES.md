@@ -13,3 +13,7 @@ Click on an image to run the example.
 [<kbd><img src="examples/snapshots/demo.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
 
 [<kbd><img src="examples/snapshots/ontime.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
+
+[<kbd><img src="examples/snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)
+
+[<kbd><img src="examples/snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)

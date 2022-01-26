@@ -112,7 +112,7 @@ class HTMLParser
 	// <ontime src="...">
 	parseTagONTIME( suica, elem )
 	{
-		suica.nextFrame = elem.getAttribute('src') || Suica.DEFAULT.ONTIME.SRC;
+		suica.onTime( elem.getAttribute('src') || Suica.DEFAULT.ONTIME.SRC );
 	} // HTMLParser.parseTagONTIME
 	
 	
@@ -125,6 +125,10 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POINT.COLOR
 		);
 		
+		if( elem.hasAttribute('x') ) p.position.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.position.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.position.z = Number(elem.getAttribute('z')); 
+
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 		
@@ -140,6 +144,10 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
+		if( elem.hasAttribute('x') ) p.position.x = Number(elem.hasAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.position.y = Number(elem.hasAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.position.z = Number(elem.hasAttribute('z')); 
+			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 		

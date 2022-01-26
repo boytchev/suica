@@ -22,9 +22,9 @@
 <body>
 	<h1>Test</h1>
 
-	<suica></suica>
 	<suica id="one"></suica>
 	<script>
+
 		var canvas = document.createElement('canvas');
 			canvas.width = canvas.height = 32;
 		var context = canvas.getContext('2d');
@@ -50,33 +50,28 @@
 			p.material.map = image;
 		}
 		
-		animate(function ( t, dt )
+		onTime(function ( t, dt )
 		{
 			one.scene.rotation.set(t,t/2,0);
 		});
 	</script>
 
-	<suica></suica>
-
 
 	<suica id="two" style="background: lime; width:20em;">
 		<oxyz>
-		<animate src="loop">
+		<demo>
+		<ontime src="loopa">
 		<point id="qaa" center="0.2,0.2,0.2" color="white" size="30">
 	</suica>
 	
 	<script>
 		qaa.color = [1,0.5,0];
 		
-		function loop( t, dt )
+		function loopa( t, dt )
 		{
 			qaa.x = 30*Math.sin(t);
-			two.scene.rotation.set(t*2,1,0,'YXZ');
 			qaa.visible = (t%1)<0.5;
 		}
-	</script>
-	
-	<script>
 	</script>
 </body>
 </html>

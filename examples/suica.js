@@ -71,7 +71,7 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
-		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:5 },
+		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30 },
 	} // Suica.DEFAULT
 	
@@ -237,8 +237,8 @@ class Suica
 				size: 5,
 				sizeAttenuation: false,
 				map: new THREE.CanvasTexture( canvas ),
-				transparent: !true,
-				alphaTest: 0.8,
+				transparent: true,
+				alphaTest: 0.75,
 			});
 
 		Suica.solidMaterial = new THREE.MeshStandardMaterial( {
@@ -297,9 +297,79 @@ class Suica
 	{
 		if( Array.isArray(color) )
 			return new THREE.Color( color[0], color[1]||0, color[2]||0 );
-		else
-			return new THREE.Color( color || 'white' );
+
+		if( color instanceof THREE.Color )
+			return color;
+
+		if( typeof color === 'string' || color instanceof String )
+		{
+			color = color.toLowerCase();
+			
+			// 0x
+			if( color[0]=='0' && color[1]=='x' )
+				return new THREE.Color( Number(color) );
+
+			// rgb
+			if( color[0]=='r' && color[1]=='g' && color[2]=='b' )
+				return new THREE.Color( color );
+
+			// hsl
+			if( color[0]=='h' && color[1]=='s' && color[2]=='l' )
+			{
+				// hsl with %
+				if( color.indexOf('%') > 0 )
+					return new THREE.Color( color );
+				
+				// hsl without %
+				color = color.split(',');
+				return hsl( parseFloat(color[0].split('(')[1]), parseFloat(color[1]), parseFloat(color[2]));
+			}
+			
+			// r,g,b
+			if( color.indexOf(',') > 0 )
+			{
+				color = color.split(',');
+				return new THREE.Color( Number(color[0]), Number(color[1]), Number(color[2]) );
+			}
+		}
+
+		return new THREE.Color( color || 'white' );
 	}
+	
+	
+	static parseColorTest( )
+	{
+		var idx = 0;
+		function test( color )
+		{
+			var parsedColor = Suica.parseColor( color );
+			
+			console.log(`Color test №${++idx}`, color, parsedColor.r==1 && parsedColor.g==0 && parsedColor.g==0 );
+		}
+		test( 'red' );
+		test( 'Red' );
+		test( 'RED' );
+		test( 0xFF0000 );
+		test( 0XFF0000 );
+		
+		test( '0XFF0000' );
+		test( '0xFF0000' );
+		test( '0xff0000' );
+		test( '0Xff0000' );
+		test( [1,0,0] );
+		
+		test( '1,0,0' );
+		test( 'rgb(255,0,0)' );
+		test( 'RGB(255,0,0)' );
+		test( rgb(255,0,0) );
+		test( 'hsl(0,100,50)' );
+		
+		test( 'hsl(0,100%,50%)' );
+		test( 'HSL(0,100,50)' );
+		test( hsl(0,100,50) );
+		test( new THREE.Color('red') );
+	}
+	
 	
 	
 	point( center=Suica.DEFAULT.POINT.CENTER, size=Suica.DEFAULT.POINT.SIZE, color=Suica.DEFAULT.POINT.COLOR )
@@ -351,6 +421,26 @@ function element( id )
 {
 	return document.getElementById( id );
 }
+
+
+function rgb( r, g, b )
+{
+	return new THREE.Color( r/255, g/255, b/255 );
+}
+
+
+function hsl( h, s, l )
+{
+	return new THREE.Color( ).setHSL( h/360, s/100, l/100 );
+}
+
+
+function random( a=0, b=1 )
+{
+	return a+(b-a)*Math.random();
+}
+
+
 
 
 

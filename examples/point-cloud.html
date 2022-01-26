@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Point cloud</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Point cloud</h1>
+	<p>Using a loop to define a cloud of many yellow-red points.</p>
+
+	<suica>
+		<demo>
+	</suica>
+	
+	<script>
+		// number of points
+		const N = 200;
+		
+		// creating all points
+		for( var i=0; i<N; i++ )
+		{
+			var center = [random(-50,50), random(-30,30), random(-50,50)],
+				color  = [1, random(), 0];
+			
+			point( center, random(5,15), color );
+		}
+	</script>
+	
+</body>
+</html>

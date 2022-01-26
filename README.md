@@ -27,7 +27,7 @@ with future versions. They are not a part of Suica, but since version 2 they are
 
 
 - [User guide](USER-GUIDE.md)
-- [List of examples](EXAMPLES.md)
+- [List of examples](examples/EXAMPLES.md)
 
 
 
