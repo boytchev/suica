@@ -1,4 +1,4 @@
-# Suica User Guide
+# <img src="logo.png" style="height: 1.5em; position: relative; top:0.4em;" />Suica User Guide
 
 ## Table of contents
 

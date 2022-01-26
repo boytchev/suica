@@ -1,4 +1,4 @@
-# Suica Examples
+# <img src="logo.png" style="height: 1.5em; position: relative; top:0.4em;" />Suica Examples
 
 Click on an image to run the example.
 
