@@ -1,5 +1,3 @@
-<img src="logo.png" width="40" style="border: solid 1px red;">
-
 # Suica User Guide
 
 ## Table of contents
