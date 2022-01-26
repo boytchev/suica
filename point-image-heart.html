@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Point image</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Point image</h1>
+	<p>Defining custom image for points.</p>
+
+	<suica>
+		<demo>
+	</suica>
+	
+	<script>
+
+		var cross = drawing( 32 );
+			moveTo( 0, 0 );
+			lineTo( 32, 32 );
+			moveTo( 0, 32 );
+			lineTo( 32, 0 );
+		stroke( 'blue', 8 );
+		
+		var heart = drawing( 32 );
+			moveTo( 16, 0 );
+			curveTo( 30, 16, 30, 24 );
+			curveTo( 30, 30, 24, 30 );
+			curveTo( 16, 30, 16, 24 );
+			curveTo( 16, 30, 8, 30 );
+			curveTo( 2, 30, 2, 24 );
+			curveTo( 2, 16, 16, 2 );
+		fillAndStroke( 'pink', 'black', 4 );
+		
+		
+		
+		// number of points
+		const N = 200;
+		
+		// creating all points
+		for( var i=0; i<N; i++ )
+		{
+			var center = [random(-50,50), random(-30,30), random(-50,50)];
+			
+			var p = point( center, random(5,25), 'white' );
+			p.image = random( [cross, heart] );
+		}
+		
+		
+	</script>
+	
+</body>
+</html>

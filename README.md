@@ -1,4 +1,4 @@
-# <img src="logo.png" style="height: 1.5em; position: relative; top:0.4em;" />Suica
+# Suica
 Mobile 3D made simple. As simple, as this ([live demo](https://boytchev.github.io/suica/examples/minimal-example.html)):
 ```html
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ at [Sofia University](https://www.uni-sofia.bg/index.php/eng).
 Suica is licensed under **GPL-3.0**. Latest complete version is **1.0.12** from October 2015.
 
 Three.js and other libraries are included in this repository to safeguard against incompatibilities
-with future versions. They are not a part of Suica, but since version 2 they are esential for it.
+with future versions. They are not a part of Suica.
 
 
 - [User guide](USER-GUIDE.md)

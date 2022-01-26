@@ -121,6 +121,19 @@ class Point extends THREE.Points
 
 	//set visible - inherited from THREE.Point
 	//get visible
+	
+	set image( drawing )
+	{
+		if( DEBUG_CALLS ) console.log(`:: ${this.suica.id}.point.image = ${drawing}`);
+
+		if( drawing instanceof Drawing )
+		{
+			this.material.map = drawing.image;
+			return;
+		}
+		
+		throw 'error: Parameter of `image` is not a drawing';
+	}
 }
 
 function point( center=Suica.DEFAULT.POINT.CENTER, size=Suica.DEFAULT.POINT.SIZE, color=Suica.DEFAULT.POINT.COLOR )

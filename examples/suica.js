@@ -16,6 +16,9 @@
 //		{suica.}demo( distance, altitude )
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
+//		
+//		random( from, to )
+//		random( array )
 //	</script>
 //
 //		
@@ -23,10 +26,11 @@
 //
 // History
 //	2.0.00 (220118)	initiation
-//	2.0.01 (220119)	custom tags, nested tags, background, oxyz, animate
+//	2.0.01 (220119)	custom & nested tags, background, oxyz, animate
 //	2.0.02 (220120) point
 //	2.0.03 (220122) autoload js files, cube
 //	2.0.04 (220124) demo, examples, onTime
+//	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke, 
 //
 //===================================================
 
@@ -393,6 +397,138 @@ class Suica
 
 
 
+class Drawing
+{
+	// current active Drawing instance
+	static current;
+		
+	constructor( width=32, height=width )
+	{
+		this.canvas = document.createElement( 'canvas' );
+		this.canvas.width = width;
+		this.canvas.height = height;
+		
+		this.texture = null;
+		
+		this.context = this.canvas.getContext( '2d' );
+		this.context.scale( 1, -1 );
+		this.context.translate( 0, -height );
+		this.context.clearRect( 0, 0, width, height );
+		this.context.beginPath( );
+	}
+
+	moveTo( x = 0, y = 0 )
+	{
+		this.context.moveTo( x, y );
+	}
+	
+	lineTo( x = 0, y = 0 )
+	{
+		this.context.lineTo( x, y );
+	}
+	
+	curveTo( mx = 0, my = 0, x = 0, y = 0 )
+	{
+		this.context.quadraticCurveTo( mx, my, x, y );
+	}
+
+	stroke( color = 'black', width = 1 )
+	{
+		this.texture = null; // clear the texture
+		
+		this.context.strokeStyle = color;
+		this.context.lineWidth = width;
+		this.context.stroke( );
+
+		this.context.beginPath( );
+	}
+	
+	fill( color = 'gray' )
+	{
+		this.texture = null; // clear the texture
+		
+		this.context.fillStyle = color;
+		this.context.fill( );
+
+		this.context.beginPath( );
+	}
+
+	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1 )
+	{
+		this.texture = null; // clear the texture
+		
+		this.context.strokeStyle = strokeColor;
+		this.context.lineWidth = width;
+		this.context.stroke( );
+		
+		this.context.fillStyle = fillColor;
+		this.context.fill( );
+
+		this.context.beginPath( );
+	}
+
+	get image( )
+	{
+		if( !this.texture )
+			this.texture = new THREE.CanvasTexture( this.canvas );
+			
+		return this.texture;
+	}
+
+	
+	static precheck()
+	{
+		if( !(Drawing.current instanceof Drawing) )
+			throw 'error: No Drawing instance is active';
+	}
+
+} // class Drawing
+
+function drawing( width=32, height=width )
+{
+	Drawing.current = new Drawing( width, height );
+	return Drawing.current;
+}
+
+function moveTo( x = 0, y = 0 )
+{
+	Drawing.precheck();
+	Drawing.current.moveTo( x, y );
+}
+	
+function lineTo( x = 0, y = 0 )
+{
+	Drawing.precheck();
+	Drawing.current.lineTo( x, y );
+}
+
+function curveTo( mx = 0, my = 0, x = 0, y = 0 )
+{
+	Drawing.precheck();
+	Drawing.current.curveTo( mx, my, x, y );
+}
+
+function stroke( color = 'black', width = 1 )
+{
+	Drawing.precheck();
+	Drawing.current.stroke( color, width );
+}
+	
+function fill( color = 'gray' )
+{
+	Drawing.precheck();
+	Drawing.current.fill( color );
+}
+
+function fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1 )
+{
+	Drawing.precheck();
+	Drawing.current.fillAndStroke( fillColor, strokeColor, width );
+}
+
+
+
+
 function background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 {
 	Suica.precheck();
@@ -437,6 +573,11 @@ function hsl( h, s, l )
 
 function random( a=0, b=1 )
 {
+	if( Array.isArray(a) )
+	{
+		return a[ THREE.Math.randInt(0,a.length-1) ];
+	}
+	
 	return a+(b-a)*Math.random();
 }
 

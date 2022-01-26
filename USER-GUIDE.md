@@ -1,4 +1,4 @@
-# <img src="logo.png" style="height: 1.5em; position: relative; top:0.4em;" />Suica User Guide
+# Suica User Guide
 
 ## Table of contents
 
@@ -278,6 +278,11 @@ The additional properties of a point are:
 - `image` &ndash; custom image that is used instead of the default circular shape
 
 These properties can be set only in Javascript.
+
+The following examples demonstrates points with changed image:
+
+[<kbd><img src="examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
+
 
 
 

@@ -1,4 +1,4 @@
-# <img src="logo.png" style="height: 1.5em; position: relative; top:0.4em;" />Suica Examples
+# Suica Examples
 
 Click on an image to run the example.
 
@@ -17,3 +17,5 @@ Click on an image to run the example.
 [<kbd><img src="snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)
 
 [<kbd><img src="snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
+
+[<kbd><img src="snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
