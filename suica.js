@@ -343,7 +343,7 @@ class Suica
 		{
 			var parsedColor = Suica.parseColor( color );
 			
-			if( parsedColor.r==1 && parsedColor.g==0 && parsedColor.g==0 )
+			if( parsedColor.r==1 && parsedColor.g==0 && parsedColor.b==0 )
 				return null;
 			
 			return color;
