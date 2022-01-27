@@ -9,15 +9,6 @@
 	<link rel="shortcut icon" type="image/png" href="logo.png"/>
 	
 	<script src="suica.js"></script>
-	
-	<style>
-		suica {
-			border: solid 1px black;
-			background: lightgray;
-			width: 30em;
-			height: 30em;
-		}
-	</style>
 </head>
 
 <body>
@@ -26,35 +17,9 @@
 	<suica id="one"></suica>
 	<script>
 
-		var canvas = document.createElement('canvas');
-			canvas.width = canvas.height = 32;
-		var context = canvas.getContext('2d');
-			context.strokeStyle = 'white';
-			context.lineWidth = 8;
-			context.clearRect(0,0,32,32);
-			context.beginPath( );
-				context.moveTo( 0, 0 );
-				context.lineTo( 32,32 );
-				context.moveTo( 0, 32 );
-				context.lineTo( 32, 0 );
-			context.stroke( );
-		var image = new THREE.CanvasTexture( canvas );
-	
-		oxyz( );
-		
-		for( var i=0; i<100; i++ )
-		{
-			var p = one.point( [Math.random()*60-30,Math.random()*60-30,Math.random()*60-30] );
-			p.color = Math.random()>0.5?'red':'yellow';
-			p.size = Math.random()>0.5?6:12;
-			
-			p.material.map = image;
-		}
-		
-		onTime(function ( t, dt )
-		{
-			one.scene.rotation.set(t,t/2,0);
-		});
+		oxyz();
+		demo();
+		Suica.parseColorTest();
 	</script>
 </body>
 </html>

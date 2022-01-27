@@ -299,15 +299,15 @@ class Suica
 
 	static parseColor( color )
 	{
-		if( Array.isArray(color) )
-			return new THREE.Color( color[0], color[1]||0, color[2]||0 );
-
 		if( color instanceof THREE.Color )
 			return color;
 
+		if( Array.isArray(color) )
+			return new THREE.Color( color[0], color[1]||0, color[2]||0 );
+
 		if( typeof color === 'string' || color instanceof String )
 		{
-			color = color.toLowerCase();
+			color = color.toLowerCase().replaceAll(' ','');
 			
 			// 0x
 			if( color[0]=='0' && color[1]=='x' )
@@ -320,13 +320,9 @@ class Suica
 			// hsl
 			if( color[0]=='h' && color[1]=='s' && color[2]=='l' )
 			{
-				// hsl with %
-				if( color.indexOf('%') > 0 )
-					return new THREE.Color( color );
-				
 				// hsl without %
-				color = color.split(',');
-				return hsl( parseFloat(color[0].split('(')[1]), parseFloat(color[1]), parseFloat(color[2]));
+				color = color.substring(4).split(',');
+				return hsl( parseFloat(color[0]), parseFloat(color[1]), parseFloat(color[2]));
 			}
 			
 			// r,g,b
@@ -343,35 +339,58 @@ class Suica
 	
 	static parseColorTest( )
 	{
-		var idx = 0;
 		function test( color )
 		{
 			var parsedColor = Suica.parseColor( color );
 			
-			console.log(`Color test №${++idx}`, color, parsedColor.r==1 && parsedColor.g==0 && parsedColor.g==0 );
+			if( parsedColor.r==1 && parsedColor.g==0 && parsedColor.g==0 )
+				return null;
+			
+			return color;
 		}
-		test( 'red' );
-		test( 'Red' );
-		test( 'RED' );
-		test( 0xFF0000 );
-		test( 0XFF0000 );
 		
-		test( '0XFF0000' );
-		test( '0xFF0000' );
-		test( '0xff0000' );
-		test( '0Xff0000' );
-		test( [1,0,0] );
+		var testValues = [
+				'red',
+				'Red',
+				'RED',
+				
+				0xFF0000,
+				0XFF0000,
+				'0XFF0000',
+				'0xFF0000',
+				'0xff0000',
+				'0Xff0000',
+				
+				[1, 0, 0],
+				'1,0,0',
+				'1, 0, 0',
+				
+				'rgb(255,0,0)',
+				'rgb( 255, 0, 0)',
+				' rgb ( 255 , 0 , 0 ) ',
+				'RGB( 255, 0, 0 )',
+				rgb( 255, 0, 0 ),
+				
+				'hsl(0,100,50)',
+				'hsl( 0, 100, 50 )',
+				' hsl ( 0 , 100 , 50 ) ',
+				'HSL( 0, 100, 50 )',
+				hsl( 0, 100, 50 ),		
+				
+				new THREE.Color('red')
+			]
+			
+		var summary = [];
+		for( var value of testValues )
+		{
+			var result = test( value );
+			if( result ) summary.push( result );
+		}
 		
-		test( '1,0,0' );
-		test( 'rgb(255,0,0)' );
-		test( 'RGB(255,0,0)' );
-		test( rgb(255,0,0) );
-		test( 'hsl(0,100,50)' );
-		
-		test( 'hsl(0,100%,50%)' );
-		test( 'HSL(0,100,50)' );
-		test( hsl(0,100,50) );
-		test( new THREE.Color('red') );
+		if( summary.length )
+			console.log( `Suica::parseColorTest() - failed at: \n\t|${summary.join('|\n\t|')}|` );
+		else
+			console.log( `Suica::parseColorTest() - passed OK` );
 	}
 	
 	
@@ -580,6 +599,7 @@ function random( a=0, b=1 )
 	
 	return a+(b-a)*Math.random();
 }
+
 
 
 
