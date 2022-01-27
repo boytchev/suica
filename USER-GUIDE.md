@@ -3,7 +3,7 @@
 ## Table of contents
 
 - [About](#about)
-- [Activating Suica](#activating-suica)
+- [Drawing canvas](#drawing-canvas)
 	- [Tag &lt;suica&gt;](#tag-suica)
 	- [Background color](#background-color)
 	- [Coordinate system](#coordinate-system)
@@ -18,12 +18,11 @@
 	- [List of examples](examples/EXAMPLES.md)
 
 
-## About
+## <img src="logo.min.png" width="40" style="position:relative; top:10px;"> About
 
 **Suica is a JavaScript library** that provides a minimalistic approach to
-mobile 3D graphics. Although Suica uses a limited set of 3D functionality, it is
-a quick and easy way to make 3D scenes and animations. Here is a minimal example
-of a rotating cube in the browser (*click on the image to run the example*):
+mobile 3D graphics. Here is a minimal example of a rotating cube in the browser
+(*click on the image to run the example*):
 
 [<kbd><img src="examples/snapshots/minimal-example.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/minimal-example.html)
 
@@ -38,54 +37,41 @@ The complete code of this example is:
 </suica>
 ```
 
-where `DOCTYPE` defines that the web page contains HTML5, `script` loads
-Suica, `suica` creates the drawing canvas, `cube` adds a cube in it and
-`demo` activates the continuous rotation.
-
-_**Note**: Tools that check the validity of HTML in web pages should complain
-about Suica examples, as the minimalistic approach requires a non-standard use
-of HTML tags._
+_**Note**: Tools that validate HTML pages complain about Suica examples, as the minimalistic approach requires a non-standard use of HTML tags._
 
 
 
 
-## Activating Suica
+## Drawing canvas
 
 Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the
-`<script>` tag. Once loaded, the library will look for the HTML tag `<suica>`
-and use it as a drawing canvas for 3D graphics. 
-
-
+`<script>` tag. Once loaded, the library will look for HTML tags `<suica>` and
+use them as drawing canvases for 3D graphics. 
 
 
 ### Tag &lt;suica&gt;
 
-The tag `<suica>` is the main Suica tag. It defines the drawing canvas. All
-other Suica-specific HTML tags are recognized only if used between `<suica>` and
+The main Suica tag is `<suica>`. It defines a 3D drawing canvas. All other
+Suica-specific HTML tags are recognized only if used between `<suica>` and
 `</suica>`
 
 ```html
 <suica>
-   :
+   <!-- all other Suica tags appear here-->
 </suica>
 ```
 
 The size of the canvas is set via attributes `width` and `height`. Sizes are
-measured in pixels. The default size is 500&times;300 pixels.
-
-```html
-<suica width="400" height="300">
-```
-
-Alternatively, sizes can be set as CSS properties (either inlined or not),
-which may use any CSS unit:
-
-```html
-<suica style="width:15em; height:300px;">
-```
+measured in pixels. The default size is 500&times;300 pixels. Alternatively,
+sizes can be set as CSS properties (either inlined or not), which may use any
+CSS unit.
 
 Example of creating drawing canvases with different sizes.
 
+```html
+<suica width="400" height="300">
+<suica style="width:15em; height:300px;">
+```
 [<kbd><img src="examples/snapshots/tag-suica.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/tag-suica.html)
 
 
