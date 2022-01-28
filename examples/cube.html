@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>onTime</title>
+	<title>Cube</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -14,41 +14,20 @@
 	<link rel="stylesheet" href="examples.css">
 	
 	<script src="suica.js"></script>
-	
-	<style>
-		suica {
-			position: relative;
-			width: 30em;
-			height: 20em;
-		}
-		
-		div {
-			width: 29em;
-			position: absolute;
-			padding: 0.5em;
-			border-bottom: 1px gray dotted;
-		}
-	</style>
 </head>
 
 <body>
 
-	<h1>onTime</h1>
-	<p>Capturing elapsed time for each rendered frame.</p>
-	
+	<h1>Cube</h1>
+	<p>Defining and decorating cubes.</p>
+
 	<suica>
-		<div id="log"></div>
-		<cube>
 		<demo>
+		<cube color="white">
+		<cube x="+40" size="15" color="forestgreen">
+		<cube x="-40" size="15" color="orange">
+		<cube z="+40" size="15" color="cornflowerblue">
+		<cube z="-40" size="15" color="crimson">
 	</suica>
-	
-	<script>
-		onTime( showTime );
-		
-		function showTime( t, dt )
-		{
-			element('log').innerHTML = `Time: ${t.toFixed(1)} &Delta;Time: ${dt.toFixed(4)}`;
-		}
-	</script>	
 </body>
 </html>

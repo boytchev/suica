@@ -1,50 +1,35 @@
 ﻿//
-// Suica 2.0 Point
+// Suica 2.0 Mesh
 // CC-3.0-SA-NC
 //
-// point( center, size, color )
+// new Mesh( suica, geometry, material, center, color )
 //
-// <point id="" center="" x="" y="" z="" size="" color="">
 //
 //	center		center [x,y,z]
 //	x			x coordinate of center
 //	y			y coordinate of center
 //	z			z coordinate of center
-//	size		visual size
 //	color		color [r,g,b]
 //	image		texture (drawing or canvas)
 //
 //===================================================
 
 
-class Point extends THREE.Points
+class Mesh extends THREE.Mesh
 {
 
-	// a static geometry shared by all points
-	static geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
-
-
-
-
-	constructor(suica, center, size, color)
+	constructor( /*suica,*/ geometry, material/*, center, color*/ )
 	{
-		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.point(${center},${size},${color})`);
-
-		super( Point.geometry, Suica.pointMaterial.clone() );
-
-		this.suica = suica;
-		this.center = center;
-		this.color = color;
-		this.size = size;
-
-		suica.scene.add(this);
+		super( geometry, material );
 		
-	} // Point.constructor
+/*		this.suica = suica;
+		this.center = center;
+		this.color = color;*/
+	}
 
 
 
-
+	
 	get center()
 	{
 		this.suica.parser?.parseTags();
@@ -114,24 +99,6 @@ class Point extends THREE.Points
 
 
 
-	get size()
-	{
-		this.suica.parser?.parseTags();
-
-		return this.material.size;
-	}
-
-	set size( size )
-	{
-		this.suica.parser?.parseTags();
-
-		this.material.size = size;
-		this.material.needsUpdate = true;
-	}
-
-
-
-
 	get color()
 	{
 		this.suica.parser?.parseTags();
@@ -164,16 +131,4 @@ class Point extends THREE.Points
 		throw 'error: Parameter of `image` is not a drawing';
 	}
 	
-} // class Point
-
-
-
-
-window.point = function(
-					center = Suica.DEFAULT.POINT.CENTER,
-					size   = Suica.DEFAULT.POINT.SIZE,
-					color  = Suica.DEFAULT.POINT.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.point( center, size, color );
-}
+} // class Mesh

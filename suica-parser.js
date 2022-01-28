@@ -120,14 +120,14 @@ class HTMLParser
 	parseTagPOINT( suica, elem )
 	{
 		var p = suica.point(
-			elem.getAttribute('center')?.split(',') || Suica.DEFAULT.POINT.CENTER,
+			elem.getAttribute('center') || Suica.DEFAULT.POINT.CENTER,
 			elem.getAttribute('size') || Suica.DEFAULT.POINT.SIZE,
 			elem.getAttribute('color') || Suica.DEFAULT.POINT.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.position.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.position.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.position.z = Number(elem.getAttribute('z')); 
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
 
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
@@ -139,14 +139,14 @@ class HTMLParser
 	parseTagCUBE( suica, elem )
 	{
 		var p = suica.cube(
-			elem.getAttribute('center')?.split(',') || Suica.DEFAULT.CUBE.CENTER,
+			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
 			elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE,
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.position.x = Number(elem.hasAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.position.y = Number(elem.hasAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.position.z = Number(elem.hasAttribute('z')); 
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;

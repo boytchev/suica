@@ -10,8 +10,8 @@
 	- [Demo mode](#demo-mode)
 	- [Animation loop](#animation-loop)
 - [Objects](#objects)
-    - [General properties](#general-properties) [<small> [definitions](#definitions) | [names](#names) | [positions](#positions) | [colors](#colors) | [visibility](#visibility) | [images](#images) </small>] 
-	- [Basic objects](#basic-objects) [<small> [points](#points) </small>]
+    - [General properties](#general-properties) [<small> [definitions](#definitions) | [names](#names) | [positions](#positions) | [colors](#colors) | [images](#images) </small>] 
+	- [Basic objects](#basic-objects) [<small> [points](#points) | [cubes](#cubes) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#reference-table)
 	- [Code templates](#code-templates)
@@ -277,19 +277,6 @@ components *red*, *green* and *blue*, while the
 | CSS<br>property | crimson | #DC143C | | rgb( 220, 20, 60 ) | hsl( 348, 91, 86 ) |
 | JS<br>code | "crimson" | 0xDC143C | [0.86,&nbsp;0.08,&nbsp;0.24] | rgb(&nbsp;220,&nbsp;20,&nbsp;60) | hsl(&nbsp;348,&nbsp;91,&nbsp;86) |
 
-#### Visibility
-
-Objects in Suica have the property `visible`, which is either *true* or *false*.
-This property only indicates whether Suica will attempt to draw the object, i.e.
-it is not related to whether the object is off-screen or hidden behind another
-object. Visibility can be set only in JS. By default all objects are visible.
-
-```js
-JS:
-p = point( );
-p.visible = false;
-```
-
 #### Images
 
 Images can be stamped on objects in Suica. The the property `image` accepts a
@@ -318,8 +305,8 @@ following tabel demonstrates some combinations of colors:
 ### Points
 
 The object `point` represents a graphical point drawn as a small cirlce. Its
-main properties are: `center`, `x`, `y` and `z` for position, 
-`size`, `color`, `visible` and `image`:
+properties are `center`, `x`, `y` and `z` for position, `size`, `color` and
+`image`:
 
 ```html
 HTML:
@@ -334,6 +321,24 @@ point( [25,0,15], 10, 'red' );
 [<kbd><img src="examples/snapshots/point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point.html)&emsp;[<kbd><img src="examples/snapshots/point-cloud.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
 
 [<kbd><img src="examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;
+
+
+### Cubes
+
+The object `cube` represents the geometrical object cube. Its properties are
+`center`, `x`, `y` and `z` for position, `size`, `color` and `image`:
+
+```html
+HTML:
+<cube center="25,0,15" size="10">
+<cube x="25" y="0" z="15">
+```
+```js
+JS:
+cube( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)&emsp;
 
 
 
@@ -418,7 +423,17 @@ onTime( 𝑛𝑎𝑚𝑒 );
 <point id="𝑛𝑎𝑚𝑒" x="𝑥" y="𝑦" z="𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
 ```
 ```js
-point(  [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
+point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+
+**Cube** as tag and function:
+```html
+<cube id="𝑛𝑎𝑚𝑒" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+<cube id="𝑛𝑎𝑚𝑒" x="𝑥" y="𝑦" z="𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+cube( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
 
 
