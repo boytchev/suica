@@ -158,6 +158,7 @@ class Point extends THREE.Points
 		if (drawing instanceof Drawing)
 		{
 			this.material.map = drawing.image;
+			this.material.needsUpdate = true;
 			return;
 		}
 

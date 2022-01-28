@@ -19,3 +19,10 @@ Click on an image to run the example.
 [<kbd><img src="snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
 
 [<kbd><img src="snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
+
+[<kbd><img src="snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
+
+[<kbd><img src="snapshots/cube-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
+
+[<kbd><img src="snapshots/cubeFrame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cubeFrame.html)
+

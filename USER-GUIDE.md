@@ -11,7 +11,7 @@
 	- [Animation loop](#animation-loop)
 - [Objects](#objects)
     - [General properties](#general-properties) [<small> [definitions](#definitions) | [names](#names) | [positions](#positions) | [colors](#colors) | [images](#images) </small>] 
-	- [Basic objects](#basic-objects) [<small> [points](#points) | [cubes](#cubes) </small>]
+	- [Basic objects](#basic-objects) [<small> [points](#points) | [cubes](#cubes) | [cube frames](#cube-frames) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#reference-table)
 	- [Code templates](#code-templates)
@@ -325,8 +325,8 @@ point( [25,0,15], 10, 'red' );
 
 ### Cubes
 
-The object `cube` represents the geometrical object cube. Its properties are
-`center`, `x`, `y` and `z` for position, `size`, `color` and `image`:
+The object `cube` represents a solid cube. Its properties are `center`, `x`,
+`y` and `z` for position, `size`, `color` and `image`:
 
 ```html
 HTML:
@@ -338,7 +338,26 @@ JS:
 cube( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)&emsp;
+[<kbd><img src="examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)&emsp;[<kbd><img src="examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
+
+
+
+### Cube frames
+
+The object `cubeFrame` represents a wireframed cube. Its properties are
+`center`, `x`, `y` and `z` for position, `size` and `color`:
+
+```html
+HTML:
+<cubeFrame center="25,0,15" size="10">
+<cubeFrame x="25" y="0" z="15">
+```
+```js
+JS:
+cubeFrame( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="examples/snapshots/cubeFrame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cubeFrame.html)&emsp;
 
 
 
@@ -434,6 +453,16 @@ point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
 ```js
 cube( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+
+**CubeFrame** as tag and function:
+```html
+<cubeFrame id="𝑛𝑎𝑚𝑒" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+<cubeFrame id="𝑛𝑎𝑚𝑒" x="𝑥" y="𝑦" z="𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+cubeFrame( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
 
 

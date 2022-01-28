@@ -9,6 +9,7 @@
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -18,6 +19,7 @@
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
 //		{suica.}cube( center, size, color )
+//		{suica.}cubeFrame( center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -33,13 +35,13 @@
 //	2.0.03 (220122) autoload js files, cube
 //	2.0.04 (220124) demo, examples, onTime
 //	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
-//	2.0.06 (220128) build process, mesh
+//	2.0.06 (220128) build process, mesh, cubeFrame, arc, cube.image
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.3 (220122)` );
+console.log( `Suica 2.0.6 (220128)` );
 
 
 // control flags
@@ -72,7 +74,7 @@ class Suica
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
-		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30 },
+		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 	} // Suica.DEFAULT
 	
 	
@@ -176,9 +178,12 @@ class Suica
 		this.camera.lookAt( this.scene.position );
 
 		// default light
-		this.light = new THREE.PointLight( 'white', 1 );
-		this.light.position.set( 100, 150, 300 );
+		this.light = new THREE.PointLight( 'white', 0.5 );
+			this.light.position.set( 1000, 1500, 3000 );
 		this.scene.add( this.light );
+			
+		// ambient light
+		this.scene.add( new THREE.AmbientLight( 'white', 0.5 ) );
 			
 		// main animation loop
 		var that = this;
@@ -243,6 +248,11 @@ class Suica
 
 		Suica.solidMaterial = new THREE.MeshStandardMaterial( {
 				color: 'cornflowerblue',
+				side: THREE.DoubleSide,
+			});
+
+		Suica.lineMaterial = new THREE.LineBasicMaterial( {
+				color: 'black',
 			});
 	}
 	
@@ -433,6 +443,15 @@ class Suica
 
 		return new Cube( this, center, size, color );
 	}
+	
+	
+	cubeFrame( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.cubeFrame( [${center}], ${size}, ${color} )`);
+
+		return new CubeFrame( this, center, size, color );
+	}
 
 }
 
@@ -443,7 +462,7 @@ class Drawing
 	// current active Drawing instance
 	static current;
 		
-	constructor( width=32, height=width )
+	constructor( width=32, height=width, color=null )
 	{
 		this.canvas = document.createElement( 'canvas' );
 		this.canvas.width = width;
@@ -455,6 +474,13 @@ class Drawing
 		this.context.scale( 1, -1 );
 		this.context.translate( 0, -height );
 		this.context.clearRect( 0, 0, width, height );
+		
+		if( color )
+		{
+			this.context.fillStyle = color;
+			this.context.fillRect( 0, 0, width, height );
+		}
+			
 		this.context.beginPath( );
 	}
 
@@ -471,6 +497,11 @@ class Drawing
 	curveTo( mx = 0, my = 0, x = 0, y = 0 )
 	{
 		this.context.quadraticCurveTo( mx, my, x, y );
+	}
+
+	arc( x = 0, y = 0, r = 10, from = 0, to = 360 )
+	{
+		this.context.arc( x, y, r, from*Math.PI/2, to*Math.PI/2 );
 	}
 
 	stroke( color = 'black', width = 1 )
@@ -525,9 +556,9 @@ class Drawing
 
 } // class Drawing
 
-window.drawing = function ( width=32, height=width )
+window.drawing = function ( width=32, height=width, color=null )
 {
-	Drawing.current = new Drawing( width, height );
+	Drawing.current = new Drawing( width, height, color );
 	return Drawing.current;
 }
 
@@ -547,6 +578,12 @@ window.curveTo = function ( mx = 0, my = 0, x = 0, y = 0 )
 {
 	Drawing.precheck();
 	Drawing.current.curveTo( mx, my, x, y );
+}
+
+window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360 )
+{
+	Drawing.precheck();
+	Drawing.current.arc( x, y, r, from, to );
 }
 
 window.stroke = function ( color = 'black', width = 1 )

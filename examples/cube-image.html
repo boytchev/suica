@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Cube</title>
+	<title>Cube image</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,16 +18,27 @@
 
 <body>
 
-	<h1>Cube</h1>
-	<p>Defining solid colored cubes.</p>
+	<h1>Cube image</h1>
+	<p>Decorating a cube with custom drawing.</p>
 
 	<suica>
 		<demo>
-		<cube color="white">
-		<cube x="+40" size="15" color="crimson">
-		<cube x="-40" size="15" color="orange">
-		<cube z="+40" size="15" color="cornflowerblue">
-		<cube z="-40" size="15" color="forestgreen">
+		<cube id="a" color="white">
 	</suica>
+	
+	<script>
+		var pic = drawing( 100, 100, 'lightgray' );
+			arc( 25, 25, 15 );
+		fillAndStroke( 'crimson', 'white', 10 );	
+			arc( 100-25, 25, 15 );
+		fillAndStroke( 'forestgreen', 'white', 10 );	
+			arc( 25, 100-25, 15 );
+		fillAndStroke( 'cornflowerblue', 'white', 10 );	
+			arc( 100-25, 100-25, 15 );
+		fillAndStroke( 'rgb(255,200,0)', 'white', 10 );	
+		
+		a.image = pic;
+	</script>
+	
 </body>
 </html>

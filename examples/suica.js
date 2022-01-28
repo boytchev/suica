@@ -8,7 +8,8 @@
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
 //		<ontime src="...">
-//		<point id="..." center="..." color="..." size="...">
+//		<point id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -17,6 +18,7 @@
 //		{suica.}demo( distance, altitude )
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
+//		{suica.}cube( center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -32,7 +34,7 @@
 //	2.0.03 (220122) autoload js files, cube
 //	2.0.04 (220124) demo, examples, onTime
 //	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
-//	2.0.06 (220128) build process
+//	2.0.06 (220128) build process, mesh
 //
 //===================================================
 
@@ -71,7 +73,7 @@ class Suica
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
-		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30 },
+		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 	} // Suica.DEFAULT
 	
 	
@@ -175,9 +177,12 @@ class Suica
 		this.camera.lookAt( this.scene.position );
 
 		// default light
-		this.light = new THREE.PointLight( 'white', 1 );
-		this.light.position.set( 100, 150, 300 );
+		this.light = new THREE.PointLight( 'white', 0.5 );
+			this.light.position.set( 1000, 1500, 3000 );
 		this.scene.add( this.light );
+			
+		// ambient light
+		this.scene.add( new THREE.AmbientLight( 'white', 0.5 ) );
 			
 		// main animation loop
 		var that = this;
@@ -242,6 +247,11 @@ class Suica
 
 		Suica.solidMaterial = new THREE.MeshStandardMaterial( {
 				color: 'cornflowerblue',
+				side: THREE.DoubleSide,
+			});
+
+		Suica.lineMaterial = new THREE.LineBasicMaterial( {
+				color: 'black',
 			});
 	}
 	
@@ -432,6 +442,15 @@ class Suica
 
 		return new Cube( this, center, size, color );
 	}
+	
+	
+	cubeFrame( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.cubeFrame( [${center}], ${size}, ${color} )`);
+
+		return new CubeFrame( this, center, size, color );
+	}
 
 }
 
@@ -442,7 +461,7 @@ class Drawing
 	// current active Drawing instance
 	static current;
 		
-	constructor( width=32, height=width )
+	constructor( width=32, height=width, color=null )
 	{
 		this.canvas = document.createElement( 'canvas' );
 		this.canvas.width = width;
@@ -454,6 +473,13 @@ class Drawing
 		this.context.scale( 1, -1 );
 		this.context.translate( 0, -height );
 		this.context.clearRect( 0, 0, width, height );
+		
+		if( color )
+		{
+			this.context.fillStyle = color;
+			this.context.fillRect( 0, 0, width, height );
+		}
+			
 		this.context.beginPath( );
 	}
 
@@ -470,6 +496,11 @@ class Drawing
 	curveTo( mx = 0, my = 0, x = 0, y = 0 )
 	{
 		this.context.quadraticCurveTo( mx, my, x, y );
+	}
+
+	arc( x = 0, y = 0, r = 10, from = 0, to = 360 )
+	{
+		this.context.arc( x, y, r, from*Math.PI/2, to*Math.PI/2 );
 	}
 
 	stroke( color = 'black', width = 1 )
@@ -524,9 +555,9 @@ class Drawing
 
 } // class Drawing
 
-window.drawing = function ( width=32, height=width )
+window.drawing = function ( width=32, height=width, color=null )
 {
-	Drawing.current = new Drawing( width, height );
+	Drawing.current = new Drawing( width, height, color );
 	return Drawing.current;
 }
 
@@ -546,6 +577,12 @@ window.curveTo = function ( mx = 0, my = 0, x = 0, y = 0 )
 {
 	Drawing.precheck();
 	Drawing.current.curveTo( mx, my, x, y );
+}
+
+window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360 )
+{
+	Drawing.precheck();
+	Drawing.current.arc( x, y, r, from, to );
 }
 
 window.stroke = function ( color = 'black', width = 1 )
@@ -682,6 +719,7 @@ class HTMLParser
 		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.CUBE = this.parseTagCUBE;
+		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTag;
@@ -801,8 +839,25 @@ class HTMLParser
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
-		
 	} // HTMLParser.parseTagCUBE
+	
+	
+	// <cubeFrame id="..." center="..." color="..." size="...">
+	parseTagCUBEFRAME( suica, elem )
+	{
+		var p = suica.cubeFrame(
+			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
+			elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE,
+			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLORFRAME
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+	} // HTMLParser.parseTagCUBEFRAME
 	
 	
 } // HTMLParser
@@ -967,6 +1022,7 @@ class Point extends THREE.Points
 		if (drawing instanceof Drawing)
 		{
 			this.material.map = drawing.image;
+			this.material.needsUpdate = true;
 			return;
 		}
 
@@ -1005,13 +1061,11 @@ window.point = function(
 class Mesh extends THREE.Mesh
 {
 
-	constructor( /*suica,*/ geometry, material/*, center, color*/ )
+	constructor( suica, geometry, material )
 	{
 		super( geometry, material );
 		
-/*		this.suica = suica;
-		this.center = center;
-		this.color = color;*/
+		this.suica = suica;
 	}
 
 
@@ -1105,26 +1159,134 @@ class Mesh extends THREE.Mesh
 
 
 
-	set image(drawing)
+	set image( drawing )
 	{
 		this.suica.parser?.parseTags();
 
 		if (drawing instanceof Drawing)
 		{
 			this.material.map = drawing.image;
+			this.material.transparent = true,
+			this.material.needsUpdate = true;
 			return;
 		}
 
 		throw 'error: Parameter of `image` is not a drawing';
 	}
 	
-} // class Mesh﻿//
+} // class Mesh
+
+
+
+
+class MeshFrame extends THREE.LineSegments
+{
+
+	constructor( suica, geometry, material )
+	{
+		super( geometry, material );
+		
+		this.suica = suica;
+	}
+
+
+
+	
+	get center()
+	{
+		this.suica.parser?.parseTags();
+
+		return [this.position.x, this.position.y, this.position.z];
+	}
+
+	set center(center)
+	{
+		this.suica.parser?.parseTags();
+
+		center = Suica.parseCenter(center);
+		this.position.set(center[0], center[1], center[2]);
+	}
+
+
+
+
+	get x()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.position.x;
+	}
+
+	set x( x )
+	{
+		this.suica.parser?.parseTags();
+
+		this.position.x = x;
+	}
+
+
+
+
+	get y()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.position.y;
+	}
+
+	set y( y )
+	{
+		this.suica.parser?.parseTags();
+
+		this.position.y = y;
+	}
+
+
+
+
+	get z()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.position.z;
+	}
+
+	set z( z )
+	{
+		this.suica.parser?.parseTags();
+
+		this.position.z = z;
+	}
+
+
+
+
+	get color()
+	{
+		this.suica.parser?.parseTags();
+		
+		var col = this.material.color;
+		return [col.r, col.g, col.b];
+	}
+
+	set color( col )
+	{
+		this.suica.parser?.parseTags();
+
+		this.material.color = Suica.parseColor(col);
+		this.material.needsUpdate = true;
+	}
+
+	
+} // class MeshFrame﻿//
 // Suica 2.0 Cube
 // CC-3.0-SA-NC
 //
 // cube( center, size, color )
+// cubeFrame( center, size, color )
 //
 // <cube id="" center="" x="" y="" z="" size="" color="">
+// <cubeFrame id="" center="" x="" y="" z="" size="" color="">
 //
 //	center		center [x,y,z]
 //	x			x coordinate of center
@@ -1151,7 +1313,8 @@ class Cube extends Mesh
 	{
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cube(${center},${size},${color})`);
-		super( Cube.geometry, Suica.solidMaterial.clone() );
+		
+		super( suica, Cube.geometry, Suica.solidMaterial.clone() );
 		
 		this.suica = suica;
 		this.center = center;
@@ -1183,6 +1346,53 @@ class Cube extends Mesh
 
 
 
+class CubeFrame extends MeshFrame
+{
+	
+	
+	// a geometry shared by all cube frames
+	static geometry = new THREE.EdgesGeometry( Cube.geometry );
+	
+	
+	
+	
+	constructor( suica, center, size, color )
+	{
+		suica.parser?.parseTags();
+		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cubeFrame(${center},${size},${color})`);
+		
+		super( suica, CubeFrame.geometry, Suica.lineMaterial.clone() );
+		
+		this.suica = suica;
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		
+		suica.scene.add( this );
+	}
+
+
+
+
+	get size( )
+	{
+		this.suica.parser?.parseTags();
+		
+		return this.scale.x;
+	}
+
+	set size( size )
+	{
+		this.suica.parser?.parseTags();
+		
+		this.scale.set( size, size, size );
+	}
+	
+} // class CubeFrame
+
+
+
+
 window.cube = function(
 				center = Suica.DEFAULT.CUBE.CENTER,
 				size   = Suica.DEFAULT.CUBE.SIZE,
@@ -1190,4 +1400,16 @@ window.cube = function(
 {
 	Suica.precheck();
 	return Suica.current.cube( center, size, color );
+}
+
+
+
+
+window.cubeFrame = function(
+				center = Suica.DEFAULT.CUBE.CENTER,
+				size   = Suica.DEFAULT.CUBE.SIZE,
+				color  = Suica.DEFAULT.CUBE.FRAMECOLOR )
+{
+	Suica.precheck();
+	return Suica.current.cubeFrame( center, size, color );
 }} // LoadSuica 

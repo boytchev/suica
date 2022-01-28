@@ -31,6 +31,7 @@ class HTMLParser
 		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.CUBE = this.parseTagCUBE;
+		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTag;
@@ -150,8 +151,25 @@ class HTMLParser
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
-		
 	} // HTMLParser.parseTagCUBE
+	
+	
+	// <cubeFrame id="..." center="..." color="..." size="...">
+	parseTagCUBEFRAME( suica, elem )
+	{
+		var p = suica.cubeFrame(
+			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
+			elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE,
+			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLORFRAME
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+	} // HTMLParser.parseTagCUBEFRAME
 	
 	
 } // HTMLParser
