@@ -127,9 +127,9 @@ Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts attribute
 `orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX` (these are
 all possible permutations of the letters *X*, *Y* and *Z*. Each orientation
 defines a coordinate system in the following manner:
-- first axis points towards the viewer
-- second axis points upwards
-- third axis point to the right
+- the first axis points to the right
+- the second axis points upwards
+- the third axis point towards the viewer
 
 ```html
 HTML:
