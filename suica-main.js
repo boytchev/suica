@@ -104,7 +104,7 @@ class Suica
 		this.suicaTag = suicaTag;
 
 		// get or invent id
-		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION]
+		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
 		
 		// create and initialize <canvas>
 		this.createCanvas( ); // creates this.canvas
