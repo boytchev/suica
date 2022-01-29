@@ -3,7 +3,7 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." >
+//	<suica width="..." height="..." style="..." orientation="..." background="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
@@ -37,12 +37,13 @@
 //	2.0.04 (220124) demo, examples, onTime
 //	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
 //	2.0.06 (220128) build process, mesh, cubeFrame, arc, cube.image
+//	2.0.07 (220129) suica.orientation
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.6 (220128)` );
+console.log( `Suica 2.0.7 (220129)` );
 
 
 // control flags
@@ -104,7 +105,7 @@ class Suica
 		this.suicaTag = suicaTag;
 
 		// get or invent id
-		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase()]
+		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION]
 		
 		// create and initialize <canvas>
 		this.createCanvas( ); // creates this.canvas

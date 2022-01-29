@@ -24,3 +24,4 @@ echo } // LoadSuica >> bin\suica.js
 
 copy bin\three.min.js examples
 copy bin\suica.js examples
+del bin\suica.min.js
