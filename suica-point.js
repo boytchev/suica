@@ -6,13 +6,13 @@
 //
 // <point id="" center="" x="" y="" z="" size="" color="">
 //
-//	center		center [x,y,z]
-//	x			x coordinate of center
-//	y			y coordinate of center
-//	z			z coordinate of center
-//	size		visual size
-//	color		color [r,g,b]
-//	image		texture (drawing or canvas)
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// size		visual size
+// color	color [r,g,b]
+// image	texture (drawing or canvas)
 //
 //===================================================
 

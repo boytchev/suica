@@ -3,13 +3,14 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="...">
+//	<suica width="..." height="..." style="..." >
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -19,6 +20,7 @@
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
 //		{suica.}cube( center, size, color )
+//		{suica.}cubeFrame( center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -34,13 +36,13 @@
 //	2.0.03 (220122) autoload js files, cube
 //	2.0.04 (220124) demo, examples, onTime
 //	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
-//	2.0.06 (220128) build process, mesh
+//	2.0.06 (220128) build process, mesh, cubeFrame, arc, cube.image
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.3 (220122)` );
+console.log( `Suica 2.0.6 (220128)` );
 
 
 // control flags
@@ -65,10 +67,22 @@ class Suica
 	
 	// array of all Suicas
 	static allSuicas = [];
-	
+
+	// coordinate system orientations
+	static ORIENTATIONS = {
+			XYZ: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(0,1,0)},
+			XZY: {SCALE: new THREE.Vector3(-1,1,1), UP: new THREE.Vector3(0,0,1)},
+			YXZ: {SCALE: new THREE.Vector3(1,-1,1), UP: new THREE.Vector3(1,0,0)},
+			YZX: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(0,0,1)},
+			ZXY: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(1,0,0)},
+			ZYX: {SCALE: new THREE.Vector3(1,1,-1), UP: new THREE.Vector3(0,1,0)},
+		}
+
+
 	// default values for Suica commands
 	static DEFAULT = {
 		BACKGROUND: { COLOR: 'whitesmoke' },
+		ORIENTATION: 'XYZ',
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
@@ -89,6 +103,9 @@ class Suica
 		
 		this.suicaTag = suicaTag;
 
+		// get or invent id
+		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase()]
+		
 		// create and initialize <canvas>
 		this.createCanvas( ); // creates this.canvas
 		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
@@ -163,6 +180,8 @@ class Suica
 
 		// scene with background from <suica>'s CSS
 		this.scene = new THREE.Scene();
+		
+		this.scene.scale.copy( this.orientation.SCALE );
 
 		var color = getComputedStyle(this.suicaTag).backgroundColor;
 		if( color == 'rgba(0, 0, 0, 0)' )
@@ -173,6 +192,7 @@ class Suica
 
 		// default perspective camera
 		this.camera = new THREE.PerspectiveCamera( 40, this.canvasAspect, 1, 1000 );
+		this.camera.up.copy( this.orientation.UP );
 		this.camera.position.set( 0, 0, 100 );
 		this.camera.lookAt( this.scene.position );
 
@@ -188,13 +208,28 @@ class Suica
 		var that = this;
 		this.lastTime = 0;
 		
+		
 		function loop( time )
 		{
 			time /= 1000; // convert miliseconds to seconds
 			
 			if( that.demoViewPoint )
 			{
-				that.camera.position.setFromCylindricalCoords( that.demoViewPoint.distance, time, that.demoViewPoint.altitude );
+				var x = that.demoViewPoint.distance*Math.cos(time),
+					y = that.demoViewPoint.altitude,
+					z = that.demoViewPoint.distance*Math.sin(time),
+					p = that.camera.position;
+				
+				switch( that.orientation )
+				{
+					case Suica.ORIENTATIONS.XYZ: p.set( x, y, -z ); break;
+					case Suica.ORIENTATIONS.XZY: p.set( -x, -z, y ); break;
+					case Suica.ORIENTATIONS.YXZ: p.set( y, -x, -z ); break;
+					case Suica.ORIENTATIONS.YZX: p.set( -z, x, y ); break;
+					case Suica.ORIENTATIONS.ZXY: p.set( y, -z, x ); break;
+					case Suica.ORIENTATIONS.ZYX: p.set( -z, y, -x ); break;
+					default: throw 'error: Unknown orientation in <suica>';
+				};
 				that.camera.lookAt( that.scene.position );
 				
 				that.light.position.copy( that.camera.position );
@@ -470,8 +505,8 @@ class Drawing
 		this.texture = null;
 		
 		this.context = this.canvas.getContext( '2d' );
-		this.context.scale( 1, -1 );
-		this.context.translate( 0, -height );
+		//this.context.scale( 1, -1 );
+		//this.context.translate( 0, -height );
 		this.context.clearRect( 0, 0, width, height );
 		
 		if( color )
@@ -485,22 +520,29 @@ class Drawing
 
 	moveTo( x = 0, y = 0 )
 	{
-		this.context.moveTo( x, y );
+		this.context.moveTo( x, this.canvas.height-y );
 	}
 	
 	lineTo( x = 0, y = 0 )
 	{
-		this.context.lineTo( x, y );
+		this.context.lineTo( x, this.canvas.height-y );
 	}
 	
 	curveTo( mx = 0, my = 0, x = 0, y = 0 )
 	{
-		this.context.quadraticCurveTo( mx, my, x, y );
+		this.context.quadraticCurveTo( mx, this.canvas.height-my, x, this.canvas.height-y );
 	}
 
 	arc( x = 0, y = 0, r = 10, from = 0, to = 360 )
 	{
-		this.context.arc( x, y, r, from*Math.PI/2, to*Math.PI/2 );
+		this.context.arc( x, this.canvas.height-y, r, from*Math.PI/2, to*Math.PI/2 );
+	}
+
+	fillText( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
+	{
+		this.context.fillStyle = color;
+		this.context.font = font;
+		this.context.fillText( text, x, this.canvas.height-y );
 	}
 
 	stroke( color = 'black', width = 1 )
@@ -583,6 +625,12 @@ window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360 )
 {
 	Drawing.precheck();
 	Drawing.current.arc( x, y, r, from, to );
+}
+
+window.fillText = function ( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
+{
+	Drawing.precheck();
+	Drawing.current.fillText( x, y, text, color, font );
 }
 
 window.stroke = function ( color = 'black', width = 1 )
@@ -870,13 +918,13 @@ class HTMLParser
 //
 // <point id="" center="" x="" y="" z="" size="" color="">
 //
-//	center		center [x,y,z]
-//	x			x coordinate of center
-//	y			y coordinate of center
-//	z			z coordinate of center
-//	size		visual size
-//	color		color [r,g,b]
-//	image		texture (drawing or canvas)
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// size		visual size
+// color	color [r,g,b]
+// image	texture (drawing or canvas)
 //
 //===================================================
 
@@ -1288,13 +1336,13 @@ class MeshFrame extends THREE.LineSegments
 // <cube id="" center="" x="" y="" z="" size="" color="">
 // <cubeFrame id="" center="" x="" y="" z="" size="" color="">
 //
-//	center		center [x,y,z]
-//	x			x coordinate of center
-//	y			y coordinate of center
-//	z			z coordinate of center
-//	size		size of edge
-//	color		color [r,g,b]
-//	image		texture (drawing or canvas)
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// size		size of edge
+// color	color [r,g,b]
+// image	texture (drawing or canvas)
 //
 //===================================================
 
