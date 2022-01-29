@@ -95,7 +95,8 @@ Example of creating drawing canvases with different sizes:
 ```
 [<kbd><img src="examples/snapshots/tag-suica.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/tag-suica.html)
 
-
+The orientation of the coordinate system is set via attribute `orientation`.
+More information is available in section [Coordinate system](#coordinate-system).
 
 
 ### Background color
@@ -122,9 +123,23 @@ background( 'linen' );
 
 ### Coordinate system
 
-Suica uses Cartesian 3D coordinate system. The command `oxyz` draws the
-coordinate system as three segments with custom size and color. By default the
-size is 30 and the color is [black](https://www.color-hex.com/color/000000).
+Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts attribute
+`orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX` (these are
+all possible permutations of the letters *X*, *Y* and *Z*. Each orientation
+defines a coordinate system in the following manner:
+- first axis points towards the viewer
+- second axis points upwards
+- third axis point to the right
+```html
+HTML:
+<suica orientation="xyz">
+```
+[<kbd><img src="examples/snapshots/suica-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
+
+The coordinate system is an abstract object and it has no graphical
+representation. The command `oxyz`, however, visualizes the system as three
+segments with custom size and color. By default the size is 30 and the color
+is [black](https://www.color-hex.com/color/000000).
 
 ```html
 HTML:
