@@ -12,7 +12,7 @@
 // x		x coordinate of center
 // y		y coordinate of center
 // z		z coordinate of center
-// size		size of edge
+// size		size(s) of edge
 // color	color [r,g,b]
 // image	texture (drawing or canvas)
 //
@@ -36,29 +36,14 @@ class Cube extends Mesh
 		
 		super( suica, Cube.geometry, Suica.solidMaterial.clone() );
 		
+		this.sizeArray = false;
+		
 		this.suica = suica;
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		
 		suica.scene.add( this );
-	}
-	
-	
-	
-	
-	get size( )
-	{
-		this.suica.parser?.parseTags();
-		
-		return this.scale.x;
-	}
-
-	set size( size )
-	{
-		this.suica.parser?.parseTags();
-		
-		this.scale.set( size, size, size );
 	}
 
 } // class Cube
@@ -89,23 +74,6 @@ class CubeFrame extends MeshFrame
 		this.size = size;
 		
 		suica.scene.add( this );
-	}
-
-
-
-
-	get size( )
-	{
-		this.suica.parser?.parseTags();
-		
-		return this.scale.x;
-	}
-
-	set size( size )
-	{
-		this.suica.parser?.parseTags();
-		
-		this.scale.set( size, size, size );
 	}
 	
 } // class CubeFrame

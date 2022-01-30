@@ -141,7 +141,7 @@ class HTMLParser
 	{
 		var p = suica.cube(
 			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
-			elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE ),
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
@@ -159,7 +159,7 @@ class HTMLParser
 	{
 		var p = suica.cubeFrame(
 			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
-			elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE ),
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLORFRAME
 		);
 		

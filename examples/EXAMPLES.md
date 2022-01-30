@@ -16,6 +16,8 @@ Click on an image to run the example.
 
 [<kbd><img src="snapshots/ontime.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
 
+[<kbd><img src="snapshots/sizes.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
+
 [<kbd><img src="snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)
 
 [<kbd><img src="snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)

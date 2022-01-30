@@ -403,6 +403,24 @@ class Suica
 	}
 	
 	
+	static parseSize( size )
+	{
+		// center is string 'x,y,z'
+		if( typeof size === 'string' || size instanceof String )
+		{
+			size = size.replaceAll(' ','');
+			
+			if( size.indexOf(',') > 0 )
+			{
+				size = size.split(',');
+				return [Number(size[0]), Number(size[1]), Number(size[2]) ];
+			}
+		}
+
+		return size;
+	}
+	
+	
 	static parseColorTest( )
 	{
 		function test( color )

@@ -3,14 +3,9 @@
 ## Table of contents
 
 - [About](#about)
-- [Drawing canvas](#drawing-canvas)
-	- [Tag &lt;suica&gt;](#tag-suica)
-	- [Background color](#background-color)
-	- [Coordinate system](#coordinate-system)
-	- [Demo mode](#demo-mode)
-	- [Animation loop](#animation-loop)
+- [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop) </small>] 
 - [Objects](#objects)
-    - [General properties](#general-properties) [<small> [definitions](#definitions) | [names](#names) | [positions](#positions) | [colors](#colors) | [images](#images) </small>] 
+    - [General properties](#general-properties) [<small> [definitions](#definitions) | [names](#names) | [positions](#positions) | [sizes](#sizes) | [colors](#colors) | [images](#images) </small>] 
 	- [Basic objects](#basic-objects) [<small> [points](#points) | [cubes](#cubes) | [cube frames](#cube-frames) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#reference-table)
@@ -62,7 +57,7 @@ examples. Tools that validate HTML pages may complain about Suica HTML code.
 
 
 
-## Drawing canvas
+## Suica canvas
 
 Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the
 `<script>` tag. Once loaded, the library will look for HTML tags `<suica>` and
@@ -264,6 +259,43 @@ HTML:
 ```js
 JS:
 point( [25,0,15] );
+```
+```js
+JS:
+p = point( );
+p.center = [25, 0, 15];
+```
+```js
+JS:
+p = point( );
+p.x = 25;
+p.y = 0;
+p.z = 15;
+```
+
+#### Sizes
+
+The size of Suica objects in 3D space is maintained via the property `size`
+&ndash; a single number or an array of three numbers for the sizes along X, Y
+and Z axes. When a single number is used, it is consider as size along all axes.
+
+```html
+HTML:
+<cube size="25">
+<cube size="25,10,15">
+```
+```js
+JS:
+point( [25,0,15] );
+```
+
+[<kbd><img src="examples/snapshots/sizes.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
+
+
+
+```html
+HTML:
+<point x="25" y="0" z="15">
 ```
 ```js
 JS:

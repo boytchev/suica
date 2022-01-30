@@ -3,6 +3,7 @@
 // CC-3.0-SA-NC
 //
 // new Mesh( suica, geometry, material, center, color )
+// new MeshFrame( suica, geometry, material, center, color )
 //
 //
 //	center		center [x,y,z]
@@ -10,7 +11,8 @@
 //	y			y coordinate of center
 //	z			z coordinate of center
 //	color		color [r,g,b]
-//	image		texture (drawing or canvas)
+//	size		x / [x,y,z]
+//	image		drawing or texture -- only for Mesh
 //
 //===================================================
 
@@ -111,6 +113,35 @@ class Mesh extends THREE.Mesh
 
 		this.material.color = Suica.parseColor(col);
 		this.material.needsUpdate = true;
+	}
+	
+	
+	
+	
+	get size( )
+	{
+		this.suica.parser?.parseTags();
+		
+		if( this.sizeArray )
+			return [this.scale.x, this.scale.y, this.scale.z];
+		else
+			return this.scale.x;
+	}
+
+	set size( size )
+	{
+		this.suica.parser?.parseTags();
+		
+		if( Array.isArray(size) )
+		{
+			this.sizeArray = true;
+			this.scale.set( size[0], size[1], size[2] );
+		}
+		else
+		{
+			this.sizeArray = false;
+			this.scale.set( size, size, size );
+		}
 	}
 
 
@@ -242,5 +273,31 @@ class MeshFrame extends THREE.LineSegments
 		this.material.needsUpdate = true;
 	}
 
+	get size( )
+	{
+		this.suica.parser?.parseTags();
+		
+		if( this.sizeArray )
+			return [this.scale.x, this.scale.y, this.scale.z];
+		else
+			return this.scale.x;
+	}
+
+
+	set size( size )
+	{
+		this.suica.parser?.parseTags();
+		
+		if( Array.isArray(size) )
+		{
+			this.sizeArray = true;
+			this.scale.set( size[0], size[1], size[2] );
+		}
+		else
+		{
+			this.sizeArray = false;
+			this.scale.set( size, size, size );
+		}
+	}
 	
 } // class MeshFrame
