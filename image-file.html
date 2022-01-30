@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Image file</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Image file</h1>
+	<p>Stamping an image file on the surface of an object.</p>
+
+	<suica>
+		<demo>
+		<cube id="a" color="white">
+		<cube id="b" x="9" size="18" color="yellow">
+	</suica>
+	
+	<script>
+		a.image = image( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAABvAgMAAACfq3bzAAAACVBMVEUAAACfn5/////ZmCp3AAAAUklEQVRIx2NkwAMYtRr+MzL8YWH4IMBwwOEfE5z5n5Hh26gkI8M3RlEHpPD6z4gcer9HQ2g0+EaDbzT4hqvkaNUxmvpGg280+EaDbzT4qFh1AAAElDmsZw1MMQAAAABJRU5ErkJggg==' );
+		
+		b.image = image( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAABvAgMAAACfq3bzAAAACVBMVEUAAACfn5/////ZmCp3AAAAUklEQVRIx2NkwAMYtRr+MzL8YWH4IMBwwOEfE5z5n5Hh26gkI8M3RlEHpPD6z4gcer9HQ2g0+EaDbzT4hqvkaNUxmvpGg280+EaDbzT4qFh1AAAElDmsZw1MMQAAAABJRU5ErkJggg==' );
+	</script>
+	
+</body>
+</html>

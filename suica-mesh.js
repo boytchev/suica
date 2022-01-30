@@ -128,6 +128,14 @@ class Mesh extends THREE.Mesh
 			return;
 		}
 
+		if (drawing instanceof THREE.Texture)
+		{
+			this.material.map = drawing;
+			this.material.transparent = true,
+			this.material.needsUpdate = true;
+			return;
+		}
+
 		throw 'error: Parameter of `image` is not a drawing';
 	}
 	

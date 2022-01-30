@@ -238,3 +238,19 @@ window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', wid
 
 
 
+window.image = function ( url = null, repeatX = 1, repeatY = 1 )
+{
+	Drawing.current = new THREE.TextureLoader().load( url );
+	Drawing.current.wrapS = THREE.RepeatWrapping;
+	Drawing.current.wrapT = THREE.RepeatWrapping;
+	Drawing.current.magFilter = THREE.LinearFilter;
+	Drawing.current.minFilter = THREE.LinearMipmapLinearFilter;
+	Drawing.current.anisotropy = 16;
+	Drawing.current.repeat.set( repeatX, repeatY );
+	
+	return Drawing.current;
+}
+
+
+
+
