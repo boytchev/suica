@@ -1,4 +1,4 @@
-# Suica User Guide
+# <img src="logo.min.png" height="40" style="position:relative; top:7px;"/> Suica User Guide
 
 ## Table of contents
 
@@ -118,13 +118,21 @@ background( 'linen' );
 
 ### Coordinate system
 
-Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts attribute
-`orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX` (these are
-all possible permutations of the letters *X*, *Y* and *Z*. Each orientation
-defines a coordinate system in the following manner:
+The coordinate system in Suica is important as it controls how objects
+[positions](#positions) and [sizes](#sizes) are defined. Suica uses Cartesian
+3D coordinate system. The tag `<suica>` accepts attribute `orientation` with
+values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX` (these are all possible
+permutations of the letters *X*, *Y* and *Z*. Each orientation defines a
+coordinate system in the following manner:
+
 - the first axis points to the right
 - the second axis points upwards
 - the third axis point towards the viewer
+
+<img src="examples/images/coordinate-system-orientation.png">
+
+The default orientation in Suica is *XYZ*. All examples in this user guide use
+this orientation, unless explicitely stated that other orientations are used.
 
 ```html
 HTML:
@@ -244,40 +252,44 @@ p = point( [25,0,15] );
 #### Positions
 
 The position of Suica objects in 3D space is maintained via the property
-`center` &ndash; an array of three numbers for the x, y and z coordinates.
-Properties `x`, `y` and `z` provide individual access to the elements of
-this array. The following commands are equivalent:
+`center` &ndash; an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and
+*z* coordinates (in this order). The actual visual position depends on the
+[orientation of the coordinate system](#coordinate-system).
 
 ```html
 HTML:
 <point center="25,0,15">
 ```
-```html
-HTML:
-<point x="25" y="0" z="15">
-```
 ```js
 JS:
 point( [25,0,15] );
-```
-```js
-JS:
+
 p = point( );
 p.center = [25, 0, 15];
+```
+
+Properties `x`, `y` and `z` provide individual access to the elements of the position. 
+
+```html
+HTML:
+<point x="25">
 ```
 ```js
 JS:
 p = point( );
 p.x = 25;
-p.y = 0;
-p.z = 15;
 ```
+
 
 #### Sizes
 
 The size of Suica objects in 3D space is maintained via the property `size`
-&ndash; a single number or an array of three numbers for the sizes along X, Y
-and Z axes. When a single number is used, it is consider as size along all axes.
+&ndash; an array of up to three numbers for object's *width*, *height* and
+*depth*.
+
+When *height* or *depth* is not provided, they are considered equal to *width*.
+Thus, size 25 or [25] are both equivalent to [25,25,25], and size [25,10] is
+equivalent to [25,10,25].
 
 ```html
 HTML:
@@ -286,28 +298,31 @@ HTML:
 ```
 ```js
 JS:
-point( [25,0,15] );
+cube( [0,0,0], 25 );
+cube( [0,0,0], [25,10,15] );
 ```
 
-[<kbd><img src="examples/snapshots/sizes.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
+The order *width*, *height* and *depth* is fixed and does not depend on the
+[orientation of the coordinate system](#coordinate-system).
+
+<img src="examples/images/sizes.png">
+
+[<kbd><img src="examples/snapshots/sizes.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes.html) [<kbd><img src="examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
 
 
+Individual sizes can be set with the commands `width`, `height` and `depth`.
+The following cubes are the same sizes:
 
 ```html
-HTML:
-<point x="25" y="0" z="15">
+<cube size="3,15,40">
+<cube width="3" height="15" depth="40">
 ```
 ```js
-JS:
-p = point( );
-p.center = [25, 0, 15];
-```
-```js
-JS:
-p = point( );
-p.x = 25;
-p.y = 0;
-p.z = 15;
+cube( [0,0,0], [3,15,40] );
+a = cube( [0,0,0] );
+a.width = 3;
+a.height = 15;
+a.depth = 40;
 ```
 
 #### Colors
@@ -374,7 +389,8 @@ point( [25,0,15], 10, 'red' );
 ### Cubes
 
 The object `cube` represents a solid cube. Its properties are `center`, `x`,
-`y` and `z` for position, `size`, `color` and `image`:
+`y` and `z` for position, `size`, `width`, `height` and `depth` for size,
+`color` and `image`:
 
 ```html
 HTML:
@@ -389,11 +405,15 @@ cube( [25,0,15], 10, 'red' );
 [<kbd><img src="examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)&emsp;[<kbd><img src="examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 
 
+_**Note**: To make a cuboid (rectangular parallelepiped) use different values
+for width, height, depth (see [Sizes](#sizes))._
+
 
 ### Cube frames
 
 The object `cubeFrame` represents a wireframed cube. Its properties are
-`center`, `x`, `y` and `z` for position, `size` and `color`:
+`center`, `x`, `y` and `z` for position, `size`, `width`, `height` and `depth`
+for size and `color`:
 
 ```html
 HTML:
@@ -407,6 +427,8 @@ cubeFrame( [25,0,15], 10, 'red' );
 
 [<kbd><img src="examples/snapshots/cubeFrame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cubeFrame.html)&emsp;
 
+_**Note**: To make a cuboid frame (rectangular parallelepiped) use different
+values for width, height, depth (see [Sizes](#sizes))._
 
 
 ## Images and drawings
@@ -521,4 +543,4 @@ All examples are collected in a single page [here](examples/EXAMPLES.md)
 
 ---
 
-January, 2022
+February, 2022

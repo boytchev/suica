@@ -148,6 +148,10 @@ class HTMLParser
 		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;

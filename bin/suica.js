@@ -38,12 +38,14 @@
 //	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
 //	2.0.06 (220128) build process, mesh, cubeFrame, arc, cube.image
 //	2.0.07 (220129) suica.orientation
+//	2.0.08 (220130) size[x,y,z]
+//	2.0.09 (220201) width, height, depth
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.7 (220129)` );
+console.log( `Suica 2.0.9 (220201)` );
 
 
 // control flags
@@ -84,6 +86,7 @@ class Suica
 	static DEFAULT = {
 		BACKGROUND: { COLOR: 'whitesmoke' },
 		ORIENTATION: 'XYZ',
+		SIZE: '30',
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
@@ -395,7 +398,7 @@ class Suica
 			
 			if( center.indexOf(',') > 0 )
 			{
-				center = center.split(',');
+				center = center.split(',').map(Number);
 				return [Number(center[0]), Number(center[1]), Number(center[2]) ];
 			}
 		}
@@ -413,8 +416,7 @@ class Suica
 			
 			if( size.indexOf(',') > 0 )
 			{
-				size = size.split(',');
-				return [Number(size[0]), Number(size[1]), Number(size[2]) ];
+				return size.split(',').map(Number);
 			}
 		}
 
@@ -741,6 +743,10 @@ class HTMLParser
 		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
@@ -1215,7 +1221,7 @@ window.point = function(
 //	y			y coordinate of center
 //	z			z coordinate of center
 //	color		color [r,g,b]
-//	size		x / [x,y,z]
+//	size		size / [height,width,depth]
 //	image		drawing or texture -- only for Mesh
 //
 //===================================================
@@ -1229,6 +1235,9 @@ class Mesh extends THREE.Mesh
 		super( geometry, material );
 		
 		this.suica = suica;
+		
+		// [width, height, depth]
+		this.meshSize = [null, null, null];
 	}
 
 
@@ -1322,35 +1331,6 @@ class Mesh extends THREE.Mesh
 	
 	
 	
-	get size( )
-	{
-		this.suica.parser?.parseTags();
-		
-		if( this.sizeArray )
-			return [this.scale.x, this.scale.y, this.scale.z];
-		else
-			return this.scale.x;
-	}
-
-	set size( size )
-	{
-		this.suica.parser?.parseTags();
-		
-		if( Array.isArray(size) )
-		{
-			this.sizeArray = true;
-			this.scale.set( size[0], size[1], size[2] );
-		}
-		else
-		{
-			this.sizeArray = false;
-			this.scale.set( size, size, size );
-		}
-	}
-
-
-
-
 	set image( drawing )
 	{
 		this.suica.parser?.parseTags();
@@ -1374,6 +1354,130 @@ class Mesh extends THREE.Mesh
 		throw 'error: Parameter of `image` is not a drawing';
 	}
 	
+	
+	
+	
+	updateScale( )
+	{
+		var width = this.meshSize[0];
+		var height = this.meshSize[1];
+		var depth = this.meshSize[2];
+		
+		if( height===null ) height = width;
+		if( depth===null ) depth = width;
+				
+		switch( this.suica.orientation )
+		{
+			case Suica.ORIENTATIONS.YXZ:
+					this.scale.set( height, width, depth );
+					break;
+			case Suica.ORIENTATIONS.ZYX:
+					this.scale.set( depth, height, width );
+					break;
+			case Suica.ORIENTATIONS.XZY:
+					this.scale.set( width, depth, height );
+					break;
+
+			case Suica.ORIENTATIONS.ZXY:
+					this.scale.set( height, depth, width );
+					break;
+			case Suica.ORIENTATIONS.XYZ:
+					this.scale.set( width, height, depth );
+					break;
+			case Suica.ORIENTATIONS.YZX:
+					this.scale.set( depth, width, height );
+					break;
+			default: throw 'error: unknown orientation';
+		}
+	}
+
+	get width( )
+	{
+		return this.meshSize[0];
+	}
+
+	set width( width )
+	{
+		this.meshSize[0] = width;
+		this.updateScale();
+	}
+	
+
+
+	
+	get height( )
+	{
+		return (this.meshSize[1]!==null) ? this.meshSize[1] : this.meshSize[0];
+	}
+
+	set height( height )
+	{
+		this.meshSize[1] = height;
+		this.updateScale();
+	}
+	
+
+
+	
+	get depth( )
+	{
+		return (this.meshSize[2]!==null) ? this.meshSize[2] : this.meshSize[0];
+	}
+
+	set depth( depth )
+	{
+		this.meshSize[2] = depth;
+		this.updateScale();
+	}
+	
+
+
+	
+	get size( )
+	{
+		this.suica.parser?.parseTags();
+
+		if( this.meshSize[2]===null )
+		{
+			if( this.meshSize[1]===null )
+				return this.meshSize[0];
+			else
+				return [this.meshSize[0], this.meshSize[1]];
+		}
+			
+		return [this.meshSize[0], this.meshSize[1], this.meshSize[2]];
+	}
+
+	set size( size )
+	{
+		this.suica.parser?.parseTags();
+		
+		if( Array.isArray(size) )
+		{
+			if( size.length==0 )
+				this.meshSize = [null, null, null];
+			else
+			if( size.length==1 )
+				this.meshSize = [size[0], null, null];
+			else
+			if( size.length==2 )
+				this.meshSize = [size[0], size[1], null];
+			else
+				this.meshSize = [size[0], size[1], size[2]];
+		}
+		else
+		{
+			this.meshSize = [size, null, null];
+			console.log('ms=',this.meshSize);
+		}
+		
+		this.updateScale();
+	}
+
+
+
+
+	
 } // class Mesh
 
 
@@ -1387,6 +1491,9 @@ class MeshFrame extends THREE.LineSegments
 		super( geometry, material );
 		
 		this.suica = suica;
+
+		// [width, height, depth]
+		this.meshSize = [null, null, null];
 	}
 
 
@@ -1477,16 +1584,99 @@ class MeshFrame extends THREE.LineSegments
 		this.material.needsUpdate = true;
 	}
 
+
+
+
+	updateScale( )
+	{
+		var width = this.meshSize[0];
+		var height = this.meshSize[1];
+		var depth = this.meshSize[2];
+		
+		if( height===null ) height = width;
+		if( depth===null ) depth = width;
+				
+		switch( this.suica.orientation )
+		{
+			case Suica.ORIENTATIONS.YXZ:
+					this.scale.set( height, width, depth );
+					break;
+			case Suica.ORIENTATIONS.ZYX:
+					this.scale.set( depth, height, width );
+					break;
+			case Suica.ORIENTATIONS.XZY:
+					this.scale.set( width, depth, height );
+					break;
+
+			case Suica.ORIENTATIONS.ZXY:
+					this.scale.set( height, depth, width );
+					break;
+			case Suica.ORIENTATIONS.XYZ:
+					this.scale.set( width, height, depth );
+					break;
+			case Suica.ORIENTATIONS.YZX:
+					this.scale.set( depth, width, height );
+					break;
+			default: throw 'error: unknown orientation';
+		}
+	}
+
+	get width( )
+	{
+		return this.meshSize[0];
+	}
+
+	set width( width )
+	{
+		this.meshSize[0] = width;
+		this.updateScale();
+	}
+	
+
+
+	
+	get height( )
+	{
+		return (this.meshSize[1]!==null) ? this.meshSize[1] : this.meshSize[0];
+	}
+
+	set height( height )
+	{
+		this.meshSize[1] = height;
+		this.updateScale();
+	}
+	
+
+
+	
+	get depth( )
+	{
+		return (this.meshSize[2]!==null) ? this.meshSize[2] : this.meshSize[0];
+	}
+
+	set depth( depth )
+	{
+		this.meshSize[2] = depth;
+		this.updateScale();
+	}
+	
+
+
+	
 	get size( )
 	{
 		this.suica.parser?.parseTags();
-		
-		if( this.sizeArray )
-			return [this.scale.x, this.scale.y, this.scale.z];
-		else
-			return this.scale.x;
-	}
 
+		if( this.meshSize[2]===null )
+		{
+			if( this.meshSize[1]===null )
+				return this.meshSize[0];
+			else
+				return [this.meshSize[0], this.meshSize[1]];
+		}
+			
+		return [this.meshSize[0], this.meshSize[1], this.meshSize[2]];
+	}
 
 	set size( size )
 	{
@@ -1494,16 +1684,29 @@ class MeshFrame extends THREE.LineSegments
 		
 		if( Array.isArray(size) )
 		{
-			this.sizeArray = true;
-			this.scale.set( size[0], size[1], size[2] );
+			if( size.length==0 )
+				this.meshSize = [null, null, null];
+			else
+			if( size.length==1 )
+				this.meshSize = [size[0], null, null];
+			else
+			if( size.length==2 )
+				this.meshSize = [size[0], size[1], null];
+			else
+				this.meshSize = [size[0], size[1], size[2]];
 		}
 		else
 		{
-			this.sizeArray = false;
-			this.scale.set( size, size, size );
+			this.meshSize = [size, null, null];
+			console.log('ms=',this.meshSize);
 		}
+		
+		this.updateScale();
 	}
+
+
 	
+
 } // class MeshFrame﻿//
 // Suica 2.0 Cube
 // CC-3.0-SA-NC

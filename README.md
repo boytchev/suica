@@ -1,4 +1,4 @@
-# <img src="logo.min.png" height="40" style="position:relative; top:10px;"> Suica
+# <img src="logo.min.png" height="40" style="position:relative; top:7px;"/> Suica
 
 Mobile 3D made simple. As simple, as this ([live demo](https://boytchev.github.io/suica/examples/minimal-example.html)):
 ```html
@@ -37,4 +37,4 @@ with future versions. They are not a part of Suica.
 
 ---
 
-January, 2022
+February, 2022

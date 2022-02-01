@@ -37,12 +37,14 @@
 //	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
 //	2.0.06 (220128) build process, mesh, cubeFrame, arc, cube.image
 //	2.0.07 (220129) suica.orientation
+//	2.0.08 (220130) size[x,y,z]
+//	2.0.09 (220201) width, height, depth
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.7 (220129)` );
+console.log( `Suica 2.0.9 (220201)` );
 
 
 // control flags
@@ -83,6 +85,7 @@ class Suica
 	static DEFAULT = {
 		BACKGROUND: { COLOR: 'whitesmoke' },
 		ORIENTATION: 'XYZ',
+		SIZE: '30',
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
@@ -394,7 +397,7 @@ class Suica
 			
 			if( center.indexOf(',') > 0 )
 			{
-				center = center.split(',');
+				center = center.split(',').map(Number);
 				return [Number(center[0]), Number(center[1]), Number(center[2]) ];
 			}
 		}
@@ -412,8 +415,7 @@ class Suica
 			
 			if( size.indexOf(',') > 0 )
 			{
-				size = size.split(',');
-				return [Number(size[0]), Number(size[1]), Number(size[2]) ];
+				return size.split(',').map(Number);
 			}
 		}
 
