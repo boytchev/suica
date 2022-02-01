@@ -32,17 +32,17 @@
 			lineTo( 32, 32 );
 			moveTo( 0, 32 );
 			lineTo( 32, 0 );
-		stroke( 'blue', 5 );
+		stroke( 'black', 5 );
 
 		// number of points
-		const N = 150;
+		const N = 350;
 		
 		// creating all points
 		for( var i=0; i<N; i++ )
 		{
 			var center = [random(-50,50), random(-30,30), random(-50,50)];
 			
-			var p = point( center, random(10,20), 'white' );
+			var p = point( center, 10 );
 			p.image = cross;
 		}
 		

@@ -4,7 +4,8 @@
 //
 // point( center, size, color )
 //
-// <point id="" center="" x="" y="" z="" size="" color="">
+// <point id="" center="" size="" color="">
+// <point x="" y="" z="">
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -17,7 +18,7 @@
 //===================================================
 
 
-class Point extends THREE.Points
+class Point extends Mesh
 {
 
 	// a static geometry shared by all points
@@ -31,85 +32,15 @@ class Point extends THREE.Points
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.point(${center},${size},${color})`);
 
-		super( Point.geometry, Suica.pointMaterial.clone() );
+		super( suica, THREE.Points, Point.geometry, Suica.pointMaterial.clone() );
 
-		this.suica = suica;
 		this.center = center;
 		this.color = color;
 		this.size = size;
 
-		suica.scene.add(this);
+		suica.scene.add( this.threejs );
 		
 	} // Point.constructor
-
-
-
-
-	get center()
-	{
-		this.suica.parser?.parseTags();
-
-		return [this.position.x, this.position.y, this.position.z];
-	}
-
-	set center(center)
-	{
-		this.suica.parser?.parseTags();
-
-		center = Suica.parseCenter(center);
-		this.position.set(center[0], center[1], center[2]);
-	}
-
-
-
-
-	get x()
-	{
-		this.suica.parser?.parseTags();
-
-		return this.position.x;
-	}
-
-	set x( x )
-	{
-		this.suica.parser?.parseTags();
-
-		this.position.x = x;
-	}
-
-
-
-
-	get y()
-	{
-		this.suica.parser?.parseTags();
-
-		return this.position.y;
-	}
-
-	set y( y )
-	{
-		this.suica.parser?.parseTags();
-
-		this.position.y = y;
-	}
-
-
-
-
-	get z()
-	{
-		this.suica.parser?.parseTags();
-
-		return this.position.z;
-	}
-
-	set z( z )
-	{
-		this.suica.parser?.parseTags();
-
-		this.position.z = z;
-	}
 
 
 
@@ -118,51 +49,15 @@ class Point extends THREE.Points
 	{
 		this.suica.parser?.parseTags();
 
-		return this.material.size;
+		return this.threejs.material.size;
 	}
 
 	set size( size )
 	{
 		this.suica.parser?.parseTags();
 
-		this.material.size = size;
-		this.material.needsUpdate = true;
-	}
-
-
-
-
-	get color()
-	{
-		this.suica.parser?.parseTags();
-		
-		var col = this.material.color;
-		return [col.r, col.g, col.b];
-	}
-
-	set color( col )
-	{
-		this.suica.parser?.parseTags();
-
-		this.material.color = Suica.parseColor(col);
-		this.material.needsUpdate = true;
-	}
-
-
-
-
-	set image(drawing)
-	{
-		this.suica.parser?.parseTags();
-
-		if (drawing instanceof Drawing)
-		{
-			this.material.map = drawing.image;
-			this.material.needsUpdate = true;
-			return;
-		}
-
-		throw 'error: Parameter of `image` is not a drawing';
+		this.threejs.material.size = size;
+		this.threejs.material.needsUpdate = true;
 	}
 	
 } // class Point

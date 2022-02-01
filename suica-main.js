@@ -277,7 +277,7 @@ class Suica
 		Suica.pointMaterial = new THREE.PointsMaterial( {
 				color: 'white',
 				size: 5,
-				sizeAttenuation: false,
+				sizeAttenuation: true,
 				map: new THREE.CanvasTexture( canvas ),
 				transparent: true,
 				alphaTest: 0.75,
