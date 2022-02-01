@@ -31,6 +31,7 @@ with future versions. They are not a part of Suica.
 
 
 - [User guide](USER-GUIDE.md)
+- [Reference guide](REFERENCE-GUIDE.md)
 - [List of examples](examples/EXAMPLES.md)
 
 
