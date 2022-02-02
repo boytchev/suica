@@ -17,21 +17,33 @@ Click on an image to run the example.
 [<kbd><img src="snapshots/demo.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
 [<kbd><img src="snapshots/ontime.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
 
-## Objects &ndash; general properties
+## Objects properties
 
 [<kbd><img src="snapshots/sizes.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
 [<kbd><img src="snapshots/sizes-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
 
-## Objects &ndash; basic objects
+## Common objects
 
 [<kbd><img src="snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)
 [<kbd><img src="snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
 
-[<kbd><img src="snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
-[<kbd><img src="snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
+[<kbd><img src="snapshots/square.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square.html)
+[<kbd><img src="snapshots/rectangle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/rectangle.html)
 
+[<kbd><img src="snapshots/square-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
+[<kbd><img src="snapshots/rectangle-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
+
+[<kbd><img src="snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
+[<kbd><img src="snapshots/cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
+
+
+[<kbd><img src="snapshots/cube-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
+[<kbd><img src="snapshots/cuboid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
+
+## Images
+
+[<kbd><img src="snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 [<kbd><img src="snapshots/cube-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
-[<kbd><img src="snapshots/cubeFrame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cubeFrame.html)
 
 ---
 

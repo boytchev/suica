@@ -10,6 +10,8 @@
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<square id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -18,6 +20,8 @@
 //		{suica.}demo( distance, altitude )
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
+//		{suica.}square( center, size, color )
+//		{suica.}squareFrame( center, size, color )
 //		{suica.}cube( center, size, color )
 //		{suica.}cubeFrame( center, size, color )
 //		
@@ -39,12 +43,13 @@
 //	2.0.07 (220129) suica.orientation
 //	2.0.08 (220130) size[x,y,z]
 //	2.0.09 (220201) width, height, depth
+//	2.0.10 (220201) square
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.9 (220201)` );
+console.log( `Suica 2.0.10 (220201)` );
 
 
 // control flags
@@ -91,6 +96,7 @@ class Suica
 		ONTIME: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
+		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 	} // Suica.DEFAULT
 	
 	
@@ -487,6 +493,24 @@ class Suica
 		if( DEBUG_CALLS ) console.log(`:: ${this.id}.point( [${center}], ${size}, ${color} )`);
 
 		return new Point( this, center, size, color );
+	}
+	
+	
+	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.square( [${center}], ${size}, ${color} )`);
+
+		return new Square( this, center, size, color );
+	}
+	
+	
+	squareFrame( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.squareFrame( [${center}], ${size}, ${color} )`);
+
+		return new SquareFrame( this, center, size, color );
 	}
 	
 	

@@ -7,6 +7,10 @@
 // <oxyz size="..." color="...">
 // <ontime src="...">
 // <point id="..." center="..." color="..." size="...">
+// <square id="..." center="..." color="..." size="...">
+// <squareFrame id="..." center="..." color="..." size="...">
+// <cube id="..." center="..." color="..." size="...">
+// <cubeFrame id="..." center="..." color="..." size="...">
 //
 
 
@@ -30,6 +34,8 @@ class HTMLParser
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
+		this.parseTag.SQUARE = this.parseTagSQUARE;
+		this.parseTag.SQUAREFRAME = this.parseTagSQUAREFRAME;
 		this.parseTag.CUBE = this.parseTagCUBE;
 		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		
@@ -136,6 +142,47 @@ class HTMLParser
 	} // HTMLParser.parseTagPOINT
 	
 	
+	// <square id="..." center="..." color="..." size="...">
+	parseTagSQUARE( suica, elem )
+	{
+		var p = suica.square(
+			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+	} // HTMLParser.parseTagSQUARE
+	
+	
+	// <squareFrame id="..." center="..." color="..." size="...">
+	parseTagSQUAREFRAME( suica, elem )
+	{
+		var p = suica.squareFrame(
+			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLORFRAME
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+			
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+	} // HTMLParser.parseTagSQUAREFRAME
+
 	// <cube id="..." center="..." color="..." size="...">
 	parseTagCUBE( suica, elem )
 	{
@@ -171,6 +218,10 @@ class HTMLParser
 		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
 			
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 	} // HTMLParser.parseTagCUBEFRAME

@@ -11,6 +11,8 @@
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<square id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -19,6 +21,8 @@
 //		{suica.}demo( distance, altitude )
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
+//		{suica.}square( center, size, color )
+//		{suica.}squareFrame( center, size, color )
 //		{suica.}cube( center, size, color )
 //		{suica.}cubeFrame( center, size, color )
 //		
@@ -40,12 +44,13 @@
 //	2.0.07 (220129) suica.orientation
 //	2.0.08 (220130) size[x,y,z]
 //	2.0.09 (220201) width, height, depth
+//	2.0.10 (220201) square
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.9 (220201)` );
+console.log( `Suica 2.0.10 (220201)` );
 
 
 // control flags
@@ -92,6 +97,7 @@ class Suica
 		ONTIME: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
+		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 	} // Suica.DEFAULT
 	
 	
@@ -491,6 +497,24 @@ class Suica
 	}
 	
 	
+	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.square( [${center}], ${size}, ${color} )`);
+
+		return new Square( this, center, size, color );
+	}
+	
+	
+	squareFrame( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.squareFrame( [${center}], ${size}, ${color} )`);
+
+		return new SquareFrame( this, center, size, color );
+	}
+	
+	
 	cube( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.COLOR )
 	{
 		this.parser?.parseTags();
@@ -602,6 +626,10 @@ window.addEventListener( 'load', function()
 // <oxyz size="..." color="...">
 // <ontime src="...">
 // <point id="..." center="..." color="..." size="...">
+// <square id="..." center="..." color="..." size="...">
+// <squareFrame id="..." center="..." color="..." size="...">
+// <cube id="..." center="..." color="..." size="...">
+// <cubeFrame id="..." center="..." color="..." size="...">
 //
 
 
@@ -625,6 +653,8 @@ class HTMLParser
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
+		this.parseTag.SQUARE = this.parseTagSQUARE;
+		this.parseTag.SQUAREFRAME = this.parseTagSQUAREFRAME;
 		this.parseTag.CUBE = this.parseTagCUBE;
 		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		
@@ -731,6 +761,47 @@ class HTMLParser
 	} // HTMLParser.parseTagPOINT
 	
 	
+	// <square id="..." center="..." color="..." size="...">
+	parseTagSQUARE( suica, elem )
+	{
+		var p = suica.square(
+			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+	} // HTMLParser.parseTagSQUARE
+	
+	
+	// <squareFrame id="..." center="..." color="..." size="...">
+	parseTagSQUAREFRAME( suica, elem )
+	{
+		var p = suica.squareFrame(
+			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLORFRAME
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+			
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+	} // HTMLParser.parseTagSQUAREFRAME
+
 	// <cube id="..." center="..." color="..." size="...">
 	parseTagCUBE( suica, elem )
 	{
@@ -766,6 +837,10 @@ class HTMLParser
 		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
 			
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 	} // HTMLParser.parseTagCUBEFRAME
@@ -1371,6 +1446,100 @@ window.point = function(
 {
 	Suica.precheck();
 	return Suica.current.point( center, size, color );
+}﻿//
+// Suica 2.0 Square
+// CC-3.0-SA-NC
+//
+// square( center, size, color )
+// squareFrame( center, size, color )
+//
+// <square id="" center="" size="" color="">
+// <square x="" y="" z="">
+// <square width="" height="">
+// <squareFrame ...>
+//
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// size		size(s) of edge
+// width
+// height
+// color	color [r,g,b]
+// image	texture (drawing or canvas)
+//
+//===================================================
+
+
+class Square extends Mesh
+{
+	
+	// a geometry shared by all cubes
+	static geometry = new THREE.PlaneGeometry( 1, 1 );
+	
+	constructor( suica, center, size, color )
+	{
+		suica.parser?.parseTags();
+		if (DEBUG_CALLS) console.log(`:: ${suica.id}.square(${center},${size},${color})`);
+		
+		super( suica, THREE.Mesh, Square.geometry, Suica.solidMaterial.clone() );
+		
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		
+		suica.scene.add( this.threejs );
+	}
+
+} // class Square
+
+
+
+
+class SquareFrame extends Mesh
+{
+	
+	// a geometry shared by all square frames
+	static geometry = new THREE.EdgesGeometry( Square.geometry );
+	
+	constructor( suica, center, size, color )
+	{
+		suica.parser?.parseTags();
+		if (DEBUG_CALLS) console.log(`:: ${suica.id}.squareFrame(${center},${size},${color})`);
+		
+		super( suica, THREE.LineSegments, SquareFrame.geometry, Suica.lineMaterial.clone() );
+		
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		
+		suica.scene.add( this.threejs );
+	}
+	
+} // class SquareFrame
+
+
+
+
+window.square = function(
+				center = Suica.DEFAULT.SQUARE.CENTER,
+				size   = Suica.DEFAULT.SQUARE.SIZE,
+				color  = Suica.DEFAULT.SQUARE.COLOR )
+{
+	Suica.precheck();
+	return Suica.current.square( center, size, color );
+}
+
+
+
+
+window.squareFrame = function(
+				center = Suica.DEFAULT.SQUARE.CENTER,
+				size   = Suica.DEFAULT.SQUARE.SIZE,
+				color  = Suica.DEFAULT.SQUARE.FRAMECOLOR )
+{
+	Suica.precheck();
+	return Suica.current.squareFrame( center, size, color );
 }﻿//
 // Suica 2.0 Cube
 // CC-3.0-SA-NC

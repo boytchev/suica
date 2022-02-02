@@ -5,12 +5,11 @@
 - [About](#about)
 - [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop) </small>] 
 - [Objects](#objects)
-    - [General properties](#general-properties) [<small> [definitions](#definitions) | [names](#names) | [positions](#positions) | [sizes](#sizes) | [colors](#colors) | [images](#images) </small>] 
-	- [Basic objects](#basic-objects) [<small> [points](#points) | [cubes](#cubes) | [cube frames](#cube-frames) </small>]
+    - [Definition](#definition)
+    - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
+	- [Common objects](#common-objects) [<small> [point](#point) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) </small>]
 - [Images and drawings](#images-and-drawings)
-- [References](#reference-table)
-	- [Code templates](#code-templates)
-	- [List of examples](examples/EXAMPLES.md)
+- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples/EXAMPLES.md) </small>] 
 
 
 ## About
@@ -219,26 +218,25 @@ function loop( t, dt )
 
 This section describes the graphical objects in Suica.
 
-### General properties
 
-#### Definition
+### Definition
 
-In Suica object may be created as HTML tag or via JS function.
+In Suica object may be created as HTML tag or via JavaScript function. Each
+object has properties, however, they are all optional. In HTML the properties
+are provided as tag attributes in no specific order. In JavaScript the
+properties are provided as function parameters and the order is fixed.
 
 ```html
 HTML:
-<object param1="value1" param2="value2" ...>
+<object attribute1="value1" properties2="value2" ...>
 ```
 ```js
 JS:
 object( value1, value2, ... );
 ```
 
-#### Names
-
-When an HTML-ly created object is referenced, for example its properties are
-modified in the animation loop, its name is given in the `id` property. The
-following examples show two alternative ways to create named objects.
+Objects with names are created as JavaScript variables. In HTML the name is
+taken from the `id` attribute. 
 
 ```html
 HTML:
@@ -249,12 +247,18 @@ JS:
 p = point( [25,0,15] );
 ```
 
-#### Positions
+### Properties
 
-The position of Suica objects in 3D space is maintained via the property
+Most Suica objects share the same basic properties, like position, orientation,
+size, color and so on. Some objects have specific properties
+
+#### Position
+
+The position of a Suica object in 3D space is maintained via the property
 `center` &ndash; an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and
 *z* coordinates (in this order). The actual visual position depends on the
-[orientation of the coordinate system](#coordinate-system).
+orientation of the (coordinate system](#coordinate-system). All coordinates are
+optional. Default values are 0.
 
 ```html
 HTML:
@@ -268,7 +272,8 @@ p = point( );
 p.center = [25, 0, 15];
 ```
 
-Properties `x`, `y` and `z` provide individual access to the elements of the position. 
+There are alternative properties `x`, `y` and `z` that provide individual access
+to the elements of the position. 
 
 ```html
 HTML:
@@ -281,37 +286,42 @@ p.x = 25;
 ```
 
 
-#### Sizes
+#### Size
 
-The size of Suica objects in 3D space is maintained via the property `size`
-&ndash; an array of up to three numbers for object's *width*, *height* and
-*depth*.
+The size of a Suica object in 3D space is maintained via the property `size`
+that defines how big is the objects along its dimensions. If size is a single
+number, that the object if uniformly big. If object's size varies than the
+property is an array of three numbers for object's *width*, *height* and
+*depth*. The order *width*, *height* and *depth* is fixed and does not depend on
+the [orientation of the coordinate system](#coordinate-system). Thus height
+corresponds to the axis that is upwards.
 
-When *height* or *depth* is not provided, they are considered equal to *width*.
-Thus, size 25 or [25] are both equivalent to [25,25,25], and size [25,10] is
-equivalent to [25,10,25].
+<img src="examples/images/sizes.png">
+
+Flat objects like squares and circles have no depth.
+
+_**Note**: Omitting the depth property of a 3D object makes its depth the same
+as its width. This maintains uniform horizontal size._
 
 ```html
 HTML:
 <cube size="25">
+<cube size="25,10">
 <cube size="25,10,15">
 ```
 ```js
 JS:
 cube( [0,0,0], 25 );
+cube( [0,0,0], [25,10] );
 cube( [0,0,0], [25,10,15] );
 ```
 
-The order *width*, *height* and *depth* is fixed and does not depend on the
-[orientation of the coordinate system](#coordinate-system).
-
-<img src="examples/images/sizes.png">
 
 [<kbd><img src="examples/snapshots/sizes.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes.html) [<kbd><img src="examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
 
 
-Individual sizes can be set with the commands `width`, `height` and `depth`.
-The following cubes are the same sizes:
+Alternative access to the size is with the properties `width`, `height` and
+`depth`. 
 
 ```html
 <cube size="3,15,40">
@@ -325,9 +335,14 @@ a.height = 15;
 a.depth = 40;
 ```
 
-#### Colors
+#### Orientation
 
-Colors in Suica can be expressed in a variety of ways. The [RGB scheme](https://www.w3schools.com/colors/colors_rgb.asp) represents colors as three
+TBD
+
+
+#### Color
+
+Color in Suica can be expressed in a variety of ways. The [RGB scheme](https://www.w3schools.com/colors/colors_rgb.asp) represents colors as three
 components *red*, *green* and *blue*, while the
 [HSL scheme](https://www.w3schools.com/colors/colors_hsl.asp) components are
 *hue*, *saturation* and *lightness*.
@@ -340,19 +355,21 @@ components *red*, *green* and *blue*, while the
 | CSS<br>property | crimson | #DC143C | | rgb( 220, 20, 60 ) | hsl( 348, 91, 86 ) |
 | JS<br>code | "crimson" | 0xDC143C | [0.86,&nbsp;0.08,&nbsp;0.24] | rgb(&nbsp;220,&nbsp;20,&nbsp;60) | hsl(&nbsp;348,&nbsp;91,&nbsp;86) |
 
-#### Images
 
-Images can be stamped on objects in Suica. The the property `image` accepts a
-drawing or a texture image. For more information of how to generate a drawing
-see section or load external image see section [Images and drawings](#images-and-drawings).
+#### Image
 
-When an object has both `color` and `images`, the resulting color is the product
-of the RGB normalized colors (i.e. color components r,g,b&isin;[0,1]). The
-following tabel demonstrates some combinations of colors:
+Images can be stamped onto Suica object via the property `image`. The property
+accepts a drawing or a texture image. For more information of how to generate a
+drawing or use an image see section [Images and drawings](#images-and-drawings).
+
+When an object has both `color` and `image`, the resulting color is the product
+of the RGB normalized colors (i.e. components r,g,b&isin;[0,1]) of the color and
+the image pixels. If the object color is [R,G,B] and the image color is [r,g,b],
+then the combined color is [R,G,B]&times;[r,g,b] = [R&times;r,G&times;g,B&times;b].
+The following tabel shows some combinations of colors:
 
 | Object color | Image color | Resulting color |
 |---|---|---|
-| Any<br><small>[R,G,B]</small> | Any<br><small>[r,g,b]</small> | Combined color<br><small>[R,G,B]&times;[r,g,b] = [R&times;r,G&times;g,B&times;b]</small> |
 | White<br><small>[1,1,1]</small> | Any<br><small>[r,g,b]</small> | Image color<br><small>[1,1,1]&times;[r,g,b] = [r,g,b]</small> |
 | Black<br><small>[0,0,0]</small> | Any<br><small>[r,g,b]</small> | Black<br><small>[0,0,0]&times;[r,g,b] = [0,0,0]</small> |
 | Any<br><small>[R,G,B]</small> | White<br><small>[1,1,1]</small> | Object color<br><small>[R,G,B]&times;[1,1,1] = [R,G,B]</small> |
@@ -363,179 +380,138 @@ following tabel demonstrates some combinations of colors:
 
 
 
-## Basic objects
+## Common objects
 
-### Points
+The common objects represents simple shapes, like points, square, cubes, spheres
+and so on. Their constructions requires to set just a few properties. Some of
+the objects have framed variants, where only their edges are drawn with lines.
+The width of the lines is 1 pixels and this limitation is set in the underlying
+technology.
 
-The object `point` represents a graphical point drawn as a small cirlce. Its
-properties are `center`, `x`, `y` and `z` for position, `size`, `color` and
-`image`:
+
+### Point
+
+The object `point` represents a point. Its properties are `center` (or `x`, `y`
+and `z`), `size`, `color` and `image`. By default a point is drawn as a small
+cirlce, but it can be changed with custom [drawing](#images-and-drawings).
 
 ```html
 HTML:
+<point center="25,0,15">
 <point center="25,0,15" size="10" color="red">
 <point x="25" y="0" z="15" size="10" color="red">
 ```
 ```js
 JS:
+point( [25,0,15] );
 point( [25,0,15], 10, 'red' );
 ```
 
 [<kbd><img src="examples/snapshots/point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point.html)&emsp;[<kbd><img src="examples/snapshots/point-cloud.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
 
-[<kbd><img src="examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;
 
+### Square
 
-### Cubes
-
-The object `cube` represents a solid cube. Its properties are `center`, `x`,
-`y` and `z` for position, `size`, `width`, `height` and `depth` for size,
-`color` and `image`:
+The object `square` represents a solid square or rectangle. Its properties are
+`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color` and
+`image`. 
 
 ```html
 HTML:
-<cube center="25,0,15" size="10">
-<cube x="25" y="0" z="15">
+<square center="25,0,15">
+<square x="25" y="0" z="15" size="10">
 ```
 ```js
 JS:
+square( [25,0,15] );
+square( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="examples/snapshots/square.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square.html)
+[<kbd><img src="examples/snapshots/rectangle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle.html)
+
+
+
+### Square frame
+
+The object `squareFrame` represents a wireframed square or rectangle. Its
+properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`
+and `color`:
+
+```html
+HTML:
+<squareFrame center="25,0,15">
+<squareFrame x="25" y="0" z="15" size="10>
+```
+```js
+JS:
+squareFrame( [25,0,15] );
+squareFrame( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="examples/snapshots/square-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
+[<kbd><img src="examples/snapshots/rectangle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
+
+
+
+### Cube
+
+The object `cube` represents a solid cube or cuboid. Its properties are `center`
+(or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`), `color` and
+`image`. 
+
+```html
+HTML:
+<cube center="25,0,15">
+<cube x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+cube( [25,0,15] );
 cube( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)&emsp;[<kbd><img src="examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
+[<kbd><img src="examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
+[<kbd><img src="examples/snapshots/cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
 
 
-_**Note**: To make a cuboid (rectangular parallelepiped) use different values
-for width, height, depth (see [Sizes](#sizes))._
 
+### Cube frame
 
-### Cube frames
-
-The object `cubeFrame` represents a wireframed cube. Its properties are
-`center`, `x`, `y` and `z` for position, `size`, `width`, `height` and `depth`
-for size and `color`:
+The object `cubeFrame` represents a wireframed cube or cuboid. Its properties
+are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`)
+and `color`:
 
 ```html
 HTML:
-<cubeFrame center="25,0,15" size="10">
-<cubeFrame x="25" y="0" z="15">
+<cubeFrame center="25,0,15">
+<cubeFrame x="25" y="0" z="15" size="10>
 ```
 ```js
 JS:
+cubeFrame( [25,0,15] );
 cubeFrame( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/cubeFrame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cubeFrame.html)&emsp;
+[<kbd><img src="examples/snapshots/cube-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
+[<kbd><img src="examples/snapshots/cuboid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
 
-_**Note**: To make a cuboid frame (rectangular parallelepiped) use different
-values for width, height, depth (see [Sizes](#sizes))._
 
 
 ## Images and drawings
 
 TBD
 
-
-
-
-## Reference table
-
+[<kbd><img src="examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;[<kbd><img src="examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 
 
 
 
-### Code templates
+## References
 
-**Tag &lt;suica&gt;** with attributes and inline style:
+### Reference guide
 
-```html
-<suica id="𝑠𝑡𝑟𝑖𝑛𝑔" width="𝑛𝑢𝑚𝑏𝑒𝑟" height="𝑛𝑢𝑚𝑏𝑒𝑟" background="𝑐𝑜𝑙𝑜𝑟">
-
-<suica id="𝑠𝑡𝑟𝑖𝑛𝑔" style="width: 𝑐𝑠𝑠-𝑛𝑢𝑚𝑏𝑒𝑟; height: 𝑐𝑠𝑠-𝑛𝑢𝑚𝑏𝑒𝑟; background: 𝑐𝑜𝑙𝑜𝑟;">
-```
-
-
-**Background color** as attribute, inline style, normal style and function:
-```html
-<suica background="𝑐𝑜𝑙𝑜𝑟">
-
-<suica style="background: 𝑐𝑜𝑙𝑜𝑟;">
-
-<style>
-   suica { background: 𝑐𝑜𝑙𝑜𝑟; }
-</style>
-<suica>
-```
-```js
-background( 𝑐𝑜𝑙𝑜𝑟 );
-```
-
-
-**Coordinate system** as tag and function:
-```html
-<oxyz size="𝑛𝑢𝑚𝑏𝑒𝑟" color="𝑐𝑜𝑙𝑜𝑟">
-```
-```js
-oxyz( 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
-```
-
-
-**Demo mode** as tag and function:
-```html
-<demo distance="𝑛𝑢𝑚𝑏𝑒𝑟" altitude="𝑛𝑢𝑚𝑏𝑒𝑟">
-```
-```js
-demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
-```
-
-
-
-**Animation loop** as tag and function:
-```html
-<ontime src="𝑛𝑎𝑚𝑒">
-```
-```js
-onTime( 𝑛𝑎𝑚𝑒 );
-```
-
-
-
-**Animation loop function**:
-```js
-𝑛𝑎𝑚𝑒( 𝑡, 𝑑𝑡 );
-```
-
-
-**Point** as tag and function:
-```html
-<point id="𝑛𝑎𝑚𝑒" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
-<point id="𝑛𝑎𝑚𝑒" x="𝑥" y="𝑦" z="𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
-```
-```js
-point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
-```
-
-
-**Cube** as tag and function:
-```html
-<cube id="𝑛𝑎𝑚𝑒" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
-<cube id="𝑛𝑎𝑚𝑒" x="𝑥" y="𝑦" z="𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
-```
-```js
-cube( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
-```
-
-
-**CubeFrame** as tag and function:
-```html
-<cubeFrame id="𝑛𝑎𝑚𝑒" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
-<cubeFrame id="𝑛𝑎𝑚𝑒" x="𝑥" y="𝑦" z="𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
-```
-```js
-cubeFrame( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
-```
-
-
+A reference guide and code templates are collected [here](REFERENCE-GUIDE.md)
 
 ### List of examples
 

@@ -9,5 +9,6 @@ document.write( '<script src="suica-parser.js"></script>' );
 document.write( '<script src="suica-drawing.js"></script>' );
 document.write( '<script src="suica-mesh.js"></script>' );
 document.write( '<script src="suica-point.js"></script>' );
+document.write( '<script src="suica-square.js"></script>' );
 document.write( '<script src="suica-cube.js"></script>' );
 document.write( '<script src="suica-main.js"></script>' );
