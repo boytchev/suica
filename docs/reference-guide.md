@@ -1,4 +1,4 @@
-# <img src="logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
+# <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
 [Suica](#suica) | [Color](#color) | [Point](#point) | [Square](#square) | [SquareFrame](#squareframe) | [Cube](#cube) | [CubeFrame](#cubeframe)
 

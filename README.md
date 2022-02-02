@@ -30,9 +30,9 @@ Three.js and other libraries are included in this repository to safeguard agains
 with future versions. They are not a part of Suica.
 
 
-- [User guide](USER-GUIDE.md)
-- [Reference guide](REFERENCE-GUIDE.md)
-- [List of examples](examples/EXAMPLES.md)
+- [User guide](docs/user-guids.md)
+- [Reference guide](docs/reference-guide.md)
+- [List of examples](docs/examples.md)
 
 
 

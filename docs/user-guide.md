@@ -1,4 +1,4 @@
-# <img src="logo.min.png" height="40" style="position:relative; top:7px;"/> Suica User Guide
+# <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica User Guide
 
 ## Table of contents
 
@@ -9,7 +9,7 @@
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
 	- [Common objects](#common-objects) [<small> [point](#point) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) </small>]
 - [Images and drawings](#images-and-drawings)
-- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples/EXAMPLES.md) </small>] 
+- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) </small>] 
 
 
 ## About
@@ -18,7 +18,7 @@
 mobile 3D graphics. Here is a minimal example of a rotating cube in the browser
 (*click on the image to run the example*):
 
-[<kbd><img src="examples/snapshots/minimal-example.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/minimal-example.html)
+[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/minimal-example.html)
 
 The complete code of this example is:
 
@@ -87,7 +87,7 @@ Example of creating drawing canvases with different sizes:
 <suica width="400" height="300">
 <suica style="width:15em; height:300px;">
 ```
-[<kbd><img src="examples/snapshots/tag-suica.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/tag-suica.html)
+[<kbd><img src="../examples/snapshots/tag-suica.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/tag-suica.html)
 
 The orientation of the coordinate system is set via attribute `orientation`.
 More information is available in section [Coordinate system](#coordinate-system).
@@ -110,7 +110,7 @@ JS:
 background( 'linen' );
 ```
 
-[<kbd><img src="examples/snapshots/background.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/background.html)
+[<kbd><img src="../examples/snapshots/background.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/background.html)
 
 
 
@@ -128,7 +128,7 @@ coordinate system in the following manner:
 - the second axis points upwards
 - the third axis point towards the viewer
 
-<img src="examples/images/coordinate-system-orientation.png">
+<img src="../examples/images/coordinate-system-orientation.png">
 
 The default orientation in Suica is *XYZ*. All examples in this user guide use
 this orientation, unless explicitely stated that other orientations are used.
@@ -137,7 +137,7 @@ this orientation, unless explicitely stated that other orientations are used.
 HTML:
 <suica orientation="xyz">
 ```
-[<kbd><img src="examples/snapshots/suica-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
+[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
 
 The coordinate system is an abstract object and it has no graphical
 representation. The command `oxyz`, however, visualizes the system as three
@@ -153,7 +153,7 @@ JS:
 oxyz( 30, 'black' );
 ```
 
-[<kbd><img src="examples/snapshots/oxyz.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
+[<kbd><img src="../examples/snapshots/oxyz.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
 
 
 
@@ -174,7 +174,7 @@ JS:
 demo( 100, 30 );
 ```
 
-[<kbd><img src="examples/snapshots/demo.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
+[<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
 
 
 
@@ -207,7 +207,7 @@ function loop( t, dt )
 }
 ```
 
-[<kbd><img src="examples/snapshots/ontime.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
+[<kbd><img src="../examples/snapshots/ontime.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
 
 
 
@@ -246,6 +246,10 @@ HTML:
 JS:
 p = point( [25,0,15] );
 ```
+
+[<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-html.html)
+[<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-js.html)
+
 
 ### Properties
 
@@ -296,7 +300,7 @@ property is an array of three numbers for object's *width*, *height* and
 the [orientation of the coordinate system](#coordinate-system). Thus height
 corresponds to the axis that is upwards.
 
-<img src="examples/images/sizes.png">
+<img src="../examples/images/sizes.png">
 
 Flat objects like squares and circles have no depth.
 
@@ -317,7 +321,8 @@ cube( [0,0,0], [25,10,15] );
 ```
 
 
-[<kbd><img src="examples/snapshots/sizes.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes.html) [<kbd><img src="examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
+[<kbd><img src="../examples/snapshots/sizes.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
+[<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
 
 
 Alternative access to the size is with the properties `width`, `height` and
@@ -407,7 +412,7 @@ point( [25,0,15] );
 point( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point.html)&emsp;[<kbd><img src="examples/snapshots/point-cloud.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
+[<kbd><img src="../examples/snapshots/point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point.html)&emsp;[<kbd><img src="../examples/snapshots/point-cloud.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
 
 
 ### Square
@@ -427,8 +432,8 @@ square( [25,0,15] );
 square( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/square.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square.html)
-[<kbd><img src="examples/snapshots/rectangle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle.html)
+[<kbd><img src="../examples/snapshots/square.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square.html)
+[<kbd><img src="../examples/snapshots/rectangle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle.html)
 
 
 
@@ -449,8 +454,8 @@ squareFrame( [25,0,15] );
 squareFrame( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/square-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
-[<kbd><img src="examples/snapshots/rectangle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
+[<kbd><img src="../examples/snapshots/square-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
+[<kbd><img src="../examples/snapshots/rectangle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
 
 
 
@@ -471,8 +476,8 @@ cube( [25,0,15] );
 cube( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
-[<kbd><img src="examples/snapshots/cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
+[<kbd><img src="../examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
+[<kbd><img src="../examples/snapshots/cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
 
 
 
@@ -493,8 +498,8 @@ cubeFrame( [25,0,15] );
 cubeFrame( [25,0,15], 10, 'red' );
 ```
 
-[<kbd><img src="examples/snapshots/cube-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
-[<kbd><img src="examples/snapshots/cuboid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
+[<kbd><img src="../examples/snapshots/cube-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
+[<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
 
 
 
@@ -502,7 +507,7 @@ cubeFrame( [25,0,15], 10, 'red' );
 
 TBD
 
-[<kbd><img src="examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;[<kbd><img src="examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
+[<kbd><img src="../examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;[<kbd><img src="../examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 
 
 
@@ -511,11 +516,11 @@ TBD
 
 ### Reference guide
 
-A reference guide and code templates are collected [here](REFERENCE-GUIDE.md)
+A reference guide and code templates are collected [here](reference-guide.md)
 
 ### List of examples
 
-All examples are collected in a single page [here](examples/EXAMPLES.md)
+All examples are collected in a single page [here](examples.md)
 
 ---
 
