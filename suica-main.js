@@ -119,7 +119,6 @@ class Suica
 		// create and initialize <canvas>
 		this.createCanvas( ); // creates this.canvas
 		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
-		this.createMaterials( );
 		
 		// define parsers for suica tags inside <suica>
 		this.parser = new HTMLParser( this );
@@ -265,42 +264,6 @@ class Suica
 	} // Suica.createRenderer
 
 
-	
-	// create default materials for SUica objects
-	createMaterials( )
-	{
-		// point material
-		var CANVAS_SIZE = 64;
-		var canvas = document.createElement('canvas');
-			canvas.width = CANVAS_SIZE;
-			canvas.height = CANVAS_SIZE;
-			
-		var context = canvas.getContext('2d');
-			context.fillStyle = 'white';
-			context.beginPath( );
-			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
-			context.fill( );
-
-		Suica.pointMaterial = new THREE.PointsMaterial( {
-				color: 'white',
-				size: 5,
-				sizeAttenuation: true,
-				map: new THREE.CanvasTexture( canvas ),
-				transparent: true,
-				alphaTest: 0.75,
-			});
-
-		Suica.solidMaterial = new THREE.MeshStandardMaterial( {
-				color: 'cornflowerblue',
-				side: THREE.DoubleSide,
-			});
-
-		Suica.lineMaterial = new THREE.LineBasicMaterial( {
-				color: 'black',
-			});
-
-	}
-	
 	
 	
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )

@@ -32,7 +32,7 @@ class Point extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.point(${center},${size},${color})`);
 
-		super( suica, THREE.Points, Point.geometry, Suica.pointMaterial.clone() );
+		super( suica, THREE.Points, Point.geometry, Mesh.pointMaterial.clone() );
 
 		this.center = center;
 		this.color = color;

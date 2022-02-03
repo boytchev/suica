@@ -35,7 +35,7 @@ class Cube extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cube(${center},${size},${color})`);
 		
-		super( suica, THREE.Mesh, Cube.geometry, Suica.solidMaterial.clone() );
+		super( suica, THREE.Mesh, Cube.geometry, Mesh.solidMaterial.clone() );
 		
 		this.center = center;
 		this.color = color;
@@ -60,7 +60,7 @@ class CubeFrame extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cubeFrame(${center},${size},${color})`);
 		
-		super( suica, THREE.LineSegments, CubeFrame.geometry, Suica.lineMaterial.clone() );
+		super( suica, THREE.LineSegments, CubeFrame.geometry, Mesh.lineMaterial.clone() );
 
 		this.center = center;
 		this.color = color;

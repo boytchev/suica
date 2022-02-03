@@ -18,7 +18,6 @@
 
 class Mesh
 {
-
 	constructor( suica, threejsClass, geometry, material )
 	{
 		this.suica = suica;
@@ -31,6 +30,44 @@ class Mesh
 
 
 	
+	// create default materials for SUica objects
+	static createMaterials( )
+	{
+		// point material
+		var CANVAS_SIZE = 64;
+		var canvas = document.createElement('canvas');
+			canvas.width = CANVAS_SIZE;
+			canvas.height = CANVAS_SIZE;
+			
+		var context = canvas.getContext('2d');
+			context.fillStyle = 'white';
+			context.beginPath( );
+			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
+			context.fill( );
+
+		Mesh.pointMaterial = new THREE.PointsMaterial( {
+				color: 'white',
+				size: 5,
+				sizeAttenuation: true,
+				map: new THREE.CanvasTexture( canvas ),
+				transparent: true,
+				alphaTest: 0.75,
+			});
+
+		Mesh.solidMaterial = new THREE.MeshStandardMaterial( {
+				color: 'cornflowerblue',
+				side: THREE.DoubleSide,
+			});
+
+		Mesh.lineMaterial = new THREE.LineBasicMaterial( {
+				color: 'black',
+			});
+
+	}
+
+
+
+
 	get center()
 	{
 		this.suica.parser?.parseTags();
@@ -266,3 +303,6 @@ class Mesh
 
 	
 } // class Mesh
+
+
+Mesh.createMaterials();

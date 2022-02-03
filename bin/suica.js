@@ -120,7 +120,6 @@ class Suica
 		// create and initialize <canvas>
 		this.createCanvas( ); // creates this.canvas
 		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
-		this.createMaterials( );
 		
 		// define parsers for suica tags inside <suica>
 		this.parser = new HTMLParser( this );
@@ -266,42 +265,6 @@ class Suica
 	} // Suica.createRenderer
 
 
-	
-	// create default materials for SUica objects
-	createMaterials( )
-	{
-		// point material
-		var CANVAS_SIZE = 64;
-		var canvas = document.createElement('canvas');
-			canvas.width = CANVAS_SIZE;
-			canvas.height = CANVAS_SIZE;
-			
-		var context = canvas.getContext('2d');
-			context.fillStyle = 'white';
-			context.beginPath( );
-			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
-			context.fill( );
-
-		Suica.pointMaterial = new THREE.PointsMaterial( {
-				color: 'white',
-				size: 5,
-				sizeAttenuation: true,
-				map: new THREE.CanvasTexture( canvas ),
-				transparent: true,
-				alphaTest: 0.75,
-			});
-
-		Suica.solidMaterial = new THREE.MeshStandardMaterial( {
-				color: 'cornflowerblue',
-				side: THREE.DoubleSide,
-			});
-
-		Suica.lineMaterial = new THREE.LineBasicMaterial( {
-				color: 'black',
-			});
-
-	}
-	
 	
 	
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
@@ -1150,7 +1113,6 @@ window.image = function ( url = null, repeatX = 1, repeatY = 1 )
 
 class Mesh
 {
-
 	constructor( suica, threejsClass, geometry, material )
 	{
 		this.suica = suica;
@@ -1163,6 +1125,44 @@ class Mesh
 
 
 	
+	// create default materials for SUica objects
+	static createMaterials( )
+	{
+		// point material
+		var CANVAS_SIZE = 64;
+		var canvas = document.createElement('canvas');
+			canvas.width = CANVAS_SIZE;
+			canvas.height = CANVAS_SIZE;
+			
+		var context = canvas.getContext('2d');
+			context.fillStyle = 'white';
+			context.beginPath( );
+			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
+			context.fill( );
+
+		Mesh.pointMaterial = new THREE.PointsMaterial( {
+				color: 'white',
+				size: 5,
+				sizeAttenuation: true,
+				map: new THREE.CanvasTexture( canvas ),
+				transparent: true,
+				alphaTest: 0.75,
+			});
+
+		Mesh.solidMaterial = new THREE.MeshStandardMaterial( {
+				color: 'cornflowerblue',
+				side: THREE.DoubleSide,
+			});
+
+		Mesh.lineMaterial = new THREE.LineBasicMaterial( {
+				color: 'black',
+			});
+
+	}
+
+
+
+
 	get center()
 	{
 		this.suica.parser?.parseTags();
@@ -1398,7 +1398,9 @@ class Mesh
 
 	
 } // class Mesh
-﻿//
+
+
+Mesh.createMaterials();﻿//
 // Suica 2.0 Point
 // CC-3.0-SA-NC
 //
@@ -1432,7 +1434,7 @@ class Point extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.point(${center},${size},${color})`);
 
-		super( suica, THREE.Points, Point.geometry, Suica.pointMaterial.clone() );
+		super( suica, THREE.Points, Point.geometry, Mesh.pointMaterial.clone() );
 
 		this.center = center;
 		this.color = color;
@@ -1508,7 +1510,7 @@ class Square extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.square(${center},${size},${color})`);
 		
-		super( suica, THREE.Mesh, Square.geometry, Suica.solidMaterial.clone() );
+		super( suica, THREE.Mesh, Square.geometry, Mesh.solidMaterial.clone() );
 		
 		this.center = center;
 		this.color = color;
@@ -1533,7 +1535,7 @@ class SquareFrame extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.squareFrame(${center},${size},${color})`);
 		
-		super( suica, THREE.LineSegments, SquareFrame.geometry, Suica.lineMaterial.clone() );
+		super( suica, THREE.LineSegments, SquareFrame.geometry, Mesh.lineMaterial.clone() );
 		
 		this.center = center;
 		this.color = color;
@@ -1603,7 +1605,7 @@ class Cube extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cube(${center},${size},${color})`);
 		
-		super( suica, THREE.Mesh, Cube.geometry, Suica.solidMaterial.clone() );
+		super( suica, THREE.Mesh, Cube.geometry, Mesh.solidMaterial.clone() );
 		
 		this.center = center;
 		this.color = color;
@@ -1628,7 +1630,7 @@ class CubeFrame extends Mesh
 		suica.parser?.parseTags();
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cubeFrame(${center},${size},${color})`);
 		
-		super( suica, THREE.LineSegments, CubeFrame.geometry, Suica.lineMaterial.clone() );
+		super( suica, THREE.LineSegments, CubeFrame.geometry, Mesh.lineMaterial.clone() );
 
 		this.center = center;
 		this.color = color;
