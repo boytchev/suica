@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Dotted line</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Dotted line</h1>
+	<p>Drawing framed cubes with dotted and dashed lines.</p>
+
+	<suica>
+		<demo>
+		<cube x="20" id="a" color="white">
+		<cubeFrame x="-20" id="b" color="orange">
+	</suica>
+	
+	<script>
+		var dotted = drawing( 4, 4 );
+			moveTo( 0, 0 );
+			lineTo( 2, 0 );
+			lineTo( 2, 4 );
+			lineTo( 0, 4 );
+			lineTo( 0, 0 );
+		fill( 'black' );
+		
+		a.image = dotted;
+		//b.image = dotted;
+	</script>
+	
+</body>
+</html>

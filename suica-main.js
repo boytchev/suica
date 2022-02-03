@@ -44,12 +44,13 @@
 //	2.0.08 (220130) size[x,y,z]
 //	2.0.09 (220201) width, height, depth
 //	2.0.10 (220201) square
+//	2.0.11 (220203) attribute modification
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.10 (220201)` );
+console.log( `Suica 2.0.11 (220203)` );
 
 
 // control flags
@@ -297,6 +298,7 @@ class Suica
 		Suica.lineMaterial = new THREE.LineBasicMaterial( {
 				color: 'black',
 			});
+
 	}
 	
 	
@@ -601,6 +603,7 @@ window.random = function random( a=0, b=1 )
 new MutationObserver( function( mutations )
 	{
 		for( var parentElem of mutations )
+		{
 			for( var childElem of parentElem.addedNodes) 
 			{
 				if( childElem?.tagName=='SCRIPT' )
@@ -609,7 +612,16 @@ new MutationObserver( function( mutations )
 				if( childElem?.tagName=='SUICA' )
 					new Suica( childElem );
 			}
-	}).observe( document, {childList: true, subtree: true} );
+			
+			if( parentElem.type == 'attributes' && parentElem.target.suicaObject )
+			{
+				var name = parentElem.attributeName,
+					value = parentElem.target.getAttribute(parentElem.attributeName);
+				
+				parentElem.target.suicaObject[name] = value;
+			}
+		}
+	}).observe( document, {childList: true, subtree: true, attributes: true} );
 
 window.addEventListener( 'load', function()
 	{

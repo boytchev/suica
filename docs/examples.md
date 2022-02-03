@@ -50,6 +50,11 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 [<kbd><img src="../examples/snapshots/cube-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 
+## Questions and answers
+
+[<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/qa-property-modification.html)
+[<kbd><img src="../examples/snapshots/qa-attribute-modification.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification.html)
+
 ---
 
 February, 2022

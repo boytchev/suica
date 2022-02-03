@@ -61,12 +61,13 @@ class CubeFrame extends Mesh
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cubeFrame(${center},${size},${color})`);
 		
 		super( suica, THREE.LineSegments, CubeFrame.geometry, Suica.lineMaterial.clone() );
-		
+
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		
 		suica.scene.add( this.threejs );
+
 	}
 	
 } // class CubeFrame

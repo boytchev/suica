@@ -9,7 +9,7 @@
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
 	- [Common objects](#common-objects) [<small> [point](#point) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) </small>]
 - [Images and drawings](#images-and-drawings)
-- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) </small>] 
+- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
 
 ## About
@@ -521,6 +521,32 @@ A reference guide and code templates are collected [here](reference-guide.md)
 ### List of examples
 
 All examples are collected in a single page [here](examples.md)
+
+### Questions and answers
+
+#### How to change the attribute of an object created in HTML?
+
+The prefered way is to create the object with a name in attribute `id`. Suica
+will create a global variable with that name, which can be modified. The
+alternative way is to modify the attribute itself with a string value.
+
+```html
+HTML:
+<cube id="a">
+```
+```js
+JS:
+// using object properties
+a.size = 10;
+
+// using tag attributes
+cube = document.getElementsByTagName( 'cube' )[0];
+cube.setAttribute( 'size', 10 );
+```
+
+[<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-property-modification.html)
+[<kbd><img src="../examples/snapshots/qa-attribute-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification.html)
+
 
 ---
 

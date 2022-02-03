@@ -139,6 +139,8 @@ class HTMLParser
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 		
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagPOINT
 	
 	
@@ -160,6 +162,9 @@ class HTMLParser
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagSQUARE
 	
 	
@@ -181,6 +186,9 @@ class HTMLParser
 
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagSQUAREFRAME
 
 	// <cube id="..." center="..." color="..." size="...">
@@ -202,6 +210,9 @@ class HTMLParser
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagCUBE
 	
 	
@@ -224,6 +235,9 @@ class HTMLParser
 
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagCUBEFRAME
 	
 	

@@ -45,12 +45,13 @@
 //	2.0.08 (220130) size[x,y,z]
 //	2.0.09 (220201) width, height, depth
 //	2.0.10 (220201) square
+//	2.0.11 (220203) attribute modification
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.10 (220201)` );
+console.log( `Suica 2.0.11 (220203)` );
 
 
 // control flags
@@ -298,6 +299,7 @@ class Suica
 		Suica.lineMaterial = new THREE.LineBasicMaterial( {
 				color: 'black',
 			});
+
 	}
 	
 	
@@ -602,6 +604,7 @@ window.random = function random( a=0, b=1 )
 new MutationObserver( function( mutations )
 	{
 		for( var parentElem of mutations )
+		{
 			for( var childElem of parentElem.addedNodes) 
 			{
 				if( childElem?.tagName=='SCRIPT' )
@@ -610,7 +613,16 @@ new MutationObserver( function( mutations )
 				if( childElem?.tagName=='SUICA' )
 					new Suica( childElem );
 			}
-	}).observe( document, {childList: true, subtree: true} );
+			
+			if( parentElem.type == 'attributes' && parentElem.target.suicaObject )
+			{
+				var name = parentElem.attributeName,
+					value = parentElem.target.getAttribute(parentElem.attributeName);
+				
+				parentElem.target.suicaObject[name] = value;
+			}
+		}
+	}).observe( document, {childList: true, subtree: true, attributes: true} );
 
 window.addEventListener( 'load', function()
 	{
@@ -758,6 +770,8 @@ class HTMLParser
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 		
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagPOINT
 	
 	
@@ -779,6 +793,9 @@ class HTMLParser
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagSQUARE
 	
 	
@@ -800,6 +817,9 @@ class HTMLParser
 
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagSQUAREFRAME
 
 	// <cube id="..." center="..." color="..." size="...">
@@ -821,6 +841,9 @@ class HTMLParser
 			
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagCUBE
 	
 	
@@ -843,6 +866,9 @@ class HTMLParser
 
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
 	} // HTMLParser.parseTagCUBEFRAME
 	
 	
@@ -1603,12 +1629,13 @@ class CubeFrame extends Mesh
 		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cubeFrame(${center},${size},${color})`);
 		
 		super( suica, THREE.LineSegments, CubeFrame.geometry, Suica.lineMaterial.clone() );
-		
+
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		
 		suica.scene.add( this.threejs );
+
 	}
 	
 } // class CubeFrame
