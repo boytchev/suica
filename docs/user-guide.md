@@ -546,6 +546,7 @@ cube.setAttribute( 'size', 10 );
 
 [<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-property-modification.html)
 [<kbd><img src="../examples/snapshots/qa-attribute-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification.html)
+[<kbd><img src="../examples/snapshots/qa-attribute-modification-button.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification-button.html)
 
 
 ---

@@ -32,21 +32,23 @@
 	
 	<script>
 	
-		// set random size and color
-		a.size = 10+10*Math.random();
-		a.color = random(['dimgray','linen']);
-		
-		b.size = 10+10*Math.random();
-		b.color = random(['dimgray','linen']);
-		
-		c.size = 10+10*Math.random();
-		c.color = random(['dimgray','linen']);
-		
-		d.size = 10+10*Math.random();
-		d.color = random(['dimgray','linen']);
-		
-		e.size = 10+10*Math.random();
-		e.color = random(['dimgray','linen']);
+		setInterval( function ()
+		{
+			a.size = 10+10*Math.random();
+			a.color = random(['dimgray','linen']);
+			
+			b.size = 10+10*Math.random();
+			b.color = random(['dimgray','linen']);
+			
+			c.size = 10+10*Math.random();
+			c.color = random(['dimgray','linen']);
+			
+			d.size = 10+10*Math.random();
+			d.color = random(['dimgray','linen']);
+			
+			e.size = 10+10*Math.random();
+			e.color = random(['dimgray','linen']);
+		}, 500 );
 		
 	</script>
 </body>
