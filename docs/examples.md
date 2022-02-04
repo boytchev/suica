@@ -32,6 +32,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)
 [<kbd><img src="../examples/snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
 
+[<kbd><img src="../examples/snapshots/line.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/line.html)
+
 [<kbd><img src="../examples/snapshots/square.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square.html)
 [<kbd><img src="../examples/snapshots/rectangle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/rectangle.html)
 

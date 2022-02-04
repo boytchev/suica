@@ -23,21 +23,41 @@
 
 	<suica>
 		<demo>
-		<cube x="20" id="a" color="white">
-		<cubeFrame x="-20" id="b" color="orange">
+		<cubeFrame x="-20" id="mb" color="orange">
+		
+		<line center="0,0,0" to="30,0,0" color="crimson">
+		<line id="a" center="0,0,0" to="0,30,0" color="cornflowerblue">
+		<line center="30,0,0" to="0,30,0" color="gray">
+		<line center="0,0,0" to="0,0,30" color="orange">
+		<line center="30,0,0" to="0,0,30" color="forestgreen">
+		<line id="c" center="0,0,30" to="0,30,0" color="violet">
+		<cubeFrame id="b" x="30" size="20" color="blue">
+		<squareFrame id="d" z="20" color="peru">		
 	</suica>
 	
 	<script>
-		var dotted = drawing( 4, 4 );
+		var dotted2 = drawing( 8, 1 );
 			moveTo( 0, 0 );
 			lineTo( 2, 0 );
-			lineTo( 2, 4 );
-			lineTo( 0, 4 );
-			lineTo( 0, 0 );
-		fill( 'black' );
+			moveTo( 6, 0 );
+			lineTo( 8, 0 );
+		stroke( 'black', 4 );
 		
+		mb.image = dotted2;
+		
+		var dotted = drawing( 128, 1 );
+		for( var i=0; i<128; i+=16)
+		{
+			moveTo( i, 0 );
+			lineTo( i+6, 0 );
+			moveTo( i+10, 0 );
+			lineTo( i+12, 0 );
+			stroke( 'white', 4 );
+		}
 		a.image = dotted;
-		//b.image = dotted;
+		b.image = dotted;
+		c.image = dotted;
+		d.image = dotted;
 	</script>
 	
 </body>

@@ -8,6 +8,7 @@
 //		<demo distance="..." altitude="...">
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<line id="..." center="..." from="" color="..." size="...">
 //		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<square id="..." center="..." x="" y="" z="" color="..." size="...">
@@ -20,6 +21,7 @@
 //		{suica.}demo( distance, altitude )
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
+//		{suica.}point( center/from, to, color )
 //		{suica.}square( center, size, color )
 //		{suica.}squareFrame( center, size, color )
 //		{suica.}cube( center, size, color )
@@ -33,24 +35,25 @@
 //===================================================
 //
 // History
-//	2.0.00 (220118)	initiation
-//	2.0.01 (220119)	custom & nested tags, background, oxyz, animate
-//	2.0.02 (220120) point
-//	2.0.03 (220122) autoload js files, cube
-//	2.0.04 (220124) demo, examples, onTime
-//	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
-//	2.0.06 (220128) build process, mesh, cubeFrame, arc, cube.image
-//	2.0.07 (220129) suica.orientation
-//	2.0.08 (220130) size[x,y,z]
-//	2.0.09 (220201) width, height, depth
-//	2.0.10 (220201) square
-//	2.0.11 (220203) attribute modification
+//	2.-1.00 (220118) initiation
+//	2.-1.01 (220119) custom & nested tags, background, oxyz, animate
+//	2.-1.02 (220120) point
+//	2.-1.03 (220122) autoload js files, cube
+//	2.-1.04 (220124) demo, examples, onTime
+//	2.-1.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
+//	2.-1.06 (220128) build process, mesh, cubeFrame, arc, cube.image
+//	2.-1.07 (220129) suica.orientation
+//	2.-1.08 (220130) size[x,y,z]
+//	2.-1.09 (220201) width, height, depth
+//	2.-1.10 (220201) square
+//	2.-1.11 (220203) attribute modification
+//	2.-1.12 (220204) line
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.11 (220203)` );
+console.log( `Suica 2.-1.12 (220204)` );
 
 
 // control flags
@@ -96,6 +99,7 @@ class Suica
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
+		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0] },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 	} // Suica.DEFAULT
@@ -458,6 +462,15 @@ class Suica
 		if( DEBUG_CALLS ) console.log(`:: ${this.id}.point( [${center}], ${size}, ${color} )`);
 
 		return new Point( this, center, size, color );
+	}
+	
+	
+	line( center=Suica.DEFAULT.LINE.CENTER, to=Suica.DEFAULT.LINE.TO, color=Suica.DEFAULT.LINE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.line( [${center}], ${to}, ${color} )`);
+
+		return new Line( this, center, to, color );
 	}
 	
 	

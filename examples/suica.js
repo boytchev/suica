@@ -9,6 +9,7 @@
 //		<demo distance="..." altitude="...">
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<line id="..." center="..." from="" color="..." size="...">
 //		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<square id="..." center="..." x="" y="" z="" color="..." size="...">
@@ -21,6 +22,7 @@
 //		{suica.}demo( distance, altitude )
 //		{suica.}onTime( src )
 //		{suica.}point( center, size, color )
+//		{suica.}point( center/from, to, color )
 //		{suica.}square( center, size, color )
 //		{suica.}squareFrame( center, size, color )
 //		{suica.}cube( center, size, color )
@@ -34,24 +36,25 @@
 //===================================================
 //
 // History
-//	2.0.00 (220118)	initiation
-//	2.0.01 (220119)	custom & nested tags, background, oxyz, animate
-//	2.0.02 (220120) point
-//	2.0.03 (220122) autoload js files, cube
-//	2.0.04 (220124) demo, examples, onTime
-//	2.0.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
-//	2.0.06 (220128) build process, mesh, cubeFrame, arc, cube.image
-//	2.0.07 (220129) suica.orientation
-//	2.0.08 (220130) size[x,y,z]
-//	2.0.09 (220201) width, height, depth
-//	2.0.10 (220201) square
-//	2.0.11 (220203) attribute modification
+//	2.-1.00 (220118) initiation
+//	2.-1.01 (220119) custom & nested tags, background, oxyz, animate
+//	2.-1.02 (220120) point
+//	2.-1.03 (220122) autoload js files, cube
+//	2.-1.04 (220124) demo, examples, onTime
+//	2.-1.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
+//	2.-1.06 (220128) build process, mesh, cubeFrame, arc, cube.image
+//	2.-1.07 (220129) suica.orientation
+//	2.-1.08 (220130) size[x,y,z]
+//	2.-1.09 (220201) width, height, depth
+//	2.-1.10 (220201) square
+//	2.-1.11 (220203) attribute modification
+//	2.-1.12 (220204) line
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.0.11 (220203)` );
+console.log( `Suica 2.-1.12 (220204)` );
 
 
 // control flags
@@ -97,6 +100,7 @@ class Suica
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
+		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0] },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 	} // Suica.DEFAULT
@@ -462,6 +466,15 @@ class Suica
 	}
 	
 	
+	line( center=Suica.DEFAULT.LINE.CENTER, to=Suica.DEFAULT.LINE.TO, color=Suica.DEFAULT.LINE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.line( [${center}], ${to}, ${color} )`);
+
+		return new Line( this, center, to, color );
+	}
+	
+	
 	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
 	{
 		this.parser?.parseTags();
@@ -601,6 +614,7 @@ window.addEventListener( 'load', function()
 // <oxyz size="..." color="...">
 // <ontime src="...">
 // <point id="..." center="..." color="..." size="...">
+// <line id="..." center="..." color="..." to="...">
 // <square id="..." center="..." color="..." size="...">
 // <squareFrame id="..." center="..." color="..." size="...">
 // <cube id="..." center="..." color="..." size="...">
@@ -628,6 +642,7 @@ class HTMLParser
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
+		this.parseTag.LINE = this.parseTagLINE;
 		this.parseTag.SQUARE = this.parseTagSQUARE;
 		this.parseTag.SQUAREFRAME = this.parseTagSQUAREFRAME;
 		this.parseTag.CUBE = this.parseTagCUBE;
@@ -736,6 +751,23 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPOINT
+	
+	
+	// <line id="..." center="..." color="..." to="...">
+	parseTagLINE( suica, elem )
+	{
+		var p = suica.line(
+			elem.getAttribute('center') || elem.getAttribute('from') || Suica.DEFAULT.LINE.CENTER,
+			elem.getAttribute('to') || Suica.DEFAULT.LINE.TO,
+			elem.getAttribute('color') || Suica.DEFAULT.LINE.COLOR
+		);
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+		
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagLINE
 	
 	
 	// <square id="..." center="..." color="..." size="...">
@@ -1149,14 +1181,35 @@ class Mesh
 				alphaTest: 0.75,
 			});
 
+		// solid material
 		Mesh.solidMaterial = new THREE.MeshStandardMaterial( {
 				color: 'cornflowerblue',
 				side: THREE.DoubleSide,
 			});
 
-		Mesh.lineMaterial = new THREE.LineBasicMaterial( {
+		// line material
+		CANVAS_SIZE = 4;
+		canvas.width = CANVAS_SIZE;
+		canvas.height = 1;
+			
+		context.fillStyle = 'white';
+		context.fillRect( 0, 0, canvas.width, canvas.height );
+
+		Mesh.lineMaterial = new THREE.MeshBasicMaterial( {
 				color: 'black',
+				transparent: true,
+				map: new THREE.CanvasTexture( canvas ),
 			});
+
+		Mesh.lineMaterial.onBeforeCompile = shader => {
+			shader.fragmentShader = shader.fragmentShader.replace(
+				'#include <map_fragment>',
+				`#ifdef USE_MAP
+					vec4 texelColor = texture2D( map, vUv );
+					diffuseColor *= texelColor;
+				#endif`
+			);
+		}
 
 	}
 
@@ -1475,6 +1528,186 @@ window.point = function(
 	Suica.precheck();
 	return Suica.current.point( center, size, color );
 }﻿//
+// Suica 2.0 Line
+// CC-3.0-SA-NC
+//
+// line( center, to, color )
+//
+// <line id="" center="" to="" color="">
+// <line x="" y="" z="">
+//
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// to		second point of line
+// size		visual size
+// color	color [r,g,b]
+//
+//===================================================
+
+
+class Line extends Mesh
+{
+
+	constructor(suica, center, to, color)
+	{
+		suica.parser?.parseTags();
+		if (DEBUG_CALLS) console.log(`:: ${suica.id}.line(${center},${to},${color})`);
+			
+		super( suica, THREE.LineSegments, Line.geometry.clone(), Mesh.lineMaterial.clone() );
+
+		this.center = center;
+		this.color = color;
+		this.to = to;
+
+		suica.scene.add( this.threejs );
+	} // Line.constructor
+
+
+
+	get center()
+	{
+		this.suica.parser?.parseTags();
+
+		var pos = this.threejs.geometry.getAttribute( 'position' );
+		return [pos.getX(0), pos.getY(0), pos.getZ(0)];
+	}
+
+	set center(center)
+	{
+		this.suica.parser?.parseTags();
+
+		center = Suica.parseCenter( center );
+		
+		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 0, center[0], center[1], center[2] );
+		this.threejs.geometry.needsUpdate = true;
+	}
+
+
+
+
+	get from()
+	{
+		return this.center;
+	}
+
+	set from(from)
+	{
+		this.center = from;
+	}
+
+
+
+
+	get to()
+	{
+		this.suica.parser?.parseTags();
+
+		var pos = this.threejs.geometry.getAttribute( 'position' );
+		return [pos.getX(1), pos.getY(1), pos.getZ(1)];
+	}
+
+	set to(to)
+	{
+		this.suica.parser?.parseTags();
+
+		to = Suica.parseCenter( to );
+		
+		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 1, to[0], to[1], to[2] );
+		this.threejs.geometry.needsUpdate = true;
+	}
+
+
+
+
+
+	get size()
+	{
+		throw 'error: size is not available for line';
+	}
+
+	set size( size )
+	{
+		throw 'error: size is not available for line';
+	}
+	
+	get width()
+	{
+		throw 'error: width is not available for line';
+	}
+
+	set width( width )
+	{
+		throw 'error: width is not available for line';
+	}
+	
+	get height()
+	{
+		throw 'error: height is not available for line';
+	}
+
+	set height( height )
+	{
+		throw 'error: height is not available for line';
+	}
+	
+	get depth()
+	{
+		throw 'error: depth is not available for line';
+	}
+
+	set depth( depth )
+	{
+		throw 'error: depth is not available for line';
+	}
+	
+	get x()
+	{
+		throw 'error: x is not available for line';
+	}
+
+	set x( x )
+	{
+		throw 'error: x is not available for line';
+	}
+	
+	get y()
+	{
+		throw 'error: y is not available for line';
+	}
+
+	set y( y )
+	{
+		throw 'error: y is not available for line';
+	}
+	
+	get z()
+	{
+		throw 'error: z is not available for line';
+	}
+
+	set z( z )
+	{
+		throw 'error: z is not available for line';
+	}
+	
+} // class Line
+
+
+Line.geometry = new THREE.BufferGeometry();
+Line.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
+Line.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
+
+
+window.line = function(
+					center = Suica.DEFAULT.LINE.CENTER,
+					to     = Suica.DEFAULT.LINE.TO,
+					color  = Suica.DEFAULT.LINE.COLOR )
+{
+	Suica.precheck();
+	return Suica.current.line( center, to, color );
+}﻿//
 // Suica 2.0 Square
 // CC-3.0-SA-NC
 //
@@ -1501,9 +1734,6 @@ window.point = function(
 
 class Square extends Mesh
 {
-	
-	// a geometry shared by all cubes
-	static geometry = new THREE.PlaneGeometry( 1, 1 );
 	
 	constructor( suica, center, size, color )
 	{
@@ -1545,6 +1775,21 @@ class SquareFrame extends Mesh
 	}
 	
 } // class SquareFrame
+
+
+SquareFrame.geometry = new THREE.BufferGeometry();
+SquareFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+	-0.5,-0.5,0, +0.5,-0.5,0, 
+	+0.5,-0.5,0, +0.5,+0.5,0, 
+	+0.5,+0.5,0, -0.5,+0.5,0, 
+	-0.5,+0.5,0, -0.5,-0.5,0, 
+]), 3));
+SquareFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	]), 2));
 
 
 
@@ -1622,9 +1867,6 @@ class Cube extends Mesh
 class CubeFrame extends Mesh
 {
 	
-	// a geometry shared by all cube frames
-	static geometry = new THREE.EdgesGeometry( Cube.geometry );
-	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
@@ -1641,6 +1883,43 @@ class CubeFrame extends Mesh
 	}
 	
 } // class CubeFrame
+
+
+CubeFrame.geometry = new THREE.BufferGeometry();
+CubeFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+	// bottom ring
+	-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
+	+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
+	+0.5,+0.5,-0.5, -0.5,+0.5,-0.5, 
+	-0.5,+0.5,-0.5, -0.5,-0.5,-0.5, 
+	// top ring
+	-0.5,-0.5,+0.5, +0.5,-0.5,+0.5, 
+	+0.5,-0.5,+0.5, +0.5,+0.5,+0.5, 
+	+0.5,+0.5,+0.5, -0.5,+0.5,+0.5, 
+	-0.5,+0.5,+0.5, -0.5,-0.5,+0.5, 
+	// bottom to top
+	-0.5,-0.5,-0.5, -0.5,-0.5,+0.5, 
+	+0.5,-0.5,-0.5, +0.5,-0.5,+0.5, 
+	+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
+	-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
+]), 3));
+CubeFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+	// bottom ring
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	// top ring
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	// bottom to top
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	]), 2));
 
 
 

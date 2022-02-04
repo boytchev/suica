@@ -7,7 +7,7 @@
 - [Objects](#objects)
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
-	- [Common objects](#common-objects) [<small> [point](#point) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) </small>]
+	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
@@ -289,6 +289,9 @@ p = point( );
 p.x = 25;
 ```
 
+_**Note**: The object [line](#line) is an exception. It has `from` as synonym of
+`center`, and it has no `x`, `y` and `z`._
+
 
 #### Size
 
@@ -304,8 +307,11 @@ corresponds to the axis that is upwards.
 
 Flat objects like squares and circles have no depth.
 
-_**Note**: Omitting the depth property of a 3D object makes its depth the same
+_**Note <small><sup>1</sup></small>**: Omitting the depth property of a 3D object makes its depth the same
 as its width. This maintains uniform horizontal size._
+
+_**Note <small><sup>2</sup></small>**: The object [line](#line) has no size,
+width, height and depth._
 
 ```html
 HTML:
@@ -413,6 +419,30 @@ point( [25,0,15], 10, 'red' );
 ```
 
 [<kbd><img src="../examples/snapshots/point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point.html)&emsp;[<kbd><img src="../examples/snapshots/point-cloud.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
+
+
+### Line
+
+The object `line` represents a segment. Its properties are `center` (or `from`),
+`to`, `color` and `image`. The properties `center` and `from` are synonyms and
+they set the starting point of the segment, while `to` sets the ending point. By
+default a line is drawn as solid line, but it can be changed with custom
+[drawing](#images-and-drawings).
+
+```html
+HTML:
+<line center="25,0,15" to="100,-20,35">
+<line from="25,0,15" to="100,-20,35">
+```
+```js
+JS:
+line( [25,0,15], [100,-20,35] );
+point( [25,0,15], [100,-20,35], 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/line.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/line.html)
+
+_**Note**: Lines have no properties x, y, z, size, width, height and depth._
 
 
 ### Square

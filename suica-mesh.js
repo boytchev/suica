@@ -54,14 +54,35 @@ class Mesh
 				alphaTest: 0.75,
 			});
 
+		// solid material
 		Mesh.solidMaterial = new THREE.MeshStandardMaterial( {
 				color: 'cornflowerblue',
 				side: THREE.DoubleSide,
 			});
 
-		Mesh.lineMaterial = new THREE.LineBasicMaterial( {
+		// line material
+		CANVAS_SIZE = 4;
+		canvas.width = CANVAS_SIZE;
+		canvas.height = 1;
+			
+		context.fillStyle = 'white';
+		context.fillRect( 0, 0, canvas.width, canvas.height );
+
+		Mesh.lineMaterial = new THREE.MeshBasicMaterial( {
 				color: 'black',
+				transparent: true,
+				map: new THREE.CanvasTexture( canvas ),
 			});
+
+		Mesh.lineMaterial.onBeforeCompile = shader => {
+			shader.fragmentShader = shader.fragmentShader.replace(
+				'#include <map_fragment>',
+				`#ifdef USE_MAP
+					vec4 texelColor = texture2D( map, vUv );
+					diffuseColor *= texelColor;
+				#endif`
+			);
+		}
 
 	}
 

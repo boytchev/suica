@@ -1,6 +1,6 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) | [Color](#color) | [Point](#point) | [Square](#square) | [SquareFrame](#squareframe) | [Cube](#cube) | [CubeFrame](#cubeframe)
+[Suica](#suica) | [Color](#color) | [Point](#point) | [Line](#line) | [Square](#square) | [SquareFrame](#squareframe) | [Cube](#cube) | [CubeFrame](#cubeframe)
 
 ### Suica
 
@@ -70,6 +70,24 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.y = 𝑦;
 𝑜𝑏𝑗𝑒𝑐𝑡.z = 𝑧;
 𝑜𝑏𝑗𝑒𝑐𝑡.size = 𝑠𝑖𝑧𝑒;
+𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
+```
+
+
+### Line
+
+```html
+HTML:
+<line id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" to="𝑥,𝑦,𝑧" color="𝑐𝑜𝑙𝑜𝑟">
+<line id="𝑜𝑏𝑗𝑒𝑐𝑡" from="𝑥,𝑦,𝑧" to="𝑥,𝑦,𝑧" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.line( [𝑥,𝑦,𝑧], [𝑥,𝑦,𝑧], 𝑐𝑜𝑙𝑜𝑟 );
+𝑜𝑏𝑗𝑒𝑐𝑡.center = [𝑥,𝑦,𝑧];
+𝑜𝑏𝑗𝑒𝑐𝑡.from = [𝑥,𝑦,𝑧];
+𝑜𝑏𝑗𝑒𝑐𝑡.to = [𝑥,𝑦,𝑧];
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 ```

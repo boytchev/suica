@@ -26,9 +26,6 @@
 class Square extends Mesh
 {
 	
-	// a geometry shared by all cubes
-	static geometry = new THREE.PlaneGeometry( 1, 1 );
-	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
@@ -69,6 +66,21 @@ class SquareFrame extends Mesh
 	}
 	
 } // class SquareFrame
+
+
+SquareFrame.geometry = new THREE.BufferGeometry();
+SquareFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+	-0.5,-0.5,0, +0.5,-0.5,0, 
+	+0.5,-0.5,0, +0.5,+0.5,0, 
+	+0.5,+0.5,0, -0.5,+0.5,0, 
+	-0.5,+0.5,0, -0.5,-0.5,0, 
+]), 3));
+SquareFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	]), 2));
 
 
 

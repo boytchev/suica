@@ -52,9 +52,6 @@ class Cube extends Mesh
 class CubeFrame extends Mesh
 {
 	
-	// a geometry shared by all cube frames
-	static geometry = new THREE.EdgesGeometry( Cube.geometry );
-	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
@@ -71,6 +68,43 @@ class CubeFrame extends Mesh
 	}
 	
 } // class CubeFrame
+
+
+CubeFrame.geometry = new THREE.BufferGeometry();
+CubeFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+	// bottom ring
+	-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
+	+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
+	+0.5,+0.5,-0.5, -0.5,+0.5,-0.5, 
+	-0.5,+0.5,-0.5, -0.5,-0.5,-0.5, 
+	// top ring
+	-0.5,-0.5,+0.5, +0.5,-0.5,+0.5, 
+	+0.5,-0.5,+0.5, +0.5,+0.5,+0.5, 
+	+0.5,+0.5,+0.5, -0.5,+0.5,+0.5, 
+	-0.5,+0.5,+0.5, -0.5,-0.5,+0.5, 
+	// bottom to top
+	-0.5,-0.5,-0.5, -0.5,-0.5,+0.5, 
+	+0.5,-0.5,-0.5, +0.5,-0.5,+0.5, 
+	+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
+	-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
+]), 3));
+CubeFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+	// bottom ring
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	// top ring
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	// bottom to top
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	0, 0,  1, 0,
+	]), 2));
 
 
 

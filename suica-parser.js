@@ -7,6 +7,7 @@
 // <oxyz size="..." color="...">
 // <ontime src="...">
 // <point id="..." center="..." color="..." size="...">
+// <line id="..." center="..." color="..." to="...">
 // <square id="..." center="..." color="..." size="...">
 // <squareFrame id="..." center="..." color="..." size="...">
 // <cube id="..." center="..." color="..." size="...">
@@ -34,6 +35,7 @@ class HTMLParser
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
+		this.parseTag.LINE = this.parseTagLINE;
 		this.parseTag.SQUARE = this.parseTagSQUARE;
 		this.parseTag.SQUAREFRAME = this.parseTagSQUAREFRAME;
 		this.parseTag.CUBE = this.parseTagCUBE;
@@ -142,6 +144,23 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPOINT
+	
+	
+	// <line id="..." center="..." color="..." to="...">
+	parseTagLINE( suica, elem )
+	{
+		var p = suica.line(
+			elem.getAttribute('center') || elem.getAttribute('from') || Suica.DEFAULT.LINE.CENTER,
+			elem.getAttribute('to') || Suica.DEFAULT.LINE.TO,
+			elem.getAttribute('color') || Suica.DEFAULT.LINE.COLOR
+		);
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+		
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagLINE
 	
 	
 	// <square id="..." center="..." color="..." size="...">
