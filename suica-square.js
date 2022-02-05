@@ -25,6 +25,9 @@
 
 class Square extends Mesh
 {
+
+	// a geometry shared by all cubes
+	static geometry = new THREE.PlaneGeometry( 1, 1 );
 	
 	constructor( suica, center, size, color )
 	{
@@ -47,9 +50,6 @@ class Square extends Mesh
 
 class SquareFrame extends Mesh
 {
-	
-	// a geometry shared by all square frames
-	static geometry = new THREE.EdgesGeometry( Square.geometry );
 	
 	constructor( suica, center, size, color )
 	{
