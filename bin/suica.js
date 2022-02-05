@@ -49,6 +49,7 @@
 //	2.-1.10 (220201) square
 //	2.-1.11 (220203) attribute modification
 //	2.-1.12 (220204) line
+//	2.-1.13 (220205) object as position
 //
 //===================================================
 
@@ -371,10 +372,17 @@ class Suica
 		{
 			center = center.replaceAll(' ','');
 			
+			// x,y,z
 			if( center.indexOf(',') > 0 )
 			{
 				center = center.split(',').map(Number);
 				return [Number(center[0]), Number(center[1]), Number(center[2]) ];
+			}
+			
+			// object name - object exists and has center
+			if( window[center] && window[center].center )
+			{
+				return window[center].center;
 			}
 		}
 
@@ -469,7 +477,7 @@ class Suica
 	line( center=Suica.DEFAULT.LINE.CENTER, to=Suica.DEFAULT.LINE.TO, color=Suica.DEFAULT.LINE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.line( [${center}], ${to}, ${color} )`);
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.line( [${center}], [${to}], ${color} )`);
 
 		return new Line( this, center, to, color );
 	}

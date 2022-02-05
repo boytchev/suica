@@ -118,7 +118,7 @@ background( 'linen' );
 ### Coordinate system
 
 The coordinate system in Suica is important as it controls how objects
-[positions](#positions) and [sizes](#sizes) are defined. Suica uses Cartesian
+[positions](#position) and [sizes](#size) are defined. Suica uses Cartesian
 3D coordinate system. The tag `<suica>` accepts attribute `orientation` with
 values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX` (these are all possible
 permutations of the letters *X*, *Y* and *Z*. Each orientation defines a
@@ -292,6 +292,22 @@ p.x = 25;
 _**Note**: The object [line](#line) is an exception. It has `from` as synonym of
 `center`, and it has no `x`, `y` and `z`._
 
+An object as be passed as a center of another object. In this case its center
+is used. 
+
+```html
+HTML:
+<cubeFrame id="a" x="-20">
+<cubeFrame id="b" x="20">
+<line from="a" to="b">
+```
+```js
+JS:
+a = cubeFrame( [20,0,0] );
+b = cubeFrame( [-20,0,0] );
+line( a, b );
+```
+[<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-as-position.html)
 
 #### Size
 
