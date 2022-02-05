@@ -44,9 +44,14 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
 [<kbd><img src="../examples/snapshots/cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
 
-
 [<kbd><img src="../examples/snapshots/cube-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
 [<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
+
+[<kbd><img src="../examples/snapshots/circle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle.html)
+[<kbd><img src="../examples/snapshots/ellipse.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse.html)
+
+[<kbd><img src="../examples/snapshots/circle-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle-frame.html)
+[<kbd><img src="../examples/snapshots/ellipse-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse-frame.html)
 
 ## Images
 

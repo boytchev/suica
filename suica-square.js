@@ -26,7 +26,7 @@
 class Square extends Mesh
 {
 
-	// a geometry shared by all cubes
+	// a geometry shared by all squares
 	static geometry = new THREE.PlaneGeometry( 1, 1 );
 	
 	constructor( suica, center, size, color )

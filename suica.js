@@ -12,4 +12,5 @@ document.write( '<script src="suica-point.js"></script>' );
 document.write( '<script src="suica-line.js"></script>' );
 document.write( '<script src="suica-square.js"></script>' );
 document.write( '<script src="suica-cube.js"></script>' );
+document.write( '<script src="suica-circle.js"></script>' );
 document.write( '<script src="suica-main.js"></script>' );

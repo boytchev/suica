@@ -49,12 +49,13 @@
 //	2.-1.11 (220203) attribute modification
 //	2.-1.12 (220204) line
 //	2.-1.13 (220205) object as position
+//	2.-1.14 (220205) circle, circleFrame
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.13 (220205)` );
+console.log( `Suica 2.-1.14 (220205)` );
 
 
 // control flags
@@ -103,6 +104,7 @@ class Suica
 		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0] },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
+		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
 	} // Suica.DEFAULT
 	
 	
@@ -517,6 +519,24 @@ class Suica
 		return new CubeFrame( this, center, size, color );
 	}
 
+	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circle( [${center}], ${size}, ${color} )`);
+
+		return new Circle( this, center, size, color );
+	}
+	
+	
+	circleFrame( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circleFrame( [${center}], ${size}, ${color} )`);
+
+		return new CircleFrame( this, center, size, color );
+	}
+	
+	
 }
 
 

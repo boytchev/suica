@@ -7,7 +7,7 @@
 - [Objects](#objects)
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
-	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) </small>]
+	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) | [circle](#circle) | [circle frame](#circle-frame) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
@@ -492,7 +492,7 @@ and `color`:
 ```html
 HTML:
 <squareFrame center="25,0,15">
-<squareFrame x="25" y="0" z="15" size="10>
+<squareFrame x="25" y="0" z="15" size="10">
 ```
 ```js
 JS:
@@ -536,7 +536,7 @@ and `color`:
 ```html
 HTML:
 <cubeFrame center="25,0,15">
-<cubeFrame x="25" y="0" z="15" size="10>
+<cubeFrame x="25" y="0" z="15" size="10">
 ```
 ```js
 JS:
@@ -546,6 +546,51 @@ cubeFrame( [25,0,15], 10, 'red' );
 
 [<kbd><img src="../examples/snapshots/cube-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
 [<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
+
+
+
+### Circle
+
+The object `circle` represents a solid circle or ellipse. Its properties are
+`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color` and
+`image`. 
+
+```html
+HTML:
+<circle center="25,0,15">
+<circle x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+circle( [25,0,15] );
+circle( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/circle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle.html)
+[<kbd><img src="../examples/snapshots/ellipse.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ellipse.html)
+
+
+
+### Circle frame
+
+The object `circleFrame` represents a wireframed circle or ellipse. Its
+properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`
+and `color`:
+
+```html
+HTML:
+<circleFrame center="25,0,15">
+<circleFrame x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+circleFrame( [25,0,15] );
+circleFrame( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/circle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle-frame.html)
+[<kbd><img src="../examples/snapshots/ellipse-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ellipse-frame.html)
+
 
 
 

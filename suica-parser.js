@@ -12,6 +12,8 @@
 // <squareFrame id="..." center="..." color="..." size="...">
 // <cube id="..." center="..." color="..." size="...">
 // <cubeFrame id="..." center="..." color="..." size="...">
+// <circle id="..." center="..." color="..." size="...">
+// <circleFrame id="..." center="..." color="..." size="...">
 //
 
 
@@ -40,6 +42,8 @@ class HTMLParser
 		this.parseTag.SQUAREFRAME = this.parseTagSQUAREFRAME;
 		this.parseTag.CUBE = this.parseTagCUBE;
 		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
+		this.parseTag.CIRCLE = this.parseTagCIRCLE;
+		this.parseTag.CIRCLEFRAME = this.parseTagCIRCLEFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTag;
@@ -260,5 +264,52 @@ class HTMLParser
 	} // HTMLParser.parseTagCUBEFRAME
 	
 	
+	// <circle id="..." center="..." color="..." size="...">
+	parseTagCIRCLE( suica, elem )
+	{
+		var p = suica.circle(
+			elem.getAttribute('center') || Suica.DEFAULT.CIRCLE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CIRCLE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagCIRCLE
+	
+	
+	// <squareFrame id="..." center="..." color="..." size="...">
+	parseTagCIRCLEFRAME( suica, elem )
+	{
+		var p = suica.circleFrame(
+			elem.getAttribute('center') || Suica.DEFAULT.CIRCLE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CIRCLE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLORFRAME
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+			
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagCIRCLEFRAME
+
 } // HTMLParser
 
