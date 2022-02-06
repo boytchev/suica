@@ -16,6 +16,7 @@
 // <circleFrame id="..." center="..." color="..." size="...">
 // <polygon id="..." center="..." color="..." size="..." count="...">
 // <polygonFrame id="..." center="..." color="..." size="..." count="...">
+// <sphere id="..." center="..." color="..." size="...">
 //
 
 
@@ -48,6 +49,7 @@ class HTMLParser
 		this.parseTag.CIRCLEFRAME = this.parseTagCIRCLEFRAME;
 		this.parseTag.POLYGON = this.parseTagPOLYGON;
 		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
+		this.parseTag.SPHERE = this.parseTagSPHERE;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTag;
@@ -365,5 +367,30 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagPOLYGONFRAME
 
+	// <sphere id="..." center="..." color="..." size="...">
+	parseTagSPHERE( suica, elem )
+	{
+		var p = suica.sphere(
+			elem.getAttribute('center') || Suica.DEFAULT.SPHERE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SPHERE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.SPHERE.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagSPHERE
+	
+	
 } // HTMLParser
 

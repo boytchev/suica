@@ -7,7 +7,7 @@
 - [Objects](#objects)
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
-	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) </small>]
+	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) | [sphere](#sphere) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
@@ -639,6 +639,28 @@ polygonFrame( 5, [25,0,15], 10, 'red' ); // pentagon
 
 _**Note:** Properties size, width and height refer to the polygon circumscribed
 circle, rather than the polygon itself._
+
+
+
+### Sphere
+
+The object `sphere` represents a solid sphere or spheroid. Its properties are
+`center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
+`color` and `image`. 
+
+```html
+HTML:
+<sphere center="25,0,15">
+<sphere x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+sphere( [25,0,15] );
+sphere( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/sphere.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
+[<kbd><img src="../examples/snapshots/spheroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/spheroid.html)
 
 
 

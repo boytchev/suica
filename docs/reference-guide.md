@@ -1,6 +1,6 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) | [Color](#color) | [Point](#point) | [Line](#line) | [Square](#square) | [SquareFrame](#squareframe) | [Cube](#cube) | [CubeFrame](#cubeframe) | [Circle](#circle) | [CircleFrame](#circleframe) | [Polygon](#polygon) | [PolygonFrame](#polygonframe)
+[Suica](#suica) | [Color](#color) | [Point](#point) | [Line](#line) | [Square](#square) | [SquareFrame](#squareframe) | [Cube](#cube) | [CubeFrame](#cubeframe) | [Circle](#circle) | [CircleFrame](#circleframe) | [Polygon](#polygon) | [PolygonFrame](#polygonframe) | [Sphere](#sphere)
 
 ### Suica
 
@@ -303,6 +303,34 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 ```
+
+
+### Sphere
+
+```html
+HTML:
+<sphere id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+<sphere x="𝑥" y="𝑦" z="𝑧">
+<sphere size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
+<sphere width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.sphere( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
+𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.sphere( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+𝑜𝑏𝑗𝑒𝑐𝑡.center = [𝑥,𝑦,𝑧];
+𝑜𝑏𝑗𝑒𝑐𝑡.x = 𝑥;
+𝑜𝑏𝑗𝑒𝑐𝑡.y = 𝑦;
+𝑜𝑏𝑗𝑒𝑐𝑡.z = 𝑧;
+𝑜𝑏𝑗𝑒𝑐𝑡.size = 𝑠𝑖𝑧𝑒;
+𝑜𝑏𝑗𝑒𝑐𝑡.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ];
+𝑜𝑏𝑗𝑒𝑐𝑡.width = 𝑤𝑖𝑑𝑡ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
+𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
+```
+
 
 
 ---

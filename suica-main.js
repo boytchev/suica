@@ -58,7 +58,7 @@
 //	2.-1.12 (220204) line
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
-//	2.-1.15 (220206) polygon, polygonFrame
+//	2.-1.15 (220206) polygon, polygonFrame, sphere
 //
 //===================================================
 
@@ -115,6 +115,7 @@ class Suica
 		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
 		POLYGON: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
+		SPHERE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50 },
 	} // Suica.DEFAULT
 	
 	
@@ -581,6 +582,14 @@ class Suica
 		return new PolygonFrame( this, count, center, size, color );
 	}
 	
+	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.sphere( [${center}], ${size}, ${color} )`);
+
+		return new Sphere( this, center, size, color );
+	}
+
 	
 }
 

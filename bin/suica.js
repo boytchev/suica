@@ -59,7 +59,7 @@
 //	2.-1.12 (220204) line
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
-//	2.-1.15 (220206) polygon, polygonFrame
+//	2.-1.15 (220206) polygon, polygonFrame, sphere
 //
 //===================================================
 
@@ -116,6 +116,7 @@ class Suica
 		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
 		POLYGON: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
+		SPHERE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50 },
 	} // Suica.DEFAULT
 	
 	
@@ -582,6 +583,14 @@ class Suica
 		return new PolygonFrame( this, count, center, size, color );
 	}
 	
+	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.sphere( [${center}], ${size}, ${color} )`);
+
+		return new Sphere( this, center, size, color );
+	}
+
 	
 }
 
@@ -696,6 +705,7 @@ window.addEventListener( 'load', function()
 // <circleFrame id="..." center="..." color="..." size="...">
 // <polygon id="..." center="..." color="..." size="..." count="...">
 // <polygonFrame id="..." center="..." color="..." size="..." count="...">
+// <sphere id="..." center="..." color="..." size="...">
 //
 
 
@@ -728,6 +738,7 @@ class HTMLParser
 		this.parseTag.CIRCLEFRAME = this.parseTagCIRCLEFRAME;
 		this.parseTag.POLYGON = this.parseTagPOLYGON;
 		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
+		this.parseTag.SPHERE = this.parseTagSPHERE;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTag;
@@ -1045,6 +1056,31 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagPOLYGONFRAME
 
+	// <sphere id="..." center="..." color="..." size="...">
+	parseTagSPHERE( suica, elem )
+	{
+		var p = suica.sphere(
+			elem.getAttribute('center') || Suica.DEFAULT.SPHERE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SPHERE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.SPHERE.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagSPHERE
+	
+	
 } // HTMLParser
 
 //
@@ -2321,4 +2357,77 @@ window.polygonFrame = function(
 {
 	Suica.precheck();
 	return Suica.current.polygonFrame( count, size, color );
+}﻿//
+// Suica 2.0 Sphere
+// CC-3.0-SA-NC
+//
+// sphere( center, size, color )
+//
+// <sphere id="" center="" size="" color="">
+// <sphere x="" y="" z="">
+// <sphere width="" height="" depth="">
+//
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// size		size(s) of edge
+// width
+// height
+// depth
+// color	color [r,g,b]
+// image	texture (drawing or canvas)
+//
+//===================================================
+
+
+class Sphere extends Mesh
+{
+	
+	// a geometry shared by all cubes
+	static geometry;
+	
+	constructor( suica, center, size, color )
+	{
+		suica.parser?.parseTags();
+		if (DEBUG_CALLS) console.log(`:: ${suica.id}.sphere(${center},${size},${color})`);
+		
+		if( !Sphere.geometry )
+		{
+			Sphere.geometry = new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) );
+		}
+		
+		super( suica, THREE.Mesh, Sphere.geometry, Mesh.solidMaterial.clone() );
+		
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		
+		suica.scene.add( this.threejs );
+	}
+
+} // class Sphere
+
+
+
+
+window.sphere = function(
+				center = Suica.DEFAULT.SPHERE.CENTER,
+				size   = Suica.DEFAULT.SPHERE.SIZE,
+				color  = Suica.DEFAULT.SPHERE.COLOR )
+{
+	Suica.precheck();
+	return Suica.current.sphere( center, size, color );
+}
+
+
+
+
+window.cubeFrame = function(
+				center = Suica.DEFAULT.CUBE.CENTER,
+				size   = Suica.DEFAULT.CUBE.SIZE,
+				color  = Suica.DEFAULT.CUBE.FRAMECOLOR )
+{
+	Suica.precheck();
+	return Suica.current.cubeFrame( center, size, color );
 }} // LoadSuica 
