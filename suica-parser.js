@@ -14,6 +14,8 @@
 // <cubeFrame id="..." center="..." color="..." size="...">
 // <circle id="..." center="..." color="..." size="...">
 // <circleFrame id="..." center="..." color="..." size="...">
+// <polygon id="..." center="..." color="..." size="..." count="...">
+// <polygonFrame id="..." center="..." color="..." size="..." count="...">
 //
 
 
@@ -44,6 +46,8 @@ class HTMLParser
 		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		this.parseTag.CIRCLE = this.parseTagCIRCLE;
 		this.parseTag.CIRCLEFRAME = this.parseTagCIRCLEFRAME;
+		this.parseTag.POLYGON = this.parseTagPOLYGON;
+		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTag;
@@ -279,7 +283,7 @@ class HTMLParser
 
 		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
 		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-			
+	
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 
@@ -310,6 +314,56 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagCIRCLEFRAME
+	
+	
+	// <polygon id="..." center="..." color="..." size="..." count="...">
+	parseTagPOLYGON( suica, elem )
+	{
+		var p = suica.polygon(
+			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+	
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPOLYGON
+	
+	
+	// <squareFrame id="..." center="..." color="..." size="..." count="...">
+	parseTagPOLYGONFRAME( suica, elem )
+	{
+		var p = suica.polygonFrame(
+			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLORFRAME
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+			
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPOLYGONFRAME
 
 } // HTMLParser
 

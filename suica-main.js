@@ -13,6 +13,10 @@
 //		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<square id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<circle id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<circleFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<polygon id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<polygonFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -26,6 +30,10 @@
 //		{suica.}squareFrame( center, size, color )
 //		{suica.}cube( center, size, color )
 //		{suica.}cubeFrame( center, size, color )
+//		{suica.}circle( center, size, color )
+//		{suica.}circleFrame( center, size, color )
+//		{suica.}polygon( count, center, size, color )
+//		{suica.}polygonFrame( count, center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -50,12 +58,13 @@
 //	2.-1.12 (220204) line
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
+//	2.-1.15 (220206) polygon, polygonFrame
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.14 (220205)` );
+console.log( `Suica 2.-1.15 (220206)` );
 
 
 // control flags
@@ -105,6 +114,7 @@ class Suica
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
+		POLYGON: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
 	} // Suica.DEFAULT
 	
 	
@@ -393,7 +403,7 @@ class Suica
 	
 	static parseSize( size )
 	{
-		// center is string 'x,y,z'
+		// size is string 'x,y,z'
 		if( typeof size === 'string' || size instanceof String )
 		{
 			size = size.replaceAll(' ','');
@@ -405,6 +415,23 @@ class Suica
 		}
 
 		return size;
+	}
+	
+	
+	static parseRadius( radius )
+	{
+		// radius is string 'x,y,z'
+		if( typeof radius === 'string' || radius instanceof String )
+		{
+			radius = radius.replaceAll(' ','');
+			
+			if( radius.indexOf(',') > 0 )
+			{
+				return radius.split(',').map(Number);
+			}
+		}
+
+		return radius;
 	}
 	
 	
@@ -524,7 +551,7 @@ class Suica
 		this.parser?.parseTags();
 		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circle( [${center}], ${size}, ${color} )`);
 
-		return new Circle( this, center, size, color );
+		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
 	
 	
@@ -533,7 +560,25 @@ class Suica
 		this.parser?.parseTags();
 		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circleFrame( [${center}], ${size}, ${color} )`);
 
-		return new CircleFrame( this, center, size, color );
+		return new PolygonFrame( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
+	}
+	
+	
+	polygon( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.POLYGON.CENTER, size=Suica.DEFAULT.POLYGON.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygon( ${count}, [${center}], ${size}, ${color} )`);
+
+		return new Polygon( this, count, center, size, color );
+	}
+	
+	
+	polygonFrame( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygonFrame( ${count}, [${center}], ${size}, ${color} )`);
+
+		return new PolygonFrame( this, count, center, size, color );
 	}
 	
 	

@@ -14,6 +14,10 @@
 //		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<square id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<circle id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<circleFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<polygon id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<polygonFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -27,6 +31,10 @@
 //		{suica.}squareFrame( center, size, color )
 //		{suica.}cube( center, size, color )
 //		{suica.}cubeFrame( center, size, color )
+//		{suica.}circle( center, size, color )
+//		{suica.}circleFrame( center, size, color )
+//		{suica.}polygon( count, center, size, color )
+//		{suica.}polygonFrame( count, center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -51,12 +59,13 @@
 //	2.-1.12 (220204) line
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
+//	2.-1.15 (220206) polygon, polygonFrame
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.14 (220205)` );
+console.log( `Suica 2.-1.15 (220206)` );
 
 
 // control flags
@@ -106,6 +115,7 @@ class Suica
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
 		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
+		POLYGON: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
 	} // Suica.DEFAULT
 	
 	
@@ -394,7 +404,7 @@ class Suica
 	
 	static parseSize( size )
 	{
-		// center is string 'x,y,z'
+		// size is string 'x,y,z'
 		if( typeof size === 'string' || size instanceof String )
 		{
 			size = size.replaceAll(' ','');
@@ -406,6 +416,23 @@ class Suica
 		}
 
 		return size;
+	}
+	
+	
+	static parseRadius( radius )
+	{
+		// radius is string 'x,y,z'
+		if( typeof radius === 'string' || radius instanceof String )
+		{
+			radius = radius.replaceAll(' ','');
+			
+			if( radius.indexOf(',') > 0 )
+			{
+				return radius.split(',').map(Number);
+			}
+		}
+
+		return radius;
 	}
 	
 	
@@ -525,7 +552,7 @@ class Suica
 		this.parser?.parseTags();
 		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circle( [${center}], ${size}, ${color} )`);
 
-		return new Circle( this, center, size, color );
+		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
 	
 	
@@ -534,7 +561,25 @@ class Suica
 		this.parser?.parseTags();
 		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circleFrame( [${center}], ${size}, ${color} )`);
 
-		return new CircleFrame( this, center, size, color );
+		return new PolygonFrame( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
+	}
+	
+	
+	polygon( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.POLYGON.CENTER, size=Suica.DEFAULT.POLYGON.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygon( ${count}, [${center}], ${size}, ${color} )`);
+
+		return new Polygon( this, count, center, size, color );
+	}
+	
+	
+	polygonFrame( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygonFrame( ${count}, [${center}], ${size}, ${color} )`);
+
+		return new PolygonFrame( this, count, center, size, color );
 	}
 	
 	
@@ -649,6 +694,8 @@ window.addEventListener( 'load', function()
 // <cubeFrame id="..." center="..." color="..." size="...">
 // <circle id="..." center="..." color="..." size="...">
 // <circleFrame id="..." center="..." color="..." size="...">
+// <polygon id="..." center="..." color="..." size="..." count="...">
+// <polygonFrame id="..." center="..." color="..." size="..." count="...">
 //
 
 
@@ -679,6 +726,8 @@ class HTMLParser
 		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		this.parseTag.CIRCLE = this.parseTagCIRCLE;
 		this.parseTag.CIRCLEFRAME = this.parseTagCIRCLEFRAME;
+		this.parseTag.POLYGON = this.parseTagPOLYGON;
+		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTag;
@@ -914,7 +963,7 @@ class HTMLParser
 
 		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
 		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-			
+	
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
 
@@ -945,6 +994,56 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagCIRCLEFRAME
+	
+	
+	// <polygon id="..." center="..." color="..." size="..." count="...">
+	parseTagPOLYGON( suica, elem )
+	{
+		var p = suica.polygon(
+			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+	
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPOLYGON
+	
+	
+	// <squareFrame id="..." center="..." color="..." size="..." count="...">
+	parseTagPOLYGONFRAME( suica, elem )
+	{
+		var p = suica.polygonFrame(
+			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLORFRAME
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+			
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPOLYGONFRAME
 
 } // HTMLParser
 
@@ -2047,72 +2146,133 @@ window.cubeFrame = function(
 //===================================================
 
 
-class Circle extends Mesh
+class Polygon extends Mesh
 {
 	
-	constructor( suica, center, size, color )
+	static geometry = []; // array of geometries for different number of sides
+	
+	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.circle(${center},${size},${color})`);
+		if (DEBUG_CALLS) console.log(`:: ${suica.id}.polygon(${count},${center},${size},${color})`);
 	
-		if( !Circle.geometry )
+		if( !Polygon.geometry[count] )
 		{
-			Circle.geometry = new THREE.CircleGeometry( 0.5, Suica.DEFAULT.CIRCLE.COUNT );
+			Polygon.geometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
 		}
 		
-		super( suica, THREE.Mesh, Circle.geometry, Mesh.solidMaterial.clone() );
+		super( suica, THREE.Mesh, Polygon.geometry[count], Mesh.solidMaterial.clone() );
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
+		this.n = count;
 		
 		suica.scene.add( this.threejs );
 		
-	} // Circle.constructor
+	} // Polygon.constructor
 
 
-} // class Circle
+	get count()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.n;
+	}
+	
+	
+	set count( count )
+	{
+		this.suica.parser?.parseTags();
+
+		if( count == this.n ) return; // same number of side, no need to regenerate
+		
+		if( !Polygon.geometry[count] )
+		{
+			Polygon.geometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
+		}
+		
+		this.threejs.geometry = Polygon.geometry[count];
+	}
+	
+	
+} // class Polygon
 
 
 
 
-class CircleFrame extends Mesh
+class PolygonFrame extends Mesh
 {
 
-	constructor( suica, center, size, color )
+	static geometry = []; // array of geometries for different number of sides
+
+	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.circleFrame(${center},${size},${color})`);
+		if (DEBUG_CALLS) console.log(`:: ${suica.id}.polygonFrame(${count},${center},${size},${color})`);
 		
-		if( !CircleFrame.geometry  )
-		{
-			CircleFrame.geometry = new THREE.BufferGeometry();
-
-			let vertices = new Float32Array(3*Suica.DEFAULT.CIRCLE.COUNT+3),
-				uvs = new Float32Array(2*Suica.DEFAULT.CIRCLE.COUNT+2);
-
-			for( var i=0; i<=Suica.DEFAULT.CIRCLE.COUNT; i++ )
-			{
-				var angle = 2*Math.PI * i/Suica.DEFAULT.CIRCLE.COUNT;
-				
-				vertices[3*i] = 0.5*Math.cos( angle ); 
-				vertices[3*i+1] = 0.5*Math.sin( angle ); 
-				uvs[2*i] = 2*i/Suica.DEFAULT.CIRCLE.COUNT;
-			}
-			CircleFrame.geometry.setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			CircleFrame.geometry.setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
-		}
-
-		super( suica, THREE.Line, CircleFrame.geometry, Mesh.lineMaterial.clone() );
+		super( suica, THREE.Line, PolygonFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
+		this.n = count;
 		
 		suica.scene.add( this.threejs );
 	}		
 	
-} // class CircleFrame
+	
+
+
+	get count()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.n;
+	}
+	
+
+	static getGeometry( count )
+	{
+		if( !Polygon.geometry[count] )
+		{
+			PolygonFrame.geometry[count] = new THREE.BufferGeometry();
+
+			let vertices = new Float32Array(3*count+3),
+				uvs = new Float32Array(2*count+2);
+
+			for( var i=0; i<=count; i++ )
+			{
+				var angle = 2*Math.PI * i/count - Math.PI*(1/2-1/count);
+				
+				vertices[3*i] = 0.5*Math.cos( angle ); 
+				vertices[3*i+1] = 0.5*Math.sin( angle ); 
+				
+				// for up to octagons each side has uv from 0 to 1
+				// above octagons each quarter of sides has uv from 0 to 1
+				if( count > 8 )
+					uvs[2*i] = 4*i/count;
+				else
+					uvs[2*i] = i;
+			}
+			PolygonFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			PolygonFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+		}
+		
+		return PolygonFrame.geometry[count];
+	}
+	
+	
+	set count( count )
+	{
+		this.suica.parser?.parseTags();
+
+		if( count == this.n ) return; // same number of side, no need to regenerate
+		
+		this.threejs.geometry = PolygonFrame.getGeometry( count );
+	}
+	
+} // class PolygonFrame
 
 
 
@@ -2135,4 +2295,30 @@ window.circleFrame = function(
 {
 	Suica.precheck();
 	return Suica.current.circleFrame( center, size, color );
+}
+
+
+
+
+window.polygon = function(
+				count = Suica.DEFAULT.POLYGON.COUNT,
+				center = Suica.DEFAULT.CIRCLE.CENTER,
+				size   = Suica.DEFAULT.CIRCLE.SIZE,
+				color  = Suica.DEFAULT.CIRCLE.COLOR )
+{
+	Suica.precheck();
+	return Suica.current.polygon( count, center, size, color );
+}
+
+
+
+
+window.polygonFrame = function(
+				count = Suica.DEFAULT.POLYGON.COUNT,
+				center = Suica.DEFAULT.CIRCLE.CENTER,
+				size   = Suica.DEFAULT.CIRCLE.SIZE,
+				color  = Suica.DEFAULT.CIRCLE.FRAMECOLOR )
+{
+	Suica.precheck();
+	return Suica.current.polygonFrame( count, size, color );
 }} // LoadSuica 

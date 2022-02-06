@@ -53,6 +53,9 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/circle-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle-frame.html)
 [<kbd><img src="../examples/snapshots/ellipse-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse-frame.html)
 
+[<kbd><img src="../examples/snapshots/polygon.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
+[<kbd><img src="../examples/snapshots/polygon-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon-frame.html)
+
 ## Images
 
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)

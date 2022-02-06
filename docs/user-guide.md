@@ -2,12 +2,12 @@
 
 ## Table of contents
 
-- [About](#about)
+- [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
 - [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop) </small>] 
 - [Objects](#objects)
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
-	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) | [circle](#circle) | [circle frame](#circle-frame) </small>]
+	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
@@ -486,8 +486,8 @@ square( [25,0,15], 10, 'red' );
 ### Square frame
 
 The object `squareFrame` represents a wireframed square or rectangle. Its
-properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`
-and `color`:
+properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
+`color` and `image`.
 
 ```html
 HTML:
@@ -530,8 +530,8 @@ cube( [25,0,15], 10, 'red' );
 ### Cube frame
 
 The object `cubeFrame` represents a wireframed cube or cuboid. Its properties
-are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`)
-and `color`:
+are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
+`color` and `image`.
 
 ```html
 HTML:
@@ -574,8 +574,8 @@ circle( [25,0,15], 10, 'red' );
 ### Circle frame
 
 The object `circleFrame` represents a wireframed circle or ellipse. Its
-properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`
-and `color`:
+properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
+`color` and `image`.
 
 ```html
 HTML:
@@ -591,6 +591,54 @@ circleFrame( [25,0,15], 10, 'red' );
 [<kbd><img src="../examples/snapshots/circle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle-frame.html)
 [<kbd><img src="../examples/snapshots/ellipse-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ellipse-frame.html)
 
+
+
+### Polygon
+
+The object `polygon` represents a solid regular polygon. Its properties are
+`count`, `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
+`color` and `image`. The property `count` defines the number of sides of the
+polygon.
+
+```html
+HTML:
+<polygon count="3" center="25,0,15">
+<polygon count="5"  x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+polygon( 3, [25,0,15] ); // triangle
+polygon( 5, [25,0,15], 10, 'red' ); // pentagon
+```
+
+[<kbd><img src="../examples/snapshots/polygon.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
+
+_**Note:** Properties size, width and height refer to the polygon circumscribed
+circle, rather than the polygon itself._
+
+
+### Polygon frame
+
+The object `polygonFrame` represents a wireframed regular polygon. Its
+properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width` and
+`height`, `color` and `image`. The property `count` defines the number of sides
+of the polygon.
+
+```html
+HTML:
+<polygonFrame count="3" center="25,0,15">
+<polygonFrame count="5" x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+polygonFrame( 3, [25,0,15] ); // triangle
+polygonFrame( 5, [25,0,15], 10, 'red' ); // pentagon
+```
+
+[<kbd><img src="../examples/snapshots/polygon-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/polygon-frame.html)
+
+_**Note:** Properties size, width and height refer to the polygon circumscribed
+circle, rather than the polygon itself._
 
 
 
