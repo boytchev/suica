@@ -7,7 +7,8 @@
 - [Objects](#objects)
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
-	- [Common objects](#common-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [cube](#cube) | [cube frame](#cube-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) | [sphere](#sphere) </small>]
+	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) </small>]
+	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [cube frame](#cube-frame) | [sphere](#sphere) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
@@ -407,13 +408,15 @@ The following tabel shows some combinations of colors:
 
 
 
-## Common objects
+## Common 2D objects
 
-The common objects represents simple shapes, like points, square, cubes, spheres
-and so on. Their constructions requires to set just a few properties. Some of
-the objects have framed variants, where only their edges are drawn with lines.
-The width of the lines is 1 pixels and this limitation is set in the underlying
-technology.
+The common 2D objects represents flat 1D and 2D shapes, like points, squares,
+circles and so on. Their constructions requires to set just a few properties.
+Some of the objects have framed variants, where only their edges are drawn with
+lines.
+
+_**Note:** The width of the lines is 1 pixel and this limitation is set in the
+underlying technology._
 
 
 ### Point
@@ -502,50 +505,6 @@ squareFrame( [25,0,15], 10, 'red' );
 
 [<kbd><img src="../examples/snapshots/square-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
 [<kbd><img src="../examples/snapshots/rectangle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
-
-
-
-### Cube
-
-The object `cube` represents a solid cube or cuboid. Its properties are `center`
-(or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`), `color` and
-`image`. 
-
-```html
-HTML:
-<cube center="25,0,15">
-<cube x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-cube( [25,0,15] );
-cube( [25,0,15], 10, 'red' );
-```
-
-[<kbd><img src="../examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
-[<kbd><img src="../examples/snapshots/cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
-
-
-
-### Cube frame
-
-The object `cubeFrame` represents a wireframed cube or cuboid. Its properties
-are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color` and `image`.
-
-```html
-HTML:
-<cubeFrame center="25,0,15">
-<cubeFrame x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-cubeFrame( [25,0,15] );
-cubeFrame( [25,0,15], 10, 'red' );
-```
-
-[<kbd><img src="../examples/snapshots/cube-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
-[<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
 
 
 
@@ -639,6 +598,60 @@ polygonFrame( 5, [25,0,15], 10, 'red' ); // pentagon
 
 _**Note:** Properties size, width and height refer to the polygon circumscribed
 circle, rather than the polygon itself._
+
+
+
+
+## Common 3D objects
+
+The common 3D objects represents shapes, like cubes, spheres, and so on. Their
+constructions requires to set just a few properties. Some of the objects have
+framed variants, where only their edges are drawn with lines.
+
+_**Note:** The width of the lines is 1 pixel and this limitation is set in the
+underlying technology._
+
+### Cube
+
+The object `cube` represents a solid cube or cuboid. Its properties are `center`
+(or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`), `color` and
+`image`. 
+
+```html
+HTML:
+<cube center="25,0,15">
+<cube x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+cube( [25,0,15] );
+cube( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
+[<kbd><img src="../examples/snapshots/cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
+
+
+
+### Cube frame
+
+The object `cubeFrame` represents a wireframed cube or cuboid. Its properties
+are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
+`color` and `image`.
+
+```html
+HTML:
+<cubeFrame center="25,0,15">
+<cubeFrame x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+cubeFrame( [25,0,15] );
+cubeFrame( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/cube-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
+[<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
 
 
 

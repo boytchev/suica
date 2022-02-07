@@ -28,7 +28,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/sizes.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
 
-## Common objects
+## Common 2D objects
 
 [<kbd><img src="../examples/snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)
 [<kbd><img src="../examples/snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
@@ -41,12 +41,6 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/square-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
 [<kbd><img src="../examples/snapshots/rectangle-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
 
-[<kbd><img src="../examples/snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
-[<kbd><img src="../examples/snapshots/cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
-
-[<kbd><img src="../examples/snapshots/cube-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
-[<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
-
 [<kbd><img src="../examples/snapshots/circle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle.html)
 [<kbd><img src="../examples/snapshots/ellipse.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse.html)
 
@@ -56,8 +50,16 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/polygon.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
 [<kbd><img src="../examples/snapshots/polygon-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon-frame.html)
 
+## Common 3D objects
+
 [<kbd><img src="../examples/snapshots/sphere.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
 [<kbd><img src="../examples/snapshots/spheroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/spheroid.html)
+
+[<kbd><img src="../examples/snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
+[<kbd><img src="../examples/snapshots/cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
+
+[<kbd><img src="../examples/snapshots/cube-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
+[<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
 
 ## Images
 
