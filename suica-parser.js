@@ -52,7 +52,7 @@ class HTMLParser
 		this.parseTag.SPHERE = this.parseTagSPHERE;
 		
 		this.parseTag.BUTTON = this.skipTag;
-		this.parseTag.CANVAS = this.skipTag;
+		this.parseTag.CANVAS = this.skipTagSilently;
 		this.parseTag.DIV = this.skipTag;
 		this.parseTag.SPAN = this.skipTag;
 		
@@ -62,7 +62,7 @@ class HTMLParser
 	// executed once - parses <suica-canvas>
 	parseTags( )
 	{
-		if( DEBUG_CALLS ) console.log(`:: ${this.suica.id}.parseTag( )`);
+		this.suica.debugCall( 'parseTags' );
 
 		// unhook the parser
 		this.suica.parser = null;
@@ -91,12 +91,17 @@ class HTMLParser
 	} // HTMLParser.parseTagsInElement
 		
 
-	// <canvas> <div>
+	// <some-unknown-tag> <div>
 	skipTag( suica, elem )
 	{
-		if( DEBUG_CALLS ) console.log(`:: ${suica.id}.skipTag( ${elem.tagName } )`);
-		// skip this tag
+		suica.debugCall( 'skipTag', elem.tagName ); // skip this tag
 	} // HTMLParser.skipTag
+	
+	
+	// <canvas> <div>
+	skipTagSilently( suica, elem )
+	{
+	} // HTMLParser.skipTagSIlently
 	
 	
 	// <oxyz size="..." color="...">

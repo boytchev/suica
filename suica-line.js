@@ -24,7 +24,7 @@ class Line extends Mesh
 	constructor(suica, center, to, color)
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.line(${center},${to},${color})`);
+		suica.debugCall( 'line', center, to, color );
 			
 		super( suica, THREE.LineSegments, Line.geometry.clone(), Mesh.lineMaterial.clone() );
 

@@ -33,7 +33,7 @@ class Cube extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cube(${center},${size},${color})`);
+		suica.debugCall( 'cube', center, size, color );
 		
 		super( suica, THREE.Mesh, Cube.geometry, Mesh.solidMaterial.clone() );
 		
@@ -55,7 +55,7 @@ class CubeFrame extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cubeFrame(${center},${size},${color})`);
+		suica.debugCall( 'cubeFrame', center, size, color );
 		
 		super( suica, THREE.LineSegments, CubeFrame.geometry, Mesh.lineMaterial.clone() );
 

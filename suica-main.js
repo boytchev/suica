@@ -9,14 +9,15 @@
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<line id="..." center="..." from="" color="..." size="...">
-//		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<square id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<circle id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<circleFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<polygon id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<polygonFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
 //	</suica>
 //
 //	<script>
@@ -28,12 +29,13 @@
 //		{suica.}point( center/from, to, color )
 //		{suica.}square( center, size, color )
 //		{suica.}squareFrame( center, size, color )
-//		{suica.}cube( center, size, color )
-//		{suica.}cubeFrame( center, size, color )
 //		{suica.}circle( center, size, color )
 //		{suica.}circleFrame( center, size, color )
 //		{suica.}polygon( count, center, size, color )
 //		{suica.}polygonFrame( count, center, size, color )
+//		{suica.}cube( center, size, color )
+//		{suica.}cubeFrame( center, size, color )
+//		{suica.}sphere( center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -287,7 +289,7 @@ class Suica
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.background( ${color} )`);
+		this.debugCall( 'background', color );
 		
 		this.scene.background = new THREE.Color( color );
 	}
@@ -296,7 +298,7 @@ class Suica
 	oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.oxyz( ${size}, ${color} )`);
+		this.debugCall( 'oxyz', size, color );
 		
 		var axes = new THREE.AxesHelper( size )
 			axes.setColors( color, color, color );
@@ -307,7 +309,7 @@ class Suica
 	demo( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.demo( ${distance}, ${altitude} )`);
+		this.debugCall( 'demo', distance, altitude );
 		
 		this.demoViewPoint = {distance:distance, altitude:altitude};
 	}
@@ -316,8 +318,8 @@ class Suica
 	onTime( src=Suica.DEFAULT.ONTIME.SRC )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.onTime( ${src} )`);
-		
+		this.debugCall( 'onTime', src );
+				
 		this.onTimeHandler = src;
 	}
 	
@@ -328,7 +330,25 @@ class Suica
 			throw 'error: No Suica instance is active';
 	}
 	
+	
+	debugCall( functionName, ...parameters )
+	{
+		if( !DEBUG_CALLS ) return;
+		
+		for( var i=0; i<parameters.length; i++ )
+		{
+			if( Array.isArray(parameters[i]) )
+				parameters[i] = `[${parameters[i]}]`;
+			else
+			if( typeof parameters[i] === 'string' || parameters[i] instanceof String )
+				parameters[i] = `'${parameters[i]}'`;
+			else
+				parameters[i] = ''+parameters[i];
+		}
 
+		console.info( `:: ${this.id}.${functionName}(${parameters.join(',')})` );
+	}
+	
 	static parseColor( color )
 	{
 		if( color instanceof THREE.Color )
@@ -497,7 +517,6 @@ class Suica
 	point( center=Suica.DEFAULT.POINT.CENTER, size=Suica.DEFAULT.POINT.SIZE, color=Suica.DEFAULT.POINT.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.point( [${center}], ${size}, ${color} )`);
 
 		return new Point( this, center, size, color );
 	}
@@ -506,7 +525,6 @@ class Suica
 	line( center=Suica.DEFAULT.LINE.CENTER, to=Suica.DEFAULT.LINE.TO, color=Suica.DEFAULT.LINE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.line( [${center}], [${to}], ${color} )`);
 
 		return new Line( this, center, to, color );
 	}
@@ -515,7 +533,6 @@ class Suica
 	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.square( [${center}], ${size}, ${color} )`);
 
 		return new Square( this, center, size, color );
 	}
@@ -524,7 +541,6 @@ class Suica
 	squareFrame( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.squareFrame( [${center}], ${size}, ${color} )`);
 
 		return new SquareFrame( this, center, size, color );
 	}
@@ -533,7 +549,6 @@ class Suica
 	cube( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.cube( [${center}], ${size}, ${color} )`);
 
 		return new Cube( this, center, size, color );
 	}
@@ -542,7 +557,6 @@ class Suica
 	cubeFrame( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.cubeFrame( [${center}], ${size}, ${color} )`);
 
 		return new CubeFrame( this, center, size, color );
 	}
@@ -550,7 +564,6 @@ class Suica
 	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circle( [${center}], ${size}, ${color} )`);
 
 		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
@@ -559,7 +572,6 @@ class Suica
 	circleFrame( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circleFrame( [${center}], ${size}, ${color} )`);
 
 		return new PolygonFrame( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
@@ -568,7 +580,6 @@ class Suica
 	polygon( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.POLYGON.CENTER, size=Suica.DEFAULT.POLYGON.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygon( ${count}, [${center}], ${size}, ${color} )`);
 
 		return new Polygon( this, count, center, size, color );
 	}
@@ -577,7 +588,6 @@ class Suica
 	polygonFrame( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygonFrame( ${count}, [${center}], ${size}, ${color} )`);
 
 		return new PolygonFrame( this, count, center, size, color );
 	}
@@ -585,7 +595,6 @@ class Suica
 	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.sphere( [${center}], ${size}, ${color} )`);
 
 		return new Sphere( this, center, size, color );
 	}

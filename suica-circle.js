@@ -31,7 +31,11 @@ class Polygon extends Mesh
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.polygon(${count},${center},${size},${color})`);
+		if( count < Suica.DEFAULT.CIRCLE.COUNT )
+			suica.debugCall( 'polygon', count, center, size, color );
+		else
+			suica.debugCall( 'circle', center, size, color );
+
 	
 		if( !Polygon.geometry[count] )
 		{
@@ -86,7 +90,10 @@ class PolygonFrame extends Mesh
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.polygonFrame(${count},${center},${size},${color})`);
+		if( count < Suica.DEFAULT.CIRCLE.COUNT )
+			suica.debugCall( 'polygonFrame', count, center, size, color );
+		else
+			suica.debugCall( 'circleFrame', center, size, color );
 		
 		super( suica, THREE.Line, PolygonFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
 		

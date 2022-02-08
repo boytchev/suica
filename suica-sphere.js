@@ -31,7 +31,7 @@ class Sphere extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.sphere(${center},${size},${color})`);
+		suica.debugCall( 'sphere', center, size, color );
 		
 		if( !Sphere.geometry )
 		{

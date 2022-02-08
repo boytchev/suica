@@ -32,7 +32,7 @@ class Square extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.square(${center},${size},${color})`);
+		suica.debugCall( 'square', center, size, color );
 		
 		super( suica, THREE.Mesh, Square.geometry, Mesh.solidMaterial.clone() );
 		
@@ -54,7 +54,7 @@ class SquareFrame extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.squareFrame(${center},${size},${color})`);
+		suica.debugCall( 'squareFrame', center, size, color );
 		
 		super( suica, THREE.LineSegments, SquareFrame.geometry, Mesh.lineMaterial.clone() );
 		
