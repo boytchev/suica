@@ -8,7 +8,7 @@
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) </small>]
-	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [cube frame](#cube-frame) | [sphere](#sphere) </small>]
+	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [cube frame](#cube-frame) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [prism frame](#prism-frame) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
@@ -674,6 +674,72 @@ sphere( [25,0,15], 10, 'red' );
 
 [<kbd><img src="../examples/snapshots/sphere.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
 [<kbd><img src="../examples/snapshots/spheroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/spheroid.html)
+
+
+
+### Cylinder
+
+The object `cylinder` represents a solid cylinder or cylindroid. Its properties
+are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
+`color` and `image`. 
+
+```html
+HTML:
+<cylinder center="25,0,15">
+<cylinder x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+cylinder( [25,0,15] );
+cylinder( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/cylinder.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cylinder.html)
+[<kbd><img src="../examples/snapshots/cylindroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cylindroid.html)
+
+
+
+### Prism
+
+The object `prism` represents a solid prism or prismoid. Its properties are
+`count`, `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and
+`depth`), `color` and `image`. The property `count` defines the number of sides
+of the prism.
+
+```html
+HTML:
+<prism count="6" center="25,0,15">
+<prism count="6" x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+prism( 6, [25,0,15] );
+prism( 6, [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/prism.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/prism.html)
+
+
+
+### Prism frame
+
+The object `prismFrame` represents a wireframed prism or prismoid. Its
+properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
+`height` and `depth`), `color` and `image`. The property `count` defines the
+number of sides of the prism.
+
+```html
+HTML:
+<prismFrame count="6" center="25,0,15">
+<prismFrame count="6" x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+prismFrame( 6, [25,0,15] );
+prismFrame( 6, [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/prism-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/prism-frame.html)
 
 
 

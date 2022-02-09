@@ -60,6 +60,13 @@ class Mesh
 				side: THREE.DoubleSide,
 			});
 
+		// solid flat material
+		Mesh.flatMaterial = new THREE.MeshStandardMaterial( {
+				color: 'cornflowerblue',
+				side: THREE.DoubleSide,
+				flatShading: true,
+			});
+
 		// line material
 		CANVAS_SIZE = 4;
 		canvas.width = CANVAS_SIZE;

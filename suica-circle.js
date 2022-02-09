@@ -186,9 +186,9 @@ window.circleFrame = function(
 
 window.polygon = function(
 				count = Suica.DEFAULT.POLYGON.COUNT,
-				center = Suica.DEFAULT.CIRCLE.CENTER,
-				size   = Suica.DEFAULT.CIRCLE.SIZE,
-				color  = Suica.DEFAULT.CIRCLE.COLOR )
+				center = Suica.DEFAULT.POLYGON.CENTER,
+				size   = Suica.DEFAULT.POLYGON.SIZE,
+				color  = Suica.DEFAULT.POLYGON.COLOR )
 {
 	Suica.precheck();
 	return Suica.current.polygon( count, center, size, color );
@@ -199,10 +199,10 @@ window.polygon = function(
 
 window.polygonFrame = function(
 				count = Suica.DEFAULT.POLYGON.COUNT,
-				center = Suica.DEFAULT.CIRCLE.CENTER,
-				size   = Suica.DEFAULT.CIRCLE.SIZE,
-				color  = Suica.DEFAULT.CIRCLE.FRAMECOLOR )
+				center = Suica.DEFAULT.POLYGON.CENTER,
+				size   = Suica.DEFAULT.POLYGON.SIZE,
+				color  = Suica.DEFAULT.POLYGON.FRAMECOLOR )
 {
 	Suica.precheck();
-	return Suica.current.polygonFrame( count, size, color );
+	return Suica.current.polygonFrame( count, center, size, color );
 }

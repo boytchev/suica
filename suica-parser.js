@@ -17,6 +17,9 @@
 // <polygon id="..." center="..." color="..." size="..." count="...">
 // <polygonFrame id="..." center="..." color="..." size="..." count="...">
 // <sphere id="..." center="..." color="..." size="...">
+// <cylinder ...>
+// <prism ...>
+// <prismFrame ...>
 //
 
 
@@ -50,6 +53,9 @@ class HTMLParser
 		this.parseTag.POLYGON = this.parseTagPOLYGON;
 		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
 		this.parseTag.SPHERE = this.parseTagSPHERE;
+		this.parseTag.CYLINDER = this.parseTagCYLINDER;
+		this.parseTag.PRISM = this.parseTagPRISM;
+		this.parseTag.PRISMFRAME = this.parseTagPRISMFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
@@ -395,6 +401,80 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagSPHERE
+	
+	// <cylinder id="..." center="..." color="..." size="...">
+	parseTagCYLINDER( suica, elem )
+	{
+		var p = suica.cylinder(
+			elem.getAttribute('center') || Suica.DEFAULT.CYLINDER.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CYLINDER.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagCYLINDER
+	
+	// <prism id="..." center="..." color="..." size="..." count="...">
+	parseTagPRISM( suica, elem )
+	{
+		var p = suica.prism(
+			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPRISM
+	
+	// <prismFrame id="..." center="..." color="..." size="..." count="...">
+	parseTagPRISMFRAME( suica, elem )
+	{
+		var p = suica.prismFrame(
+			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPRISMFRAME
 	
 	
 } // HTMLParser

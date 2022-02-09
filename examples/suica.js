@@ -10,14 +10,18 @@
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<line id="..." center="..." from="" color="..." size="...">
-//		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<square id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<circle id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<circleFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<polygon id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<polygonFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cylinder ...>
+//		<prism ...>
+//		<prismFrame ...>
 //	</suica>
 //
 //	<script>
@@ -29,12 +33,16 @@
 //		{suica.}point( center/from, to, color )
 //		{suica.}square( center, size, color )
 //		{suica.}squareFrame( center, size, color )
-//		{suica.}cube( center, size, color )
-//		{suica.}cubeFrame( center, size, color )
 //		{suica.}circle( center, size, color )
 //		{suica.}circleFrame( center, size, color )
 //		{suica.}polygon( count, center, size, color )
 //		{suica.}polygonFrame( count, center, size, color )
+//		{suica.}cube( center, size, color )
+//		{suica.}cubeFrame( center, size, color )
+//		{suica.}sphere( center, size, color )
+//		{suica.}cylinder( center, size, color )
+//		{suica.}prism( count, center, size, color )
+//		{suica.}prismFrame( count, center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -60,12 +68,13 @@
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
 //	2.-1.15 (220206) polygon, polygonFrame, sphere
+//	2.-1.16 (220209) cylinder, prism, prismFrame
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.15 (220206)` );
+console.log( `Suica 2.-1.16 (220209)` );
 
 
 // control flags
@@ -117,6 +126,10 @@ class Suica
 		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
 		POLYGON: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
 		SPHERE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50 },
+		CYLINDER: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 1 },
+		CONE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 0 },
+		PRISM: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 1 },
+		PYRAMID: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 0 },
 	} // Suica.DEFAULT
 	
 	
@@ -288,7 +301,7 @@ class Suica
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.background( ${color} )`);
+		this.debugCall( 'background', color );
 		
 		this.scene.background = new THREE.Color( color );
 	}
@@ -297,7 +310,7 @@ class Suica
 	oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.oxyz( ${size}, ${color} )`);
+		this.debugCall( 'oxyz', size, color );
 		
 		var axes = new THREE.AxesHelper( size )
 			axes.setColors( color, color, color );
@@ -308,7 +321,7 @@ class Suica
 	demo( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.demo( ${distance}, ${altitude} )`);
+		this.debugCall( 'demo', distance, altitude );
 		
 		this.demoViewPoint = {distance:distance, altitude:altitude};
 	}
@@ -317,8 +330,8 @@ class Suica
 	onTime( src=Suica.DEFAULT.ONTIME.SRC )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.onTime( ${src} )`);
-		
+		this.debugCall( 'onTime', src );
+				
 		this.onTimeHandler = src;
 	}
 	
@@ -329,7 +342,25 @@ class Suica
 			throw 'error: No Suica instance is active';
 	}
 	
+	
+	debugCall( functionName, ...parameters )
+	{
+		if( !DEBUG_CALLS ) return;
+		
+		for( var i=0; i<parameters.length; i++ )
+		{
+			if( Array.isArray(parameters[i]) )
+				parameters[i] = `[${parameters[i]}]`;
+			else
+			if( typeof parameters[i] === 'string' || parameters[i] instanceof String )
+				parameters[i] = `'${parameters[i]}'`;
+			else
+				parameters[i] = ''+parameters[i];
+		}
 
+		console.info( `:: ${this.id}.${functionName}(${parameters.join(',')})` );
+	}
+	
 	static parseColor( color )
 	{
 		if( color instanceof THREE.Color )
@@ -498,7 +529,6 @@ class Suica
 	point( center=Suica.DEFAULT.POINT.CENTER, size=Suica.DEFAULT.POINT.SIZE, color=Suica.DEFAULT.POINT.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.point( [${center}], ${size}, ${color} )`);
 
 		return new Point( this, center, size, color );
 	}
@@ -507,7 +537,6 @@ class Suica
 	line( center=Suica.DEFAULT.LINE.CENTER, to=Suica.DEFAULT.LINE.TO, color=Suica.DEFAULT.LINE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.line( [${center}], [${to}], ${color} )`);
 
 		return new Line( this, center, to, color );
 	}
@@ -516,7 +545,6 @@ class Suica
 	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.square( [${center}], ${size}, ${color} )`);
 
 		return new Square( this, center, size, color );
 	}
@@ -525,7 +553,6 @@ class Suica
 	squareFrame( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.squareFrame( [${center}], ${size}, ${color} )`);
 
 		return new SquareFrame( this, center, size, color );
 	}
@@ -534,7 +561,6 @@ class Suica
 	cube( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.cube( [${center}], ${size}, ${color} )`);
 
 		return new Cube( this, center, size, color );
 	}
@@ -543,7 +569,6 @@ class Suica
 	cubeFrame( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.cubeFrame( [${center}], ${size}, ${color} )`);
 
 		return new CubeFrame( this, center, size, color );
 	}
@@ -551,7 +576,6 @@ class Suica
 	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circle( [${center}], ${size}, ${color} )`);
 
 		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
@@ -560,7 +584,6 @@ class Suica
 	circleFrame( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.circleFrame( [${center}], ${size}, ${color} )`);
 
 		return new PolygonFrame( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
@@ -569,7 +592,6 @@ class Suica
 	polygon( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.POLYGON.CENTER, size=Suica.DEFAULT.POLYGON.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygon( ${count}, [${center}], ${size}, ${color} )`);
 
 		return new Polygon( this, count, center, size, color );
 	}
@@ -578,7 +600,6 @@ class Suica
 	polygonFrame( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.polygonFrame( ${count}, [${center}], ${size}, ${color} )`);
 
 		return new PolygonFrame( this, count, center, size, color );
 	}
@@ -586,12 +607,30 @@ class Suica
 	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
 	{
 		this.parser?.parseTags();
-		if( DEBUG_CALLS ) console.log(`:: ${this.id}.sphere( [${center}], ${size}, ${color} )`);
 
 		return new Sphere( this, center, size, color );
 	}
 
-	
+	cylinder( center=Suica.DEFAULT.CYLINDER.CENTER, size=Suica.DEFAULT.CYLINDER.SIZE, color=Suica.DEFAULT.CYLINDER.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Prism( this, Suica.DEFAULT.CYLINDER.COUNT, center, size, color, false );
+	}
+
+	prism( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Prism( this, count, center, size, color, true );
+	}
+
+	prismFrame( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+
+		return new PrismFrame( this, count, center, size, color );
+	}	
 }
 
 
@@ -706,6 +745,9 @@ window.addEventListener( 'load', function()
 // <polygon id="..." center="..." color="..." size="..." count="...">
 // <polygonFrame id="..." center="..." color="..." size="..." count="...">
 // <sphere id="..." center="..." color="..." size="...">
+// <cylinder ...>
+// <prism ...>
+// <prismFrame ...>
 //
 
 
@@ -739,9 +781,12 @@ class HTMLParser
 		this.parseTag.POLYGON = this.parseTagPOLYGON;
 		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
 		this.parseTag.SPHERE = this.parseTagSPHERE;
+		this.parseTag.CYLINDER = this.parseTagCYLINDER;
+		this.parseTag.PRISM = this.parseTagPRISM;
+		this.parseTag.PRISMFRAME = this.parseTagPRISMFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
-		this.parseTag.CANVAS = this.skipTag;
+		this.parseTag.CANVAS = this.skipTagSilently;
 		this.parseTag.DIV = this.skipTag;
 		this.parseTag.SPAN = this.skipTag;
 		
@@ -751,7 +796,7 @@ class HTMLParser
 	// executed once - parses <suica-canvas>
 	parseTags( )
 	{
-		if( DEBUG_CALLS ) console.log(`:: ${this.suica.id}.parseTag( )`);
+		this.suica.debugCall( 'parseTags' );
 
 		// unhook the parser
 		this.suica.parser = null;
@@ -780,12 +825,17 @@ class HTMLParser
 	} // HTMLParser.parseTagsInElement
 		
 
-	// <canvas> <div>
+	// <some-unknown-tag> <div>
 	skipTag( suica, elem )
 	{
-		if( DEBUG_CALLS ) console.log(`:: ${suica.id}.skipTag( ${elem.tagName } )`);
-		// skip this tag
+		suica.debugCall( 'skipTag', elem.tagName ); // skip this tag
 	} // HTMLParser.skipTag
+	
+	
+	// <canvas> <div>
+	skipTagSilently( suica, elem )
+	{
+	} // HTMLParser.skipTagSIlently
 	
 	
 	// <oxyz size="..." color="...">
@@ -1079,6 +1129,80 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagSPHERE
+	
+	// <cylinder id="..." center="..." color="..." size="...">
+	parseTagCYLINDER( suica, elem )
+	{
+		var p = suica.cylinder(
+			elem.getAttribute('center') || Suica.DEFAULT.CYLINDER.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CYLINDER.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagCYLINDER
+	
+	// <prism id="..." center="..." color="..." size="..." count="...">
+	parseTagPRISM( suica, elem )
+	{
+		var p = suica.prism(
+			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPRISM
+	
+	// <prismFrame id="..." center="..." color="..." size="..." count="...">
+	parseTagPRISMFRAME( suica, elem )
+	{
+		var p = suica.prismFrame(
+			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPRISMFRAME
 	
 	
 } // HTMLParser
@@ -1401,6 +1525,13 @@ class Mesh
 				side: THREE.DoubleSide,
 			});
 
+		// solid flat material
+		Mesh.flatMaterial = new THREE.MeshStandardMaterial( {
+				color: 'cornflowerblue',
+				side: THREE.DoubleSide,
+				flatShading: true,
+			});
+
 		// line material
 		CANVAS_SIZE = 4;
 		canvas.width = CANVAS_SIZE;
@@ -1699,7 +1830,8 @@ class Point extends Mesh
 	constructor(suica, center, size, color)
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.point(${center},${size},${color})`);
+		suica.debugCall( 'point', center, size, color );
+
 
 		super( suica, THREE.Points, Point.geometry, Mesh.pointMaterial.clone() );
 
@@ -1767,7 +1899,7 @@ class Line extends Mesh
 	constructor(suica, center, to, color)
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.line(${center},${to},${color})`);
+		suica.debugCall( 'line', center, to, color );
 			
 		super( suica, THREE.LineSegments, Line.geometry.clone(), Mesh.lineMaterial.clone() );
 
@@ -1955,7 +2087,7 @@ class Square extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.square(${center},${size},${color})`);
+		suica.debugCall( 'square', center, size, color );
 		
 		super( suica, THREE.Mesh, Square.geometry, Mesh.solidMaterial.clone() );
 		
@@ -1977,7 +2109,7 @@ class SquareFrame extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.squareFrame(${center},${size},${color})`);
+		suica.debugCall( 'squareFrame', center, size, color );
 		
 		super( suica, THREE.LineSegments, SquareFrame.geometry, Mesh.lineMaterial.clone() );
 		
@@ -2062,7 +2194,7 @@ class Cube extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cube(${center},${size},${color})`);
+		suica.debugCall( 'cube', center, size, color );
 		
 		super( suica, THREE.Mesh, Cube.geometry, Mesh.solidMaterial.clone() );
 		
@@ -2084,7 +2216,7 @@ class CubeFrame extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.cubeFrame(${center},${size},${color})`);
+		suica.debugCall( 'cubeFrame', center, size, color );
 		
 		super( suica, THREE.LineSegments, CubeFrame.geometry, Mesh.lineMaterial.clone() );
 
@@ -2190,7 +2322,11 @@ class Polygon extends Mesh
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.polygon(${count},${center},${size},${color})`);
+		if( count < Suica.DEFAULT.CIRCLE.COUNT )
+			suica.debugCall( 'polygon', count, center, size, color );
+		else
+			suica.debugCall( 'circle', center, size, color );
+
 	
 		if( !Polygon.geometry[count] )
 		{
@@ -2245,7 +2381,10 @@ class PolygonFrame extends Mesh
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.polygonFrame(${count},${center},${size},${color})`);
+		if( count < Suica.DEFAULT.CIRCLE.COUNT )
+			suica.debugCall( 'polygonFrame', count, center, size, color );
+		else
+			suica.debugCall( 'circleFrame', center, size, color );
 		
 		super( suica, THREE.Line, PolygonFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
 		
@@ -2338,9 +2477,9 @@ window.circleFrame = function(
 
 window.polygon = function(
 				count = Suica.DEFAULT.POLYGON.COUNT,
-				center = Suica.DEFAULT.CIRCLE.CENTER,
-				size   = Suica.DEFAULT.CIRCLE.SIZE,
-				color  = Suica.DEFAULT.CIRCLE.COLOR )
+				center = Suica.DEFAULT.POLYGON.CENTER,
+				size   = Suica.DEFAULT.POLYGON.SIZE,
+				color  = Suica.DEFAULT.POLYGON.COLOR )
 {
 	Suica.precheck();
 	return Suica.current.polygon( count, center, size, color );
@@ -2351,12 +2490,12 @@ window.polygon = function(
 
 window.polygonFrame = function(
 				count = Suica.DEFAULT.POLYGON.COUNT,
-				center = Suica.DEFAULT.CIRCLE.CENTER,
-				size   = Suica.DEFAULT.CIRCLE.SIZE,
-				color  = Suica.DEFAULT.CIRCLE.FRAMECOLOR )
+				center = Suica.DEFAULT.POLYGON.CENTER,
+				size   = Suica.DEFAULT.POLYGON.SIZE,
+				color  = Suica.DEFAULT.POLYGON.FRAMECOLOR )
 {
 	Suica.precheck();
-	return Suica.current.polygonFrame( count, size, color );
+	return Suica.current.polygonFrame( count, center, size, color );
 }﻿//
 // Suica 2.0 Sphere
 // CC-3.0-SA-NC
@@ -2390,7 +2529,7 @@ class Sphere extends Mesh
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if (DEBUG_CALLS) console.log(`:: ${suica.id}.sphere(${center},${size},${color})`);
+		suica.debugCall( 'sphere', center, size, color );
 		
 		if( !Sphere.geometry )
 		{
@@ -2419,15 +2558,249 @@ window.sphere = function(
 	Suica.precheck();
 	return Suica.current.sphere( center, size, color );
 }
+﻿//
+// Suica 2.0 Cylinder
+// CC-3.0-SA-NC
+//
+// cylinder( center, size, color )
+// cone( center, size, color )
+// prism( center, size, color )
+// prismFrame( center, size, color )
+// pyramid( center, size, color )
+// pyramidFrame( center, size, color )
+//
+// <cylinder id="" center="" size="" color="">
+// <cone id="" center="" size="" color="">
+// <prism id="" center="" size="" color="">
+// <prismFrame id="" center="" size="" color="">
+// <pyramid id="" center="" size="" color="">
+// <pyramidFrame id="" center="" size="" color="">
+//
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// size		size(s)
+// width
+// height
+// depth
+// color	color [r,g,b]
+// image	texture (drawing or canvas)
+//
+//===================================================
+
+
+class Prism extends Mesh
+{
+	
+	static geometry = []; // array of geometries for different number of sides
+	
+	constructor( suica, count, center, size, color, flatShading )
+	{
+		suica.parser?.parseTags();
+		if( count < Suica.DEFAULT.CYLINDER.COUNT )
+			suica.debugCall( 'prism', count, center, size, color );
+		else
+			suica.debugCall( 'cylinder', center, size, color );
+	
+		if( !Prism.geometry[count] )
+		{
+			Prism.geometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		}
+		
+		super( suica, THREE.Mesh, Prism.geometry[count], flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() );
+		
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		this.n = count;
+		
+		suica.scene.add( this.threejs );
+		
+	} // Prism.constructor
+
+
+	get count()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.n;
+	}
+	
+	
+	set count( count )
+	{
+		this.suica.parser?.parseTags();
+
+		if( count == this.n ) return; // same number of side, no need to regenerate
+		
+		if( !Prism.geometry[count] )
+		{
+			Prism.geometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		}
+		
+		this.threejs.geometry = Prism.geometry[count];
+	}
+	
+	
+} // class Prism
 
 
 
 
-window.cubeFrame = function(
-				center = Suica.DEFAULT.CUBE.CENTER,
-				size   = Suica.DEFAULT.CUBE.SIZE,
-				color  = Suica.DEFAULT.CUBE.FRAMECOLOR )
+class PrismFrame extends Mesh
+{
+
+	static geometry = []; // array of geometries for different number of sides
+
+	constructor( suica, count, center, size, color )
+	{
+		suica.parser?.parseTags();
+		suica.debugCall( 'prismFrame', count, center, size, color );
+		
+		super( suica, THREE.LineSegments, PrismFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
+		
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		this.n = count;
+		
+		suica.scene.add( this.threejs );
+	}		
+	
+	
+
+
+	get count()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.n;
+	}
+	
+
+	static getGeometry( count )
+	{
+		if( !Prism.geometry[count] )
+		{
+			PrismFrame.geometry[count] = new THREE.BufferGeometry();
+
+			// count segments at bottom, at top, at sides
+			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
+			let vertices = new Float32Array(3*2*3*count),
+				uvs = new Float32Array(2*2*3*count);
+
+			for( var i=0; i<count; i++ )
+			{
+				var angle1 = 2*Math.PI * i/count - Math.PI*(1/2-1/count),
+					sin1 = 0.5*Math.sin( angle1 ),
+					cos1 = 0.5*Math.cos( angle1 );
+				var angle2 = 2*Math.PI * (i+1)/count - Math.PI*(1/2-1/count),
+					sin2 = 0.5*Math.sin( angle2 ),
+					cos2 = 0.5*Math.cos( angle2 );
+				
+				// horizontal bottom 
+				vertices[18*i] = cos1;
+				vertices[18*i+1] = 0; 
+				vertices[18*i+2] = sin1; 
+				vertices[18*i+3] = cos2;
+				vertices[18*i+4] = 0; 
+				vertices[18*i+5] = sin2; 
+				
+				// horizontal top
+				vertices[18*i+6] = cos1;
+				vertices[18*i+7] = 1; 
+				vertices[18*i+8] = sin1; 
+				vertices[18*i+9] = cos2;
+				vertices[18*i+10] = 1; 
+				vertices[18*i+11] = sin2; 
+				
+				// vertical
+				vertices[18*i+12] = cos1;
+				vertices[18*i+13] = 0; 
+				vertices[18*i+14] = sin1; 
+				vertices[18*i+15] = cos1;
+				vertices[18*i+16] = 1; 
+				vertices[18*i+17] = sin1; 
+				
+				// for up to octagons each side has uv from 0 to 1
+				// above octagons each quarter of sides has uv from 0 to 1
+				console.assert( uvs[2*i+1] == 0 );
+				var u1,u2;
+				if( count > 8 )
+				{
+					u1 = 4*i/count;
+					u2 = 4*(i+1)/count;
+				}
+				else
+				{
+					u1 = i;
+					u2 = i+1;
+				}
+
+				// horizontal bottom 
+				uvs[2*i] = u1;
+				uvs[2*i+2] = u2;
+
+				// horizontal top
+				uvs[2*i+4] = u1;
+				uvs[2*i+6] = u2;
+
+				// vertical
+				uvs[2*i+8] = 0;
+				uvs[2*i+10] = 1;
+			}
+			PrismFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			PrismFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+		}
+		
+		return PrismFrame.geometry[count];
+	}
+	
+	
+	set count( count )
+	{
+		this.suica.parser?.parseTags();
+
+		if( count == this.n ) return; // same number of side, no need to regenerate
+		
+		this.threejs.geometry = PrismFrame.getGeometry( count );
+	}
+	
+} // class PolygonFrame
+
+
+
+window.cylinder = function(
+				center = Suica.DEFAULT.CYLINDER.CENTER,
+				size   = Suica.DEFAULT.CYLINDER.SIZE,
+				color  = Suica.DEFAULT.CYLINDER.COLOR )
 {
 	Suica.precheck();
-	return Suica.current.cubeFrame( center, size, color );
+	return Suica.current.cylnder( center, size, color );
+}
+
+
+
+window.prism = function(
+				count = Suica.DEFAULT.PRISM.COUNT,
+				center = Suica.DEFAULT.PRISM.CENTER,
+				size   = Suica.DEFAULT.PRISM.SIZE,
+				color  = Suica.DEFAULT.PRISM.COLOR )
+{
+	Suica.precheck();
+	return Suica.current.prism( count, center, size, color );
+}
+
+
+
+
+window.prismFrame = function(
+				count = Suica.DEFAULT.PRISM.COUNT,
+				center = Suica.DEFAULT.PRISM.CENTER,
+				size   = Suica.DEFAULT.PRISM.SIZE,
+				color  = Suica.DEFAULT.PRISM.FRAMECOLOR )
+{
+	Suica.precheck();
+	return Suica.current.prismFrame( count, center, size, color );
 }} // LoadSuica 

@@ -52,14 +52,21 @@ Click on an image to run the example.
 
 ## Common 3D objects
 
-[<kbd><img src="../examples/snapshots/sphere.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
-[<kbd><img src="../examples/snapshots/spheroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/spheroid.html)
-
 [<kbd><img src="../examples/snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
 [<kbd><img src="../examples/snapshots/cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
 
 [<kbd><img src="../examples/snapshots/cube-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
 [<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
+
+[<kbd><img src="../examples/snapshots/sphere.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
+[<kbd><img src="../examples/snapshots/spheroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/spheroid.html)
+
+[<kbd><img src="../examples/snapshots/cylinder.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cylinder.html)
+[<kbd><img src="../examples/snapshots/cylindroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cylindroid.html)
+
+[<kbd><img src="../examples/snapshots/prism.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/prism.html)
+[<kbd><img src="../examples/snapshots/prism-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/prism-frame.html)
+
 
 ## Images
 

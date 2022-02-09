@@ -60,15 +60,3 @@ window.sphere = function(
 	Suica.precheck();
 	return Suica.current.sphere( center, size, color );
 }
-
-
-
-
-window.cubeFrame = function(
-				center = Suica.DEFAULT.CUBE.CENTER,
-				size   = Suica.DEFAULT.CUBE.SIZE,
-				color  = Suica.DEFAULT.CUBE.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.cubeFrame( center, size, color );
-}

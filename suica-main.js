@@ -18,6 +18,9 @@
 //		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<cylinder ...>
+//		<prism ...>
+//		<prismFrame ...>
 //	</suica>
 //
 //	<script>
@@ -36,6 +39,9 @@
 //		{suica.}cube( center, size, color )
 //		{suica.}cubeFrame( center, size, color )
 //		{suica.}sphere( center, size, color )
+//		{suica.}cylinder( center, size, color )
+//		{suica.}prism( count, center, size, color )
+//		{suica.}prismFrame( count, center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -61,12 +67,13 @@
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
 //	2.-1.15 (220206) polygon, polygonFrame, sphere
+//	2.-1.16 (220209) cylinder, prism, prismFrame
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.15 (220206)` );
+console.log( `Suica 2.-1.16 (220209)` );
 
 
 // control flags
@@ -118,6 +125,10 @@ class Suica
 		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
 		POLYGON: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
 		SPHERE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50 },
+		CYLINDER: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 1 },
+		CONE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 0 },
+		PRISM: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 1 },
+		PYRAMID: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 0 },
 	} // Suica.DEFAULT
 	
 	
@@ -599,7 +610,26 @@ class Suica
 		return new Sphere( this, center, size, color );
 	}
 
-	
+	cylinder( center=Suica.DEFAULT.CYLINDER.CENTER, size=Suica.DEFAULT.CYLINDER.SIZE, color=Suica.DEFAULT.CYLINDER.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Prism( this, Suica.DEFAULT.CYLINDER.COUNT, center, size, color, false );
+	}
+
+	prism( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Prism( this, count, center, size, color, true );
+	}
+
+	prismFrame( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+
+		return new PrismFrame( this, count, center, size, color );
+	}	
 }
 
 
