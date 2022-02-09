@@ -20,6 +20,9 @@
 // <cylinder ...>
 // <prism ...>
 // <prismFrame ...>
+// <cone ...>
+// <pyramid ...>
+// <pyramidFrame ...>
 //
 
 
@@ -56,6 +59,9 @@ class HTMLParser
 		this.parseTag.CYLINDER = this.parseTagCYLINDER;
 		this.parseTag.PRISM = this.parseTagPRISM;
 		this.parseTag.PRISMFRAME = this.parseTagPRISMFRAME;
+		this.parseTag.CONE = this.parseTagCONE;
+		this.parseTag.PYRAMID = this.parseTagPYRAMID;
+		this.parseTag.PYRAMIDFRAME = this.parseTagPYRAMIDFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
@@ -475,6 +481,80 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPRISMFRAME
+	
+	// <cone id="..." center="..." color="..." size="...">
+	parseTagCONE( suica, elem )
+	{
+		var p = suica.cone(
+			elem.getAttribute('center') || Suica.DEFAULT.CONE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CONE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagCONE
+	
+	// <pyramid id="..." center="..." color="..." size="..." count="...">
+	parseTagPYRAMID( suica, elem )
+	{
+		var p = suica.pyramid(
+			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPYRAMID
+	
+	// <pyramidFrame id="..." center="..." color="..." size="..." count="...">
+	parseTagPYRAMIDFRAME( suica, elem )
+	{
+		var p = suica.pyramidFrame(
+			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPYRAMIDFRAME
 	
 	
 } // HTMLParser

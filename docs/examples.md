@@ -67,6 +67,12 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/prism.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/prism.html)
 [<kbd><img src="../examples/snapshots/prism-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/prism-frame.html)
 
+[<kbd><img src="../examples/snapshots/cone.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cone.html)
+[<kbd><img src="../examples/snapshots/conoid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/conoid.html)
+
+[<kbd><img src="../examples/snapshots/pyramid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
+[<kbd><img src="../examples/snapshots/pyramid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/pyramid-frame.html)
+
 
 ## Images
 

@@ -22,6 +22,9 @@
 //		<cylinder ...>
 //		<prism ...>
 //		<prismFrame ...>
+//		<cone ...>
+//		<pyramid ...>
+//		<pyramidFrame ...>
 //	</suica>
 //
 //	<script>
@@ -43,6 +46,9 @@
 //		{suica.}cylinder( center, size, color )
 //		{suica.}prism( count, center, size, color )
 //		{suica.}prismFrame( count, center, size, color )
+//		{suica.}cone( center, size, color )
+//		{suica.}pyramid( count, center, size, color )
+//		{suica.}pyramidFrame( count, center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -68,7 +74,7 @@
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
 //	2.-1.15 (220206) polygon, polygonFrame, sphere
-//	2.-1.16 (220209) cylinder, prism, prismFrame
+//	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
 //
 //===================================================
 
@@ -631,6 +637,27 @@ class Suica
 
 		return new PrismFrame( this, count, center, size, color );
 	}	
+
+	cone( center=Suica.DEFAULT.CONE.CENTER, size=Suica.DEFAULT.CONE.SIZE, color=Suica.DEFAULT.CONE.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Pyramid( this, Suica.DEFAULT.CONE.COUNT, center, size, color, false );
+	}
+
+	pyramid( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Pyramid( this, count, center, size, color, true );
+	}
+
+	pyramidFrame( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+
+		return new PyramidFrame( this, count, center, size, color );
+	}	
 }
 
 
@@ -748,6 +775,9 @@ window.addEventListener( 'load', function()
 // <cylinder ...>
 // <prism ...>
 // <prismFrame ...>
+// <cone ...>
+// <pyramid ...>
+// <pyramidFrame ...>
 //
 
 
@@ -784,6 +814,9 @@ class HTMLParser
 		this.parseTag.CYLINDER = this.parseTagCYLINDER;
 		this.parseTag.PRISM = this.parseTagPRISM;
 		this.parseTag.PRISMFRAME = this.parseTagPRISMFRAME;
+		this.parseTag.CONE = this.parseTagCONE;
+		this.parseTag.PYRAMID = this.parseTagPYRAMID;
+		this.parseTag.PYRAMIDFRAME = this.parseTagPYRAMIDFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
@@ -1203,6 +1236,80 @@ class HTMLParser
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPRISMFRAME
+	
+	// <cone id="..." center="..." color="..." size="...">
+	parseTagCONE( suica, elem )
+	{
+		var p = suica.cone(
+			elem.getAttribute('center') || Suica.DEFAULT.CONE.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CONE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagCONE
+	
+	// <pyramid id="..." center="..." color="..." size="..." count="...">
+	parseTagPYRAMID( suica, elem )
+	{
+		var p = suica.pyramid(
+			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPYRAMID
+	
+	// <pyramidFrame id="..." center="..." color="..." size="..." count="...">
+	parseTagPYRAMIDFRAME( suica, elem )
+	{
+		var p = suica.pyramidFrame(
+			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
+			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
+		);
+		
+		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;
+		
+	} // HTMLParser.parseTagPYRAMIDFRAME
 	
 	
 } // HTMLParser
@@ -2563,18 +2670,12 @@ window.sphere = function(
 // CC-3.0-SA-NC
 //
 // cylinder( center, size, color )
-// cone( center, size, color )
 // prism( center, size, color )
 // prismFrame( center, size, color )
-// pyramid( center, size, color )
-// pyramidFrame( center, size, color )
 //
 // <cylinder id="" center="" size="" color="">
-// <cone id="" center="" size="" color="">
 // <prism id="" center="" size="" color="">
 // <prismFrame id="" center="" size="" color="">
-// <pyramid id="" center="" size="" color="">
-// <pyramidFrame id="" center="" size="" color="">
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -2739,16 +2840,16 @@ class PrismFrame extends Mesh
 				}
 
 				// horizontal bottom 
-				uvs[2*i] = u1;
-				uvs[2*i+2] = u2;
+				uvs[12*i] = u1;
+				uvs[12*i+2] = u2;
 
 				// horizontal top
-				uvs[2*i+4] = u1;
-				uvs[2*i+6] = u2;
+				uvs[12*i+4] = u1;
+				uvs[12*i+6] = u2;
 
 				// vertical
-				uvs[2*i+8] = 0;
-				uvs[2*i+10] = 1;
+				uvs[12*i+8] = 0;
+				uvs[12*i+10] = 1;
 			}
 			PrismFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
 			PrismFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
@@ -2767,7 +2868,7 @@ class PrismFrame extends Mesh
 		this.threejs.geometry = PrismFrame.getGeometry( count );
 	}
 	
-} // class PolygonFrame
+} // class PrismFrame
 
 
 
@@ -2803,4 +2904,231 @@ window.prismFrame = function(
 {
 	Suica.precheck();
 	return Suica.current.prismFrame( count, center, size, color );
+}﻿//
+// Suica 2.0 Cone
+// CC-3.0-SA-NC
+//
+// cone( center, size, color )
+// pyramid( center, size, color )
+// pyramidFrame( center, size, color )
+//
+// <cone id="" center="" size="" color="">
+// <pyramid id="" center="" size="" color="">
+// <pyramidFrame id="" center="" size="" color="">
+//
+// center	center [x,y,z]
+// x		x coordinate of center
+// y		y coordinate of center
+// z		z coordinate of center
+// size		size(s)
+// width
+// height
+// depth
+// color	color [r,g,b]
+// image	texture (drawing or canvas)
+//
+//===================================================
+
+
+class Pyramid extends Mesh
+{
+	
+	static geometry = []; // array of geometries for different number of sides
+	
+	constructor( suica, count, center, size, color, flatShading )
+	{
+		suica.parser?.parseTags();
+		if( count < Suica.DEFAULT.CONE.COUNT )
+			suica.debugCall( 'pyramid', count, center, size, color );
+		else
+			suica.debugCall( 'cone', center, size, color );
+	
+		if( !Prism.geometry[count] )
+		{
+			Prism.geometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		}
+		
+		super( suica, THREE.Mesh, Prism.geometry[count], flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() );
+		
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		this.n = count;
+		
+		suica.scene.add( this.threejs );
+		
+	} // Pyramid.constructor
+
+
+	get count()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.n;
+	}
+	
+	
+	set count( count )
+	{
+		this.suica.parser?.parseTags();
+
+		if( count == this.n ) return; // same number of side, no need to regenerate
+		
+		if( !Pyramid.geometry[count] )
+		{
+			Pyramid.geometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		}
+		
+		this.threejs.geometry = Pyramid.geometry[count];
+	}
+	
+	
+} // class Pyramid
+
+
+
+
+class PyramidFrame extends Mesh
+{
+
+	static geometry = []; // array of geometries for different number of sides
+
+	constructor( suica, count, center, size, color )
+	{
+		suica.parser?.parseTags();
+		suica.debugCall( 'pyramidFrame', count, center, size, color );
+		
+		super( suica, THREE.LineSegments, PyramidFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
+		
+		this.center = center;
+		this.color = color;
+		this.size = size;
+		this.n = count;
+		
+		suica.scene.add( this.threejs );
+	}		
+	
+	
+
+
+	get count()
+	{
+		this.suica.parser?.parseTags();
+
+		return this.n;
+	}
+	
+
+	static getGeometry( count )
+	{
+		if( !Pyramid.geometry[count] )
+		{
+			PyramidFrame.geometry[count] = new THREE.BufferGeometry();
+
+			// count segments at bottom and at sides
+			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
+			let vertices = new Float32Array(3*2*2*count),
+				uvs = new Float32Array(2*2*2*count);
+
+			for( var i=0; i<count; i++ )
+			{
+				var angle1 = 2*Math.PI * i/count - Math.PI*(1/2-1/count),
+					sin1 = 0.5*Math.sin( angle1 ),
+					cos1 = 0.5*Math.cos( angle1 );
+				var angle2 = 2*Math.PI * (i+1)/count - Math.PI*(1/2-1/count),
+					sin2 = 0.5*Math.sin( angle2 ),
+					cos2 = 0.5*Math.cos( angle2 );
+				
+				// horizontal bottom (skipping 0 values)
+				vertices[12*i] = cos1;
+				vertices[12*i+1] = 0; 
+				vertices[12*i+2] = sin1; 
+				vertices[12*i+3] = cos2;
+				vertices[12*i+4] = 0; 
+				vertices[12*i+5] = sin2; 
+				
+				// vertical
+				vertices[12*i+6] = cos1;
+				vertices[12*i+7] = 0; 
+				vertices[12*i+8] = sin1; 
+				vertices[12*i+9] = 0;
+				vertices[12*i+10] = 1; 
+				vertices[12*i+11] = 0; 
+				
+				// for up to octagons each side has uv from 0 to 1
+				// above octagons each quarter of sides has uv from 0 to 1
+				console.assert( uvs[2*i+1] == 0 );
+				var u1,u2;
+				if( count > 8 )
+				{
+					u1 = 4*i/count;
+					u2 = 4*(i+1)/count;
+				}
+				else
+				{
+					u1 = i;
+					u2 = i+1;
+				}
+
+				// horizontal bottom 
+				uvs[8*i] = u1;
+				uvs[8*i+2] = u2;
+
+				// vertical
+				uvs[8*i+4] = 0;
+				uvs[8*i+6] = 1;
+			}
+			PyramidFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			PyramidFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+		}
+		
+		return PyramidFrame.geometry[count];
+	}
+	
+	
+	set count( count )
+	{
+		this.suica.parser?.parseTags();
+
+		if( count == this.n ) return; // same number of side, no need to regenerate
+		
+		this.threejs.geometry = PyramidFrame.getGeometry( count );
+	}
+	
+} // class PyramidFrame
+
+
+
+window.cone = function(
+				center = Suica.DEFAULT.CONE.CENTER,
+				size   = Suica.DEFAULT.CONE.SIZE,
+				color  = Suica.DEFAULT.CONE.COLOR )
+{
+	Suica.precheck();
+	return Suica.current.cone( center, size, color );
+}
+
+
+
+window.pyramid = function(
+				count = Suica.DEFAULT.PYRAMID.COUNT,
+				center = Suica.DEFAULT.PYRAMID.CENTER,
+				size   = Suica.DEFAULT.PYRAMID.SIZE,
+				color  = Suica.DEFAULT.PYRAMID.COLOR )
+{
+	Suica.precheck();
+	return Suica.current.pyramid( count, center, size, color );
+}
+
+
+
+
+window.pyramidFrame = function(
+				count = Suica.DEFAULT.PYRAMID.COUNT,
+				center = Suica.DEFAULT.PYRAMID.CENTER,
+				size   = Suica.DEFAULT.PYRAMID.SIZE,
+				color  = Suica.DEFAULT.PYRAMID.FRAMECOLOR )
+{
+	Suica.precheck();
+	return Suica.current.pyramidFrame( count, center, size, color );
 }} // LoadSuica 

@@ -21,6 +21,9 @@
 //		<cylinder ...>
 //		<prism ...>
 //		<prismFrame ...>
+//		<cone ...>
+//		<pyramid ...>
+//		<pyramidFrame ...>
 //	</suica>
 //
 //	<script>
@@ -42,6 +45,9 @@
 //		{suica.}cylinder( center, size, color )
 //		{suica.}prism( count, center, size, color )
 //		{suica.}prismFrame( count, center, size, color )
+//		{suica.}cone( center, size, color )
+//		{suica.}pyramid( count, center, size, color )
+//		{suica.}pyramidFrame( count, center, size, color )
 //		
 //		random( from, to )
 //		random( array )
@@ -67,7 +73,7 @@
 //	2.-1.13 (220205) object as position
 //	2.-1.14 (220205) circle, circleFrame
 //	2.-1.15 (220206) polygon, polygonFrame, sphere
-//	2.-1.16 (220209) cylinder, prism, prismFrame
+//	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
 //
 //===================================================
 
@@ -629,6 +635,27 @@ class Suica
 		this.parser?.parseTags();
 
 		return new PrismFrame( this, count, center, size, color );
+	}	
+
+	cone( center=Suica.DEFAULT.CONE.CENTER, size=Suica.DEFAULT.CONE.SIZE, color=Suica.DEFAULT.CONE.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Pyramid( this, Suica.DEFAULT.CONE.COUNT, center, size, color, false );
+	}
+
+	pyramid( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Pyramid( this, count, center, size, color, true );
+	}
+
+	pyramidFrame( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.FRAMECOLOR )
+	{
+		this.parser?.parseTags();
+
+		return new PyramidFrame( this, count, center, size, color );
 	}	
 }
 

@@ -3,18 +3,12 @@
 // CC-3.0-SA-NC
 //
 // cylinder( center, size, color )
-// cone( center, size, color )
 // prism( center, size, color )
 // prismFrame( center, size, color )
-// pyramid( center, size, color )
-// pyramidFrame( center, size, color )
 //
 // <cylinder id="" center="" size="" color="">
-// <cone id="" center="" size="" color="">
 // <prism id="" center="" size="" color="">
 // <prismFrame id="" center="" size="" color="">
-// <pyramid id="" center="" size="" color="">
-// <pyramidFrame id="" center="" size="" color="">
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -179,16 +173,16 @@ class PrismFrame extends Mesh
 				}
 
 				// horizontal bottom 
-				uvs[2*i] = u1;
-				uvs[2*i+2] = u2;
+				uvs[12*i] = u1;
+				uvs[12*i+2] = u2;
 
 				// horizontal top
-				uvs[2*i+4] = u1;
-				uvs[2*i+6] = u2;
+				uvs[12*i+4] = u1;
+				uvs[12*i+6] = u2;
 
 				// vertical
-				uvs[2*i+8] = 0;
-				uvs[2*i+10] = 1;
+				uvs[12*i+8] = 0;
+				uvs[12*i+10] = 1;
 			}
 			PrismFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
 			PrismFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
@@ -207,7 +201,7 @@ class PrismFrame extends Mesh
 		this.threejs.geometry = PrismFrame.getGeometry( count );
 	}
 	
-} // class PolygonFrame
+} // class PrismFrame
 
 
 

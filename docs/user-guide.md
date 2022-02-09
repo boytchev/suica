@@ -8,7 +8,7 @@
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) </small>]
-	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [cube frame](#cube-frame) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [prism frame](#prism-frame) </small>]
+	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [cube frame](#cube-frame) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [prism frame](#prism-frame) | [cone](#cone) | [pyramid](#pyramid) | [pyramid frame](#pyramid-frame) </small>]
 - [Images and drawings](#images-and-drawings)
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
@@ -740,6 +740,72 @@ prismFrame( 6, [25,0,15], 10, 'red' );
 ```
 
 [<kbd><img src="../examples/snapshots/prism-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/prism-frame.html)
+
+
+
+### Cone
+
+The object `conr` represents a solid cone or conoid. Its properties are `center`
+(or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`), `color` and
+`image`. 
+
+```html
+HTML:
+<cone center="25,0,15">
+<cone x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+cone( [25,0,15] );
+cone( [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/cone.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cone.html)
+[<kbd><img src="../examples/snapshots/conoid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/conoid.html)
+
+
+
+### Pyramid
+
+The object `pyramid` represents a solid pyramid or pyramoid. Its properties are
+`count`, `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and
+`depth`), `color` and `image`. The property `count` defines the number of sides
+of the pyramid.
+
+```html
+HTML:
+<pyramid count="6" center="25,0,15">
+<pyramid count="6" x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+pyramid( 6, [25,0,15] );
+pyramid( 6, [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/pyramid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
+
+
+
+### Pyramid frame
+
+The object `pyramidFrame` represents a wireframed pyramid or pyramidoid. Its
+properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
+`height` and `depth`), `color` and `image`. The property `count` defines the
+number of sides of the pyramid.
+
+```html
+HTML:
+<pyramidFrame count="6" center="25,0,15">
+<pyramidFrame count="6" x="25" y="0" z="15" size="10">
+```
+```js
+JS:
+pyramidFrame( 6, [25,0,15] );
+pyramidFrame( 6, [25,0,15], 10, 'red' );
+```
+
+[<kbd><img src="../examples/snapshots/pyramid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/pyramid-frame.html)
 
 
 
