@@ -833,6 +833,7 @@ class HTMLParser
 
 		// unhook the parser
 		this.suica.parser = null;
+		this.suica.parserReadonly = this;
 
 		this.parseTagsInElement( this.suica, this.suica.suicaTag );
 		this.suica.render( );
@@ -907,6 +908,28 @@ class HTMLParser
 	} // HTMLParser.parseTagONTIME
 	
 	
+	parseAttributes( elem, object, widthHeight, depth )
+	{
+		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
+		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
+		if( elem.hasAttribute('z') ) object.z = Number(elem.getAttribute('z')); 
+		
+		if( widthHeight )
+		{
+			if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
+			if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		}
+		
+		if( depth )
+		{
+			if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+		}
+		
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = object;
+	}
+	
+	
 	// <point id="..." center="..." color="..." size="...">
 	parseTagPOINT( suica, elem )
 	{
@@ -916,13 +939,8 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POINT.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
+		suica.parserReadonly.parseAttributes( elem, p );
 
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
-		
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPOINT
@@ -954,15 +972,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, false );
 
 		elem.suicaObject = p;
 		
@@ -978,15 +988,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLORFRAME
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-			
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, false );
 
 		elem.suicaObject = p;
 		
@@ -1001,16 +1003,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1026,16 +1019,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLORFRAME
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-			
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1051,15 +1035,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-	
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, false );
 
 		elem.suicaObject = p;
 		
@@ -1075,15 +1051,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLORFRAME
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-			
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, false );
 
 		elem.suicaObject = p;
 		
@@ -1100,15 +1068,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-	
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, false );
 
 		elem.suicaObject = p;
 		
@@ -1125,15 +1085,8 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLORFRAME
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-			
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+		suica.parserReadonly.parseAttributes( elem, p, true, false );
 
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
 
 		elem.suicaObject = p;
 		
@@ -1148,16 +1101,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SPHERE.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1172,16 +1116,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1197,16 +1132,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1222,16 +1148,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1246,16 +1163,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1271,16 +1179,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1296,16 +1195,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
 		);
 		
-		if( elem.hasAttribute('x') ) p.x = Number(elem.getAttribute('x')); 
-		if( elem.hasAttribute('y') ) p.y = Number(elem.getAttribute('y')); 
-		if( elem.hasAttribute('z') ) p.z = Number(elem.getAttribute('z')); 
-
-		if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-		if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
-		if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
-			
-		var id = elem.getAttribute('id');
-		if( id ) window[id] = p;
+		suica.parserReadonly.parseAttributes( elem, p, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1641,16 +1531,18 @@ class Mesh
 
 		// line material
 		CANVAS_SIZE = 4;
-		canvas.width = CANVAS_SIZE;
-		canvas.height = 1;
+		var canvas2 = document.createElement('canvas');
+			canvas2.width = CANVAS_SIZE;
+			canvas2.height = 1;
 			
-		context.fillStyle = 'white';
-		context.fillRect( 0, 0, canvas.width, canvas.height );
+		var context2 = canvas2.getContext('2d');
+			context2.fillStyle = 'white';
+			context2.fillRect( 0, 0, canvas2.width, canvas2.height );
 
 		Mesh.lineMaterial = new THREE.MeshBasicMaterial( {
 				color: 'black',
 				transparent: true,
-				map: new THREE.CanvasTexture( canvas ),
+				map: new THREE.CanvasTexture( canvas2 ),
 			});
 
 		Mesh.lineMaterial.onBeforeCompile = shader => {
@@ -1930,8 +1822,6 @@ class Point extends Mesh
 
 	// a static geometry shared by all points
 	static geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
-
-
 
 
 	constructor(suica, center, size, color)

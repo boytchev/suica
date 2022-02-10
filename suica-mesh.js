@@ -69,16 +69,18 @@ class Mesh
 
 		// line material
 		CANVAS_SIZE = 4;
-		canvas.width = CANVAS_SIZE;
-		canvas.height = 1;
+		var canvas2 = document.createElement('canvas');
+			canvas2.width = CANVAS_SIZE;
+			canvas2.height = 1;
 			
-		context.fillStyle = 'white';
-		context.fillRect( 0, 0, canvas.width, canvas.height );
+		var context2 = canvas2.getContext('2d');
+			context2.fillStyle = 'white';
+			context2.fillRect( 0, 0, canvas2.width, canvas2.height );
 
 		Mesh.lineMaterial = new THREE.MeshBasicMaterial( {
 				color: 'black',
 				transparent: true,
-				map: new THREE.CanvasTexture( canvas ),
+				map: new THREE.CanvasTexture( canvas2 ),
 			});
 
 		Mesh.lineMaterial.onBeforeCompile = shader => {

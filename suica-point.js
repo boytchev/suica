@@ -25,8 +25,6 @@ class Point extends Mesh
 	static geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
 
 
-
-
 	constructor(suica, center, size, color)
 	{
 		suica.parser?.parseTags();
