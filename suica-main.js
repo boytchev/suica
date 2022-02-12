@@ -51,6 +51,9 @@
 //		
 //		random( from, to )
 //		random( array )
+//		degrees( radians )
+//		radians( degrees )
+//
 //	</script>
 //
 //		
@@ -74,6 +77,7 @@
 //	2.-1.14 (220205) circle, circleFrame
 //	2.-1.15 (220206) polygon, polygonFrame, sphere
 //	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
+//	2.-1.17 (220212) radians degrees
 //
 //===================================================
 
@@ -686,25 +690,25 @@ window.onTime = function ( src=Suica.DEFAULT.ONTIME.SRC )
 	Suica.current.onTime( src );
 }
 
-window.element = function ( id )
+window.element = function( id )
 {
 	return document.getElementById( id );
 }
 
 
-window.rgb = function ( r, g, b )
+window.rgb = function( r, g, b )
 {
 	return new THREE.Color( r/255, g/255, b/255 );
 }
 
 
-window.hsl = function hsl( h, s, l )
+window.hsl = function( h, s, l )
 {
 	return new THREE.Color( ).setHSL( h/360, s/100, l/100 );
 }
 
 
-window.random = function random( a=0, b=1 )
+window.random = function( a=0, b=1 )
 {
 	if( Array.isArray(a) )
 	{
@@ -714,6 +718,17 @@ window.random = function random( a=0, b=1 )
 	return a+(b-a)*Math.random();
 }
 
+
+window.radians = function( degrees )
+{
+	return degrees * Math.PI/180;
+}
+
+
+window.degrees = function( radians )
+{
+	return radians * 180/Math.PI;
+}
 
 
 

@@ -1,6 +1,6 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) | [Color](#color) | [Point](#point) | [Line](#line) | [Square](#square) | [SquareFrame](#squareframe) | [Circle](#circle) | [CircleFrame](#circleframe) | [Polygon](#polygon) | [PolygonFrame](#polygonframe) | [Cube](#cube) | [CubeFrame](#cubeframe) | [Sphere](#sphere) | [Cylinder](#cylinder) | [Prism](#prism) | [PrismFrame](#prismframe) | [Cone](#cone) | [Pyramid](#pyramid) | [PyramidFrame](#pyramidframe)
+[Suica](#suica) | [Color](#color) | [Point](#point) | [Line](#line) | [Square](#square) | [SquareFrame](#squareframe) | [Circle](#circle) | [CircleFrame](#circleframe) | [Polygon](#polygon) | [PolygonFrame](#polygonframe) | [Cube](#cube) | [CubeFrame](#cubeframe) | [Sphere](#sphere) | [Cylinder](#cylinder) | [Prism](#prism) | [PrismFrame](#prismframe) | [Cone](#cone) | [Pyramid](#pyramid) | [PyramidFrame](#pyramidframe) | [Functions](#functions)
 
 ### Suica
 
@@ -491,6 +491,14 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 ```
 
+### Functions
+```js
+JS:
+random( 𝑓𝑟𝑜𝑚, 𝑡𝑜 );
+random( [𝑎, 𝑏, 𝑐, ...] );
+radians( 𝑑𝑒𝑔𝑟𝑒𝑒𝑠 );
+degrees( 𝑟𝑎𝑑𝑖𝑎𝑛𝑠 );
+```
 
 
 ---

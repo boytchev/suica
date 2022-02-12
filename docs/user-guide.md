@@ -10,6 +10,7 @@
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [cube frame](#cube-frame) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [prism frame](#prism-frame) | [cone](#cone) | [pyramid](#pyramid) | [pyramid frame](#pyramid-frame) </small>]
 - [Images and drawings](#images-and-drawings)
+- [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) </small>]
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
 
@@ -815,6 +816,38 @@ TBD
 
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;[<kbd><img src="../examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 
+
+
+## Functions
+
+### Radians
+
+The function `radians` converts degrees into radians.
+
+```js
+JS:
+rad = radians( 120 );
+```
+
+### Degrees
+
+The function `degrees` converts radians into degrees.
+
+```js
+JS:
+deg = degrees( 3.14159 );
+```
+
+### Random
+
+The function `random` generates a pseudo-random floating-point number in a
+range or pick a random number from an array.
+
+```js
+JS:
+a = random( 5, 10 ); // from 5 to 10
+a = random( [1, 2, 3, 4] ); // from the list
+```
 
 
 
