@@ -10,14 +10,10 @@
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<line id="..." center="..." from="" color="..." size="...">
-//		<square id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<circle id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<circleFrame id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<polygon id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<polygonFrame id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<square id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
+//		<circle id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
+//		<polygon id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
+//		<cube id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
 //		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cylinder ...>
 //		<prism ...>
@@ -35,13 +31,9 @@
 //		{suica.}point( center, size, color )
 //		{suica.}point( center/from, to, color )
 //		{suica.}square( center, size, color )
-//		{suica.}squareFrame( center, size, color )
 //		{suica.}circle( center, size, color )
-//		{suica.}circleFrame( center, size, color )
 //		{suica.}polygon( count, center, size, color )
-//		{suica.}polygonFrame( count, center, size, color )
 //		{suica.}cube( center, size, color )
-//		{suica.}cubeFrame( center, size, color )
 //		{suica.}sphere( center, size, color )
 //		{suica.}cylinder( center, size, color )
 //		{suica.}prism( count, center, size, color )
@@ -79,12 +71,13 @@
 //	2.-1.15 (220206) polygon, polygonFrame, sphere
 //	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
 //	2.-1.17 (220212) radians degrees
+//	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.16 (220209)` );
+console.log( `Suica 2.-1.18 (220213)` );
 
 
 // control flags
@@ -559,15 +552,8 @@ class Suica
 		return new Square( this, center, size, color );
 	}
 	
-	
-	squareFrame( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
 
-		return new SquareFrame( this, center, size, color );
-	}
-	
-	
+
 	cube( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.COLOR )
 	{
 		this.parser?.parseTags();
@@ -576,26 +562,11 @@ class Suica
 	}
 	
 	
-	cubeFrame( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new CubeFrame( this, center, size, color );
-	}
-
 	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
 	{
 		this.parser?.parseTags();
 
 		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
-	}
-	
-	
-	circleFrame( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new PolygonFrame( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
 	
 	
@@ -606,13 +577,6 @@ class Suica
 		return new Polygon( this, count, center, size, color );
 	}
 	
-	
-	polygonFrame( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new PolygonFrame( this, count, center, size, color );
-	}
 	
 	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
 	{
@@ -778,21 +742,15 @@ window.addEventListener( 'load', function()
 // <ontime src="...">
 // <point id="..." center="..." color="..." size="...">
 // <line id="..." center="..." color="..." to="...">
-// <square id="..." center="..." color="..." size="...">
-// <squareFrame id="..." center="..." color="..." size="...">
-// <cube id="..." center="..." color="..." size="...">
-// <cubeFrame id="..." center="..." color="..." size="...">
-// <circle id="..." center="..." color="..." size="...">
-// <circleFrame id="..." center="..." color="..." size="...">
-// <polygon id="..." center="..." color="..." size="..." count="...">
-// <polygonFrame id="..." center="..." color="..." size="..." count="...">
+// <square id="..." center="..." color="..." size="..." wireframe="...">
+// <cube id="..." center="..." color="..." size="..." wireframe="...">
+// <circle id="..." center="..." color="..." size="..." wireframe="...">
+// <polygon id="..." center="..." color="..." size="..." count="..." wireframe="...">
 // <sphere id="..." center="..." color="..." size="...">
 // <cylinder ...>
 // <prism ...>
-// <prismFrame ...>
 // <cone ...>
 // <pyramid ...>
-// <pyramidFrame ...>
 //
 
 
@@ -818,20 +776,14 @@ class HTMLParser
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.LINE = this.parseTagLINE;
 		this.parseTag.SQUARE = this.parseTagSQUARE;
-		this.parseTag.SQUAREFRAME = this.parseTagSQUAREFRAME;
 		this.parseTag.CUBE = this.parseTagCUBE;
-		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		this.parseTag.CIRCLE = this.parseTagCIRCLE;
-		this.parseTag.CIRCLEFRAME = this.parseTagCIRCLEFRAME;
 		this.parseTag.POLYGON = this.parseTagPOLYGON;
-		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
 		this.parseTag.SPHERE = this.parseTagSPHERE;
 		this.parseTag.CYLINDER = this.parseTagCYLINDER;
 		this.parseTag.PRISM = this.parseTagPRISM;
-		this.parseTag.PRISMFRAME = this.parseTagPRISMFRAME;
 		this.parseTag.CONE = this.parseTagCONE;
 		this.parseTag.PYRAMID = this.parseTagPYRAMID;
-		this.parseTag.PYRAMIDFRAME = this.parseTagPYRAMIDFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
@@ -923,7 +875,7 @@ class HTMLParser
 	} // HTMLParser.parseTagONTIME
 	
 	
-	parseAttributes( elem, object, widthHeight, depth )
+	parseAttributes( elem, object, widthHeight, depth, wireframe )
 	{
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
@@ -931,13 +883,18 @@ class HTMLParser
 		
 		if( widthHeight )
 		{
-			if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-			if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+			if( elem.hasAttribute('width') ) object.width = Number(elem.getAttribute('width')); 
+			if( elem.hasAttribute('height') ) object.height = Number(elem.getAttribute('height')); 
 		}
 		
 		if( depth )
 		{
-			if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			if( elem.hasAttribute('depth') ) object.depth = Number(elem.getAttribute('depth')); 
+		}
+		
+		if( wireframe )
+		{
+			if( elem.hasAttribute('wireframe') ) object.wireframe = ['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase()) >= 0;
 		}
 		
 		var id = elem.getAttribute('id');
@@ -978,7 +935,7 @@ class HTMLParser
 	} // HTMLParser.parseTagLINE
 	
 	
-	// <square id="..." center="..." color="..." size="...">
+	// <square id="..." center="..." color="..." size="..." wireframe="...">
 	parseTagSQUARE( suica, elem )
 	{
 		var p = suica.square(
@@ -987,29 +944,14 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagSQUARE
 	
 	
-	// <squareFrame id="..." center="..." color="..." size="...">
-	parseTagSQUAREFRAME( suica, elem )
-	{
-		var p = suica.squareFrame(
-			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagSQUAREFRAME
-
-	// <cube id="..." center="..." color="..." size="...">
+	// <cube id="..." center="..." color="..." size="..." wireframe="...">
 	parseTagCUBE( suica, elem )
 	{
 		var p = suica.cube(
@@ -1018,30 +960,14 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagCUBE
 	
 	
-	// <cubeFrame id="..." center="..." color="..." size="...">
-	parseTagCUBEFRAME( suica, elem )
-	{
-		var p = suica.cubeFrame(
-			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagCUBEFRAME
-	
-	
-	// <circle id="..." center="..." color="..." size="...">
+	// <circle id="..." center="..." color="..." size="..." wireframe="...">
 	parseTagCIRCLE( suica, elem )
 	{
 		var p = suica.circle(
@@ -1050,30 +976,14 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagCIRCLE
 	
 	
-	// <squareFrame id="..." center="..." color="..." size="...">
-	parseTagCIRCLEFRAME( suica, elem )
-	{
-		var p = suica.circleFrame(
-			elem.getAttribute('center') || Suica.DEFAULT.CIRCLE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CIRCLE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagCIRCLEFRAME
-	
-	
-	// <polygon id="..." center="..." color="..." size="..." count="...">
+	// <polygon id="..." center="..." color="..." size="..." count="..." wireframe="...">
 	parseTagPOLYGON( suica, elem )
 	{
 		var p = suica.polygon(
@@ -1083,29 +993,12 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPOLYGON
 	
-	
-	// <squareFrame id="..." center="..." color="..." size="..." count="...">
-	parseTagPOLYGONFRAME( suica, elem )
-	{
-		var p = suica.polygonFrame(
-			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
-
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagPOLYGONFRAME
 
 	// <sphere id="..." center="..." color="..." size="...">
 	parseTagSPHERE( suica, elem )
@@ -1122,6 +1015,7 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagSPHERE
 	
+	
 	// <cylinder id="..." center="..." color="..." size="...">
 	parseTagCYLINDER( suica, elem )
 	{
@@ -1137,7 +1031,8 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagCYLINDER
 	
-	// <prism id="..." center="..." color="..." size="..." count="...">
+	
+	// <prism id="..." center="..." color="..." size="..." count="..." wireframe="...">
 	parseTagPRISM( suica, elem )
 	{
 		var p = suica.prism(
@@ -1147,27 +1042,12 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPRISM
 	
-	// <prismFrame id="..." center="..." color="..." size="..." count="...">
-	parseTagPRISMFRAME( suica, elem )
-	{
-		var p = suica.prismFrame(
-			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagPRISMFRAME
 	
 	// <cone id="..." center="..." color="..." size="...">
 	parseTagCONE( suica, elem )
@@ -1184,7 +1064,8 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagCONE
 	
-	// <pyramid id="..." center="..." color="..." size="..." count="...">
+	
+	// <pyramid id="..." center="..." color="..." size="..." count="..." wireframe="...">
 	parseTagPYRAMID( suica, elem )
 	{
 		var p = suica.pyramid(
@@ -1194,27 +1075,11 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPYRAMID
-	
-	// <pyramidFrame id="..." center="..." color="..." size="..." count="...">
-	parseTagPYRAMIDFRAME( suica, elem )
-	{
-		var p = suica.pyramidFrame(
-			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagPYRAMIDFRAME
 	
 	
 } // HTMLParser
@@ -1495,13 +1360,19 @@ window.image = function ( url = null, repeatX = 1, repeatY = 1 )
 
 class Mesh
 {
-	constructor( suica, threejsClass, geometry, material )
+	constructor( suica, solidMesh, frameMesh )
 	{
 		this.suica = suica;
-		this.threejs = new threejsClass( geometry, material );
+		this.solidMesh = solidMesh;
+		this.frameMesh = frameMesh;
+		
+		this.threejs = solidMesh;
+		this.isWireframe = false;
 		
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
+
+		suica.scene.add( solidMesh );
 	}
 
 
@@ -1511,15 +1382,24 @@ class Mesh
 	static createMaterials( )
 	{
 		// point material
-		var CANVAS_SIZE = 64;
+		var CANVAS_SIZE = 128;
 		var canvas = document.createElement('canvas');
 			canvas.width = CANVAS_SIZE;
 			canvas.height = CANVAS_SIZE;
 			
 		var context = canvas.getContext('2d');
 			context.fillStyle = 'white';
+			
+		var gradient = context.createRadialGradient(
+				CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-5,
+				CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2
+			);
+			gradient.addColorStop(0, 'white');
+			gradient.addColorStop(1, 'rgba(0,0,0,0)');
+			context.fillStyle = gradient;
+
 			context.beginPath( );
-			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
+			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-2, 0, 2*Math.PI );
 			context.fill( );
 
 		Mesh.pointMaterial = new THREE.PointsMaterial( {
@@ -1528,7 +1408,7 @@ class Mesh
 				sizeAttenuation: true,
 				map: new THREE.CanvasTexture( canvas ),
 				transparent: true,
-				alphaTest: 0.75,
+				alphaTest: 0.5,
 			});
 
 		// solid material
@@ -1807,6 +1687,39 @@ class Mesh
 
 
 
+	get wireframe( )
+	{
+		return this.isWireframe;
+	}
+	
+	set wireframe( wireframe )
+	{
+		if( !this.frameMesh )
+			throw 'error: wireframe property not available';
+		
+		this.isWireframe = wireframe;
+		
+		var oldMesh = this.threejs,
+			newMesh = (wireframe===true) || (['','true','yes','1'].indexOf(String(wireframe).toLowerCase()) >= 0) ? this.frameMesh : this.solidMesh;
+
+		// copy properties
+		newMesh.position.copy( oldMesh.position );
+		newMesh.scale.copy( oldMesh.scale );
+		newMesh.material.color.copy( oldMesh.material.color );
+		
+		if( oldMesh.material.map )
+		{
+			newMesh.material.map = oldMesh.material.map;
+			newMesh.material.transparent = oldMesh.material.transparent;
+			newMesh.material.needsUpdate = true;
+		}
+		
+		this.threejs = newMesh;
+		
+		this.suica.scene.remove( oldMesh );
+		this.suica.scene.add( newMesh );
+
+	}
 
 	
 } // class Mesh
@@ -1834,9 +1747,7 @@ Mesh.createMaterials();﻿//
 
 class Point extends Mesh
 {
-
-	// a static geometry shared by all points
-	static geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+	static solidGeometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
 
 
 	constructor(suica, center, size, color)
@@ -1845,14 +1756,15 @@ class Point extends Mesh
 		suica.debugCall( 'point', center, size, color );
 
 
-		super( suica, THREE.Points, Point.geometry, Mesh.pointMaterial.clone() );
+		super( suica,
+			new THREE.Points( Point.solidGeometry, Mesh.pointMaterial.clone() ),
+			null, // no wireframe
+		);
 
 		this.center = center;
 		this.color = color;
 		this.size = size;
 
-		suica.scene.add( this.threejs );
-		
 	} // Point.constructor
 
 
@@ -1907,19 +1819,28 @@ window.point = function(
 
 class Line extends Mesh
 {
+	static solidGeometry = new THREE.BufferGeometry();
+	static
+	{
+		this.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
+		this.solidGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
+	}
+
 
 	constructor(suica, center, to, color)
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'line', center, to, color );
 			
-		super( suica, THREE.LineSegments, Line.geometry.clone(), Mesh.lineMaterial.clone() );
+		super( suica,
+			new THREE.LineSegments( Line.solidGeometry.clone(), Mesh.lineMaterial.clone() ),
+			null, // no wireframe
+		);
 
 		this.center = center;
 		this.color = color;
 		this.to = to;
 
-		suica.scene.add( this.threejs );
 	} // Line.constructor
 
 
@@ -2053,9 +1974,6 @@ class Line extends Mesh
 } // class Line
 
 
-Line.geometry = new THREE.BufferGeometry();
-Line.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
-Line.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
 
 
 window.line = function(
@@ -2070,12 +1988,10 @@ window.line = function(
 // CC-3.0-SA-NC
 //
 // square( center, size, color )
-// squareFrame( center, size, color )
 //
-// <square id="" center="" size="" color="">
+// <square id="" center="" size="" color="" wireframe="">
 // <square x="" y="" z="">
 // <square width="" height="">
-// <squareFrame ...>
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -2085,6 +2001,7 @@ window.line = function(
 // width
 // height
 // color	color [r,g,b]
+// wireframe true (wireframe) or false (solid)
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -2092,62 +2009,43 @@ window.line = function(
 
 class Square extends Mesh
 {
-
-	// a geometry shared by all squares
-	static geometry = new THREE.PlaneGeometry( 1, 1 );
+	static solidGeometry = new THREE.PlaneGeometry( 1, 1 );
+	static frameGeometry = new THREE.BufferGeometry();
+	
+	static
+	{
+		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+			-0.5,-0.5,0, +0.5,-0.5,0, 
+			+0.5,-0.5,0, +0.5,+0.5,0, 
+			+0.5,+0.5,0, -0.5,+0.5,0, 
+			-0.5,+0.5,0, -0.5,-0.5,0, 
+		]), 3));
+		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+		]), 2));
+			
+	} // Square.static
 	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'square', center, size, color );
 		
-		super( suica, THREE.Mesh, Square.geometry, Mesh.solidMaterial.clone() );
+		super( suica, 
+			/*solid*/ new THREE.Mesh( Square.solidGeometry, Mesh.solidMaterial.clone() ),
+			/*frame*/ new THREE.LineSegments( Square.frameGeometry, Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		
-		suica.scene.add( this.threejs );
-	}
+	} // Square.constructor
 
 } // class Square
-
-
-
-
-class SquareFrame extends Mesh
-{
-	
-	constructor( suica, center, size, color )
-	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'squareFrame', center, size, color );
-		
-		super( suica, THREE.LineSegments, SquareFrame.geometry, Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		
-		suica.scene.add( this.threejs );
-	}
-	
-} // class SquareFrame
-
-
-SquareFrame.geometry = new THREE.BufferGeometry();
-SquareFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
-	-0.5,-0.5,0, +0.5,-0.5,0, 
-	+0.5,-0.5,0, +0.5,+0.5,0, 
-	+0.5,+0.5,0, -0.5,+0.5,0, 
-	-0.5,+0.5,0, -0.5,-0.5,0, 
-]), 3));
-SquareFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	]), 2));
 
 
 
@@ -2160,28 +2058,15 @@ window.square = function(
 	Suica.precheck();
 	return Suica.current.square( center, size, color );
 }
-
-
-
-
-window.squareFrame = function(
-				center = Suica.DEFAULT.SQUARE.CENTER,
-				size   = Suica.DEFAULT.SQUARE.SIZE,
-				color  = Suica.DEFAULT.SQUARE.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.squareFrame( center, size, color );
-}﻿//
+﻿//
 // Suica 2.0 Cube
 // CC-3.0-SA-NC
 //
 // cube( center, size, color )
-// cubeFrame( center, size, color )
 //
-// <cube id="" center="" size="" color="">
+// <cube id="" center="" size="" color="" wireframe="">
 // <cube x="" y="" z="">
 // <cube width="" height="" depth="">
-// <cubeFrame ...>
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -2192,6 +2077,7 @@ window.squareFrame = function(
 // height
 // depth
 // color	color [r,g,b]
+// wireframe true (wireframe) or false (solid)
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -2199,85 +2085,67 @@ window.squareFrame = function(
 
 class Cube extends Mesh
 {
+	static solidGeometry = new THREE.BoxGeometry( 1, 1, 1 );
+	static frameGeometry = new THREE.BufferGeometry();
+
+	static
+	{
+		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+			// bottom ring
+			-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
+			+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
+			+0.5,+0.5,-0.5, -0.5,+0.5,-0.5, 
+			-0.5,+0.5,-0.5, -0.5,-0.5,-0.5, 
+			// top ring
+			-0.5,-0.5,+0.5, +0.5,-0.5,+0.5, 
+			+0.5,-0.5,+0.5, +0.5,+0.5,+0.5, 
+			+0.5,+0.5,+0.5, -0.5,+0.5,+0.5, 
+			-0.5,+0.5,+0.5, -0.5,-0.5,+0.5, 
+			// bottom to top
+			-0.5,-0.5,-0.5, -0.5,-0.5,+0.5, 
+			+0.5,-0.5,-0.5, +0.5,-0.5,+0.5, 
+			+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
+			-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
+		]), 3));
+		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+			// bottom ring
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			// top ring
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			// bottom to top
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			]), 2));
+			
+	} // Cube.static
 	
-	// a geometry shared by all cubes
-	static geometry = new THREE.BoxGeometry( 1, 1, 1 );
 	
 	constructor( suica, center, size, color )
 	{
+		
 		suica.parser?.parseTags();
 		suica.debugCall( 'cube', center, size, color );
 		
-		super( suica, THREE.Mesh, Cube.geometry, Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Cube.solidGeometry, Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Cube.frameGeometry, Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		
-		suica.scene.add( this.threejs );
-	}
+	} // Cube.constructor
 
 } // class Cube
-
-
-
-
-class CubeFrame extends Mesh
-{
-	
-	constructor( suica, center, size, color )
-	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'cubeFrame', center, size, color );
-		
-		super( suica, THREE.LineSegments, CubeFrame.geometry, Mesh.lineMaterial.clone() );
-
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		
-		suica.scene.add( this.threejs );
-
-	}
-	
-} // class CubeFrame
-
-
-CubeFrame.geometry = new THREE.BufferGeometry();
-CubeFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
-	// bottom ring
-	-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
-	+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
-	+0.5,+0.5,-0.5, -0.5,+0.5,-0.5, 
-	-0.5,+0.5,-0.5, -0.5,-0.5,-0.5, 
-	// top ring
-	-0.5,-0.5,+0.5, +0.5,-0.5,+0.5, 
-	+0.5,-0.5,+0.5, +0.5,+0.5,+0.5, 
-	+0.5,+0.5,+0.5, -0.5,+0.5,+0.5, 
-	-0.5,+0.5,+0.5, -0.5,-0.5,+0.5, 
-	// bottom to top
-	-0.5,-0.5,-0.5, -0.5,-0.5,+0.5, 
-	+0.5,-0.5,-0.5, +0.5,-0.5,+0.5, 
-	+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
-	-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
-]), 3));
-CubeFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
-	// bottom ring
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	// top ring
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	// bottom to top
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	]), 2));
 
 
 
@@ -2290,28 +2158,16 @@ window.cube = function(
 	Suica.precheck();
 	return Suica.current.cube( center, size, color );
 }
-
-
-
-
-window.cubeFrame = function(
-				center = Suica.DEFAULT.CUBE.CENTER,
-				size   = Suica.DEFAULT.CUBE.SIZE,
-				color  = Suica.DEFAULT.CUBE.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.cubeFrame( center, size, color );
-}﻿//
+﻿//
 // Suica 2.0 Circle
 // CC-3.0-SA-NC
 //
 // circle( center, size, color )
-// circleFrame( center, size, color )
 //
-// <circle id="" center="" size="" color="">
+// <circle id="" center="" size="" color="" wireframe=""> 
 // <circle x="" y="" z="">
 // <circle width="" height="">
-// <circleFrame ...>
+// <polygon id="" count="..." center="" size="" color="" wireframe=""> 
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -2321,6 +2177,7 @@ window.cubeFrame = function(
 // width
 // height
 // color	color [r,g,b]
+// wireframe
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -2328,8 +2185,8 @@ window.cubeFrame = function(
 
 class Polygon extends Mesh
 {
-	
-	static geometry = []; // array of geometries for different number of sides
+	static solidGeometry = []; // array of geometries for different number of sides
+	static frameGeometry = []; // array of geometries for different number of sides
 	
 	constructor( suica, count, center, size, color )
 	{
@@ -2339,21 +2196,16 @@ class Polygon extends Mesh
 		else
 			suica.debugCall( 'circle', center, size, color );
 
-	
-		if( !Polygon.geometry[count] )
-		{
-			Polygon.geometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
-		}
-		
-		super( suica, THREE.Mesh, Polygon.geometry[count], Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Polygon.getSolidGeometry(count), Mesh.solidMaterial.clone() ),
+			new THREE.LineLoop( Polygon.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		this.n = count;
-		
-		suica.scene.add( this.threejs );
-		
+
 	} // Polygon.constructor
 
 
@@ -2371,59 +2223,27 @@ class Polygon extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		if( !Polygon.geometry[count] )
-		{
-			Polygon.geometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
-		}
+		this.solidMesh.geometry = Polygon.getSolidGeometry( count );
+		this.frameMesh.geometry = Polygon.getFrameGeometry( count );
 		
-		this.threejs.geometry = Polygon.geometry[count];
-	}
-	
-	
-} // class Polygon
-
-
-
-
-class PolygonFrame extends Mesh
-{
-
-	static geometry = []; // array of geometries for different number of sides
-
-	constructor( suica, count, center, size, color )
-	{
-		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CIRCLE.COUNT )
-			suica.debugCall( 'polygonFrame', count, center, size, color );
-		else
-			suica.debugCall( 'circleFrame', center, size, color );
-		
-		super( suica, THREE.Line, PolygonFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
-		
-		suica.scene.add( this.threejs );
-	}		
-	
-	
-
-
-	get count()
-	{
-		this.suica.parser?.parseTags();
-
-		return this.n;
+		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 
-	static getGeometry( count )
+	static getSolidGeometry( count )
 	{
-		if( !Polygon.geometry[count] )
+		if( !Polygon.solidGeometry[count] )
+			Polygon.solidGeometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
+		
+		return Polygon.solidGeometry[count];
+	} // Polygon.getSolidGeometry
+	
+	
+	static getFrameGeometry( count )
+	{
+		if( !Polygon.frameGeometry[count] )
 		{
-			PolygonFrame.geometry[count] = new THREE.BufferGeometry();
+			Polygon.frameGeometry[count] = new THREE.BufferGeometry();
 
 			let vertices = new Float32Array(3*count+3),
 				uvs = new Float32Array(2*count+2);
@@ -2442,24 +2262,15 @@ class PolygonFrame extends Mesh
 				else
 					uvs[2*i] = i;
 			}
-			PolygonFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			PolygonFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			Polygon.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			Polygon.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
 		}
 		
-		return PolygonFrame.geometry[count];
-	}
+		return Polygon.frameGeometry[count];
+	} // Polygon.getFrameGeometry
 	
-	
-	set count( count )
-	{
-		this.suica.parser?.parseTags();
+} // class Polygon
 
-		if( count == this.n ) return; // same number of side, no need to regenerate
-		
-		this.threejs.geometry = PolygonFrame.getGeometry( count );
-	}
-	
-} // class PolygonFrame
 
 
 
@@ -2475,18 +2286,6 @@ window.circle = function(
 
 
 
-window.circleFrame = function(
-				center = Suica.DEFAULT.CIRCLE.CENTER,
-				size   = Suica.DEFAULT.CIRCLE.SIZE,
-				color  = Suica.DEFAULT.CIRCLE.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.circleFrame( center, size, color );
-}
-
-
-
-
 window.polygon = function(
 				count = Suica.DEFAULT.POLYGON.COUNT,
 				center = Suica.DEFAULT.POLYGON.CENTER,
@@ -2495,19 +2294,6 @@ window.polygon = function(
 {
 	Suica.precheck();
 	return Suica.current.polygon( count, center, size, color );
-}
-
-
-
-
-window.polygonFrame = function(
-				count = Suica.DEFAULT.POLYGON.COUNT,
-				center = Suica.DEFAULT.POLYGON.CENTER,
-				size   = Suica.DEFAULT.POLYGON.SIZE,
-				color  = Suica.DEFAULT.POLYGON.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.polygonFrame( count, center, size, color );
 }﻿//
 // Suica 2.0 Sphere
 // CC-3.0-SA-NC
@@ -2534,28 +2320,28 @@ window.polygonFrame = function(
 
 class Sphere extends Mesh
 {
-	
-	// a geometry shared by all cubes
-	static geometry;
+	static solidGeometry;
 	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'sphere', center, size, color );
 		
-		if( !Sphere.geometry )
+		if( !Sphere.solidGeometry )
 		{
-			Sphere.geometry = new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) );
+			Sphere.solidGeometry = new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) );
 		}
 		
-		super( suica, THREE.Mesh, Sphere.geometry, Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Sphere.solidGeometry, Mesh.solidMaterial.clone() ),
+			null, // no wireframe
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
-		
-		suica.scene.add( this.threejs );
-	}
+
+	} // Sphere.constructor
 
 } // class Sphere
 
@@ -2576,11 +2362,9 @@ window.sphere = function(
 //
 // cylinder( center, size, color )
 // prism( center, size, color )
-// prismFrame( center, size, color )
 //
-// <cylinder id="" center="" size="" color="">
+// <cylinder id="" center="" size="" color="" wireframe=""> 
 // <prism id="" center="" size="" color="">
-// <prismFrame id="" center="" size="" color="">
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -2591,6 +2375,7 @@ window.sphere = function(
 // height
 // depth
 // color	color [r,g,b]
+// wireframe
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -2598,30 +2383,26 @@ window.sphere = function(
 
 class Prism extends Mesh
 {
-	
-	static geometry = []; // array of geometries for different number of sides
+	static solidGeometry = []; // array of geometries for different number of sides
+	static frameGeometry = []; // array of geometries for different number of sides
 	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CYLINDER.COUNT )
+		if( flatShading )
 			suica.debugCall( 'prism', count, center, size, color );
 		else
 			suica.debugCall( 'cylinder', center, size, color );
 	
-		if( !Prism.geometry[count] )
-		{
-			Prism.geometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
-		
-		super( suica, THREE.Mesh, Prism.geometry[count], flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Prism.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Prism.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		this.n = count;
-		
-		suica.scene.add( this.threejs );
 		
 	} // Prism.constructor
 
@@ -2640,56 +2421,27 @@ class Prism extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		if( !Prism.geometry[count] )
-		{
-			Prism.geometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
+		this.solidMesh.geometry = Prism.getSolidGeometry( count );
+		this.frameMesh.geometry = Prism.getFrameGeometry( count );
 		
-		this.threejs.geometry = Prism.geometry[count];
+		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 	
-} // class Prism
-
-
-
-
-class PrismFrame extends Mesh
-{
-
-	static geometry = []; // array of geometries for different number of sides
-
-	constructor( suica, count, center, size, color )
+	static getSolidGeometry( count )
 	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'prismFrame', count, center, size, color );
+		if( !Prism.solidGeometry[count] )
+			Prism.solidGeometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
 		
-		super( suica, THREE.LineSegments, PrismFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
-		
-		suica.scene.add( this.threejs );
-	}		
+		return Prism.solidGeometry[count];
+	} // Prism.getSolidGeometry
 	
 	
-
-
-	get count()
+	static getFrameGeometry( count )
 	{
-		this.suica.parser?.parseTags();
-
-		return this.n;
-	}
-	
-
-	static getGeometry( count )
-	{
-		if( !Prism.geometry[count] )
+		if( !Prism.frameGeometry[count] )
 		{
-			PrismFrame.geometry[count] = new THREE.BufferGeometry();
+			Prism.frameGeometry[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom, at top, at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -2756,24 +2508,15 @@ class PrismFrame extends Mesh
 				uvs[12*i+8] = 0;
 				uvs[12*i+10] = 1;
 			}
-			PrismFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			PrismFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			Prism.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			Prism.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
 		}
 		
-		return PrismFrame.geometry[count];
-	}
+		return Prism.frameGeometry[count];
+	} // Prism.getFrameGeometry
 	
-	
-	set count( count )
-	{
-		this.suica.parser?.parseTags();
+} // class Prism
 
-		if( count == this.n ) return; // same number of side, no need to regenerate
-		
-		this.threejs.geometry = PrismFrame.getGeometry( count );
-	}
-	
-} // class PrismFrame
 
 
 
@@ -2796,19 +2539,6 @@ window.prism = function(
 {
 	Suica.precheck();
 	return Suica.current.prism( count, center, size, color );
-}
-
-
-
-
-window.prismFrame = function(
-				count = Suica.DEFAULT.PRISM.COUNT,
-				center = Suica.DEFAULT.PRISM.CENTER,
-				size   = Suica.DEFAULT.PRISM.SIZE,
-				color  = Suica.DEFAULT.PRISM.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.prismFrame( count, center, size, color );
 }﻿//
 // Suica 2.0 Cone
 // CC-3.0-SA-NC
@@ -2817,9 +2547,8 @@ window.prismFrame = function(
 // pyramid( center, size, color )
 // pyramidFrame( center, size, color )
 //
-// <cone id="" center="" size="" color="">
+// <cone id="" center="" size="" color="" wireframe=""> 
 // <pyramid id="" center="" size="" color="">
-// <pyramidFrame id="" center="" size="" color="">
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -2830,6 +2559,7 @@ window.prismFrame = function(
 // height
 // depth
 // color	color [r,g,b]
+// wireframe
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -2837,31 +2567,27 @@ window.prismFrame = function(
 
 class Pyramid extends Mesh
 {
-	
-	static geometry = []; // array of geometries for different number of sides
+	static solidGeometry = []; // array of geometries for different number of sides
+	static frameGeometry = []; // array of geometries for different number of sides
 	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CONE.COUNT )
+		if( flatShading )
 			suica.debugCall( 'pyramid', count, center, size, color );
 		else
 			suica.debugCall( 'cone', center, size, color );
 	
-		if( !Prism.geometry[count] )
-		{
-			Prism.geometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
-		
-		super( suica, THREE.Mesh, Prism.geometry[count], flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Pyramid.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Pyramid.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		this.n = count;
-		
-		suica.scene.add( this.threejs );
-		
+	
 	} // Pyramid.constructor
 
 
@@ -2879,56 +2605,27 @@ class Pyramid extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		if( !Pyramid.geometry[count] )
-		{
-			Pyramid.geometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
+		this.solidMesh.geometry = Pyramid.getSolidGeometry( count );
+		this.frameMesh.geometry = Pyramid.getFrameGeometry( count );
 		
-		this.threejs.geometry = Pyramid.geometry[count];
+		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 	
-} // class Pyramid
-
-
-
-
-class PyramidFrame extends Mesh
-{
-
-	static geometry = []; // array of geometries for different number of sides
-
-	constructor( suica, count, center, size, color )
+	static getSolidGeometry( count )
 	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'pyramidFrame', count, center, size, color );
+		if( !Pyramid.solidGeometry[count] )
+			Pyramid.solidGeometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
 		
-		super( suica, THREE.LineSegments, PyramidFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
-		
-		suica.scene.add( this.threejs );
-	}		
-	
-	
+		return Pyramid.solidGeometry[count];
+	} // Pyramid.getSolidGeometry
 
 
-	get count()
+	static getFrameGeometry( count )
 	{
-		this.suica.parser?.parseTags();
-
-		return this.n;
-	}
-	
-
-	static getGeometry( count )
-	{
-		if( !Pyramid.geometry[count] )
+		if( !Pyramid.frameGeometry[count] )
 		{
-			PyramidFrame.geometry[count] = new THREE.BufferGeometry();
+			Pyramid.frameGeometry[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom and at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -2983,24 +2680,15 @@ class PyramidFrame extends Mesh
 				uvs[8*i+4] = 0;
 				uvs[8*i+6] = 1;
 			}
-			PyramidFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			PyramidFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			Pyramid.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			Pyramid.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
 		}
 		
-		return PyramidFrame.geometry[count];
-	}
+		return Pyramid.frameGeometry[count];
+	} // Pyramid.getFrameGeometry
 	
-	
-	set count( count )
-	{
-		this.suica.parser?.parseTags();
+} // class Pyramid
 
-		if( count == this.n ) return; // same number of side, no need to regenerate
-		
-		this.threejs.geometry = PyramidFrame.getGeometry( count );
-	}
-	
-} // class PyramidFrame
 
 
 
@@ -3024,16 +2712,4 @@ window.pyramid = function(
 	Suica.precheck();
 	return Suica.current.pyramid( count, center, size, color );
 }
-
-
-
-
-window.pyramidFrame = function(
-				count = Suica.DEFAULT.PYRAMID.COUNT,
-				center = Suica.DEFAULT.PYRAMID.CENTER,
-				size   = Suica.DEFAULT.PYRAMID.SIZE,
-				color  = Suica.DEFAULT.PYRAMID.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.pyramidFrame( count, center, size, color );
-}} // LoadSuica 
+} // LoadSuica 

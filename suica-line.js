@@ -20,19 +20,28 @@
 
 class Line extends Mesh
 {
+	static solidGeometry = new THREE.BufferGeometry();
+	static
+	{
+		this.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
+		this.solidGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
+	}
+
 
 	constructor(suica, center, to, color)
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'line', center, to, color );
 			
-		super( suica, THREE.LineSegments, Line.geometry.clone(), Mesh.lineMaterial.clone() );
+		super( suica,
+			new THREE.LineSegments( Line.solidGeometry.clone(), Mesh.lineMaterial.clone() ),
+			null, // no wireframe
+		);
 
 		this.center = center;
 		this.color = color;
 		this.to = to;
 
-		suica.scene.add( this.threejs );
 	} // Line.constructor
 
 
@@ -166,9 +175,6 @@ class Line extends Mesh
 } // class Line
 
 
-Line.geometry = new THREE.BufferGeometry();
-Line.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
-Line.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
 
 
 window.line = function(

@@ -3,12 +3,10 @@
 // CC-3.0-SA-NC
 //
 // square( center, size, color )
-// squareFrame( center, size, color )
 //
-// <square id="" center="" size="" color="">
+// <square id="" center="" size="" color="" wireframe="">
 // <square x="" y="" z="">
 // <square width="" height="">
-// <squareFrame ...>
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -18,6 +16,7 @@
 // width
 // height
 // color	color [r,g,b]
+// wireframe true (wireframe) or false (solid)
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -25,62 +24,43 @@
 
 class Square extends Mesh
 {
-
-	// a geometry shared by all squares
-	static geometry = new THREE.PlaneGeometry( 1, 1 );
+	static solidGeometry = new THREE.PlaneGeometry( 1, 1 );
+	static frameGeometry = new THREE.BufferGeometry();
+	
+	static
+	{
+		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+			-0.5,-0.5,0, +0.5,-0.5,0, 
+			+0.5,-0.5,0, +0.5,+0.5,0, 
+			+0.5,+0.5,0, -0.5,+0.5,0, 
+			-0.5,+0.5,0, -0.5,-0.5,0, 
+		]), 3));
+		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+		]), 2));
+			
+	} // Square.static
 	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'square', center, size, color );
 		
-		super( suica, THREE.Mesh, Square.geometry, Mesh.solidMaterial.clone() );
+		super( suica, 
+			/*solid*/ new THREE.Mesh( Square.solidGeometry, Mesh.solidMaterial.clone() ),
+			/*frame*/ new THREE.LineSegments( Square.frameGeometry, Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		
-		suica.scene.add( this.threejs );
-	}
+	} // Square.constructor
 
 } // class Square
-
-
-
-
-class SquareFrame extends Mesh
-{
-	
-	constructor( suica, center, size, color )
-	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'squareFrame', center, size, color );
-		
-		super( suica, THREE.LineSegments, SquareFrame.geometry, Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		
-		suica.scene.add( this.threejs );
-	}
-	
-} // class SquareFrame
-
-
-SquareFrame.geometry = new THREE.BufferGeometry();
-SquareFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
-	-0.5,-0.5,0, +0.5,-0.5,0, 
-	+0.5,-0.5,0, +0.5,+0.5,0, 
-	+0.5,+0.5,0, -0.5,+0.5,0, 
-	-0.5,+0.5,0, -0.5,-0.5,0, 
-]), 3));
-SquareFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	]), 2));
 
 
 
@@ -92,16 +72,4 @@ window.square = function(
 {
 	Suica.precheck();
 	return Suica.current.square( center, size, color );
-}
-
-
-
-
-window.squareFrame = function(
-				center = Suica.DEFAULT.SQUARE.CENTER,
-				size   = Suica.DEFAULT.SQUARE.SIZE,
-				color  = Suica.DEFAULT.SQUARE.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.squareFrame( center, size, color );
 }

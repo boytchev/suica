@@ -3,12 +3,10 @@
 // CC-3.0-SA-NC
 //
 // cube( center, size, color )
-// cubeFrame( center, size, color )
 //
-// <cube id="" center="" size="" color="">
+// <cube id="" center="" size="" color="" wireframe="">
 // <cube x="" y="" z="">
 // <cube width="" height="" depth="">
-// <cubeFrame ...>
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -19,6 +17,7 @@
 // height
 // depth
 // color	color [r,g,b]
+// wireframe true (wireframe) or false (solid)
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -26,85 +25,67 @@
 
 class Cube extends Mesh
 {
+	static solidGeometry = new THREE.BoxGeometry( 1, 1, 1 );
+	static frameGeometry = new THREE.BufferGeometry();
+
+	static
+	{
+		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+			// bottom ring
+			-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
+			+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
+			+0.5,+0.5,-0.5, -0.5,+0.5,-0.5, 
+			-0.5,+0.5,-0.5, -0.5,-0.5,-0.5, 
+			// top ring
+			-0.5,-0.5,+0.5, +0.5,-0.5,+0.5, 
+			+0.5,-0.5,+0.5, +0.5,+0.5,+0.5, 
+			+0.5,+0.5,+0.5, -0.5,+0.5,+0.5, 
+			-0.5,+0.5,+0.5, -0.5,-0.5,+0.5, 
+			// bottom to top
+			-0.5,-0.5,-0.5, -0.5,-0.5,+0.5, 
+			+0.5,-0.5,-0.5, +0.5,-0.5,+0.5, 
+			+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
+			-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
+		]), 3));
+		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+			// bottom ring
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			// top ring
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			// bottom to top
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			]), 2));
+			
+	} // Cube.static
 	
-	// a geometry shared by all cubes
-	static geometry = new THREE.BoxGeometry( 1, 1, 1 );
 	
 	constructor( suica, center, size, color )
 	{
+		
 		suica.parser?.parseTags();
 		suica.debugCall( 'cube', center, size, color );
 		
-		super( suica, THREE.Mesh, Cube.geometry, Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Cube.solidGeometry, Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Cube.frameGeometry, Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		
-		suica.scene.add( this.threejs );
-	}
+	} // Cube.constructor
 
 } // class Cube
-
-
-
-
-class CubeFrame extends Mesh
-{
-	
-	constructor( suica, center, size, color )
-	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'cubeFrame', center, size, color );
-		
-		super( suica, THREE.LineSegments, CubeFrame.geometry, Mesh.lineMaterial.clone() );
-
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		
-		suica.scene.add( this.threejs );
-
-	}
-	
-} // class CubeFrame
-
-
-CubeFrame.geometry = new THREE.BufferGeometry();
-CubeFrame.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
-	// bottom ring
-	-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
-	+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
-	+0.5,+0.5,-0.5, -0.5,+0.5,-0.5, 
-	-0.5,+0.5,-0.5, -0.5,-0.5,-0.5, 
-	// top ring
-	-0.5,-0.5,+0.5, +0.5,-0.5,+0.5, 
-	+0.5,-0.5,+0.5, +0.5,+0.5,+0.5, 
-	+0.5,+0.5,+0.5, -0.5,+0.5,+0.5, 
-	-0.5,+0.5,+0.5, -0.5,-0.5,+0.5, 
-	// bottom to top
-	-0.5,-0.5,-0.5, -0.5,-0.5,+0.5, 
-	+0.5,-0.5,-0.5, +0.5,-0.5,+0.5, 
-	+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
-	-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
-]), 3));
-CubeFrame.geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
-	// bottom ring
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	// top ring
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	// bottom to top
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	0, 0,  1, 0,
-	]), 2));
 
 
 
@@ -116,16 +97,4 @@ window.cube = function(
 {
 	Suica.precheck();
 	return Suica.current.cube( center, size, color );
-}
-
-
-
-
-window.cubeFrame = function(
-				center = Suica.DEFAULT.CUBE.CENTER,
-				size   = Suica.DEFAULT.CUBE.SIZE,
-				color  = Suica.DEFAULT.CUBE.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.cubeFrame( center, size, color );
 }

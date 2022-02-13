@@ -7,8 +7,8 @@
 - [Objects](#objects)
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
-	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [square frame](#square-frame) | [circle](#circle) | [circle frame](#circle-frame)  | [polygon](#polygon) | [polygon frame](#polygon-frame) </small>]
-	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [cube frame](#cube-frame) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [prism frame](#prism-frame) | [cone](#cone) | [pyramid](#pyramid) | [pyramid frame](#pyramid-frame) </small>]
+	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
+	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 - [Images and drawings](#images-and-drawings)
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) </small>]
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
@@ -422,20 +422,19 @@ underlying technology._
 
 ### Point
 
-The object `point` represents a point. Its properties are `center` (or `x`, `y`
-and `z`), `size`, `color` and `image`. By default a point is drawn as a small
-cirlce, but it can be changed with custom [drawing](#images-and-drawings).
+Object. Represents a point. Its properties are `center` (or `x`, `y` and `z`),
+`size`, `color` and `image`. By default a point is drawn as a small cirlce, but
+it can be changed with custom [drawing](#images-and-drawings).
 
 ```html
 HTML:
 <point center="25,0,15">
-<point center="25,0,15" size="10" color="red">
-<point x="25" y="0" z="15" size="10" color="red">
+<point center="25,0,15" size="10" color="crimson">
 ```
 ```js
 JS:
 point( [25,0,15] );
-point( [25,0,15], 10, 'red' );
+point( [25,0,15], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point.html)&emsp;[<kbd><img src="../examples/snapshots/point-cloud.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
@@ -443,10 +442,10 @@ point( [25,0,15], 10, 'red' );
 
 ### Line
 
-The object `line` represents a segment. Its properties are `center` (or `from`),
+Object. Represents a straight segment. Its properties are `center` (or `from`),
 `to`, `color` and `image`. The properties `center` and `from` are synonyms and
 they set the starting point of the segment, while `to` sets the ending point. By
-default a line is drawn as solid line, but it can be changed with custom
+default a line is drawn as a solid line, but it can be changed with custom
 [drawing](#images-and-drawings).
 
 ```html
@@ -467,135 +466,67 @@ _**Note**: Lines have no properties x, y, z, size, width, height and depth._
 
 ### Square
 
-The object `square` represents a solid square or rectangle. Its properties are
-`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color` and
-`image`. 
+Object. Represents a regular square or a rectangle. Its properties are
+`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color`,
+`wireframe` and `image`. 
 
 ```html
 HTML:
 <square center="25,0,15">
-<square x="25" y="0" z="15" size="10">
+<square size="10" color="crimson">
 ```
 ```js
 JS:
 square( [25,0,15] );
-square( [25,0,15], 10, 'red' );
+square( [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/square.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square.html)
-[<kbd><img src="../examples/snapshots/rectangle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle.html)
-
-
-
-### Square frame
-
-The object `squareFrame` represents a wireframed square or rectangle. Its
-properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
-`color` and `image`.
-
-```html
-HTML:
-<squareFrame center="25,0,15">
-<squareFrame x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-squareFrame( [25,0,15] );
-squareFrame( [25,0,15], 10, 'red' );
-```
-
-[<kbd><img src="../examples/snapshots/square-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
-[<kbd><img src="../examples/snapshots/rectangle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
+[<kbd><img src="../examples/snapshots/square-rectangle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square-rectangle.html)
 
 
 
 ### Circle
 
-The object `circle` represents a solid circle or ellipse. Its properties are
-`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color` and
+Object. Represents a circle or an ellipse. Its properties are `center` (or `x`,
+`y` and `z`), `size` (or `width` and `height`), `color`, `wireframe` and
 `image`. 
 
 ```html
 HTML:
 <circle center="25,0,15">
-<circle x="25" y="0" z="15" size="10">
+<circle size="10" color="crimson">
 ```
 ```js
 JS:
 circle( [25,0,15] );
-circle( [25,0,15], 10, 'red' );
+circle( [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/circle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle.html)
-[<kbd><img src="../examples/snapshots/ellipse.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ellipse.html)
-
-
-
-### Circle frame
-
-The object `circleFrame` represents a wireframed circle or ellipse. Its
-properties are `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
-`color` and `image`.
-
-```html
-HTML:
-<circleFrame center="25,0,15">
-<circleFrame x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-circleFrame( [25,0,15] );
-circleFrame( [25,0,15], 10, 'red' );
-```
-
-[<kbd><img src="../examples/snapshots/circle-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle-frame.html)
-[<kbd><img src="../examples/snapshots/ellipse-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ellipse-frame.html)
+[<kbd><img src="../examples/snapshots/circle-ellipse.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle-ellipse.html)
 
 
 
 ### Polygon
 
-The object `polygon` represents a solid regular polygon. Its properties are
-`count`, `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
-`color` and `image`. The property `count` defines the number of sides of the
-polygon.
+Object. Represents a regular polygon or an elliptical polygon. Its properties
+are `count`, `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
+`color`, `wireframe` and `image`. The property `count` defines the number of
+sides of the polygon.
 
 ```html
 HTML:
 <polygon count="3" center="25,0,15">
-<polygon count="5"  x="25" y="0" z="15" size="10">
+<polygon count="5" size="10" color="crimson">
 ```
 ```js
 JS:
 polygon( 3, [25,0,15] ); // triangle
-polygon( 5, [25,0,15], 10, 'red' ); // pentagon
+polygon( 5, [0,0,0], 10, 'crimson' ); // pentagon
 ```
 
 [<kbd><img src="../examples/snapshots/polygon.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
-
-_**Note:** Properties size, width and height refer to the polygon circumscribed
-circle, rather than the polygon itself._
-
-
-### Polygon frame
-
-The object `polygonFrame` represents a wireframed regular polygon. Its
-properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width` and
-`height`, `color` and `image`. The property `count` defines the number of sides
-of the polygon.
-
-```html
-HTML:
-<polygonFrame count="3" center="25,0,15">
-<polygonFrame count="5" x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-polygonFrame( 3, [25,0,15] ); // triangle
-polygonFrame( 5, [25,0,15], 10, 'red' ); // pentagon
-```
-
-[<kbd><img src="../examples/snapshots/polygon-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/polygon-frame.html)
 
 _**Note:** Properties size, width and height refer to the polygon circumscribed
 circle, rather than the polygon itself._
@@ -614,199 +545,133 @@ underlying technology._
 
 ### Cube
 
-The object `cube` represents a solid cube or cuboid. Its properties are `center`
-(or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`), `color` and
-`image`. 
+Object. Represents a regular cube or a deformed cube (called *cuboid*).
+Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
+and `depth`), `color`, `wireframe` and `image`. 
 
 ```html
 HTML:
 <cube center="25,0,15">
-<cube x="25" y="0" z="15" size="10">
+<cube size="10" color="crimson">
 ```
 ```js
 JS:
 cube( [25,0,15] );
-cube( [25,0,15], 10, 'red' );
+cube( [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
-[<kbd><img src="../examples/snapshots/cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
-
-
-
-### Cube frame
-
-The object `cubeFrame` represents a wireframed cube or cuboid. Its properties
-are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color` and `image`.
-
-```html
-HTML:
-<cubeFrame center="25,0,15">
-<cubeFrame x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-cubeFrame( [25,0,15] );
-cubeFrame( [25,0,15], 10, 'red' );
-```
-
-[<kbd><img src="../examples/snapshots/cube-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
-[<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
+[<kbd><img src="../examples/snapshots/cube-cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-cuboid.html)
 
 
 
 ### Sphere
 
-The object `sphere` represents a solid sphere or spheroid. Its properties are
-`center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color` and `image`. 
+Object. Represents a regular sphere or a deformed sphere (spheroid). Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
+and `depth`), `color` and `image`. 
 
 ```html
 HTML:
 <sphere center="25,0,15">
-<sphere x="25" y="0" z="15" size="10">
+<sphere size="10" color="crimson">
 ```
 ```js
 JS:
 sphere( [25,0,15] );
-sphere( [25,0,15], 10, 'red' );
+sphere( [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/sphere.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
-[<kbd><img src="../examples/snapshots/spheroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/spheroid.html)
+[<kbd><img src="../examples/snapshots/sphere-spheroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sphere-spheroid.html)
 
 
 
 ### Cylinder
 
-The object `cylinder` represents a solid cylinder or cylindroid. Its properties
-are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color` and `image`. 
+Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder).
+Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
+and `depth`), `color` and `image`. 
 
 ```html
 HTML:
 <cylinder center="25,0,15">
-<cylinder x="25" y="0" z="15" size="10">
+<cylinder size="10" color="crimson">
 ```
 ```js
 JS:
 cylinder( [25,0,15] );
-cylinder( [25,0,15], 10, 'red' );
+cylinder( [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/cylinder.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cylinder.html)
-[<kbd><img src="../examples/snapshots/cylindroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cylindroid.html)
+[<kbd><img src="../examples/snapshots/cylinder-cylindroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cylinder-cylindroid.html)
 
 
 
 ### Prism
 
-The object `prism` represents a solid prism or prismoid. Its properties are
-`count`, `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and
-`depth`), `color` and `image`. The property `count` defines the number of sides
-of the prism.
+Object. Represents a regular prism or prismoid (an elliptical prism). Its
+properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
+`height` and `depth`), `color`, `wireframe` and `image`. The property `count`
+defines the number of sides of the prism.
 
 ```html
 HTML:
 <prism count="6" center="25,0,15">
-<prism count="6" x="25" y="0" z="15" size="10">
+<prism count="3" size="10" color="crimson">
 ```
 ```js
 JS:
 prism( 6, [25,0,15] );
-prism( 6, [25,0,15], 10, 'red' );
+prism( 3, [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/prism.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/prism.html)
 
 
 
-### Prism frame
-
-The object `prismFrame` represents a wireframed prism or prismoid. Its
-properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color` and `image`. The property `count` defines the
-number of sides of the prism.
-
-```html
-HTML:
-<prismFrame count="6" center="25,0,15">
-<prismFrame count="6" x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-prismFrame( 6, [25,0,15] );
-prismFrame( 6, [25,0,15], 10, 'red' );
-```
-
-[<kbd><img src="../examples/snapshots/prism-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/prism-frame.html)
-
-
-
 ### Cone
 
-The object `conr` represents a solid cone or conoid. Its properties are `center`
-(or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`), `color` and
-`image`. 
+Object. Represents a regilar cone or conoid (an elliptical cone). Its properties
+are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
+`color` and `image`. 
 
 ```html
 HTML:
 <cone center="25,0,15">
-<cone x="25" y="0" z="15" size="10">
+<cone size="10" color="crimson">
 ```
 ```js
 JS:
 cone( [25,0,15] );
-cone( [25,0,15], 10, 'red' );
+cone( [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/cone.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cone.html)
-[<kbd><img src="../examples/snapshots/conoid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/conoid.html)
+[<kbd><img src="../examples/snapshots/cone-conoid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cone-conoid.html)
 
 
 
 ### Pyramid
 
-The object `pyramid` represents a solid pyramid or pyramoid. Its properties are
-`count`, `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and
-`depth`), `color` and `image`. The property `count` defines the number of sides
-of the pyramid.
+Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its
+properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
+`height` and `depth`), `color`, `wireframe` and `image`. The property `count`
+defines the number of sides of the pyramid.
 
 ```html
 HTML:
 <pyramid count="6" center="25,0,15">
-<pyramid count="6" x="25" y="0" z="15" size="10">
+<pyramid count="3" size="10" color="crimson">
 ```
 ```js
 JS:
 pyramid( 6, [25,0,15] );
-pyramid( 6, [25,0,15], 10, 'red' );
+pyramid( 3, [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/pyramid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
 
-
-
-### Pyramid frame
-
-The object `pyramidFrame` represents a wireframed pyramid or pyramidoid. Its
-properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color` and `image`. The property `count` defines the
-number of sides of the pyramid.
-
-```html
-HTML:
-<pyramidFrame count="6" center="25,0,15">
-<pyramidFrame count="6" x="25" y="0" z="15" size="10">
-```
-```js
-JS:
-pyramidFrame( 6, [25,0,15] );
-pyramidFrame( 6, [25,0,15], 10, 'red' );
-```
-
-[<kbd><img src="../examples/snapshots/pyramid-frame.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/pyramid-frame.html)
 
 
 
@@ -822,7 +687,7 @@ TBD
 
 ### Radians
 
-The function `radians` converts degrees into radians.
+Function. Converts degrees into radians.
 
 ```js
 JS:
@@ -831,7 +696,7 @@ rad = radians( 120 );
 
 ### Degrees
 
-The function `degrees` converts radians into degrees.
+Function. Converts radians into degrees.
 
 ```js
 JS:
@@ -840,8 +705,7 @@ deg = degrees( 3.14159 );
 
 ### Random
 
-The function `random` generates a pseudo-random floating-point number in a
-range or pick a random number from an array.
+Function. Generates a pseudo-random floating-point number in a range or picks a random value from an array of values.
 
 ```js
 JS:

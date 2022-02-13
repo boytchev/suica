@@ -4,11 +4,9 @@
 //
 // cylinder( center, size, color )
 // prism( center, size, color )
-// prismFrame( center, size, color )
 //
-// <cylinder id="" center="" size="" color="">
+// <cylinder id="" center="" size="" color="" wireframe=""> 
 // <prism id="" center="" size="" color="">
-// <prismFrame id="" center="" size="" color="">
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -19,6 +17,7 @@
 // height
 // depth
 // color	color [r,g,b]
+// wireframe
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -26,30 +25,26 @@
 
 class Prism extends Mesh
 {
-	
-	static geometry = []; // array of geometries for different number of sides
+	static solidGeometry = []; // array of geometries for different number of sides
+	static frameGeometry = []; // array of geometries for different number of sides
 	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CYLINDER.COUNT )
+		if( flatShading )
 			suica.debugCall( 'prism', count, center, size, color );
 		else
 			suica.debugCall( 'cylinder', center, size, color );
 	
-		if( !Prism.geometry[count] )
-		{
-			Prism.geometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
-		
-		super( suica, THREE.Mesh, Prism.geometry[count], flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Prism.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Prism.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		this.n = count;
-		
-		suica.scene.add( this.threejs );
 		
 	} // Prism.constructor
 
@@ -68,56 +63,27 @@ class Prism extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		if( !Prism.geometry[count] )
-		{
-			Prism.geometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
+		this.solidMesh.geometry = Prism.getSolidGeometry( count );
+		this.frameMesh.geometry = Prism.getFrameGeometry( count );
 		
-		this.threejs.geometry = Prism.geometry[count];
+		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 	
-} // class Prism
-
-
-
-
-class PrismFrame extends Mesh
-{
-
-	static geometry = []; // array of geometries for different number of sides
-
-	constructor( suica, count, center, size, color )
+	static getSolidGeometry( count )
 	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'prismFrame', count, center, size, color );
+		if( !Prism.solidGeometry[count] )
+			Prism.solidGeometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
 		
-		super( suica, THREE.LineSegments, PrismFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
-		
-		suica.scene.add( this.threejs );
-	}		
+		return Prism.solidGeometry[count];
+	} // Prism.getSolidGeometry
 	
 	
-
-
-	get count()
+	static getFrameGeometry( count )
 	{
-		this.suica.parser?.parseTags();
-
-		return this.n;
-	}
-	
-
-	static getGeometry( count )
-	{
-		if( !Prism.geometry[count] )
+		if( !Prism.frameGeometry[count] )
 		{
-			PrismFrame.geometry[count] = new THREE.BufferGeometry();
+			Prism.frameGeometry[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom, at top, at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -184,24 +150,15 @@ class PrismFrame extends Mesh
 				uvs[12*i+8] = 0;
 				uvs[12*i+10] = 1;
 			}
-			PrismFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			PrismFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			Prism.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			Prism.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
 		}
 		
-		return PrismFrame.geometry[count];
-	}
+		return Prism.frameGeometry[count];
+	} // Prism.getFrameGeometry
 	
-	
-	set count( count )
-	{
-		this.suica.parser?.parseTags();
+} // class Prism
 
-		if( count == this.n ) return; // same number of side, no need to regenerate
-		
-		this.threejs.geometry = PrismFrame.getGeometry( count );
-	}
-	
-} // class PrismFrame
 
 
 
@@ -224,17 +181,4 @@ window.prism = function(
 {
 	Suica.precheck();
 	return Suica.current.prism( count, center, size, color );
-}
-
-
-
-
-window.prismFrame = function(
-				count = Suica.DEFAULT.PRISM.COUNT,
-				center = Suica.DEFAULT.PRISM.CENTER,
-				size   = Suica.DEFAULT.PRISM.SIZE,
-				color  = Suica.DEFAULT.PRISM.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.prismFrame( count, center, size, color );
 }

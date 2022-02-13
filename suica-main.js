@@ -9,14 +9,10 @@
 //		<ontime src="...">
 //		<point id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<line id="..." center="..." from="" color="..." size="...">
-//		<square id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<squareFrame id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<circle id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<circleFrame id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<polygon id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<polygonFrame id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<cube id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<cubeFrame id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<square id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
+//		<circle id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
+//		<polygon id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
+//		<cube id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
 //		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cylinder ...>
 //		<prism ...>
@@ -34,13 +30,9 @@
 //		{suica.}point( center, size, color )
 //		{suica.}point( center/from, to, color )
 //		{suica.}square( center, size, color )
-//		{suica.}squareFrame( center, size, color )
 //		{suica.}circle( center, size, color )
-//		{suica.}circleFrame( center, size, color )
 //		{suica.}polygon( count, center, size, color )
-//		{suica.}polygonFrame( count, center, size, color )
 //		{suica.}cube( center, size, color )
-//		{suica.}cubeFrame( center, size, color )
 //		{suica.}sphere( center, size, color )
 //		{suica.}cylinder( center, size, color )
 //		{suica.}prism( count, center, size, color )
@@ -78,12 +70,13 @@
 //	2.-1.15 (220206) polygon, polygonFrame, sphere
 //	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
 //	2.-1.17 (220212) radians degrees
+//	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.16 (220209)` );
+console.log( `Suica 2.-1.18 (220213)` );
 
 
 // control flags
@@ -558,15 +551,8 @@ class Suica
 		return new Square( this, center, size, color );
 	}
 	
-	
-	squareFrame( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
 
-		return new SquareFrame( this, center, size, color );
-	}
-	
-	
+
 	cube( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.COLOR )
 	{
 		this.parser?.parseTags();
@@ -575,26 +561,11 @@ class Suica
 	}
 	
 	
-	cubeFrame( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new CubeFrame( this, center, size, color );
-	}
-
 	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
 	{
 		this.parser?.parseTags();
 
 		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
-	}
-	
-	
-	circleFrame( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new PolygonFrame( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
 	}
 	
 	
@@ -605,13 +576,6 @@ class Suica
 		return new Polygon( this, count, center, size, color );
 	}
 	
-	
-	polygonFrame( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new PolygonFrame( this, count, center, size, color );
-	}
 	
 	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
 	{

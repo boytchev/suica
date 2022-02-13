@@ -6,9 +6,8 @@
 // pyramid( center, size, color )
 // pyramidFrame( center, size, color )
 //
-// <cone id="" center="" size="" color="">
+// <cone id="" center="" size="" color="" wireframe=""> 
 // <pyramid id="" center="" size="" color="">
-// <pyramidFrame id="" center="" size="" color="">
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -19,6 +18,7 @@
 // height
 // depth
 // color	color [r,g,b]
+// wireframe
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -26,31 +26,27 @@
 
 class Pyramid extends Mesh
 {
-	
-	static geometry = []; // array of geometries for different number of sides
+	static solidGeometry = []; // array of geometries for different number of sides
+	static frameGeometry = []; // array of geometries for different number of sides
 	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CONE.COUNT )
+		if( flatShading )
 			suica.debugCall( 'pyramid', count, center, size, color );
 		else
 			suica.debugCall( 'cone', center, size, color );
 	
-		if( !Prism.geometry[count] )
-		{
-			Prism.geometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
-		
-		super( suica, THREE.Mesh, Prism.geometry[count], flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Pyramid.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Pyramid.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		this.n = count;
-		
-		suica.scene.add( this.threejs );
-		
+	
 	} // Pyramid.constructor
 
 
@@ -68,56 +64,27 @@ class Pyramid extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		if( !Pyramid.geometry[count] )
-		{
-			Pyramid.geometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
-		}
+		this.solidMesh.geometry = Pyramid.getSolidGeometry( count );
+		this.frameMesh.geometry = Pyramid.getFrameGeometry( count );
 		
-		this.threejs.geometry = Pyramid.geometry[count];
+		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 	
-} // class Pyramid
-
-
-
-
-class PyramidFrame extends Mesh
-{
-
-	static geometry = []; // array of geometries for different number of sides
-
-	constructor( suica, count, center, size, color )
+	static getSolidGeometry( count )
 	{
-		suica.parser?.parseTags();
-		suica.debugCall( 'pyramidFrame', count, center, size, color );
+		if( !Pyramid.solidGeometry[count] )
+			Pyramid.solidGeometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
 		
-		super( suica, THREE.LineSegments, PyramidFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
-		
-		suica.scene.add( this.threejs );
-	}		
-	
-	
+		return Pyramid.solidGeometry[count];
+	} // Pyramid.getSolidGeometry
 
 
-	get count()
+	static getFrameGeometry( count )
 	{
-		this.suica.parser?.parseTags();
-
-		return this.n;
-	}
-	
-
-	static getGeometry( count )
-	{
-		if( !Pyramid.geometry[count] )
+		if( !Pyramid.frameGeometry[count] )
 		{
-			PyramidFrame.geometry[count] = new THREE.BufferGeometry();
+			Pyramid.frameGeometry[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom and at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -172,24 +139,15 @@ class PyramidFrame extends Mesh
 				uvs[8*i+4] = 0;
 				uvs[8*i+6] = 1;
 			}
-			PyramidFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			PyramidFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			Pyramid.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			Pyramid.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
 		}
 		
-		return PyramidFrame.geometry[count];
-	}
+		return Pyramid.frameGeometry[count];
+	} // Pyramid.getFrameGeometry
 	
-	
-	set count( count )
-	{
-		this.suica.parser?.parseTags();
+} // class Pyramid
 
-		if( count == this.n ) return; // same number of side, no need to regenerate
-		
-		this.threejs.geometry = PyramidFrame.getGeometry( count );
-	}
-	
-} // class PyramidFrame
 
 
 
@@ -212,17 +170,4 @@ window.pyramid = function(
 {
 	Suica.precheck();
 	return Suica.current.pyramid( count, center, size, color );
-}
-
-
-
-
-window.pyramidFrame = function(
-				count = Suica.DEFAULT.PYRAMID.COUNT,
-				center = Suica.DEFAULT.PYRAMID.CENTER,
-				size   = Suica.DEFAULT.PYRAMID.SIZE,
-				color  = Suica.DEFAULT.PYRAMID.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.pyramidFrame( count, center, size, color );
 }

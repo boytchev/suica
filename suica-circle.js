@@ -3,12 +3,11 @@
 // CC-3.0-SA-NC
 //
 // circle( center, size, color )
-// circleFrame( center, size, color )
 //
-// <circle id="" center="" size="" color="">
+// <circle id="" center="" size="" color="" wireframe=""> 
 // <circle x="" y="" z="">
 // <circle width="" height="">
-// <circleFrame ...>
+// <polygon id="" count="..." center="" size="" color="" wireframe=""> 
 //
 // center	center [x,y,z]
 // x		x coordinate of center
@@ -18,6 +17,7 @@
 // width
 // height
 // color	color [r,g,b]
+// wireframe
 // image	texture (drawing or canvas)
 //
 //===================================================
@@ -25,8 +25,8 @@
 
 class Polygon extends Mesh
 {
-	
-	static geometry = []; // array of geometries for different number of sides
+	static solidGeometry = []; // array of geometries for different number of sides
+	static frameGeometry = []; // array of geometries for different number of sides
 	
 	constructor( suica, count, center, size, color )
 	{
@@ -36,21 +36,16 @@ class Polygon extends Mesh
 		else
 			suica.debugCall( 'circle', center, size, color );
 
-	
-		if( !Polygon.geometry[count] )
-		{
-			Polygon.geometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
-		}
-		
-		super( suica, THREE.Mesh, Polygon.geometry[count], Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Polygon.getSolidGeometry(count), Mesh.solidMaterial.clone() ),
+			new THREE.LineLoop( Polygon.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
 		this.n = count;
-		
-		suica.scene.add( this.threejs );
-		
+
 	} // Polygon.constructor
 
 
@@ -68,59 +63,27 @@ class Polygon extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		if( !Polygon.geometry[count] )
-		{
-			Polygon.geometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
-		}
+		this.solidMesh.geometry = Polygon.getSolidGeometry( count );
+		this.frameMesh.geometry = Polygon.getFrameGeometry( count );
 		
-		this.threejs.geometry = Polygon.geometry[count];
-	}
-	
-	
-} // class Polygon
-
-
-
-
-class PolygonFrame extends Mesh
-{
-
-	static geometry = []; // array of geometries for different number of sides
-
-	constructor( suica, count, center, size, color )
-	{
-		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CIRCLE.COUNT )
-			suica.debugCall( 'polygonFrame', count, center, size, color );
-		else
-			suica.debugCall( 'circleFrame', center, size, color );
-		
-		super( suica, THREE.Line, PolygonFrame.getGeometry( count ), Mesh.lineMaterial.clone() );
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
-		
-		suica.scene.add( this.threejs );
-	}		
-	
-	
-
-
-	get count()
-	{
-		this.suica.parser?.parseTags();
-
-		return this.n;
+		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 
-	static getGeometry( count )
+	static getSolidGeometry( count )
 	{
-		if( !Polygon.geometry[count] )
+		if( !Polygon.solidGeometry[count] )
+			Polygon.solidGeometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
+		
+		return Polygon.solidGeometry[count];
+	} // Polygon.getSolidGeometry
+	
+	
+	static getFrameGeometry( count )
+	{
+		if( !Polygon.frameGeometry[count] )
 		{
-			PolygonFrame.geometry[count] = new THREE.BufferGeometry();
+			Polygon.frameGeometry[count] = new THREE.BufferGeometry();
 
 			let vertices = new Float32Array(3*count+3),
 				uvs = new Float32Array(2*count+2);
@@ -139,24 +102,15 @@ class PolygonFrame extends Mesh
 				else
 					uvs[2*i] = i;
 			}
-			PolygonFrame.geometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			PolygonFrame.geometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			Polygon.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			Polygon.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
 		}
 		
-		return PolygonFrame.geometry[count];
-	}
+		return Polygon.frameGeometry[count];
+	} // Polygon.getFrameGeometry
 	
-	
-	set count( count )
-	{
-		this.suica.parser?.parseTags();
+} // class Polygon
 
-		if( count == this.n ) return; // same number of side, no need to regenerate
-		
-		this.threejs.geometry = PolygonFrame.getGeometry( count );
-	}
-	
-} // class PolygonFrame
 
 
 
@@ -172,18 +126,6 @@ window.circle = function(
 
 
 
-window.circleFrame = function(
-				center = Suica.DEFAULT.CIRCLE.CENTER,
-				size   = Suica.DEFAULT.CIRCLE.SIZE,
-				color  = Suica.DEFAULT.CIRCLE.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.circleFrame( center, size, color );
-}
-
-
-
-
 window.polygon = function(
 				count = Suica.DEFAULT.POLYGON.COUNT,
 				center = Suica.DEFAULT.POLYGON.CENTER,
@@ -192,17 +134,4 @@ window.polygon = function(
 {
 	Suica.precheck();
 	return Suica.current.polygon( count, center, size, color );
-}
-
-
-
-
-window.polygonFrame = function(
-				count = Suica.DEFAULT.POLYGON.COUNT,
-				center = Suica.DEFAULT.POLYGON.CENTER,
-				size   = Suica.DEFAULT.POLYGON.SIZE,
-				color  = Suica.DEFAULT.POLYGON.FRAMECOLOR )
-{
-	Suica.precheck();
-	return Suica.current.polygonFrame( count, center, size, color );
 }

@@ -24,28 +24,28 @@
 
 class Sphere extends Mesh
 {
-	
-	// a geometry shared by all cubes
-	static geometry;
+	static solidGeometry;
 	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'sphere', center, size, color );
 		
-		if( !Sphere.geometry )
+		if( !Sphere.solidGeometry )
 		{
-			Sphere.geometry = new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) );
+			Sphere.solidGeometry = new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) );
 		}
 		
-		super( suica, THREE.Mesh, Sphere.geometry, Mesh.solidMaterial.clone() );
+		super( suica, 
+			new THREE.Mesh( Sphere.solidGeometry, Mesh.solidMaterial.clone() ),
+			null, // no wireframe
+		);
 		
 		this.center = center;
 		this.color = color;
 		this.size = size;
-		
-		suica.scene.add( this.threejs );
-	}
+
+	} // Sphere.constructor
 
 } // class Sphere
 

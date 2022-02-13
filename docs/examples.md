@@ -36,42 +36,31 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/line.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/line.html)
 
 [<kbd><img src="../examples/snapshots/square.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square.html)
-[<kbd><img src="../examples/snapshots/rectangle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/rectangle.html)
-
-[<kbd><img src="../examples/snapshots/square-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square-frame.html)
-[<kbd><img src="../examples/snapshots/rectangle-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/rectangle-frame.html)
+[<kbd><img src="../examples/snapshots/square-rectangle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square-rectangle.html)
 
 [<kbd><img src="../examples/snapshots/circle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle.html)
-[<kbd><img src="../examples/snapshots/ellipse.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse.html)
-
-[<kbd><img src="../examples/snapshots/circle-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle-frame.html)
-[<kbd><img src="../examples/snapshots/ellipse-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse-frame.html)
+[<kbd><img src="../examples/snapshots/circle-ellipse.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse.html)
 
 [<kbd><img src="../examples/snapshots/polygon.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
-[<kbd><img src="../examples/snapshots/polygon-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon-frame.html)
 
 ## Common 3D objects
 
 [<kbd><img src="../examples/snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
-[<kbd><img src="../examples/snapshots/cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid.html)
-
-[<kbd><img src="../examples/snapshots/cube-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-frame.html)
-[<kbd><img src="../examples/snapshots/cuboid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cuboid-frame.html)
+[<kbd><img src="../examples/snapshots/cube-cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-cuboid.html)
 
 [<kbd><img src="../examples/snapshots/sphere.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
-[<kbd><img src="../examples/snapshots/spheroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/spheroid.html)
+[<kbd><img src="../examples/snapshots/sphere-spheroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sphere-spheroid.html)
 
 [<kbd><img src="../examples/snapshots/cylinder.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cylinder.html)
-[<kbd><img src="../examples/snapshots/cylindroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cylindroid.html)
+[<kbd><img src="../examples/snapshots/cylinder-cylindroid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cylinder-cylindroid.html)
 
 [<kbd><img src="../examples/snapshots/prism.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/prism.html)
-[<kbd><img src="../examples/snapshots/prism-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/prism-frame.html)
+
 
 [<kbd><img src="../examples/snapshots/cone.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cone.html)
-[<kbd><img src="../examples/snapshots/conoid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/conoid.html)
+[<kbd><img src="../examples/snapshots/cone-conoid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cone-conoid.html)
 
 [<kbd><img src="../examples/snapshots/pyramid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
-[<kbd><img src="../examples/snapshots/pyramid-frame.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/pyramid-frame.html)
 
 
 ## Images

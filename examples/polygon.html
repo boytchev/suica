@@ -19,15 +19,15 @@
 <body>
 
 	<h1>Polygon</h1>
-	<p>Defining solid colored polygons.</p>
+	<p>Defining polygons with different properties.</p>
 
 	<suica>
 		<demo>
-		<polygon count="9" x="-45" size="20" color="crimson">
-		<polygon count="4" x="-25" size="20" color="cornflowerblue">
+		<polygon count="9" x="-45" size="20" color="lightgray">
+		<polygon count="4" x="-25" size="20" color="lightsalmon">
 		<polygon id="a" color="black">
-		<polygon count="5" x="25" size="20" color="orange">
-		<polygon count="6" x="45" size="20" color="forestgreen">
+		<polygon count="5" x="25" size="20" color="peachpuff">
+		<polygon count="6" x="45" size="20" color="dimgray">
 	</suica>
 	
 	<script>
@@ -35,7 +35,7 @@
 		
 		function randomPolygon()
 		{
-			a.count = Math.round( random(3,12) );
+			a.count = 5;//Math.round( random(3,12) );
 		}
 	</script>
 </body>

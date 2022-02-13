@@ -18,13 +18,19 @@
 
 class Mesh
 {
-	constructor( suica, threejsClass, geometry, material )
+	constructor( suica, solidMesh, frameMesh )
 	{
 		this.suica = suica;
-		this.threejs = new threejsClass( geometry, material );
+		this.solidMesh = solidMesh;
+		this.frameMesh = frameMesh;
+		
+		this.threejs = solidMesh;
+		this.isWireframe = false;
 		
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
+
+		suica.scene.add( solidMesh );
 	}
 
 
@@ -34,15 +40,24 @@ class Mesh
 	static createMaterials( )
 	{
 		// point material
-		var CANVAS_SIZE = 64;
+		var CANVAS_SIZE = 128;
 		var canvas = document.createElement('canvas');
 			canvas.width = CANVAS_SIZE;
 			canvas.height = CANVAS_SIZE;
 			
 		var context = canvas.getContext('2d');
 			context.fillStyle = 'white';
+			
+		var gradient = context.createRadialGradient(
+				CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-5,
+				CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2
+			);
+			gradient.addColorStop(0, 'white');
+			gradient.addColorStop(1, 'rgba(0,0,0,0)');
+			context.fillStyle = gradient;
+
 			context.beginPath( );
-			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-1, 0, 2*Math.PI );
+			context.arc( CANVAS_SIZE/2, CANVAS_SIZE/2, CANVAS_SIZE/2-2, 0, 2*Math.PI );
 			context.fill( );
 
 		Mesh.pointMaterial = new THREE.PointsMaterial( {
@@ -51,7 +66,7 @@ class Mesh
 				sizeAttenuation: true,
 				map: new THREE.CanvasTexture( canvas ),
 				transparent: true,
-				alphaTest: 0.75,
+				alphaTest: 0.5,
 			});
 
 		// solid material
@@ -330,6 +345,39 @@ class Mesh
 
 
 
+	get wireframe( )
+	{
+		return this.isWireframe;
+	}
+	
+	set wireframe( wireframe )
+	{
+		if( !this.frameMesh )
+			throw 'error: wireframe property not available';
+		
+		this.isWireframe = wireframe;
+		
+		var oldMesh = this.threejs,
+			newMesh = (wireframe===true) || (['','true','yes','1'].indexOf(String(wireframe).toLowerCase()) >= 0) ? this.frameMesh : this.solidMesh;
+
+		// copy properties
+		newMesh.position.copy( oldMesh.position );
+		newMesh.scale.copy( oldMesh.scale );
+		newMesh.material.color.copy( oldMesh.material.color );
+		
+		if( oldMesh.material.map )
+		{
+			newMesh.material.map = oldMesh.material.map;
+			newMesh.material.transparent = oldMesh.material.transparent;
+			newMesh.material.needsUpdate = true;
+		}
+		
+		this.threejs = newMesh;
+		
+		this.suica.scene.remove( oldMesh );
+		this.suica.scene.add( newMesh );
+
+	}
 
 	
 } // class Mesh

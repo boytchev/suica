@@ -8,21 +8,15 @@
 // <ontime src="...">
 // <point id="..." center="..." color="..." size="...">
 // <line id="..." center="..." color="..." to="...">
-// <square id="..." center="..." color="..." size="...">
-// <squareFrame id="..." center="..." color="..." size="...">
-// <cube id="..." center="..." color="..." size="...">
-// <cubeFrame id="..." center="..." color="..." size="...">
-// <circle id="..." center="..." color="..." size="...">
-// <circleFrame id="..." center="..." color="..." size="...">
-// <polygon id="..." center="..." color="..." size="..." count="...">
-// <polygonFrame id="..." center="..." color="..." size="..." count="...">
+// <square id="..." center="..." color="..." size="..." wireframe="...">
+// <cube id="..." center="..." color="..." size="..." wireframe="...">
+// <circle id="..." center="..." color="..." size="..." wireframe="...">
+// <polygon id="..." center="..." color="..." size="..." count="..." wireframe="...">
 // <sphere id="..." center="..." color="..." size="...">
 // <cylinder ...>
 // <prism ...>
-// <prismFrame ...>
 // <cone ...>
 // <pyramid ...>
-// <pyramidFrame ...>
 //
 
 
@@ -48,20 +42,14 @@ class HTMLParser
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.LINE = this.parseTagLINE;
 		this.parseTag.SQUARE = this.parseTagSQUARE;
-		this.parseTag.SQUAREFRAME = this.parseTagSQUAREFRAME;
 		this.parseTag.CUBE = this.parseTagCUBE;
-		this.parseTag.CUBEFRAME = this.parseTagCUBEFRAME;
 		this.parseTag.CIRCLE = this.parseTagCIRCLE;
-		this.parseTag.CIRCLEFRAME = this.parseTagCIRCLEFRAME;
 		this.parseTag.POLYGON = this.parseTagPOLYGON;
-		this.parseTag.POLYGONFRAME = this.parseTagPOLYGONFRAME;
 		this.parseTag.SPHERE = this.parseTagSPHERE;
 		this.parseTag.CYLINDER = this.parseTagCYLINDER;
 		this.parseTag.PRISM = this.parseTagPRISM;
-		this.parseTag.PRISMFRAME = this.parseTagPRISMFRAME;
 		this.parseTag.CONE = this.parseTagCONE;
 		this.parseTag.PYRAMID = this.parseTagPYRAMID;
-		this.parseTag.PYRAMIDFRAME = this.parseTagPYRAMIDFRAME;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
@@ -153,7 +141,7 @@ class HTMLParser
 	} // HTMLParser.parseTagONTIME
 	
 	
-	parseAttributes( elem, object, widthHeight, depth )
+	parseAttributes( elem, object, widthHeight, depth, wireframe )
 	{
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
@@ -161,13 +149,18 @@ class HTMLParser
 		
 		if( widthHeight )
 		{
-			if( elem.hasAttribute('width') ) p.width = Number(elem.getAttribute('width')); 
-			if( elem.hasAttribute('height') ) p.height = Number(elem.getAttribute('height')); 
+			if( elem.hasAttribute('width') ) object.width = Number(elem.getAttribute('width')); 
+			if( elem.hasAttribute('height') ) object.height = Number(elem.getAttribute('height')); 
 		}
 		
 		if( depth )
 		{
-			if( elem.hasAttribute('depth') ) p.depth = Number(elem.getAttribute('depth')); 
+			if( elem.hasAttribute('depth') ) object.depth = Number(elem.getAttribute('depth')); 
+		}
+		
+		if( wireframe )
+		{
+			if( elem.hasAttribute('wireframe') ) object.wireframe = ['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase()) >= 0;
 		}
 		
 		var id = elem.getAttribute('id');
@@ -208,7 +201,7 @@ class HTMLParser
 	} // HTMLParser.parseTagLINE
 	
 	
-	// <square id="..." center="..." color="..." size="...">
+	// <square id="..." center="..." color="..." size="..." wireframe="...">
 	parseTagSQUARE( suica, elem )
 	{
 		var p = suica.square(
@@ -217,29 +210,14 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagSQUARE
 	
 	
-	// <squareFrame id="..." center="..." color="..." size="...">
-	parseTagSQUAREFRAME( suica, elem )
-	{
-		var p = suica.squareFrame(
-			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagSQUAREFRAME
-
-	// <cube id="..." center="..." color="..." size="...">
+	// <cube id="..." center="..." color="..." size="..." wireframe="...">
 	parseTagCUBE( suica, elem )
 	{
 		var p = suica.cube(
@@ -248,30 +226,14 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagCUBE
 	
 	
-	// <cubeFrame id="..." center="..." color="..." size="...">
-	parseTagCUBEFRAME( suica, elem )
-	{
-		var p = suica.cubeFrame(
-			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagCUBEFRAME
-	
-	
-	// <circle id="..." center="..." color="..." size="...">
+	// <circle id="..." center="..." color="..." size="..." wireframe="...">
 	parseTagCIRCLE( suica, elem )
 	{
 		var p = suica.circle(
@@ -280,30 +242,14 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagCIRCLE
 	
 	
-	// <squareFrame id="..." center="..." color="..." size="...">
-	parseTagCIRCLEFRAME( suica, elem )
-	{
-		var p = suica.circleFrame(
-			elem.getAttribute('center') || Suica.DEFAULT.CIRCLE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CIRCLE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagCIRCLEFRAME
-	
-	
-	// <polygon id="..." center="..." color="..." size="..." count="...">
+	// <polygon id="..." center="..." color="..." size="..." count="..." wireframe="...">
 	parseTagPOLYGON( suica, elem )
 	{
 		var p = suica.polygon(
@@ -313,29 +259,12 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPOLYGON
 	
-	
-	// <squareFrame id="..." center="..." color="..." size="..." count="...">
-	parseTagPOLYGONFRAME( suica, elem )
-	{
-		var p = suica.polygonFrame(
-			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLORFRAME
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, false );
-
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagPOLYGONFRAME
 
 	// <sphere id="..." center="..." color="..." size="...">
 	parseTagSPHERE( suica, elem )
@@ -352,6 +281,7 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagSPHERE
 	
+	
 	// <cylinder id="..." center="..." color="..." size="...">
 	parseTagCYLINDER( suica, elem )
 	{
@@ -367,7 +297,8 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagCYLINDER
 	
-	// <prism id="..." center="..." color="..." size="..." count="...">
+	
+	// <prism id="..." center="..." color="..." size="..." count="..." wireframe="...">
 	parseTagPRISM( suica, elem )
 	{
 		var p = suica.prism(
@@ -377,27 +308,12 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPRISM
 	
-	// <prismFrame id="..." center="..." color="..." size="..." count="...">
-	parseTagPRISMFRAME( suica, elem )
-	{
-		var p = suica.prismFrame(
-			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagPRISMFRAME
 	
 	// <cone id="..." center="..." color="..." size="...">
 	parseTagCONE( suica, elem )
@@ -414,7 +330,8 @@ class HTMLParser
 		
 	} // HTMLParser.parseTagCONE
 	
-	// <pyramid id="..." center="..." color="..." size="..." count="...">
+	
+	// <pyramid id="..." center="..." color="..." size="..." count="..." wireframe="...">
 	parseTagPYRAMID( suica, elem )
 	{
 		var p = suica.pyramid(
@@ -424,27 +341,11 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
 
 		elem.suicaObject = p;
 		
 	} // HTMLParser.parseTagPYRAMID
-	
-	// <pyramidFrame id="..." center="..." color="..." size="..." count="...">
-	parseTagPYRAMIDFRAME( suica, elem )
-	{
-		var p = suica.pyramidFrame(
-			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
-		);
-		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
-
-		elem.suicaObject = p;
-		
-	} // HTMLParser.parseTagPYRAMIDFRAME
 	
 	
 } // HTMLParser
