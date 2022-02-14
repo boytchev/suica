@@ -19,13 +19,14 @@
 <body>
 
 	<h1>Object as position</h1>
-	<p>Using objects instead of their centers as positions in 3D space.</p>
+	<p>Using objects as positions for other objects.</p>
 
 	<suica>
 		<demo>
-		<cubeFrame id="a" x="-20">
-		<cubeFrame id="b" x="20">
-		<line from="a" to="b">
+		<cube id="a" x="-20" color="dimgray" wireframe>
+		<cube id="b" x="20" color="dimgray" wireframe>
+		<sphere center="a" size="20" color="linen">
+		<cone center="b" size="20" y="-10" color="peachpuff">
 	</suica>
 	
 </body>
