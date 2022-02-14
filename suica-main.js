@@ -71,12 +71,13 @@
 //	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
 //	2.-1.17 (220212) radians degrees
 //	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
+//	2.-1.19 (220214) added property clone
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.18 (220213)` );
+console.log( `Suica 2.-1.19 (220214)` );
 
 
 // control flags
@@ -694,7 +695,13 @@ window.degrees = function( radians )
 	return radians * 180/Math.PI;
 }
 
-
+window.sameAs = function( object )
+{
+	if( object.clone )
+		return object.clone();
+	else
+		throw 'error: cannot clone object';
+}
 
 
 

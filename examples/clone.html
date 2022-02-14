@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Clone</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Clone</h1>
+	<p>Cloning objects.</p>
+
+	<suica>
+		<demo>
+		<cube id="a1" x="-50" size="15" color="linen">
+		<sphere id="a2" x="-30" size="15" color="linen">
+		<cylinder id="a3" x="-10" y="-7.5" size="15" color="linen">
+		<prism id="a4" x="10" y="-7.5" size="15" color="linen">
+		<cone id="a5" x="30" y="-7.5" size="15" color="linen">
+		<pyramid id="a6" x="50" y="-7.5" size="15" color="linen">
+
+		<square id="a7" x="-50" y="20" size="15" color="linen">
+		<circle id="a8" x="-30" y="20" size="15" color="linen">
+		<polygon id="a9" count="6" x="-10" y="20" size="15" color="linen">
+		<point id="a10" x="10" y="20" size="15" color="linen">
+		<line id="a11" from="30,20,0" to="50,20,0" color="lightgray">
+	</suica>
+	
+	<script>
+		for( var i=1; i<=11; i++ )
+		{
+			var obj = window['a'+i].clone;
+
+			obj.color = 'peachpuff';
+			if( i<11 )
+				obj.z = 20;
+			else
+			{
+				obj.from = [30,20,20];
+				obj.to = [50,20,20];
+			}
+		}
+	</script>
+	
+</body>
+</html>

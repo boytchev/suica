@@ -200,12 +200,24 @@ class Mesh
 	
 	
 	
+	get image( )
+	{
+		return this.threejs.material.map;
+	}
 	
 	set image( drawing )
 	{
 		this.suica.parser?.parseTags();
 
-		if (drawing instanceof Drawing)
+		if( !drawing )
+		{
+			delete this.threejs.material.map;
+			this.threejs.material.transparent = false,
+			this.threejs.material.needsUpdate = true;
+			return;
+		}
+
+		if( drawing instanceof Drawing )
 		{
 			this.threejs.material.map = drawing.image;
 			this.threejs.material.transparent = true,
@@ -213,7 +225,7 @@ class Mesh
 			return;
 		}
 
-		if (drawing instanceof THREE.Texture)
+		if( drawing instanceof THREE.Texture )
 		{
 			this.threejs.material.map = drawing;
 			this.threejs.material.transparent = true,

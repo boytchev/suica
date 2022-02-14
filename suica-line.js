@@ -28,7 +28,7 @@ class Line extends Mesh
 	}
 
 
-	constructor(suica, center, to, color)
+	constructor( suica, center, to, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'line', center, to, color );
@@ -171,6 +171,17 @@ class Line extends Mesh
 	{
 		throw 'error: z is not available for line';
 	}
+
+
+	get clone( )
+	{
+		var object = new Line( this.suica, this.from, this.to, this.color );
+		
+		object.image = this.image;
+		
+		return object;
+		
+	} // Line.clone
 	
 } // class Line
 

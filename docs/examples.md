@@ -26,7 +26,9 @@ Click on an image to run the example.
 
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/object-as-position.html)
 [<kbd><img src="../examples/snapshots/sizes.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
+
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
+[<kbd><img src="../examples/snapshots/clone.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
 
 ## Common 2D objects
 

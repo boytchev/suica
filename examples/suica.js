@@ -72,12 +72,13 @@
 //	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
 //	2.-1.17 (220212) radians degrees
 //	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
+//	2.-1.19 (220214) added property clone
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.18 (220213)` );
+console.log( `Suica 2.-1.19 (220214)` );
 
 
 // control flags
@@ -695,7 +696,13 @@ window.degrees = function( radians )
 	return radians * 180/Math.PI;
 }
 
-
+window.sameAs = function( object )
+{
+	if( object.clone )
+		return object.clone();
+	else
+		throw 'error: cannot clone object';
+}
 
 
 
@@ -1542,12 +1549,24 @@ class Mesh
 	
 	
 	
+	get image( )
+	{
+		return this.threejs.material.map;
+	}
 	
 	set image( drawing )
 	{
 		this.suica.parser?.parseTags();
 
-		if (drawing instanceof Drawing)
+		if( !drawing )
+		{
+			delete this.threejs.material.map;
+			this.threejs.material.transparent = false,
+			this.threejs.material.needsUpdate = true;
+			return;
+		}
+
+		if( drawing instanceof Drawing )
 		{
 			this.threejs.material.map = drawing.image;
 			this.threejs.material.transparent = true,
@@ -1555,7 +1574,7 @@ class Mesh
 			return;
 		}
 
-		if (drawing instanceof THREE.Texture)
+		if( drawing instanceof THREE.Texture )
 		{
 			this.threejs.material.map = drawing;
 			this.threejs.material.transparent = true,
@@ -1784,6 +1803,18 @@ class Point extends Mesh
 		this.threejs.material.size = size;
 		this.threejs.material.needsUpdate = true;
 	}
+
+
+
+	get clone( )
+	{
+		var object = new Point( this.suica, this.center, this.size, this.color );
+
+		object.image = this.image;
+		
+		return object;
+		
+	} // Point.clone
 	
 } // class Point
 
@@ -1827,7 +1858,7 @@ class Line extends Mesh
 	}
 
 
-	constructor(suica, center, to, color)
+	constructor( suica, center, to, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'line', center, to, color );
@@ -1970,6 +2001,17 @@ class Line extends Mesh
 	{
 		throw 'error: z is not available for line';
 	}
+
+
+	get clone( )
+	{
+		var object = new Line( this.suica, this.from, this.to, this.color );
+		
+		object.image = this.image;
+		
+		return object;
+		
+	} // Line.clone
 	
 } // class Line
 
@@ -2044,6 +2086,18 @@ class Square extends Mesh
 		this.size = size;
 		
 	} // Square.constructor
+
+
+	get clone( )
+	{
+		var object = new Square( this.suica, this.center, this.size, this.color );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Square.clone
 
 } // class Square
 
@@ -2144,6 +2198,18 @@ class Cube extends Mesh
 		this.size = size;
 		
 	} // Cube.constructor
+
+
+	get clone( )
+	{
+		var object = new Cube( this.suica, this.center, this.size, this.color );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Cube.clone
 
 } // class Cube
 
@@ -2268,6 +2334,18 @@ class Polygon extends Mesh
 		
 		return Polygon.frameGeometry[count];
 	} // Polygon.getFrameGeometry
+
+
+	get clone( )
+	{
+		var object = new Polygon( this.suica, this.n, this.center, this.size, this.color );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Polygon.clone
 	
 } // class Polygon
 
@@ -2343,6 +2421,17 @@ class Sphere extends Mesh
 
 	} // Sphere.constructor
 
+
+	get clone( )
+	{
+		var object = new Sphere( this.suica, this.center, this.size, this.color );
+		
+		object.image = this.image;
+			
+		return object;
+		
+	} // Sphere.clone
+	
 } // class Sphere
 
 
@@ -2403,6 +2492,7 @@ class Prism extends Mesh
 		this.color = color;
 		this.size = size;
 		this.n = count;
+		this.flatShading = flatShading;
 		
 	} // Prism.constructor
 
@@ -2514,6 +2604,18 @@ class Prism extends Mesh
 		
 		return Prism.frameGeometry[count];
 	} // Prism.getFrameGeometry
+
+
+	get clone( )
+	{
+		var object = new Prism( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Prism.clone
 	
 } // class Prism
 
@@ -2587,6 +2689,7 @@ class Pyramid extends Mesh
 		this.color = color;
 		this.size = size;
 		this.n = count;
+		this.flatShading = flatShading;
 	
 	} // Pyramid.constructor
 
@@ -2686,6 +2789,18 @@ class Pyramid extends Mesh
 		
 		return Pyramid.frameGeometry[count];
 	} // Pyramid.getFrameGeometry
+
+
+	get clone( )
+	{
+		var object = new Pyramid( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
+
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Pyramid.clone
 	
 } // class Pyramid
 

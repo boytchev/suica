@@ -47,6 +47,17 @@ class Sphere extends Mesh
 
 	} // Sphere.constructor
 
+
+	get clone( )
+	{
+		var object = new Sphere( this.suica, this.center, this.size, this.color );
+		
+		object.image = this.image;
+			
+		return object;
+		
+	} // Sphere.clone
+	
 } // class Sphere
 
 

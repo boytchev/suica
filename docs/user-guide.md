@@ -6,7 +6,7 @@
 - [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop-ontime) </small>] 
 - [Objects](#objects)
     - [Definition](#definition)
-    - [Properties](#properties) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe)  | [image](#image) </small>] 
+    - [Properties](#properties) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe)  | [image](#image)   | [clone](#clone) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 - [Images and drawings](#images-and-drawings)
@@ -438,6 +438,22 @@ The following tabel shows some combinations of colors:
 | Red<br><small>[R,0,0]</small> | Any<br><small>[r,g,b]</small> | Only the red component of the image color<br><small>[1,0,0]&times;[r,g,b] = [r,0,0]</small> |
 | Yellow<br><small>[1,1,0]</small> | Cyan<br><small>[0,1,1]</small> | Green<br><small>[1,1,0]&times;[0,1,1] = [0,1,0]</small> |
 
+#### Clone
+
+Readonly property. Generates a clone of the object. Whenever the value of `clone`
+is retrieved, it is a clone of the object. Cloning is used to generate objects
+from a single object-template.
+
+```js
+JS:
+a = cube( [0,0,0], 25 );
+b = a.clone;
+```
+
+
+[<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
+
+
 
 
 
@@ -455,7 +471,7 @@ underlying technology._
 ### Point
 
 Object. Represents a point. Its properties are `center` (or `x`, `y` and `z`),
-`size`, `color` and `image`. By default a point is drawn as a small cirlce, but
+`size`, `color`, `image` and `clone`. By default a point is drawn as a small cirlce, but
 it can be changed with custom [drawing](#images-and-drawings).
 
 ```html
@@ -475,7 +491,7 @@ point( [25,0,15], 10, 'crimson' );
 ### Line
 
 Object. Represents a straight segment. Its properties are `center` (or `from`),
-`to`, `color` and `image`. The properties `center` and `from` are synonyms and
+`to`, `color`, `image` and `clone`. The properties `center` and `from` are synonyms and
 they set the starting point of the segment, while `to` sets the ending point. By
 default a line is drawn as a solid line, but it can be changed with custom
 [drawing](#images-and-drawings).
@@ -500,7 +516,7 @@ _**Note**: Lines have no properties x, y, z, size, width, height and depth._
 
 Object. Represents a regular square or a rectangle. Its properties are
 `center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color`,
-`wireframe` and `image`. 
+`wireframe`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -521,8 +537,7 @@ square( [0,0,0], 10, 'crimson' );
 ### Circle
 
 Object. Represents a circle or an ellipse. Its properties are `center` (or `x`,
-`y` and `z`), `size` (or `width` and `height`), `color`, `wireframe` and
-`image`. 
+`y` and `z`), `size` (or `width` and `height`), `color`, `wireframe`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -544,7 +559,7 @@ circle( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular polygon or an elliptical polygon. Its properties
 are `count`, `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
-`color`, `wireframe` and `image`. The property `count` defines the number of
+`color`, `wireframe`, `image` and `clone`. The property `count` defines the number of
 sides of the polygon.
 
 ```html
@@ -579,7 +594,7 @@ underlying technology._
 
 Object. Represents a regular cube or a deformed cube (called *cuboid*).
 Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color`, `wireframe` and `image`. 
+and `depth`), `color`, `wireframe`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -600,7 +615,7 @@ cube( [0,0,0], 10, 'crimson' );
 ### Sphere
 
 Object. Represents a regular sphere or a deformed sphere (spheroid). Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color` and `image`. 
+and `depth`), `color`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -622,7 +637,7 @@ sphere( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder).
 Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color` and `image`. 
+and `depth`), `color`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -644,7 +659,7 @@ cylinder( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular prism or prismoid (an elliptical prism). Its
 properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color`, `wireframe` and `image`. The property `count`
+`height` and `depth`), `color`, `wireframe`, `image` and `clone`. The property `count`
 defines the number of sides of the prism.
 
 ```html
@@ -666,7 +681,7 @@ prism( 3, [0,0,0], 10, 'crimson' );
 
 Object. Represents a regilar cone or conoid (an elliptical cone). Its properties
 are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color` and `image`. 
+`color`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -688,7 +703,7 @@ cone( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its
 properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color`, `wireframe` and `image`. The property `count`
+`height` and `depth`), `color`, `wireframe`, `image` and `clone`. The property `count`
 defines the number of sides of the pyramid.
 
 ```html

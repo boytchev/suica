@@ -46,6 +46,7 @@ class Pyramid extends Mesh
 		this.color = color;
 		this.size = size;
 		this.n = count;
+		this.flatShading = flatShading;
 	
 	} // Pyramid.constructor
 
@@ -145,6 +146,18 @@ class Pyramid extends Mesh
 		
 		return Pyramid.frameGeometry[count];
 	} // Pyramid.getFrameGeometry
+
+
+	get clone( )
+	{
+		var object = new Pyramid( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
+
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Pyramid.clone
 	
 } // class Pyramid
 

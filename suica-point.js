@@ -57,6 +57,18 @@ class Point extends Mesh
 		this.threejs.material.size = size;
 		this.threejs.material.needsUpdate = true;
 	}
+
+
+
+	get clone( )
+	{
+		var object = new Point( this.suica, this.center, this.size, this.color );
+
+		object.image = this.image;
+		
+		return object;
+		
+	} // Point.clone
 	
 } // class Point
 

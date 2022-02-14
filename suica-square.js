@@ -60,6 +60,18 @@ class Square extends Mesh
 		
 	} // Square.constructor
 
+
+	get clone( )
+	{
+		var object = new Square( this.suica, this.center, this.size, this.color );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Square.clone
+
 } // class Square
 
 

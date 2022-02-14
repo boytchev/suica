@@ -45,6 +45,7 @@ class Prism extends Mesh
 		this.color = color;
 		this.size = size;
 		this.n = count;
+		this.flatShading = flatShading;
 		
 	} // Prism.constructor
 
@@ -156,6 +157,18 @@ class Prism extends Mesh
 		
 		return Prism.frameGeometry[count];
 	} // Prism.getFrameGeometry
+
+
+	get clone( )
+	{
+		var object = new Prism( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Prism.clone
 	
 } // class Prism
 

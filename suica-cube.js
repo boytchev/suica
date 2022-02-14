@@ -85,6 +85,18 @@ class Cube extends Mesh
 		
 	} // Cube.constructor
 
+
+	get clone( )
+	{
+		var object = new Cube( this.suica, this.center, this.size, this.color );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Cube.clone
+
 } // class Cube
 
 

@@ -108,6 +108,18 @@ class Polygon extends Mesh
 		
 		return Polygon.frameGeometry[count];
 	} // Polygon.getFrameGeometry
+
+
+	get clone( )
+	{
+		var object = new Polygon( this.suica, this.n, this.center, this.size, this.color );
+		
+		object.wireframe = this.wireframe;
+		object.image = this.image;
+		
+		return object;
+		
+	} // Polygon.clone
 	
 } // class Polygon
 
