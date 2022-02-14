@@ -3,10 +3,10 @@
 ## Table of contents
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
-- [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop) </small>] 
+- [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop-ontime) </small>] 
 - [Objects](#objects)
     - [Definition](#definition)
-    - [Properties](#properties) [<small> [position](#position) | [size](#size) | [orientation](#orientation) | [color](#color) | [image](#image) </small>] 
+    - [Properties](#properties) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe)  | [image](#image) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 - [Images and drawings](#images-and-drawings)
@@ -68,7 +68,7 @@ order to allow easy local development.
 
 ### Tag &lt;suica&gt;
 
-The main Suica tag is `<suica>`. It defines a 3D drawing canvas. All other
+Tag. Defines a 3D drawing canvas. `<suica>` is the main Suica tag is . All other
 Suica-specific HTML tags are recognized only if used between `<suica>` and
 `</suica>`
 
@@ -97,9 +97,10 @@ More information is available in section [Coordinate system](#coordinate-system)
 
 ### Background color
 
-The background color of the drawing canvas can be set as HTML attribute, CSS
-style (both inlined and non-inlined), HTML tag and JS function. By default the
-background color is [white smoke](https://www.color-hex.com/color/f5f5f5).
+Property and command. Defines the background color of the
+Suica canvas. It can be set as HTML attribute, CSS style (both inlined and
+non-inlined), HTML tag and JS function. By default the background color is
+[white smoke](https://www.color-hex.com/color/f5f5f5).
 
 ```html
 HTML/CSS:
@@ -119,12 +120,13 @@ background( 'linen' );
 
 ### Coordinate system
 
-The coordinate system in Suica is important as it controls how objects
-[positions](#position) and [sizes](#size) are defined. Suica uses Cartesian
-3D coordinate system. The tag `<suica>` accepts attribute `orientation` with
-values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX` (these are all possible
-permutations of the letters *X*, *Y* and *Z*. Each orientation defines a
-coordinate system in the following manner:
+#### Orientation
+
+Property. Controls how objects [positions](#position) and [sizes](#size) are
+defined. Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts
+attribute `orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX`
+(these are all possible permutations of the letters *X*, *Y* and *Z*. Each
+orientation defines a coordinate system in the following manner:
 
 - the first axis points to the right
 - the second axis points upwards
@@ -141,10 +143,12 @@ HTML:
 ```
 [<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
 
-The coordinate system is an abstract object and it has no graphical
-representation. The command `oxyz`, however, visualizes the system as three
-segments with custom size and color. By default the size is 30 and the color
-is [black](https://www.color-hex.com/color/000000).
+#### Oxyz
+
+Command. Vizualizes the coordinate system. The coordinate system is an abstract
+object and it has no graphical representation. The command `oxyz`, however,
+visualizes the system as three segments with custom size and color. By default
+the size is 30 and the color is [black](https://www.color-hex.com/color/000000).
 
 ```html
 HTML:
@@ -162,7 +166,7 @@ oxyz( 30, 'black' );
 
 ### Demo mode
 
-The command `demo` turns on *demo mode* &ndash; atomatic scene rotation. The
+Command. Turns on *demo mode* &ndash; atomatic scene rotation. The
 parameters define the viewpoint position as distance from the origin of the
 the coordinate system and altitude. By default the distance is 100 and the
 altitude is 30.
@@ -180,11 +184,12 @@ demo( 100, 30 );
 
 
 
-### Animation loop
+### Animation loop (onTime)
 
-The animation approach of Suica is to react every time when the browser is ready
-to update the image on the canvas. The command `onTime` registers a user-defined
-JS function that adjusts the 3D scene whenever a new frame is required. 
+Command. Supports frame-based animation. The animation approach of
+Suica is to react every time when the browser is ready to update the image on
+the canvas. The command `onTime` registers a user-defined JS function that
+adjusts the 3D scene whenever a new frame is required. 
 
 ```html
 HTML:
@@ -258,11 +263,11 @@ p = point( [25,0,15] );
 Most Suica objects share the same basic properties, like position, orientation,
 size, color and so on. Some objects have specific properties
 
-#### Position
+#### Position (center, x, y, z)
 
-The position of a Suica object in 3D space is maintained via the property
-`center` &ndash; an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and
-*z* coordinates (in this order). The actual visual position depends on the
+Properties. Define the position of a Suica object in 3D space. Propery `center`
+is an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and *z*
+coordinates (in this order). The actual visual position depends on the
 orientation of the (coordinate system](#coordinate-system). All coordinates are
 optional. Default values are 0.
 
@@ -311,15 +316,15 @@ line( a, b );
 ```
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-as-position.html)
 
-#### Size
+#### Size (size, width, height, depth)
 
-The size of a Suica object in 3D space is maintained via the property `size`
-that defines how big is the objects along its dimensions. If size is a single
-number, that the object if uniformly big. If object's size varies than the
-property is an array of three numbers for object's *width*, *height* and
-*depth*. The order *width*, *height* and *depth* is fixed and does not depend on
-the [orientation of the coordinate system](#coordinate-system). Thus height
-corresponds to the axis that is upwards.
+Properties. The size of a Suica object in 3D space is maintained via the
+property `size` that defines how big is the objects along its dimensions. If
+size is a single number, that the object if uniformly big. If object's size
+varies than the property is an array of three numbers for object's *width*,
+*height* and *depth*. The order *width*, *height* and *depth* is fixed and does
+not depend on the [orientation of the coordinate system](#coordinate-system).
+Thus height corresponds to the axis that is upwards.
 
 <img src="../examples/images/sizes.png">
 
@@ -371,7 +376,8 @@ TBD
 
 #### Color
 
-Color in Suica can be expressed in a variety of ways. The [RGB scheme](https://www.w3schools.com/colors/colors_rgb.asp) represents colors as three
+Property. Defines the color of a graphical object. Color in Suica can be
+expressed in a variety of ways. The [RGB scheme](https://www.w3schools.com/colors/colors_rgb.asp) represents colors as three
 components *red*, *green* and *blue*, while the
 [HSL scheme](https://www.w3schools.com/colors/colors_hsl.asp) components are
 *hue*, *saturation* and *lightness*.
@@ -385,11 +391,37 @@ components *red*, *green* and *blue*, while the
 | JS<br>code | "crimson" | 0xDC143C | [0.86,&nbsp;0.08,&nbsp;0.24] | rgb(&nbsp;220,&nbsp;20,&nbsp;60) | hsl(&nbsp;348,&nbsp;91,&nbsp;86) |
 
 
+#### Wireframe
+
+Property. Defines whether to visualize objects as wireframes. By default objects
+in Suica are drawn with solid surfaces. The property `wireframe` is used to
+change switch surface visualization into wireframe mode &ndash; i.e. only edges
+are drawn.
+
+To turn on wireframe mode set the property to `true`, `yes` or `1`. When used as
+HTML attributes, the value may be omitted. To turn off wireframe mode set the
+property to `false`, `no` or `0`.
+
+```html
+HTML:
+<cube size="30" wireframe>
+<cube size="30" wireframe="true">
+```
+```js
+JS:
+a = cube( [0,0,0], 30);
+a.wireframe = true;
+```
+
+_**Note**. Not all objects have wireframe mode._
+
+
 #### Image
 
-Images can be stamped onto Suica object via the property `image`. The property
-accepts a drawing or a texture image. For more information of how to generate a
-drawing or use an image see section [Images and drawings](#images-and-drawings).
+Property. Decorates object surface with an image. Images can be stamped onto
+Suica object via the property `image`. The property accepts a drawing or a
+texture image. For more information of how to generate a drawing or use an image
+see section [Images and drawings](#images-and-drawings).
 
 When an object has both `color` and `image`, the resulting color is the product
 of the RGB normalized colors (i.e. components r,g,b&isin;[0,1]) of the color and
