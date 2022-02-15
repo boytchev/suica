@@ -30,6 +30,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
 [<kbd><img src="../examples/snapshots/clone.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
 
+[<kbd><img src="../examples/snapshots/style.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/style.html)
+
 ## [Common 2D objects](user-guide.md#common-2d-objects)
 
 [<kbd><img src="../examples/snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)

@@ -6,11 +6,11 @@
 - [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop-ontime) </small>] 
 - [Objects](#objects)
     - [Definition](#definition)
-    - [Properties](#properties) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe)  | [image](#image)   | [clone](#clone) </small>] 
+    - [Properties](#properties) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 - [Images and drawings](#images-and-drawings)
-- [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) </small>]
+- [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
 
 
@@ -450,9 +450,23 @@ a = cube( [0,0,0], 25 );
 b = a.clone;
 ```
 
-
 [<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
 
+#### Style
+
+Method. Sets a group of properties of an object. The properties are defined as a
+set of *name:value* pairs. New, custom user-defined properties are allowed. 
+As `style` return the same object, styling can be chained.
+
+```js
+JS:
+sphere().style( {x:15, size:20, color:'peachpuff'} );
+sphere().style( {x:15} ).style( {size:20} ).style( {color:'peachpuff'} );
+```
+
+[<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/style.html)
+
+_**Note**. Style can also be used as a [function](#style-1)._
 
 
 
@@ -759,6 +773,16 @@ JS:
 a = random( 5, 10 ); // from 5 to 10
 a = random( [1, 2, 3, 4] ); // from the list
 ```
+
+### Style
+
+Function. Sets a group of properties of an object. 
+
+```js
+JS:
+style( sphere(), {x:15, size:20, color:'peachpuff'} );
+```
+
 
 
 

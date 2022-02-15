@@ -390,8 +390,14 @@ class Mesh
 		this.suica.scene.add( newMesh );
 
 	}
-
 	
+	style( properties )
+	{
+		for( var n in properties ) this[n] = properties[n];
+		return this;
+		
+	} // Mesh.style
+
 } // class Mesh
 
 

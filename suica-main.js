@@ -41,6 +41,8 @@
 //		{suica.}pyramid( count, center, size, color )
 //		{suica.}pyramidFrame( count, center, size, color )
 //		
+//		style( object, style )
+//
 //		random( from, to )
 //		random( array )
 //		degrees( radians )
@@ -72,12 +74,13 @@
 //	2.-1.17 (220212) radians degrees
 //	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
 //	2.-1.19 (220214) added property clone
+//	2.-1.20 (220215) added style
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.19 (220214)` );
+console.log( `Suica 2.-1.20 (220215)` );
 
 
 // control flags
@@ -630,50 +633,54 @@ class Suica
 
 
 
+function style( object, properties )
+{
+	for( var n in properties ) object[n] = properties[n];
+}
 
-window.background = function ( color=Suica.DEFAULT.BACKGROUND.COLOR )
+function background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 {
 	Suica.precheck();
 	Suica.current.background( color );
 }
 
-window.oxyz = function oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
+function oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 {
 	Suica.precheck();
 	Suica.current.oxyz( size, color );
 }
 
-window.demo = function ( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
+function demo ( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
 {
 	Suica.precheck();
 	Suica.current.demo( distance, altitude );
 }
 
-window.onTime = function ( src=Suica.DEFAULT.ONTIME.SRC )
+function onTime( src=Suica.DEFAULT.ONTIME.SRC )
 {
 	Suica.precheck();
 	Suica.current.onTime( src );
 }
 
-window.element = function( id )
+function element ( id )
 {
 	return document.getElementById( id );
 }
 
 
-window.rgb = function( r, g, b )
+function rgb( r, g, b )
 {
 	return new THREE.Color( r/255, g/255, b/255 );
 }
 
 
-window.hsl = function( h, s, l )
+function hsl( h, s, l )
 {
 	return new THREE.Color( ).setHSL( h/360, s/100, l/100 );
 }
 
 
-window.random = function( a=0, b=1 )
+function random( a=0, b=1 )
 {
 	if( Array.isArray(a) )
 	{
@@ -684,18 +691,18 @@ window.random = function( a=0, b=1 )
 }
 
 
-window.radians = function( degrees )
+function radians( degrees )
 {
 	return degrees * Math.PI/180;
 }
 
 
-window.degrees = function( radians )
+function degrees( radians )
 {
 	return radians * 180/Math.PI;
 }
 
-window.sameAs = function( object )
+function sameAs( object )
 {
 	if( object.clone )
 		return object.clone();
