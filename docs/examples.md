@@ -2,11 +2,11 @@
 
 Click on an image to run the example.
 
-## About
+## [About](user-guide.md#about)
 
 [<kbd><img src="../examples/snapshots/minimal-example.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/minimal-example.html)
 
-## Suica canvas
+## [Suica canvas](user-guide.md#suica-canvas)
 
 [<kbd><img src="../examples/snapshots/tag-suica.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/tag-suica.html)
 [<kbd><img src="../examples/snapshots/background.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/background.html)
@@ -17,12 +17,12 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/demo.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
 [<kbd><img src="../examples/snapshots/ontime.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
 
-## Objects
+## [Objects](user-guide.md#objects)
 
 [<kbd><img src="../examples/snapshots/object-html.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/object-html.html)
 [<kbd><img src="../examples/snapshots/object-js.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/object-js.html)
 
-## Objects properties
+## [Objects properties](user-guide.md#properties)
 
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/object-as-position.html)
 [<kbd><img src="../examples/snapshots/sizes.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
@@ -30,7 +30,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
 [<kbd><img src="../examples/snapshots/clone.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
 
-## Common 2D objects
+## [Common 2D objects](user-guide.md#common-2d-objects)
 
 [<kbd><img src="../examples/snapshots/point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point.html)
 [<kbd><img src="../examples/snapshots/point-cloud.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
@@ -45,7 +45,7 @@ Click on an image to run the example.
 
 [<kbd><img src="../examples/snapshots/polygon.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
 
-## Common 3D objects
+## [Common 3D objects](user-guide.md#common-3d-objects)
 
 [<kbd><img src="../examples/snapshots/cube.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
 [<kbd><img src="../examples/snapshots/cube-cuboid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-cuboid.html)
@@ -65,12 +65,12 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/pyramid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
 
 
-## Images
+## [Images and drawings](user-guide.md#images-and-drawings)
 
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 [<kbd><img src="../examples/snapshots/cube-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 
-## Questions and answers
+## [Questions and answers](user-guide.md#questions-and-answers)
 
 [<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/qa-property-modification.html)
 [<kbd><img src="../examples/snapshots/qa-attribute-modification.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification.html)
