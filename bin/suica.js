@@ -825,7 +825,7 @@ class HTMLParser
 			if( this.parseTag[tagName] )
 				this.parseTag[tagName]( this.suica, elem.children[i] );
 			else
-				throw `error: unknown tag <${tagName}> in <${that.tagName}>`;
+				console.error( `error: unknown tag <${tagName}> in <${that.tagName}>` );
 
 			// recurse into subtags
 			this.parseTagsInElement( this.suica, elem.children[i] );

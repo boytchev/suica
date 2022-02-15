@@ -16,96 +16,85 @@
 	<script src="suica.js"></script>
 	
 	<style>
-		suica { width: 15em; height: 15em; }
+		suica {
+			width: 164px;
+			height: 148px;
+		}
 	</style>
 </head>
 
 <body>
 
 	<h1>Sizes orientation</h1>
-	<p>Demonstrating that sizes are independend on the coordinate system orientation.</p>
+	<p>Sizes are independend on the coordinate system orientation.</p>
 
-	<table>
-		<tr>
-			<td>
-				<suica orientation="yxz">
-					<oxyz>
-					<demo>
-					<cube id="c1" size="16,32,4">
-					<point id="x3" x="32" size="12">
-					<point id="y3" y="32" size="12">
-					<point id="z3" z="32" size="12">
-				</suica>
-				&nbsp;
-			</td>
-			<td>
-				<suica orientation="zyx">
-					<oxyz>
-					<demo>
-					<cube id="c2" size="16,32,4">
-					<point id="x6" x="32" size="12">
-					<point id="y6" y="32" size="12">
-					<point id="z6" z="32" size="12">
-				</suica>
-				&nbsp;
-			</td>
-			<td>
-				<suica orientation="xzy">
-					<oxyz>
-					<demo>
-					<cube id="c3" size="16,32,4">
-					<point id="x2" x="32" size="12">
-					<point id="y2" y="32" size="12">
-					<point id="z2" z="32" size="12">
-				</suica>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<suica orientation="zxy">
-					<oxyz>
-					<demo>
-					<cube id="c4" size="16,32,4">
-					<point id="x5" x="32" size="12">
-					<point id="y5" y="32" size="12">
-					<point id="z5" z="32" size="12">
-				</suica>
-				&nbsp;
-			</td>
-			<td>
-				<suica orientation="xyz">
-					<oxyz>
-					<demo>
-					<cube id="c5" size="16,32,4">
-					<point id="x1" x="32" size="12">
-					<point id="y1" y="32" size="12">
-					<point id="z1" z="32" size="12">
-				</suica>
-				&nbsp;
-			</td>
-			<td>
-				<suica orientation="yzx">
-					<oxyz>
-					<demo>
-					<cube id="c6" size="16,32,4">
-					<point id="x4" x="32" size="12">
-					<point id="y4" y="32" size="12">
-					<point id="z4" z="32" size="12">
-				</suica>
-			</td>
-		</tr>
-	</table>
+	<suica orientation="yxz">
+		<oxyz>
+		<demo>
+		<cube id="c1" color="peachpuff" size="16,32,4">
+		<point id="x3" x="32" size="12">
+		<point id="y3" y="32" size="12">
+		<point id="z3" z="32" size="12">
+	</suica>
+
+	<suica orientation="zyx">
+		<oxyz>
+		<demo>
+		<cube id="c2" color="peachpuff" size="16,32,4">
+		<point id="x6" x="32" size="12">
+		<point id="y6" y="32" size="12">
+		<point id="z6" z="32" size="12">
+	</suica>
+
+	<suica orientation="xzy">
+		<oxyz>
+		<demo>
+		<cube id="c3" color="peachpuff" size="16,32,4">
+		<point id="x2" x="32" size="12">
+		<point id="y2" y="32" size="12">
+		<point id="z2" z="32" size="12">
+	</suica>
+
+	<br>
+	
+	<suica orientation="zxy">
+		<oxyz>
+		<demo>
+		<cube id="c4" color="peachpuff" size="16,32,4">
+		<point id="x5" x="32" size="12">
+		<point id="y5" y="32" size="12">
+		<point id="z5" z="32" size="12">
+	</suica>
+
+	<suica orientation="xyz">
+		<oxyz>
+		<demo>
+		<cube id="c5" color="peachpuff" size="16,32,4">
+		<point id="x1" x="32" size="12">
+		<point id="y1" y="32" size="12">
+		<point id="z1" z="32" size="12">
+	</suica>
+
+	<suica orientation="yzx">
+		<oxyz>
+		<demo>
+		<cube id="c6" color="peachpuff" size="16,32,4">
+		<point id="x4" x="32" size="12">
+		<point id="y4" y="32" size="12">
+		<point id="z4" z="32" size="12">
+	</suica>
+
 	
 	<script>
 
 		var ix = drawing( 15 );
-			fillText( 0, 0, 'X', 'crimson', 'bold 20px Arial' );
+			fillText( 0, 0, 'X', 'lightsalmon', 'bold 20px Arial' );
 		
 		var iy = drawing( 15 );
-			fillText( 0, 0, 'Y', 'crimson', 'bold 20px Arial' );
+			fillText( 0, 0, 'Y', 'lightsalmon', 'bold 20px Arial' );
 		
 		var iz = drawing( 15 );
-			fillText( 0, 0, 'Z', 'crimson', 'bold 20px Arial' );
+			fillText( 0, 0, 'Z', 'lightsalmon', 'bold 20px Arial' );
 		
 		x1.image = x2.image = x3.image = x4.image = x5.image = x6.image = ix;
 		y1.image = y2.image = y3.image = y4.image = y5.image = y6.image = iy;
