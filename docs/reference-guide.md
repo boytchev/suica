@@ -1,8 +1,8 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) | [Color](#color) | [Point](#point) | [Line](#line) | [Square](#square) | [Circle](#circle) | [Polygon](#polygon) | [Cube](#cube) | [Sphere](#sphere) | [Cylinder](#cylinder) | [Prism](#prism) | [Cone](#cone) | [Pyramid](#pyramid) | [Functions](#functions)
+[ [Suica](#suica) | [Color](#color) | [Point](#point) | [Line](#line) | [Square](#square) | [Circle](#circle) | [Polygon](#polygon) | [Cube](#cube) | [Sphere](#sphere) | [Cylinder](#cylinder) | [Prism](#prism) | [Cone](#cone) | [Pyramid](#pyramid) | [Functions](#functions) ]
 
-### Suica
+### [Suica](user-guide.md#suica-canvas)
 
 ```html
 HTML:
@@ -43,7 +43,7 @@ function 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛( t, dt )
 
 ```
 
-### Color
+### [Color](user-guide.md#color)
 
 ```js
 '𝑐𝑜𝑙𝑜𝑟-𝑛𝑎𝑚𝑒'
@@ -55,7 +55,7 @@ rgb(𝑟𝑒𝑑,𝑔𝑟𝑒𝑒𝑛,𝑏𝑙𝑢𝑒)          // 0..255
 hsl(ℎ𝑢𝑒,𝑠𝑎𝑡𝑢𝑟𝑎𝑡𝑖𝑜𝑛,𝑙𝑖𝑔ℎ𝑡𝑛𝑒𝑠𝑠)  // 0..360, 0..100, 0..100
 ```
 
-### Point
+### [Point](user-guide.md#point)
 
 ```html
 HTML:
@@ -76,7 +76,7 @@ JS:
 ```
 
 
-### Line
+### [Line](user-guide.md#line)
 
 ```html
 HTML:
@@ -95,7 +95,7 @@ JS:
 ```
 
 
-### Square
+### [Square](user-guide.md#square)
 
 ```html
 HTML:
@@ -123,7 +123,7 @@ JS:
 ```
 
 
-### Circle
+### [Circle](user-guide.md#circle)
 
 ```html
 HTML:
@@ -151,7 +151,7 @@ JS:
 ```
 
 
-### Polygon
+### [Polygon](user-guide.md#polygon)
 
 ```html
 HTML:
@@ -180,7 +180,7 @@ JS:
 ```
 
 
-### Cube
+### [Cube](user-guide.md#cube)
 
 ```html
 HTML:
@@ -209,7 +209,7 @@ JS:
 ```
 
 
-### Sphere
+### [Sphere](user-guide.md#sphere)
 
 ```html
 HTML:
@@ -236,7 +236,7 @@ JS:
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 ```
 
-### Cylinder
+### [Cylinder](user-guide.md#cylinder)
 
 ```html
 HTML:
@@ -263,7 +263,7 @@ JS:
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 ```
 
-### Prism
+### [Prism](user-guide.md#prism)
 
 ```html
 HTML:
@@ -292,7 +292,7 @@ JS:
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 ```
 
-### Cone
+### [Cone](user-guide.md#cone)
 
 ```html
 HTML:
@@ -319,7 +319,7 @@ JS:
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 ```
 
-### Pyramid
+### [Pyramid](user-guide.md#pyramid)
 
 ```html
 HTML:
@@ -349,7 +349,7 @@ JS:
 ```
 
 
-### Functions
+### [Functions](user-guide.md#functions)
 ```js
 JS:
 random( 𝑓𝑟𝑜𝑚, 𝑡𝑜 );
