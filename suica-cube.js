@@ -25,12 +25,17 @@
 
 class Cube extends Mesh
 {
-	static solidGeometry = new THREE.BoxGeometry( 1, 1, 1 );
-	static frameGeometry = new THREE.BufferGeometry();
-
-	static
+	
+	constructor( suica, center, size, color )
 	{
-		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+		
+		suica.parser?.parseTags();
+		suica.debugCall( 'cube', center, size, color );
+		
+		suica._.solidGeometry.cube = suica.flipNormal( new THREE.BoxGeometry( 1, 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) ); // array of geometries for different number of sides
+		suica._.frameGeometry.cube = new THREE.BufferGeometry(); // array of geometries for different number of sides
+
+		suica._.frameGeometry.cube.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
 			// bottom ring
 			-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
 			+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
@@ -47,7 +52,7 @@ class Cube extends Mesh
 			+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
 			-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
 		]), 3));
-		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+		suica._.frameGeometry.cube.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
 			// bottom ring
 			0, 0,  1, 0,
 			0, 0,  1, 0,
@@ -64,19 +69,12 @@ class Cube extends Mesh
 			0, 0,  1, 0,
 			0, 0,  1, 0,
 			]), 2));
-			
-	} // Cube.static
-	
-	
-	constructor( suica, center, size, color )
-	{
-		
-		suica.parser?.parseTags();
-		suica.debugCall( 'cube', center, size, color );
+
+		suica._.frameGeometry.cube = suica._.frameGeometry.cube.applyMatrix4( suica.orientation.MATRIX );
 		
 		super( suica, 
-			new THREE.Mesh( Cube.solidGeometry, Mesh.solidMaterial.clone() ),
-			new THREE.LineSegments( Cube.frameGeometry, Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( suica._.solidGeometry.cube, Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( suica._.frameGeometry.cube, Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;

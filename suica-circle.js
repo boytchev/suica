@@ -24,10 +24,7 @@
 
 
 class Polygon extends Mesh
-{
-	static solidGeometry = []; // array of geometries for different number of sides
-	static frameGeometry = []; // array of geometries for different number of sides
-	
+{	
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
@@ -36,9 +33,12 @@ class Polygon extends Mesh
 		else
 			suica.debugCall( 'circle', center, size, color );
 
+		suica._.solidGeometry.polygon = []; // array of geometries for different number of sides
+		suica._.frameGeometry.polygon = []; // array of geometries for different number of sides
+
 		super( suica, 
-			new THREE.Mesh( Polygon.getSolidGeometry(count), Mesh.solidMaterial.clone() ),
-			new THREE.LineLoop( Polygon.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( Polygon.getSolidGeometry(suica,count), Mesh.solidMaterial.clone() ),
+			new THREE.LineLoop( Polygon.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -70,20 +70,20 @@ class Polygon extends Mesh
 	}
 	
 
-	static getSolidGeometry( count )
+	static getSolidGeometry( suica, count )
 	{
-		if( !Polygon.solidGeometry[count] )
-			Polygon.solidGeometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
+		if( !suica._.solidGeometry.polygon[count] )
+			suica._.solidGeometry.polygon[count] = suica.flipNormal( new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) ).applyMatrix4( suica.orientation.MATRIX ) );
 		
-		return Polygon.solidGeometry[count];
+		return suica._.solidGeometry.polygon[count];
 	} // Polygon.getSolidGeometry
 	
 	
-	static getFrameGeometry( count )
+	static getFrameGeometry( suica, count )
 	{
-		if( !Polygon.frameGeometry[count] )
+		if( !suica._.frameGeometry.polygon[count] )
 		{
-			Polygon.frameGeometry[count] = new THREE.BufferGeometry();
+			suica._.frameGeometry.polygon[count] = new THREE.BufferGeometry();
 
 			let vertices = new Float32Array(3*count+3),
 				uvs = new Float32Array(2*count+2);
@@ -102,11 +102,12 @@ class Polygon extends Mesh
 				else
 					uvs[2*i] = i;
 			}
-			Polygon.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			Polygon.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.polygon[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			suica._.frameGeometry.polygon[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.polygon[count].applyMatrix4( suica.orientation.MATRIX );
 		}
 		
-		return Polygon.frameGeometry[count];
+		return suica._.frameGeometry.polygon[count];
 	} // Polygon.getFrameGeometry
 
 

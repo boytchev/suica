@@ -47,6 +47,7 @@
 //		random( array )
 //		degrees( radians )
 //		radians( degrees )
+//		style( object, style )
 //
 //	</script>
 //
@@ -75,12 +76,13 @@
 //	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
 //	2.-1.19 (220214) added property clone
 //	2.-1.20 (220215) added style
+//	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.20 (220215)` );
+console.log( `Suica 2.-1.21 (220216)` );
 
 
 // control flags
@@ -107,16 +109,55 @@ class Suica
 	static allSuicas = [];
 
 	// coordinate system orientations
+	static OX = new THREE.Vector3(1,0,0);
+	static OY = new THREE.Vector3(0,1,0);
+	static OZ = new THREE.Vector3(0,0,1);
+	static NX = new THREE.Vector3(-1,0,0);
+	static NY = new THREE.Vector3(0,-1,0);
+	static NZ = new THREE.Vector3(0,0,-1);
 	static ORIENTATIONS = {
-			XYZ: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(0,1,0)},
-			XZY: {SCALE: new THREE.Vector3(-1,1,1), UP: new THREE.Vector3(0,0,1)},
-			YXZ: {SCALE: new THREE.Vector3(1,-1,1), UP: new THREE.Vector3(1,0,0)},
-			YZX: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(0,0,1)},
-			ZXY: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(1,0,0)},
-			ZYX: {SCALE: new THREE.Vector3(1,1,-1), UP: new THREE.Vector3(0,1,0)},
+			YXZ: {	SCALE: new THREE.Vector3(1,-1,1),
+					UP: Suica.OX,
+					FLIP_NORMAL: true,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OX,Suica.OZ) },
+			ZYX: {	SCALE: new THREE.Vector3(1,1,-1),
+					UP: Suica.OY,
+					FLIP_NORMAL: true,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OY,Suica.OX) },
+			XZY: {	SCALE: new THREE.Vector3(-1,1,1),
+					UP: Suica.OZ,
+					FLIP_NORMAL: true,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OZ,Suica.OY) },
+
+
+			ZXY: {	SCALE: new THREE.Vector3(1,1,1),
+					UP: Suica.OX,
+					FLIP_NORMAL: false,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OX,Suica.OY) },
+			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
+					UP: Suica.OY,
+					FLIP_NORMAL: false,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OY,Suica.OZ) },
+			YZX: {	SCALE: new THREE.Vector3(1,1,1),
+					UP: Suica.OZ,
+					FLIP_NORMAL: false,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX) },
 		}
 
 
+	flipNormal( geometry )
+	{
+		if( this.orientation.FLIP_NORMAL )
+		{
+			var nor = geometry.getAttribute( 'normal' ).array;
+			for( var i=0; i<nor.length; i++ )
+				nor[i] = -nor[i];
+		}
+		
+		return geometry;
+	}
+	
+	
 	// default values for Suica commands
 	static DEFAULT = {
 		BACKGROUND: { COLOR: 'whitesmoke' },
@@ -141,6 +182,13 @@ class Suica
 	
 	constructor( suicaTag )
 	{
+		// internal storage
+		this._ = {
+			solidGeometry:{},
+			frameGeometry:{},
+		};
+		
+		
 		// fix styling of <suica>
 		suicaTag.style.display = 'inline-block';
 		suicaTag.style.boxSizing = 'border-box';
@@ -151,7 +199,7 @@ class Suica
 		
 		this.suicaTag = suicaTag;
 
-		// get or invent id
+		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
 		
 		// create and initialize <canvas>
@@ -264,27 +312,42 @@ class Suica
 			{
 				var x = that.demoViewPoint.distance*Math.cos(time),
 					y = that.demoViewPoint.altitude,
-					z = that.demoViewPoint.distance*Math.sin(time),
-					p = that.camera.position;
+					z = that.demoViewPoint.distance*Math.sin(time);
 				
 				switch( that.orientation )
 				{
-					case Suica.ORIENTATIONS.XYZ: p.set( x, y, -z ); break;
-					case Suica.ORIENTATIONS.XZY: p.set( -x, -z, y ); break;
-					case Suica.ORIENTATIONS.YXZ: p.set( y, -x, -z ); break;
-					case Suica.ORIENTATIONS.YZX: p.set( -z, x, y ); break;
-					case Suica.ORIENTATIONS.ZXY: p.set( y, -z, x ); break;
-					case Suica.ORIENTATIONS.ZYX: p.set( -z, y, -x ); break;
-					default: throw 'error: Unknown orientation in <suica>';
+					case Suica.ORIENTATIONS.XYZ:
+							that.camera.position.set( x, y, -z );
+							that.light.position.set( x, y, -z );
+							break;
+					case Suica.ORIENTATIONS.XZY:
+							that.camera.position.set( -x, -z, y );
+							that.light.position.set( x, -z, y );
+							break;
+					case Suica.ORIENTATIONS.YXZ:
+							that.camera.position.set( y, -x, -z );
+							that.light.position.set( y, x, -z );
+							break;
+					case Suica.ORIENTATIONS.YZX:
+							that.camera.position.set( -z, x, y );
+							that.light.position.set( -z, x, y );
+							break;
+					case Suica.ORIENTATIONS.ZXY:
+							that.camera.position.set( y, -z, x );
+							that.light.position.set( y, -z, x );
+							break;
+					case Suica.ORIENTATIONS.ZYX:
+							that.camera.position.set( -z, y, -x );
+							that.light.position.set( -z, y, x );
+							break;
+					default: console.error( 'error: Unknown orientation in <suica>' );
 				};
 				that.camera.lookAt( that.scene.position );
-				
-				that.light.position.copy( that.camera.position );
+
 			}
 			
 			if( that.onTimeHandler )
 			{
-				// OMG, I have never expected to use eval() in actual code, but here I am
 				if (typeof that.onTimeHandler === 'string' || that.onTimeHandler instanceof String)
 					that.onTimeHandler = window[that.onTimeHandler];
 				

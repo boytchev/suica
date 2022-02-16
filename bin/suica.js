@@ -48,6 +48,7 @@
 //		random( array )
 //		degrees( radians )
 //		radians( degrees )
+//		style( object, style )
 //
 //	</script>
 //
@@ -76,12 +77,13 @@
 //	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
 //	2.-1.19 (220214) added property clone
 //	2.-1.20 (220215) added style
+//	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.20 (220215)` );
+console.log( `Suica 2.-1.21 (220216)` );
 
 
 // control flags
@@ -108,16 +110,55 @@ class Suica
 	static allSuicas = [];
 
 	// coordinate system orientations
+	static OX = new THREE.Vector3(1,0,0);
+	static OY = new THREE.Vector3(0,1,0);
+	static OZ = new THREE.Vector3(0,0,1);
+	static NX = new THREE.Vector3(-1,0,0);
+	static NY = new THREE.Vector3(0,-1,0);
+	static NZ = new THREE.Vector3(0,0,-1);
 	static ORIENTATIONS = {
-			XYZ: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(0,1,0)},
-			XZY: {SCALE: new THREE.Vector3(-1,1,1), UP: new THREE.Vector3(0,0,1)},
-			YXZ: {SCALE: new THREE.Vector3(1,-1,1), UP: new THREE.Vector3(1,0,0)},
-			YZX: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(0,0,1)},
-			ZXY: {SCALE: new THREE.Vector3(1,1,1), UP: new THREE.Vector3(1,0,0)},
-			ZYX: {SCALE: new THREE.Vector3(1,1,-1), UP: new THREE.Vector3(0,1,0)},
+			YXZ: {	SCALE: new THREE.Vector3(1,-1,1),
+					UP: Suica.OX,
+					FLIP_NORMAL: true,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OX,Suica.OZ) },
+			ZYX: {	SCALE: new THREE.Vector3(1,1,-1),
+					UP: Suica.OY,
+					FLIP_NORMAL: true,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OY,Suica.OX) },
+			XZY: {	SCALE: new THREE.Vector3(-1,1,1),
+					UP: Suica.OZ,
+					FLIP_NORMAL: true,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OZ,Suica.OY) },
+
+
+			ZXY: {	SCALE: new THREE.Vector3(1,1,1),
+					UP: Suica.OX,
+					FLIP_NORMAL: false,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OX,Suica.OY) },
+			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
+					UP: Suica.OY,
+					FLIP_NORMAL: false,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OY,Suica.OZ) },
+			YZX: {	SCALE: new THREE.Vector3(1,1,1),
+					UP: Suica.OZ,
+					FLIP_NORMAL: false,
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX) },
 		}
 
 
+	flipNormal( geometry )
+	{
+		if( this.orientation.FLIP_NORMAL )
+		{
+			var nor = geometry.getAttribute( 'normal' ).array;
+			for( var i=0; i<nor.length; i++ )
+				nor[i] = -nor[i];
+		}
+		
+		return geometry;
+	}
+	
+	
 	// default values for Suica commands
 	static DEFAULT = {
 		BACKGROUND: { COLOR: 'whitesmoke' },
@@ -142,6 +183,13 @@ class Suica
 	
 	constructor( suicaTag )
 	{
+		// internal storage
+		this._ = {
+			solidGeometry:{},
+			frameGeometry:{},
+		};
+		
+		
 		// fix styling of <suica>
 		suicaTag.style.display = 'inline-block';
 		suicaTag.style.boxSizing = 'border-box';
@@ -152,7 +200,7 @@ class Suica
 		
 		this.suicaTag = suicaTag;
 
-		// get or invent id
+		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
 		
 		// create and initialize <canvas>
@@ -265,27 +313,42 @@ class Suica
 			{
 				var x = that.demoViewPoint.distance*Math.cos(time),
 					y = that.demoViewPoint.altitude,
-					z = that.demoViewPoint.distance*Math.sin(time),
-					p = that.camera.position;
+					z = that.demoViewPoint.distance*Math.sin(time);
 				
 				switch( that.orientation )
 				{
-					case Suica.ORIENTATIONS.XYZ: p.set( x, y, -z ); break;
-					case Suica.ORIENTATIONS.XZY: p.set( -x, -z, y ); break;
-					case Suica.ORIENTATIONS.YXZ: p.set( y, -x, -z ); break;
-					case Suica.ORIENTATIONS.YZX: p.set( -z, x, y ); break;
-					case Suica.ORIENTATIONS.ZXY: p.set( y, -z, x ); break;
-					case Suica.ORIENTATIONS.ZYX: p.set( -z, y, -x ); break;
-					default: throw 'error: Unknown orientation in <suica>';
+					case Suica.ORIENTATIONS.XYZ:
+							that.camera.position.set( x, y, -z );
+							that.light.position.set( x, y, -z );
+							break;
+					case Suica.ORIENTATIONS.XZY:
+							that.camera.position.set( -x, -z, y );
+							that.light.position.set( x, -z, y );
+							break;
+					case Suica.ORIENTATIONS.YXZ:
+							that.camera.position.set( y, -x, -z );
+							that.light.position.set( y, x, -z );
+							break;
+					case Suica.ORIENTATIONS.YZX:
+							that.camera.position.set( -z, x, y );
+							that.light.position.set( -z, x, y );
+							break;
+					case Suica.ORIENTATIONS.ZXY:
+							that.camera.position.set( y, -z, x );
+							that.light.position.set( y, -z, x );
+							break;
+					case Suica.ORIENTATIONS.ZYX:
+							that.camera.position.set( -z, y, -x );
+							that.light.position.set( -z, y, x );
+							break;
+					default: console.error( 'error: Unknown orientation in <suica>' );
 				};
 				that.camera.lookAt( that.scene.position );
-				
-				that.light.position.copy( that.camera.position );
+
 			}
 			
 			if( that.onTimeHandler )
 			{
-				// OMG, I have never expected to use eval() in actual code, but here I am
 				if (typeof that.onTimeHandler === 'string' || that.onTimeHandler instanceof String)
 					that.onTimeHandler = window[that.onTimeHandler];
 				
@@ -2064,34 +2127,31 @@ window.line = function(
 
 class Square extends Mesh
 {
-	static solidGeometry = new THREE.PlaneGeometry( 1, 1 );
-	static frameGeometry = new THREE.BufferGeometry();
-	
-	static
-	{
-		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
-			-0.5,-0.5,0, +0.5,-0.5,0, 
-			+0.5,-0.5,0, +0.5,+0.5,0, 
-			+0.5,+0.5,0, -0.5,+0.5,0, 
-			-0.5,+0.5,0, -0.5,-0.5,0, 
-		]), 3));
-		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
-			0, 0,  1, 0,
-			0, 0,  1, 0,
-			0, 0,  1, 0,
-			0, 0,  1, 0,
-		]), 2));
-			
-	} // Square.static
 	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'square', center, size, color );
 		
+		suica._.solidGeometry.square = suica.flipNormal( new THREE.PlaneGeometry( 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) );; // array of geometries for different number of sides
+		suica._.frameGeometry.square = new THREE.BufferGeometry(); // array of geometries for different number of sides
+		suica._.frameGeometry.square.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+			-0.5,-0.5,0, +0.5,-0.5,0, 
+			+0.5,-0.5,0, +0.5,+0.5,0, 
+			+0.5,+0.5,0, -0.5,+0.5,0, 
+			-0.5,+0.5,0, -0.5,-0.5,0, 
+		]), 3));
+		suica._.frameGeometry.square.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+		]), 2));
+		suica._.frameGeometry.square.applyMatrix4( suica.orientation.MATRIX );
+		
 		super( suica, 
-			/*solid*/ new THREE.Mesh( Square.solidGeometry, Mesh.solidMaterial.clone() ),
-			/*frame*/ new THREE.LineSegments( Square.frameGeometry, Mesh.lineMaterial.clone() ),
+			/*solid*/ new THREE.Mesh( suica._.solidGeometry.square, Mesh.solidMaterial.clone() ),
+			/*frame*/ new THREE.LineSegments( suica._.frameGeometry.square, Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -2152,12 +2212,17 @@ window.square = function(
 
 class Cube extends Mesh
 {
-	static solidGeometry = new THREE.BoxGeometry( 1, 1, 1 );
-	static frameGeometry = new THREE.BufferGeometry();
-
-	static
+	
+	constructor( suica, center, size, color )
 	{
-		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+		
+		suica.parser?.parseTags();
+		suica.debugCall( 'cube', center, size, color );
+		
+		suica._.solidGeometry.cube = suica.flipNormal( new THREE.BoxGeometry( 1, 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) ); // array of geometries for different number of sides
+		suica._.frameGeometry.cube = new THREE.BufferGeometry(); // array of geometries for different number of sides
+
+		suica._.frameGeometry.cube.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
 			// bottom ring
 			-0.5,-0.5,-0.5, +0.5,-0.5,-0.5, 
 			+0.5,-0.5,-0.5, +0.5,+0.5,-0.5, 
@@ -2174,7 +2239,7 @@ class Cube extends Mesh
 			+0.5,+0.5,-0.5, +0.5,+0.5,+0.5, 
 			-0.5,+0.5,-0.5, -0.5,+0.5,+0.5, 
 		]), 3));
-		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+		suica._.frameGeometry.cube.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
 			// bottom ring
 			0, 0,  1, 0,
 			0, 0,  1, 0,
@@ -2191,19 +2256,12 @@ class Cube extends Mesh
 			0, 0,  1, 0,
 			0, 0,  1, 0,
 			]), 2));
-			
-	} // Cube.static
-	
-	
-	constructor( suica, center, size, color )
-	{
-		
-		suica.parser?.parseTags();
-		suica.debugCall( 'cube', center, size, color );
+
+		suica._.frameGeometry.cube = suica._.frameGeometry.cube.applyMatrix4( suica.orientation.MATRIX );
 		
 		super( suica, 
-			new THREE.Mesh( Cube.solidGeometry, Mesh.solidMaterial.clone() ),
-			new THREE.LineSegments( Cube.frameGeometry, Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( suica._.solidGeometry.cube, Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( suica._.frameGeometry.cube, Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -2263,10 +2321,7 @@ window.cube = function(
 
 
 class Polygon extends Mesh
-{
-	static solidGeometry = []; // array of geometries for different number of sides
-	static frameGeometry = []; // array of geometries for different number of sides
-	
+{	
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
@@ -2275,9 +2330,12 @@ class Polygon extends Mesh
 		else
 			suica.debugCall( 'circle', center, size, color );
 
+		suica._.solidGeometry.polygon = []; // array of geometries for different number of sides
+		suica._.frameGeometry.polygon = []; // array of geometries for different number of sides
+
 		super( suica, 
-			new THREE.Mesh( Polygon.getSolidGeometry(count), Mesh.solidMaterial.clone() ),
-			new THREE.LineLoop( Polygon.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( Polygon.getSolidGeometry(suica,count), Mesh.solidMaterial.clone() ),
+			new THREE.LineLoop( Polygon.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -2309,20 +2367,20 @@ class Polygon extends Mesh
 	}
 	
 
-	static getSolidGeometry( count )
+	static getSolidGeometry( suica, count )
 	{
-		if( !Polygon.solidGeometry[count] )
-			Polygon.solidGeometry[count] = new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) );
+		if( !suica._.solidGeometry.polygon[count] )
+			suica._.solidGeometry.polygon[count] = suica.flipNormal( new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) ).applyMatrix4( suica.orientation.MATRIX ) );
 		
-		return Polygon.solidGeometry[count];
+		return suica._.solidGeometry.polygon[count];
 	} // Polygon.getSolidGeometry
 	
 	
-	static getFrameGeometry( count )
+	static getFrameGeometry( suica, count )
 	{
-		if( !Polygon.frameGeometry[count] )
+		if( !suica._.frameGeometry.polygon[count] )
 		{
-			Polygon.frameGeometry[count] = new THREE.BufferGeometry();
+			suica._.frameGeometry.polygon[count] = new THREE.BufferGeometry();
 
 			let vertices = new Float32Array(3*count+3),
 				uvs = new Float32Array(2*count+2);
@@ -2341,11 +2399,12 @@ class Polygon extends Mesh
 				else
 					uvs[2*i] = i;
 			}
-			Polygon.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			Polygon.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.polygon[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			suica._.frameGeometry.polygon[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.polygon[count].applyMatrix4( suica.orientation.MATRIX );
 		}
 		
-		return Polygon.frameGeometry[count];
+		return suica._.frameGeometry.polygon[count];
 	} // Polygon.getFrameGeometry
 
 
@@ -2411,20 +2470,20 @@ window.polygon = function(
 
 class Sphere extends Mesh
 {
-	static solidGeometry;
-	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'sphere', center, size, color );
 		
-		if( !Sphere.solidGeometry )
+		suica._.solidGeometry.sphere = null; // array of geometries for different number of sides
+
+		if( !suica._.solidGeometry.sphere )
 		{
-			Sphere.solidGeometry = new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) );
+			suica._.solidGeometry.sphere = suica.flipNormal( new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) ).applyMatrix4( suica.orientation.MATRIX ) );
 		}
 		
 		super( suica, 
-			new THREE.Mesh( Sphere.solidGeometry, Mesh.solidMaterial.clone() ),
+			new THREE.Mesh( suica._.solidGeometry.sphere, Mesh.solidMaterial.clone() ),
 			null, // no wireframe
 		);
 		
@@ -2485,9 +2544,6 @@ window.sphere = function(
 
 class Prism extends Mesh
 {
-	static solidGeometry = []; // array of geometries for different number of sides
-	static frameGeometry = []; // array of geometries for different number of sides
-	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
@@ -2496,9 +2552,12 @@ class Prism extends Mesh
 		else
 			suica.debugCall( 'cylinder', center, size, color );
 	
+		suica._.solidGeometry.prism = []; // array of geometries for different number of sides
+		suica._.frameGeometry.prism = []; // array of geometries for different number of sides
+
 		super( suica, 
-			new THREE.Mesh( Prism.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
-			new THREE.LineSegments( Prism.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( Prism.getSolidGeometry(suica,count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Prism.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -2531,20 +2590,20 @@ class Prism extends Mesh
 	}
 	
 	
-	static getSolidGeometry( count )
+	static getSolidGeometry( suica, count )
 	{
-		if( !Prism.solidGeometry[count] )
-			Prism.solidGeometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		if( !suica._.solidGeometry.prism[count] )
+			suica._.solidGeometry.prism[count] = suica.flipNormal( new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
 		
-		return Prism.solidGeometry[count];
+		return suica._.solidGeometry.prism[count];
 	} // Prism.getSolidGeometry
 	
 	
-	static getFrameGeometry( count )
+	static getFrameGeometry( suica, count )
 	{
-		if( !Prism.frameGeometry[count] )
+		if( !suica._.frameGeometry.prism[count] )
 		{
-			Prism.frameGeometry[count] = new THREE.BufferGeometry();
+			suica._.frameGeometry.prism[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom, at top, at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -2611,11 +2670,12 @@ class Prism extends Mesh
 				uvs[12*i+8] = 0;
 				uvs[12*i+10] = 1;
 			}
-			Prism.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			Prism.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.prism[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			suica._.frameGeometry.prism[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.prism[count].applyMatrix4( suica.orientation.MATRIX );
 		}
 		
-		return Prism.frameGeometry[count];
+		return suica._.frameGeometry.prism[count];
 	} // Prism.getFrameGeometry
 
 
@@ -2682,9 +2742,6 @@ window.prism = function(
 
 class Pyramid extends Mesh
 {
-	static solidGeometry = []; // array of geometries for different number of sides
-	static frameGeometry = []; // array of geometries for different number of sides
-	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
@@ -2693,9 +2750,12 @@ class Pyramid extends Mesh
 		else
 			suica.debugCall( 'cone', center, size, color );
 	
+		suica._.solidGeometry.pyramid = []; // array of geometries for different number of sides
+		suica._.frameGeometry.pyramid = []; // array of geometries for different number of sides
+	
 		super( suica, 
-			new THREE.Mesh( Pyramid.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
-			new THREE.LineSegments( Pyramid.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( Pyramid.getSolidGeometry(suica,count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Pyramid.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -2703,7 +2763,7 @@ class Pyramid extends Mesh
 		this.size = size;
 		this.n = count;
 		this.flatShading = flatShading;
-	
+
 	} // Pyramid.constructor
 
 
@@ -2721,27 +2781,29 @@ class Pyramid extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		this.solidMesh.geometry = Pyramid.getSolidGeometry( count );
-		this.frameMesh.geometry = Pyramid.getFrameGeometry( count );
+		this.solidMesh.geometry = Pyramid.getSolidGeometry( this.suica, count );
+		this.frameMesh.geometry = Pyramid.getFrameGeometry( this.suica, count );
 		
 		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 	
-	static getSolidGeometry( count )
+	static getSolidGeometry( suica, count )
 	{
-		if( !Pyramid.solidGeometry[count] )
-			Pyramid.solidGeometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		if( !suica._.solidGeometry.pyramid[count] )
+		{
+			suica._.solidGeometry.pyramid[count] = suica.flipNormal( new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
+		}
 		
-		return Pyramid.solidGeometry[count];
+		return suica._.solidGeometry.pyramid[count];
 	} // Pyramid.getSolidGeometry
 
 
-	static getFrameGeometry( count )
+	static getFrameGeometry( suica, count )
 	{
-		if( !Pyramid.frameGeometry[count] )
+		if( !suica._.frameGeometry.pyramid[count] )
 		{
-			Pyramid.frameGeometry[count] = new THREE.BufferGeometry();
+			suica._.frameGeometry.pyramid[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom and at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -2796,11 +2858,12 @@ class Pyramid extends Mesh
 				uvs[8*i+4] = 0;
 				uvs[8*i+6] = 1;
 			}
-			Pyramid.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			Pyramid.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.pyramid[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			suica._.frameGeometry.pyramid[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.pyramid[count].applyMatrix4( suica.orientation.MATRIX );
 		}
 		
-		return Pyramid.frameGeometry[count];
+		return suica._.frameGeometry.pyramid[count];
 	} // Pyramid.getFrameGeometry
 
 

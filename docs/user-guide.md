@@ -55,7 +55,8 @@ Browsers have a standard way of reaction on non-standard web pages (e.g. missing
 closing tags, unregistered custom tags, etc). This is heavily used in all Suica
 examples. Tools that validate HTML pages may complain about Suica HTML code.
 
-
+_**Note.** Three.js and other libraries are included in this repository to safeguard
+against incompatibilities with future versions. They are not a part of Suica._
 
 
 ## Suica canvas

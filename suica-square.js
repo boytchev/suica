@@ -24,34 +24,31 @@
 
 class Square extends Mesh
 {
-	static solidGeometry = new THREE.PlaneGeometry( 1, 1 );
-	static frameGeometry = new THREE.BufferGeometry();
-	
-	static
-	{
-		this.frameGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
-			-0.5,-0.5,0, +0.5,-0.5,0, 
-			+0.5,-0.5,0, +0.5,+0.5,0, 
-			+0.5,+0.5,0, -0.5,+0.5,0, 
-			-0.5,+0.5,0, -0.5,-0.5,0, 
-		]), 3));
-		this.frameGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
-			0, 0,  1, 0,
-			0, 0,  1, 0,
-			0, 0,  1, 0,
-			0, 0,  1, 0,
-		]), 2));
-			
-	} // Square.static
 	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'square', center, size, color );
 		
+		suica._.solidGeometry.square = suica.flipNormal( new THREE.PlaneGeometry( 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) );; // array of geometries for different number of sides
+		suica._.frameGeometry.square = new THREE.BufferGeometry(); // array of geometries for different number of sides
+		suica._.frameGeometry.square.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+			-0.5,-0.5,0, +0.5,-0.5,0, 
+			+0.5,-0.5,0, +0.5,+0.5,0, 
+			+0.5,+0.5,0, -0.5,+0.5,0, 
+			-0.5,+0.5,0, -0.5,-0.5,0, 
+		]), 3));
+		suica._.frameGeometry.square.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+			0, 0,  1, 0,
+		]), 2));
+		suica._.frameGeometry.square.applyMatrix4( suica.orientation.MATRIX );
+		
 		super( suica, 
-			/*solid*/ new THREE.Mesh( Square.solidGeometry, Mesh.solidMaterial.clone() ),
-			/*frame*/ new THREE.LineSegments( Square.frameGeometry, Mesh.lineMaterial.clone() ),
+			/*solid*/ new THREE.Mesh( suica._.solidGeometry.square, Mesh.solidMaterial.clone() ),
+			/*frame*/ new THREE.LineSegments( suica._.frameGeometry.square, Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;

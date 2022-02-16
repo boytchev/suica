@@ -25,9 +25,6 @@
 
 class Prism extends Mesh
 {
-	static solidGeometry = []; // array of geometries for different number of sides
-	static frameGeometry = []; // array of geometries for different number of sides
-	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
@@ -36,9 +33,12 @@ class Prism extends Mesh
 		else
 			suica.debugCall( 'cylinder', center, size, color );
 	
+		suica._.solidGeometry.prism = []; // array of geometries for different number of sides
+		suica._.frameGeometry.prism = []; // array of geometries for different number of sides
+
 		super( suica, 
-			new THREE.Mesh( Prism.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
-			new THREE.LineSegments( Prism.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( Prism.getSolidGeometry(suica,count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Prism.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -71,20 +71,20 @@ class Prism extends Mesh
 	}
 	
 	
-	static getSolidGeometry( count )
+	static getSolidGeometry( suica, count )
 	{
-		if( !Prism.solidGeometry[count] )
-			Prism.solidGeometry[count] = new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		if( !suica._.solidGeometry.prism[count] )
+			suica._.solidGeometry.prism[count] = suica.flipNormal( new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
 		
-		return Prism.solidGeometry[count];
+		return suica._.solidGeometry.prism[count];
 	} // Prism.getSolidGeometry
 	
 	
-	static getFrameGeometry( count )
+	static getFrameGeometry( suica, count )
 	{
-		if( !Prism.frameGeometry[count] )
+		if( !suica._.frameGeometry.prism[count] )
 		{
-			Prism.frameGeometry[count] = new THREE.BufferGeometry();
+			suica._.frameGeometry.prism[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom, at top, at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -151,11 +151,12 @@ class Prism extends Mesh
 				uvs[12*i+8] = 0;
 				uvs[12*i+10] = 1;
 			}
-			Prism.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			Prism.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.prism[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			suica._.frameGeometry.prism[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.prism[count].applyMatrix4( suica.orientation.MATRIX );
 		}
 		
-		return Prism.frameGeometry[count];
+		return suica._.frameGeometry.prism[count];
 	} // Prism.getFrameGeometry
 
 

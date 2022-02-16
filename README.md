@@ -26,11 +26,6 @@ Suica is licensed under **GPL-3.0**.
 - [Reference guide](docs/reference-guide.md)
 - [List of examples](docs/examples.md)
 
-_**Note.** Three.js and other libraries are included in this repository to safeguard
-against incompatibilities with future versions. They are not a part of Suica._
-
-
-
 ---
 
 February, 2022

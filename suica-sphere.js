@@ -24,20 +24,20 @@
 
 class Sphere extends Mesh
 {
-	static solidGeometry;
-	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'sphere', center, size, color );
 		
-		if( !Sphere.solidGeometry )
+		suica._.solidGeometry.sphere = null; // array of geometries for different number of sides
+
+		if( !suica._.solidGeometry.sphere )
 		{
-			Sphere.solidGeometry = new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) );
+			suica._.solidGeometry.sphere = suica.flipNormal( new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) ).applyMatrix4( suica.orientation.MATRIX ) );
 		}
 		
 		super( suica, 
-			new THREE.Mesh( Sphere.solidGeometry, Mesh.solidMaterial.clone() ),
+			new THREE.Mesh( suica._.solidGeometry.sphere, Mesh.solidMaterial.clone() ),
 			null, // no wireframe
 		);
 		

@@ -26,9 +26,6 @@
 
 class Pyramid extends Mesh
 {
-	static solidGeometry = []; // array of geometries for different number of sides
-	static frameGeometry = []; // array of geometries for different number of sides
-	
 	constructor( suica, count, center, size, color, flatShading )
 	{
 		suica.parser?.parseTags();
@@ -37,9 +34,12 @@ class Pyramid extends Mesh
 		else
 			suica.debugCall( 'cone', center, size, color );
 	
+		suica._.solidGeometry.pyramid = []; // array of geometries for different number of sides
+		suica._.frameGeometry.pyramid = []; // array of geometries for different number of sides
+	
 		super( suica, 
-			new THREE.Mesh( Pyramid.getSolidGeometry(count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
-			new THREE.LineSegments( Pyramid.getFrameGeometry(count), Mesh.lineMaterial.clone() ),
+			new THREE.Mesh( Pyramid.getSolidGeometry(suica,count), flatShading ? Mesh.flatMaterial.clone() : Mesh.solidMaterial.clone() ),
+			new THREE.LineSegments( Pyramid.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
 		this.center = center;
@@ -47,7 +47,7 @@ class Pyramid extends Mesh
 		this.size = size;
 		this.n = count;
 		this.flatShading = flatShading;
-	
+
 	} // Pyramid.constructor
 
 
@@ -65,27 +65,29 @@ class Pyramid extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		this.solidMesh.geometry = Pyramid.getSolidGeometry( count );
-		this.frameMesh.geometry = Pyramid.getFrameGeometry( count );
+		this.solidMesh.geometry = Pyramid.getSolidGeometry( this.suica, count );
+		this.frameMesh.geometry = Pyramid.getFrameGeometry( this.suica, count );
 		
 		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
 	
 	
-	static getSolidGeometry( count )
+	static getSolidGeometry( suica, count )
 	{
-		if( !Pyramid.solidGeometry[count] )
-			Pyramid.solidGeometry[count] = new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0);
+		if( !suica._.solidGeometry.pyramid[count] )
+		{
+			suica._.solidGeometry.pyramid[count] = suica.flipNormal( new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
+		}
 		
-		return Pyramid.solidGeometry[count];
+		return suica._.solidGeometry.pyramid[count];
 	} // Pyramid.getSolidGeometry
 
 
-	static getFrameGeometry( count )
+	static getFrameGeometry( suica, count )
 	{
-		if( !Pyramid.frameGeometry[count] )
+		if( !suica._.frameGeometry.pyramid[count] )
 		{
-			Pyramid.frameGeometry[count] = new THREE.BufferGeometry();
+			suica._.frameGeometry.pyramid[count] = new THREE.BufferGeometry();
 
 			// count segments at bottom and at sides
 			// 2 vertices for each segment, 3 numbers for each vertex; uvs has 2 numbers per vertex
@@ -140,11 +142,12 @@ class Pyramid extends Mesh
 				uvs[8*i+4] = 0;
 				uvs[8*i+6] = 1;
 			}
-			Pyramid.frameGeometry[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
-			Pyramid.frameGeometry[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.pyramid[count].setAttribute( 'position', new THREE.BufferAttribute(vertices,3) );
+			suica._.frameGeometry.pyramid[count].setAttribute( 'uv', new THREE.BufferAttribute(uvs,2) );
+			suica._.frameGeometry.pyramid[count].applyMatrix4( suica.orientation.MATRIX );
 		}
 		
-		return Pyramid.frameGeometry[count];
+		return suica._.frameGeometry.pyramid[count];
 	} // Pyramid.getFrameGeometry
 
 
