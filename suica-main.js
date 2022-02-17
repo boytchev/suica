@@ -2,7 +2,7 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="...">
+//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="..." stereo="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
@@ -74,7 +74,7 @@
 //	2.-1.20 (220215) added style
 //	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
 //	2.-1.22 (220217) perspective and orthographic
-//	2.-1.23 (220217) anaglyph
+//	2.-1.23 (220217) anaglyph and stereo
 //
 //===================================================
 
@@ -156,6 +156,7 @@ class Suica
 	// default values for Suica commands
 	static DEFAULT = {
 		ANAGLYPH: { DISTANCE: 5 },
+		STEREO: { DISTANCE: 1 },
 		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
 		ORTHOGRAPHIC: { NEAR: 0, FAR: 1000 },
 		BACKGROUND: { COLOR: 'whitesmoke' },
@@ -321,6 +322,15 @@ class Suica
 
 			this.anaglyph( ... values );
 		}
+		else
+		if( this.suicaTag.hasAttribute('STEREO') )
+		{
+			// stereo camera
+			let values = this.suicaTag.getAttribute('STEREO').replaceAll(' ','');
+				values = values ? values.split(',').map(Number) : [];
+
+			this.stereo( ... values );
+		}
 
 
 		// default light
@@ -403,7 +413,19 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'anaglyph', distance );
 		
+		this.uberRenderer?.dispose();
 		this.uberRenderer = new AnaglyphEffect( this, distance );
+		//effect.setSize( window.innerWidth, window.innerHeight );
+	}
+	
+	
+	stereo( distance = Suica.DEFAULT.STEREO.DISTANCE )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'stereo', distance );
+		
+		this.uberRenderer?.dispose();
+		this.uberRenderer = new StereoEffect( this, distance );
 		//effect.setSize( window.innerWidth, window.innerHeight );
 	}
 	

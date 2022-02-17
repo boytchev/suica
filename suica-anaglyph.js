@@ -1,7 +1,15 @@
 //
-// Suica 2.0 Anaglyph Effect
+// Suica 2.0 Anaglyph and Stereo Effect
 //
-// Massively based on Three.js' AnaglyphEffect.js
+// Massively based on Three.js' AnaglyphEffect.js and StereoEffect.js
+//
+// AnaglyphEffect (suica, distance );
+//		setSize( width, height )
+//		dispose( );
+//
+// StereoEffect (suica, distance );
+//		setSize( width, height )
+//		dispose( );
 //
 //===================================================
 
@@ -29,23 +37,23 @@ class AnaglyphEffect
 			0,0,1,	// blue out
 		] );
 
-		var _camera = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 ),
-			_scene = new THREE.Scene(),
-			_stereo = new THREE.StereoCamera();
+		this.camera = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 );
+		this.scene = new THREE.Scene();
+		this.stereo = new THREE.StereoCamera();
 
-		var _params = {
+		var params = {
 			minFilter: THREE.LinearFilter,
 			magFilter: THREE.NearestFilter,
 			format: THREE.RGBAFormat
 		};
 
-		var _renderTargetL = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, _params ),
-			_renderTargetR = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, _params );
+		this.renderTargetL = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, params );
+		this.renderTargetR = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, params );
 
-		var _material = new THREE.ShaderMaterial( {
+		this.material = new THREE.ShaderMaterial( {
 			uniforms: {
-				'mapLeft': {value: _renderTargetL.texture},
-				'mapRight': {value: _renderTargetR.texture},
+				'mapLeft': {value: this.renderTargetL.texture},
+				'mapRight': {value: this.renderTargetR.texture},
 				'colorMatrixLeft': {value: this.colorMatrixLeft},
 				'colorMatrixRight': {value: this.colorMatrixRight}
 			},
@@ -87,50 +95,109 @@ class AnaglyphEffect
 				}`
 		} );
 
-		var _mesh = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), _material );
+		this.mesh = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), this.material );
 
-		_scene.add( _mesh );
-
-		this.setSize = function ( width, height ) {
-
-			this.suica.renderer.setSize( width, height );
-			const pixelRatio = this.suica.renderer.getPixelRatio();
-
-			_renderTargetL.setSize( width * pixelRatio, height * pixelRatio );
-
-			_renderTargetR.setSize( width * pixelRatio, height * pixelRatio );
-
-		};
-
-		this.render = function ( scene, camera ) {
-
-			const currentRenderTarget = this.suica.renderer.getRenderTarget();
-			scene.updateMatrixWorld();
-			if ( camera.parent === null ) camera.updateMatrixWorld();
-
-			_stereo.update( camera );
-
-			this.suica.renderer.setRenderTarget( _renderTargetL );
-			this.suica.renderer.clear();
-			this.suica.renderer.render( scene, _stereo.cameraL );
-			this.suica.renderer.setRenderTarget( _renderTargetR );
-			this.suica.renderer.clear();
-			this.suica.renderer.render( scene, _stereo.cameraR );
-			this.suica.renderer.setRenderTarget( null );
-			this.suica.renderer.render( _scene, _camera );
-			this.suica.renderer.setRenderTarget( currentRenderTarget );
-
-		};
-
-		this.dispose = function () {
-
-			_renderTargetL.dispose();
-			_renderTargetR.dispose();
-			_mesh.geometry.dispose();
-			_material.dispose();
-
-		};
+		this.scene.add( this.mesh );
 
 	} // AnaglyphEffect.constructor
 
+
+	setSize( width, height )
+	{
+		this.suica.renderer.setSize( width, height );
+		
+		var pixelRatio = this.suica.renderer.getPixelRatio();
+
+		this.renderTargetL.setSize( width * pixelRatio, height * pixelRatio );
+		this.renderTargetR.setSize( width * pixelRatio, height * pixelRatio );
+
+	}; // AnaglyphEffect.setSize
+
+
+	render( scene, camera )
+	{
+
+		var currentRenderTarget = this.suica.renderer.getRenderTarget();
+		
+		scene.updateMatrixWorld();
+	
+		if ( camera.parent === null ) camera.updateMatrixWorld();
+
+		this.stereo.update( camera );
+
+		this.suica.renderer.setRenderTarget( this.renderTargetL );
+		this.suica.renderer.clear();
+		this.suica.renderer.render( scene, this.stereo.cameraL );
+		this.suica.renderer.setRenderTarget( this.renderTargetR );
+		this.suica.renderer.clear();
+		this.suica.renderer.render( scene, this.stereo.cameraR );
+		this.suica.renderer.setRenderTarget( null );
+		this.suica.renderer.render( this.scene, this.camera );
+		this.suica.renderer.setRenderTarget( currentRenderTarget );
+
+	}; // AnaglyphEffect.render
+
+
+	dispose()
+	{
+		this.renderTargetL.dispose();
+		this.renderTargetR.dispose();
+		this.mesh.geometry.dispose();
+		this.material.dispose();
+
+	}; // AnaglyphEffect.dispose
+	
 } // class AnaglyphEffect
+
+
+
+
+class StereoEffect
+{
+
+	constructor( suica, distance )
+	{
+		this.suica = suica;
+		
+		this.stereo = new THREE.StereoCamera();
+		this.stereo.aspect = 0.5;
+		this.stereo.eyeSep = distance;
+		
+		this.size = new THREE.Vector2();
+
+	} // StereoEffect.constructor
+
+
+	setSize( width, height )
+	{
+		this.suica.renderer.setSize( width, height );
+		
+	} // StereoEffect.setSize
+
+
+	render( scene, camera )
+	{
+		scene.updateMatrixWorld();
+		if ( camera.parent === null ) camera.updateMatrixWorld();
+
+		this.stereo.update( camera );
+
+		this.suica.renderer.getSize( this.size );
+		if ( this.suica.renderer.autoClear ) this.suica.renderer.clear();
+		this.suica.renderer.setScissorTest( true );
+		this.suica.renderer.setScissor( 0, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.setViewport( 0, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.render( scene, this.stereo.cameraL );
+		this.suica.renderer.setScissor( this.size.width / 2, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.setViewport( this.size.width / 2, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.render( scene, this.stereo.cameraR );
+		this.suica.renderer.setScissorTest( false );
+
+	}; // StereoEffect.render
+
+
+	dispose()
+	{		
+	}; // StereoEffect.dispose
+	
+} // class StereoEffect

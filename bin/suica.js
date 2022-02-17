@@ -3,7 +3,7 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="...">
+//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="..." stereo="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
@@ -75,7 +75,7 @@
 //	2.-1.20 (220215) added style
 //	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
 //	2.-1.22 (220217) perspective and orthographic
-//	2.-1.23 (220217) anaglyph
+//	2.-1.23 (220217) anaglyph and stereo
 //
 //===================================================
 
@@ -157,6 +157,7 @@ class Suica
 	// default values for Suica commands
 	static DEFAULT = {
 		ANAGLYPH: { DISTANCE: 5 },
+		STEREO: { DISTANCE: 1 },
 		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
 		ORTHOGRAPHIC: { NEAR: 0, FAR: 1000 },
 		BACKGROUND: { COLOR: 'whitesmoke' },
@@ -322,6 +323,15 @@ class Suica
 
 			this.anaglyph( ... values );
 		}
+		else
+		if( this.suicaTag.hasAttribute('STEREO') )
+		{
+			// stereo camera
+			let values = this.suicaTag.getAttribute('STEREO').replaceAll(' ','');
+				values = values ? values.split(',').map(Number) : [];
+
+			this.stereo( ... values );
+		}
 
 
 		// default light
@@ -404,7 +414,19 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'anaglyph', distance );
 		
+		this.uberRenderer?.dispose();
 		this.uberRenderer = new AnaglyphEffect( this, distance );
+		//effect.setSize( window.innerWidth, window.innerHeight );
+	}
+	
+	
+	stereo( distance = Suica.DEFAULT.STEREO.DISTANCE )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'stereo', distance );
+		
+		this.uberRenderer?.dispose();
+		this.uberRenderer = new StereoEffect( this, distance );
 		//effect.setSize( window.innerWidth, window.innerHeight );
 	}
 	
@@ -886,9 +908,17 @@ window.addEventListener( 'load', function()
 			suica.parser?.parseTags();
 	}
 );//
-// Suica 2.0 Anaglyph Effect
+// Suica 2.0 Anaglyph and Stereo Effect
 //
-// Massively based on Three.js' AnaglyphEffect.js
+// Massively based on Three.js' AnaglyphEffect.js and StereoEffect.js
+//
+// AnaglyphEffect (suica, distance );
+//		setSize( width, height )
+//		dispose( );
+//
+// StereoEffect (suica, distance );
+//		setSize( width, height )
+//		dispose( );
 //
 //===================================================
 
@@ -916,23 +946,23 @@ class AnaglyphEffect
 			0,0,1,	// blue out
 		] );
 
-		var _camera = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 ),
-			_scene = new THREE.Scene(),
-			_stereo = new THREE.StereoCamera();
+		this.camera = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 );
+		this.scene = new THREE.Scene();
+		this.stereo = new THREE.StereoCamera();
 
-		var _params = {
+		var params = {
 			minFilter: THREE.LinearFilter,
 			magFilter: THREE.NearestFilter,
 			format: THREE.RGBAFormat
 		};
 
-		var _renderTargetL = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, _params ),
-			_renderTargetR = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, _params );
+		this.renderTargetL = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, params );
+		this.renderTargetR = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, params );
 
-		var _material = new THREE.ShaderMaterial( {
+		this.material = new THREE.ShaderMaterial( {
 			uniforms: {
-				'mapLeft': {value: _renderTargetL.texture},
-				'mapRight': {value: _renderTargetR.texture},
+				'mapLeft': {value: this.renderTargetL.texture},
+				'mapRight': {value: this.renderTargetR.texture},
 				'colorMatrixLeft': {value: this.colorMatrixLeft},
 				'colorMatrixRight': {value: this.colorMatrixRight}
 			},
@@ -974,58 +1004,119 @@ class AnaglyphEffect
 				}`
 		} );
 
-		var _mesh = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), _material );
+		this.mesh = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), this.material );
 
-		_scene.add( _mesh );
-
-		this.setSize = function ( width, height ) {
-
-			this.suica.renderer.setSize( width, height );
-			const pixelRatio = this.suica.renderer.getPixelRatio();
-
-			_renderTargetL.setSize( width * pixelRatio, height * pixelRatio );
-
-			_renderTargetR.setSize( width * pixelRatio, height * pixelRatio );
-
-		};
-
-		this.render = function ( scene, camera ) {
-
-			const currentRenderTarget = this.suica.renderer.getRenderTarget();
-			scene.updateMatrixWorld();
-			if ( camera.parent === null ) camera.updateMatrixWorld();
-
-			_stereo.update( camera );
-
-			this.suica.renderer.setRenderTarget( _renderTargetL );
-			this.suica.renderer.clear();
-			this.suica.renderer.render( scene, _stereo.cameraL );
-			this.suica.renderer.setRenderTarget( _renderTargetR );
-			this.suica.renderer.clear();
-			this.suica.renderer.render( scene, _stereo.cameraR );
-			this.suica.renderer.setRenderTarget( null );
-			this.suica.renderer.render( _scene, _camera );
-			this.suica.renderer.setRenderTarget( currentRenderTarget );
-
-		};
-
-		this.dispose = function () {
-
-			_renderTargetL.dispose();
-			_renderTargetR.dispose();
-			_mesh.geometry.dispose();
-			_material.dispose();
-
-		};
+		this.scene.add( this.mesh );
 
 	} // AnaglyphEffect.constructor
 
-} // class AnaglyphEffect﻿//
+
+	setSize( width, height )
+	{
+		this.suica.renderer.setSize( width, height );
+		
+		var pixelRatio = this.suica.renderer.getPixelRatio();
+
+		this.renderTargetL.setSize( width * pixelRatio, height * pixelRatio );
+		this.renderTargetR.setSize( width * pixelRatio, height * pixelRatio );
+
+	}; // AnaglyphEffect.setSize
+
+
+	render( scene, camera )
+	{
+
+		var currentRenderTarget = this.suica.renderer.getRenderTarget();
+		
+		scene.updateMatrixWorld();
+	
+		if ( camera.parent === null ) camera.updateMatrixWorld();
+
+		this.stereo.update( camera );
+
+		this.suica.renderer.setRenderTarget( this.renderTargetL );
+		this.suica.renderer.clear();
+		this.suica.renderer.render( scene, this.stereo.cameraL );
+		this.suica.renderer.setRenderTarget( this.renderTargetR );
+		this.suica.renderer.clear();
+		this.suica.renderer.render( scene, this.stereo.cameraR );
+		this.suica.renderer.setRenderTarget( null );
+		this.suica.renderer.render( this.scene, this.camera );
+		this.suica.renderer.setRenderTarget( currentRenderTarget );
+
+	}; // AnaglyphEffect.render
+
+
+	dispose()
+	{
+		this.renderTargetL.dispose();
+		this.renderTargetR.dispose();
+		this.mesh.geometry.dispose();
+		this.material.dispose();
+
+	}; // AnaglyphEffect.dispose
+	
+} // class AnaglyphEffect
+
+
+
+
+class StereoEffect
+{
+
+	constructor( suica, distance )
+	{
+		this.suica = suica;
+		
+		this.stereo = new THREE.StereoCamera();
+		this.stereo.aspect = 0.5;
+		this.stereo.eyeSep = distance;
+		
+		this.size = new THREE.Vector2();
+
+	} // StereoEffect.constructor
+
+
+	setSize( width, height )
+	{
+		this.suica.renderer.setSize( width, height );
+		
+	} // StereoEffect.setSize
+
+
+	render( scene, camera )
+	{
+		scene.updateMatrixWorld();
+		if ( camera.parent === null ) camera.updateMatrixWorld();
+
+		this.stereo.update( camera );
+
+		this.suica.renderer.getSize( this.size );
+		if ( this.suica.renderer.autoClear ) this.suica.renderer.clear();
+		this.suica.renderer.setScissorTest( true );
+		this.suica.renderer.setScissor( 0, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.setViewport( 0, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.render( scene, this.stereo.cameraL );
+		this.suica.renderer.setScissor( this.size.width / 2, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.setViewport( this.size.width / 2, 0, this.size.width / 2, this.size.height );
+		this.suica.renderer.render( scene, this.stereo.cameraR );
+		this.suica.renderer.setScissorTest( false );
+
+	}; // StereoEffect.render
+
+
+	dispose()
+	{		
+	}; // StereoEffect.dispose
+	
+} // class StereoEffect
+﻿//
 // Suica 2.0 Parser
 //
 // Parses custom tags inside <suica-canvas>.
 //
-// <anaglyph eyeseparation="...">
+// <anaglyph distance="...">
+// <stereo distance="...">
 // <perspective near="..." far="..." fov="...">
 // <orthographic near="..." far="...">
 // <background color="...">
@@ -1063,6 +1154,7 @@ class HTMLParser
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
+		this.parseTag.STEREO = this.parseTagSTEREO;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
@@ -1160,6 +1252,15 @@ class HTMLParser
 			elem.getAttribute('distance') || Suica.DEFAULT.ANAGLYPH.DISTANCE
 		);
 	} // HTMLParser.parseTagANAGLYPH
+	
+	
+	// <stereo distance="...">
+	parseTagSTEREO( suica, elem )
+	{
+		suica.stereo(
+			elem.getAttribute('distance') || Suica.DEFAULT.STEREO.DISTANCE
+		);
+	} // HTMLParser.parseTagSTEREO
 	
 	
 	// <perspective fov="..." near="..." far="...">

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Orthographic camera</title>
+	<title>Stereo camera &ndash; wall-eyed viewing</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,16 +18,30 @@
 
 <body>
 
-	<h1>Orthographic camera</h1>
-	<p>Setting orthographic camera projection.</p>
+	<h1>Stereo camera &ndash; wall-eyed viewing</h1>
+	<p>Setting stereo camera for wall-eyed (parallel) viewing.</p>
 
-	<suica orthographic="1,1000">
-		<demo distance="200" altitude="60">
-		<cube x="135"  size="120" color="dimgray">
-		<cube x="-135" size="120" color="linen">
-		<cube z="135"  size="120" color="lightsalmon">
-		<cube z="-135" size="120" color="peachpuff">
+	<suica stereo>
 	</suica>
-
+	
+	<script>
+		var cubes = [];
+		var grid = 5;
+		
+		for( var x = -3; x<=3; x++ )
+		for( var y = -3; y<=3; y++ )
+		{
+			cubes.push( cube( [grid*x,grid*y,0], grid-1, random(['dimgray','linen','lightsalmon','peachpuff']) ) );
+		}
+		
+		onTime( loop );
+		
+		function loop( t )
+		{
+			for( var i=0; i<cubes.length; i++ )
+				cubes[i].depth = grid + 40 + 60*Math.sin( 5*t+i*i );
+		}
+	</script>
+	
 </body>
 </html>

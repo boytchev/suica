@@ -3,7 +3,8 @@
 //
 // Parses custom tags inside <suica-canvas>.
 //
-// <anaglyph eyeseparation="...">
+// <anaglyph distance="...">
+// <stereo distance="...">
 // <perspective near="..." far="..." fov="...">
 // <orthographic near="..." far="...">
 // <background color="...">
@@ -41,6 +42,7 @@ class HTMLParser
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
+		this.parseTag.STEREO = this.parseTagSTEREO;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
@@ -138,6 +140,15 @@ class HTMLParser
 			elem.getAttribute('distance') || Suica.DEFAULT.ANAGLYPH.DISTANCE
 		);
 	} // HTMLParser.parseTagANAGLYPH
+	
+	
+	// <stereo distance="...">
+	parseTagSTEREO( suica, elem )
+	{
+		suica.stereo(
+			elem.getAttribute('distance') || Suica.DEFAULT.STEREO.DISTANCE
+		);
+	} // HTMLParser.parseTagSTEREO
 	
 	
 	// <perspective fov="..." near="..." far="...">

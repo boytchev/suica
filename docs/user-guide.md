@@ -121,7 +121,7 @@ background( 'linen' );
 
 ### Camera projection
 
-#### Perspective camera projection
+#### Perspective camera
 
 Property and command. Sets a perspective camera projection. Objects further
 away appear smaller. The perspective is defined by three numbers &ndash; *near*
@@ -154,7 +154,7 @@ perspective( 1, 1000, 40 );
 
 
 
-#### Orthographic camera projection
+#### Orthographic camera
 
 Property and command. Sets an orthographic camera projection. Objects do not
 change their visual size depending on how close or distant they are. The
@@ -181,7 +181,7 @@ orthographic( 0, 1000 );
 
 
 
-#### Anaglyph camera projection
+#### Anaglyph camera
 
 Property and command. Sets an [anaglyph](https://en.wikipedia.org/wiki/Anaglyph_3D)
 camera projection. The scene is projected twice with different colors, suited for
@@ -201,6 +201,37 @@ anaglyph( 5 );
 ```
 
 [<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
+
+
+
+#### Stereo camera
+
+Property and command. Sets a stereo camera projection. The scene is projected
+twice &ndash; side-by-side, once for each of the eyes. The stereo effect is
+controlled by *distance* parameter, which determines the simulated distance
+between the eyes. By default it is 5. Values closer to 0 will decrease the
+stereo effect.
+
+Both positive and negative distances are allowed. Positive distances correspond
+to wall-eyed viewing or vewing with a smartphone and low-end stereoscopic
+glasses. Negative distances swap left and right images and correspond to
+cross-eyed viewing.
+
+```html
+HTML:
+<suica stereo>
+<suica stereo="1">
+<suica stereo="-1">
+```
+```js
+JS:
+stereo( );
+stereo( 1 ); // wall-eyed
+stereo( -1 ); // cross-eyed
+```
+
+[<kbd><img src="../examples/snapshots/camera-stereo-wall-eyed.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-wall-eyed.html)
+[<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-cross-eyed.html)
 
 
 
