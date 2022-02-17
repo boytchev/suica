@@ -3,7 +3,7 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="...">
+//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
@@ -17,10 +17,8 @@
 //		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cylinder ...>
 //		<prism ...>
-//		<prismFrame ...>
 //		<cone ...>
 //		<pyramid ...>
-//		<pyramidFrame ...>
 //	</suica>
 //
 //	<script>
@@ -37,10 +35,8 @@
 //		{suica.}sphere( center, size, color )
 //		{suica.}cylinder( center, size, color )
 //		{suica.}prism( count, center, size, color )
-//		{suica.}prismFrame( count, center, size, color )
 //		{suica.}cone( center, size, color )
 //		{suica.}pyramid( count, center, size, color )
-//		{suica.}pyramidFrame( count, center, size, color )
 //		
 //		style( object, style )
 //
@@ -79,12 +75,13 @@
 //	2.-1.20 (220215) added style
 //	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
 //	2.-1.22 (220217) perspective and orthographic
+//	2.-1.23 (220217) anaglyph
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.22 (220217)` );
+console.log( `Suica 2.-1.23 (220217)` );
 
 
 // control flags
@@ -159,6 +156,7 @@ class Suica
 	
 	// default values for Suica commands
 	static DEFAULT = {
+		ANAGLYPH: { DISTANCE: 5 },
 		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
 		ORTHOGRAPHIC: { NEAR: 0, FAR: 1000 },
 		BACKGROUND: { COLOR: 'whitesmoke' },
@@ -188,7 +186,6 @@ class Suica
 			solidGeometry:{},
 			frameGeometry:{},
 		};
-		
 		
 		// fix styling of <suica>
 		suicaTag.style.display = 'inline-block';
@@ -259,7 +256,10 @@ class Suica
 	// render the current scene
 	render( )
 	{
-		this.renderer.render( this.scene, this.camera );
+		if( this.uberRenderer )
+			this.uberRenderer.render( this.scene, this.camera );
+		else
+			this.renderer.render( this.scene, this.camera );
 		
 	} // Suica.render
 	
@@ -274,6 +274,9 @@ class Suica
 							antialias: true
 						} );
 
+		// renderer with effects; if set, it is used instead of the normal renderer
+		this.uberRenderer = null;
+		
 		// scene with background from <suica>'s CSS
 		this.scene = new THREE.Scene();
 		
@@ -295,13 +298,6 @@ class Suica
 				values = values ? values.split(',').map(Number) : [];
 				
 			this.perspective( ... values );
-			/* switch( values.length )
-			{
-				case 0: this.perspective(); break;
-				case 1: this.perspective( values[0] ); break;
-				case 2: this.perspective( values[0], values[1] ); break;
-				default: this.perspective( values[0], values[1], values[2] ); break;
-			} */
 		}
 		else
 		if( this.suicaTag.hasAttribute('ORTHOGRAPHIC') )
@@ -310,17 +306,21 @@ class Suica
 			let values = this.suicaTag.getAttribute('ORTHOGRAPHIC').replaceAll(' ','');
 				values = values ? values.split(',').map(Number) : [];
 			this.orthographic( ...values );
-			/* switch( values.length )
-			{
-				case 0: this.orthographic(); break;
-				case 1: this.orthographic( values[0] ); break;
-				default: this.orthographic( values[0], values[1] ); break;
-			} */
 		}
 		else
 		{
 			// default perspective camera
 			this.perspective();
+		}
+
+
+		if( this.suicaTag.hasAttribute('ANAGLYPH') )
+		{
+			// anaglyph camera
+			let values = this.suicaTag.getAttribute('ANAGLYPH').replaceAll(' ','');
+				values = values ? values.split(',').map(Number) : [];
+
+			this.anaglyph( ... values );
 		}
 
 
@@ -398,6 +398,15 @@ class Suica
 	} // Suica.createRenderer
 
 
+	
+	anaglyph( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'anaglyph', distance );
+		
+		this.uberRenderer = new AnaglyphEffect( this, distance );
+		//effect.setSize( window.innerWidth, window.innerHeight );
+	}
 	
 	
 	perspective( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
@@ -753,67 +762,66 @@ class Suica
 } // class Suica
 
 
-
-function style( object, properties )
+window.style = function( object, properties )
 {
 	for( var n in properties ) object[n] = properties[n];
 }
 
-function perspective( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
+window.perspective = function( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
 {
 	Suica.precheck();
 	Suica.current.perspective( near, far, fov );
 }
 	
-function orthographic( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
+window.orthographic = function( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
 {
 	Suica.precheck();
 	Suica.current.orthographic( near, far );
 }
 
-function background( color=Suica.DEFAULT.BACKGROUND.COLOR )
+window.background = function( color=Suica.DEFAULT.BACKGROUND.COLOR )
 {
 	Suica.precheck();
 	Suica.current.background( color );
 }
 
-function oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
+window.oxyz = function( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 {
 	Suica.precheck();
 	Suica.current.oxyz( size, color );
 }
 
-function demo ( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
+window.demo = function( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
 {
 	Suica.precheck();
 	Suica.current.demo( distance, altitude );
 }
 
-function onTime( src=Suica.DEFAULT.ONTIME.SRC )
+window.onTime = function( src=Suica.DEFAULT.ONTIME.SRC )
 {
 	Suica.precheck();
 	Suica.current.onTime( src );
 }
 
-function element ( id )
+window.element = function( id )
 {
 	return document.getElementById( id );
 }
 
 
-function rgb( r, g, b )
+window.rgb = function( r, g, b )
 {
 	return new THREE.Color( r/255, g/255, b/255 );
 }
 
 
-function hsl( h, s, l )
+window.hsl = function( h, s, l )
 {
 	return new THREE.Color( ).setHSL( h/360, s/100, l/100 );
 }
 
 
-function random( a=0, b=1 )
+window.random = function( a=0, b=1 )
 {
 	if( Array.isArray(a) )
 	{
@@ -824,25 +832,24 @@ function random( a=0, b=1 )
 }
 
 
-function radians( degrees )
+window.radians = function( degrees )
 {
 	return degrees * Math.PI/180;
 }
 
 
-function degrees( radians )
+window.degrees = function( radians )
 {
 	return radians * 180/Math.PI;
 }
 
-function sameAs( object )
+window.sameAs = function( object )
 {
 	if( object.clone )
 		return object.clone();
 	else
 		throw 'error: cannot clone object';
 }
-
 
 
 // monitor creation of tags, we are interested in creation of
@@ -878,11 +885,147 @@ window.addEventListener( 'load', function()
 		for( var suica of Suica.allSuicas )
 			suica.parser?.parseTags();
 	}
-);﻿//
+);//
+// Suica 2.0 Anaglyph Effect
+//
+// Massively based on Three.js' AnaglyphEffect.js
+//
+//===================================================
+
+
+class AnaglyphEffect
+{
+
+	constructor( suica, distance )
+	{
+		this.suica = suica;
+		
+		this.suica.camera.focus = distance;
+		
+		this.colorMatrixLeft = new THREE.Matrix3().fromArray( [
+			//red in    green in    blue in
+			1,0,0,	// red out
+			0,0,0, 	// green out
+			0,0,0,	// blue out
+		] );
+
+		this.colorMatrixRight = new THREE.Matrix3().fromArray( [
+			//red in    green in    blue in
+			0,0,0,	// red out
+			0,1,0,	// green out
+			0,0,1,	// blue out
+		] );
+
+		var _camera = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 ),
+			_scene = new THREE.Scene(),
+			_stereo = new THREE.StereoCamera();
+
+		var _params = {
+			minFilter: THREE.LinearFilter,
+			magFilter: THREE.NearestFilter,
+			format: THREE.RGBAFormat
+		};
+
+		var _renderTargetL = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, _params ),
+			_renderTargetR = new THREE.WebGLRenderTarget( this.suica.canvas.width, this.suica.canvas.height, _params );
+
+		var _material = new THREE.ShaderMaterial( {
+			uniforms: {
+				'mapLeft': {value: _renderTargetL.texture},
+				'mapRight': {value: _renderTargetR.texture},
+				'colorMatrixLeft': {value: this.colorMatrixLeft},
+				'colorMatrixRight': {value: this.colorMatrixRight}
+			},
+			vertexShader: `
+				varying vec2 vUv;
+				void main()
+				{
+					vUv = vec2( uv.x, uv.y );
+					gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+				}`,
+			fragmentShader: `
+				uniform sampler2D mapLeft;
+				uniform sampler2D mapRight;
+				varying vec2 vUv;
+				uniform mat3 colorMatrixLeft;
+				uniform mat3 colorMatrixRight;
+				
+				// These functions implement sRGB linearization and gamma correction
+				float lin( float c )
+				{
+					return c<=0.04045 ? c*0.0773993808 : pow( c*0.9478672986+0.0521327014, 2.4 );
+				}
+				vec4 lin( vec4 c )
+				{
+					return vec4( lin( c.r ), lin( c.g ), lin( c.b ), c.a );
+				}
+				float dev( float c )
+				{
+					return c<=0.0031308 ? c*12.92 : pow( c, 0.41666 ) * 1.055 - 0.055;
+				}
+				
+				void main()
+				{
+					vec2 uv = vUv;
+					vec4 colorL = lin( texture2D( mapLeft, uv ) );
+					vec4 colorR = lin( texture2D( mapRight, uv ) );
+					vec3 color = clamp( colorMatrixLeft * colorL.rgb + colorMatrixRight * colorR.rgb, 0., 1. );
+					gl_FragColor = vec4( dev( color.r ), dev( color.g ), dev( color.b ), max( colorL.a, colorR.a ) );
+				}`
+		} );
+
+		var _mesh = new THREE.Mesh( new THREE.PlaneGeometry( 2, 2 ), _material );
+
+		_scene.add( _mesh );
+
+		this.setSize = function ( width, height ) {
+
+			this.suica.renderer.setSize( width, height );
+			const pixelRatio = this.suica.renderer.getPixelRatio();
+
+			_renderTargetL.setSize( width * pixelRatio, height * pixelRatio );
+
+			_renderTargetR.setSize( width * pixelRatio, height * pixelRatio );
+
+		};
+
+		this.render = function ( scene, camera ) {
+
+			const currentRenderTarget = this.suica.renderer.getRenderTarget();
+			scene.updateMatrixWorld();
+			if ( camera.parent === null ) camera.updateMatrixWorld();
+
+			_stereo.update( camera );
+
+			this.suica.renderer.setRenderTarget( _renderTargetL );
+			this.suica.renderer.clear();
+			this.suica.renderer.render( scene, _stereo.cameraL );
+			this.suica.renderer.setRenderTarget( _renderTargetR );
+			this.suica.renderer.clear();
+			this.suica.renderer.render( scene, _stereo.cameraR );
+			this.suica.renderer.setRenderTarget( null );
+			this.suica.renderer.render( _scene, _camera );
+			this.suica.renderer.setRenderTarget( currentRenderTarget );
+
+		};
+
+		this.dispose = function () {
+
+			if ( _renderTargetL ) _renderTargetL.dispose();
+			if ( _renderTargetR ) _renderTargetR.dispose();
+			if ( _mesh ) _mesh.geometry.dispose();
+			if ( _material ) _material.dispose();
+
+		};
+
+	} // AnaglyphEffect.constructor
+
+} // class AnaglyphEffect﻿//
 // Suica 2.0 Parser
 //
 // Parses custom tags inside <suica-canvas>.
 //
+// <anaglyph eyeseparation="...">
 // <perspective near="..." far="..." fov="...">
 // <orthographic near="..." far="...">
 // <background color="...">
@@ -919,6 +1062,7 @@ class HTMLParser
 		this.parseTag = {};
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
+		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
@@ -1007,6 +1151,15 @@ class HTMLParser
 			elem.getAttribute('altitude') || Suica.DEFAULT.DEMO.ALTITUDE
 		);
 	} // HTMLParser.parseTagDEMO
+	
+	
+	// <anaglyph distance="...">
+	parseTagANAGLYPH( suica, elem )
+	{
+		suica.anaglyph(
+			elem.getAttribute('distance') || Suica.DEFAULT.ANAGLYPH.DISTANCE
+		);
+	} // HTMLParser.parseTagANAGLYPH
 	
 	
 	// <perspective fov="..." near="..." far="...">

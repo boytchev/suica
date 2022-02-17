@@ -2,7 +2,7 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="...">
+//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
@@ -16,10 +16,8 @@
 //		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
 //		<cylinder ...>
 //		<prism ...>
-//		<prismFrame ...>
 //		<cone ...>
 //		<pyramid ...>
-//		<pyramidFrame ...>
 //	</suica>
 //
 //	<script>
@@ -36,10 +34,8 @@
 //		{suica.}sphere( center, size, color )
 //		{suica.}cylinder( center, size, color )
 //		{suica.}prism( count, center, size, color )
-//		{suica.}prismFrame( count, center, size, color )
 //		{suica.}cone( center, size, color )
 //		{suica.}pyramid( count, center, size, color )
-//		{suica.}pyramidFrame( count, center, size, color )
 //		
 //		style( object, style )
 //
@@ -78,12 +74,13 @@
 //	2.-1.20 (220215) added style
 //	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
 //	2.-1.22 (220217) perspective and orthographic
+//	2.-1.23 (220217) anaglyph
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.22 (220217)` );
+console.log( `Suica 2.-1.23 (220217)` );
 
 
 // control flags
@@ -158,6 +155,7 @@ class Suica
 	
 	// default values for Suica commands
 	static DEFAULT = {
+		ANAGLYPH: { DISTANCE: 5 },
 		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
 		ORTHOGRAPHIC: { NEAR: 0, FAR: 1000 },
 		BACKGROUND: { COLOR: 'whitesmoke' },
@@ -187,7 +185,6 @@ class Suica
 			solidGeometry:{},
 			frameGeometry:{},
 		};
-		
 		
 		// fix styling of <suica>
 		suicaTag.style.display = 'inline-block';
@@ -258,7 +255,10 @@ class Suica
 	// render the current scene
 	render( )
 	{
-		this.renderer.render( this.scene, this.camera );
+		if( this.uberRenderer )
+			this.uberRenderer.render( this.scene, this.camera );
+		else
+			this.renderer.render( this.scene, this.camera );
 		
 	} // Suica.render
 	
@@ -273,6 +273,9 @@ class Suica
 							antialias: true
 						} );
 
+		// renderer with effects; if set, it is used instead of the normal renderer
+		this.uberRenderer = null;
+		
 		// scene with background from <suica>'s CSS
 		this.scene = new THREE.Scene();
 		
@@ -294,13 +297,6 @@ class Suica
 				values = values ? values.split(',').map(Number) : [];
 				
 			this.perspective( ... values );
-			/* switch( values.length )
-			{
-				case 0: this.perspective(); break;
-				case 1: this.perspective( values[0] ); break;
-				case 2: this.perspective( values[0], values[1] ); break;
-				default: this.perspective( values[0], values[1], values[2] ); break;
-			} */
 		}
 		else
 		if( this.suicaTag.hasAttribute('ORTHOGRAPHIC') )
@@ -309,17 +305,21 @@ class Suica
 			let values = this.suicaTag.getAttribute('ORTHOGRAPHIC').replaceAll(' ','');
 				values = values ? values.split(',').map(Number) : [];
 			this.orthographic( ...values );
-			/* switch( values.length )
-			{
-				case 0: this.orthographic(); break;
-				case 1: this.orthographic( values[0] ); break;
-				default: this.orthographic( values[0], values[1] ); break;
-			} */
 		}
 		else
 		{
 			// default perspective camera
 			this.perspective();
+		}
+
+
+		if( this.suicaTag.hasAttribute('ANAGLYPH') )
+		{
+			// anaglyph camera
+			let values = this.suicaTag.getAttribute('ANAGLYPH').replaceAll(' ','');
+				values = values ? values.split(',').map(Number) : [];
+
+			this.anaglyph( ... values );
 		}
 
 
@@ -397,6 +397,15 @@ class Suica
 	} // Suica.createRenderer
 
 
+	
+	anaglyph( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'anaglyph', distance );
+		
+		this.uberRenderer = new AnaglyphEffect( this, distance );
+		//effect.setSize( window.innerWidth, window.innerHeight );
+	}
 	
 	
 	perspective( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
@@ -752,67 +761,66 @@ class Suica
 } // class Suica
 
 
-
-function style( object, properties )
+window.style = function( object, properties )
 {
 	for( var n in properties ) object[n] = properties[n];
 }
 
-function perspective( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
+window.perspective = function( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
 {
 	Suica.precheck();
 	Suica.current.perspective( near, far, fov );
 }
 	
-function orthographic( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
+window.orthographic = function( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
 {
 	Suica.precheck();
 	Suica.current.orthographic( near, far );
 }
 
-function background( color=Suica.DEFAULT.BACKGROUND.COLOR )
+window.background = function( color=Suica.DEFAULT.BACKGROUND.COLOR )
 {
 	Suica.precheck();
 	Suica.current.background( color );
 }
 
-function oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
+window.oxyz = function( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 {
 	Suica.precheck();
 	Suica.current.oxyz( size, color );
 }
 
-function demo ( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
+window.demo = function( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
 {
 	Suica.precheck();
 	Suica.current.demo( distance, altitude );
 }
 
-function onTime( src=Suica.DEFAULT.ONTIME.SRC )
+window.onTime = function( src=Suica.DEFAULT.ONTIME.SRC )
 {
 	Suica.precheck();
 	Suica.current.onTime( src );
 }
 
-function element ( id )
+window.element = function( id )
 {
 	return document.getElementById( id );
 }
 
 
-function rgb( r, g, b )
+window.rgb = function( r, g, b )
 {
 	return new THREE.Color( r/255, g/255, b/255 );
 }
 
 
-function hsl( h, s, l )
+window.hsl = function( h, s, l )
 {
 	return new THREE.Color( ).setHSL( h/360, s/100, l/100 );
 }
 
 
-function random( a=0, b=1 )
+window.random = function( a=0, b=1 )
 {
 	if( Array.isArray(a) )
 	{
@@ -823,25 +831,24 @@ function random( a=0, b=1 )
 }
 
 
-function radians( degrees )
+window.radians = function( degrees )
 {
 	return degrees * Math.PI/180;
 }
 
 
-function degrees( radians )
+window.degrees = function( radians )
 {
 	return radians * 180/Math.PI;
 }
 
-function sameAs( object )
+window.sameAs = function( object )
 {
 	if( object.clone )
 		return object.clone();
 	else
 		throw 'error: cannot clone object';
 }
-
 
 
 // monitor creation of tags, we are interested in creation of

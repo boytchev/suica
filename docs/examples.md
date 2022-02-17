@@ -14,6 +14,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-perspective.html)
 [<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-orthographic.html)
 
+[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
+
 [<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
 [<kbd><img src="../examples/snapshots/oxyz.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
 

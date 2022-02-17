@@ -123,7 +123,7 @@ background( 'linen' );
 
 #### Perspective camera projection
 
-Property and command. Sets a perspective camera projectsion. Objects further
+Property and command. Sets a perspective camera projection. Objects further
 away appear smaller. The perspective is defined by three numbers &ndash; *near*
 distance , *far* distance  and *field of view* angle.
 
@@ -156,7 +156,7 @@ perspective( 1, 1000, 40 );
 
 #### Orthographic camera projection
 
-Property and command. Sets an orthographic camera projectsion. Objects do not
+Property and command. Sets an orthographic camera projection. Objects do not
 change their visual size depending on how close or distant they are. The
 orthographic camera is defined by two numbers &ndash; *near* and *far* distances.
 By default they are 0 and 1000; and rhey define the depth span of the viewing
@@ -178,6 +178,29 @@ orthographic( 0, 1000 );
 ```
 
 [<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-orthographic.html)
+
+
+
+#### Anaglyph camera projection
+
+Property and command. Sets an [anaglyph](https://en.wikipedia.org/wiki/Anaglyph_3D)
+camera projection. The scene is projected twice with different colors, suited for
+red-cyan glasses. The anaglyph effect is controlled by *distance* parameter,
+which determines the focal distance. By default it is 5. Smaller values will
+increase the anaglyphic effect, larger values will decrease it.
+
+```html
+HTML:
+<suica anaglyph>
+<suica anaglyph="5">
+```
+```js
+JS:
+anaglyph( );
+anaglyph( 5 );
+```
+
+[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
 
 
 

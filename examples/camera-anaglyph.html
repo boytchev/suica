@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Anaglyph camera</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Anaglyph camera</h1>
+	<p>Setting anaglyph stereo camera.</p>
+
+	<suica anaglyph>
+	</suica>
+	
+	<script>
+		var cubes = [];
+		var grid = 10;
+		
+		for( var x = -3; x<=3; x++ )
+		for( var y = -3; y<=3; y++ )
+		{
+			cubes.push( cube( [grid*x,grid*y,0], grid-1, random(['dimgray','linen','lightsalmon','peachpuff']) ) );
+		}
+		
+		onTime( loop );
+		
+		function loop( t )
+		{
+			for( var i=0; i<cubes.length; i++ )
+				cubes[i].depth = grid + 40 + 60*Math.sin( 5*t+i*i );
+		}
+	</script>
+	
+</body>
+</html>
