@@ -21,7 +21,8 @@ copy /b bin\suica.js + suica-main.js + suica-parser.js + suica-drawing.js + suic
 rem Create suica.js postfix
 echo } // LoadSuica >> bin\suica.js
 
+misc\jsmin\jsmin <bin\suica.js >bin\suica.min.js "Suica 2.0"
 
 copy bin\three.min.js examples
 copy bin\suica.js examples
-del bin\suica.min.js
+
