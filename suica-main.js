@@ -2,7 +2,7 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." orientation="..." background="...">
+//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="...">
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
@@ -77,12 +77,13 @@
 //	2.-1.19 (220214) added property clone
 //	2.-1.20 (220215) added style
 //	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
+//	2.-1.22 (220217) perspective and orthographic
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.21 (220216)` );
+console.log( `Suica 2.-1.22 (220217)` );
 
 
 // control flags
@@ -112,9 +113,6 @@ class Suica
 	static OX = new THREE.Vector3(1,0,0);
 	static OY = new THREE.Vector3(0,1,0);
 	static OZ = new THREE.Vector3(0,0,1);
-	static NX = new THREE.Vector3(-1,0,0);
-	static NY = new THREE.Vector3(0,-1,0);
-	static NZ = new THREE.Vector3(0,0,-1);
 	static ORIENTATIONS = {
 			YXZ: {	SCALE: new THREE.Vector3(1,-1,1),
 					UP: Suica.OX,
@@ -142,7 +140,7 @@ class Suica
 					UP: Suica.OZ,
 					FLIP_NORMAL: false,
 					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX) },
-		}
+		} // Suica.ORIENTATIONS
 
 
 	flipNormal( geometry )
@@ -155,11 +153,13 @@ class Suica
 		}
 		
 		return geometry;
-	}
+	} // Suica.flipNormal
 	
 	
 	// default values for Suica commands
 	static DEFAULT = {
+		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
+		ORTHOGRAPHIC: { NEAR: 0, FAR: 1000 },
 		BACKGROUND: { COLOR: 'whitesmoke' },
 		ORIENTATION: 'XYZ',
 		SIZE: '30',
@@ -285,11 +285,43 @@ class Suica
 		}
 		this.scene.background = Suica.parseColor( color );
 
-		// default perspective camera
-		this.camera = new THREE.PerspectiveCamera( 40, this.canvasAspect, 1, 1000 );
-		this.camera.up.copy( this.orientation.UP );
-		this.camera.position.set( 0, 0, 100 );
-		this.camera.lookAt( this.scene.position );
+
+		// set camera
+		if( this.suicaTag.hasAttribute('PERSPECTIVE') )
+		{
+			// perspective camera
+			let values = this.suicaTag.getAttribute('PERSPECTIVE').replaceAll(' ','');
+				values = values ? values.split(',').map(Number) : [];
+				
+			this.perspective( ... values );
+			/* switch( values.length )
+			{
+				case 0: this.perspective(); break;
+				case 1: this.perspective( values[0] ); break;
+				case 2: this.perspective( values[0], values[1] ); break;
+				default: this.perspective( values[0], values[1], values[2] ); break;
+			} */
+		}
+		else
+		if( this.suicaTag.hasAttribute('ORTHOGRAPHIC') )
+		{
+			// orthographic camera
+			let values = this.suicaTag.getAttribute('ORTHOGRAPHIC').replaceAll(' ','');
+				values = values ? values.split(',').map(Number) : [];
+			this.orthographic( ...values );
+			/* switch( values.length )
+			{
+				case 0: this.orthographic(); break;
+				case 1: this.orthographic( values[0] ); break;
+				default: this.orthographic( values[0], values[1] ); break;
+			} */
+		}
+		else
+		{
+			// default perspective camera
+			this.perspective();
+		}
+
 
 		// default light
 		this.light = new THREE.PointLight( 'white', 0.5 );
@@ -318,27 +350,27 @@ class Suica
 				{
 					case Suica.ORIENTATIONS.XYZ:
 							that.camera.position.set( x, y, -z );
-							that.light.position.set( x, y, -z );
+							that.light.position.set( 2*x, 2*y, -2*z );
 							break;
 					case Suica.ORIENTATIONS.XZY:
 							that.camera.position.set( -x, -z, y );
-							that.light.position.set( x, -z, y );
+							that.light.position.set( 2*x, -2*z, 2*y );
 							break;
 					case Suica.ORIENTATIONS.YXZ:
 							that.camera.position.set( y, -x, -z );
-							that.light.position.set( y, x, -z );
+							that.light.position.set( 2*y, 2*x, -2*z );
 							break;
 					case Suica.ORIENTATIONS.YZX:
 							that.camera.position.set( -z, x, y );
-							that.light.position.set( -z, x, y );
+							that.light.position.set( -2*z, 2*x, 2*y );
 							break;
 					case Suica.ORIENTATIONS.ZXY:
 							that.camera.position.set( y, -z, x );
-							that.light.position.set( y, -z, x );
+							that.light.position.set( 2*y, -2*z, 2*x );
 							break;
 					case Suica.ORIENTATIONS.ZYX:
 							that.camera.position.set( -z, y, -x );
-							that.light.position.set( -z, y, x );
+							that.light.position.set( -2*z, 2*y, 2*x );
 							break;
 					default: console.error( 'error: Unknown orientation in <suica>' );
 				};
@@ -367,13 +399,46 @@ class Suica
 
 	
 	
+	perspective( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'perspective', near, far, fov );
+		
+		this.camera = new THREE.PerspectiveCamera( fov, this.canvasAspect, near, far );
+		this.camera.up.copy( this.orientation.UP );
+		this.camera.position.set( 0, 0, 100 );
+		this.camera.lookAt( this.scene.position );
+		
+		this.camera.updateProjectionMatrix();
+		
+	} // Suica.perspective
+	
+	
+	orthographic( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'orthographic', near, far );
+
+		var w = this.canvas.width/2,
+			h = this.canvas.height/2;
+			
+		this.camera = new THREE.OrthographicCamera( -w, w, h, -h, near, far );
+		this.camera.up.copy( this.orientation.UP );
+		this.camera.position.set( 0, 0, 100 );
+		this.camera.lookAt( this.scene.position );
+		
+		this.camera.updateProjectionMatrix();
+		
+	} // Suica.orthographic
+	
+	
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 	{
 		this.parser?.parseTags();
 		this.debugCall( 'background', color );
 		
 		this.scene.background = new THREE.Color( color );
-	}
+	} // Suica.background
 	
 	
 	oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
@@ -384,7 +449,7 @@ class Suica
 		var axes = new THREE.AxesHelper( size )
 			axes.setColors( color, color, color );
 		this.scene.add( axes );
-	}
+	} // Suica.oxyz
 	
 	
 	demo( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
@@ -393,7 +458,7 @@ class Suica
 		this.debugCall( 'demo', distance, altitude );
 		
 		this.demoViewPoint = {distance:distance, altitude:altitude};
-	}
+	} // Suica.demo
 	
 	
 	onTime( src=Suica.DEFAULT.ONTIME.SRC )
@@ -402,14 +467,14 @@ class Suica
 		this.debugCall( 'onTime', src );
 				
 		this.onTimeHandler = src;
-	}
+	} // Suica.onTime
 	
 	
 	static precheck()
 	{
 		if( !(Suica.current instanceof Suica) )
 			throw 'error: No Suica instance is active';
-	}
+	} // Suica.precheck
 	
 	
 	debugCall( functionName, ...parameters )
@@ -428,7 +493,8 @@ class Suica
 		}
 
 		console.info( `:: ${this.id}.${functionName}(${parameters.join(',')})` );
-	}
+	} // Suica.debugCall
+	
 	
 	static parseColor( color )
 	{
@@ -467,7 +533,7 @@ class Suica
 		}
 
 		return new THREE.Color( color || 'white' );
-	}
+	} // Suica.parseCOlor
 	
 	
 	static parseCenter( center )
@@ -500,7 +566,7 @@ class Suica
 		}
 
 		return center;
-	}
+	} // Suica.parseCenter
 	
 	
 	static parseSize( size )
@@ -517,7 +583,7 @@ class Suica
 		}
 
 		return size;
-	}
+	} // Suica.parseSize
 	
 	
 	static parseRadius( radius )
@@ -534,7 +600,7 @@ class Suica
 		}
 
 		return radius;
-	}
+	} // Suica.parseRadius
 	
 	
 	static parseColorTest( )
@@ -591,7 +657,7 @@ class Suica
 			console.log( `Suica::parseColorTest() - failed at: \n\t|${summary.join('|\n\t|')}|` );
 		else
 			console.log( `Suica::parseColorTest() - passed OK` );
-	}
+	} // Suica.parseColorTest
 	
 	
 	
@@ -600,7 +666,7 @@ class Suica
 		this.parser?.parseTags();
 
 		return new Point( this, center, size, color );
-	}
+	} // Suica.point
 	
 	
 	line( center=Suica.DEFAULT.LINE.CENTER, to=Suica.DEFAULT.LINE.TO, color=Suica.DEFAULT.LINE.COLOR )
@@ -608,7 +674,7 @@ class Suica
 		this.parser?.parseTags();
 
 		return new Line( this, center, to, color );
-	}
+	} // Suica.line
 	
 	
 	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
@@ -616,7 +682,7 @@ class Suica
 		this.parser?.parseTags();
 
 		return new Square( this, center, size, color );
-	}
+	} // Suica.square
 	
 
 
@@ -625,7 +691,7 @@ class Suica
 		this.parser?.parseTags();
 
 		return new Cube( this, center, size, color );
-	}
+	} // Suica.cube
 	
 	
 	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
@@ -633,7 +699,7 @@ class Suica
 		this.parser?.parseTags();
 
 		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
-	}
+	} // Suica.circle
 	
 	
 	polygon( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.POLYGON.CENTER, size=Suica.DEFAULT.POLYGON.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
@@ -641,7 +707,7 @@ class Suica
 		this.parser?.parseTags();
 
 		return new Polygon( this, count, center, size, color );
-	}
+	} // Suica.polygon
 	
 	
 	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
@@ -649,56 +715,59 @@ class Suica
 		this.parser?.parseTags();
 
 		return new Sphere( this, center, size, color );
-	}
+	} // Suica.sphere
+	
 
 	cylinder( center=Suica.DEFAULT.CYLINDER.CENTER, size=Suica.DEFAULT.CYLINDER.SIZE, color=Suica.DEFAULT.CYLINDER.COLOR )
 	{
 		this.parser?.parseTags();
 
 		return new Prism( this, Suica.DEFAULT.CYLINDER.COUNT, center, size, color, false );
-	}
+	} // Suica.cylinder
+	
 
 	prism( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.COLOR )
 	{
 		this.parser?.parseTags();
 
 		return new Prism( this, count, center, size, color, true );
-	}
-
-	prismFrame( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new PrismFrame( this, count, center, size, color );
-	}	
+	} // Suica.prims
+	
 
 	cone( center=Suica.DEFAULT.CONE.CENTER, size=Suica.DEFAULT.CONE.SIZE, color=Suica.DEFAULT.CONE.COLOR )
 	{
 		this.parser?.parseTags();
 
 		return new Pyramid( this, Suica.DEFAULT.CONE.COUNT, center, size, color, false );
-	}
+	} // Suica.cone
+	
 
 	pyramid( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.COLOR )
 	{
 		this.parser?.parseTags();
 
 		return new Pyramid( this, count, center, size, color, true );
-	}
+	} // Suica.pyramid
 
-	pyramidFrame( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.FRAMECOLOR )
-	{
-		this.parser?.parseTags();
-
-		return new PyramidFrame( this, count, center, size, color );
-	}	
-}
+} // class Suica
 
 
 
 function style( object, properties )
 {
 	for( var n in properties ) object[n] = properties[n];
+}
+
+function perspective( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
+{
+	Suica.precheck();
+	Suica.current.perspective( near, far, fov );
+}
+	
+function orthographic( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
+{
+	Suica.precheck();
+	Suica.current.orthographic( near, far );
 }
 
 function background( color=Suica.DEFAULT.BACKGROUND.COLOR )

@@ -3,6 +3,8 @@
 //
 // Parses custom tags inside <suica-canvas>.
 //
+// <perspective near="..." far="..." fov="...">
+// <orthographic near="..." far="...">
 // <background color="...">
 // <oxyz size="..." color="...">
 // <ontime src="...">
@@ -37,6 +39,8 @@ class HTMLParser
 		this.parseTag = {};
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
+		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
+		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ONTIME = this.parseTagONTIME;
 		this.parseTag.POINT = this.parseTagPOINT;
@@ -123,6 +127,27 @@ class HTMLParser
 			elem.getAttribute('altitude') || Suica.DEFAULT.DEMO.ALTITUDE
 		);
 	} // HTMLParser.parseTagDEMO
+	
+	
+	// <perspective fov="..." near="..." far="...">
+	parseTagPERSPECTIVE( suica, elem )
+	{
+		suica.perspective(
+			elem.getAttribute('near') || Suica.DEFAULT.PERSPECTIVE.NEAR,
+			elem.getAttribute('far') || Suica.DEFAULT.PERSPECTIVE.FAR,
+			elem.getAttribute('fov') || Suica.DEFAULT.PERSPECTIVE.FOV
+		);
+	} // HTMLParser.parseTagPERSPECTIVE
+	
+	
+	// <orthographic near="..." far="...">
+	parseTagORTHOGRAPHIC( suica, elem )
+	{
+		suica.perspective(
+			elem.getAttribute('near') || Suica.DEFAULT.ORTHOGRAPHIC.NEAR,
+			elem.getAttribute('far') || Suica.DEFAULT.ORTHOGRAPHIC.FAR
+		);
+	} // HTMLParser.parseTagORTHOGRAPHIC
 	
 	
 	// <background color="...">

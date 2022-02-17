@@ -3,7 +3,7 @@
 ## Table of contents
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
-- [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop-ontime) </small>] 
+- [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Camera projection](#camera-projection) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop-ontime) </small>] 
 - [Objects](#objects)
     - [Definition](#definition)
     - [Properties](#properties) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
@@ -116,6 +116,68 @@ background( 'linen' );
 
 [<kbd><img src="../examples/snapshots/background.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/background.html)
 
+
+
+
+### Camera projection
+
+#### Perspective camera projection
+
+Property and command. Sets a perspective camera projectsion. Objects further
+away appear smaller. The perspective is defined by three numbers &ndash; *near*
+distance , *far* distance  and *field of view* angle.
+
+The *near* and *far* distances (by default 1 and 1000) define the depth span of
+the viewing area. Objects and part of objects outside this area are not drawn.
+If *near* and *far* are too close, this may truncate some objects; it they are
+too far away, this may reduce the precision of overlapping distant objects.
+
+The *field of view* angle is measured in degrees (by default 40&deg;) and
+defines the vertical span of the viewing area. Smaller angles make objects
+appear bigger and reduce the perspective effect; larger angles make objects
+appear smaller and increases the perspective effect.
+
+A valid perspective requires that 0<*near*<*far* and 0&deg;<*field of view*<180&deg;.
+
+```html
+HTML:
+<suica perspective>
+<suica perspective="1,1000,40">
+```
+```js
+JS:
+perspective( );
+perspective( 1, 1000, 40 );
+```
+
+[<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-perspective.html)
+
+
+
+#### Orthographic camera projection
+
+Property and command. Sets an orthographic camera projectsion. Objects do not
+change their visual size depending on how close or distant they are. The
+orthographic camera is defined by two numbers &ndash; *near* and *far* distances.
+By default they are 0 and 1000; and rhey define the depth span of the viewing
+area. Objects and part of objects outside this area are not drawn. If *near* and
+*far* are too close, this may truncate some objects; it they are too far away,
+this may reduce the precision of overlapping distant objects.
+
+A valid orthographic projection requires that 0&leq;*near*<*far*.
+
+```html
+HTML:
+<suica orthographic>
+<suica orthographic="0,1000">
+```
+```js
+JS:
+orthographic( );
+orthographic( 0, 1000 );
+```
+
+[<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-orthographic.html)
 
 
 
