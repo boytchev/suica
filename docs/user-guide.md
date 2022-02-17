@@ -11,7 +11,7 @@
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 - [Images and drawings](#images-and-drawings)
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
-- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [Q&A](#questions-and-answers) </small>] 
+- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [External libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
 
 ## About
@@ -858,6 +858,19 @@ A reference guide and code templates are collected [here](reference-guide.md)
 ### List of examples
 
 All examples are collected in a single page [here](examples.md)
+
+### External libraries
+
+Suica uses several external libraries.
+
+- [**Three.js** &ndash; JavaScript 3D Library](https://threejs.org/) provides the graphical backbone of Suica. It
+is used at runtime, so `three.min.js` file must be present alongside `suica.js`
+or `suica.min.js`.
+
+- [**JSMin** &ndash; JavaScript Minification Filter](https://github.com/douglascrockford/JSMin) is
+used in the development process to generate minified `suica.min.js` from the
+original `suica.js` file. 
+
 
 ### Questions and answers
 
