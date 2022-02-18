@@ -11,19 +11,23 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/tag-suica.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/tag-suica.html)
 [<kbd><img src="../examples/snapshots/background.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/background.html)
 
+[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
+[<kbd><img src="../examples/snapshots/ontime.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
+
+## [Helpers](user-guide.md#helpers)
+
+[<kbd><img src="../examples/snapshots/oxyz.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
+[<kbd><img src="../examples/snapshots/demo.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
+
+## [Cameras](user-guide.md#cameras)
+
 [<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-perspective.html)
 [<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-orthographic.html)
-
-[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
 
 [<kbd><img src="../examples/snapshots/camera-stereo-wall-eyed.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-wall-eyed.html)
 [<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-cross-eyed.html)
 
-[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
-[<kbd><img src="../examples/snapshots/oxyz.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
-
-[<kbd><img src="../examples/snapshots/demo.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
-[<kbd><img src="../examples/snapshots/ontime.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
+[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
 
 ## [Objects](user-guide.md#objects)
 

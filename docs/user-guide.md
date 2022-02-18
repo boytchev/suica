@@ -3,15 +3,16 @@
 ## Table of contents
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
-- [Suica canvas](#drawing-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [Background color](#background-color) | [Camera projection](#camera-projection) | [Coordinate system](#coordinate-system) | [Demo mode](#demo-mode) | [Animation loop](#animation-loop-ontime) </small>] 
+- [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [onTime](#ontime) </small>] 
+    - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) </small>]
+    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) </small>] 
 - [Objects](#objects)
-    - [Definition](#definition)
-    - [Properties](#properties) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
+    - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 - [Images and drawings](#images-and-drawings)
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
-- [References](#references) [<small> [Reference guide](reference-guide.md) | [List of examples](examples.md) | [External libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
+- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
 
 ## About
@@ -96,7 +97,7 @@ The orientation of the coordinate system is set via attribute `orientation`.
 More information is available in section [Coordinate system](#coordinate-system).
 
 
-### Background color
+### Background
 
 Property and command. Defines the background color of the
 Suica canvas. It can be set as HTML attribute, CSS style (both inlined and
@@ -119,7 +120,116 @@ background( 'linen' );
 
 
 
-### Camera projection
+### Orientation
+
+Property. Controls how objects [positions](#position) and [sizes](#size) are
+defined. Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts
+attribute `orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX`
+(these are all possible permutations of the letters *X*, *Y* and *Z*. Each
+orientation defines a coordinate system in the following manner:
+
+- the first axis points to the right
+- the second axis points upwards
+- the third axis point towards the viewer
+
+<img src="../examples/images/coordinate-system-orientation.png">
+
+The default orientation in Suica is *XYZ*. All examples in this user guide use
+this orientation, unless explicitely stated that other orientations are used.
+
+```html
+HTML:
+<suica orientation="xyz">
+```
+[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
+
+
+
+
+### onTime
+
+Command. Supports frame-based animation. The animation approach of
+Suica is to react every time when the browser is ready to update the image on
+the canvas. The command `onTime` registers a user-defined JS function that
+adjusts the 3D scene whenever a new frame is required. 
+
+```html
+HTML:
+<ontime src="loop">
+```
+```js
+JS:
+onTime( loop ); // register a new ontime function
+onTime( );      // unregister the current ontime function
+```
+
+This user-defined function has two parameters &ndash; elapsed times since the
+start of Suica *t* and since the previous frame *td*. Both times are measured in
+seconds.
+
+```js
+JS:
+function loop( t, dt )
+{
+   // code that sets objects properties 
+   // depending on times t and dt
+}
+```
+
+[<kbd><img src="../examples/snapshots/ontime.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
+
+
+
+
+### Helpers
+
+Helpers are functions that provide supplimentary functionality. They are
+supposed to aid fast prototyping.
+
+
+#### Oxyz
+
+Command. Vizualizes the coordinate system. The coordinate system is an abstract
+object and it has no graphical representation. The command `oxyz`, however,
+visualizes the system as three segments with custom size and color. By default
+the size is 30 and the color is [black](https://www.color-hex.com/color/000000).
+
+```html
+HTML:
+<oxyz size="30" color="black">
+```
+```js
+JS:
+oxyz( 30, 'black' );
+```
+
+[<kbd><img src="../examples/snapshots/oxyz.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
+
+
+
+### Demo
+
+Command. Turns on *demo mode* &ndash; atomatic scene rotation. The
+parameters define the viewpoint position as distance from the origin of the
+the coordinate system and altitude. By default the distance is 100 and the
+altitude is 30.
+
+```html
+HTML:
+<demo distance="100" altitude="30">
+```
+```js
+JS:
+demo( 100, 30 );
+```
+
+[<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
+
+
+
+
+
+### Cameras
 
 #### Perspective camera
 
@@ -181,29 +291,6 @@ orthographic( 0, 1000 );
 
 
 
-#### Anaglyph camera
-
-Property and command. Sets an [anaglyph](https://en.wikipedia.org/wiki/Anaglyph_3D)
-camera projection. The scene is projected twice with different colors, suited for
-red-cyan glasses. The anaglyph effect is controlled by *distance* parameter,
-which determines the focal distance. By default it is 5. Smaller values will
-increase the anaglyphic effect, larger values will decrease it.
-
-```html
-HTML:
-<suica anaglyph>
-<suica anaglyph="5">
-```
-```js
-JS:
-anaglyph( );
-anaglyph( 5 );
-```
-
-[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
-
-
-
 #### Stereo camera
 
 Property and command. Sets a stereo camera projection. The scene is projected
@@ -235,103 +322,27 @@ stereo( -1 ); // cross-eyed
 
 
 
-### Coordinate system
+#### Anaglyph camera
 
-#### Orientation
-
-Property. Controls how objects [positions](#position) and [sizes](#size) are
-defined. Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts
-attribute `orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX`
-(these are all possible permutations of the letters *X*, *Y* and *Z*. Each
-orientation defines a coordinate system in the following manner:
-
-- the first axis points to the right
-- the second axis points upwards
-- the third axis point towards the viewer
-
-<img src="../examples/images/coordinate-system-orientation.png">
-
-The default orientation in Suica is *XYZ*. All examples in this user guide use
-this orientation, unless explicitely stated that other orientations are used.
+Property and command. Sets an [anaglyph](https://en.wikipedia.org/wiki/Anaglyph_3D)
+camera projection. The scene is projected twice with different colors, suited for
+red-cyan glasses. The anaglyph effect is controlled by *distance* parameter,
+which determines the focal distance. By default it is 5. Smaller values will
+increase the anaglyphic effect, larger values will decrease it.
 
 ```html
 HTML:
-<suica orientation="xyz">
-```
-[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
-
-#### Oxyz
-
-Command. Vizualizes the coordinate system. The coordinate system is an abstract
-object and it has no graphical representation. The command `oxyz`, however,
-visualizes the system as three segments with custom size and color. By default
-the size is 30 and the color is [black](https://www.color-hex.com/color/000000).
-
-```html
-HTML:
-<oxyz size="30" color="black">
+<suica anaglyph>
+<suica anaglyph="5">
 ```
 ```js
 JS:
-oxyz( 30, 'black' );
+anaglyph( );
+anaglyph( 5 );
 ```
 
-[<kbd><img src="../examples/snapshots/oxyz.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
+[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
 
-
-
-
-### Demo mode
-
-Command. Turns on *demo mode* &ndash; atomatic scene rotation. The
-parameters define the viewpoint position as distance from the origin of the
-the coordinate system and altitude. By default the distance is 100 and the
-altitude is 30.
-
-```html
-HTML:
-<demo distance="100" altitude="30">
-```
-```js
-JS:
-demo( 100, 30 );
-```
-
-[<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
-
-
-
-### Animation loop (onTime)
-
-Command. Supports frame-based animation. The animation approach of
-Suica is to react every time when the browser is ready to update the image on
-the canvas. The command `onTime` registers a user-defined JS function that
-adjusts the 3D scene whenever a new frame is required. 
-
-```html
-HTML:
-<ontime src="loop">
-```
-```js
-JS:
-onTime( loop ); // register a new ontime function
-onTime( );      // unregister the current ontime function
-```
-
-This user-defined function has two parameters &ndash; elapsed times since the
-start of Suica *t* and since the previous frame *td*. Both times are measured in
-seconds.
-
-```js
-JS:
-function loop( t, dt )
-{
-   // code that sets objects properties 
-   // depending on times t and dt
-}
-```
-
-[<kbd><img src="../examples/snapshots/ontime.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
 
 
 
@@ -373,9 +384,6 @@ p = point( [25,0,15] );
 
 [<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-html.html)
 [<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-js.html)
-
-
-### Properties
 
 Most Suica objects share the same basic properties, like position, orientation,
 size, color and so on. Some objects have specific properties
