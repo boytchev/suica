@@ -3,6 +3,7 @@
 //
 // Parses custom tags inside <suica-canvas>.
 //
+// <vr>
 // <anaglyph distance="...">
 // <stereo distance="...">
 // <perspective near="..." far="..." fov="...">
@@ -41,6 +42,7 @@ class HTMLParser
 		this.parseTag = {};
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
+		this.parseTag.VR = this.parseTagVR;
 		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
 		this.parseTag.STEREO = this.parseTagSTEREO;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
@@ -131,6 +133,14 @@ class HTMLParser
 			elem.getAttribute('altitude') || Suica.DEFAULT.DEMO.ALTITUDE
 		);
 	} // HTMLParser.parseTagDEMO
+	
+	
+	// <vr>
+	parseTagVR( suica, elem )
+	{
+		suica.vr(
+		);
+	} // HTMLParser.parseTagVR
 	
 	
 	// <anaglyph distance="...">

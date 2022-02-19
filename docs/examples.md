@@ -28,6 +28,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-cross-eyed.html)
 
 [<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
+[<kbd><img src="../examples/snapshots/camera-vr.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-vr.html)
 
 ## [Objects](user-guide.md#objects)
 

@@ -2,7 +2,7 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="..." stereo="...">
+//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="..." stereo="..." vr>
 //		<background color="...">
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
@@ -75,12 +75,13 @@
 //	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
 //	2.-1.22 (220217) perspective and orthographic
 //	2.-1.23 (220217) anaglyph and stereo
+//	2.-1.24 (220219) VR
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.23 (220217)` );
+console.log( `Suica 2.-1.24 (220219)` );
 
 
 // control flags
@@ -155,6 +156,7 @@ class Suica
 	
 	// default values for Suica commands
 	static DEFAULT = {
+		VR: {  },
 		ANAGLYPH: { DISTANCE: 5 },
 		STEREO: { DISTANCE: 1 },
 		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
@@ -190,6 +192,7 @@ class Suica
 		// fix styling of <suica>
 		suicaTag.style.display = 'inline-block';
 		suicaTag.style.boxSizing = 'border-box';
+		if( !suicaTag.style.position ) suicaTag.style.position = 'relative';
 		
 		// get or invent id
 		this.id = suicaTag.getAttribute('id') || `suica${Suica.allSuicas.length}`
@@ -332,6 +335,14 @@ class Suica
 			this.stereo( ... values );
 		}
 
+		if( this.suicaTag.hasAttribute('VR') )
+		{
+			// vr camera
+			let values = this.suicaTag.getAttribute('VR').replaceAll(' ','');
+				values = values ? values.split(',').map(Number) : [];
+
+			this.vr( ... values );
+		}
 
 		// default light
 		this.light = new THREE.PointLight( 'white', 0.5 );
@@ -407,6 +418,20 @@ class Suica
 	} // Suica.createRenderer
 
 
+	
+	vr( )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'vr' );
+
+		//document.body.appendChild( VRButton.createButton( this.renderer ) );
+		this.suicaTag.appendChild( VRButton.createButton( this.renderer ) );
+
+		this.renderer.xr.enabled = true;
+		
+		this.camera.position.set( 0, 0, 0 );
+	}
+	
 	
 	anaglyph( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
 	{

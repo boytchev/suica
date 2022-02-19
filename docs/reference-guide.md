@@ -13,12 +13,13 @@ HTML:
 ```html
 HTML:
 <suica id="𝑠𝑢𝑖𝑐𝑎" width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" background="𝑐𝑜𝑙𝑜𝑟" orientation="𝑥𝑦𝑧">
-<suica perspective="𝑛𝑒𝑎𝑟,𝑓𝑎𝑟,𝑓𝑜𝑣" orthographic="𝑛𝑒𝑎𝑟,𝑓𝑎𝑟" anaglyph="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" stereo="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
+<suica perspective="𝑛𝑒𝑎𝑟,𝑓𝑎𝑟,𝑓𝑜𝑣" orthographic="𝑛𝑒𝑎𝑟,𝑓𝑎𝑟" anaglyph="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" stereo="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" vr>
 <suica style="width:𝑤𝑖𝑑𝑡ℎ; height:ℎ𝑒𝑖𝑔ℎ𝑡; background:𝑐𝑜𝑙𝑜𝑟;">
 <perspective near="𝑛𝑒𝑎𝑟" far="𝑓𝑎𝑟" fov="𝑓𝑜𝑣">
 <orthographic near="𝑛𝑒𝑎𝑟" far="𝑓𝑎𝑟">
-<anaglyph distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
 <stereo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
+<anaglyph distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
+<vr>
 <background color="𝑐𝑜𝑙𝑜𝑟">
 <oxyz size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
 <demo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" altitude="𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒">
@@ -36,8 +37,9 @@ suica {
 JS:
 𝑠𝑢𝑖𝑐𝑎.perspective( 𝑛𝑒𝑎𝑟, 𝑓𝑎𝑟, 𝑓𝑜𝑣 );
 𝑠𝑢𝑖𝑐𝑎.orthographic( 𝑛𝑒𝑎𝑟, 𝑓𝑎𝑟 );
-𝑠𝑢𝑖𝑐𝑎.anaglyph( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 );
 𝑠𝑢𝑖𝑐𝑎.stereo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 );
+𝑠𝑢𝑖𝑐𝑎.anaglyph( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 );
+𝑠𝑢𝑖𝑐𝑎.vr( );
 𝑠𝑢𝑖𝑐𝑎.background( 𝑐𝑜𝑙𝑜𝑟 );
 𝑠𝑢𝑖𝑐𝑎.oxyz( 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 𝑠𝑢𝑖𝑐𝑎.demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );

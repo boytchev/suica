@@ -5,7 +5,7 @@
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
 - [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [onTime](#ontime) </small>] 
     - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) </small>]
-    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) </small>] 
+    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) </small>] 
 - [Objects](#objects)
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
@@ -344,6 +344,27 @@ anaglyph( 5 );
 [<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
 
 
+
+
+#### VR camera
+
+Property and command. Allows Suica to go into emmersive 3D environment. Using a
+VR camera adds a button at the bottom of the canvas. If the button says
+`[Enter VR]` the user must click it to enter VR mode. If VR is not sipported,
+the button says `[VR NOT SUPPORTED]`. 
+
+```html
+HTML:
+<suica vr>
+```
+```js
+JS:
+vr( );
+```
+
+[<kbd><img src="../examples/snapshots/camera-vr.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-vr.html)
+
+_**Note.** Currently the VR camera does not provide access to the controllers._
 
 
 
