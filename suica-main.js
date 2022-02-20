@@ -425,7 +425,8 @@ class Suica
 		this.debugCall( 'vr' );
 
 		//document.body.appendChild( VRButton.createButton( this.renderer ) );
-		this.suicaTag.appendChild( VRButton.createButton( this.renderer ) );
+		//this.suicaTag.appendChild( VRButton.createButton( this.renderer ) );
+		this.suicaTag.appendChild( createVRButton( this.renderer ) );
 
 		this.renderer.xr.enabled = true;
 		
