@@ -3,7 +3,7 @@
 //
 // Brutally based on Three.js' VRButton, AnaglyphEffect.js and StereoEffect.js
 //
-// VRMode( suica )
+// createVRButton( renderer )
 //
 // AnaglyphEffect( suica, distance );
 //		setSize( width, height )
@@ -14,6 +14,76 @@
 //		dispose( );
 //
 //===================================================
+
+
+function createFSButton( suica )
+{
+	var inFullScreen = false;
+	
+	var button = document.createElement( 'button' );
+
+	button.style.display = '';
+
+	button.style.cursor = 'pointer';
+	button.style.left = 'calc(50% - 90px)';
+	button.style.width = '180px';
+
+	button.style.position = 'absolute';
+	button.style.bottom = '20px';
+	button.style.padding = '12px 6px';
+	button.style.border = '1px solid #fff';
+	button.style.borderRadius = '4px';
+	button.style.background = 'rgba(0,0,0,0.5)';
+	button.style.color = '#fff';
+	button.style.font = 'normal 13px';
+	button.style.textAlign = 'center';
+	button.style.opacity = '0.5';
+	button.style.outline = 'none';
+	button.style.zIndex = '999';
+
+	var requestFullscreen = suica.suicaTag.requestFullscreen || suica.suicaTag.webkitRequestFullscreen || suica.suicaTag.msRequestFullscreen;
+
+	button.textContent = requestFullscreen ? 'ENTER FULLSCREEN' : 'FULLSCREEN NOT SUPPORTED';
+
+	button.onmouseenter = function( )
+	{
+		button.style.opacity = '1.0';
+	};
+
+	button.onmouseleave = function( )
+	{
+		button.style.opacity = '0.5';
+	};
+
+	if( requestFullscreen )
+	{
+		button.onclick = function( )
+		{
+			requestFullscreen.call( suica.suicaTag );
+		};
+	}
+
+	suica.suicaTag.onfullscreenchange = function( )
+	{
+		button.style.display = document.fullscreenElement ? 'none' : '';
+		
+		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
+		suica.camera.updateProjectionMatrix();
+		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
+		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+	}
+	
+	window.addEventListener( 'resize', function()
+	{
+		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
+		suica.camera.updateProjectionMatrix();
+		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
+		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+	});
+	
+	return button;
+} // createFSButton
+
 
 
 function createVRButton( renderer )

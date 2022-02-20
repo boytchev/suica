@@ -4,6 +4,8 @@
 // Parses custom tags inside <suica-canvas>.
 //
 // <vr>
+// <fullscreen>
+// <fullwindow>
 // <anaglyph distance="...">
 // <stereo distance="...">
 // <perspective near="..." far="..." fov="...">
@@ -43,6 +45,8 @@ class HTMLParser
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.VR = this.parseTagVR;
+		this.parseTag.FULLSCREEN = this.parseTagFULLSCREEN;
+		this.parseTag.FULLWINDOW = this.parseTagFULLWINDOW;
 		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
 		this.parseTag.STEREO = this.parseTagSTEREO;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
@@ -141,6 +145,22 @@ class HTMLParser
 		suica.vr(
 		);
 	} // HTMLParser.parseTagVR
+	
+	
+	// <fullscreen>
+	parseTagFULLSCREEN( suica, elem )
+	{
+		suica.fullScreen(
+		);
+	} // HTMLParser.parseTagFULLSCREEN
+	
+	
+	// <fullwindow>
+	parseTagFULLWINDOW( suica, elem )
+	{
+		suica.fullWindow(
+		);
+	} // HTMLParser.parseTagFULLWINDOW
 	
 	
 	// <anaglyph distance="...">

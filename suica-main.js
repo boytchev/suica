@@ -76,6 +76,7 @@
 //	2.-1.22 (220217) perspective and orthographic
 //	2.-1.23 (220217) anaglyph and stereo
 //	2.-1.24 (220219) VR
+//	2.-1.25 (220220) fullScreen
 //
 //===================================================
 
@@ -344,6 +345,16 @@ class Suica
 			this.vr( ... values );
 		}
 
+		if( this.suicaTag.hasAttribute('FULLSCREEN') )
+		{
+			this.fullScreen( );
+		}
+
+		if( this.suicaTag.hasAttribute('FULLWINDOW') )
+		{
+			this.fullWindow( );
+		}
+
 		// default light
 		this.light = new THREE.PointLight( 'white', 0.5 );
 			this.light.position.set( 1000, 1500, 3000 );
@@ -360,6 +371,8 @@ class Suica
 		function loop( time )
 		{
 			time /= 1000; // convert miliseconds to seconds
+
+			//time=Math.PI/2;
 			
 			if( that.demoViewPoint )
 			{
@@ -424,13 +437,29 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'vr' );
 
-		//document.body.appendChild( VRButton.createButton( this.renderer ) );
-		//this.suicaTag.appendChild( VRButton.createButton( this.renderer ) );
 		this.suicaTag.appendChild( createVRButton( this.renderer ) );
 
 		this.renderer.xr.enabled = true;
 		
 		this.camera.position.set( 0, 0, 0 );
+	}
+	
+	
+	fullScreen( )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'fullScreen' );
+
+		this.suicaTag.appendChild( createFSButton( this ) );
+	}
+	
+	
+	fullWindow( )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'fullWindow' );
+
+		console.error( 'TODO: fullWindow()' );
 	}
 	
 	
@@ -812,6 +841,31 @@ class Suica
 window.style = function( object, properties )
 {
 	for( var n in properties ) object[n] = properties[n];
+}
+
+
+window.fullScreen = function( )
+{
+	Suica.precheck();
+	Suica.current.fullScreen(  );
+}
+	
+window.fullWindow = function( )
+{
+	Suica.precheck();
+	Suica.current.fullWindow(  );
+}
+	
+window.anaglyph = function( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
+{
+	Suica.precheck();
+	Suica.current.anaglyph( distance );
+}
+	
+window.stereo = function( distance = Suica.DEFAULT.STEREO.DISTANCE )
+{
+	Suica.precheck();
+	Suica.current.stereo( distance );
 }
 
 window.perspective = function( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )

@@ -5,7 +5,7 @@
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
 - [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [onTime](#ontime) </small>] 
     - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) </small>]
-    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) </small>] 
+    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) </small>] 
 - [Objects](#objects)
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
@@ -291,6 +291,30 @@ orthographic( 0, 1000 );
 
 
 
+#### Full screen camera
+
+Property and command. Allows Suica to go into full screen mode. Using full
+screen camera adds a button at the bottom of the canvas. If the button says
+`[ENTER FULLSCREEN]` the user must click it to enter full screen mode. If full
+screen is not supported, the button says `[FULLSCREEN NOT SUPPORTED]`. 
+
+```html
+HTML:
+<suica fullscreen>
+```
+```js
+JS:
+fullScreen( );
+```
+
+[<kbd><img src="../examples/snapshots/camera-fullscreen.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-fullscreen.html)
+
+_**Note.** To exit full screen mode press `Esc` or follow the browser's
+instructions._
+
+
+
+
 #### Stereo camera
 
 Property and command. Sets a stereo camera projection. The scene is projected
@@ -350,7 +374,7 @@ anaglyph( 5 );
 
 Property and command. Allows Suica to go into emmersive 3D environment. Using a
 VR camera adds a button at the bottom of the canvas. If the button says
-`[Enter VR]` the user must click it to enter VR mode. If VR is not sipported,
+`[ENTER VR]` the user must click it to enter VR mode. If VR is not supported,
 the button says `[VR NOT SUPPORTED]`. 
 
 ```html
@@ -365,6 +389,8 @@ vr( );
 [<kbd><img src="../examples/snapshots/camera-vr.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-vr.html)
 
 _**Note.** Currently the VR camera does not provide access to the controllers._
+
+_**Note.** VR mode is not supported in local HTML files._
 
 
 

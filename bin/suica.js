@@ -77,6 +77,7 @@
 //	2.-1.22 (220217) perspective and orthographic
 //	2.-1.23 (220217) anaglyph and stereo
 //	2.-1.24 (220219) VR
+//	2.-1.25 (220220) fullScreen
 //
 //===================================================
 
@@ -345,6 +346,16 @@ class Suica
 			this.vr( ... values );
 		}
 
+		if( this.suicaTag.hasAttribute('FULLSCREEN') )
+		{
+			this.fullScreen( );
+		}
+
+		if( this.suicaTag.hasAttribute('FULLWINDOW') )
+		{
+			this.fullWindow( );
+		}
+
 		// default light
 		this.light = new THREE.PointLight( 'white', 0.5 );
 			this.light.position.set( 1000, 1500, 3000 );
@@ -361,6 +372,8 @@ class Suica
 		function loop( time )
 		{
 			time /= 1000; // convert miliseconds to seconds
+
+			//time=Math.PI/2;
 			
 			if( that.demoViewPoint )
 			{
@@ -425,13 +438,29 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'vr' );
 
-		//document.body.appendChild( VRButton.createButton( this.renderer ) );
-		//this.suicaTag.appendChild( VRButton.createButton( this.renderer ) );
 		this.suicaTag.appendChild( createVRButton( this.renderer ) );
 
 		this.renderer.xr.enabled = true;
 		
 		this.camera.position.set( 0, 0, 0 );
+	}
+	
+	
+	fullScreen( )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'fullScreen' );
+
+		this.suicaTag.appendChild( createFSButton( this ) );
+	}
+	
+	
+	fullWindow( )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'fullWindow' );
+
+		console.error( 'TODO: fullWindow()' );
 	}
 	
 	
@@ -815,6 +844,31 @@ window.style = function( object, properties )
 	for( var n in properties ) object[n] = properties[n];
 }
 
+
+window.fullScreen = function( )
+{
+	Suica.precheck();
+	Suica.current.fullScreen(  );
+}
+	
+window.fullWindow = function( )
+{
+	Suica.precheck();
+	Suica.current.fullWindow(  );
+}
+	
+window.anaglyph = function( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
+{
+	Suica.precheck();
+	Suica.current.anaglyph( distance );
+}
+	
+window.stereo = function( distance = Suica.DEFAULT.STEREO.DISTANCE )
+{
+	Suica.precheck();
+	Suica.current.stereo( distance );
+}
+
 window.perspective = function( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
 {
 	Suica.precheck();
@@ -938,7 +992,7 @@ window.addEventListener( 'load', function()
 //
 // Brutally based on Three.js' VRButton, AnaglyphEffect.js and StereoEffect.js
 //
-// VRMode( suica )
+// createVRButton( renderer )
 //
 // AnaglyphEffect( suica, distance );
 //		setSize( width, height )
@@ -949,6 +1003,76 @@ window.addEventListener( 'load', function()
 //		dispose( );
 //
 //===================================================
+
+
+function createFSButton( suica )
+{
+	var inFullScreen = false;
+	
+	var button = document.createElement( 'button' );
+
+	button.style.display = '';
+
+	button.style.cursor = 'pointer';
+	button.style.left = 'calc(50% - 90px)';
+	button.style.width = '180px';
+
+	button.style.position = 'absolute';
+	button.style.bottom = '20px';
+	button.style.padding = '12px 6px';
+	button.style.border = '1px solid #fff';
+	button.style.borderRadius = '4px';
+	button.style.background = 'rgba(0,0,0,0.5)';
+	button.style.color = '#fff';
+	button.style.font = 'normal 13px';
+	button.style.textAlign = 'center';
+	button.style.opacity = '0.5';
+	button.style.outline = 'none';
+	button.style.zIndex = '999';
+
+	var requestFullscreen = suica.suicaTag.requestFullscreen || suica.suicaTag.webkitRequestFullscreen || suica.suicaTag.msRequestFullscreen;
+
+	button.textContent = requestFullscreen ? 'ENTER FULLSCREEN' : 'FULLSCREEN NOT SUPPORTED';
+
+	button.onmouseenter = function( )
+	{
+		button.style.opacity = '1.0';
+	};
+
+	button.onmouseleave = function( )
+	{
+		button.style.opacity = '0.5';
+	};
+
+	if( requestFullscreen )
+	{
+		button.onclick = function( )
+		{
+			requestFullscreen.call( suica.suicaTag );
+		};
+	}
+
+	suica.suicaTag.onfullscreenchange = function( )
+	{
+		button.style.display = document.fullscreenElement ? 'none' : '';
+		
+		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
+		suica.camera.updateProjectionMatrix();
+		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
+		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+	}
+	
+	window.addEventListener( 'resize', function()
+	{
+		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
+		suica.camera.updateProjectionMatrix();
+		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
+		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+	});
+	
+	return button;
+} // createFSButton
+
 
 
 function createVRButton( renderer )
@@ -1299,6 +1423,8 @@ class StereoEffect
 // Parses custom tags inside <suica-canvas>.
 //
 // <vr>
+// <fullscreen>
+// <fullwindow>
 // <anaglyph distance="...">
 // <stereo distance="...">
 // <perspective near="..." far="..." fov="...">
@@ -1338,6 +1464,8 @@ class HTMLParser
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.VR = this.parseTagVR;
+		this.parseTag.FULLSCREEN = this.parseTagFULLSCREEN;
+		this.parseTag.FULLWINDOW = this.parseTagFULLWINDOW;
 		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
 		this.parseTag.STEREO = this.parseTagSTEREO;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
@@ -1436,6 +1564,22 @@ class HTMLParser
 		suica.vr(
 		);
 	} // HTMLParser.parseTagVR
+	
+	
+	// <fullscreen>
+	parseTagFULLSCREEN( suica, elem )
+	{
+		suica.fullScreen(
+		);
+	} // HTMLParser.parseTagFULLSCREEN
+	
+	
+	// <fullwindow>
+	parseTagFULLWINDOW( suica, elem )
+	{
+		suica.fullWindow(
+		);
+	} // HTMLParser.parseTagFULLWINDOW
 	
 	
 	// <anaglyph distance="...">
