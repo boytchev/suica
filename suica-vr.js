@@ -67,18 +67,12 @@ function createFSButton( suica )
 	{
 		button.style.display = document.fullscreenElement ? 'none' : '';
 		
-		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
-		suica.camera.updateProjectionMatrix();
-		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
-		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+		suica.resizeCanvas();
 	}
 	
 	window.addEventListener( 'resize', function()
 	{
-		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
-		suica.camera.updateProjectionMatrix();
-		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
-		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+		suica.resizeCanvas();
 	});
 	
 	return button;

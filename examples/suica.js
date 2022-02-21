@@ -77,13 +77,13 @@
 //	2.-1.22 (220217) perspective and orthographic
 //	2.-1.23 (220217) anaglyph and stereo
 //	2.-1.24 (220219) VR
-//	2.-1.25 (220220) fullScreen
+//	2.-1.25 (220220) fullScreen, fullwindow
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.24 (220219)` );
+console.log( `Suica 2.-1.25 (220220)` );
 
 
 // control flags
@@ -249,6 +249,15 @@ class Suica
 		
 	} // Suica.createCanvas
 	
+
+	// readjust canvas (after resize)
+	resizeCanvas()
+	{
+		this.camera.aspect = this.suicaTag.clientWidth/this.suicaTag.clientHeight;
+		this.camera.updateProjectionMatrix();
+		this.renderer.setSize( this.suicaTag.clientWidth, this.suicaTag.clientHeight, true );
+		this.uberRenderer?.setSize( this.suicaTag.clientWidth, this.suicaTag.clientHeight, true );		
+	}
 
 	// pseudo-element to calculates the canvas aspect
 	get canvasAspect( )
@@ -460,7 +469,19 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'fullWindow' );
 
-		console.error( 'TODO: fullWindow()' );
+		this.suicaTag.style.position = 'fixed';
+		this.suicaTag.style.width = '100%';
+		this.suicaTag.style.height = '100%';
+		this.suicaTag.style.left = '0';
+		this.suicaTag.style.top = '0';
+		
+		this.resizeCanvas();
+		
+		var that = this;
+		window.addEventListener( 'resize', function()
+		{
+			that.resizeCanvas();
+		});
 	}
 	
 	
@@ -1056,18 +1077,12 @@ function createFSButton( suica )
 	{
 		button.style.display = document.fullscreenElement ? 'none' : '';
 		
-		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
-		suica.camera.updateProjectionMatrix();
-		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
-		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+		suica.resizeCanvas();
 	}
 	
 	window.addEventListener( 'resize', function()
 	{
-		suica.camera.aspect = suica.suicaTag.clientWidth/suica.suicaTag.clientHeight;
-		suica.camera.updateProjectionMatrix();
-		suica.renderer.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );
-		suica.uberRenderer?.setSize( suica.suicaTag.clientWidth, suica.suicaTag.clientHeight, true );		
+		suica.resizeCanvas();
 	});
 	
 	return button;

@@ -25,6 +25,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-orthographic.html)
 
 [<kbd><img src="../examples/snapshots/camera-fullscreen.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-fullscreen.html)
+[<kbd><img src="../examples/snapshots/camera-fullwindow.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-fullwindow.html)
 
 [<kbd><img src="../examples/snapshots/camera-stereo-wall-eyed.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-wall-eyed.html)
 [<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-cross-eyed.html)

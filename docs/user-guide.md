@@ -314,6 +314,23 @@ instructions._
 
 
 
+#### Full window camera
+
+Property and command. Allows Suica to go into full window mode. 
+
+```html
+HTML:
+<suica fullwindow>
+```
+```js
+JS:
+fullWindow( );
+```
+
+[<kbd><img src="../examples/snapshots/camera-fullwindow.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-fullwindow.html)
+
+
+
 
 #### Stereo camera
 
