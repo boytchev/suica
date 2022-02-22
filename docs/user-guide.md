@@ -132,7 +132,7 @@ orientation defines a coordinate system in the following manner:
 - the second axis points upwards
 - the third axis point towards the viewer
 
-<img src="../examples/images/coordinate-system-orientation.png">
+<img src="images/coordinate-system-orientation.png">
 
 The default orientation in Suica is *XYZ*. All examples in this user guide use
 this orientation, unless explicitely stated that other orientations are used.
@@ -230,6 +230,18 @@ demo( 100, 30 );
 
 
 ### Cameras
+
+A camera in Suica is a colelctive term that refers to how a scene is visualized
+on the screen. A camera may define a projection (perspective or orthographic),
+canvas span (normal span, full-window or full-screen) and stereoscopic mode
+(mono, stereo, anaglyph and vr). Some cameras can be combined, others are
+mutually exclusive. The following illustration shows available camera
+combinations.
+
+<img src="images/cameras.png">
+
+
+
 
 #### Perspective camera
 
@@ -515,7 +527,7 @@ varies than the property is an array of three numbers for object's *width*,
 not depend on the [orientation of the coordinate system](#coordinate-system).
 Thus height corresponds to the axis that is upwards.
 
-<img src="../examples/images/sizes.png">
+<img src="images/sizes.png">
 
 Flat objects like squares and circles have no depth.
 
