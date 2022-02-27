@@ -13,6 +13,7 @@
 // <background color="...">
 // <oxyz size="..." color="...">
 // <ontime src="...">
+// <lookat from="..." to="..." up="...">
 // <point id="..." center="..." color="..." size="...">
 // <line id="..." center="..." color="..." to="...">
 // <square id="..." center="..." color="..." size="..." wireframe="...">
@@ -42,6 +43,7 @@ class HTMLParser
 		this.suica = suica;
 
 		this.parseTag = {};
+		this.parseTag.LOOKAT = this.parseTagLOOKAT;
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.VR = this.parseTagVR;
@@ -200,6 +202,18 @@ class HTMLParser
 			elem.getAttribute('far') || Suica.DEFAULT.ORTHOGRAPHIC.FAR
 		);
 	} // HTMLParser.parseTagORTHOGRAPHIC
+	
+	
+	// <lookAt id="..." from="..." to="..." up="...">
+	parseTagLOOKAT( suica, elem )
+	{
+		suica.lookAt(
+			elem.getAttribute('from') || elem.getAttribute('center') || undefined,
+			elem.getAttribute('to') || undefined,
+			elem.getAttribute('up') || undefined
+		);
+		
+	} // HTMLParser.parseTagLOOKAT
 	
 	
 	// <background color="...">

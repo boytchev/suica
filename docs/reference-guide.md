@@ -17,6 +17,7 @@ HTML:
 <suica style="width:𝑤𝑖𝑑𝑡ℎ; height:ℎ𝑒𝑖𝑔ℎ𝑡; background:𝑐𝑜𝑙𝑜𝑟;">
 <perspective near="𝑛𝑒𝑎𝑟" far="𝑓𝑎𝑟" fov="𝑓𝑜𝑣">
 <orthographic near="𝑛𝑒𝑎𝑟" far="𝑓𝑎𝑟">
+<lookat from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" up="𝑢𝑝">
 <fullscreen>
 <fullwindow>
 <stereo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
@@ -39,6 +40,7 @@ suica {
 JS:
 𝑠𝑢𝑖𝑐𝑎.perspective( 𝑛𝑒𝑎𝑟, 𝑓𝑎𝑟, 𝑓𝑜𝑣 );
 𝑠𝑢𝑖𝑐𝑎.orthographic( 𝑛𝑒𝑎𝑟, 𝑓𝑎𝑟 );
+𝑠𝑢𝑖𝑐𝑎.lookAt( 𝑓𝑟𝑜𝑚, 𝑡𝑜, 𝑢𝑝 );
 𝑠𝑢𝑖𝑐𝑎.fullScreen( );
 𝑠𝑢𝑖𝑐𝑎.fullWindow( );
 𝑠𝑢𝑖𝑐𝑎.stereo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 );

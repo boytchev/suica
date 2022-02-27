@@ -78,12 +78,13 @@
 //	2.-1.23 (220217) anaglyph and stereo
 //	2.-1.24 (220219) VR
 //	2.-1.25 (220220) fullScreen, fullwindow
+//	2.-1.26 (220227) lookAt
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.25 (220220)` );
+console.log( `Suica 2.-1.26 (220227)` );
 
 
 // control flags
@@ -115,31 +116,42 @@ class Suica
 	static OZ = new THREE.Vector3(0,0,1);
 	static ORIENTATIONS = {
 			YXZ: {	SCALE: new THREE.Vector3(1,-1,1),
-					UP: Suica.OX,
+					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [1,0,0]},
 					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OX,Suica.OZ) },
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OX,Suica.OZ),
+			},
 			ZYX: {	SCALE: new THREE.Vector3(1,1,-1),
+					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,1,0]},
 					UP: Suica.OY,
 					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OY,Suica.OX) },
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OY,Suica.OX),
+			},
 			XZY: {	SCALE: new THREE.Vector3(-1,1,1),
+					LOOKAT: {FROM: [0,100,0], TO: [0,0,0], UP: [0,0,1]},
 					UP: Suica.OZ,
 					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OZ,Suica.OY) },
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OZ,Suica.OY),
+			},
 
 
 			ZXY: {	SCALE: new THREE.Vector3(1,1,1),
+					LOOKAT: {FROM: [0,100,0], TO: [0,0,0], UP: [1,0,0]},
 					UP: Suica.OX,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OX,Suica.OY) },
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OX,Suica.OY),
+			},
 			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
+					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [0,1,0]},
 					UP: Suica.OY,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OY,Suica.OZ) },
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OY,Suica.OZ),
+			},
 			YZX: {	SCALE: new THREE.Vector3(1,1,1),
+					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,0,1]},
 					UP: Suica.OZ,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX) },
+					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX),
+			},
 		} // Suica.ORIENTATIONS
 
 
@@ -169,6 +181,7 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
+
 		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
 		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0] },
 		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
@@ -452,6 +465,7 @@ class Suica
 		this.renderer.xr.enabled = true;
 		
 		this.camera.position.set( 0, 0, 0 );
+		this.camera.lookAt(	1, 0, 0 );
 	}
 	
 	
@@ -513,10 +527,7 @@ class Suica
 		this.debugCall( 'perspective', near, far, fov );
 		
 		this.camera = new THREE.PerspectiveCamera( fov, this.canvasAspect, near, far );
-		this.camera.up.copy( this.orientation.UP );
-		this.camera.position.set( 0, 0, 100 );
-		this.camera.lookAt( this.scene.position );
-		
+		this.lookAt();
 		this.camera.updateProjectionMatrix();
 		
 	} // Suica.perspective
@@ -531,14 +542,36 @@ class Suica
 			h = this.canvas.height/2;
 			
 		this.camera = new THREE.OrthographicCamera( -w, w, h, -h, near, far );
-		this.camera.up.copy( this.orientation.UP );
-		this.camera.position.set( 0, 0, 100 );
-		this.camera.lookAt( this.scene.position );
-		
+		this.lookAt();
 		this.camera.updateProjectionMatrix();
 		
 	} // Suica.orthographic
+
 	
+	lookAt( from, to, up )
+	{
+		this.parser?.parseTags();
+		// if( up ) this.debugCall( 'lookAt', from, to, up )
+		// else if( to ) this.debugCall( 'lookAt', from, to )
+		// else if( from ) this.debugCall( 'lookAt', from )
+
+		if( typeof from === 'undefined' ) from = this.orientation.LOOKAT.FROM;
+		if( typeof to === 'undefined' )   to   = this.orientation.LOOKAT.TO;
+		if( typeof up === 'undefined' )   up   = this.orientation.LOOKAT.UP;
+
+
+		from = Suica.parseCenter( from );
+		to = Suica.parseCenter( to );
+		up = Suica.parseCenter( up );
+		
+		this.camera.up.set( ...up );
+		this.camera.position.set( ...from );
+		this.camera.lookAt( ...to );
+
+		this.light?.position.set( 2*from[0], 2*from[1], 2*from[2] );
+		
+	} // Suica.lookAt
+
 	
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 	{
@@ -692,7 +725,7 @@ class Suica
 
 		return size;
 	} // Suica.parseSize
-	
+
 	
 	static parseRadius( radius )
 	{
@@ -866,6 +899,12 @@ window.style = function( object, properties )
 }
 
 
+window.lookAt = function( from = Suica.DEFAULT.LOOKAT.CAMERA.FROM, to = Suica.DEFAULT.LOOKAT.CAMERA.TO, up = Suica.orientations)
+{
+	Suica.precheck();
+	Suica.current.fullScreen( from, to, up );
+}
+	
 window.fullScreen = function( )
 {
 	Suica.precheck();
@@ -900,6 +939,12 @@ window.orthographic = function( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.
 {
 	Suica.precheck();
 	Suica.current.orthographic( near, far );
+}
+	
+window.lookAt = function( from, to, up )
+{
+	Suica.precheck();
+	Suica.current.lookAt( from, to, up );
 }
 
 window.background = function( color=Suica.DEFAULT.BACKGROUND.COLOR )
@@ -1447,6 +1492,7 @@ class StereoEffect
 // <background color="...">
 // <oxyz size="..." color="...">
 // <ontime src="...">
+// <lookat from="..." to="..." up="...">
 // <point id="..." center="..." color="..." size="...">
 // <line id="..." center="..." color="..." to="...">
 // <square id="..." center="..." color="..." size="..." wireframe="...">
@@ -1476,6 +1522,7 @@ class HTMLParser
 		this.suica = suica;
 
 		this.parseTag = {};
+		this.parseTag.LOOKAT = this.parseTagLOOKAT;
 		this.parseTag.OXYZ = this.parseTagOXYZ;
 		this.parseTag.DEMO = this.parseTagDEMO;
 		this.parseTag.VR = this.parseTagVR;
@@ -1634,6 +1681,18 @@ class HTMLParser
 			elem.getAttribute('far') || Suica.DEFAULT.ORTHOGRAPHIC.FAR
 		);
 	} // HTMLParser.parseTagORTHOGRAPHIC
+	
+	
+	// <lookAt id="..." from="..." to="..." up="...">
+	parseTagLOOKAT( suica, elem )
+	{
+		suica.lookAt(
+			elem.getAttribute('from') || elem.getAttribute('center') || undefined,
+			elem.getAttribute('to') || undefined,
+			elem.getAttribute('up') || undefined
+		);
+		
+	} // HTMLParser.parseTagLOOKAT
 	
 	
 	// <background color="...">
@@ -3401,7 +3460,7 @@ window.cylinder = function(
 				color  = Suica.DEFAULT.CYLINDER.COLOR )
 {
 	Suica.precheck();
-	return Suica.current.cylnder( center, size, color );
+	return Suica.current.cylinder( center, size, color );
 }
 
 

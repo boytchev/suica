@@ -33,6 +33,9 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
 [<kbd><img src="../examples/snapshots/camera-vr.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-vr.html)
 
+[<kbd><img src="../examples/snapshots/lookat.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/lookat.html)
+[<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation.html)
+
 ## [Objects](user-guide.md#objects)
 
 [<kbd><img src="../examples/snapshots/object-html.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/object-html.html)

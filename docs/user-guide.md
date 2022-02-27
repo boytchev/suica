@@ -5,7 +5,7 @@
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
 - [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [onTime](#ontime) </small>] 
     - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) </small>]
-    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera) | [full window](#full-window-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) </small>] 
+    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera) | [full window](#full-window-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) | [lookAt](#lookat) </small>] 
 - [Objects](#objects)
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
@@ -420,6 +420,36 @@ vr( );
 _**Note.** Currently the VR camera does not provide access to the controllers._
 
 _**Note.** VR mode is not supported in local HTML files._
+
+
+
+
+#### lookAt
+
+Command. Defines the viewing position and orientation. LookAt takes three
+parameters: *from* is a 3D location for the viewing position (i.e. the camera is
+placed there), *to* is a 3D position of the viewing target (i.e. the came is
+facing it), and *up* is a vector defining the head orientation (i.e. the
+direction that is considered upwards). By default the target position is (0,0,0)
+and the up direction corresponds to the up axis of the coordinate system.
+
+```html
+HTML:
+<lookat from="100,10,50">
+<lookat from="100,10,50" to="0,0,10" up="1,0,0">
+```
+```js
+JS:
+lookAt( [100,10,50] );
+lookAt( [100,10,50], [0,0,10], [1,0,0] );
+```
+
+[<kbd><img src="../examples/snapshots/lookat.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat.html)
+
+To implement a navigation (walking or flying) in a 3D scene the viewing position
+must be modified in the animation loop.
+
+[<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation.html)
 
 
 

@@ -182,7 +182,7 @@ window.cylinder = function(
 				color  = Suica.DEFAULT.CYLINDER.COLOR )
 {
 	Suica.precheck();
-	return Suica.current.cylnder( center, size, color );
+	return Suica.current.cylinder( center, size, color );
 }
 
 
