@@ -34,6 +34,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/camera-vr.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/camera-vr.html)
 
 [<kbd><img src="../examples/snapshots/lookat.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/lookat.html)
+[<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/lookat-demo.html)
 
 [<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation.html)
 [<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation-vr.html)
