@@ -450,6 +450,7 @@ To implement a navigation (walking or flying) in a 3D scene the viewing position
 must be modified in the animation loop.
 
 [<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation.html)
+[<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation-vr.html)
 
 
 

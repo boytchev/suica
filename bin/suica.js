@@ -218,6 +218,12 @@ class Suica
 		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
 		
+		this.viewPoint = {
+			from: this.orientation.LOOKAT.FROM,
+			to: this.orientation.LOOKAT.TO,
+			up: this.orientation.LOOKAT.UP,
+		};
+		
 		// create and initialize <canvas>
 		this.createCanvas( ); // creates this.canvas
 		this.createRenderer( ); // creates this.rendered, this.scene, this.camera
@@ -318,6 +324,8 @@ class Suica
 
 
 		// set camera
+		this.vrCamera = new THREE.Group();
+		
 		if( this.suicaTag.hasAttribute('PERSPECTIVE') )
 		{
 			// perspective camera
@@ -391,6 +399,73 @@ class Suica
 		this.lastTime = 0;
 		
 		
+		function adjustDemoViewPoint( time )
+		{
+			var x = that.demoViewPoint.distance*Math.cos(time),
+				y = that.demoViewPoint.altitude,
+				z = that.demoViewPoint.distance*Math.sin(time);
+			
+			switch( that.orientation )
+			{
+				case Suica.ORIENTATIONS.XYZ:
+						that.camera.position.set( x, y, -z );
+						that.light.position.set( 2*x, 2*y, -2*z );
+						break;
+				case Suica.ORIENTATIONS.XZY:
+						that.camera.position.set( -x, -z, y );
+						that.light.position.set( 2*x, -2*z, 2*y );
+						break;
+				case Suica.ORIENTATIONS.YXZ:
+						that.camera.position.set( y, -x, -z );
+						that.light.position.set( 2*y, 2*x, -2*z );
+						break;
+				case Suica.ORIENTATIONS.YZX:
+						that.camera.position.set( -z, x, y );
+						that.light.position.set( -2*z, 2*x, 2*y );
+						break;
+				case Suica.ORIENTATIONS.ZXY:
+						that.camera.position.set( y, -z, x );
+						that.light.position.set( 2*y, -2*z, 2*x );
+						break;
+				case Suica.ORIENTATIONS.ZYX:
+						that.camera.position.set( -z, y, -x );
+						that.light.position.set( -2*z, 2*y, 2*x );
+						break;
+				default: console.error( 'error: Unknown orientation in <suica>' );
+			};
+			that.camera.lookAt( that.scene.position );
+		}
+		
+
+		function adjustViewPoint( )
+		{
+			if( that.renderer.xr.isPresenting )
+			{
+				that.camera.up.set( 0, 1, 0 );
+				that.camera.position.set( 0, 0, 0 );
+				that.camera.lookAt( 1, 0, 0 );
+
+				that.vrCamera.up.set( ...that.viewPoint.up );
+				that.vrCamera.position.set( ...that.viewPoint.to );
+				that.vrCamera.lookAt( ...that.viewPoint.from );
+				that.vrCamera.position.set( ...that.viewPoint.from );
+			}
+			else
+			{
+				that.vrCamera.up.set( 0, 1, 0 );
+				that.vrCamera.lookAt( 0, 0, 1 );
+				that.vrCamera.position.set( 0, 0, 0 );
+				
+				that.camera.up.set( ...that.viewPoint.up );
+				that.camera.position.set( ...that.viewPoint.from );
+				that.camera.lookAt( ...that.viewPoint.to );
+			}
+			
+			that.light?.position.set( ...that.viewPoint.from );
+	
+		} // Suica.adjustViewPoint
+		
+
 		function loop( time )
 		{
 			time /= 1000; // convert miliseconds to seconds
@@ -399,41 +474,13 @@ class Suica
 			
 			if( that.demoViewPoint )
 			{
-				var x = that.demoViewPoint.distance*Math.cos(time),
-					y = that.demoViewPoint.altitude,
-					z = that.demoViewPoint.distance*Math.sin(time);
-				
-				switch( that.orientation )
-				{
-					case Suica.ORIENTATIONS.XYZ:
-							that.camera.position.set( x, y, -z );
-							that.light.position.set( 2*x, 2*y, -2*z );
-							break;
-					case Suica.ORIENTATIONS.XZY:
-							that.camera.position.set( -x, -z, y );
-							that.light.position.set( 2*x, -2*z, 2*y );
-							break;
-					case Suica.ORIENTATIONS.YXZ:
-							that.camera.position.set( y, -x, -z );
-							that.light.position.set( 2*y, 2*x, -2*z );
-							break;
-					case Suica.ORIENTATIONS.YZX:
-							that.camera.position.set( -z, x, y );
-							that.light.position.set( -2*z, 2*x, 2*y );
-							break;
-					case Suica.ORIENTATIONS.ZXY:
-							that.camera.position.set( y, -z, x );
-							that.light.position.set( 2*y, -2*z, 2*x );
-							break;
-					case Suica.ORIENTATIONS.ZYX:
-							that.camera.position.set( -z, y, -x );
-							that.light.position.set( -2*z, 2*y, 2*x );
-							break;
-					default: console.error( 'error: Unknown orientation in <suica>' );
-				};
-				that.camera.lookAt( that.scene.position );
-
+				adjustDemoViewPoint( time );
 			}
+			else
+			{
+				adjustViewPoint( );
+			}
+			
 			
 			if( that.onTimeHandler )
 			{
@@ -465,7 +512,8 @@ class Suica
 		this.renderer.xr.enabled = true;
 		
 		this.camera.position.set( 0, 0, 0 );
-		this.camera.lookAt(	1, 0, 0 );
+//		this.camera.lookAt(	0, 0, 0 );
+
 	}
 	
 	
@@ -526,7 +574,9 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'perspective', near, far, fov );
 		
+		this.vrCamera.remove( this.camera );
 		this.camera = new THREE.PerspectiveCamera( fov, this.canvasAspect, near, far );
+		this.vrCamera.add( this.camera );
 		this.lookAt();
 		this.camera.updateProjectionMatrix();
 		
@@ -541,11 +591,14 @@ class Suica
 		var w = this.canvas.width/2,
 			h = this.canvas.height/2;
 			
+		this.vrCamera.remove( this.camera );
 		this.camera = new THREE.OrthographicCamera( -w, w, h, -h, near, far );
+		this.vrCamera.add( this.camera );
 		this.lookAt();
 		this.camera.updateProjectionMatrix();
 		
 	} // Suica.orthographic
+
 
 	
 	lookAt( from, to, up )
@@ -559,19 +612,12 @@ class Suica
 		if( typeof to === 'undefined' )   to   = this.orientation.LOOKAT.TO;
 		if( typeof up === 'undefined' )   up   = this.orientation.LOOKAT.UP;
 
-
-		from = Suica.parseCenter( from );
-		to = Suica.parseCenter( to );
-		up = Suica.parseCenter( up );
-		
-		this.camera.up.set( ...up );
-		this.camera.position.set( ...from );
-		this.camera.lookAt( ...to );
-
-		this.light?.position.set( 2*from[0], 2*from[1], 2*from[2] );
+		this.viewPoint.from = Suica.parseCenter( from );
+		this.viewPoint.to = Suica.parseCenter( to );
+		this.viewPoint.up = Suica.parseCenter( up );
 		
 	} // Suica.lookAt
-
+	
 	
 	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
 	{
@@ -1053,7 +1099,8 @@ window.addEventListener( 'load', function()
 		for( var suica of Suica.allSuicas )
 			suica.parser?.parseTags();
 	}
-);//
+);
+//
 // Suica 2.0 VR, anaglyph and atereo
 //
 // Brutally based on Three.js' VRButton, AnaglyphEffect.js and StereoEffect.js

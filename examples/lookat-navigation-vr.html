@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>lookAt navigation in VR</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>LookAt navigation in VR</h1>
+	<p>Navigating the scene with dynamic lookAt(...).</p>
+
+	<suica vr>
+		<cylinder center="40,-10,0" size="4,20" color="black">
+		<cylinder center="-40,-10,0" size="4,20" color="black">
+		<cylinder center="70,-10,0" size="4,20" color="black">
+		<cylinder center="-70,-10,0" size="4,20" color="black">
+
+		<ontime src="loop">
+	</suica>
+
+	<script>
+		// an array of tile colors
+		var color = ['linen','peachpuff','lightsalmon', 'dimgray' ];
+		
+		// create floor and ceiling
+		for( x = -80; x<=80; x+=10 )
+		for( z = -40; z<=40; z+=10 )
+		{
+			cube( [x,-10,z], [9,0.2,9], random( color ) );
+			cube( [x,10,z], [9,0.2,9], random( color ) );
+		}
+		
+		// calculates point on Lemniscate of Bernoulli
+		// https://en.wikipedia.org/wiki/Lemniscate_of_Bernoulli
+		function lemniscate( t )
+		{
+			var sin = Math.sin( t ),
+				cos = Math.cos( t );
+				
+			var x = 55*cos/(1+sin*sin),
+				z = x*sin;
+				
+			return [x,0,z];
+		}
+
+		// dynamic lookAt
+		function loop( t )
+		{
+//			lookAt( [108,0,60], [-90,0,-50], [0,1,0] );
+			lookAt( lemniscate(t/2), lemniscate(t/2+0.3) );
+		}
+	</script>
+</body>
+</html>
