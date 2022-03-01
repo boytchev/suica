@@ -232,7 +232,7 @@ class HTMLParser
 	} // HTMLParser.parseTagONTIME
 	
 	
-	parseAttributes( elem, object, widthHeight, depth, wireframe )
+	parseAttributes( elem, object, widthHeight, depth, wireframe, spin )
 	{
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
@@ -247,6 +247,11 @@ class HTMLParser
 		if( depth )
 		{
 			if( elem.hasAttribute('depth') ) object.depth = Number(elem.getAttribute('depth')); 
+		}
+		
+		if( spin )
+		{
+			if( elem.hasAttribute('spin') ) object.spin = elem.getAttribute('spin'); 
 		}
 		
 		if( wireframe )
@@ -301,7 +306,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
 		
@@ -317,7 +322,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
 
 		elem.suicaObject = p;
 		
@@ -333,7 +338,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
 		
@@ -350,7 +355,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
 		
@@ -366,7 +371,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SPHERE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
 		
@@ -382,7 +387,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
 		
@@ -399,7 +404,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
 
 		elem.suicaObject = p;
 		
@@ -415,7 +420,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
 		
@@ -432,7 +437,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
 
 		elem.suicaObject = p;
 		

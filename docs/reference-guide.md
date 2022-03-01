@@ -118,7 +118,7 @@ JS:
 
 ```html
 HTML:
-<square id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<square id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <square x="𝑥" y="𝑦" z="𝑧">
 <square size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡">
 <square width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡">
@@ -136,6 +136,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.width = 𝑤𝑖𝑑𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
@@ -147,7 +149,7 @@ JS:
 
 ```html
 HTML:
-<circle id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<circle id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <circle x="𝑥" y="𝑦" z="𝑧">
 <circle size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡">
 <circle width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡">
@@ -165,6 +167,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.width = 𝑤𝑖𝑑𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
@@ -176,7 +180,7 @@ JS:
 
 ```html
 HTML:
-<polygon id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<polygon id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <polygon x="𝑥" y="𝑦" z="𝑧">
 <polygon size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡">
 <polygon width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡">
@@ -195,6 +199,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.width = 𝑤𝑖𝑑𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
@@ -206,7 +212,7 @@ JS:
 
 ```html
 HTML:
-<cube id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<cube id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <cube x="𝑥" y="𝑦" z="𝑧">
 <cube size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
 <cube width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
@@ -225,6 +231,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
@@ -236,7 +244,7 @@ JS:
 
 ```html
 HTML:
-<sphere id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+<sphere id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <sphere x="𝑥" y="𝑦" z="𝑧">
 <sphere size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
 <sphere width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
@@ -255,6 +263,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 𝑜𝑏𝑗𝑒𝑐𝑡.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
@@ -264,7 +274,7 @@ JS:
 
 ```html
 HTML:
-<cylinder id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+<cylinder id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <cylinder x="𝑥" y="𝑦" z="𝑧">
 <cylinder size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
 <cylinder width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
@@ -283,6 +293,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 𝑜𝑏𝑗𝑒𝑐𝑡.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
@@ -292,7 +304,7 @@ JS:
 
 ```html
 HTML:
-<prism id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<prism id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <prism x="𝑥" y="𝑦" z="𝑧">
 <prism size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
 <prism width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
@@ -312,6 +324,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
@@ -322,7 +336,7 @@ JS:
 
 ```html
 HTML:
-<cone id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+<cone id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <cone x="𝑥" y="𝑦" z="𝑧">
 <cone size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
 <cone width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
@@ -341,6 +355,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 𝑜𝑏𝑗𝑒𝑐𝑡.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
@@ -350,7 +366,7 @@ JS:
 
 ```html
 HTML:
-<pyramid id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<pyramid id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟" wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒" spin="𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡">
 <pyramid x="𝑥" y="𝑦" z="𝑧">
 <pyramid size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
 <pyramid width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
@@ -370,6 +386,8 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;

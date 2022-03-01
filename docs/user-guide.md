@@ -7,7 +7,7 @@
     - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) </small>]
     - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera) | [full window](#full-window-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) | [lookAt](#lookat) </small>] 
 - [Objects](#objects)
-    - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [orientation](#orientation-1) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
+    - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [spin](#spin) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 - [Images and drawings](#images-and-drawings)
@@ -607,9 +607,18 @@ a.height = 15;
 a.depth = 40;
 ```
 
-#### Orientation
+#### Spin
 
-TBD
+Property. Defines the rotation of an object in respect to its own axes. The
+value of `spin` is either an angle or an array of up to three angles. All angles
+are measured in degrees.
+
+The first *spin* value rotates around the vertical axis. The second *spin*
+value rotates around the horizontal axis and away from the global vertical axis.
+The third *spin* value rotates again around the vertical local axis of the
+object.
+
+<img src="images/spin.png">
 
 
 #### Color

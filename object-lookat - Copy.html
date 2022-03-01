@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Object lookAt</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Object lookAt</h1>
+	<p>Turning an object towards another object.</p>
+
+	<div>xyz</div>
+	<suica orientation="xyz">
+		<oxyz>
+		<lookat from="50,50,50">
+		<square z="15" size="16" color="red">
+		<square z="-15" size="16" color="yellow">
+		<square x="15" size="16" color="blue" spin="90">
+		<square x="-15" size="16" color="green" spin="90">
+		<square y="15" size="16" color="linen" spin="0,90">
+		<square y="-15" size="16" color="black" spin="0,90">
+		<cube id="p1" size="10,30,3">
+		<point id="x1" x="32" size="4">
+		<point id="y1" y="32" size="4">
+		<point id="z1" z="32" size="4">
+	</suica>
+
+	<script>
+		onTime( function(t) { p1.spin = (40*t) % 90; } );
+	</script>
+
+
+	<div>xzy</div>
+	<suica orientation="xzy">
+		<oxyz>
+		<lookat from="50,50,50">
+		<square z="15" size="16" color="red">
+		<square z="-15" size="16" color="yellow">
+		<square x="15" size="16" color="blue" spin="90">
+		<square x="-15" size="16" color="green" spin="90">
+		<square y="15" size="16" color="linen" spin="0,90">
+		<square y="-15" size="16" color="black" spin="0,90">
+		<cube id="p2" size="10,30,3">
+		<point id="x2" x="32" size="4">
+		<point id="y2" y="32" size="4">
+		<point id="z2" z="32" size="4">
+	</suica>
+
+	<script>
+		onTime( function(t) { p2.spin = (40*t) % 90; } );
+	</script>
+
+	<div>yxz</div>
+	<suica orientation="yxz">
+		<oxyz>
+		<lookat from="50,50,50">
+		<square z="15" size="16" color="red">
+		<square z="-15" size="16" color="yellow">
+		<square x="15" size="16" color="blue" spin="90">
+		<square x="-15" size="16" color="green" spin="90">
+		<square y="15" size="16" color="linen" spin="0,90">
+		<square y="-15" size="16" color="black" spin="0,90">
+		<cube id="p3" size="10,30,3">
+		<point id="x3" x="32" size="4">
+		<point id="y3" y="32" size="4">
+		<point id="z3" z="32" size="4">
+	</suica>
+
+	<script>
+		onTime( function(t) { p3.spin = (40*t) % 90; } );
+	</script>
+
+
+	<div>yzx</div>
+	<suica orientation="yzx">
+		<oxyz>
+		<lookat from="50,50,50">
+		<square z="15" size="16" color="red">
+		<square z="-15" size="16" color="yellow">
+		<square x="15" size="16" color="blue" spin="90">
+		<square x="-15" size="16" color="green" spin="90">
+		<square y="15" size="16" color="linen" spin="0,90">
+		<square y="-15" size="16" color="black" spin="0,90">
+		<cube id="p4" size="10,30,3">
+		<point id="x4" x="32" size="4">
+		<point id="y4" y="32" size="4">
+		<point id="z4" z="32" size="4">
+	</suica>
+
+	<script>
+		onTime( function(t) { p4.spin = (40*t) % 90; } );
+	</script>
+
+	<div>zxy</div>
+	<suica orientation="zxy">
+		<oxyz>
+		<lookat from="50,50,50">
+		<square z="15" size="16" color="red">
+		<square z="-15" size="16" color="yellow">
+		<square x="15" size="16" color="blue" spin="90">
+		<square x="-15" size="16" color="green" spin="90">
+		<square y="15" size="16" color="linen" spin="0,90">
+		<square y="-15" size="16" color="black" spin="0,90">
+		<cube id="p5" size="10,30,3">
+		<point id="x5" x="32" size="4">
+		<point id="y5" y="32" size="4">
+		<point id="z5" z="32" size="4">
+	</suica>
+
+	<script>
+		onTime( function(t) { p5.spin = (40*t) % 90; } );
+	</script>
+
+
+	<div>zyx</div>
+	<suica orientation="zyx">
+		<oxyz>
+		<lookat from="50,50,50">
+		<square z="15" size="16" color="red">
+		<square z="-15" size="16" color="yellow">
+		<square x="15" size="16" color="blue" spin="90">
+		<square x="-15" size="16" color="green" spin="90">
+		<square y="15" size="16" color="linen" spin="0,90">
+		<square y="-15" size="16" color="black" spin="0,90">
+		<cube id="p6" size="10,30,3">
+		<point id="x6" x="32" size="4">
+		<point id="y6" y="32" size="4">
+		<point id="z6" z="32" size="4">
+	</suica>
+
+	<script>
+		onTime( function(t) { p6.spin = (40*t) % 90; } );
+	</script>
+	
+	<script>
+
+		var ix = drawing( 15 );
+			fillText( 0, 0, 'X', 'lightsalmon', 'bold 20px Arial' );
+		
+		var iy = drawing( 15 );
+			fillText( 0, 0, 'Y', 'lightsalmon', 'bold 20px Arial' );
+		
+		var iz = drawing( 15 );
+			fillText( 0, 0, 'Z', 'lightsalmon', 'bold 20px Arial' );
+		
+		x1.image = x2.image = x3.image = x4.image = x5.image = x6.image = ix;
+		y1.image = y2.image = y3.image = y4.image = y5.image = y6.image = iy;
+		z1.image = z2.image = z3.image = z4.image = z5.image = z6.image = iz;
+		
+	</script>
+</body>
+</html>

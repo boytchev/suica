@@ -29,6 +29,8 @@ class Mesh
 		
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
+		this.meshFocus = null;
+		this.meshSpin = null;
 
 		suica.scene.add( solidMesh );
 	}
@@ -125,7 +127,7 @@ class Mesh
 		this.suica.parser?.parseTags();
 
 		center = Suica.parseCenter( center );
-		this.threejs.position.set( center[0], center[1], center[2] );
+		this.threejs.position.set( ...center );
 	}
 
 
@@ -391,6 +393,7 @@ class Mesh
 
 	}
 	
+	
 	style( properties )
 	{
 		for( var n in properties ) this[n] = properties[n];
@@ -398,7 +401,69 @@ class Mesh
 		
 	} // Mesh.style
 
+
+	updateOrientation( )
+	{
+		var spin = this.meshSpin;
+		if( !spin ) return;
+
+		var flip = 1;
+		switch( this.suica.orientation )
+		{
+			//case Suica.ORIENTATIONS.XYZ: 
+			case Suica.ORIENTATIONS.XZY: flip = -1; break;
+			case Suica.ORIENTATIONS.YXZ: flip = -1; break;
+			//case Suica.ORIENTATIONS.YZX:
+			//case Suica.ORIENTATIONS.ZXY:
+			case Suica.ORIENTATIONS.ZYX: flip = -1; break;
+		};
+		
+		if( Array.isArray(spin) )
+		{
+			this.threejs.rotation.set( 0, 0, 0 );
+			if( spin[0] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[0]) );
+			if( spin[1] ) this.threejs.rotateOnAxis( this.suica.orientation.RIGHT, radians(flip*spin[1]) );
+			if( spin[2] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[2]) );
+		}
+		else
+		{
+			this.threejs.rotation.set( 0, 0, 0 );
+			if( spin ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin) );
+		}
+
+	} // Mesh.updateOrientation
+
+	
+	get focus( )
+	{
+		return this.meshFocus;
+	}
+
+	set focus( focus )
+	{
+		this.meshFocus = focus;
+		this.updateOrientation();
+	}
+
+	
+	get spin( )
+	{
+		return this.meshSpin;
+	}
+
+	set spin( spin )
+	{
+		this.meshSpin = Suica.parseSize( spin );
+		this.updateOrientation();
+	}
+	
+
+
+	
+
 } // class Mesh
+
+
 
 
 Mesh.createMaterials();

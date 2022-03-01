@@ -78,7 +78,7 @@
 //	2.-1.23 (220217) anaglyph and stereo
 //	2.-1.24 (220219) VR
 //	2.-1.25 (220220) fullScreen, fullwindow
-//	2.-1.26 (220227) lookAt
+//	2.-1.26 (220227) lookAt, lookAt in VR
 //
 //===================================================
 
@@ -88,7 +88,7 @@ console.log( `Suica 2.-1.26 (220227)` );
 
 
 // control flags
-const DEBUG_CALLS = !false;
+const DEBUG_CALLS = false;
 
 
 
@@ -117,18 +117,25 @@ class Suica
 	static ORIENTATIONS = {
 			YXZ: {	SCALE: new THREE.Vector3(1,-1,1),
 					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [1,0,0]},
+					RIGHT: Suica.OY,
+					UP: Suica.OX,
+					FORWARD: Suica.OZ,
 					FLIP_NORMAL: true,
 					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OX,Suica.OZ),
 			},
 			ZYX: {	SCALE: new THREE.Vector3(1,1,-1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,1,0]},
+					RIGHT: Suica.OZ,
 					UP: Suica.OY,
+					FORWARD: Suica.OX,
 					FLIP_NORMAL: true,
 					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OY,Suica.OX),
 			},
 			XZY: {	SCALE: new THREE.Vector3(-1,1,1),
 					LOOKAT: {FROM: [0,100,0], TO: [0,0,0], UP: [0,0,1]},
+					RIGHT: Suica.OX,
 					UP: Suica.OZ,
+					FORWARD: Suica.OY,
 					FLIP_NORMAL: true,
 					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OZ,Suica.OY),
 			},
@@ -136,19 +143,25 @@ class Suica
 
 			ZXY: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [0,100,0], TO: [0,0,0], UP: [1,0,0]},
+					RIGHT: Suica.OZ,
 					UP: Suica.OX,
+					FORWARD: Suica.OY,
 					FLIP_NORMAL: false,
 					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OX,Suica.OY),
 			},
 			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [0,1,0]},
+					RIGHT: Suica.OX,
 					UP: Suica.OY,
+					FORWARD: Suica.OZ,
 					FLIP_NORMAL: false,
 					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OY,Suica.OZ),
 			},
 			YZX: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,0,1]},
+					RIGHT: Suica.OY,
 					UP: Suica.OZ,
+					FORWARD: Suica.OX,
 					FLIP_NORMAL: false,
 					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX),
 			},
@@ -207,6 +220,11 @@ class Suica
 		// fix styling of <suica>
 		suicaTag.style.display = 'inline-block';
 		suicaTag.style.boxSizing = 'border-box';
+		if( !getComputedStyle(suicaTag).width && !suicaTag.hasAttribute('width') )
+			suicaTag.style.width = '500px';
+		if( !getComputedStyle(suicaTag).height && !suicaTag.hasAttribute('height') )
+			suicaTag.style.height = '300px';
+		
 		if( !suicaTag.style.position ) suicaTag.style.position = 'relative';
 		
 		// get or invent id
@@ -404,7 +422,8 @@ class Suica
 			var x = that.demoViewPoint.distance*Math.cos(time),
 				y = that.demoViewPoint.altitude,
 				z = that.demoViewPoint.distance*Math.sin(time);
-			
+
+			that.camera.up.copy( that.orientation.UP );
 			switch( that.orientation )
 			{
 				case Suica.ORIENTATIONS.XYZ:
@@ -413,11 +432,11 @@ class Suica
 						break;
 				case Suica.ORIENTATIONS.XZY:
 						that.camera.position.set( -x, -z, y );
-						that.light.position.set( 2*x, -2*z, 2*y );
+						that.light.position.set( /**/2*x, -2*z, 2*y );
 						break;
 				case Suica.ORIENTATIONS.YXZ:
 						that.camera.position.set( y, -x, -z );
-						that.light.position.set( 2*y, 2*x, -2*z );
+						that.light.position.set( 2*y, /**/2*x, -2*z );
 						break;
 				case Suica.ORIENTATIONS.YZX:
 						that.camera.position.set( -z, x, y );
@@ -429,7 +448,7 @@ class Suica
 						break;
 				case Suica.ORIENTATIONS.ZYX:
 						that.camera.position.set( -z, y, -x );
-						that.light.position.set( -2*z, 2*y, 2*x );
+						that.light.position.set( -2*z, 2*y, /**/2*x );
 						break;
 				default: console.error( 'error: Unknown orientation in <suica>' );
 			};
@@ -439,16 +458,39 @@ class Suica
 
 		function adjustViewPoint( )
 		{
+			var up = [ ...that.viewPoint.up ],
+				from = [ ...that.viewPoint.from ],
+				to = [ ...that.viewPoint.to ];
+			
+			switch( that.orientation )
+			{
+				case Suica.ORIENTATIONS.XZY:
+						up[0] = -up[0];
+						from[0] = -from[0];
+						to[0] = -to[0];
+						break;
+				case Suica.ORIENTATIONS.YXZ:
+						up[1] = -up[1];
+						from[1] = -from[1];
+						to[1] = -to[1];
+						break;
+				case Suica.ORIENTATIONS.ZYX:
+						up[2] = -up[2];
+						from[2] = -from[2];
+						to[2] = -to[2];
+						break;
+			}
+			
 			if( that.renderer.xr.isPresenting )
 			{
 				that.camera.up.set( 0, 1, 0 );
 				that.camera.position.set( 0, 0, 0 );
 				that.camera.lookAt( 1, 0, 0 );
 
-				that.vrCamera.up.set( ...that.viewPoint.up );
-				that.vrCamera.position.set( ...that.viewPoint.to );
-				that.vrCamera.lookAt( ...that.viewPoint.from );
-				that.vrCamera.position.set( ...that.viewPoint.from );
+				that.vrCamera.up.set( ...up );
+				that.vrCamera.position.set( ...to );
+				that.vrCamera.lookAt( ...from );
+				that.vrCamera.position.set( ...from );
 			}
 			else
 			{
@@ -456,12 +498,12 @@ class Suica
 				that.vrCamera.lookAt( 0, 0, 1 );
 				that.vrCamera.position.set( 0, 0, 0 );
 				
-				that.camera.up.set( ...that.viewPoint.up );
-				that.camera.position.set( ...that.viewPoint.from );
-				that.camera.lookAt( ...that.viewPoint.to );
+				that.camera.up.set( ...up );
+				that.camera.position.set( ...from );
+				that.camera.lookAt( ...to );
 			}
 			
-			that.light?.position.set( ...that.viewPoint.from );
+			that.light?.position.set( ...from );
 	
 		} // Suica.adjustViewPoint
 		
@@ -771,7 +813,7 @@ class Suica
 
 		return size;
 	} // Suica.parseSize
-
+	
 	
 	static parseRadius( radius )
 	{
@@ -1758,7 +1800,7 @@ class HTMLParser
 	} // HTMLParser.parseTagONTIME
 	
 	
-	parseAttributes( elem, object, widthHeight, depth, wireframe )
+	parseAttributes( elem, object, widthHeight, depth, wireframe, spin )
 	{
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
@@ -1773,6 +1815,11 @@ class HTMLParser
 		if( depth )
 		{
 			if( elem.hasAttribute('depth') ) object.depth = Number(elem.getAttribute('depth')); 
+		}
+		
+		if( spin )
+		{
+			if( elem.hasAttribute('spin') ) object.spin = elem.getAttribute('spin'); 
 		}
 		
 		if( wireframe )
@@ -1827,7 +1874,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1843,7 +1890,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1859,7 +1906,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1876,7 +1923,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1892,7 +1939,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SPHERE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
 		
@@ -1908,7 +1955,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
 		
@@ -1925,7 +1972,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
 
 		elem.suicaObject = p;
 		
@@ -1941,7 +1988,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
 		
@@ -1958,7 +2005,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
 
 		elem.suicaObject = p;
 		
@@ -2254,6 +2301,8 @@ class Mesh
 		
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
+		this.meshFocus = null;
+		this.meshSpin = null;
 
 		suica.scene.add( solidMesh );
 	}
@@ -2350,7 +2399,7 @@ class Mesh
 		this.suica.parser?.parseTags();
 
 		center = Suica.parseCenter( center );
-		this.threejs.position.set( center[0], center[1], center[2] );
+		this.threejs.position.set( ...center );
 	}
 
 
@@ -2616,6 +2665,7 @@ class Mesh
 
 	}
 	
+	
 	style( properties )
 	{
 		for( var n in properties ) this[n] = properties[n];
@@ -2623,7 +2673,69 @@ class Mesh
 		
 	} // Mesh.style
 
+
+	updateOrientation( )
+	{
+		var spin = this.meshSpin;
+		if( !spin ) return;
+
+		var flip = 1;
+		switch( this.suica.orientation )
+		{
+			//case Suica.ORIENTATIONS.XYZ: 
+			case Suica.ORIENTATIONS.XZY: flip = -1; break;
+			case Suica.ORIENTATIONS.YXZ: flip = -1; break;
+			//case Suica.ORIENTATIONS.YZX:
+			//case Suica.ORIENTATIONS.ZXY:
+			case Suica.ORIENTATIONS.ZYX: flip = -1; break;
+		};
+		
+		if( Array.isArray(spin) )
+		{
+			this.threejs.rotation.set( 0, 0, 0 );
+			if( spin[0] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[0]) );
+			if( spin[1] ) this.threejs.rotateOnAxis( this.suica.orientation.RIGHT, radians(flip*spin[1]) );
+			if( spin[2] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[2]) );
+		}
+		else
+		{
+			this.threejs.rotation.set( 0, 0, 0 );
+			if( spin ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin) );
+		}
+
+	} // Mesh.updateOrientation
+
+	
+	get focus( )
+	{
+		return this.meshFocus;
+	}
+
+	set focus( focus )
+	{
+		this.meshFocus = focus;
+		this.updateOrientation();
+	}
+
+	
+	get spin( )
+	{
+		return this.meshSpin;
+	}
+
+	set spin( spin )
+	{
+		this.meshSpin = Suica.parseSize( spin );
+		this.updateOrientation();
+	}
+	
+
+
+	
+
 } // class Mesh
+
+
 
 
 Mesh.createMaterials();﻿//
