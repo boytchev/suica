@@ -418,17 +418,16 @@ class Mesh
 			case Suica.ORIENTATIONS.ZYX: flip = -1; break;
 		};
 		
+		this.threejs.rotation.set( 0, 0, 0 );
 		if( Array.isArray(spin) )
 		{
-			this.threejs.rotation.set( 0, 0, 0 );
 			if( spin[0] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[0]) );
 			if( spin[1] ) this.threejs.rotateOnAxis( this.suica.orientation.RIGHT, radians(flip*spin[1]) );
 			if( spin[2] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[2]) );
 		}
 		else
 		{
-			this.threejs.rotation.set( 0, 0, 0 );
-			if( spin ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin) );
+			this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin) );
 		}
 
 	} // Mesh.updateOrientation
