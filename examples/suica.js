@@ -8,13 +8,13 @@
 //		<oxyz size="..." color="...">
 //		<demo distance="..." altitude="...">
 //		<ontime src="...">
-//		<point id="..." center="..." x="" y="" z="" color="..." size="...">
-//		<line id="..." center="..." from="" color="..." size="...">
-//		<square id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
-//		<circle id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
-//		<polygon id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
-//		<cube id="..." center="..." x="" y="" z="" color="..." size="..." wireframe="...">
-//		<sphere id="..." center="..." x="" y="" z="" color="..." size="...">
+//		<point id="..." center="..." x="" y="" z="" color="..." size="..." spin="...">
+//		<line id="..." center="..." from="" color="..." size="..." spin="...">
+//		<square id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
+//		<circle id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
+//		<polygon id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
+//		<cube id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
+//		<sphere id="..." center="..." x="" y="" z="" color="..." size="..." spin="...">
 //		<cylinder ...>
 //		<prism ...>
 //		<cone ...>
@@ -79,12 +79,13 @@
 //	2.-1.24 (220219) VR
 //	2.-1.25 (220220) fullScreen, fullwindow
 //	2.-1.26 (220227) lookAt, lookAt in VR
+//	2.-1.27 (220303) spin
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.26 (220227)` );
+console.log( `Suica 2.-1.27 (220303)` );
 
 
 // control flags
@@ -240,6 +241,7 @@ class Suica
 			from: this.orientation.LOOKAT.FROM,
 			to: this.orientation.LOOKAT.TO,
 			up: this.orientation.LOOKAT.UP,
+//			changed: true,
 		};
 		
 		// create and initialize <canvas>
@@ -259,6 +261,9 @@ class Suica
 		Suica.current = this; // as current Suica
 		Suica.allSuicas.push( this ); // as one of all Suicas
 		window[this.id] = this; // as global variable
+		
+//		this.debugObject = new THREE.Mesh( new THREE.SphereGeometry(5), new THREE.MeshPhongMaterial({color:'orange', shininess:200}));
+//		this.scene.add( this.debugObject );
 		
 	} // Suica.constructor
 	
@@ -417,12 +422,16 @@ class Suica
 		this.lastTime = 0;
 		
 		
+		function setCameraLightPosition( x, y, z )
+		{
+		}
+		
 		function adjustDemoViewPoint( time )
 		{
 			var x = that.demoViewPoint.distance*Math.cos(time),
 				y = that.demoViewPoint.altitude,
 				z = that.demoViewPoint.distance*Math.sin(time);
-
+		
 			that.camera.up.copy( that.orientation.UP );
 			switch( that.orientation )
 			{
@@ -453,11 +462,18 @@ class Suica
 				default: console.error( 'error: Unknown orientation in <suica>' );
 			};
 			that.camera.lookAt( that.scene.position );
+			//that.debugObject.position.set( that.light.position.x/4, that.light.position.y/4, that.light.position.z/4 );
+			//that.light.position.set( that.light.position.x/10, that.light.position.y/10, that.light.position.z/10 );
+			//console.log(that.light.position);
 		}
 		
 
 		function adjustViewPoint( )
 		{
+//			if( !that.viewPoint.changed ) return;
+			
+//			that.viewPoint.changed = false;
+			
 			var up = [ ...that.viewPoint.up ],
 				from = [ ...that.viewPoint.from ],
 				to = [ ...that.viewPoint.to ];
@@ -503,6 +519,13 @@ class Suica
 				that.camera.lookAt( ...to );
 			}
 			
+//			console.log( ...from );
+			switch( that.orientation )
+			{
+				case Suica.ORIENTATIONS.XZY: from[0] = -from[0]; break;
+				case Suica.ORIENTATIONS.YXZ: from[1] = -from[1]; break;
+				case Suica.ORIENTATIONS.ZYX: from[2] = -from[2]; break;
+			};
 			that.light?.position.set( ...from );
 	
 		} // Suica.adjustViewPoint
@@ -657,6 +680,7 @@ class Suica
 		this.viewPoint.from = Suica.parseCenter( from );
 		this.viewPoint.to = Suica.parseCenter( to );
 		this.viewPoint.up = Suica.parseCenter( up );
+		//this.viewPoint.changed = true;
 		
 	} // Suica.lookAt
 	
@@ -2690,17 +2714,16 @@ class Mesh
 			case Suica.ORIENTATIONS.ZYX: flip = -1; break;
 		};
 		
+		this.threejs.rotation.set( 0, 0, 0 );
 		if( Array.isArray(spin) )
 		{
-			this.threejs.rotation.set( 0, 0, 0 );
 			if( spin[0] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[0]) );
 			if( spin[1] ) this.threejs.rotateOnAxis( this.suica.orientation.RIGHT, radians(flip*spin[1]) );
 			if( spin[2] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[2]) );
 		}
 		else
 		{
-			this.threejs.rotation.set( 0, 0, 0 );
-			if( spin ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin) );
+			this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin) );
 		}
 
 	} // Mesh.updateOrientation

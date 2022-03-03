@@ -620,6 +620,14 @@ object.
 
 <img src="images/spin.png">
 
+The spin is independent on the orientation of the coordinate system. However,
+due to the default orientation of flat and non-flat objects, orientation along
+coordinate system axes differ. For example, if a square has a spin [&alpha;, &beta;, &gamma;],
+a pyramid on that square should have spin [&alpha;, &beta;+90, &gamma;].
+
+[<kbd><img src="../examples/snapshots/spin.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/spin.html)
+[<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/spin-orientation.html)
+
 
 #### Color
 
@@ -1085,4 +1093,4 @@ cube.setAttribute( 'size', 10 );
 
 ---
 
-February, 2022
+March, 2022

@@ -47,11 +47,14 @@ Click on an image to run the example.
 ## [Objects properties](user-guide.md#properties)
 
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/object-as-position.html)
+
 [<kbd><img src="../examples/snapshots/sizes.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
-
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
-[<kbd><img src="../examples/snapshots/clone.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
 
+[<kbd><img src="../examples/snapshots/spin.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/spin.html)
+[<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/spin-orientation.html)
+
+[<kbd><img src="../examples/snapshots/clone.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
 [<kbd><img src="../examples/snapshots/style.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/style.html)
 
 ## [Common 2D objects](user-guide.md#common-2d-objects)
@@ -102,4 +105,4 @@ Click on an image to run the example.
 
 ---
 
-February, 2022
+March, 2022

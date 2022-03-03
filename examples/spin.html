@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Spin object</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Spin object</h1>
+	<p>Orienting objects in respect to coordinate system axes.</p>
+
+	<suica>
+		<demo>
+		
+		<square z="15" size="25" color="0.2,0.2,0.2" spin="0">
+		<square z="-15" size="25" color="white" spin="180">
+		<square x="15" size="25" color="lightgray" spin="90">
+		<square x="-15" size="25" color="gray" spin="-90">
+		<square y="15" size="25" color="peachpuff" spin="0,90">
+		<square y="-15" size="25" color="lightsalmon" spin="0,90">
+		
+		<pyramid z="15" size="20,20" color="0.2,0.2,0.2" spin="0,90">
+		<pyramid z="-15" size="20,20" color="white" spin="180,90">
+		<pyramid x="15" size="20,20" color="lightgray" spin="90,90">
+		<pyramid x="-15" size="20,20" color="gray" spin="-90,90">
+		<pyramid y="15" size="20,20" color="peachpuff" spin="0">
+		<pyramid y="-15" size="20,20" color="lightsalmon" spin="0,180">
+	</suica>
+
+</body>
+</html>
