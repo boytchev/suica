@@ -421,10 +421,6 @@ class Suica
 		this.lastTime = 0;
 		
 		
-		function setCameraLightPosition( x, y, z )
-		{
-		}
-		
 		function adjustDemoViewPoint( time )
 		{
 			var x = that.demoViewPoint.distance*Math.cos(time),
