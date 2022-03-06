@@ -1,6 +1,6 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) [Color](#color) [Point](#point) [Line](#line) [Square](#square) [Circle](#circle) [Polygon](#polygon) [Cube](#cube) [Sphere](#sphere) [Cylinder](#cylinder) [Prism](#prism) [Cone](#cone) [Pyramid](#pyramid) [Functions](#functions)
+[Suica](#suica) [Color](#color) [Point](#point) [Line](#line) [Square](#square) [Circle](#circle) [Polygon](#polygon) [Cube](#cube) [Sphere](#sphere) [Cylinder](#cylinder) [Prism](#prism) [Cone](#cone) [Pyramid](#pyramid) [Group](#group) [Functions](#functions)
 
 ### [Suica](user-guide.md#suica-canvas)
 
@@ -390,6 +390,29 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
+𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
+𝑜𝑏𝑗𝑒𝑐𝑡.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
+```
+
+
+### [Group](user-guide.md#group)
+
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.group( 𝑜𝑏𝑗𝑒𝑐𝑡, 𝑜𝑏𝑗𝑒𝑐𝑡, ... );
+𝑜𝑏𝑗𝑒𝑐𝑡.add( 𝑜𝑏𝑗𝑒𝑐𝑡, 𝑜𝑏𝑗𝑒𝑐𝑡, ... );
+𝑜𝑏𝑗𝑒𝑐𝑡.center = [𝑥,𝑦,𝑧];
+𝑜𝑏𝑗𝑒𝑐𝑡.x = 𝑥;
+𝑜𝑏𝑗𝑒𝑐𝑡.y = 𝑦;
+𝑜𝑏𝑗𝑒𝑐𝑡.z = 𝑧;
+𝑜𝑏𝑗𝑒𝑐𝑡.size = 𝑠𝑖𝑧𝑒;
+𝑜𝑏𝑗𝑒𝑐𝑡.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ];
+𝑜𝑏𝑗𝑒𝑐𝑡.width = 𝑤𝑖𝑑𝑡ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.height = ℎ𝑒𝑖𝑔ℎ𝑡;
+𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝑑𝑒𝑝𝑡ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 𝑜𝑏𝑗𝑒𝑐𝑡.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
 ```

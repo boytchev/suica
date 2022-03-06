@@ -10,6 +10,7 @@
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [spin](#spin) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
+	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Images and drawings](#images-and-drawings)
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
@@ -987,6 +988,18 @@ pyramid( 3, [0,0,0], 10, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/pyramid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
+
+
+
+
+## Advanced 3D objects
+
+The advanced 3D objects are constructed from other objects.
+
+
+### Group
+
+TO DO.
 
 
 

@@ -79,12 +79,13 @@
 //	2.-1.25 (220220) fullScreen, fullwindow
 //	2.-1.26 (220227) lookAt, lookAt in VR
 //	2.-1.27 (220303) spin
+//	2.-1.28 (220306) group
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.27 (220303)` );
+console.log( `Suica 2.-1.28 (220306)` );
 
 
 // control flags
@@ -996,6 +997,14 @@ class Suica
 
 		return new Pyramid( this, count, center, size, color, true );
 	} // Suica.pyramid
+
+	
+	group( ...groupElements )
+	{
+		this.parser?.parseTags();
+
+		return new Group( this, ...groupElements );
+	} // Suica.group
 
 } // class Suica
 

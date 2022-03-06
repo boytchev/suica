@@ -92,6 +92,12 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/pyramid.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
 
 
+## [Advanced 3D objects](user-guide.md#advanced-3d-objects)
+
+[<kbd><img src="../examples/snapshots/group.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/group.html)
+
+
+
 ## [Images and drawings](user-guide.md#images-and-drawings)
 
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
