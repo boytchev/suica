@@ -29,8 +29,7 @@ class Mesh
 		
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
-		this.meshFocus = null;
-		this.meshSpin = null;
+		this.meshSpin = [0, 0, 0];
 
 		suica.scene.add( solidMesh );
 	}
@@ -431,18 +430,6 @@ class Mesh
 		}
 
 	} // Mesh.updateOrientation
-
-	
-	get focus( )
-	{
-		return this.meshFocus;
-	}
-
-	set focus( focus )
-	{
-		this.meshFocus = focus;
-		this.updateOrientation();
-	}
 
 	
 	get spin( )
