@@ -90,7 +90,7 @@ console.log( `Suica 2.-1.28 (220306)` );
 
 
 // control flags
-const DEBUG_CALLS = false;
+const DEBUG_CALLS = !false;
 
 
 
@@ -208,6 +208,7 @@ class Suica
 		CONE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 0 },
 		PRISM: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 1 },
 		PYRAMID: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 0 },
+		GROUP: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:[1,1,1] },
 	} // Suica.DEFAULT
 	
 	
@@ -1622,6 +1623,7 @@ class StereoEffect
 // <prism ...>
 // <cone ...>
 // <pyramid ...>
+// <group>...</group>
 //
 
 
@@ -1652,6 +1654,7 @@ class HTMLParser
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
 		this.parseTag.ONTIME = this.parseTagONTIME;
+		
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.LINE = this.parseTagLINE;
 		this.parseTag.SQUARE = this.parseTagSQUARE;
@@ -1663,11 +1666,14 @@ class HTMLParser
 		this.parseTag.PRISM = this.parseTagPRISM;
 		this.parseTag.CONE = this.parseTagCONE;
 		this.parseTag.PYRAMID = this.parseTagPYRAMID;
+		this.parseTag.GROUP = this.parseTagGROUP;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
 		this.parseTag.DIV = this.skipTag;
 		this.parseTag.SPAN = this.skipTag;
+
+		this.openGroups = [];
 		
 	} // HTMLParser.constructor
 
@@ -1693,14 +1699,42 @@ class HTMLParser
 		for( var i = 0; i<elem.children.length; i++ )
 		{
 			// execute tag
-			var tagName = elem.children[i].tagName;
+			var tagElement = elem.children[i];
+			var tagName = tagElement.tagName;
+			var newObject = null;
 			if( this.parseTag[tagName] )
-				this.parseTag[tagName]( this.suica, elem.children[i] );
+			{
+				newObject = this.parseTag[tagName]( this.suica, tagElement );
+				
+				// if there is open group, add the new object to the latest open group
+				if( this.openGroups.length )
+					this.openGroups[ this.openGroups.length-1 ].add( newObject );
+			}
 			else
 				console.error( `error: unknown tag <${tagName}> in <${that.tagName}>` );
 
+			// if this tag is <group> then mark the gorup as open
+			// new objects will be automatically added to the latest open group
+			if( tagName == 'GROUP' )
+			{
+				this.openGroups.push( newObject );
+			}
+
 			// recurse into subtags
-			this.parseTagsInElement( this.suica, elem.children[i] );
+			this.parseTagsInElement( this.suica, tagElement );
+
+			// is this tag is </group> then close the group
+			if( tagName == 'GROUP' )
+			{
+				// post-process color
+				var group = this.openGroups.pop( );
+				
+				if( tagElement.hasAttribute('color') )
+				{
+					group.color = tagElement.getAttribute('color');
+				}
+			}
+
 		}
 	} // HTMLParser.parseTagsInElement
 		
@@ -1874,6 +1908,8 @@ class HTMLParser
 
 		elem.suicaObject = p;
 		
+		return p;
+		
 	} // HTMLParser.parseTagPOINT
 	
 	
@@ -1891,6 +1927,8 @@ class HTMLParser
 		
 		elem.suicaObject = p;
 		
+		return p;
+		
 	} // HTMLParser.parseTagLINE
 	
 	
@@ -1906,6 +1944,8 @@ class HTMLParser
 		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
+		
+		return p;
 		
 	} // HTMLParser.parseTagSQUARE
 	
@@ -1923,6 +1963,8 @@ class HTMLParser
 
 		elem.suicaObject = p;
 		
+		return p;
+		
 	} // HTMLParser.parseTagCUBE
 	
 	
@@ -1938,6 +1980,8 @@ class HTMLParser
 		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
 
 		elem.suicaObject = p;
+		
+		return p;
 		
 	} // HTMLParser.parseTagCIRCLE
 	
@@ -1956,6 +2000,8 @@ class HTMLParser
 
 		elem.suicaObject = p;
 		
+		return p;
+		
 	} // HTMLParser.parseTagPOLYGON
 	
 
@@ -1972,6 +2018,8 @@ class HTMLParser
 
 		elem.suicaObject = p;
 		
+		return p;
+		
 	} // HTMLParser.parseTagSPHERE
 	
 	
@@ -1987,6 +2035,8 @@ class HTMLParser
 		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
+		
+		return p;
 		
 	} // HTMLParser.parseTagCYLINDER
 	
@@ -2005,6 +2055,8 @@ class HTMLParser
 
 		elem.suicaObject = p;
 		
+		return p;
+		
 	} // HTMLParser.parseTagPRISM
 	
 	
@@ -2020,6 +2072,8 @@ class HTMLParser
 		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
 
 		elem.suicaObject = p;
+		
+		return p;
 		
 	} // HTMLParser.parseTagCONE
 	
@@ -2038,8 +2092,26 @@ class HTMLParser
 
 		elem.suicaObject = p;
 		
+		return p;
+		
 	} // HTMLParser.parseTagPYRAMID
 	
+	// <group id="..." center="..." color="..." size="..." spin="...">
+	parseTagGROUP( suica, elem )
+	{
+		var p = suica.group();
+		
+		p.center = elem.getAttribute('center') || Suica.DEFAULT.GROUP.CENTER;
+		p.size = Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.GROUP.SIZE );
+		p.spin = elem.getAttribute('spin') || Suica.DEFAULT.GROUP.SPIN;
+
+		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true ); // parse widthHeight, depth, spin
+
+		elem.suicaObject = p;		
+		
+		return p;
+		
+	} // HTMLParser.parseTagGROUP
 	
 } // HTMLParser
 
@@ -3857,6 +3929,8 @@ class Group
 {
 	constructor( suica, ...groupElements )
 	{
+		suica.debugCall( 'group' );
+
 		this.suica = suica;
 		
 		this.threejs = new THREE.Group();

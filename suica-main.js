@@ -89,7 +89,7 @@ console.log( `Suica 2.-1.28 (220306)` );
 
 
 // control flags
-const DEBUG_CALLS = false;
+const DEBUG_CALLS = !false;
 
 
 
@@ -207,6 +207,7 @@ class Suica
 		CONE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 0 },
 		PRISM: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 1 },
 		PYRAMID: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 0 },
+		GROUP: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:[1,1,1] },
 	} // Suica.DEFAULT
 	
 	

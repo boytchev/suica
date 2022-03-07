@@ -19,6 +19,8 @@ class Group
 {
 	constructor( suica, ...groupElements )
 	{
+		suica.debugCall( 'group' );
+
 		this.suica = suica;
 		
 		this.threejs = new THREE.Group();
