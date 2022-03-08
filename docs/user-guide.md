@@ -575,6 +575,9 @@ as its width. This maintains uniform horizontal size._
 _**Note <small><sup>2</sup></small>**: The object [line](#line) has no size,
 width, height and depth._
 
+_**Note <small><sup>3</sup></small>**: The object [group](#group) uses size as
+a scale factor, npt as an actual size._
+
 ```html
 HTML:
 <cube size="25">
@@ -646,6 +649,8 @@ components *red*, *green* and *blue*, while the
 | CSS<br>property | crimson | #DC143C | | rgb( 220, 20, 60 ) | hsl( 348, 91, 86 ) |
 | JS<br>code | "crimson" | 0xDC143C | [0.86,&nbsp;0.08,&nbsp;0.24] | rgb(&nbsp;220,&nbsp;20,&nbsp;60) | hsl(&nbsp;348,&nbsp;91,&nbsp;86) |
 
+_**Note**: Setting the color of object [group](#group) sets it to all its objects._
+
 
 #### Wireframe
 
@@ -707,6 +712,9 @@ b = a.clone;
 ```
 
 [<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
+
+_**Note**: Cloning an object [group](#group) also clones all its objects._
+
 
 #### Style
 
@@ -785,7 +793,7 @@ _**Note**: Lines have no properties x, y, z, size, width, height and depth._
 ### Square
 
 Object. Represents a regular square or a rectangle. Its properties are
-`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color`,
+`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color`, `spin`, 
 `wireframe`, `image` and `clone`. 
 
 ```html
@@ -807,7 +815,8 @@ square( [0,0,0], 10, 'crimson' );
 ### Circle
 
 Object. Represents a circle or an ellipse. Its properties are `center` (or `x`,
-`y` and `z`), `size` (or `width` and `height`), `color`, `wireframe`, `image` and `clone`. 
+`y` and `z`), `size` (or `width` and `height`), `color`, `spin`, `wireframe`,
+`image` and `clone`. 
 
 ```html
 HTML:
@@ -829,8 +838,8 @@ circle( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular polygon or an elliptical polygon. Its properties
 are `count`, `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
-`color`, `wireframe`, `image` and `clone`. The property `count` defines the number of
-sides of the polygon.
+`color`, `spin`, `wireframe`, `image` and `clone`. The property `count` defines
+the number of sides of the polygon.
 
 ```html
 HTML:
@@ -864,7 +873,7 @@ underlying technology._
 
 Object. Represents a regular cube or a deformed cube (called *cuboid*).
 Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color`, `wireframe`, `image` and `clone`. 
+and `depth`), `color`, `spin`, `wireframe`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -884,8 +893,9 @@ cube( [0,0,0], 10, 'crimson' );
 
 ### Sphere
 
-Object. Represents a regular sphere or a deformed sphere (spheroid). Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color`, `image` and `clone`. 
+Object. Represents a regular sphere or a deformed sphere (spheroid). Its
+properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
+and `depth`), `color`, `spin`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -907,7 +917,7 @@ sphere( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder).
 Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color`, `image` and `clone`. 
+and `depth`), `color`, `spin`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -929,8 +939,8 @@ cylinder( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular prism or prismoid (an elliptical prism). Its
 properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color`, `wireframe`, `image` and `clone`. The property `count`
-defines the number of sides of the prism.
+`height` and `depth`), `color`, `spin`, `wireframe`, `image` and `clone`. The
+property `count` defines the number of sides of the prism.
 
 ```html
 HTML:
@@ -949,9 +959,9 @@ prism( 3, [0,0,0], 10, 'crimson' );
 
 ### Cone
 
-Object. Represents a regilar cone or conoid (an elliptical cone). Its properties
+Object. Represents a regular cone or conoid (an elliptical cone). Its properties
 are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color`, `image` and `clone`. 
+`color`, `spin`, `image` and `clone`. 
 
 ```html
 HTML:
@@ -973,8 +983,8 @@ cone( [0,0,0], 10, 'crimson' );
 
 Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its
 properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color`, `wireframe`, `image` and `clone`. The property `count`
-defines the number of sides of the pyramid.
+`height` and `depth`), `color`, `spin`, `wireframe`, `image` and `clone`. The
+property `count` defines the number of sides of the pyramid.
 
 ```html
 HTML:
@@ -999,7 +1009,39 @@ The advanced 3D objects are constructed from other objects.
 
 ### Group
 
-TO DO.
+Object. Represents a collection of objects grouped into a single object. A group
+can be positioned, scaled, rotated and colored as other objects. Its properties
+are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
+`color`, `spin` and `clone`; it has method `add`.
+
+```html
+HTML:
+<group center="0,-10,0">
+   <sphere y="25" size="10">
+   <cone size="12,25">
+</group>
+```
+```js
+JS:
+group(
+   sphere( [0,25,0], 10 ),
+   cone( [0,0,0], [12,25] )
+);
+```
+
+[<kbd><img src="../examples/snapshots/group.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/group.html)
+[<kbd><img src="../examples/snapshots/group-tag.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/group-tag.html)
+
+A group is a special objects, and some aspects of group management are:
+- A group has own center, size and spin. Values of `size` of a group are scale
+factors, not sizes. Centers and spins of objects in a group are relative to the
+group's center and spin.
+- Group objects are defined between `<group>` and `</group>` tags or as
+parameters to `group(...)`. A group can be extended with new objects with
+`add(...)`.
+- Cloning a group will also clone all its objects, setting `color` of a group
+sets it to all its objects overwriting their individual colors.
+
 
 
 
