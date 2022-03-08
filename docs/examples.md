@@ -95,6 +95,7 @@ Click on an image to run the example.
 ## [Advanced 3D objects](user-guide.md#advanced-3d-objects)
 
 [<kbd><img src="../examples/snapshots/group.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/group.html)
+[<kbd><img src="../examples/snapshots/group-tag.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/group-tag.html)
 
 
 

@@ -1013,6 +1013,7 @@ class Suica
 window.style = function( object, properties )
 {
 	for( var n in properties ) object[n] = properties[n];
+	return object;
 }
 
 

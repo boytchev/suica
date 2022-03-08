@@ -1014,6 +1014,7 @@ class Suica
 window.style = function( object, properties )
 {
 	for( var n in properties ) object[n] = properties[n];
+	return object;
 }
 
 
@@ -2887,6 +2888,15 @@ class Point extends Mesh
 
 
 
+	style( properties )
+	{
+		for( var n in properties ) this[n] = properties[n];
+		return this;
+		
+	} // Point.style
+
+
+
 	get clone( )
 	{
 		var object = new Point( this.suica, this.center, this.size, this.color );
@@ -3082,6 +3092,14 @@ class Line extends Mesh
 	{
 		throw 'error: z is not available for line';
 	}
+
+
+	style( properties )
+	{
+		for( var n in properties ) this[n] = properties[n];
+		return this;
+		
+	} // Line.style
 
 
 	get clone( )

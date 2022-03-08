@@ -173,6 +173,14 @@ class Line extends Mesh
 	}
 
 
+	style( properties )
+	{
+		for( var n in properties ) this[n] = properties[n];
+		return this;
+		
+	} // Line.style
+
+
 	get clone( )
 	{
 		var object = new Line( this.suica, this.from, this.to, this.color );

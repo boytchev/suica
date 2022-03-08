@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Group</title>
+	<title>Group tag</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,31 +18,25 @@
 
 <body>
 
-	<h1>Group</h1>
-	<p>Grouping objects into a single object.</p>
+	<h1>Group tag</h1>
+	<p>Grouping objects into a single object in HTML tags.</p>
 
 	<suica>
-		<demo>
-		<group id="pawn" center="30,-5,0" color="dimgray">
+		<demo distance="120">
+		<group id="pawn" center="0,-10,0" color="dimgray" spin="0,180">
 			<sphere y="25" size="10">
 			<sphere y="19" size="10,2,10">
 			<cone size="12,25">
 			<cone size="20,10">
 		</group>
+		
+		<sphere size="29" color="black">
 	</suica>
 
 	<script>
-		pawn = pawn.clone;
-		pawn.color = 'linen';
-		pawn.center = [-30,-5,0];
-		
-		pawn = pawn.clone;
-		pawn.color = 'lightcoral';
-		pawn.center = [0,-5,30];
-		
-		pawn = pawn.clone;
-		pawn.color = 'peachpuff';
-		pawn.center = [0,-5,-30];
+		pawn.clone.style( {color: 'linen', center: [0,10,0], spin: [0,0]} );
+		pawn.clone.style( {color: 'lightcoral', center: [0,0,10], spin: [0,90]} );
+		pawn.clone.style( {color: 'peachpuff', center: [0,0,-10], spin: [180,90]} );
 	</script>
 </body>
 </html>

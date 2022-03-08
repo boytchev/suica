@@ -60,6 +60,15 @@ class Point extends Mesh
 
 
 
+	style( properties )
+	{
+		for( var n in properties ) this[n] = properties[n];
+		return this;
+		
+	} // Point.style
+
+
+
 	get clone( )
 	{
 		var object = new Point( this.suica, this.center, this.size, this.color );
