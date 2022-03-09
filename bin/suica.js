@@ -3188,6 +3188,7 @@ class Square extends Mesh
 	{
 		var object = new Square( this.suica, this.center, this.size, this.color );
 		
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		
@@ -3298,6 +3299,7 @@ class Cube extends Mesh
 	{
 		var object = new Cube( this.suica, this.center, this.size, this.color );
 		
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		
@@ -3435,6 +3437,7 @@ class Polygon extends Mesh
 	{
 		var object = new Polygon( this.suica, this.n, this.center, this.size, this.color );
 		
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		
@@ -3521,6 +3524,7 @@ class Sphere extends Mesh
 	{
 		var object = new Sphere( this.suica, this.center, this.size, this.color );
 		
+		object.spin = this.spin;
 		object.image = this.image;
 			
 		return object;
@@ -3706,6 +3710,7 @@ class Prism extends Mesh
 	{
 		var object = new Prism( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
 		
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		
@@ -3894,6 +3899,7 @@ class Pyramid extends Mesh
 	{
 		var object = new Pyramid( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
 
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		
@@ -4237,6 +4243,7 @@ class Group
 		object.center = this.center;
 		object.size = this.size;
 		object.spin = this.spin;
+		
 		return object;
 		
 	} // Group.clone

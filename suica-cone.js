@@ -155,6 +155,7 @@ class Pyramid extends Mesh
 	{
 		var object = new Pyramid( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
 
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		

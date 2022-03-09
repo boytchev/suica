@@ -115,6 +115,7 @@ class Polygon extends Mesh
 	{
 		var object = new Polygon( this.suica, this.n, this.center, this.size, this.color );
 		
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		

@@ -52,6 +52,7 @@ class Sphere extends Mesh
 	{
 		var object = new Sphere( this.suica, this.center, this.size, this.color );
 		
+		object.spin = this.spin;
 		object.image = this.image;
 			
 		return object;

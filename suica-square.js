@@ -62,6 +62,7 @@ class Square extends Mesh
 	{
 		var object = new Square( this.suica, this.center, this.size, this.color );
 		
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		

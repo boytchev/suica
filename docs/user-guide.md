@@ -1120,6 +1120,8 @@ original `suica.js` file.
 
 
 ### Questions and answers
+- [How to change the attribute of an object created in HTML?](#how-to-change-the-attribute-of-an-object-created-in-html)
+- [How to change the center of an object in respect to the object?](#how-to-change-the-center-of-an-object-in-respect-to-the-object)
 
 #### How to change the attribute of an object created in HTML?
 
@@ -1144,6 +1146,25 @@ cube.setAttribute( 'size', 10 );
 [<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-property-modification.html)
 [<kbd><img src="../examples/snapshots/qa-attribute-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification.html)
 [<kbd><img src="../examples/snapshots/qa-attribute-modification-button.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification-button.html)
+
+
+
+#### How to change the center of an object in respect to the object?
+
+The center of an object is important point as translation, scaling and rotation
+is done in respect to the center. To define a custom center of an object it can
+be put in a group. Then the center of the group can be used instead of a custom
+object center.
+
+<img src="images/custom-center.png">
+
+```js
+JS:
+p = group( pyramid([0,0,30]) );
+p.spin = [0,45];
+```
+
+[<kbd><img src="../examples/snapshots/qa-custom-center.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-custom-center.html)
 
 
 ---

@@ -309,6 +309,7 @@ class Group
 		object.center = this.center;
 		object.size = this.size;
 		object.spin = this.spin;
+		
 		return object;
 		
 	} // Group.clone

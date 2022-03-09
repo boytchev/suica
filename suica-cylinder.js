@@ -164,6 +164,7 @@ class Prism extends Mesh
 	{
 		var object = new Prism( this.suica, this.n, this.center, this.size, this.color, this.flatShading );
 		
+		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
 		
