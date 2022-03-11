@@ -81,12 +81,13 @@
 //	2.-1.26 (220227) lookAt, lookAt in VR
 //	2.-1.27 (220303) spin
 //	2.-1.28 (220306) group
+//	2.-1.29 (220311) tag <clone>
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.28 (220306)` );
+console.log( `Suica 2.-1.29 (220311)` );
 
 
 // control flags
@@ -1130,7 +1131,7 @@ window.degrees = function( radians )
 	return radians * 180/Math.PI;
 }
 
-window.sameAs = function( object )
+window.clone = function( object )
 {
 	if( object.clone )
 		return object.clone();
@@ -1668,6 +1669,8 @@ class HTMLParser
 		this.parseTag.CONE = this.parseTagCONE;
 		this.parseTag.PYRAMID = this.parseTagPYRAMID;
 		this.parseTag.GROUP = this.parseTagGROUP;
+
+		this.parseTag.CLONE = this.parseTagCLONE;
 		
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
@@ -2107,6 +2110,32 @@ class HTMLParser
 		p.spin = elem.getAttribute('spin') || Suica.DEFAULT.GROUP.SPIN;
 
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+
+		elem.suicaObject = p;		
+		
+		return p;
+		
+	} // HTMLParser.parseTagGROUP
+	
+	
+	// <clone id="..." src="..." center="..." color="..." size="..." spin="...">
+	parseTagCLONE( suica, elem )
+	{
+		var sourceId = elem.getAttribute('src');
+		if( !window[sourceId] )
+		{
+			console.error( `error: unknown object name '${sourceId}' in attribute 'src' of tag <clone>` );
+			return;
+		}
+
+		var p = window[sourceId].clone;
+
+		if( elem.hasAttribute('center') ) p.center = elem.getAttribute('center');
+		if( elem.hasAttribute('size') ) p.size = Suica.parseSize( elem.getAttribute('size') );
+		if( elem.hasAttribute('spin') ) p.spin = elem.getAttribute('spin');
+		if( elem.hasAttribute('color') ) p.color = elem.getAttribute('color');
+
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, wireframe:true} );
 
 		elem.suicaObject = p;		
 		

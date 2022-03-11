@@ -80,12 +80,13 @@
 //	2.-1.26 (220227) lookAt, lookAt in VR
 //	2.-1.27 (220303) spin
 //	2.-1.28 (220306) group
+//	2.-1.29 (220311) tag <clone>
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.28 (220306)` );
+console.log( `Suica 2.-1.29 (220311)` );
 
 
 // control flags
@@ -1129,7 +1130,7 @@ window.degrees = function( radians )
 	return radians * 180/Math.PI;
 }
 
-window.sameAs = function( object )
+window.clone = function( object )
 {
 	if( object.clone )
 		return object.clone();

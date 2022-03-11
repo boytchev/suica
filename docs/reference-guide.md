@@ -26,6 +26,7 @@ HTML:
 <background color="𝑐𝑜𝑙𝑜𝑟">
 <oxyz size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
 <demo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" altitude="𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒">
+<clone id="𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡" src="𝑜𝑏𝑗𝑒𝑐𝑡">
 <ontime src="𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛">
 ```
 ```css
@@ -49,6 +50,7 @@ JS:
 𝑠𝑢𝑖𝑐𝑎.background( 𝑐𝑜𝑙𝑜𝑟 );
 𝑠𝑢𝑖𝑐𝑎.oxyz( 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 𝑠𝑢𝑖𝑐𝑎.demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
+𝑠𝑢𝑖𝑐𝑎.clone( 𝑜𝑏𝑗𝑒𝑐𝑡 );
 𝑠𝑢𝑖𝑐𝑎.onTime( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 );
 𝑠𝑢𝑖𝑐𝑎.onTime( );
 
