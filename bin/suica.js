@@ -1864,29 +1864,29 @@ class HTMLParser
 	} // HTMLParser.parseTagONTIME
 	
 	
-	parseAttributes( elem, object, widthHeight, depth, wireframe, spin )
+	parseAttributes( elem, object, parseOptions = {} )
 	{
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) object.z = Number(elem.getAttribute('z')); 
 		
-		if( widthHeight )
+		if( parseOptions.widthHeight )
 		{
 			if( elem.hasAttribute('width') ) object.width = Number(elem.getAttribute('width')); 
 			if( elem.hasAttribute('height') ) object.height = Number(elem.getAttribute('height')); 
 		}
 		
-		if( depth )
+		if( parseOptions.depth )
 		{
 			if( elem.hasAttribute('depth') ) object.depth = Number(elem.getAttribute('depth')); 
 		}
 		
-		if( spin )
+		if( parseOptions.spin )
 		{
 			if( elem.hasAttribute('spin') ) object.spin = elem.getAttribute('spin'); 
 		}
 		
-		if( wireframe )
+		if( parseOptions.wireframe )
 		{
 			if( elem.hasAttribute('wireframe') ) object.wireframe = ['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase()) >= 0;
 		}
@@ -1942,7 +1942,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -1960,7 +1960,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -1978,7 +1978,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -1997,7 +1997,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, false, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -2015,7 +2015,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.SPHERE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -2033,7 +2033,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -2052,7 +2052,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -2070,7 +2070,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -2089,7 +2089,7 @@ class HTMLParser
 			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, true, true, true, true );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
 
 		elem.suicaObject = p;
 		
@@ -2106,7 +2106,7 @@ class HTMLParser
 		p.size = Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.GROUP.SIZE );
 		p.spin = elem.getAttribute('spin') || Suica.DEFAULT.GROUP.SPIN;
 
-		suica.parserReadonly.parseAttributes( elem, p, true, true, false, true ); // parse widthHeight, depth, spin
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
 
 		elem.suicaObject = p;		
 		
