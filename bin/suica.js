@@ -461,6 +461,10 @@ class Suica
 				default: console.error( 'error: Unknown orientation in <suica>' );
 			};
 			that.camera.lookAt( that.scene.position );
+			
+			//the following line is required for smooth animation on old laptops
+			that.camera.updateMatrixWorld();
+			
 			//that.debugObject.position.set( that.light.position.x/4, that.light.position.y/4, that.light.position.z/4 );
 			//that.light.position.set( that.light.position.x/10, that.light.position.y/10, that.light.position.z/10 );
 			//console.log(that.light.position);
