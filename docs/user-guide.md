@@ -12,6 +12,7 @@
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Images and drawings](#images-and-drawings)
+    - [Drawing](#drawing) [<small> [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke)  | [fillText](#filltext) </small>] 
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -1054,7 +1055,106 @@ sets it to all its objects overwriting their individual colors.
 
 ## Images and drawings
 
-TBD
+Images and drawings are 2D images that can be stamped onto 2D and 3D objects in
+Suica. Images are read from image files, while drawings are generated in Suica.
+
+
+### Images
+
+TO DO
+
+
+### Drawing
+
+Command. Defines a 2D drawing canvas.
+
+```js
+drawing( width, height, color );
+```
+
+The size of the canvas is set via parameters `width` and `height`. By default
+the width is 32 pixels and the height is equal to the width. The third parameter
+is the color to fill in the canvas.
+
+Example of creating drawing canvases with different sizes:
+
+```js
+var a = drawing( 32 );
+var b = drawing( 32, 48, 'crimson' );
+```
+
+Drawing is done by creating paths with a virtual pen similar to the [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D).
+
+#### MoveTo
+
+Command. Moves the virtual pen to (`x`,`y`) without generating a path.
+
+```js
+moveTo( x, y );
+```
+	
+#### LineTo
+
+Command. Draws a straight line to (`x`,`y`).
+
+```js
+lineTo( x, y );
+```
+		
+#### CurveTo
+
+Command. Draws a curved line to (`x`,`y`). The curvature is defined as an
+intermediate curve-attracting point at (`mx`,`my`).
+
+```js
+curveTo( mx, my, x, y );
+```
+		
+#### Arc
+
+Command. Draws a circle with center (`x`,`y`), radius `r`, starting from angle
+`from` and ending at angle `to`. Angles are measured in degrees. If the angles
+are not provided, a full circle is drawn, otherwise a circular arc is drawn.
+
+```js
+arc( x, y, r, from, to);
+```
+
+#### Stroke
+
+Command. Draws a line over the current path with given `color` and line `width`.
+Next commands will start a new path.
+
+```js
+stroke( color, width );
+```
+	
+#### Fill
+
+Command. Fills the shape surrounded by the path with given `color`.
+Next commands will start a new path.
+
+```js
+fill( color );
+```
+	
+#### FillAndStroke
+
+Command. Fills the shape surrounded by the path with given `fillColor` and draws
+a line with `strokeColor` and given width. Next commands will start a new path.
+
+```js
+fillAndStroke( fillColor, strokeColor, width );
+```
+
+#### FillText
+
+Command. Draws a `text` at given coordinates (`x`,`y`) with `color` and `font`.
+
+```js
+fillText( x, y, text, color, font )
+```	
+	
 
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;[<kbd><img src="../examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 
