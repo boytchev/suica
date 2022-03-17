@@ -1056,7 +1056,7 @@ sets it to all its objects overwriting their individual colors.
 ## Images and drawings
 
 Images and drawings are 2D images that can be stamped onto 2D and 3D objects in
-Suica. Images are read from image files, while drawings are generated in Suica.
+Suica. Images are read from image files, while drawings are drawn in Suica.
 
 
 ### Images
@@ -1064,52 +1064,73 @@ Suica. Images are read from image files, while drawings are generated in Suica.
 TO DO
 
 
-### Drawing
+### Drawings
 
-Command. Defines a 2D drawing canvas.
+Suica drawings are based on on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D).
+Lines are drawn by moving a virtual pen over the canvas. Filled areas are drawn
+by defining their boundary with the virtual pen.
 
-```js
-drawing( width, height, color );
-```
+#### Drawing
 
-The size of the canvas is set via parameters `width` and `height`. By default
-the width is 32 pixels and the height is equal to the width. The third parameter
-is the color to fill in the canvas.
-
-Example of creating drawing canvases with different sizes:
+Command. Defines a 2D drawing canvas. Parameters are `width` and `height` for
+the canvas size in pixels; and `color` for the initial background colour. By
+default the size is 32&times;32 pixels. If *height* is not provided, it is
+assumed to be the same as the *width*. If `colour` is set, the background of the
+canvas is filled with this color; otherwise it is kept *transparent*.
 
 ```js
 var a = drawing( 32 );
 var b = drawing( 32, 48, 'crimson' );
 ```
 
-Drawing is done by creating paths with a virtual pen similar to the [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D).
+[<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-transparent.html)
+[<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-opaque.html)
+
+When a drawing canvas is initialized and stored in a variable, this variable has
+commands for drawing on the canvas.
 
 #### MoveTo
 
-Command. Moves the virtual pen to (`x`,`y`) without generating a path.
+Command. Sets the position of the virtual. This command moves the virtual
+pen from its current location to (`x`,`y`) without generating a path. This is
+used to set the starting point of a line or to start a new line, that is not
+connected to the current line. By default the both *x* and *y* are 0.
+
+<img src="images/moveto-lineto.png">
 
 ```js
-moveTo( x, y );
+moveTo( 10, 0 );
 ```
 	
 #### LineTo
 
-Command. Draws a straight line to (`x`,`y`).
+Command. Adds a line segment to the path. This command moves the virtual pen
+along a straight line from its current location to (`x`,`y`) and adds that line
+to the current path. This is used to define straignt line sections of the path.
+By default the both *x* and *y* are 0.
 
 ```js
-lineTo( x, y );
+lineTo( 10, 0 );
 ```
+
+[<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-moveto-lineto.html)
 		
 #### CurveTo
 
-Command. Draws a curved line to (`x`,`y`). The curvature is defined as an
-intermediate curve-attracting point at (`mx`,`my`).
+Command. Adds a curved segment to the path. This command moves the virtual pen
+along a curved line from its current location to (`x`,`y`) and adds that curve
+to the current path. The line is quadratic curve and is attracted towards point
+(`mx`, `my`), which is defined by the first pair of parameters of *curveTo*.
+By default all coordinates *mx*, *my*, *x* and *y* are 0.
+
+<img src="images/curveto.png">
 
 ```js
-curveTo( mx, my, x, y );
+curveTo( 10, 0, 20, 15 );
 ```
 		
+[<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
+
 #### Arc
 
 Command. Draws a circle with center (`x`,`y`), radius `r`, starting from angle

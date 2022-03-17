@@ -1,6 +1,6 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) [Color](#color) [Point](#point) [Line](#line) [Square](#square) [Circle](#circle) [Polygon](#polygon) [Cube](#cube) [Sphere](#sphere) [Cylinder](#cylinder) [Prism](#prism) [Cone](#cone) [Pyramid](#pyramid) [Group](#group) [Functions](#functions)
+[Suica](#suica) [Color](#color) [Point](#point) [Line](#line) [Square](#square) [Circle](#circle) [Polygon](#polygon) [Cube](#cube) [Sphere](#sphere) [Cylinder](#cylinder) [Prism](#prism) [Cone](#cone) [Pyramid](#pyramid) [Group](#group) [Drawing](#drawing) [Functions](#functions)
 
 ### [Suica](user-guide.md#suica-canvas)
 
@@ -431,6 +431,16 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 𝑜𝑏𝑗𝑒𝑐𝑡.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
+```
+
+
+### [Drawing](user-guide.md#drawing)
+```js
+JS:
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔 = 𝑠𝑢𝑖𝑐𝑎.drawing( 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡, 𝑐𝑜𝑙𝑜𝑟 );
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.moveTo( 𝑥, 𝑦 );
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.lineTo( 𝑥, 𝑦 );
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
 ```
 
 

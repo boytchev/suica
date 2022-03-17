@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Drawing &ndash; curveTo</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Drawing &ndash; curveTo</h1>
+	<p>Drawing a curved line with curveTo.</p>
+
+	<suica>
+		<demo>
+		<cube id="a" color="white">
+	</suica>
+	
+	<script>
+		var pic = drawing( 100, 100, 'lightgray' );
+			pic.moveTo( 0, 0 );
+			pic.curveTo( 50, 150, 100, 0 );
+		fillAndStroke( 'peachpuff', 'lightsalmon', 10 );
+		
+		a.image = pic;
+	</script>
+	
+</body>
+</html>

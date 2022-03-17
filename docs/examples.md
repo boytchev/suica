@@ -103,6 +103,12 @@ Click on an image to run the example.
 
 ## [Images and drawings](user-guide.md#images-and-drawings)
 
+[<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-transparent.html)
+[<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-opaque.html)
+
+[<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-moveto-lineto.html)
+[<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
+
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 [<kbd><img src="../examples/snapshots/cube-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 

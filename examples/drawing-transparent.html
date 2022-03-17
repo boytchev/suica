@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Drawing on a transparent canvas</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Drawing on a transparent canvas</h1>
+	<p>Drawing on a transparent (colorless) canvas.</p>
+
+	<suica>
+		<demo>
+		<cube id="a" color="white">
+	</suica>
+	
+	<script>
+		var pic = drawing( 100, 100 );
+			pic.moveTo( 50, 10 );
+			pic.lineTo( 90, 10 );
+			pic.lineTo( 90, 90 );
+			pic.lineTo( 10, 90 );
+			pic.lineTo( 10, 10 );
+			pic.lineTo( 50, 10 );
+		stroke( 'lightsalmon', 6 );	
+			pic.moveTo( 20, 20 );
+			pic.lineTo( 80, 20 );
+			pic.lineTo( 80, 80 );
+			pic.lineTo( 20, 80 );
+			pic.lineTo( 20, 20 );
+		fillAndStroke( 'peachpuff', 'black', 1 );	
+			pic.moveTo( 0, 0 );
+			pic.lineTo( 100, 0 );
+			pic.lineTo( 100, 100 );
+			pic.lineTo( 0, 100 );
+			pic.lineTo( 0, 0 );
+		stroke( 'black', 1 );		
+		
+		a.image = pic;
+	</script>
+	
+</body>
+</html>
