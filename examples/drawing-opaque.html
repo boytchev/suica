@@ -28,24 +28,27 @@
 	
 	<script>
 		var pic = drawing( 100, 100, 'linen' );
-			pic.moveTo( 50, 10 );
-			pic.lineTo( 90, 10 );
-			pic.lineTo( 90, 90 );
-			pic.lineTo( 10, 90 );
-			pic.lineTo( 10, 10 );
-			pic.lineTo( 50, 10 );
+		
+		moveTo( 50, 10 );
+			lineTo( 90, 10 );
+			lineTo( 90, 90 );
+			lineTo( 10, 90 );
+			lineTo( 10, 10 );
+			lineTo( 50, 10 );
 		stroke( 'lightsalmon', 6 );	
-			pic.moveTo( 20, 20 );
-			pic.lineTo( 80, 20 );
-			pic.lineTo( 80, 80 );
-			pic.lineTo( 20, 80 );
-			pic.lineTo( 20, 20 );
+		
+		moveTo( 20, 20 );
+			lineTo( 80, 20 );
+			lineTo( 80, 80 );
+			lineTo( 20, 80 );
+			lineTo( 20, 20 );
 		fillAndStroke( 'peachpuff', 'black', 1 );	
-			pic.moveTo( 0, 0 );
-			pic.lineTo( 100, 0 );
-			pic.lineTo( 100, 100 );
-			pic.lineTo( 0, 100 );
-			pic.lineTo( 0, 0 );
+		
+		moveTo( 0, 0 );
+			lineTo( 100, 0 );
+			lineTo( 100, 100 );
+			lineTo( 0, 100 );
+			lineTo( 0, 0 );
 		stroke( 'black', 1 );	
 		
 		a.image = pic;
