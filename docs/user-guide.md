@@ -1078,6 +1078,11 @@ default the size is 32&times;32 pixels. If *height* is not provided, it is
 assumed to be the same as the *width*. If `colour` is set, the background of the
 canvas is filled with this color; otherwise it is kept *transparent*.
 
+The coordinate system of a drawing has origin (0,0) at the bottom left side of
+the canvas. The X axis extends to the right, Y extends to the top.
+
+<img src="images/drawing-coordinates.png">
+
 ```js
 var a = drawing( 32 );
 var b = drawing( 32, 48, 'crimson' );
@@ -1128,18 +1133,30 @@ By default all coordinates *mx*, *my*, *x* and *y* are 0.
 ```js
 curveTo( 10, 0, 20, 15 );
 ```
-		
+
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
 
 #### Arc
 
-Command. Draws a circle with center (`x`,`y`), radius `r`, starting from angle
-`from` and ending at angle `to`. Angles are measured in degrees. If the angles
-are not provided, a full circle is drawn, otherwise a circular arc is drawn.
+Command. Adds a circle оr a circular arc to the path. This command creates an
+arc from a circle with center (`x`,`y`) and `radius`. The arc stars from angle
+`from` and ends at angle `to`, clockwise. Coordinates and radius are measured in
+pixels, angles are measured in degrees. If the angles are not provided, a full
+circle is generated.
+
+The coordinate system of a drawing has origin (0,0) at the bottom left side of
+the canvas. The X axis extends to the right, Y extends to the top.
+
+<img src="images/drawing-arc.png">
+
 
 ```js
-arc( x, y, r, from, to);
+arc( 10, 0, 5);
+arc( 10, 0, 5, 0, 180);
 ```
+
+[<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-arc.html)
+
 
 #### Stroke
 

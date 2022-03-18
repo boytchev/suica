@@ -109,6 +109,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-moveto-lineto.html)
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
 
+[<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-arc.html)
+
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 [<kbd><img src="../examples/snapshots/cube-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
 

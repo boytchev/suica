@@ -2226,7 +2226,7 @@ class Drawing
 
 	arc( x = 0, y = 0, r = 10, from = 0, to = 360 )
 	{
-		this.context.arc( x, this.canvas.height-y, r, from*Math.PI/2, to*Math.PI/2 );
+		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90) );
 	} // Drawing.arc
 	
 	
