@@ -113,7 +113,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-stroke.html)
 
 [<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill.html)
-[<kbd><img src="../examples/snapshots/drawing-fillText.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-fillText.html)
+[<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-filltext.html)
 
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 
