@@ -1160,41 +1160,61 @@ arc( 10, 0, 5, 0, 180);
 
 #### Stroke
 
-Command. Draws a line over the current path with given `color` and line `width`.
-Next commands will start a new path.
+Command. Draws a line over the current path. The line has given `color` and 
+`width`. If the `close` parameter is *true*, then the end of the path is
+conneted to the beginning of the path. The commands after *stroke* start a new
+path.
 
 ```js
-stroke( color, width );
+stroke( 'crimson' );
+stroke( 'crimson', 10, true );
 ```
+
+[<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-stroke.html)
+	
 	
 #### Fill
 
-Command. Fills the shape surrounded by the path with given `color`.
-Next commands will start a new path.
+Command. Fills the area defined by a path. The area is filledwith the given
+`color`. Next commands after *fill* start a new path.
 
 ```js
-fill( color );
+fill( 'crimson' );
 ```
+	
+[<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill.html)
+	
 	
 #### FillAndStroke
 
-Command. Fills the shape surrounded by the path with given `fillColor` and draws
-a line with `strokeColor` and given width. Next commands will start a new path.
+Command. Fills the area defined by a path and draw a line along the boundary of
+the area. This command is a combination of [fill](#fill) followed immediately
+by [stroke](#stroke) using the same path. The parameters of *fillAndStroke* are
+the `color` of filling, followed by `color`, `width` and `close` of stroking.
+Next commands after *fillAndStroke* start a new path.
 
 ```js
-fillAndStroke( fillColor, strokeColor, width );
+fillAndStroke( 'crimson', 'white' );
+fillAndStroke( 'crimson', 'white', 10, true );
 ```
+
+[<kbd><img src="../examples/snapshots/drawing-fillandstroke.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-fillandstroke.html)
+
 
 #### FillText
 
-Command. Draws a `text` at given coordinates (`x`,`y`) with `color` and `font`.
+Command. Draws a text. The `text` is drawn at given coordinates (`x`,`y`) with
+given `color` and `font` style. The *font* parameter is a string with a
+[CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description.
 
 ```js
-fillText( x, y, text, color, font )
+fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 ```	
 	
+[<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-filltext.html)
 
-[<kbd><img src="../examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)&emsp;[<kbd><img src="../examples/snapshots/cube-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
+
+[<kbd><img src="../examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 
 
 

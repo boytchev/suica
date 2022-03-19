@@ -110,9 +110,13 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
 
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-arc.html)
+[<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-stroke.html)
+
+[<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill.html)
+[<kbd><img src="../examples/snapshots/drawing-fillText.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-fillText.html)
 
 [<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
-[<kbd><img src="../examples/snapshots/cube-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/cube-image.html)
+
 
 ## [Questions and answers](user-guide.md#questions-and-answers)
 

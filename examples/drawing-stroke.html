@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Cube image</title>
+	<title>Drawing &ndash; stroke</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,8 +18,8 @@
 
 <body>
 
-	<h1>Cube image</h1>
-	<p>Decorating a cube with custom drawing.</p>
+	<h1>Drawing &ndash; stroke</h1>
+	<p>Drawing a closed or open line.</p>
 
 	<suica>
 		<demo>
@@ -28,14 +28,24 @@
 	
 	<script>
 		var pic = drawing( 100, 100, 'lightgray' );
-			arc( 25, 25, 15 );
-		fillAndStroke( 'crimson', 'white', 10 );	
-			arc( 100-25, 25, 15 );
-		fillAndStroke( 'forestgreen', 'white', 10 );	
-			arc( 25, 100-25, 15 );
-		fillAndStroke( 'cornflowerblue', 'white', 10 );	
-			arc( 100-25, 100-25, 15 );
-		fillAndStroke( 'rgb(255,200,0)', 'white', 10 );	
+		
+		moveTo( 10, 90 );
+			lineTo( 10, 10 );
+			lineTo( 90, 10 );
+			lineTo( 90, 90 );
+		stroke( 'lightsalmon', 10 );
+		
+		moveTo( 22, 78 );
+			lineTo( 22, 22 );
+			lineTo( 78, 22 );
+			lineTo( 78, 78 );
+		stroke( 'white', 7, true );
+		
+		moveTo( 32, 68 );
+			lineTo( 32, 32 );
+			lineTo( 68, 32 );
+			lineTo( 68, 68 );
+		stroke( 'dimgray', 5 );
 		
 		a.image = pic;
 	</script>

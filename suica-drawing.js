@@ -8,9 +8,9 @@
 // curveTo( mx, my, x, y )
 // arc( x, y, r, from, to )
 // fillText( x, y, text, color, font )
-// stroke( color, width )
+// stroke( color, width, close )
 // fill( color )
-// fillAndStroke( fillColor, strokeColor, width )
+// fillAndStroke( fillColor, strokeColor, width, close )
 //
 //===================================================
 
@@ -91,9 +91,11 @@ class Drawing
 	
 	
 
-	stroke( color = 'black', width = 1 )
+	stroke( color = 'black', width = 1, close = false )
 	{
 		this.texture = null; // clear the texture
+		
+		if( close ) this.context.closePath();
 		
 		this.context.strokeStyle = color;
 		this.context.lineWidth = width;
@@ -118,10 +120,12 @@ class Drawing
 	
 	
 
-	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1 )
+	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
 	{
 		this.texture = null; // clear the texture
 		
+				if( close ) this.context.closePath();
+
 		this.context.strokeStyle = strokeColor;
 		this.context.lineWidth = width;
 		this.context.stroke( );
@@ -138,7 +142,10 @@ class Drawing
 	get image( )
 	{
 		if( !this.texture )
+		{
 			this.texture = new THREE.CanvasTexture( this.canvas );
+			this.texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+		}
 			
 		return this.texture;
 	} // Drawing.image
@@ -211,10 +218,10 @@ window.fillText = function ( x = 0, y = 0, text = '', color = 'black', font = '2
 
 
 
-window.stroke = function ( color = 'black', width = 1 )
+window.stroke = function ( color = 'black', width = 1, close = false )
 {
 	Drawing.precheck();
-	Drawing.current.stroke( color, width );
+	Drawing.current.stroke( color, width, close );
 }
 	
 	
@@ -229,10 +236,10 @@ window.fill = function ( color = 'gray' )
 
 
 
-window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', width = 1 )
+window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
 {
 	Drawing.precheck();
-	Drawing.current.fillAndStroke( fillColor, strokeColor, width );
+	Drawing.current.fillAndStroke( fillColor, strokeColor, width, close );
 }
 
 

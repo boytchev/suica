@@ -2,52 +2,6 @@
 // Suica 2.0
 // CC-3.0-SA-NC
 //
-//	<suica width="..." height="..." style="..." orientation="..." background="..." perspective="..." orthographic="..." anaglyph="..." stereo="..." vr>
-//		<background color="...">
-//		<oxyz size="..." color="...">
-//		<demo distance="..." altitude="...">
-//		<ontime src="...">
-//		<point id="..." center="..." x="" y="" z="" color="..." size="..." spin="...">
-//		<line id="..." center="..." from="" color="..." size="..." spin="...">
-//		<square id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
-//		<circle id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
-//		<polygon id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
-//		<cube id="..." center="..." x="" y="" z="" color="..." size="..." spin="..." wireframe="...">
-//		<sphere id="..." center="..." x="" y="" z="" color="..." size="..." spin="...">
-//		<cylinder ...>
-//		<prism ...>
-//		<cone ...>
-//		<pyramid ...>
-//	</suica>
-//
-//	<script>
-//		{suica.}background( color )
-//		{suica.}oxyz( size, color )
-//		{suica.}demo( distance, altitude )
-//		{suica.}onTime( src )
-//		{suica.}point( center, size, color )
-//		{suica.}point( center/from, to, color )
-//		{suica.}square( center, size, color )
-//		{suica.}circle( center, size, color )
-//		{suica.}polygon( count, center, size, color )
-//		{suica.}cube( center, size, color )
-//		{suica.}sphere( center, size, color )
-//		{suica.}cylinder( center, size, color )
-//		{suica.}prism( count, center, size, color )
-//		{suica.}cone( center, size, color )
-//		{suica.}pyramid( count, center, size, color )
-//		
-//		style( object, style )
-//
-//		random( from, to )
-//		random( array )
-//		degrees( radians )
-//		radians( degrees )
-//		style( object, style )
-//
-//	</script>
-//
-//		
 //===================================================
 //
 // History
@@ -81,12 +35,13 @@
 //	2.-1.27 (220303) spin
 //	2.-1.28 (220306) group
 //	2.-1.29 (220311) tag <clone>
+//	2.-1.30 (220319) parameter 'close' in stroke and fillAndStroke
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.29 (220311)` );
+console.log( `Suica 2.-1.30 (220319)` );
 
 
 // control flags

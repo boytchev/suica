@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Drawing &ndash; fillAndStroke</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Drawing &ndash; fillAndStroke</h1>
+	<p>Drawing a color-filled area with a border.</p>
+
+	<suica>
+		<demo>
+		<cube id="a" color="white">
+	</suica>
+	
+	<script>
+		var pic = drawing( 100, 100, 'white' );
+		
+		arc( 50, 50, 100 );
+		fill( 'linen' );	
+		
+		arc( 25, 25, 15 );
+		fillAndStroke( 'peachpuff', 'black', 10 );	
+		
+		arc( 100-25, 25, 15 );
+		fillAndStroke( 'white', 'black', 10 );	
+		
+		arc( 25, 100-25, 15 );
+		fillAndStroke( 'lightgray', 'black', 10 );	
+	
+		arc( 100-25, 100-25, 15 );
+		fillAndStroke( 'lightsalmon', 'black', 10 );	
+		
+		a.image = pic;
+	</script>
+	
+</body>
+</html>
