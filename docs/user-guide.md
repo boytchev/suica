@@ -1094,6 +1094,14 @@ var b = drawing( 32, 48, 'crimson' );
 When a drawing canvas is initialized and stored in a variable, this variable has
 commands for drawing on the canvas.
 
+Drawings can be applied to points and lines. For points the drawings act like
+sprites &ndash; they are not subject to orientation and they always face the
+screen. For lines drawings are used to created dot-and-dash patterns.
+
+[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-custom-point.html)
+[<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-dotted-lines.html)
+
+
 #### MoveTo
 
 Command. Sets the position of the virtual. This command moves the virtual
@@ -1136,6 +1144,13 @@ curveTo( 10, 0, 20, 15 );
 
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
 
+A more complex curve can be constructed by joining individual curves.
+
+<img src="images/drawing-heart.png">
+
+[<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-heart-point.html)
+
+
 #### Arc
 
 Command. Adds a circle оr a circular arc to the path. This command creates an
@@ -1144,18 +1159,18 @@ arc from a circle with center (`x`,`y`) and `radius`. The arc stars from angle
 pixels, angles are measured in degrees. If the angles are not provided, a full
 circle is generated.
 
-The coordinate system of a drawing has origin (0,0) at the bottom left side of
-the canvas. The X axis extends to the right, Y extends to the top.
-
-<img src="images/drawing-arc.png">
-
-
 ```js
 arc( 10, 0, 5);
 arc( 10, 0, 5, 0, 180);
 ```
 
+The coordinate system of a drawing has origin (0,0) at the bottom left side of
+the canvas. The X axis extends to the right, Y extends to the top.
+
+<img src="images/drawing-arc.png">
+
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-arc.html)
+
 
 
 #### Stroke
@@ -1213,8 +1228,6 @@ fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 	
 [<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-filltext.html)
 
-
-[<kbd><img src="../examples/snapshots/point-image.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 
 
 

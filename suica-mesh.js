@@ -67,7 +67,7 @@ class Mesh
 				sizeAttenuation: true,
 				map: new THREE.CanvasTexture( canvas ),
 				transparent: true,
-				alphaTest: 0.5,
+				alphaTest: 0.1,
 			});
 
 		// solid material

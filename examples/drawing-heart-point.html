@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Point image</title>
+	<title>Drawing heart points</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,34 +18,31 @@
 
 <body>
 
-	<h1>Point image</h1>
-	<p>Defining custom image for points.</p>
+	<h1>Drawing heart points</h1>
+	<p>Defining custom heart image for points.</p>
 
 	<suica>
 		<demo>
 	</suica>
 	
 	<script>
+		var heart = drawing( 128 );
 
-		var cross = drawing( 32 );
-			moveTo( 0, 0 );
-			lineTo( 32, 32 );
-			moveTo( 0, 32 );
-			lineTo( 32, 0 );
-		stroke( 'blue', 8 );
+		moveTo( 64, 8 );
+			curveTo( 120, 64, 120, 96 );
+			curveTo( 120, 120, 96, 120 );
+			curveTo( 64, 120, 64, 96 );
+			curveTo( 64, 120, 32, 120 );
+			curveTo( 8, 120, 8, 96 );
+			curveTo( 8, 64, 64, 8 );
+		fill( 'white' );
 		
-		var heart = drawing( 32 );
-			moveTo( 16, 0 );
-			curveTo( 30, 16, 30, 24 );
-			curveTo( 30, 30, 24, 30 );
-			curveTo( 16, 30, 16, 24 );
-			curveTo( 16, 30, 8, 30 );
-			curveTo( 2, 30, 2, 24 );
-			curveTo( 2, 16, 16, 2 );
-		fillAndStroke( 'pink', 'black', 4 );
-		
-		
-		
+		var colors = [
+			'lightsalmon', 'peachpuff', 'linen',
+			'lightsalmon', 'peachpuff', 'linen',
+			'lightgray', 'dimgray', 'white', 'black' ];
+
+
 		// number of points
 		const N = 200;
 		
@@ -53,9 +50,7 @@
 		for( var i=0; i<N; i++ )
 		{
 			var center = [random(-50,50), random(-30,30), random(-50,50)];
-			
-			var p = point( center, random(5,25), 'white' );
-			p.image = random( [cross, heart] );
+			point( center, random(5,25), random(colors) ).image = heart;
 		}
 		
 		

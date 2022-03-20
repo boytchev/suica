@@ -106,16 +106,20 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-transparent.html)
 [<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-opaque.html)
 
+[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-custom-point.html)
+[<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-dotted-lines.html)
+
 [<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-moveto-lineto.html)
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
 
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-arc.html)
-[<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-stroke.html)
+[<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-heart-point.html)
 
+[<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-stroke.html)
 [<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill.html)
+
 [<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-filltext.html)
 
-[<kbd><img src="../examples/snapshots/point-image.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/point-image.html)
 
 
 ## [Questions and answers](user-guide.md#questions-and-answers)
