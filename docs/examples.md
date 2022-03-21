@@ -58,6 +58,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/clone-tag.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/clone-tag.html)
 
 [<kbd><img src="../examples/snapshots/style.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/style.html)
+[<kbd><img src="../examples/snapshots/image-file.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/image-file.html)
+
 [<kbd><img src="../examples/snapshots/images.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/images.html)
 
 ## [Common 2D objects](user-guide.md#common-2d-objects)

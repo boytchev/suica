@@ -12,9 +12,10 @@
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Images and drawings](#images-and-drawings)
-    - [Drawing](#drawing) [<small> [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke)  | [fillText](#filltext) </small>] 
+    - [Images](#images-1) [<small> [image](#image-1) </small>] 
+    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke)  | [fillText](#filltext) </small>] 
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
-- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
+- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
 
 ## About
@@ -691,10 +692,11 @@ HTML:
 ```
 ```js
 JS:
+a.image = 'https://boytchev.github.io/suica/textures/flower.jpg';
 a.image = image( 'https://boytchev.github.io/suica/textures/flower.jpg' );
 ```
 
-[<kbd><img src="../examples/snapshots/images.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/images.html)
+[<kbd><img src="../examples/snapshots/image-file.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/image-file.html)
 
 
 When an object has both `color` and `image`, the resulting color is the product
@@ -1097,6 +1099,8 @@ Suica. Images are read from image files, while drawings are drawn in Suica.
 
 ### Images
 
+#### Image
+
 TO DO
 
 
@@ -1320,6 +1324,34 @@ A reference guide and code templates are collected [here](reference-guide.md)
 ### List of examples
 
 All examples are collected in a single page [here](examples.md)
+
+### Available images
+
+This is a list of available images in Suica site.
+
+<kbd>
+	<img width="128" src="../textures/flower.jpg">
+	<br>
+	flower.jpg
+</kbd>
+
+<kbd>
+	<img width="128" src="../textures/blobs.jpg">
+	<br>
+	blobs.jpg
+</kbd>
+
+<kbd>
+	<img width="128" src="../textures/tile.png">
+	<br>
+	tile.png
+</kbd>
+
+<kbd>
+	<img width="128" src="../textures/grid.png">
+	<br>
+	grid.png
+</kbd>
 
 ### External libraries
 

@@ -24,13 +24,16 @@
 	<suica>
 		<demo>
 		<cube x="-32" color="white" image="https://boytchev.github.io/suica/textures/flower.jpg">
-		<cylinder y="-15" color="linen" image="https://boytchev.github.io/suica/textures/tile.png" images="9,3">
+		<cylinder id="a" y="-15" color="linen">
 	</suica>
 	
 	<script>
-		var c = cone( [32,-15,0] );
-		c.image = 'https://boytchev.github.io/suica/textures/grid.png';
-		c.images = [2,1];
+		a.image = image( 'https://boytchev.github.io/suica/textures/tile.png' );
+		a.images = [9,3];
+		
+		var c = sphere( [32,0,0], 30, 'white' );
+		c.image = 'https://boytchev.github.io/suica/textures/blobs.jpg';
+		c.images = [6,2];
 	</script>
 </body>
 </html>
