@@ -1831,6 +1831,16 @@ class HTMLParser
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) object.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('images') ) object.images = elem.getAttribute('images');
+		if( elem.hasAttribute('image') )
+		{
+			var imageName = elem.getAttribute('image');
+			if( window[imageName] )
+				object.image = window[imageName]; 
+			else
+				throw `error: '${imageName}' in attribute 'image' is not known drawing or image`;
+		}
 		
 		if( parseOptions.widthHeight )
 		{
@@ -2251,6 +2261,8 @@ class Drawing
 		{
 			this.texture = new THREE.CanvasTexture( this.canvas );
 			this.texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+			this.texture.wrapS = THREE.RepeatWrapping;
+			this.texture.wrapT = THREE.RepeatWrapping;
 		}
 			
 		return this.texture;
@@ -2358,7 +2370,7 @@ window.image = function ( url = null, repeatX = 1, repeatY = 1 )
 	Drawing.current.wrapT = THREE.RepeatWrapping;
 	Drawing.current.magFilter = THREE.LinearFilter;
 	Drawing.current.minFilter = THREE.LinearMipmapLinearFilter;
-	Drawing.current.anisotropy = 16;
+	Drawing.current.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();;
 	Drawing.current.repeat.set( repeatX, repeatY );
 	
 	return Drawing.current;
@@ -2399,6 +2411,7 @@ class Mesh
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
 		this.meshSpin = [0, 0, 0];
+		this.meshImages = 1;
 
 		suica.scene.add( solidMesh );
 	}
@@ -2589,24 +2602,73 @@ class Mesh
 
 		if( drawing instanceof Drawing )
 		{
-			this.threejs.material.map = drawing.image;
+			this.threejs.material.map = drawing.image.clone();
 			this.threejs.material.transparent = true,
 			this.threejs.material.needsUpdate = true;
+			this.updateImages();
 			return;
 		}
 
 		if( drawing instanceof THREE.Texture )
 		{
-			this.threejs.material.map = drawing;
+			this.threejs.material.map = drawing.clone();
 			this.threejs.material.transparent = true,
 			this.threejs.material.needsUpdate = true;
+			this.updateImages();
 			return;
 		}
 
-		throw 'error: Parameter of `image` is not a drawing';
+		throw 'error: parameter of `image` is not a drawing';
 	}
 	
 	
+	get images( )
+	{
+		return this.meshImages;
+	}
+	
+	set images( img )
+	{
+		this.suica.parser?.parseTags();
+
+		// img is string 'x,y'
+		if( typeof img === 'string' || img instanceof String )
+		{
+			img = img.replaceAll(' ','');
+			img = img.split(',').map(Number);
+		}
+
+		this.meshImages = img;
+
+		this.updateImages();
+	}
+	
+	
+	updateImages( )
+	{
+		var img = this.meshImages;
+
+		// img is number
+		if( !isNaN(img) )
+		{
+			this.threejs.material.map?.repeat.set( img, img );
+			return;
+		}
+		
+		// img is array [x,y]
+		if( Array.isArray(img) )
+		{
+			switch( img.count )
+			{
+				case 0: this.threejs.material.map?.repeat.set( 1, 1 ); break;
+				case 1: this.threejs.material.map?.repeat.set( img[0], img[0] ); break;
+				default: this.threejs.material.map?.repeat.set( img[0], img[1] );
+			}
+			return;
+		}
+		
+		throw `error: invalid value '${img}' of 'images' property`;
+	}
 	
 	
 	updateScale( )

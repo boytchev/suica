@@ -145,6 +145,8 @@ class Drawing
 		{
 			this.texture = new THREE.CanvasTexture( this.canvas );
 			this.texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+			this.texture.wrapS = THREE.RepeatWrapping;
+			this.texture.wrapT = THREE.RepeatWrapping;
 		}
 			
 		return this.texture;
@@ -252,7 +254,7 @@ window.image = function ( url = null, repeatX = 1, repeatY = 1 )
 	Drawing.current.wrapT = THREE.RepeatWrapping;
 	Drawing.current.magFilter = THREE.LinearFilter;
 	Drawing.current.minFilter = THREE.LinearMipmapLinearFilter;
-	Drawing.current.anisotropy = 16;
+	Drawing.current.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();;
 	Drawing.current.repeat.set( repeatX, repeatY );
 	
 	return Drawing.current;

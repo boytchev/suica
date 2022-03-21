@@ -30,6 +30,7 @@ class Mesh
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
 		this.meshSpin = [0, 0, 0];
+		this.meshImages = 1;
 
 		suica.scene.add( solidMesh );
 	}
@@ -220,24 +221,73 @@ class Mesh
 
 		if( drawing instanceof Drawing )
 		{
-			this.threejs.material.map = drawing.image;
+			this.threejs.material.map = drawing.image.clone();
 			this.threejs.material.transparent = true,
 			this.threejs.material.needsUpdate = true;
+			this.updateImages();
 			return;
 		}
 
 		if( drawing instanceof THREE.Texture )
 		{
-			this.threejs.material.map = drawing;
+			this.threejs.material.map = drawing.clone();
 			this.threejs.material.transparent = true,
 			this.threejs.material.needsUpdate = true;
+			this.updateImages();
 			return;
 		}
 
-		throw 'error: Parameter of `image` is not a drawing';
+		throw 'error: parameter of `image` is not a drawing';
 	}
 	
 	
+	get images( )
+	{
+		return this.meshImages;
+	}
+	
+	set images( img )
+	{
+		this.suica.parser?.parseTags();
+
+		// img is string 'x,y'
+		if( typeof img === 'string' || img instanceof String )
+		{
+			img = img.replaceAll(' ','');
+			img = img.split(',').map(Number);
+		}
+
+		this.meshImages = img;
+
+		this.updateImages();
+	}
+	
+	
+	updateImages( )
+	{
+		var img = this.meshImages;
+
+		// img is number
+		if( !isNaN(img) )
+		{
+			this.threejs.material.map?.repeat.set( img, img );
+			return;
+		}
+		
+		// img is array [x,y]
+		if( Array.isArray(img) )
+		{
+			switch( img.count )
+			{
+				case 0: this.threejs.material.map?.repeat.set( 1, 1 ); break;
+				case 1: this.threejs.material.map?.repeat.set( img[0], img[0] ); break;
+				default: this.threejs.material.map?.repeat.set( img[0], img[1] );
+			}
+			return;
+		}
+		
+		throw `error: invalid value '${img}' of 'images' property`;
+	}
 	
 	
 	updateScale( )

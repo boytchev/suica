@@ -272,6 +272,16 @@ class HTMLParser
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) object.z = Number(elem.getAttribute('z')); 
+
+		if( elem.hasAttribute('images') ) object.images = elem.getAttribute('images');
+		if( elem.hasAttribute('image') )
+		{
+			var imageName = elem.getAttribute('image');
+			if( window[imageName] )
+				object.image = window[imageName]; 
+			else
+				throw `error: '${imageName}' in attribute 'image' is not known drawing or image`;
+		}
 		
 		if( parseOptions.widthHeight )
 		{
