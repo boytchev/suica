@@ -247,17 +247,19 @@ window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', wid
 
 
 
-window.image = function ( url = null, repeatX = 1, repeatY = 1 )
+window.image = function ( url = null )
 {
-	Drawing.current = new THREE.TextureLoader().load( url );
-	Drawing.current.wrapS = THREE.RepeatWrapping;
-	Drawing.current.wrapT = THREE.RepeatWrapping;
-	Drawing.current.magFilter = THREE.LinearFilter;
-	Drawing.current.minFilter = THREE.LinearMipmapLinearFilter;
-	Drawing.current.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();;
-	Drawing.current.repeat.set( repeatX, repeatY );
-	
-	return Drawing.current;
+	var texture = new THREE.TextureLoader().load( url );
+
+	texture.wrapS = THREE.RepeatWrapping;
+	texture.wrapT = THREE.RepeatWrapping;
+
+	texture.magFilter = THREE.LinearFilter;
+	texture.minFilter = THREE.LinearMipmapLinearFilter;
+
+	texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+
+	return texture;
 }
 
 

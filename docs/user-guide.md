@@ -685,6 +685,18 @@ Suica object via the property `image`. The property accepts a drawing or a
 texture image. For more information of how to generate a drawing or use an image
 see section [Images and drawings](#images-and-drawings).
 
+```html
+HTML:
+<cube id="a" image="https://boytchev.github.io/suica/textures/flower.jpg">
+```
+```js
+JS:
+a.image = image( 'https://boytchev.github.io/suica/textures/flower.jpg' );
+```
+
+[<kbd><img src="../examples/snapshots/images.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/images.html)
+
+
 When an object has both `color` and `image`, the resulting color is the product
 of the RGB normalized colors (i.e. components r,g,b&isin;[0,1]) of the color and
 the image pixels. If the object color is [R,G,B] and the image color is [r,g,b],

@@ -230,10 +230,16 @@ class Mesh
 
 		if( drawing instanceof THREE.Texture )
 		{
-			this.threejs.material.map = drawing.clone();
+			this.threejs.material.map = drawing; // no cloning available
 			this.threejs.material.transparent = true,
 			this.threejs.material.needsUpdate = true;
 			this.updateImages();
+			return;
+		}
+
+		if( typeof drawing == 'string' || drawing instanceof String )
+		{
+			this.image = image(drawing);
 			return;
 		}
 

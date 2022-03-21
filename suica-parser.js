@@ -280,7 +280,7 @@ class HTMLParser
 			if( window[imageName] )
 				object.image = window[imageName]; 
 			else
-				throw `error: '${imageName}' in attribute 'image' is not known drawing or image`;
+				object.image = image(imageName);
 		}
 		
 		if( parseOptions.widthHeight )

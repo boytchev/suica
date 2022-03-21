@@ -23,15 +23,14 @@
 
 	<suica>
 		<demo>
-		<cube id="a" color="white">
-		<cube id="b" x="9" size="18" color="yellow">
+		<cube x="-32" color="white" image="https://boytchev.github.io/suica/textures/flower.jpg">
+		<cylinder y="-15" color="linen" image="https://boytchev.github.io/suica/textures/tile.png" images="9,3">
 	</suica>
 	
 	<script>
-		a.image = image( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAABvAgMAAACfq3bzAAAACVBMVEUAAACfn5/////ZmCp3AAAAUklEQVRIx2NkwAMYtRr+MzL8YWH4IMBwwOEfE5z5n5Hh26gkI8M3RlEHpPD6z4gcer9HQ2g0+EaDbzT4hqvkaNUxmvpGg280+EaDbzT4qFh1AAAElDmsZw1MMQAAAABJRU5ErkJggg==' );
-		
-		b.image = image( 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAABvAgMAAACfq3bzAAAACVBMVEUAAACfn5/////ZmCp3AAAAUklEQVRIx2NkwAMYtRr+MzL8YWH4IMBwwOEfE5z5n5Hh26gkI8M3RlEHpPD6z4gcer9HQ2g0+EaDbzT4hqvkaNUxmvpGg280+EaDbzT4qFh1AAAElDmsZw1MMQAAAABJRU5ErkJggg==' );
+		var c = cone( [32,-15,0] );
+		c.image = 'https://boytchev.github.io/suica/textures/grid.png';
+		c.images = [2,1];
 	</script>
-	
 </body>
 </html>
