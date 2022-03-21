@@ -153,18 +153,18 @@ class Suica
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 		ONTIME: { SRC: null },
 
-		POINT: { CENTER:[0,0,0], COLOR:'crimson', SIZE:7 },
+		POINT: { CENTER:[0,0,0], COLOR:'black', SIZE:7 },
 		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0] },
-		CUBE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
-		SQUARE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30 },
-		CIRCLE: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
-		POLYGON: { CENTER:[0,0,0], COLOR:'cornflowerblue', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
-		SPHERE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50 },
-		CYLINDER: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 1 },
-		CONE: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 50, RATIO: 0 },
-		PRISM: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 1 },
-		PYRAMID: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:30, COUNT: 6, RATIO: 0 },
-		GROUP: { CENTER:[0,0,0], COLOR:'cornflowerblue', SIZE:[1,1,1] },
+		CUBE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30 },
+		SQUARE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30 },
+		CIRCLE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:50 },
+		POLYGON: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:3 },
+		SPHERE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50 },
+		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1 },
+		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0 },
+		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1 },
+		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0 },
+		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1] },
 	} // Suica.DEFAULT
 	
 	
@@ -2436,7 +2436,7 @@ class Mesh
 				sizeAttenuation: true,
 				map: new THREE.CanvasTexture( canvas ),
 				transparent: true,
-				alphaTest: 0.5,
+				alphaTest: 0.1,
 			});
 
 		// solid material
