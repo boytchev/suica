@@ -478,14 +478,7 @@ class Suica
 				that.camera.lookAt( ...to );
 			}
 			
-//			console.log( ...from );
-			switch( that.orientation )
-			{
-				case Suica.ORIENTATIONS.XZY: from[0] = -from[0]; break;
-				case Suica.ORIENTATIONS.YXZ: from[1] = -from[1]; break;
-				case Suica.ORIENTATIONS.ZYX: from[2] = -from[2]; break;
-			};
-			that.light?.position.set( ...from );
+			that.light?.position.set( ...that.viewPoint.from );
 	
 		} // Suica.adjustViewPoint
 		
