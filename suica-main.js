@@ -79,7 +79,6 @@ class Suica
 					UP: Suica.OX,
 					FORWARD: Suica.OZ,
 					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OX,Suica.OZ),
 			},
 			ZYX: {	SCALE: new THREE.Vector3(1,1,-1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,1,0]},
@@ -87,7 +86,6 @@ class Suica
 					UP: Suica.OY,
 					FORWARD: Suica.OX,
 					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OY,Suica.OX),
 			},
 			XZY: {	SCALE: new THREE.Vector3(-1,1,1),
 					LOOKAT: {FROM: [0,100,0], TO: [0,0,0], UP: [0,0,1]},
@@ -95,7 +93,6 @@ class Suica
 					UP: Suica.OZ,
 					FORWARD: Suica.OY,
 					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OZ,Suica.OY),
 			},
 
 
@@ -105,7 +102,6 @@ class Suica
 					UP: Suica.OX,
 					FORWARD: Suica.OY,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OX,Suica.OY),
 			},
 			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [0,1,0]},
@@ -113,7 +109,6 @@ class Suica
 					UP: Suica.OY,
 					FORWARD: Suica.OZ,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OY,Suica.OZ),
 			},
 			YZX: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,0,1]},
@@ -121,7 +116,6 @@ class Suica
 					UP: Suica.OZ,
 					FORWARD: Suica.OX,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX),
 			},
 		} // Suica.ORIENTATIONS
 
@@ -194,6 +188,7 @@ class Suica
 
 		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
+		this.orientation.MATRIX = new THREE.Matrix4().makeBasis(this.orientation.RIGHT,this.orientation.UP,this.orientation.FORWARD);
 		
 		this.viewPoint = {
 			from: this.orientation.LOOKAT.FROM,
