@@ -78,21 +78,18 @@ class Suica
 					RIGHT: Suica.OY,
 					UP: Suica.OX,
 					FORWARD: Suica.OZ,
-					FLIP_NORMAL: true,
 			},
 			ZYX: {	SCALE: new THREE.Vector3(1,1,-1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,1,0]},
 					RIGHT: Suica.OZ,
 					UP: Suica.OY,
 					FORWARD: Suica.OX,
-					FLIP_NORMAL: true,
 			},
 			XZY: {	SCALE: new THREE.Vector3(-1,1,1),
 					LOOKAT: {FROM: [0,100,0], TO: [0,0,0], UP: [0,0,1]},
 					RIGHT: Suica.OX,
 					UP: Suica.OZ,
 					FORWARD: Suica.OY,
-					FLIP_NORMAL: true,
 			},
 
 
@@ -189,12 +186,12 @@ class Suica
 		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
 		this.orientation.MATRIX = new THREE.Matrix4().makeBasis(this.orientation.RIGHT,this.orientation.UP,this.orientation.FORWARD);
+		this.orientation.FLIP_NORMAL = this.orientation.SCALE.x<0 || this.orientation.SCALE.y<0 || this.orientation.SCALE.z<0;
 		
 		this.viewPoint = {
 			from: this.orientation.LOOKAT.FROM,
 			to: this.orientation.LOOKAT.TO,
 			up: this.orientation.LOOKAT.UP,
-//			changed: true,
 		};
 		
 		// create and initialize <canvas>
@@ -423,9 +420,6 @@ class Suica
 
 		function adjustViewPoint( )
 		{
-//			if( !that.viewPoint.changed ) return;
-			
-//			that.viewPoint.changed = false;
 			
 			var up = [ ...that.viewPoint.up ],
 				from = [ ...that.viewPoint.from ],
@@ -626,7 +620,6 @@ class Suica
 		this.viewPoint.from = Suica.parseCenter( from );
 		this.viewPoint.to = Suica.parseCenter( to );
 		this.viewPoint.up = Suica.parseCenter( up );
-		//this.viewPoint.changed = true;
 		
 	} // Suica.lookAt
 	
