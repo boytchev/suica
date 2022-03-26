@@ -73,7 +73,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/square-rectangle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/square-rectangle.html)
 
 [<kbd><img src="../examples/snapshots/circle.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle.html)
-[<kbd><img src="../examples/snapshots/circle-ellipse.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/ellipse.html)
+[<kbd><img src="../examples/snapshots/circle-ellipse.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/circle-ellipse.html)
 
 [<kbd><img src="../examples/snapshots/polygon.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
 
