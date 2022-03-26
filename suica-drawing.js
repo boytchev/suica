@@ -83,6 +83,8 @@ class Drawing
 
 	fillText( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
 	{
+		if( this.texture ) this.texture.needsUpdate = true;
+		
 		this.context.fillStyle = color;
 		this.context.font = font;
 		this.context.fillText( text, x, this.canvas.height-y );
@@ -93,7 +95,8 @@ class Drawing
 
 	stroke( color = 'black', width = 1, close = false )
 	{
-		this.texture = null; // clear the texture
+		if( this.texture ) this.texture.needsUpdate = true;
+//		this.texture = null; // clear the texture
 		
 		if( close ) this.context.closePath();
 		
@@ -109,7 +112,8 @@ class Drawing
 	
 	fill( color = 'gray' )
 	{
-		this.texture = null; // clear the texture
+		if( this.texture ) this.texture.needsUpdate = true;
+//		this.texture = null; // clear the texture
 		
 		this.context.fillStyle = color;
 		this.context.fill( );
@@ -122,9 +126,14 @@ class Drawing
 
 	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
 	{
-		this.texture = null; // clear the texture
+		// if( this.texture )
+		// {
+			// console.log( this.texture );
+			// this.texture.needsUpdate = true;
+		// }
+//		this.texture = null; // clear the texture
 		
-				if( close ) this.context.closePath();
+		if( close ) this.context.closePath();
 
 		this.context.strokeStyle = strokeColor;
 		this.context.lineWidth = width;
@@ -134,6 +143,11 @@ class Drawing
 		this.context.fill( );
 
 		this.context.beginPath( );
+
+		if( this.texture )
+		{
+			this.texture.needsUpdate = true;
+		}
 	} // Drawing.fillAndStroke
 	
 	
@@ -154,11 +168,19 @@ class Drawing
 	
 	
 
+	get clone( )
+	{
+		var newDrawing = drawing( this.canvas.width, this.canvas.height );
+		newDrawing.context.drawImage( this.canvas, 0, 0);
+		
+		return newDrawing;
+	}
+	
 	
 	static precheck()
 	{
 		if( !(Drawing.current instanceof Drawing) )
-			throw 'error: No Drawing instance is active';
+			throw 'error: No Drawing instance is active';		
 	} // Drawing.precheck
 
 } // class Drawing

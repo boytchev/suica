@@ -38,12 +38,13 @@
 //	2.-1.29 (220311) tag <clone>
 //	2.-1.30 (220319) parameter 'close' in stroke and fillAndStroke
 //	2.-1.31 (220321) property image
+//	2.-1.32 (220326) dynamic drawings
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.31 (220321)` );
+console.log( `Suica 2.-1.32 (220326)` );
 
 
 // control flags
@@ -79,24 +80,18 @@ class Suica
 					RIGHT: Suica.OY,
 					UP: Suica.OX,
 					FORWARD: Suica.OZ,
-					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OX,Suica.OZ),
 			},
 			ZYX: {	SCALE: new THREE.Vector3(1,1,-1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,1,0]},
 					RIGHT: Suica.OZ,
 					UP: Suica.OY,
 					FORWARD: Suica.OX,
-					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OY,Suica.OX),
 			},
 			XZY: {	SCALE: new THREE.Vector3(-1,1,1),
 					LOOKAT: {FROM: [0,100,0], TO: [0,0,0], UP: [0,0,1]},
 					RIGHT: Suica.OX,
 					UP: Suica.OZ,
 					FORWARD: Suica.OY,
-					FLIP_NORMAL: true,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OZ,Suica.OY),
 			},
 
 
@@ -106,7 +101,6 @@ class Suica
 					UP: Suica.OX,
 					FORWARD: Suica.OY,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OZ,Suica.OX,Suica.OY),
 			},
 			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [0,1,0]},
@@ -114,7 +108,6 @@ class Suica
 					UP: Suica.OY,
 					FORWARD: Suica.OZ,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OX,Suica.OY,Suica.OZ),
 			},
 			YZX: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,0,1]},
@@ -122,7 +115,6 @@ class Suica
 					UP: Suica.OZ,
 					FORWARD: Suica.OX,
 					FLIP_NORMAL: false,
-					MATRIX: new THREE.Matrix4().makeBasis(Suica.OY,Suica.OZ,Suica.OX),
 			},
 		} // Suica.ORIENTATIONS
 
@@ -195,12 +187,13 @@ class Suica
 
 		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
+		this.orientation.MATRIX = new THREE.Matrix4().makeBasis(this.orientation.RIGHT,this.orientation.UP,this.orientation.FORWARD);
+		this.orientation.FLIP_NORMAL = this.orientation.SCALE.x<0 || this.orientation.SCALE.y<0 || this.orientation.SCALE.z<0;
 		
 		this.viewPoint = {
 			from: this.orientation.LOOKAT.FROM,
 			to: this.orientation.LOOKAT.TO,
 			up: this.orientation.LOOKAT.UP,
-//			changed: true,
 		};
 		
 		// create and initialize <canvas>
@@ -429,9 +422,6 @@ class Suica
 
 		function adjustViewPoint( )
 		{
-//			if( !that.viewPoint.changed ) return;
-			
-//			that.viewPoint.changed = false;
 			
 			var up = [ ...that.viewPoint.up ],
 				from = [ ...that.viewPoint.from ],
@@ -632,7 +622,6 @@ class Suica
 		this.viewPoint.from = Suica.parseCenter( from );
 		this.viewPoint.to = Suica.parseCenter( to );
 		this.viewPoint.up = Suica.parseCenter( up );
-		//this.viewPoint.changed = true;
 		
 	} // Suica.lookAt
 	
@@ -2193,6 +2182,8 @@ class Drawing
 
 	fillText( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
 	{
+		if( this.texture ) this.texture.needsUpdate = true;
+		
 		this.context.fillStyle = color;
 		this.context.font = font;
 		this.context.fillText( text, x, this.canvas.height-y );
@@ -2203,7 +2194,8 @@ class Drawing
 
 	stroke( color = 'black', width = 1, close = false )
 	{
-		this.texture = null; // clear the texture
+		if( this.texture ) this.texture.needsUpdate = true;
+//		this.texture = null; // clear the texture
 		
 		if( close ) this.context.closePath();
 		
@@ -2219,7 +2211,8 @@ class Drawing
 	
 	fill( color = 'gray' )
 	{
-		this.texture = null; // clear the texture
+		if( this.texture ) this.texture.needsUpdate = true;
+//		this.texture = null; // clear the texture
 		
 		this.context.fillStyle = color;
 		this.context.fill( );
@@ -2232,9 +2225,14 @@ class Drawing
 
 	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
 	{
-		this.texture = null; // clear the texture
+		// if( this.texture )
+		// {
+			// console.log( this.texture );
+			// this.texture.needsUpdate = true;
+		// }
+//		this.texture = null; // clear the texture
 		
-				if( close ) this.context.closePath();
+		if( close ) this.context.closePath();
 
 		this.context.strokeStyle = strokeColor;
 		this.context.lineWidth = width;
@@ -2244,6 +2242,11 @@ class Drawing
 		this.context.fill( );
 
 		this.context.beginPath( );
+
+		if( this.texture )
+		{
+			this.texture.needsUpdate = true;
+		}
 	} // Drawing.fillAndStroke
 	
 	
@@ -2264,11 +2267,19 @@ class Drawing
 	
 	
 
+	get clone( )
+	{
+		var newDrawing = drawing( this.canvas.width, this.canvas.height );
+		newDrawing.context.drawImage( this.canvas, 0, 0);
+		
+		return newDrawing;
+	}
+	
 	
 	static precheck()
 	{
 		if( !(Drawing.current instanceof Drawing) )
-			throw 'error: No Drawing instance is active';
+			throw 'error: No Drawing instance is active';		
 	} // Drawing.precheck
 
 } // class Drawing
@@ -2581,13 +2592,16 @@ class Mesh
 	
 	get image( )
 	{
-		return this.threejs.material.map;
+		//return this.threejs.material.map;
+		return this._drawing;
 	}
 	
 	set image( drawing )
 	{
 		this.suica.parser?.parseTags();
 
+		this._drawing = drawing;
+		
 		if( !drawing )
 		{
 			delete this.threejs.material.map;
@@ -2598,7 +2612,9 @@ class Mesh
 
 		if( drawing instanceof Drawing )
 		{
-			this.threejs.material.map = drawing.image.clone();
+			this._drawing = drawing.clone;
+			
+			this.threejs.material.map = this._drawing.image;
 			this.threejs.material.transparent = true,
 			this.threejs.material.needsUpdate = true;
 			this.updateImages();

@@ -13,7 +13,7 @@
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Images and drawings](#images-and-drawings)
     - [Images](#images-1) [<small> [image](#image-1) </small>] 
-    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke)  | [fillText](#filltext) </small>] 
+    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke) | [fillText](#filltext) </small>] 
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -761,6 +761,7 @@ b = a.clone;
 _**Note**: Cloning an object [group](#group) also clones all its objects._
 
 
+
 #### Style
 
 Method. Sets a group of properties of an object. The properties are defined as a
@@ -1141,8 +1142,11 @@ screen. For lines drawings are used to created dot-and-dash patterns.
 [<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-custom-point.html)
 [<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-dotted-lines.html)
 
-A drawing is applied to an object via the [image](#image) property. The scale of
-a drawing is managed by the [images](#images) property.
+A drawing is applied to an object via the [image](#image) property and can be
+updated both before and after this assignment. The scale of
+a drawing is managed by the [images](#images) property. 
+
+[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/dynamic-drawing.html)
 
 #### MoveTo
 

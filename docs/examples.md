@@ -112,6 +112,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-custom-point.html)
 [<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-dotted-lines.html)
 
+[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/dynamic-drawing.html)
+
 [<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-moveto-lineto.html)
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
 

@@ -204,13 +204,16 @@ class Mesh
 	
 	get image( )
 	{
-		return this.threejs.material.map;
+		//return this.threejs.material.map;
+		return this._drawing;
 	}
 	
 	set image( drawing )
 	{
 		this.suica.parser?.parseTags();
 
+		this._drawing = drawing;
+		
 		if( !drawing )
 		{
 			delete this.threejs.material.map;
@@ -221,7 +224,9 @@ class Mesh
 
 		if( drawing instanceof Drawing )
 		{
-			this.threejs.material.map = drawing.image.clone();
+			this._drawing = drawing.clone;
+			
+			this.threejs.material.map = this._drawing.image;
 			this.threejs.material.transparent = true,
 			this.threejs.material.needsUpdate = true;
 			this.updateImages();

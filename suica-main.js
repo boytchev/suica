@@ -37,12 +37,13 @@
 //	2.-1.29 (220311) tag <clone>
 //	2.-1.30 (220319) parameter 'close' in stroke and fillAndStroke
 //	2.-1.31 (220321) property image
+//	2.-1.32 (220326) dynamic drawings
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.31 (220321)` );
+console.log( `Suica 2.-1.32 (220326)` );
 
 
 // control flags
