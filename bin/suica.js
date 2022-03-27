@@ -2123,26 +2123,26 @@ class Drawing
 
 
 		
-	constructor( width=32, height=width, color=null )
+	constructor( width=32, height=width, color=null, newCanvas=true )
 	{
-		this.canvas = document.createElement( 'canvas' );
-		this.canvas.width = width;
-		this.canvas.height = height;
-		
-		this.texture = null;
-		
-		this.context = this.canvas.getContext( '2d' );
-		//this.context.scale( 1, -1 );
-		//this.context.translate( 0, -height );
-		this.context.clearRect( 0, 0, width, height );
-		
-		if( color )
+		if( newCanvas )
 		{
-			this.context.fillStyle = color;
-			this.context.fillRect( 0, 0, width, height );
-		}
+			this.canvas = document.createElement( 'canvas' );
+			this.canvas.width = width;
+			this.canvas.height = height;
+			this.texture = null;
+		
+			this.context = this.canvas.getContext( '2d' );
+			this.context.clearRect( 0, 0, width, height );
 			
-		this.context.beginPath( );
+			if( color )
+			{
+				this.context.fillStyle = color;
+				this.context.fillRect( 0, 0, width, height );
+			}
+			
+			this.context.beginPath( );
+		}
 	} // Drawing.constructor
 
 
@@ -2269,8 +2269,13 @@ class Drawing
 
 	get clone( )
 	{
-		var newDrawing = drawing( this.canvas.width, this.canvas.height );
-		newDrawing.context.drawImage( this.canvas, 0, 0);
+		var newDrawing = drawing( this.canvas.width, this.canvas.height, 'white', false );
+			newDrawing.canvas = this.canvas;
+			newDrawing.context = this.context;
+			newDrawing.texture = this.texture;
+
+		// var newDrawing = drawing( this.canvas.width, this.canvas.height );
+		// newDrawing.context.drawImage( this.canvas, 0, 0);
 		
 		return newDrawing;
 	}
