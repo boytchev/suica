@@ -13,7 +13,7 @@
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Images and drawings](#images-and-drawings)
     - [Images](#images-1) [<small> [image](#image-1) </small>] 
-    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke) | [fillText](#filltext) </small>] 
+    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke) | [fillText](#filltext) | [clear](#clear) </small>] 
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -1236,7 +1236,7 @@ stroke( 'crimson', 10, true );
 	
 #### Fill
 
-Command. Fills the area defined by a path. The area is filledwith the given
+Command. Fills the area defined by a path. The area is filled with the given
 `color`. Next commands after *fill* start a new path.
 
 ```js
@@ -1273,6 +1273,21 @@ fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 ```	
 	
 [<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-filltext.html)
+	
+	
+#### Clear
+
+Command. Clears a drawing canvas. The drawing canvas is filled with the given
+`color` if it is provided, or is cleared to transparent if it is not provided.
+Next commands after *clear* start a new path.
+
+```js
+clear( 'crimson' );
+```
+	
+[<kbd><img src="../examples/snapshots/drawing-clear.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-clear.html)
+	
+	
 
 
 

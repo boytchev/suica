@@ -124,6 +124,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill.html)
 
 [<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-filltext.html)
+[<kbd><img src="../examples/snapshots/drawing-clear.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-clear.html)
 
 
 

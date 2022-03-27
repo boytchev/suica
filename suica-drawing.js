@@ -123,6 +123,24 @@ class Drawing
 	
 	
 	
+	clear( color = null )
+	{
+		if( this.texture ) this.texture.needsUpdate = true;
+
+		if( color )
+		{
+			this.context.fillStyle = color;
+			this.context.fillRect( -1, -1, this.canvas.width+2, this.canvas.height+2 );
+		}
+		else
+		{
+			this.context.clearRect( -1, -1, this.canvas.width+2, this.canvas.height+2 );
+		}
+
+		this.context.beginPath( );
+	}
+
+
 
 	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
 	{
@@ -269,6 +287,15 @@ window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', wid
 {
 	Drawing.precheck();
 	Drawing.current.fillAndStroke( fillColor, strokeColor, width, close );
+}
+
+
+
+
+window.clear = function ( color = null )
+{
+	Drawing.precheck();
+	Drawing.current.clear( color );
 }
 
 

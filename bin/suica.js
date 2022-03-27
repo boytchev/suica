@@ -39,12 +39,13 @@
 //	2.-1.30 (220319) parameter 'close' in stroke and fillAndStroke
 //	2.-1.31 (220321) property image
 //	2.-1.32 (220326) dynamic drawings
+//	2.-1.33 (220327) drawing clear
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.32 (220326)` );
+console.log( `Suica 2.-1.33 (220327)` );
 
 
 // control flags
@@ -2222,6 +2223,24 @@ class Drawing
 	
 	
 	
+	clear( color = null )
+	{
+		if( this.texture ) this.texture.needsUpdate = true;
+
+		if( color )
+		{
+			this.context.fillStyle = color;
+			this.context.fillRect( -1, -1, this.canvas.width+2, this.canvas.height+2 );
+		}
+		else
+		{
+			this.context.clearRect( -1, -1, this.canvas.width+2, this.canvas.height+2 );
+		}
+
+		this.context.beginPath( );
+	}
+
+
 
 	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
 	{
@@ -2368,6 +2387,15 @@ window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', wid
 {
 	Drawing.precheck();
 	Drawing.current.fillAndStroke( fillColor, strokeColor, width, close );
+}
+
+
+
+
+window.clear = function ( color = null )
+{
+	Drawing.precheck();
+	Drawing.current.clear( color );
 }
 
 
