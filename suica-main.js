@@ -157,7 +157,13 @@ class Suica
 		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0 },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1 },
 		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0 },
+		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1] },
+		
+		DRAWING: { SIZE:32, COLOR:null },
+		MOVETO: { CENTER:[0,0] },
+		LINETO: { CENTER:[0,0] },
+		FILL: { COLOR:'gray' },
 	} // Suica.DEFAULT
 	
 	
@@ -692,6 +698,9 @@ class Suica
 	
 	static parseColor( color )
 	{
+		if( color === null )
+			return color;
+
 		if( color instanceof THREE.Color )
 			return color;
 

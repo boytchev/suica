@@ -24,7 +24,7 @@ class Drawing
 
 
 		
-	constructor( width=32, height=width, color=null, newCanvas=true )
+	constructor( width=Suica.DEFAULT.DRAWING.SIZE, height=width, color=Suica.DEFAULT.DRAWING.COLOR, newCanvas=true )
 	{
 		if( newCanvas )
 		{
@@ -43,6 +43,7 @@ class Drawing
 			}
 			
 			this.context.beginPath( );
+//document.body.appendChild( this.canvas );			
 		}
 	} // Drawing.constructor
 
@@ -110,7 +111,7 @@ class Drawing
 	
 	
 	
-	fill( color = 'gray' )
+	fill( color = Suica.DEFAULT.FILL.COLOR )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 //		this.texture = null; // clear the texture

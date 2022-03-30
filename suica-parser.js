@@ -72,12 +72,25 @@ class HTMLParser
 
 		this.parseTag.CLONE = this.parseTagCLONE;
 		
+		this.parseTag.DRAWING = this.parseTagDRAWING;
+		this.parseTag.MOVETO = this.parseTagMOVETO;
+		this.parseTag.LINETO = this.parseTagLINETO;
+		this.parseTag.FILL = this.parseTagFILL;
+// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
+// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚, 𝑡𝑜 );
+// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
+// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillAndStroke( 𝑐𝑜𝑙𝑜𝑟, 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
+// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillText( 𝑥, 𝑦, 𝑡𝑒𝑥𝑡, 𝑐𝑜𝑙𝑜𝑟, 𝑓𝑜𝑛𝑡 );
+// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.clear( );
+// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.clear( 𝑐𝑜𝑙𝑜𝑟 );
+
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
 		this.parseTag.DIV = this.skipTag;
 		this.parseTag.SPAN = this.skipTag;
 
 		this.openGroups = [];
+		this.openDrawings = [];
 		
 	} // HTMLParser.constructor
 
@@ -106,6 +119,9 @@ class HTMLParser
 			var tagElement = elem.children[i];
 			var tagName = tagElement.tagName;
 			var newObject = null;
+
+			//console.log('tagName=',tagName);
+			
 			if( this.parseTag[tagName] )
 			{
 				newObject = this.parseTag[tagName]( this.suica, tagElement );
@@ -124,6 +140,13 @@ class HTMLParser
 				this.openGroups.push( newObject );
 			}
 
+			// if this tag is <drawing> then mark the drawing as open
+			// new drawing commands will be automatically added to the latest open drawing
+			if( tagName == 'DRAWING' )
+			{
+				this.openDrawings.push( newObject );
+			}
+
 			// recurse into subtags
 			this.parseTagsInElement( this.suica, tagElement );
 
@@ -137,6 +160,12 @@ class HTMLParser
 				{
 					group.color = tagElement.getAttribute('color');
 				}
+			}
+
+			// is this tag is </drawing> then close the drawing
+			if( tagName == 'DRAWING' )
+			{
+				this.openDrawings.pop( );
 			}
 
 		}
@@ -552,6 +581,84 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagGROUP
+
+	
+	// <drawing id="..." color="..." size="..." width="..." height="...">
+	parseTagDRAWING( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.DRAWING.COLOR;
+		var width = elem.getAttribute('width') || Suica.DEFAULT.DRAWING.SIZE;
+		var height = elem.getAttribute('height') || width;
+
+		// process size=n and size=n,m
+		if( elem.hasAttribute('size') )
+		{
+			var size = Suica.parseSize( elem.getAttribute('size') );
+			if( Array.isArray(size) )
+			{
+				if( size.length==1 )
+					width = height = size[0];
+				else
+				if( size.length==2 )
+				{
+					width = size[0];
+					height = size[1];
+				}
+			}
+			else
+			{
+				width = height = size;
+			}
+		}
+
+		var p = drawing( width, height, color );
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;		
+		
+		return p;
+		
+	} // HTMLParser.parseTagDRAWING
+
+
+	// <moveto center="x,y">
+	// <moveto x="..." y="...">
+	parseTagMOVETO( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.MOVETO.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.MOVETO.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.MOVETO.CENTER[1];
+
+		moveTo( center[0], center[1] );
+	} // HTMLParser.parseTagMOVETO
+
+
+	// <lineto center="x,y">
+	// <lineto x="..." y="...">
+	parseTagLINETO( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.MOVETO.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.MOVETO.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.MOVETO.CENTER[1];
+
+		lineTo( center[0], center[1] );
+	} // HTMLParser.parseTagLINETO
+
+
+	// <fill color="...">
+	parseTagFILL( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.FILL.COLOR;
+
+		fill( color );
+	} // HTMLParser.parseTagFILL
+
 	
 } // HTMLParser
 
