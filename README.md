@@ -28,4 +28,4 @@ Suica is licensed under **GPL-3.0**.
 
 ---
 
-February, 2022
+March, 2022

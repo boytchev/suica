@@ -106,6 +106,9 @@ Click on an image to run the example.
 
 ## [Images and drawings](user-guide.md#images-and-drawings)
 
+[<kbd><img src="../examples/snapshots/drawing-html.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-html.html)
+[<kbd><img src="../examples/snapshots/drawing-js.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-js.html)
+
 [<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-transparent.html)
 [<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-opaque.html)
 
