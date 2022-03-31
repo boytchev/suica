@@ -40,12 +40,14 @@
 //	2.-1.31 (220321) property image
 //	2.-1.32 (220326) dynamic drawings
 //	2.-1.33 (220327) drawing clear
+//	2.-1.34 (220330) <drawing>, <lineto>, <moveto>, <fill>
+//	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.33 (220327)` );
+console.log( `Suica 2.-1.35 (220331)` );
 
 
 // control flags
@@ -158,7 +160,18 @@ class Suica
 		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0 },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1 },
 		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0 },
+		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1] },
+		
+		DRAWING: { SIZE:32, COLOR:null },
+		MOVETO: { CENTER:[0,0] },
+		LINETO: { CENTER:[0,0] },
+		CURVETO: { CENTER:[0,0], M:[0,0] },
+		ARC: { CENTER:[0,0], RADIUS:10, FROM:0, TO:360, CW:true },
+		STROKE: { COLOR:'black', WIDTH:1, CLOSE:false },
+		FILL: { COLOR:'gray' },
+		FILLTEXT: { CENTER:[0,0], TEXT:'Suica', COLOR:'black', FONT:'20px Arial' },
+		CLEAR: { COLOR:null },
 	} // Suica.DEFAULT
 	
 	
@@ -693,6 +706,9 @@ class Suica
 	
 	static parseColor( color )
 	{
+		if( color === null )
+			return color;
+
 		if( color instanceof THREE.Color )
 			return color;
 
@@ -1615,12 +1631,23 @@ class HTMLParser
 
 		this.parseTag.CLONE = this.parseTagCLONE;
 		
+		this.parseTag.DRAWING = this.parseTagDRAWING;
+		this.parseTag.MOVETO = this.parseTagMOVETO;
+		this.parseTag.LINETO = this.parseTagLINETO;
+		this.parseTag.CURVETO = this.parseTagCURVETO;
+		this.parseTag.ARC = this.parseTagARC;
+		this.parseTag.STROKE = this.parseTagSTROKE;
+		this.parseTag.FILL = this.parseTagFILL;
+		this.parseTag.FILLTEXT = this.parseTagFILLTEXT;
+		this.parseTag.CLEAR = this.parseTagCLEAR;
+
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
 		this.parseTag.DIV = this.skipTag;
 		this.parseTag.SPAN = this.skipTag;
 
 		this.openGroups = [];
+		this.openDrawings = [];
 		
 	} // HTMLParser.constructor
 
@@ -1649,6 +1676,9 @@ class HTMLParser
 			var tagElement = elem.children[i];
 			var tagName = tagElement.tagName;
 			var newObject = null;
+
+			//console.log('tagName=',tagName);
+			
 			if( this.parseTag[tagName] )
 			{
 				newObject = this.parseTag[tagName]( this.suica, tagElement );
@@ -1667,6 +1697,13 @@ class HTMLParser
 				this.openGroups.push( newObject );
 			}
 
+			// if this tag is <drawing> then mark the drawing as open
+			// new drawing commands will be automatically added to the latest open drawing
+			if( tagName == 'DRAWING' )
+			{
+				this.openDrawings.push( newObject );
+			}
+
 			// recurse into subtags
 			this.parseTagsInElement( this.suica, tagElement );
 
@@ -1680,6 +1717,12 @@ class HTMLParser
 				{
 					group.color = tagElement.getAttribute('color');
 				}
+			}
+
+			// is this tag is </drawing> then close the drawing
+			if( tagName == 'DRAWING' )
+			{
+				this.openDrawings.pop( );
 			}
 
 		}
@@ -2095,6 +2138,177 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagGROUP
+
+	
+	// <drawing id="..." color="..." size="..." width="..." height="...">
+	parseTagDRAWING( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.DRAWING.COLOR;
+		var width = elem.getAttribute('width') || Suica.DEFAULT.DRAWING.SIZE;
+		var height = elem.getAttribute('height') || width;
+
+		// process size=n and size=n,m
+		if( elem.hasAttribute('size') )
+		{
+			var size = Suica.parseSize( elem.getAttribute('size') );
+			if( Array.isArray(size) )
+			{
+				if( size.length==1 )
+					width = height = size[0];
+				else
+				if( size.length==2 )
+				{
+					width = size[0];
+					height = size[1];
+				}
+			}
+			else
+			{
+				width = height = size;
+			}
+		}
+
+		var p = drawing( width, height, color );
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;		
+		
+		return p;
+		
+	} // HTMLParser.parseTagDRAWING
+
+
+	// <moveto center="x,y">
+	// <moveto x="..." y="...">
+	parseTagMOVETO( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.MOVETO.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.MOVETO.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.MOVETO.CENTER[1];
+
+		moveTo( center[0], center[1] );
+	} // HTMLParser.parseTagMOVETO
+
+
+	// <lineto center="x,y">
+	// <lineto x="..." y="...">
+	parseTagLINETO( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.LINETO.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.LINETO.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.LINETO.CENTER[1];
+
+		lineTo( center[0], center[1] );
+	} // HTMLParser.parseTagLINETO
+
+
+	// <curveto m="mx,my" center="x,y">
+	// <curveto mx="..." my="..." x="..." y="...">
+	parseTagCURVETO( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.CURVETO.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.CURVETO.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.CURVETO.CENTER[1];
+
+		var m = Suica.parseCenter( elem.getAttribute('m') || Suica.DEFAULT.CURVETO.M );
+		if( elem.hasAttribute('mx') )
+			m[0] = elem.getAttribute('mx') || Suica.DEFAULT.CURVETO.M[0];
+		if( elem.hasAttribute('my') )
+			m[1] = elem.getAttribute('my') || Suica.DEFAULT.CURVETO.M[1];
+
+		curveTo( m[0], m[1], center[0], center[1] );
+	} // HTMLParser.parseTagCURVETO
+
+
+	// <arc center="..." x="..." y="..." radius="..." from="..." to="..." cw cw="..." ccw ccw="ccw">
+	parseTagARC( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.ARC.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.ARC.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.ARC.CENTER[1];
+
+		var radius = elem.getAttribute('radius') || Suica.DEFAULT.STROKE.RADIUS,
+			from = elem.getAttribute('from') || Suica.DEFAULT.STROKE.FROM,
+			to = elem.getAttribute('to') || Suica.DEFAULT.STROKE.TO;
+			
+		var cw = Suica.DEFAULT.STROKE.CW;
+		
+		if( elem.hasAttribute('cw') )
+		{
+			if( elem.getAttribute('cw') == "" )
+				cw = true;
+			else
+				cw = elem.getAttribute('cw');
+		}
+		if( elem.hasAttribute('ccw') )
+		{
+			if( elem.getAttribute('ccw') == "" )
+				cw = false;
+			else
+				cw = !elem.getAttribute('ccw');
+		}
+
+		arc( center[0], center[1], radius, from, to, cw );
+	} // HTMLParser.parseTagARC
+
+
+	// <stroke color="..." width="..." close close="...">
+	parseTagSTROKE( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.STROKE.COLOR,
+			width = elem.getAttribute('width') || Suica.DEFAULT.STROKE.WIDTH,
+			close = elem.getAttribute('close') || Suica.DEFAULT.STROKE.CLOSE;
+		
+		if( elem.hasAttribute('close') && elem.getAttribute('close')=="") close = true;
+
+		stroke( color, width, close );
+	} // HTMLParser.parseTagSTROKE
+
+
+	// <fill color="...">
+	parseTagFILL( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.FILL.COLOR;
+
+		fill( color );
+	} // HTMLParser.parseTagFILL
+
+
+	// <fillText center="..." x="..." y="..." text="..." color="..." font="...">
+	parseTagFILLTEXT( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.FILLTEXT.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.FILLTEXT.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.FILLTEXT.CENTER[1];
+
+		var text = elem.getAttribute('text') || Suica.DEFAULT.FILLTEXT.TEXT,
+			color = elem.getAttribute('color') || Suica.DEFAULT.FILLTEXT.COLOR,
+			font = elem.getAttribute('font') || Suica.DEFAULT.FILLTEXT.FONT;
+		
+		fillText( center[0], center[1], text, color, font );
+	} // HTMLParser.parseTagFILLTEXT
+
+
+	// <clear color="...">
+	parseTagCLEAR( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.CLEAR.COLOR;
+
+		clear( color );
+	} // HTMLParser.parseTagCLEAR
+
 	
 } // HTMLParser
 
@@ -2124,7 +2338,7 @@ class Drawing
 
 
 		
-	constructor( width=32, height=width, color=null, newCanvas=true )
+	constructor( width=Suica.DEFAULT.DRAWING.SIZE, height=width, color=Suica.DEFAULT.DRAWING.COLOR, newCanvas=true )
 	{
 		if( newCanvas )
 		{
@@ -2142,46 +2356,64 @@ class Drawing
 				this.context.fillRect( 0, 0, width, height );
 			}
 			
-			this.context.beginPath( );
+			this.needsNewPath = true;
+			
+//document.body.appendChild( this.canvas );			
 		}
+		
 	} // Drawing.constructor
 
 
 
 
-	moveTo( x = 0, y = 0 )
+	managePath()
 	{
+		if( this.needsNewPath )
+		{
+			this.context.beginPath( );
+			this.needsNewPath = false;
+		}	
+	} // Drawing.managePath
+
+
+
+	moveTo( x = Suica.DEFAULT.MOVETO.CENTER[0], y = Suica.DEFAULT.MOVETO.CENTER[1] )
+	{
+		this.managePath();
 		this.context.moveTo( x, this.canvas.height-y );
 	} // Drawing.moveTo
 	
 	
 	
 	
-	lineTo( x = 0, y = 0 )
+	lineTo( x = Suica.DEFAULT.LINETO.CENTER[0], y = Suica.DEFAULT.LINETO.CENTER[1] )
 	{
+		this.managePath();
 		this.context.lineTo( x, this.canvas.height-y );
 	} // Drawing.lineTo
 	
 	
 	
 	
-	curveTo( mx = 0, my = 0, x = 0, y = 0 )
+	curveTo( mx = Suica.DEFAULT.CURVETO.M[0], my = Suica.DEFAULT.CURVETO.M[1], x = Suica.DEFAULT.CURVETO.CENTER[0], y = Suica.DEFAULT.CURVETO.CENTER[1] )
 	{
+		this.managePath();
 		this.context.quadraticCurveTo( mx, this.canvas.height-my, x, this.canvas.height-y );
 	} // Drawing.curveTo
 	
 	
 	
 
-	arc( x = 0, y = 0, r = 10, from = 0, to = 360 )
+	arc( x = Suica.DEFAULT.ARC.CENTER[0], y = Suica.DEFAULT.ARC.CENTER[1], r = Suica.DEFAULT.ARC.RADIUS, from = Suica.DEFAULT.ARC.FROM, to = Suica.DEFAULT.ARC.TO, cw = Suica.DEFAULT.ARC.CW )
 	{
-		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90) );
+		this.managePath();
+		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90), !cw );
 	} // Drawing.arc
 	
 	
 	
 
-	fillText( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
+	fillText( x = Suica.DEFAULT.FILLTEXT.CENTER[0], y = Suica.DEFAULT.FILLTEXT.CENTER[1], text = Suica.DEFAULT.FILLTEXT.TEXT, color = Suica.DEFAULT.FILLTEXT.COLOR, font = Suica.DEFAULT.FILLTEXT.FONT )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 		
@@ -2193,7 +2425,7 @@ class Drawing
 	
 	
 
-	stroke( color = 'black', width = 1, close = false )
+	stroke( color = Suica.DEFAULT.STROKE.COLOR, width = Suica.DEFAULT.STROKE.WIDTH, close = Suica.DEFAULT.STROKE.CLOSE )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 //		this.texture = null; // clear the texture
@@ -2204,13 +2436,13 @@ class Drawing
 		this.context.lineWidth = width;
 		this.context.stroke( );
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 	} // Drawing.stroke
 	
 	
 	
 	
-	fill( color = 'gray' )
+	fill( color = Suica.DEFAULT.FILL.COLOR )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 //		this.texture = null; // clear the texture
@@ -2218,12 +2450,12 @@ class Drawing
 		this.context.fillStyle = color;
 		this.context.fill( );
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 	} // Drawing.fill
 	
 	
 	
-	clear( color = null )
+	clear( color = Suica.DEFAULT.CLEAR.COLOR )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 
@@ -2237,7 +2469,7 @@ class Drawing
 			this.context.clearRect( -1, -1, this.canvas.width+2, this.canvas.height+2 );
 		}
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 	}
 
 
@@ -2260,7 +2492,7 @@ class Drawing
 		this.context.fillStyle = fillColor;
 		this.context.fill( );
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 
 		if( this.texture )
 		{
@@ -2347,10 +2579,10 @@ window.curveTo = function ( mx = 0, my = 0, x = 0, y = 0 )
 
 
 
-window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360 )
+window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360, cw )
 {
 	Drawing.precheck();
-	Drawing.current.arc( x, y, r, from, to );
+	Drawing.current.arc( x, y, r, from, to, cw );
 }
 
 

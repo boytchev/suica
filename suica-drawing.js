@@ -42,47 +42,64 @@ class Drawing
 				this.context.fillRect( 0, 0, width, height );
 			}
 			
-			this.context.beginPath( );
+			this.needsNewPath = true;
+			
 //document.body.appendChild( this.canvas );			
 		}
+		
 	} // Drawing.constructor
 
 
 
 
-	moveTo( x = 0, y = 0 )
+	managePath()
 	{
+		if( this.needsNewPath )
+		{
+			this.context.beginPath( );
+			this.needsNewPath = false;
+		}	
+	} // Drawing.managePath
+
+
+
+	moveTo( x = Suica.DEFAULT.MOVETO.CENTER[0], y = Suica.DEFAULT.MOVETO.CENTER[1] )
+	{
+		this.managePath();
 		this.context.moveTo( x, this.canvas.height-y );
 	} // Drawing.moveTo
 	
 	
 	
 	
-	lineTo( x = 0, y = 0 )
+	lineTo( x = Suica.DEFAULT.LINETO.CENTER[0], y = Suica.DEFAULT.LINETO.CENTER[1] )
 	{
+		this.managePath();
 		this.context.lineTo( x, this.canvas.height-y );
 	} // Drawing.lineTo
 	
 	
 	
 	
-	curveTo( mx = 0, my = 0, x = 0, y = 0 )
+	curveTo( mx = Suica.DEFAULT.CURVETO.M[0], my = Suica.DEFAULT.CURVETO.M[1], x = Suica.DEFAULT.CURVETO.CENTER[0], y = Suica.DEFAULT.CURVETO.CENTER[1] )
 	{
+		this.managePath();
 		this.context.quadraticCurveTo( mx, this.canvas.height-my, x, this.canvas.height-y );
 	} // Drawing.curveTo
 	
 	
 	
 
-	arc( x = 0, y = 0, r = 10, from = 0, to = 360 )
+	arc( x = Suica.DEFAULT.ARC.CENTER[0], y = Suica.DEFAULT.ARC.CENTER[1], r = Suica.DEFAULT.ARC.RADIUS, from = Suica.DEFAULT.ARC.FROM, to = Suica.DEFAULT.ARC.TO, cw = Suica.DEFAULT.ARC.CW )
 	{
-		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90) );
+		this.managePath();
+		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90), !cw );
 	} // Drawing.arc
 	
 	
 	
 
-	fillText( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
+	fillText( x = Suica.DEFAULT.FILLTEXT.CENTER[0], y = Suica.DEFAULT.FILLTEXT.CENTER[1], text = Suica.DEFAULT.FILLTEXT.TEXT, color = Suica.DEFAULT.FILLTEXT.COLOR, font = Suica.DEFAULT.FILLTEXT.FONT )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 		
@@ -94,7 +111,7 @@ class Drawing
 	
 	
 
-	stroke( color = 'black', width = 1, close = false )
+	stroke( color = Suica.DEFAULT.STROKE.COLOR, width = Suica.DEFAULT.STROKE.WIDTH, close = Suica.DEFAULT.STROKE.CLOSE )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 //		this.texture = null; // clear the texture
@@ -105,7 +122,7 @@ class Drawing
 		this.context.lineWidth = width;
 		this.context.stroke( );
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 	} // Drawing.stroke
 	
 	
@@ -119,12 +136,12 @@ class Drawing
 		this.context.fillStyle = color;
 		this.context.fill( );
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 	} // Drawing.fill
 	
 	
 	
-	clear( color = null )
+	clear( color = Suica.DEFAULT.CLEAR.COLOR )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 
@@ -138,7 +155,7 @@ class Drawing
 			this.context.clearRect( -1, -1, this.canvas.width+2, this.canvas.height+2 );
 		}
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 	}
 
 
@@ -161,7 +178,7 @@ class Drawing
 		this.context.fillStyle = fillColor;
 		this.context.fill( );
 
-		this.context.beginPath( );
+		this.needsNewPath = true;
 
 		if( this.texture )
 		{
@@ -248,10 +265,10 @@ window.curveTo = function ( mx = 0, my = 0, x = 0, y = 0 )
 
 
 
-window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360 )
+window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360, cw )
 {
 	Drawing.precheck();
-	Drawing.current.arc( x, y, r, from, to );
+	Drawing.current.arc( x, y, r, from, to, cw );
 }
 
 

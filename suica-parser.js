@@ -75,14 +75,12 @@ class HTMLParser
 		this.parseTag.DRAWING = this.parseTagDRAWING;
 		this.parseTag.MOVETO = this.parseTagMOVETO;
 		this.parseTag.LINETO = this.parseTagLINETO;
+		this.parseTag.CURVETO = this.parseTagCURVETO;
+		this.parseTag.ARC = this.parseTagARC;
+		this.parseTag.STROKE = this.parseTagSTROKE;
 		this.parseTag.FILL = this.parseTagFILL;
-// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
-// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚, 𝑡𝑜 );
-// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
-// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillAndStroke( 𝑐𝑜𝑙𝑜𝑟, 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
-// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillText( 𝑥, 𝑦, 𝑡𝑒𝑥𝑡, 𝑐𝑜𝑙𝑜𝑟, 𝑓𝑜𝑛𝑡 );
-// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.clear( );
-// 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.clear( 𝑐𝑜𝑙𝑜𝑟 );
+		this.parseTag.FILLTEXT = this.parseTagFILLTEXT;
+		this.parseTag.CLEAR = this.parseTagCLEAR;
 
 		this.parseTag.BUTTON = this.skipTag;
 		this.parseTag.CANVAS = this.skipTagSilently;
@@ -641,14 +639,81 @@ class HTMLParser
 	// <lineto x="..." y="...">
 	parseTagLINETO( suica, elem )
 	{
-		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.MOVETO.CENTER );
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.LINETO.CENTER );
 		if( elem.hasAttribute('x') )
-			center[0] = elem.getAttribute('x') || Suica.DEFAULT.MOVETO.CENTER[0];
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.LINETO.CENTER[0];
 		if( elem.hasAttribute('y') )
-			center[1] = elem.getAttribute('y') || Suica.DEFAULT.MOVETO.CENTER[1];
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.LINETO.CENTER[1];
 
 		lineTo( center[0], center[1] );
 	} // HTMLParser.parseTagLINETO
+
+
+	// <curveto m="mx,my" center="x,y">
+	// <curveto mx="..." my="..." x="..." y="...">
+	parseTagCURVETO( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.CURVETO.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.CURVETO.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.CURVETO.CENTER[1];
+
+		var m = Suica.parseCenter( elem.getAttribute('m') || Suica.DEFAULT.CURVETO.M );
+		if( elem.hasAttribute('mx') )
+			m[0] = elem.getAttribute('mx') || Suica.DEFAULT.CURVETO.M[0];
+		if( elem.hasAttribute('my') )
+			m[1] = elem.getAttribute('my') || Suica.DEFAULT.CURVETO.M[1];
+
+		curveTo( m[0], m[1], center[0], center[1] );
+	} // HTMLParser.parseTagCURVETO
+
+
+	// <arc center="..." x="..." y="..." radius="..." from="..." to="..." cw cw="..." ccw ccw="ccw">
+	parseTagARC( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.ARC.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.ARC.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.ARC.CENTER[1];
+
+		var radius = elem.getAttribute('radius') || Suica.DEFAULT.STROKE.RADIUS,
+			from = elem.getAttribute('from') || Suica.DEFAULT.STROKE.FROM,
+			to = elem.getAttribute('to') || Suica.DEFAULT.STROKE.TO;
+			
+		var cw = Suica.DEFAULT.STROKE.CW;
+		
+		if( elem.hasAttribute('cw') )
+		{
+			if( elem.getAttribute('cw') == "" )
+				cw = true;
+			else
+				cw = elem.getAttribute('cw');
+		}
+		if( elem.hasAttribute('ccw') )
+		{
+			if( elem.getAttribute('ccw') == "" )
+				cw = false;
+			else
+				cw = !elem.getAttribute('ccw');
+		}
+
+		arc( center[0], center[1], radius, from, to, cw );
+	} // HTMLParser.parseTagARC
+
+
+	// <stroke color="..." width="..." close close="...">
+	parseTagSTROKE( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.STROKE.COLOR,
+			width = elem.getAttribute('width') || Suica.DEFAULT.STROKE.WIDTH,
+			close = elem.getAttribute('close') || Suica.DEFAULT.STROKE.CLOSE;
+		
+		if( elem.hasAttribute('close') && elem.getAttribute('close')=="") close = true;
+
+		stroke( color, width, close );
+	} // HTMLParser.parseTagSTROKE
 
 
 	// <fill color="...">
@@ -658,6 +723,32 @@ class HTMLParser
 
 		fill( color );
 	} // HTMLParser.parseTagFILL
+
+
+	// <fillText center="..." x="..." y="..." text="..." color="..." font="...">
+	parseTagFILLTEXT( suica, elem )
+	{
+		var center = Suica.parseCenter( elem.getAttribute('center') || Suica.DEFAULT.FILLTEXT.CENTER );
+		if( elem.hasAttribute('x') )
+			center[0] = elem.getAttribute('x') || Suica.DEFAULT.FILLTEXT.CENTER[0];
+		if( elem.hasAttribute('y') )
+			center[1] = elem.getAttribute('y') || Suica.DEFAULT.FILLTEXT.CENTER[1];
+
+		var text = elem.getAttribute('text') || Suica.DEFAULT.FILLTEXT.TEXT,
+			color = elem.getAttribute('color') || Suica.DEFAULT.FILLTEXT.COLOR,
+			font = elem.getAttribute('font') || Suica.DEFAULT.FILLTEXT.FONT;
+		
+		fillText( center[0], center[1], text, color, font );
+	} // HTMLParser.parseTagFILLTEXT
+
+
+	// <clear color="...">
+	parseTagCLEAR( suica, elem )
+	{
+		var color = elem.getAttribute('color') || Suica.DEFAULT.CLEAR.COLOR;
+
+		clear( color );
+	} // HTMLParser.parseTagCLEAR
 
 	
 } // HTMLParser

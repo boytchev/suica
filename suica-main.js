@@ -39,12 +39,14 @@
 //	2.-1.31 (220321) property image
 //	2.-1.32 (220326) dynamic drawings
 //	2.-1.33 (220327) drawing clear
+//	2.-1.34 (220330) <drawing>, <lineto>, <moveto>, <fill>
+//	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.33 (220327)` );
+console.log( `Suica 2.-1.35 (220331)` );
 
 
 // control flags
@@ -163,7 +165,12 @@ class Suica
 		DRAWING: { SIZE:32, COLOR:null },
 		MOVETO: { CENTER:[0,0] },
 		LINETO: { CENTER:[0,0] },
+		CURVETO: { CENTER:[0,0], M:[0,0] },
+		ARC: { CENTER:[0,0], RADIUS:10, FROM:0, TO:360, CW:true },
+		STROKE: { COLOR:'black', WIDTH:1, CLOSE:false },
 		FILL: { COLOR:'gray' },
+		FILLTEXT: { CENTER:[0,0], TEXT:'Suica', COLOR:'black', FONT:'20px Arial' },
+		CLEAR: { COLOR:null },
 	} // Suica.DEFAULT
 	
 	

@@ -504,6 +504,15 @@ HTML:
 <drawing id="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
 <drawing id="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
 <drawing id="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" size="𝑤𝑖𝑑𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<moveto center="𝑥,𝑦" x="𝑥" y="𝑦">
+<lineto center="𝑥,𝑦" x="𝑥" y="𝑦">
+<curveto m="𝑚𝑥,𝑚𝑦" mx="𝑚𝑥" my="𝑚𝑦" center="𝑥,𝑦" x="𝑥" y="𝑦">
+<arc center="𝑥,𝑦" x="𝑥" y="𝑦" radius="𝑟𝑎𝑑𝑖𝑢𝑠" from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" cw cw="𝑐𝑤" ccw ccw="𝑐𝑐𝑤">
+<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" close close="𝑐𝑙𝑜𝑠𝑒">
+<fill color="𝑐𝑜𝑙𝑜𝑟">
+<filltext center="𝑥,𝑦" x="𝑥" y="𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
+<clear>
+<clear color="𝑐𝑜𝑙𝑜𝑟">
 ```
 ```js
 JS:
@@ -511,7 +520,7 @@ JS:
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.moveTo( 𝑥, 𝑦 );
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.lineTo( 𝑥, 𝑦 );
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
-𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚, 𝑡𝑜 );
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚, 𝑡𝑜, 𝑐𝑤 );
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fill( 𝑐𝑜𝑙𝑜𝑟 );
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillAndStroke( 𝑐𝑜𝑙𝑜𝑟, 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );

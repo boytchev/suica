@@ -1111,6 +1111,11 @@ Suica drawings are based on on [Canvas2D](https://developer.mozilla.org/en-US/do
 Lines are drawn by moving a virtual pen over the canvas. Filled areas are drawn
 by defining their boundary with the virtual pen.
 
+A drawing can be constructed in HTML or in JavaScript.
+
+[<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-html.html)
+[<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-js.html)
+
 #### Drawing
 
 Command. Defines a 2D drawing canvas. Parameters are `width` and `height` for
