@@ -3188,7 +3188,7 @@ Mesh.createMaterials();﻿//
 
 class Point extends Mesh
 {
-	static solidGeometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+	static solidGeometry;
 
 
 	constructor(suica, center, size, color)
@@ -3196,7 +3196,12 @@ class Point extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'point', center, size, color );
 
-
+		if( !Point.solidGeometry )
+		{
+			Point.solidGeometry = new THREE.BufferGeometry();
+			Point.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+		}
+		
 		super( suica,
 			new THREE.Points( Point.solidGeometry, Mesh.pointMaterial.clone() ),
 			null, // no wireframe
@@ -3281,12 +3286,7 @@ window.point = function(
 
 class Line extends Mesh
 {
-	static solidGeometry = new THREE.BufferGeometry();
-	static
-	{
-		this.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
-		this.solidGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
-	}
+	static solidGeometry;
 
 
 	constructor( suica, center, to, color )
@@ -3294,6 +3294,13 @@ class Line extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'line', center, to, color );
 			
+		if( !Line.solidGeometry )
+		{
+			Line.solidGeometry = new THREE.BufferGeometry();
+			Line.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
+			Line.solidGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
+		}
+		
 		super( suica,
 			new THREE.LineSegments( Line.solidGeometry.clone(), Mesh.lineMaterial.clone() ),
 			null, // no wireframe

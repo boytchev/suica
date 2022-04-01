@@ -20,7 +20,7 @@
 
 class Point extends Mesh
 {
-	static solidGeometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+	static solidGeometry;
 
 
 	constructor(suica, center, size, color)
@@ -28,7 +28,12 @@ class Point extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'point', center, size, color );
 
-
+		if( !Point.solidGeometry )
+		{
+			Point.solidGeometry = new THREE.BufferGeometry();
+			Point.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0]), 3));
+		}
+		
 		super( suica,
 			new THREE.Points( Point.solidGeometry, Mesh.pointMaterial.clone() ),
 			null, // no wireframe

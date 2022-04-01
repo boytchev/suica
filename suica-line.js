@@ -20,12 +20,7 @@
 
 class Line extends Mesh
 {
-	static solidGeometry = new THREE.BufferGeometry();
-	static
-	{
-		this.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
-		this.solidGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
-	}
+	static solidGeometry;
 
 
 	constructor( suica, center, to, color )
@@ -33,6 +28,13 @@ class Line extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'line', center, to, color );
 			
+		if( !Line.solidGeometry )
+		{
+			Line.solidGeometry = new THREE.BufferGeometry();
+			Line.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
+			Line.solidGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
+		}
+		
 		super( suica,
 			new THREE.LineSegments( Line.solidGeometry.clone(), Mesh.lineMaterial.clone() ),
 			null, // no wireframe
