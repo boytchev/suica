@@ -36,7 +36,8 @@
 		function loop( )
 		{
 			a.image.arc( random(0,100), random(0,100), random(10,30) );
-			a.image.fillAndStroke( random(['peachpuff','linen','white','lightgray','lightsalmon']), 'black', 5 );
+			a.image.stroke( 'black', 5 );
+			a.image.fill( random(['peachpuff','linen','white','lightgray','lightsalmon']) );
 			
 			b.image.moveTo( random(-10,110), random(-10,110) );
 			b.image.lineTo( random(-10,110), random(-10,110) );
