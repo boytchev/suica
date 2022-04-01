@@ -13,7 +13,7 @@
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Images and drawings](#images-and-drawings)
     - [Images](#images-1) [<small> [image](#image-1) </small>] 
-    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillAndStroke](#fillandstroke) | [fillText](#filltext) | [clear](#clear) </small>] 
+    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -1228,8 +1228,7 @@ the canvas. The X axis extends to the right, Y extends to the top.
 
 Command. Draws a line over the current path. The line has given `color` and 
 `width`. If the `close` parameter is *true*, then the end of the path is
-conneted to the beginning of the path. The commands after *stroke* start a new
-path.
+conneted to the beginning of the path. 
 
 ```js
 stroke( 'crimson' );
@@ -1242,29 +1241,15 @@ stroke( 'crimson', 10, true );
 #### Fill
 
 Command. Fills the area defined by a path. The area is filled with the given
-`color`. Next commands after *fill* start a new path.
+`color`. Next commands after *fill* start a new path. *Fill* and *stroke* can
+be combined by applying them to the same path.
 
 ```js
 fill( 'crimson' );
 ```
 	
 [<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill.html)
-	
-	
-#### FillAndStroke
-
-Command. Fills the area defined by a path and draw a line along the boundary of
-the area. This command is a combination of [fill](#fill) followed immediately
-by [stroke](#stroke) using the same path. The parameters of *fillAndStroke* are
-the `color` of filling, followed by `color`, `width` and `close` of stroking.
-Next commands after *fillAndStroke* start a new path.
-
-```js
-fillAndStroke( 'crimson', 'white' );
-fillAndStroke( 'crimson', 'white', 10, true );
-```
-
-[<kbd><img src="../examples/snapshots/drawing-fillandstroke.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-fillandstroke.html)
+[<kbd><img src="../examples/snapshots/drawing-fill-and-stroke.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill-and-stroke.html)
 
 
 #### FillText
@@ -1440,4 +1425,4 @@ p.spin = [0,45];
 
 ---
 
-March, 2022
+April, 2022

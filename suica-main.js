@@ -41,12 +41,13 @@
 //	2.-1.33 (220327) drawing clear
 //	2.-1.34 (220330) <drawing>, <lineto>, <moveto>, <fill>
 //	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
+//	2.-1.36 (220401) removed fillAndStroke
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.35 (220331)` );
+console.log( `Suica 2.-1.36 (220401)` );
 
 
 // control flags

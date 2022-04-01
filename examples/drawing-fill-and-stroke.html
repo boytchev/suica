@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Drawing &ndash; fillAndStroke</title>
+	<title>Drawing &ndash; fill and stroke</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,7 +18,7 @@
 
 <body>
 
-	<h1>Drawing &ndash; fillAndStroke</h1>
+	<h1>Drawing &ndash; fill and stroke</h1>
 	<p>Drawing a color-filled area with a border.</p>
 
 	<suica>
@@ -33,16 +33,20 @@
 		fill( 'linen' );	
 		
 		arc( 25, 25, 15 );
-		fillAndStroke( 'peachpuff', 'black', 10 );	
+		stroke( 'black', 10 );	
+		fill( 'peachpuff' );	
 		
 		arc( 100-25, 25, 15 );
-		fillAndStroke( 'white', 'black', 10 );	
+		stroke( 'black', 10 );	
+		fill( 'white' );	
 		
 		arc( 25, 100-25, 15 );
-		fillAndStroke( 'lightgray', 'black', 10 );	
+		stroke( 'black', 10 );	
+		fill( 'lightgray' );	
 	
 		arc( 100-25, 100-25, 15 );
-		fillAndStroke( 'lightsalmon', 'black', 10 );	
+		stroke( 'black', 10 );	
+		fill( 'lightsalmon' );	
 		
 		a.image = pic;
 	</script>

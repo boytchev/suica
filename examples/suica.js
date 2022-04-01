@@ -42,12 +42,13 @@
 //	2.-1.33 (220327) drawing clear
 //	2.-1.34 (220330) <drawing>, <lineto>, <moveto>, <fill>
 //	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
+//	2.-1.36 (220401) removed fillAndStroke
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.35 (220331)` );
+console.log( `Suica 2.-1.36 (220401)` );
 
 
 // control flags
@@ -2324,7 +2325,6 @@ class HTMLParser
 // fillText( x, y, text, color, font )
 // stroke( color, width, close )
 // fill( color )
-// fillAndStroke( fillColor, strokeColor, width, close )
 //
 //===================================================
 
@@ -2474,35 +2474,6 @@ class Drawing
 
 
 
-	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
-	{
-		// if( this.texture )
-		// {
-			// console.log( this.texture );
-			// this.texture.needsUpdate = true;
-		// }
-//		this.texture = null; // clear the texture
-		
-		if( close ) this.context.closePath();
-
-		this.context.strokeStyle = strokeColor;
-		this.context.lineWidth = width;
-		this.context.stroke( );
-		
-		this.context.fillStyle = fillColor;
-		this.context.fill( );
-
-		this.needsNewPath = true;
-
-		if( this.texture )
-		{
-			this.texture.needsUpdate = true;
-		}
-	} // Drawing.fillAndStroke
-	
-	
-	
-
 	get image( )
 	{
 		if( !this.texture )
@@ -2610,15 +2581,6 @@ window.fill = function ( color = 'gray' )
 {
 	Drawing.precheck();
 	Drawing.current.fill( color );
-}
-
-
-
-
-window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
-{
-	Drawing.precheck();
-	Drawing.current.fillAndStroke( fillColor, strokeColor, width, close );
 }
 
 

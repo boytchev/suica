@@ -10,7 +10,6 @@
 // fillText( x, y, text, color, font )
 // stroke( color, width, close )
 // fill( color )
-// fillAndStroke( fillColor, strokeColor, width, close )
 //
 //===================================================
 
@@ -160,35 +159,6 @@ class Drawing
 
 
 
-	fillAndStroke( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
-	{
-		// if( this.texture )
-		// {
-			// console.log( this.texture );
-			// this.texture.needsUpdate = true;
-		// }
-//		this.texture = null; // clear the texture
-		
-		if( close ) this.context.closePath();
-
-		this.context.strokeStyle = strokeColor;
-		this.context.lineWidth = width;
-		this.context.stroke( );
-		
-		this.context.fillStyle = fillColor;
-		this.context.fill( );
-
-		this.needsNewPath = true;
-
-		if( this.texture )
-		{
-			this.texture.needsUpdate = true;
-		}
-	} // Drawing.fillAndStroke
-	
-	
-	
-
 	get image( )
 	{
 		if( !this.texture )
@@ -296,15 +266,6 @@ window.fill = function ( color = 'gray' )
 {
 	Drawing.precheck();
 	Drawing.current.fill( color );
-}
-
-
-
-
-window.fillAndStroke = function ( fillColor = 'gray', strokeColor = 'black', width = 1, close = false )
-{
-	Drawing.precheck();
-	Drawing.current.fillAndStroke( fillColor, strokeColor, width, close );
 }
 
 
