@@ -42,6 +42,7 @@
 //	2.-1.34 (220330) <drawing>, <lineto>, <moveto>, <fill>
 //	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
 //	2.-1.36 (220401) removed fillAndStroke
+//	2.-1.37 (220402) findObject, findObjects, addEventListener, removeEventListener
 //
 //===================================================
 
@@ -52,6 +53,7 @@ console.log( `Suica 2.-1.36 (220401)` );
 
 // control flags
 const DEBUG_CALLS = !false;
+const DEBUG_EVENTS = false;
 
 
 
@@ -121,7 +123,9 @@ class Suica
 			},
 		} // Suica.ORIENTATIONS
 
-
+	static globalHoverObject; // used to track mouse enter/leave for Suica objects
+	static globalHoverEvent;  // used to track mouse enter/leave for Suica objects while demo()
+	
 	flipNormal( geometry )
 	{
 		if( this.orientation.FLIP_NORMAL )
@@ -222,7 +226,11 @@ class Suica
 		
 		// automatic rotation
 		this.demoViewPoint = null;
-		
+
+		// object selection and events
+		this.raycaster = new THREE.Raycaster();
+		this.raycastPointer = new THREE.Vector2();
+
 		// register this suica instance
 		Suica.current = this; // as current Suica
 		Suica.allSuicas.push( this ); // as one of all Suicas
@@ -253,6 +261,7 @@ class Suica
 								width: 100%;
 								height: 100%;
 								box-sizing: border-box;`;
+		this.canvas.suicaObject = this;
 		this.suicaTag.appendChild( this.canvas );
 		
 	} // Suica.createCanvas
@@ -496,6 +505,7 @@ class Suica
 			if( that.demoViewPoint )
 			{
 				adjustDemoViewPoint( time );
+				Suica.onMouseMoveUpdate( );
 			}
 			else
 			{
@@ -968,6 +978,186 @@ class Suica
 		return new Group( this, ...groupElements );
 	} // Suica.group
 
+
+	findObjects( domEvent )
+	{
+		var canvas = domEvent.target;
+		
+		console.assert( canvas == this.canvas );
+		
+		// get pixel position withing the Suica canvas
+		var rect = canvas.getBoundingClientRect(),
+			pixelX = Math.floor( domEvent.clientX - rect.left ),
+			pixelY = Math.floor( domEvent.clientY - rect.top );
+	
+		// get relative pixel position (ie. [-1,+1])
+		this.raycastPointer.x =  2*pixelX/canvas.clientWidth - 1;
+		this.raycastPointer.y = -2*pixelY/canvas.clientHeight + 1;
+
+		// cast a ray and find intersection with all objects
+		this.raycaster.setFromCamera( this.raycastPointer, this.camera );
+		var intersects = this.raycaster.intersectObjects( this.scene.children, false );
+
+		// construct a list of all intersected objects
+		var foundObjects = [];
+			
+		for( var i=0; i<intersects.length; i++ )
+		{
+			var object = intersects[i].object.suicaObject;
+			if( foundObjects.indexOf(object) < 0 )
+				foundObjects.push( object );
+		}
+		
+		return foundObjects;
+	}
+	
+
+	findObject( domEvent )
+	{
+		var objects = this.findObjects( domEvent );
+		
+		if( objects.length )
+			return objects[0];
+		
+		return null;
+	}
+	
+	addEventListener( type, listener, aux )
+	{
+		this.canvas.addEventListener( type, listener, aux );
+	}
+	
+	removeEventListener( type, listener, aux )
+	{
+		this.canvas.removeEventListener( type, listener, aux );
+	}
+
+	
+	static eventCall( object, eventName, eventParam )
+	{
+		// no object
+		if( !object ) return;
+		
+		// no event listener
+		if( !object[eventName] ) return;
+		
+		// if event listener is a string, it is the name of the listener
+		if( typeof object[eventName] === 'string' || object[eventName] instanceof String )
+		{
+			object[eventName] = window[object[eventName]];
+		}
+		
+		// call the listener
+		object[eventName]( eventParam );
+
+		Suica.hoverObject = object;
+		
+		if( DEBUG_EVENTS ) console.log( object.id+' :: '+eventName );
+	}
+
+	
+	static onMouseMove( event )
+	{
+		Suica.globalHoverEvent = event;
+		
+		var object = findObject( event );
+		if( Suica.hoverObject )
+		{
+			if( object == Suica.hoverObject )
+			{
+				Suica.eventCall( object, 'onmousemove', event );
+			}
+			else
+			{
+				Suica.eventCall( Suica.hoverObject, 'onmouseleave', event );		
+				Suica.eventCall( object, 'onmouseenter', event );
+			}
+		}
+		else
+		{
+			Suica.eventCall( object, 'onmouseenter', event );
+		}
+	} // Suica.onMouseMove
+	
+	
+	static onMouseMoveUpdate( )
+	{
+		// this method updates mouseenter/leave cause by change in viewpoint
+		
+		if( !Suica.globalHoverEvent ) return;
+		
+		var event = Suica.globalHoverEvent;
+		
+		var object = findObject( event );
+		if( Suica.hoverObject )
+		{
+			if( object != Suica.hoverObject )
+			{
+				Suica.eventCall( Suica.hoverObject, 'onmouseleave', event );		
+				Suica.eventCall( object, 'onmouseenter', event );
+			}
+		}
+		else
+		{
+			Suica.eventCall( object, 'onmouseenter', event );
+		}
+	} // Suica.onMouseMoveUpdate
+	
+	
+	static onMouseDown( event )
+	{
+		var object = findObject( event );
+		if( object )
+		{
+			if( object.onmousedown ) object.onmousedown( event );
+			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onMouseDown' );
+			return;
+		}
+	} // Suica.onMouseDown
+	
+	
+	static onMouseUp( event )
+	{
+		var object = findObject( event );
+		if( object )
+		{
+			if( object.onmouseup ) object.onmouseup( event );
+			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onMouseUp' );
+			return;
+		}
+	} // Suica.onMouseUp
+	
+	
+	static onClick( event )
+	{
+		var object = findObject( event );
+		if( object )
+		{
+			if( object.onclick ) object.onclick( event );
+			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onClick' );
+			return;
+		}
+	} // Suica.onClick
+	
+	
+	static onDblClick( event )
+	{
+		var object = findObject( event );
+		if( object )
+		{
+			if( object.ondblclick ) object.ondblclick( event );
+			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onDblClick' );
+			return;
+		}
+	} // Suica.onDblClick
+	
+	
+	static onContextMenu( event )
+	{
+		event.preventDefault();
+	} // Suica.onContextMenu
+	
+	
 } // class Suica
 
 
@@ -1098,10 +1288,38 @@ window.clone = function( object )
 		throw 'error: cannot clone object';
 }
 
+window.findObjects = function( domEvent )
+{
+	Suica.precheck();
+	
+	var suica = domEvent.target.suicaObject;
+	if( suica )
+		return suica.findObjects( domEvent );
+}
+
+
+window.findObject = function( domEvent )
+{
+	Suica.precheck();
+	
+	var suica = domEvent.target.suicaObject;
+	if( suica )
+		return suica.findObject( domEvent );
+}
+
+
+// interactivity manager
+window.addEventListener( 'mousemove', Suica.onMouseMove );
+window.addEventListener( 'mousedown', Suica.onMouseDown );
+window.addEventListener( 'mouseup', Suica.onMouseUp );
+window.addEventListener( 'click', Suica.onClick );
+window.addEventListener( 'dblclick', Suica.onDblClick );
+window.addEventListener( 'contextmenu', Suica.onContextMenu );
+
 
 // monitor creation of tags, we are interested in creation of
 // <script> because it might contain Suica tags; thus for each
-// <script> try to prase all unparsed Suicas
+// <script> try to parase all unparsed Suicas
 //
 // idea from https://github.com/jspenguin2017/Snippets/blob/master/onbeforescriptexecute.html
 new MutationObserver( function( mutations )

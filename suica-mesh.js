@@ -18,13 +18,18 @@
 
 class Mesh
 {
+	static id = 0;
+	
 	constructor( suica, solidMesh, frameMesh )
 	{
+		this.id = 'Object'+(++Mesh.id);
+		
 		this.suica = suica;
 		this.solidMesh = solidMesh;
 		this.frameMesh = frameMesh;
 		
 		this.threejs = solidMesh;
+		this.threejs.suicaObject = this;
 		this.isWireframe = false;
 		
 		// [width, height, depth]
@@ -447,6 +452,7 @@ class Mesh
 		}
 		
 		this.threejs = newMesh;
+		this.threejs.suicaObject = this;
 		
 		this.suica.scene.remove( oldMesh );
 		this.suica.scene.add( newMesh );
@@ -505,7 +511,27 @@ class Mesh
 	}
 	
 
+	addEventListener( type, listener, aux )
+	{
+		if( aux ) console.warn( 'Suica objects do not support third parameter of addEventListener');
+		
+		if( !type.startsWith('on') )
+			type = 'on'+type;
+		
+		this[type] = listener;
+	}
+	
 
+	removeEventListener( type, listener, aux )
+	{
+		if( listener ) console.warn( 'Suica objects do not support second parameter of removeEventListener');
+		if( aux ) console.warn( 'Suica objects do not support third parameter of removeEventListener');
+
+		if( !type.startsWith('on') )
+			type = 'on'+type;
+		
+		this['on'+type] = null;
+	}
 	
 
 } // class Mesh

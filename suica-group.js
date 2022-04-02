@@ -24,6 +24,7 @@ class Group
 		this.suica = suica;
 		
 		this.threejs = new THREE.Group();
+		this.threejs.suicaObject = this;
 		this.groupElements = [];
 		
 		// [width, height, depth]

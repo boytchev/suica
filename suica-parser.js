@@ -330,9 +330,39 @@ class HTMLParser
 		{
 			if( elem.hasAttribute('wireframe') ) object.wireframe = ['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase()) >= 0;
 		}
+
+		// parse events
+		function parseEvent( actualName, name )
+		{
+			if( elem.hasAttribute(name) )
+			{
+				object[actualName] = elem.getAttribute(name);
+			}
+		}
 		
+		parseEvent( 'onmousemove',	'onmousemove' );
+		parseEvent( 'onmouseleave',	'onmouseleave' );
+		parseEvent( 'onmouseenter', 'onmouseenter' );
+		parseEvent( 'onmousedown',	'onmousedown' );
+		parseEvent( 'onmouseup',	'onmouseup' );
+		parseEvent( 'onclick',		'onclick' );
+		parseEvent( 'ondblclick',	'ondblclick' );
+
+		parseEvent( 'onmousemove',	'mousemove' );
+		parseEvent( 'onmouseleave',	'mouseleave' );
+		parseEvent( 'onmouseenter', 'mouseenter' );
+		parseEvent( 'onmousedown',	'mousedown' );
+		parseEvent( 'onmouseup',	'mouseup' );
+		parseEvent( 'onclick',		'click' );
+		parseEvent( 'ondblclick',	'dblclick' );
+		
+		// parse id
 		var id = elem.getAttribute('id');
-		if( id ) window[id] = object;
+		if( id )
+		{
+			window[id] = object;
+			object.id = id;
+		}
 	}
 	
 	
@@ -362,6 +392,8 @@ class HTMLParser
 			elem.getAttribute('to') || Suica.DEFAULT.LINE.TO,
 			elem.getAttribute('color') || Suica.DEFAULT.LINE.COLOR
 		);
+
+		suica.parserReadonly.parseAttributes( elem, p );
 
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
