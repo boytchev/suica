@@ -10,7 +10,7 @@
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [spin](#spin) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [images](#images) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
-	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
+	- [Advanced 3D objects](#advanced-3d-obje`cts) [<small> [group](#group) </small>]
 - [Images and drawings](#images-and-drawings)
     - [Images](#images-1) [<small> [image](#image-1) </small>] 
     - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
@@ -1107,14 +1107,17 @@ TO DO
 
 ### Drawings
 
-Suica drawings are based on on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D).
-Lines are drawn by moving a virtual pen over the canvas. Filled areas are drawn
-by defining their boundary with the virtual pen.
+Suica drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+and are made of lines and filled areas. A virtual pen defines a path on the canvas.
+This path can be *stroked* by drawing a line over the path; or it contents can
+be *filled* with a color.
 
-A drawing can be constructed in HTML or in JavaScript.
+A drawing can be constructed in HTML or in JavaScript. Modifications of existing
+drawing can be done only in JavaScript.
 
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-js.html)
+
 
 #### Drawing
 
@@ -1129,7 +1132,14 @@ the canvas. The X axis extends to the right, Y extends to the top.
 
 <img src="images/drawing-coordinates.png">
 
+```html
+HTML:
+<drawing id="pic">
+<drawing id="pic" size="32,48">
+<drawing id="pic" width="32" height="48">
+```
 ```js
+JS:
 var a = drawing( 32 );
 var b = drawing( 32, 48, 'crimson' );
 ```
@@ -1162,7 +1172,13 @@ connected to the current line. By default the both *x* and *y* are 0.
 
 <img src="images/moveto-lineto.png">
 
+```html
+HTML:
+<moveTo center="10,0">
+<moveTo x="10" y="0">
+```
 ```js
+JS:
 moveTo( 10, 0 );
 ```
 	
@@ -1173,7 +1189,13 @@ along a straight line from its current location to (`x`,`y`) and adds that line
 to the current path. This is used to define straignt line sections of the path.
 By default the both *x* and *y* are 0.
 
+```html
+HTML:
+<lineTo center="10,0">
+<lineTo x="10" y="0">
+```
 ```js
+JS:
 lineTo( 10, 0 );
 ```
 
@@ -1189,13 +1211,20 @@ By default all coordinates *mx*, *my*, *x* and *y* are 0.
 
 <img src="images/curveto.png">
 
+```html
+HTML:
+<curveTo m="10,0" center="20,15">
+<curveTo mx="10" my="0" x="20" y="15">
+```
 ```js
+JS:
 curveTo( 10, 0, 20, 15 );
 ```
 
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
 
-A more complex curve can be constructed by joining individual curves.
+A more complex curve can be constructed by joining individual curves. The shape
+of a heart, for examples, can be constructed by 6 connected curves.
 
 <img src="images/drawing-heart.png">
 
@@ -1206,13 +1235,20 @@ A more complex curve can be constructed by joining individual curves.
 
 Command. Adds a circle оr a circular arc to the path. This command creates an
 arc from a circle with center (`x`,`y`) and `radius`. The arc stars from angle
-`from` and ends at angle `to`, clockwise. Coordinates and radius are measured in
+`from` and ends at angle `to`. The last parameter is direction of drawing &ndash;
+either clockwise or counter-clockwise. Coordinates and radius are measured in
 pixels, angles are measured in degrees. If the angles are not provided, a full
-circle is generated.
+circle is generated. 
 
+```html
+HTML:
+<arc center="10,0" radius="5">
+<arc x="10" y="0" radius="5" from="0" to="180" ccw>
+```
 ```js
+JS:
 arc( 10, 0, 5);
-arc( 10, 0, 5, 0, 180);
+arc( 10, 0, 5, 0, 180, false);
 ```
 
 The coordinate system of a drawing has origin (0,0) at the bottom left side of
@@ -1222,15 +1258,35 @@ the canvas. The X axis extends to the right, Y extends to the top.
 
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-arc.html)
 
+In HTML the direction of drawing is set by attributes `cw` or `ccw` which values
+are either *true* or *false*. If the attributes have no values, they are assumed
+to be *true*. The following commanda are equivalent:
 
+```html
+HTML:
+<arc x="10" y="0" radius="5" cw>
+<arc x="10" y="0" radius="5" cw="true">
+<arc x="10" y="0" radius="5" ccw="false">
+```
+
+In JS the direction of drawing is set by the last 6th parameter of *arc* that
+corresponds to *cw* and by default is *true*.
 
 #### Stroke
 
 Command. Draws a line over the current path. The line has given `color` and 
 `width`. If the `close` parameter is *true*, then the end of the path is
-conneted to the beginning of the path. 
+conneted to the beginning of the path. A *stroke* immediately after another
+*stroke* or *fill* will reuse the same path.
 
+```html
+HTML:
+<stroke color="crimson">
+<stroke color="crimson" width="10" close>
+<stroke color="crimson" width="10" close="true">
+```
 ```js
+JS:
 stroke( 'crimson' );
 stroke( 'crimson', 10, true );
 ```
@@ -1241,10 +1297,15 @@ stroke( 'crimson', 10, true );
 #### Fill
 
 Command. Fills the area defined by a path. The area is filled with the given
-`color`. Next commands after *fill* start a new path. *Fill* and *stroke* can
-be combined by applying them to the same path.
+`color`.  A *fill* immediately after another *stroke* or *fill* will reuse the
+same path. 
 
+```html
+HTML:
+<fill color="crimson">
+```
 ```js
+JS:
 fill( 'crimson' );
 ```
 	
@@ -1258,7 +1319,12 @@ Command. Draws a text. The `text` is drawn at given coordinates (`x`,`y`) with
 given `color` and `font` style. The *font* parameter is a string with a
 [CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description.
 
+```html
+HTML:
+<fillText center="10,5" text="Sample text" color="crimson" font="bold 20px Courier">
+```
 ```js
+JS:
 fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 ```	
 	
@@ -1271,7 +1337,14 @@ Command. Clears a drawing canvas. The drawing canvas is filled with the given
 `color` if it is provided, or is cleared to transparent if it is not provided.
 Next commands after *clear* start a new path.
 
+```html
+HTML:
+<clear>
+<clear color="crimson">
+<clear background="crimson">
+```
 ```js
+JS:
 clear( 'crimson' );
 ```
 	
