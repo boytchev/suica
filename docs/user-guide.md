@@ -10,9 +10,11 @@
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [spin](#spin) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [images](#images) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
-	- [Advanced 3D objects](#advanced-3d-obje`cts) [<small> [group](#group) </small>]
+	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
 - [Events](#events)
+	- [Motion events](#motion-events) [<small> [onMouseMove](#onmousemove) </small>]
+	- [Click events](#click-events) [<small> </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -501,7 +503,10 @@ p = point( [25,0,15] );
 [<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-js.html)
 
 Most Suica objects share the same basic properties, like position, orientation,
-size, color and so on. Some objects have specific properties
+size, color and so on. Some objects have specific properties.
+
+Properties related to events are described in section [Events](#events).
+
 
 #### Position (center, x, y, z)
 
@@ -1365,9 +1370,26 @@ clear( 'crimson' );
 
 ## Events
 
-TO DO	
-	
+Events are something that happens 'outside' a Suica program at unknown moment
+of time. Examples of events are when the user click on an object with the mouse.
+Suica reimplements a part of the web page events system	onto Suica objects.
 
+The following Suica events are available:
+
+- Motion events: `onmousemove`, `onmouseenter`, `onmouseleave`
+- Click events: `onmousedown`, `onmouseup`, `onclick`, `ondblclick`
+	
+### Motion events
+
+<img src="images/events-motion.png">
+
+TO DO
+
+### Click events
+
+<img src="images/events-click.png">
+
+TO DO
 
 
 
