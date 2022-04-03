@@ -777,7 +777,7 @@ class HTMLParser
 	// <clear color="...">
 	parseTagCLEAR( suica, elem )
 	{
-		var color = elem.getAttribute('color') || Suica.DEFAULT.CLEAR.COLOR;
+		var color = elem.getAttribute('color') || elem.getAttribute('background') || Suica.DEFAULT.CLEAR.COLOR;
 
 		clear( color );
 	} // HTMLParser.parseTagCLEAR

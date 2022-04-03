@@ -11,9 +11,8 @@
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 	- [Advanced 3D objects](#advanced-3d-obje`cts) [<small> [group](#group) </small>]
-- [Images and drawings](#images-and-drawings)
-    - [Images](#images-1) [<small> [image](#image-1) </small>] 
-    - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
+- [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
+- [Events](#events)
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -683,8 +682,8 @@ _**Note**. Not all objects have wireframe mode._
 
 Property. Decorates object surface with an image. Images can be stamped onto
 Suica object via the property `image`. The property accepts a drawing or a
-texture image. For more information of how to generate a drawing or use an image
-see section [Images and drawings](#images-and-drawings).
+texture image. For more information of how to generate a drawing instead of
+loading an image file see section [Drawings](#drawings).
 
 ```html
 HTML:
@@ -714,11 +713,26 @@ The following tabel shows some combinations of colors:
 | Red<br><small>[R,0,0]</small> | Any<br><small>[r,g,b]</small> | Only the red component of the image color<br><small>[1,0,0]&times;[r,g,b] = [r,0,0]</small> |
 | Yellow<br><small>[1,1,0]</small> | Cyan<br><small>[0,1,1]</small> | Green<br><small>[1,1,0]&times;[0,1,1] = [0,1,0]</small> |
 
+Due to a security mechanism in browsers &ndash; [Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+(SOP) and [Cross-origin resource sharing](https://developer.mozilla.org/en-US/docs/Glossary/CORS) (CORS),
+a file can be used as image only if it is located in the same online domain;
+or the image host allows cross-origin requests. An image file can be used in
+these cases:
+
+- the image file is in the same domain as the Suica file and is accessed by
+`http://` or `https://` protocols
+- the image file is hosted on a server that allows anonymous access to images
+- the image file is accessed through a [local host](https://en.wikipedia.org/wiki/Localhost) from `http://localhost`
+- the image is encoded in the URL itself a [Data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) from `data:` scheme
+- CORS is disabled in the browser configuration (not recommended)
+- an old SOP-less and CORS-less browser is used (not recommended)
+
+
 #### Images
 
 Property. Defines the number of copies of a drawing or image across the surface
 of an object. For more information of how to generate a drawing or use an image
-see section [Images and drawings](#images-and-drawings).
+see section [Drawings](#idrawings).
 
 If the value of *images* is a number, it defines the number of copies in both
 horizontal and vertical direction. If the value is an array, the first element
@@ -1092,20 +1106,11 @@ sets it to all its objects overwriting their individual colors.
 
 
 
-## Images and drawings
+## Drawings
 
-Images and drawings are 2D images that can be stamped onto 2D and 3D objects in
-Suica. Images are read from image files, while drawings are drawn in Suica.
-
-
-### Images
-
-#### Image
-
-TO DO
-
-
-### Drawings
+Drawings are 2D images generated in Suica (instead of being loaded from [JPEG or
+PNG files](#image)) that can be stamped onto 2D and 3D objects. Drawings can be
+scaled by [images](#images) property.
 
 Suica drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
 and are made of lines and filled areas. A virtual pen defines a path on the canvas.
@@ -1355,6 +1360,14 @@ clear( 'crimson' );
 
 
 
+## Events
+
+TO DO	
+	
+
+
+
+
 ## Functions
 
 ### Radians
@@ -1409,27 +1422,22 @@ All examples are collected in a single page [here](examples.md)
 
 ### Available images
 
-This is a list of available images in Suica site.
+This is a list of available images in Suica. They can be accessed from URL
+`https://boytchev.github.io/suica/textures/` e.g. `https://boytchev.github.io/suica/textures/flower.jpg`.
 
 <kbd>
 	<img width="128" src="../textures/flower.jpg">
 	<br>
 	flower.jpg
-</kbd>
-
-<kbd>
+</kbd><kbd>
 	<img width="128" src="../textures/blobs.jpg">
 	<br>
 	blobs.jpg
-</kbd>
-
-<kbd>
+</kbd><kbd>
 	<img width="128" src="../textures/tile.png">
 	<br>
 	tile.png
-</kbd>
-
-<kbd>
+</kbd><kbd>
 	<img width="128" src="../textures/grid.png">
 	<br>
 	grid.png
