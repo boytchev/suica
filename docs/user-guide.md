@@ -1374,18 +1374,31 @@ Events are something that happens 'outside' a Suica program at unknown moment
 of time. Examples of events are when the user click on an object with the mouse.
 Suica reimplements a part of the web page events system	onto Suica objects.
 
-The following Suica events are available:
-
-- Motion events: `onmousemove`, `onmouseenter`, `onmouseleave`
-- Click events: `onmousedown`, `onmouseup`, `onclick`, `ondblclick`
+Events are captured only if they occur on a predefined target zone. Events
+occuring outside this zone are ignored. The target zone can be the Suica canvas
+or any Suica graphical object, displayed in the canvas.
 	
 ### Motion events
+
+Suica supports several motion events &ndash; they occur when the mouse is moved
+over the target zone.
+
+- `onМouseEnter` &ndash; the mouse entered the target zone
+- `onМouseMove` &ndash; the mouse is moved over the target zone
+- `onМouseLeave` &ndash; the mouse left the target zone
 
 <img src="images/events-motion.png">
 
 TO DO
 
 ### Click events
+
+Suica supports several click events &ndash; they occur when a mouse button is used over the target zone.
+
+- `onMouseDown` &ndash; a mouse button is pressed over the target zone
+- `onMouseUp` &ndash; a mouse button is released over the target zone
+- `onClick` &ndash; a mouse button is clicked over the target zone
+- `onDblClick` &ndash; a mouse button is double-clicked over the target zone
 
 <img src="images/events-click.png">
 
