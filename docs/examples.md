@@ -60,6 +60,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/style.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/style.html)
 [<kbd><img src="../examples/snapshots/image-file.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/image-file.html)
 
+[<kbd><img src="../examples/snapshots/image-datauri.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/image-datauri.html)
 [<kbd><img src="../examples/snapshots/images.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/images.html)
 
 ## [Common 2D objects](user-guide.md#common-2d-objects)
@@ -104,7 +105,7 @@ Click on an image to run the example.
 
 
 
-## [Images and drawings](user-guide.md#images-and-drawings)
+## [Drawings](user-guide.md#drawings)
 
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/drawing-js.html)

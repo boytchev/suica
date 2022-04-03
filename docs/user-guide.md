@@ -683,7 +683,7 @@ _**Note**. Not all objects have wireframe mode._
 Property. Decorates object surface with an image. Images can be stamped onto
 Suica object via the property `image`. The property accepts a drawing or a
 texture image. For more information of how to generate a drawing instead of
-loading an image file see section [Drawings](#drawings).
+loading an image file see section [Drawings](#drawings). 
 
 ```html
 HTML:
@@ -696,6 +696,7 @@ a.image = image( 'https://boytchev.github.io/suica/textures/flower.jpg' );
 ```
 
 [<kbd><img src="../examples/snapshots/image-file.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/image-file.html)
+[<kbd><img src="../examples/snapshots/image-datauri.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/image-datauri.html)
 
 
 When an object has both `color` and `image`, the resulting color is the product
@@ -723,10 +724,12 @@ these cases:
 `http://` or `https://` protocols
 - the image file is hosted on a server that allows anonymous access to images
 - the image file is accessed through a [local host](https://en.wikipedia.org/wiki/Localhost) from `http://localhost`
-- the image is encoded in the URL itself a [Data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) from `data:` scheme
+- the image is encoded in the URL itself as [Data URI/URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) from `data:` scheme
 - CORS is disabled in the browser configuration (not recommended)
 - an old SOP-less and CORS-less browser is used (not recommended)
 
+For online tools to generate Data URI from images see section
+[External libraries](#external-libraries).
 
 #### Images
 
@@ -1455,6 +1458,15 @@ or `suica.min.js`.
 used in the development process to generate minified `suica.min.js` from the
 original `suica.js` file. 
 
+Other tools and site that might be usful to Suica users:
+
+- [**EasyGIF** &ndash; Image to Data URI converter](https://ezgif.com/image-to-datauri)
+can convert image to Data URI in order to avoid SOP and CORS issues. There are
+many other web services for such conversion, like [Site24x7](https://www.site24x7.com/tools/image-to-datauri.html),
+[Online Image Tools](https://onlineimagetools.com/convert-image-to-data-uri),
+[Online JPG Tools](https://onlinejpgtools.com/convert-jpg-to-data-uri),
+[webSemantics](https://websemantics.uk/tools/image-to-data-uri-converter/),
+[Base64 Image](https://www.base64-image.de/) and others.
 
 ### Questions and answers
 - [How to change the attribute of an object created in HTML?](#how-to-change-the-attribute-of-an-object-created-in-html)
