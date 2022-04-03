@@ -1375,21 +1375,22 @@ of time. Examples of events are when the user click on an object with the mouse.
 Suica reimplements a part of the web page events system	onto Suica objects.
 
 Events are captured only if they occur on a predefined target zone. Events
-occuring outside this zone are ignored. The target zone can be the Suica canvas
-or any Suica graphical object, displayed in the canvas.
+occuring outside this zone are ignored. The target zone can be the whole Suica
+canvas or any individual Suica graphical object.
 	
 ### Motion events
 
 Suica supports several motion events &ndash; they occur when the mouse is moved
 over the target zone.
 
-- `onМouseEnter` &ndash; the mouse entered the target zone
-- `onМouseMove` &ndash; the mouse is moved over the target zone
-- `onМouseLeave` &ndash; the mouse left the target zone
+- `onМouseEnter` &ndash; the mouse enters the target zone
+- `onМouseMove` &ndash; the mouse is moves over the target zone
+- `onМouseLeave` &ndash; the mouse leaves the target zone
 
 <img src="images/events-motion.png">
 
-TO DO
+The event handler of motion events has one parameter, holding an object that
+describes the event.
 
 ### Click events
 
@@ -1398,7 +1399,6 @@ Suica supports several click events &ndash; they occur when a mouse button is us
 - `onMouseDown` &ndash; a mouse button is pressed over the target zone
 - `onMouseUp` &ndash; a mouse button is released over the target zone
 - `onClick` &ndash; a mouse button is clicked over the target zone
-- `onDblClick` &ndash; a mouse button is double-clicked over the target zone
 
 <img src="images/events-click.png">
 
@@ -1467,15 +1467,18 @@ This is a list of available images in Suica. They can be accessed from URL
 	<img width="128" src="../textures/flower.jpg">
 	<br>
 	flower.jpg
-</kbd><kbd>
+</kbd>
+<kbd>
 	<img width="128" src="../textures/blobs.jpg">
 	<br>
 	blobs.jpg
-</kbd><kbd>
+</kbd>
+<kbd>
 	<img width="128" src="../textures/tile.png">
 	<br>
 	tile.png
-</kbd><kbd>
+</kbd>
+<kbd>
 	<img width="128" src="../textures/grid.png">
 	<br>
 	grid.png

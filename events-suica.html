@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Suica canvas click</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Suica canvas click</h1>
+	<p>Capturing click event on the Suica canvas (click on a cube).</p>
+
+	<suica onclick="onClick">
+		<sphere x="-40" size="18">
+		<sphere x="-20" size="18">
+		<sphere x="0" size="18">
+		<sphere x="20" size="18">
+		<sphere x="40" size="18">
+	</suica>
+	
+	<script>
+	
+		function onClick( event )
+		{
+			var object = findObject( event );
+
+			if( object )
+			{
+				object.color = random(['peachpuff','gray','lightsalmon','white','dimgray']);
+			}
+		}
+
+	</script>
+</body>
+</html>

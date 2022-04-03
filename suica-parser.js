@@ -331,12 +331,41 @@ class HTMLParser
 			if( elem.hasAttribute('wireframe') ) object.wireframe = ['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase()) >= 0;
 		}
 
+
+		
+		// parse id
+		var id = elem.getAttribute('id');
+		if( id )
+		{
+			window[id] = object;
+			object.id = id;
+		}
+		
+		this.parseEvents( elem, object );
+	}
+	
+	
+	parseEvents( tag, object )
+	{
 		// parse events
 		function parseEvent( actualName, name )
 		{
-			if( elem.hasAttribute(name) )
+			if( tag.hasAttribute(name) )
 			{
-				object[actualName] = elem.getAttribute(name);
+				object[actualName] = tag.getAttribute(name);
+
+				// if event is set to Suica.canvas, it cannot be set as a string,
+				// (the browser just ignores this value), so we add a custom
+				// event handler that creates the event handler the first time
+				// it is called
+				if( !object[actualName] )
+				{
+					object[actualName] = function(event)
+					{
+						object[actualName] = window[tag.getAttribute(name)];
+						object[actualName]( event );
+					}
+				}
 			}
 		}
 		
@@ -346,7 +375,7 @@ class HTMLParser
 		parseEvent( 'onmousedown',	'onmousedown' );
 		parseEvent( 'onmouseup',	'onmouseup' );
 		parseEvent( 'onclick',		'onclick' );
-		parseEvent( 'ondblclick',	'ondblclick' );
+		//parseEvent( 'ondblclick',	'ondblclick' );
 
 		parseEvent( 'onmousemove',	'mousemove' );
 		parseEvent( 'onmouseleave',	'mouseleave' );
@@ -354,15 +383,7 @@ class HTMLParser
 		parseEvent( 'onmousedown',	'mousedown' );
 		parseEvent( 'onmouseup',	'mouseup' );
 		parseEvent( 'onclick',		'click' );
-		parseEvent( 'ondblclick',	'dblclick' );
-		
-		// parse id
-		var id = elem.getAttribute('id');
-		if( id )
-		{
-			window[id] = object;
-			object.id = id;
-		}
+		//parseEvent( 'ondblclick',	'dblclick' );
 	}
 	
 	

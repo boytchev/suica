@@ -52,8 +52,8 @@ console.log( `Suica 2.-1.36 (220401)` );
 
 
 // control flags
-const DEBUG_CALLS = !false;
-const DEBUG_EVENTS = false;
+const DEBUG_CALLS = false;
+const DEBUG_EVENTS = !false;
 
 
 
@@ -221,6 +221,9 @@ class Suica
 		// define parsers for suica tags inside <suica>
 		this.parser = new HTMLParser( this );
 		
+		// parse event handlers (if any)
+		this.parser.parseEvents( suicaTag, this.canvas );
+		
 		// frame-based animation
 		this.onTimeHandler = null;
 		
@@ -239,6 +242,13 @@ class Suica
 //		this.debugObject = new THREE.Mesh( new THREE.SphereGeometry(5), new THREE.MeshPhongMaterial({color:'orange', shininess:200}));
 //		this.scene.add( this.debugObject );
 		
+		// interactivity manager
+		this.canvas.addEventListener( 'mousemove', Suica.onMouseMove );
+		this.canvas.addEventListener( 'mousedown', Suica.onMouseDown );
+		this.canvas.addEventListener( 'mouseup', Suica.onMouseUp );
+		this.canvas.addEventListener( 'click', Suica.onClick );
+		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
+		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 	} // Suica.constructor
 	
 	
@@ -1024,12 +1034,27 @@ class Suica
 	
 	addEventListener( type, listener, aux )
 	{
-		this.canvas.addEventListener( type, listener, aux );
+		if( aux ) console.warn( 'Suica canvas does not support third parameter of addEventListener');
+		
+		if( !type.startsWith('on') )
+			type = 'on'+type;
+		
+		this[type] = listener;
 	}
 	
 	removeEventListener( type, listener, aux )
 	{
 		this.canvas.removeEventListener( type, listener, aux );
+	}
+
+	static addEventListener( type, listener, aux )
+	{
+		Suica.current.addEventListener( type, listener, aux );
+	}
+	
+	static removeEventListener( type, listener, aux )
+	{
+		Suica.current.removeEventListener( type, listener, aux );
 	}
 
 	
@@ -1051,7 +1076,7 @@ class Suica
 		object[eventName]( eventParam );
 
 		Suica.hoverObject = object;
-		
+			
 		if( DEBUG_EVENTS ) console.log( object.id+' :: '+eventName );
 	}
 
@@ -1109,10 +1134,9 @@ class Suica
 		var object = findObject( event );
 		if( object )
 		{
-			if( object.onmousedown ) object.onmousedown( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onMouseDown' );
-			return;
+			Suica.eventCall( object, 'onmousedown', event );
 		}
+		event.preventDefault() ;
 	} // Suica.onMouseDown
 	
 	
@@ -1121,9 +1145,7 @@ class Suica
 		var object = findObject( event );
 		if( object )
 		{
-			if( object.onmouseup ) object.onmouseup( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onMouseUp' );
-			return;
+			Suica.eventCall( object, 'onmouseup', event );
 		}
 	} // Suica.onMouseUp
 	
@@ -1131,25 +1153,25 @@ class Suica
 	static onClick( event )
 	{
 		var object = findObject( event );
+
 		if( object )
 		{
-			if( object.onclick ) object.onclick( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onClick' );
-			return;
+			Suica.eventCall( object, 'onclick', event );
 		}
+		
+		Suica.eventCall( Suica.current, 'onclick', event );
+		
 	} // Suica.onClick
 	
 	
-	static onDblClick( event )
-	{
-		var object = findObject( event );
-		if( object )
-		{
-			if( object.ondblclick ) object.ondblclick( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onDblClick' );
-			return;
-		}
-	} // Suica.onDblClick
+	// static onDblClick( event )
+	// {
+		// var object = findObject( event );
+		// if( object )
+		// {
+			// Suica.eventCall( object, 'ondblclick', event );
+		// }
+	// } // Suica.onDblClick
 	
 	
 	static onContextMenu( event )
@@ -1307,14 +1329,6 @@ window.findObject = function( domEvent )
 		return suica.findObject( domEvent );
 }
 
-
-// interactivity manager
-window.addEventListener( 'mousemove', Suica.onMouseMove );
-window.addEventListener( 'mousedown', Suica.onMouseDown );
-window.addEventListener( 'mouseup', Suica.onMouseUp );
-window.addEventListener( 'click', Suica.onClick );
-window.addEventListener( 'dblclick', Suica.onDblClick );
-window.addEventListener( 'contextmenu', Suica.onContextMenu );
 
 
 // monitor creation of tags, we are interested in creation of
