@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Suica canvas enter</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Suica canvas enter/leave</h1>
+	<p>Reacting when the mouse enters or leaves the Suica canvas.</p>
+
+	<suica onMouseEnter="onMouseEnter" onMouseLeave="onMouseLeave">
+		<demo distance="200">
+		
+		<sphere size="20" color="white">
+		<pyramid count="4" x="15" size="42.42,15" color="lightgray" spin="90,90,45">
+		<pyramid count="4" x="-15" size="42.42,15" color="dimgray" spin="-90,90,45">
+		<pyramid count="4" y="15" size="42.42,15" color="peachpuff" spin="0,0,45">
+		<pyramid count="4" y="-15" size="42.42,15" color="lightsalmon" spin="0,180,45">
+	</suica>
+	
+	<script>
+		const COLORS = ['peachpuff','gray','lightsalmon','black','lightgray','dimgray'];
+		
+		function onMouseEnter( event )
+		{
+			demo( 100, 0 );
+		}
+		
+		function onMouseLeave( event )
+		{
+			demo( 200, 0 );
+		}
+	</script>
+</body>
+</html>

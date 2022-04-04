@@ -1,5 +1,19 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Examples
 
+
+[About](#about)
+[Suica canvas](#suica-canvas)
+[Helpers](#helpers)
+[Cameras](#cameras)
+[Objects](#objects)
+[Objects properties](#properties)
+[Common 2D objects](#common-2d-objects)
+[Common 3D objects](#common-3d-objects)
+[Advanced 3D objects](#advanced-3d-objects)
+[Drawings](#drawings)
+[Events](#events)
+[Q&A](#questions-and-answers)
+
 Click on an image to run the example.
 
 ## [About](user-guide.md#about)
@@ -136,6 +150,7 @@ Click on an image to run the example.
 
 ## [Events](user-guide.md#events)
 
+[<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="400"></kbd>](../examples/events-suica-enter.html)
 [<kbd><img src="../examples/snapshots/events-find-position.jpg" width="400"></kbd>](../examples/events-find-position.html)
 
 

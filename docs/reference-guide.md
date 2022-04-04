@@ -1,6 +1,6 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) [Color](#color) [Point](#point) [Line](#line) [Square](#square) [Circle](#circle) [Polygon](#polygon) [Cube](#cube) [Sphere](#sphere) [Cylinder](#cylinder) [Prism](#prism) [Cone](#cone) [Pyramid](#pyramid) [Group](#group) [Drawing](#drawing) [Functions](#functions)
+[Suica](#suica) [Color](#color) [Point](#point) [Line](#line) [Square](#square) [Circle](#circle) [Polygon](#polygon) [Cube](#cube) [Sphere](#sphere) [Cylinder](#cylinder) [Prism](#prism) [Cone](#cone) [Pyramid](#pyramid) [Group](#group) [Drawing](#drawing) [Events](#events) [Functions](#functions)
 
 ### [Suica](user-guide.md#suica-canvas)
 
@@ -526,6 +526,13 @@ JS:
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillText( 𝑥, 𝑦, 𝑡𝑒𝑥𝑡, 𝑐𝑜𝑙𝑜𝑟, 𝑓𝑜𝑛𝑡 );
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.clear( );
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.clear( 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+
+### [Events](user-guide.md#events)
+```js
+JS:
+𝑝𝑜𝑠 = 𝑠𝑢𝑖𝑐𝑎.findPosition( 𝑒𝑣𝑒𝑛𝑡 );
 ```
 
 

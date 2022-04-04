@@ -1398,6 +1398,8 @@ and *click events* (they occur when a mouse button is used over an object).
 
 <img src="images/events-motion.png">
 
+[<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="300"></kbd>](../examples/events-suica-enter.html)
+
 **Click events** are:
 
 - `onMouseDown` &ndash; a mouse button is pressed over the target zone
