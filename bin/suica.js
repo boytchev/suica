@@ -44,16 +44,17 @@
 //	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
 //	2.-1.36 (220401) removed fillAndStroke
 //	2.-1.37 (220402) findObject, findObjects, addEventListener, removeEventListener
+//	2.-1.38 (220404) findPosition
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.36 (220401)` );
+console.log( `Suica 2.-1.38 (220404)` );
 
 
 // control flags
-const DEBUG_CALLS = !false;
+const DEBUG_CALLS = false;
 const DEBUG_EVENTS = false;
 
 
@@ -222,6 +223,9 @@ class Suica
 		// define parsers for suica tags inside <suica>
 		this.parser = new HTMLParser( this );
 		
+		// parse event handlers (if any)
+		this.parser.parseEvents( suicaTag, this.canvas );
+		
 		// frame-based animation
 		this.onTimeHandler = null;
 		
@@ -240,6 +244,13 @@ class Suica
 //		this.debugObject = new THREE.Mesh( new THREE.SphereGeometry(5), new THREE.MeshPhongMaterial({color:'orange', shininess:200}));
 //		this.scene.add( this.debugObject );
 		
+		// interactivity manager
+		this.canvas.addEventListener( 'mousemove', Suica.onMouseMove );
+		this.canvas.addEventListener( 'mousedown', Suica.onMouseDown );
+		this.canvas.addEventListener( 'mouseup', Suica.onMouseUp );
+		this.canvas.addEventListener( 'click', Suica.onClick );
+		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
+		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 	} // Suica.constructor
 	
 	
@@ -506,7 +517,6 @@ class Suica
 			if( that.demoViewPoint )
 			{
 				adjustDemoViewPoint( time );
-				Suica.onMouseMoveUpdate( );
 			}
 			else
 			{
@@ -521,6 +531,9 @@ class Suica
 				
 				that.onTimeHandler( time, time-that.lastTime );
 			}
+			
+			if( that.demoViewPoint || that.onTimeHandler )
+				Suica.onMouseMoveUpdate( );
 			
 			that.render( );
 
@@ -764,6 +777,10 @@ class Suica
 		if( center.center )
 			return center.center;
 
+		// center is Three.js vector
+		if( center instanceof THREE.Vector3 )
+			return [center.x, center.y, center.z];
+
 		// center is array [x,y,z]
 		if( Array.isArray(center) )
 			return center;
@@ -980,7 +997,7 @@ class Suica
 	} // Suica.group
 
 
-	findObjects( domEvent )
+	findPosition( domEvent )
 	{
 		var canvas = domEvent.target;
 		
@@ -994,6 +1011,15 @@ class Suica
 		// get relative pixel position (ie. [-1,+1])
 		this.raycastPointer.x =  2*pixelX/canvas.clientWidth - 1;
 		this.raycastPointer.y = -2*pixelY/canvas.clientHeight + 1;
+	
+		return [pixelX-canvas.clientWidth/2, -pixelY+canvas.clientHeight/2];
+	}
+	
+
+	findObjects( domEvent )
+	{
+		// sets this.raycastPointer
+		findPosition( domEvent );
 
 		// cast a ray and find intersection with all objects
 		this.raycaster.setFromCamera( this.raycastPointer, this.camera );
@@ -1025,12 +1051,27 @@ class Suica
 	
 	addEventListener( type, listener, aux )
 	{
-		this.canvas.addEventListener( type, listener, aux );
+		if( aux ) console.warn( 'Suica canvas does not support third parameter of addEventListener');
+		
+		if( !type.startsWith('on') )
+			type = 'on'+type;
+		
+		this[type] = listener;
 	}
 	
 	removeEventListener( type, listener, aux )
 	{
 		this.canvas.removeEventListener( type, listener, aux );
+	}
+
+	static addEventListener( type, listener, aux )
+	{
+		Suica.current.addEventListener( type, listener, aux );
+	}
+	
+	static removeEventListener( type, listener, aux )
+	{
+		Suica.current.removeEventListener( type, listener, aux );
 	}
 
 	
@@ -1052,7 +1093,7 @@ class Suica
 		object[eventName]( eventParam );
 
 		Suica.hoverObject = object;
-		
+			
 		if( DEBUG_EVENTS ) console.log( object.id+' :: '+eventName );
 	}
 
@@ -1110,10 +1151,9 @@ class Suica
 		var object = findObject( event );
 		if( object )
 		{
-			if( object.onmousedown ) object.onmousedown( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onMouseDown' );
-			return;
+			Suica.eventCall( object, 'onmousedown', event );
 		}
+		event.preventDefault() ;
 	} // Suica.onMouseDown
 	
 	
@@ -1122,9 +1162,7 @@ class Suica
 		var object = findObject( event );
 		if( object )
 		{
-			if( object.onmouseup ) object.onmouseup( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onMouseUp' );
-			return;
+			Suica.eventCall( object, 'onmouseup', event );
 		}
 	} // Suica.onMouseUp
 	
@@ -1132,25 +1170,25 @@ class Suica
 	static onClick( event )
 	{
 		var object = findObject( event );
+
 		if( object )
 		{
-			if( object.onclick ) object.onclick( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onClick' );
-			return;
+			Suica.eventCall( object, 'onclick', event );
 		}
+		
+		Suica.eventCall( Suica.current, 'onclick', event );
+		
 	} // Suica.onClick
 	
 	
-	static onDblClick( event )
-	{
-		var object = findObject( event );
-		if( object )
-		{
-			if( object.ondblclick ) object.ondblclick( event );
-			if( DEBUG_EVENTS ) console.log( Suica.object.id+' :: onDblClick' );
-			return;
-		}
-	} // Suica.onDblClick
+	// static onDblClick( event )
+	// {
+		// var object = findObject( event );
+		// if( object )
+		// {
+			// Suica.eventCall( object, 'ondblclick', event );
+		// }
+	// } // Suica.onDblClick
 	
 	
 	static onContextMenu( event )
@@ -1289,6 +1327,16 @@ window.clone = function( object )
 		throw 'error: cannot clone object';
 }
 
+window.findPosition = function( domEvent )
+{
+	Suica.precheck();
+	
+	var suica = domEvent.target.suicaObject;
+	if( suica )
+		return suica.findPosition( domEvent );
+}
+
+
 window.findObjects = function( domEvent )
 {
 	Suica.precheck();
@@ -1308,14 +1356,6 @@ window.findObject = function( domEvent )
 		return suica.findObject( domEvent );
 }
 
-
-// interactivity manager
-window.addEventListener( 'mousemove', Suica.onMouseMove );
-window.addEventListener( 'mousedown', Suica.onMouseDown );
-window.addEventListener( 'mouseup', Suica.onMouseUp );
-window.addEventListener( 'click', Suica.onClick );
-window.addEventListener( 'dblclick', Suica.onDblClick );
-window.addEventListener( 'contextmenu', Suica.onContextMenu );
 
 
 // monitor creation of tags, we are interested in creation of
@@ -2109,12 +2149,41 @@ class HTMLParser
 			if( elem.hasAttribute('wireframe') ) object.wireframe = ['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase()) >= 0;
 		}
 
+
+		
+		// parse id
+		var id = elem.getAttribute('id');
+		if( id )
+		{
+			window[id] = object;
+			object.id = id;
+		}
+		
+		this.parseEvents( elem, object );
+	}
+	
+	
+	parseEvents( tag, object )
+	{
 		// parse events
 		function parseEvent( actualName, name )
 		{
-			if( elem.hasAttribute(name) )
+			if( tag.hasAttribute(name) )
 			{
-				object[actualName] = elem.getAttribute(name);
+				object[actualName] = tag.getAttribute(name);
+
+				// if event is set to Suica.canvas, it cannot be set as a string,
+				// (the browser just ignores this value), so we add a custom
+				// event handler that creates the event handler the first time
+				// it is called
+				if( !object[actualName] )
+				{
+					object[actualName] = function(event)
+					{
+						object[actualName] = window[tag.getAttribute(name)];
+						object[actualName]( event );
+					}
+				}
 			}
 		}
 		
@@ -2124,7 +2193,7 @@ class HTMLParser
 		parseEvent( 'onmousedown',	'onmousedown' );
 		parseEvent( 'onmouseup',	'onmouseup' );
 		parseEvent( 'onclick',		'onclick' );
-		parseEvent( 'ondblclick',	'ondblclick' );
+		//parseEvent( 'ondblclick',	'ondblclick' );
 
 		parseEvent( 'onmousemove',	'mousemove' );
 		parseEvent( 'onmouseleave',	'mouseleave' );
@@ -2132,15 +2201,7 @@ class HTMLParser
 		parseEvent( 'onmousedown',	'mousedown' );
 		parseEvent( 'onmouseup',	'mouseup' );
 		parseEvent( 'onclick',		'click' );
-		parseEvent( 'ondblclick',	'dblclick' );
-		
-		// parse id
-		var id = elem.getAttribute('id');
-		if( id )
-		{
-			window[id] = object;
-			object.id = id;
-		}
+		//parseEvent( 'ondblclick',	'dblclick' );
 	}
 	
 	
@@ -2555,7 +2616,7 @@ class HTMLParser
 	// <clear color="...">
 	parseTagCLEAR( suica, elem )
 	{
-		var color = elem.getAttribute('color') || Suica.DEFAULT.CLEAR.COLOR;
+		var color = elem.getAttribute('color') || elem.getAttribute('background') || Suica.DEFAULT.CLEAR.COLOR;
 
 		clear( color );
 	} // HTMLParser.parseTagCLEAR
@@ -2997,6 +3058,7 @@ class Mesh
 		this.suica.parser?.parseTags();
 
 		center = Suica.parseCenter( center );
+
 		this.threejs.position.set( ...center );
 	}
 

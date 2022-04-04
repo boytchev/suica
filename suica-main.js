@@ -43,17 +43,18 @@
 //	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
 //	2.-1.36 (220401) removed fillAndStroke
 //	2.-1.37 (220402) findObject, findObjects, addEventListener, removeEventListener
+//	2.-1.38 (220404) findPosition
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.36 (220401)` );
+console.log( `Suica 2.-1.38 (220404)` );
 
 
 // control flags
 const DEBUG_CALLS = false;
-const DEBUG_EVENTS = !false;
+const DEBUG_EVENTS = false;
 
 
 
@@ -515,7 +516,6 @@ class Suica
 			if( that.demoViewPoint )
 			{
 				adjustDemoViewPoint( time );
-				Suica.onMouseMoveUpdate( );
 			}
 			else
 			{
@@ -530,6 +530,9 @@ class Suica
 				
 				that.onTimeHandler( time, time-that.lastTime );
 			}
+			
+			if( that.demoViewPoint || that.onTimeHandler )
+				Suica.onMouseMoveUpdate( );
 			
 			that.render( );
 
@@ -773,6 +776,10 @@ class Suica
 		if( center.center )
 			return center.center;
 
+		// center is Three.js vector
+		if( center instanceof THREE.Vector3 )
+			return [center.x, center.y, center.z];
+
 		// center is array [x,y,z]
 		if( Array.isArray(center) )
 			return center;
@@ -989,7 +996,7 @@ class Suica
 	} // Suica.group
 
 
-	findObjects( domEvent )
+	findPosition( domEvent )
 	{
 		var canvas = domEvent.target;
 		
@@ -1003,6 +1010,15 @@ class Suica
 		// get relative pixel position (ie. [-1,+1])
 		this.raycastPointer.x =  2*pixelX/canvas.clientWidth - 1;
 		this.raycastPointer.y = -2*pixelY/canvas.clientHeight + 1;
+	
+		return [pixelX-canvas.clientWidth/2, -pixelY+canvas.clientHeight/2];
+	}
+	
+
+	findObjects( domEvent )
+	{
+		// sets this.raycastPointer
+		findPosition( domEvent );
 
 		// cast a ray and find intersection with all objects
 		this.raycaster.setFromCamera( this.raycastPointer, this.camera );
@@ -1309,6 +1325,16 @@ window.clone = function( object )
 	else
 		throw 'error: cannot clone object';
 }
+
+window.findPosition = function( domEvent )
+{
+	Suica.precheck();
+	
+	var suica = domEvent.target.suicaObject;
+	if( suica )
+		return suica.findPosition( domEvent );
+}
+
 
 window.findObjects = function( domEvent )
 {

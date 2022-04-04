@@ -132,6 +132,7 @@ class Mesh
 		this.suica.parser?.parseTags();
 
 		center = Suica.parseCenter( center );
+
 		this.threejs.position.set( ...center );
 	}
 

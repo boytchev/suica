@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Suica mouse enter</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Suica mouse enter</h1>
+	<p>Capturing mouse motion over objects (hover the mouse over the cubes).</p>
+
+	<suica>
+	</suica>
+	
+	<script>
+		var cubes = [];
+		var colors = ['peachpuff','lightsalmon','lightgray'];
+		
+		<!-- for( var x=-30; x<=30; x+=10 ) -->
+		<!-- for( var y=-30; y<=30; y+=10 ) -->
+		for( var i = 0; i<40; i++ )
+		{
+			var c = cube( [random(-40,40),random(-40,40),random(-40,40)], 15, 'linen' );
+			c.spin = [random(0,360), random(0,360), random(0,360)];
+			
+			c.addEventListener( 'mouseenter', onMouseEnter );
+			c.addEventListener( 'mouseleave', onMouseLeave );
+			cubes.push( c );
+		}
+		
+		function onMouseEnter( event )
+		{
+			this.color = 'black';
+		}
+		
+		function onMouseLeave( event )
+		{
+			this.color = 'linen';
+		}
+		
+		onTime( function( t )
+		{
+			lookAt( [100*Math.cos(t), 0, 100*Math.sin(t)] );
+		} );
+	</script>
+</body>
+</html>

@@ -12,9 +12,7 @@
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
-- [Events](#events)
-	- [Motion events](#motion-events) [<small> [onMouseMove](#onmousemove) </small>]
-	- [Click events](#click-events) [<small> </small>]
+- [Events](#events) [<small> [types](#types-of-events) | [capturing](#capturing-events) | [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -1374,27 +1372,33 @@ Events are something that happens 'outside' a Suica program at unknown moment
 of time. Examples of events are when the user click on an object with the mouse.
 Suica reimplements a part of the web page events system	onto Suica objects.
 
-Events are captured only if they occur on a predefined target zone. Events
-occuring outside this zone are ignored. The target zone can be the whole Suica
-canvas or any individual Suica graphical object.
-	
-### Motion events
+Suica adds rudimentary support for events bound to Suica objects. It manages
+events for the Suica drawing canvas and for individual graphical objects in the
+canvas.
 
-Suica supports several motion events &ndash; they occur when the mouse is moved
-over the target zone.
+An event is used in two steps:
 
-- `onМouseEnter` &ndash; the mouse enters the target zone
-- `onМouseMove` &ndash; the mouse is moves over the target zone
-- `onМouseLeave` &ndash; the mouse leaves the target zone
+- An object declares that it is interested in a given message by providing a
+special event handling function
+- When the event occurs, its description is passed to the event handling
+function which processes the event
+- Events that are not listened to, are ignored
+
+
+### Types of events
+
+Suica supports *motion events* (they occur when the mouse is moved over an object)
+and *click events* (they occur when a mouse button is used over an object).
+
+**Motion events** are:
+
+- `onМouseEnter` &ndash; the mouse enters the object
+- `onМouseMove` &ndash; the mouse is moves over the object
+- `onМouseLeave` &ndash; the mouse leaves the object
 
 <img src="images/events-motion.png">
 
-The event handler of motion events has one parameter, holding an object that
-describes the event.
-
-### Click events
-
-Suica supports several click events &ndash; they occur when a mouse button is used over the target zone.
+**Click events** are:
 
 - `onMouseDown` &ndash; a mouse button is pressed over the target zone
 - `onMouseUp` &ndash; a mouse button is released over the target zone
@@ -1402,7 +1406,43 @@ Suica supports several click events &ndash; they occur when a mouse button is us
 
 <img src="images/events-click.png">
 
+### Capturing events
+
 TO DO
+
+
+#### findPosition
+
+Function. Finds the position of an event. The position is measured in pixels
+and is relative to the center of the Suica canvas. The function requires an
+`event` as a parameter &ndash; the same as the one received by the event handling
+function. The result is an array [*x*,*y*] of the position.
+
+<img src="images/event-coordinate-system.png">
+
+```js
+JS:
+function onMouseMove( event )
+{
+	pos = findPosition( event );
+}
+```
+
+The function *findPosition* is typically used with events of the Suica canvas.
+The position coordinates map the Suica coordinate system when [orthographic camera](#orthographic-camera)
+is used and the view point is not changed with [demo](#demo) or [lookAt](#lookat).
+
+[<kbd><img src="../examples/snapshots/events-find-position.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/events-find-position.html)
+
+
+#### findObject
+
+TO DO 
+
+#### findObjects
+
+TO DO
+
 
 
 

@@ -21,26 +21,28 @@
 	<h1>Suica canvas click</h1>
 	<p>Capturing click event on the Suica canvas (click on a cube).</p>
 
-	<suica onclick="onClick">
-		<sphere x="-40" size="18">
-		<sphere x="-20" size="18">
-		<sphere x="0" size="18">
-		<sphere x="20" size="18">
-		<sphere x="40" size="18">
+	<suica onClick="onClick">
+		<demo>
+		<cube x="-40" size="18">
+		<cube x="-20" size="18">
+		<cube x="0" size="18">
+		<cube x="20" size="18">
+		<cube x="40" size="18">
 	</suica>
 	
 	<script>
-	
+		const COLORS = ['peachpuff','gray','lightsalmon','black','lightgray','dimgray'];
+		
 		function onClick( event )
 		{
 			var object = findObject( event );
 
 			if( object )
 			{
-				object.color = random(['peachpuff','gray','lightsalmon','white','dimgray']);
+				object.color = random(COLORS);
+				object.height = random(10,50);
 			}
 		}
-
 	</script>
 </body>
 </html>

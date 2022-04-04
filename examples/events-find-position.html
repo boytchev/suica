@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Find event position</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Find event position</h1>
+	<p>Finding the position of a Suica event (hover the mouse).</p>
+
+	<suica orthographic onmousemove="onMouseMove">
+	</suica>
+	
+	<script>
+		var n = 40,
+			circles = [],
+			colors = ['peachpuff','gray','lightsalmon','black','lightgray','dimgray'],
+			pos = [0,0];
+		
+		onTime( showTime );
+		
+		for( var i=0; i<n; i++ )
+			circles.push( circle( [0,0,-i], 10+5*i, random(colors) ) );
+		
+		function onMouseMove( event )
+		{
+			pos = findPosition( event );
+		}
+		
+		function showTime( t, td )
+		{
+			circles[0].x = circles[0].x*0.8 + 0.2*pos[0];
+			circles[0].y = circles[0].y*0.8 + 0.2*pos[1];
+
+			for( var i=1; i<n; i++ )
+			{
+				circles[i].x = circles[i].x*0.8 + 0.2*circles[i-1].x + 0.2*Math.sin(10*t+i);
+				circles[i].y = circles[i].y*0.8 + 0.2*circles[i-1].y + 0.2*Math.sin(10*t-i);
+			}
+		}
+	</script>
+</body>
+</html>
