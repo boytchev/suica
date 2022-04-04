@@ -23,7 +23,7 @@
 mobile 3D graphics. Here is a minimal example of a rotating cube in the browser
 (*click on the image to run the example*):
 
-[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/minimal-example.html)
+[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="300"></kbd>](../examples/minimal-example.html)
 
 The complete code of this example is:
 
@@ -93,7 +93,7 @@ Example of creating drawing canvases with different sizes:
 <suica width="400" height="300">
 <suica style="width:15em; height:300px;">
 ```
-[<kbd><img src="../examples/snapshots/tag-suica.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/tag-suica.html)
+[<kbd><img src="../examples/snapshots/tag-suica.jpg" width="300"></kbd>](../examples/tag-suica.html)
 
 The orientation of the coordinate system is set via attribute `orientation`.
 More information is available in section [Coordinate system](#coordinate-system).
@@ -117,7 +117,7 @@ JS:
 background( 'linen' );
 ```
 
-[<kbd><img src="../examples/snapshots/background.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/background.html)
+[<kbd><img src="../examples/snapshots/background.jpg" width="300"></kbd>](../examples/background.html)
 
 
 
@@ -143,7 +143,7 @@ this orientation, unless explicitely stated that other orientations are used.
 HTML:
 <suica orientation="xyz">
 ```
-[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/suica-orientation.html)
+[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](../examples/suica-orientation.html)
 
 
 
@@ -178,7 +178,7 @@ function loop( t, dt )
 }
 ```
 
-[<kbd><img src="../examples/snapshots/ontime.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/ontime.html)
+[<kbd><img src="../examples/snapshots/ontime.jpg" width="300"></kbd>](../examples/ontime.html)
 
 
 
@@ -205,7 +205,7 @@ JS:
 oxyz( 30, 'black' );
 ```
 
-[<kbd><img src="../examples/snapshots/oxyz.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/oxyz.html)
+[<kbd><img src="../examples/snapshots/oxyz.jpg" width="300"></kbd>](../examples/oxyz.html)
 
 
 
@@ -225,7 +225,7 @@ JS:
 demo( 100, 30 );
 ```
 
-[<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/demo.html)
+[<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](../examples/demo.html)
 
 
 
@@ -274,7 +274,7 @@ perspective( );
 perspective( 1, 1000, 40 );
 ```
 
-[<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-perspective.html)
+[<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="300"></kbd>](../examples/camera-perspective.html)
 
 
 
@@ -301,7 +301,7 @@ orthographic( );
 orthographic( 0, 1000 );
 ```
 
-[<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-orthographic.html)
+[<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="300"></kbd>](../examples/camera-orthographic.html)
 
 
 
@@ -321,7 +321,7 @@ JS:
 fullScreen( );
 ```
 
-[<kbd><img src="../examples/snapshots/camera-fullscreen.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-fullscreen.html)
+[<kbd><img src="../examples/snapshots/camera-fullscreen.jpg" width="300"></kbd>](../examples/camera-fullscreen.html)
 
 _**Note.** To exit full screen mode press `Esc` or follow the browser's
 instructions._
@@ -341,7 +341,7 @@ JS:
 fullWindow( );
 ```
 
-[<kbd><img src="../examples/snapshots/camera-fullwindow.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-fullwindow.html)
+[<kbd><img src="../examples/snapshots/camera-fullwindow.jpg" width="300"></kbd>](../examples/camera-fullwindow.html)
 
 
 
@@ -372,8 +372,8 @@ stereo( 1 ); // wall-eyed
 stereo( -1 ); // cross-eyed
 ```
 
-[<kbd><img src="../examples/snapshots/camera-stereo-wall-eyed.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-wall-eyed.html)
-[<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-stereo-cross-eyed.html)
+[<kbd><img src="../examples/snapshots/camera-stereo-wall-eyed.jpg" width="300"></kbd>](../examples/camera-stereo-wall-eyed.html)
+[<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="300"></kbd>](../examples/camera-stereo-cross-eyed.html)
 
 
 
@@ -396,7 +396,7 @@ anaglyph( );
 anaglyph( 5 );
 ```
 
-[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-anaglyph.html)
+[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](../examples/camera-anaglyph.html)
 
 
 
@@ -417,7 +417,7 @@ JS:
 vr( );
 ```
 
-[<kbd><img src="../examples/snapshots/camera-vr.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/camera-vr.html)
+[<kbd><img src="../examples/snapshots/camera-vr.jpg" width="300"></kbd>](../examples/camera-vr.html)
 
 _**Note.** Currently the VR camera does not provide access to the controllers._
 
@@ -446,19 +446,19 @@ lookAt( [100,10,50] );
 lookAt( [100,10,50], [0,0,10], [1,0,0] );
 ```
 
-[<kbd><img src="../examples/snapshots/lookat.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat.html)
+[<kbd><img src="../examples/snapshots/lookat.jpg" width="300"></kbd>](../examples/lookat.html)
 
 The command [demo](#demo) can be simulated and enriched by *lookAt* &ndash; i.e.
 adding dynamic change of distance and elevation to the default rotation.
 
-[<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat-demo.html)
+[<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="300"></kbd>](../examples/lookat-demo.html)
 
 
 To implement a navigation (walking or flying) in a 3D scene the viewing position
 must be modified in the animation loop.
 
-[<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation.html)
-[<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/lookat-navigation-vr.html)
+[<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](../examples/lookat-navigation.html)
+[<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="300"></kbd>](../examples/lookat-navigation-vr.html)
 
 
 
@@ -497,8 +497,8 @@ JS:
 p = point( [25,0,15] );
 ```
 
-[<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-html.html)
-[<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-js.html)
+[<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](../examples/object-html.html)
+[<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](../examples/object-js.html)
 
 Most Suica objects share the same basic properties, like position, orientation,
 size, color and so on. Some objects have specific properties.
@@ -557,7 +557,7 @@ a = cubeFrame( [20,0,0] );
 b = cubeFrame( [-20,0,0] );
 line( a, b );
 ```
-[<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/object-as-position.html)
+[<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](../examples/object-as-position.html)
 
 #### Size (size, width, height, depth)
 
@@ -596,8 +596,8 @@ cube( [0,0,0], [25,10,15] );
 ```
 
 
-[<kbd><img src="../examples/snapshots/sizes.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes.html)
-[<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sizes-orientation.html)
+[<kbd><img src="../examples/snapshots/sizes.jpg" width="300"></kbd>](../examples/sizes.html)
+[<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](../examples/sizes-orientation.html)
 
 
 Alternative access to the size is with the properties `width`, `height` and
@@ -633,8 +633,8 @@ due to the default orientation of flat and non-flat objects, orientation along
 coordinate system axes differ. For example, if a square has a spin [&alpha;, &beta;, &gamma;],
 a pyramid on that square should have spin [&alpha;, &beta;+90, &gamma;].
 
-[<kbd><img src="../examples/snapshots/spin.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/spin.html)
-[<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/spin-orientation.html)
+[<kbd><img src="../examples/snapshots/spin.jpg" width="300"></kbd>](../examples/spin.html)
+[<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="300"></kbd>](../examples/spin-orientation.html)
 
 
 #### Color
@@ -698,8 +698,8 @@ a.image = 'https://boytchev.github.io/suica/textures/flower.jpg';
 a.image = image( 'https://boytchev.github.io/suica/textures/flower.jpg' );
 ```
 
-[<kbd><img src="../examples/snapshots/image-file.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/image-file.html)
-[<kbd><img src="../examples/snapshots/image-datauri.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/image-datauri.html)
+[<kbd><img src="../examples/snapshots/image-file.jpg" width="300"></kbd>](../examples/image-file.html)
+[<kbd><img src="../examples/snapshots/image-datauri.jpg" width="300"></kbd>](../examples/image-datauri.html)
 
 
 When an object has both `color` and `image`, the resulting color is the product
@@ -755,7 +755,7 @@ a.images = 2;
 a.images = [2,3];
 ```
 
-[<kbd><img src="../examples/snapshots/images.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/images.html)
+[<kbd><img src="../examples/snapshots/images.jpg" width="300"></kbd>](../examples/images.html)
 
 
 #### Clone
@@ -775,8 +775,8 @@ a = cube( [0,0,0], 25 );
 b = a.clone;
 ```
 
-[<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/clone.html)
-[<kbd><img src="../examples/snapshots/clone-tag.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/clone-tag.html)
+[<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](../examples/clone.html)
+[<kbd><img src="../examples/snapshots/clone-tag.jpg" width="300"></kbd>](../examples/clone-tag.html)
 
 _**Note**: Cloning an object [group](#group) also clones all its objects._
 
@@ -794,7 +794,7 @@ sphere().style( {x:15, size:20, color:'peachpuff'} );
 sphere().style( {x:15} ).style( {size:20} ).style( {color:'peachpuff'} );
 ```
 
-[<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/style.html)
+[<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](../examples/style.html)
 
 _**Note**. Style can also be used as a [function](#style-1)._
 
@@ -829,7 +829,7 @@ point( [25,0,15] );
 point( [25,0,15], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point.html)&emsp;[<kbd><img src="../examples/snapshots/point-cloud.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/point-cloud.html)
+[<kbd><img src="../examples/snapshots/point.jpg" width="300"></kbd>](../examples/point.html)&emsp;[<kbd><img src="../examples/snapshots/point-cloud.jpg" width="300"></kbd>](../examples/point-cloud.html)
 
 
 ### Line
@@ -851,7 +851,7 @@ line( [25,0,15], [100,-20,35] );
 point( [25,0,15], [100,-20,35], 'red' );
 ```
 
-[<kbd><img src="../examples/snapshots/line.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/line.html)
+[<kbd><img src="../examples/snapshots/line.jpg" width="300"></kbd>](../examples/line.html)
 
 _**Note**: Lines have no properties x, y, z, size, width, height and depth._
 
@@ -873,8 +873,8 @@ square( [25,0,15] );
 square( [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/square.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square.html)
-[<kbd><img src="../examples/snapshots/square-rectangle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/square-rectangle.html)
+[<kbd><img src="../examples/snapshots/square.jpg" width="300"></kbd>](../examples/square.html)
+[<kbd><img src="../examples/snapshots/square-rectangle.jpg" width="300"></kbd>](../examples/square-rectangle.html)
 
 
 
@@ -895,8 +895,8 @@ circle( [25,0,15] );
 circle( [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/circle.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle.html)
-[<kbd><img src="../examples/snapshots/circle-ellipse.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/circle-ellipse.html)
+[<kbd><img src="../examples/snapshots/circle.jpg" width="300"></kbd>](../examples/circle.html)
+[<kbd><img src="../examples/snapshots/circle-ellipse.jpg" width="300"></kbd>](../examples/circle-ellipse.html)
 
 
 
@@ -918,7 +918,7 @@ polygon( 3, [25,0,15] ); // triangle
 polygon( 5, [0,0,0], 10, 'crimson' ); // pentagon
 ```
 
-[<kbd><img src="../examples/snapshots/polygon.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/polygon.html)
+[<kbd><img src="../examples/snapshots/polygon.jpg" width="300"></kbd>](../examples/polygon.html)
 
 _**Note:** Properties size, width and height refer to the polygon circumscribed
 circle, rather than the polygon itself._
@@ -952,8 +952,8 @@ cube( [25,0,15] );
 cube( [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/cube.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube.html)
-[<kbd><img src="../examples/snapshots/cube-cuboid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cube-cuboid.html)
+[<kbd><img src="../examples/snapshots/cube.jpg" width="300"></kbd>](../examples/cube.html)
+[<kbd><img src="../examples/snapshots/cube-cuboid.jpg" width="300"></kbd>](../examples/cube-cuboid.html)
 
 
 
@@ -974,8 +974,8 @@ sphere( [25,0,15] );
 sphere( [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/sphere.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sphere.html)
-[<kbd><img src="../examples/snapshots/sphere-spheroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/sphere-spheroid.html)
+[<kbd><img src="../examples/snapshots/sphere.jpg" width="300"></kbd>](../examples/sphere.html)
+[<kbd><img src="../examples/snapshots/sphere-spheroid.jpg" width="300"></kbd>](../examples/sphere-spheroid.html)
 
 
 
@@ -996,8 +996,8 @@ cylinder( [25,0,15] );
 cylinder( [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/cylinder.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cylinder.html)
-[<kbd><img src="../examples/snapshots/cylinder-cylindroid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cylinder-cylindroid.html)
+[<kbd><img src="../examples/snapshots/cylinder.jpg" width="300"></kbd>](../examples/cylinder.html)
+[<kbd><img src="../examples/snapshots/cylinder-cylindroid.jpg" width="300"></kbd>](../examples/cylinder-cylindroid.html)
 
 
 
@@ -1019,7 +1019,7 @@ prism( 6, [25,0,15] );
 prism( 3, [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/prism.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/prism.html)
+[<kbd><img src="../examples/snapshots/prism.jpg" width="300"></kbd>](../examples/prism.html)
 
 
 
@@ -1040,8 +1040,8 @@ cone( [25,0,15] );
 cone( [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/cone.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cone.html)
-[<kbd><img src="../examples/snapshots/cone-conoid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/cone-conoid.html)
+[<kbd><img src="../examples/snapshots/cone.jpg" width="300"></kbd>](../examples/cone.html)
+[<kbd><img src="../examples/snapshots/cone-conoid.jpg" width="300"></kbd>](../examples/cone-conoid.html)
 
 
 
@@ -1063,7 +1063,7 @@ pyramid( 6, [25,0,15] );
 pyramid( 3, [0,0,0], 10, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/pyramid.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/pyramid.html)
+[<kbd><img src="../examples/snapshots/pyramid.jpg" width="300"></kbd>](../examples/pyramid.html)
 
 
 
@@ -1095,8 +1095,8 @@ group(
 );
 ```
 
-[<kbd><img src="../examples/snapshots/group.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/group.html)
-[<kbd><img src="../examples/snapshots/group-tag.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/group-tag.html)
+[<kbd><img src="../examples/snapshots/group.jpg" width="300"></kbd>](../examples/group.html)
+[<kbd><img src="../examples/snapshots/group-tag.jpg" width="300"></kbd>](../examples/group-tag.html)
 
 A group is a special objects, and some aspects of group management are:
 - A group has own center, size and spin. Values of `size` of a group are scale
@@ -1126,8 +1126,8 @@ be *filled* with a color.
 A drawing can be constructed in HTML or in JavaScript. Modifications of existing
 drawing can be done only in JavaScript.
 
-[<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-html.html)
-[<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-js.html)
+[<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
+[<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
 
 
 #### Drawing
@@ -1155,8 +1155,8 @@ var a = drawing( 32 );
 var b = drawing( 32, 48, 'crimson' );
 ```
 
-[<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-transparent.html)
-[<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-opaque.html)
+[<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="300"></kbd>](../examples/drawing-transparent.html)
+[<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="300"></kbd>](../examples/drawing-opaque.html)
 
 When a drawing canvas is initialized and stored in a variable, this variable has
 commands for drawing on the canvas.
@@ -1165,14 +1165,14 @@ Drawings can be applied to points and lines. For points the drawings act like
 sprites &ndash; they are not subject to orientation and they always face the
 screen. For lines drawings are used to created dot-and-dash patterns.
 
-[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-custom-point.html)
-[<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-dotted-lines.html)
+[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
+[<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
 
 A drawing is applied to an object via the [image](#image) property and can be
 updated both before and after this assignment. The scale of
 a drawing is managed by the [images](#images) property. 
 
-[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/dynamic-drawing.html)
+[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
 
 #### MoveTo
 
@@ -1210,7 +1210,7 @@ JS:
 lineTo( 10, 0 );
 ```
 
-[<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-moveto-lineto.html)
+[<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="300"></kbd>](../examples/drawing-moveto-lineto.html)
 		
 #### CurveTo
 
@@ -1232,14 +1232,14 @@ JS:
 curveTo( 10, 0, 20, 15 );
 ```
 
-[<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-curveto.html)
+[<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](../examples/drawing-curveto.html)
 
 A more complex curve can be constructed by joining individual curves. The shape
 of a heart, for examples, can be constructed by 6 connected curves.
 
 <img src="images/drawing-heart.png">
 
-[<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-heart-point.html)
+[<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="300"></kbd>](../examples/drawing-heart-point.html)
 
 
 #### Arc
@@ -1267,7 +1267,7 @@ the canvas. The X axis extends to the right, Y extends to the top.
 
 <img src="images/drawing-arc.png">
 
-[<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-arc.html)
+[<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](../examples/drawing-arc.html)
 
 In HTML the direction of drawing is set by attributes `cw` or `ccw` which values
 are either *true* or *false*. If the attributes have no values, they are assumed
@@ -1302,7 +1302,7 @@ stroke( 'crimson' );
 stroke( 'crimson', 10, true );
 ```
 
-[<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-stroke.html)
+[<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="300"></kbd>](../examples/drawing-stroke.html)
 	
 	
 #### Fill
@@ -1320,8 +1320,8 @@ JS:
 fill( 'crimson' );
 ```
 	
-[<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill.html)
-[<kbd><img src="../examples/snapshots/drawing-fill-and-stroke.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-fill-and-stroke.html)
+[<kbd><img src="../examples/snapshots/drawing-fill.jpg" width="300"></kbd>](../examples/drawing-fill.html)
+[<kbd><img src="../examples/snapshots/drawing-fill-and-stroke.jpg" width="300"></kbd>](../examples/drawing-fill-and-stroke.html)
 
 
 #### FillText
@@ -1339,7 +1339,7 @@ JS:
 fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 ```	
 	
-[<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-filltext.html)
+[<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="300"></kbd>](../examples/drawing-filltext.html)
 	
 	
 #### Clear
@@ -1359,7 +1359,7 @@ JS:
 clear( 'crimson' );
 ```
 	
-[<kbd><img src="../examples/snapshots/drawing-clear.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/drawing-clear.html)
+[<kbd><img src="../examples/snapshots/drawing-clear.jpg" width="300"></kbd>](../examples/drawing-clear.html)
 	
 	
 
@@ -1432,7 +1432,7 @@ The function *findPosition* is typically used with events of the Suica canvas.
 The position coordinates map the Suica coordinate system when [orthographic camera](#orthographic-camera)
 is used and the view point is not changed with [demo](#demo) or [lookAt](#lookat).
 
-[<kbd><img src="../examples/snapshots/events-find-position.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/events-find-position.html)
+[<kbd><img src="../examples/snapshots/events-find-position.jpg" width="300"></kbd>](../examples/events-find-position.html)
 
 
 #### findObject
@@ -1570,9 +1570,9 @@ cube = document.getElementsByTagName( 'cube' )[0];
 cube.setAttribute( 'size', 10 );
 ```
 
-[<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-property-modification.html)
-[<kbd><img src="../examples/snapshots/qa-attribute-modification.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification.html)
-[<kbd><img src="../examples/snapshots/qa-attribute-modification-button.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-attribute-modification-button.html)
+[<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="300"></kbd>](../examples/qa-property-modification.html)
+[<kbd><img src="../examples/snapshots/qa-attribute-modification.jpg" width="300"></kbd>](../examples/qa-attribute-modification.html)
+[<kbd><img src="../examples/snapshots/qa-attribute-modification-button.jpg" width="300"></kbd>](../examples/qa-attribute-modification-button.html)
 
 
 
@@ -1591,7 +1591,7 @@ p = group( pyramid([0,0,30]) );
 p.spin = [0,45];
 ```
 
-[<kbd><img src="../examples/snapshots/qa-custom-center.jpg" width="300"></kbd>](https://boytchev.github.io/suica/examples/qa-custom-center.html)
+[<kbd><img src="../examples/snapshots/qa-custom-center.jpg" width="300"></kbd>](../examples/qa-custom-center.html)
 
 
 ---
