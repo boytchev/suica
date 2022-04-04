@@ -134,6 +134,12 @@ Click on an image to run the example.
 
 
 
+## [Events](user-guide.md#events)
+
+[<kbd><img src="../examples/snapshots/events-find-position.jpg" width="400"></kbd>](../examples/events-find-position.html)
+
+
+
 ## [Questions and answers](user-guide.md#questions-and-answers)
 
 [<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="400"></kbd>](https://boytchev.github.io/suica/examples/qa-property-modification.html)
