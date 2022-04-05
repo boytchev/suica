@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Drag and drop</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Drag and drop</h1>
+	<p>Using canvas events for drag-and-drop (drag with the mouse).</p>
+
+	<suica orthographic onmousedown="pick" onmousemove="drag" onmouseup="drop">
+		<sphere center="-60,-60,-800" size="100" color="peachpuff">
+		<sphere center="+60,+60,-800" size="100" color="lightsalmon">
+		<sphere center="-60,+60,-800" size="100" color="lightgray">
+		<sphere center="+60,-60,-800" size="100" color="dimgray">
+	</suica>
+	
+	<script>
+		var activeObject, oldX, oldY;
+		
+		function pick( event )
+		{
+			activeObject = findObject( event );
+			oldX = event.clientX;
+			oldY = event.clientY;
+		}
+		
+		function drag( event )
+		{
+			if( activeObject )
+			{
+				activeObject.x += event.clientX-oldX;
+				activeObject.y -= event.clientY-oldY;
+				oldX = event.clientX;
+				oldY = event.clientY;
+			}
+		}
+		
+		function drop( event )
+		{
+			activeObject = null;
+		}
+	</script>
+</body>
+</html>

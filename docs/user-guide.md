@@ -12,7 +12,7 @@
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
-- [Events](#events) [<small> [types](#types-of-events) | [capturing](#capturing-events) | [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
+- [Events](#events) [<small> [types](#types-of-events) | [capturing](#capturing-events) | [addEventListener](#addeventlistener) | [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -1398,8 +1398,6 @@ and *click events* (they occur when a mouse button is used over an object).
 
 <img src="images/events-motion.png">
 
-[<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="300"></kbd>](../examples/events-suica-enter.html)
-
 **Click events** are:
 
 - `onMouseDown` &ndash; a mouse button is pressed over the target zone
@@ -1410,8 +1408,80 @@ and *click events* (they occur when a mouse button is used over an object).
 
 ### Capturing events
 
+In Suica events can be captured for Suica canvas and for individual Suica objects.
+
+#### Suica canvas events
+
+A Suica canvas event occurs on the whole Suica canvas. For example, *onClick* is
+triggered when the user clicks anywhere in the canvas, and *onMouseEnter* is
+triggered when the mouse cursor enters the canvas. There are several ways to
+capture canvas events: by attributes in the `<suica>` tag, by the canvas
+event propery, and with the function [addEventListener](#addEventListener).
+
+```html
+HTML:
+<suica onclick="eventHandler">
+   ...
+</suica>
+```
+```js
+JS:
+s.onclick = eventHandler;
+```
+```js
+JS:
+s.addEventHandler( 'click', eventHandler );
+```
+
+In the above code sniplets *eventHandler* is a user function that is called
+when the event onClick occurs.
+
+```js
+JS:
+function eventHandler( event )
+{
+	// parameter `event` contains information about the captured event
+}
+```
+
+[<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="300"></kbd>](../examples/events-suica-enter.html)
+
+The parameter *event* contains information about the event. 
+
+To get the object(s) in the canvas where the event ocurred use either
+[findObject](#findObject) or [findObjects](#findObjects) passing the same *event*
+parameter to them.
+
+#### Information about event
+
+When an event handler is activated, it receives a parameter with information
+about the event. For mouse events this parameter is the same as
+[MouseEvent)[https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)
+with an adittional element `suicaObject` containing the Suica canvas where the
+event occured. This is useful when the same event handler is bound to several
+objects. Some of the most important elements of event's information are:
+
+- `altKey`, `ctrlKey`, `shiftKey` &ndash; flags whether the corresponding keys has been pressed 
+- `button`, `buttons` &ndash; mouse buttons that have been used 
+- `movementX`, `movementY` &ndash; how much the mouse moved since the previous
+event (distance is measured in pixels) 
+- `suicaObject` &ndash; this element is added by Suica and contains the Suica
+object, either canvas or graphical object, where the event occured
+
+The following examples show simple implementation of drag-and-drop implemented
+via canvas events and via object events.
+
+[<kbd><img src="../examples/snapshots/events-drag-and-drop-canvas.jpg" width="300"></kbd>](../examples/events-drag-and-drop-canvas.html)
+
+#### addEventListener
+
 TO DO
 
+_**Note.** *addEventListener* mimics the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s
+[addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+which is used to set event listeners for HTML elements in a web page. However
+Suica's addEventListener: does not have a third parameter and does now support
+multiple listeners for the same event and object._
 
 #### findPosition
 

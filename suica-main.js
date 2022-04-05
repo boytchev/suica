@@ -44,12 +44,13 @@
 //	2.-1.36 (220401) removed fillAndStroke
 //	2.-1.37 (220402) findObject, findObjects, addEventListener, removeEventListener
 //	2.-1.38 (220404) findPosition
+//	2.-1.39 (220405) spinH, spinV, spinT
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.38 (220404)` );
+console.log( `Suica 2.-1.39 (220405)` );
 
 
 // control flags
@@ -818,6 +819,8 @@ class Suica
 			{
 				return size.split(',').map(Number);
 			}
+			else
+				return Number(size);
 		}
 
 		return size;
@@ -1015,6 +1018,20 @@ class Suica
 	}
 	
 
+	allObjects( )
+	{
+		var foundObjects = [];
+			
+		for( var threejsObject of this.scene.children )
+		{
+			if( threejsObject.suicaObject )
+				foundObjects.push( threejsObject.suicaObject );
+		}
+		
+		return foundObjects;
+	}
+	
+
 	findObjects( domEvent )
 	{
 		// sets this.raycastPointer
@@ -1091,8 +1108,6 @@ class Suica
 		// call the listener
 		object[eventName]( eventParam );
 
-		Suica.hoverObject = object;
-			
 		if( DEBUG_EVENTS ) console.log( object.id+' :: '+eventName );
 	}
 
@@ -1111,12 +1126,14 @@ class Suica
 			else
 			{
 				Suica.eventCall( Suica.hoverObject, 'onmouseleave', event );		
-				Suica.eventCall( object, 'onmouseenter', event );
+				Suica.hoverObject = object;
+				Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
 			}
 		}
 		else
 		{
-			Suica.eventCall( object, 'onmouseenter', event );
+			Suica.hoverObject = object;
+			Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
 		}
 	} // Suica.onMouseMove
 	
@@ -1135,12 +1152,14 @@ class Suica
 			if( object != Suica.hoverObject )
 			{
 				Suica.eventCall( Suica.hoverObject, 'onmouseleave', event );		
-				Suica.eventCall( object, 'onmouseenter', event );
+				Suica.hoverObject = object;
+				Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
 			}
 		}
 		else
 		{
-			Suica.eventCall( object, 'onmouseenter', event );
+			Suica.hoverObject = object;
+			Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
 		}
 	} // Suica.onMouseMoveUpdate
 	
@@ -1333,6 +1352,13 @@ window.findPosition = function( domEvent )
 	var suica = domEvent.target.suicaObject;
 	if( suica )
 		return suica.findPosition( domEvent );
+}
+
+
+window.allObjects = function( )
+{
+	Suica.precheck();
+	return Suica.current.allObjects( );
 }
 
 

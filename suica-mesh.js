@@ -512,6 +512,42 @@ class Mesh
 	}
 	
 
+	get spinH( )
+	{
+		return this.meshSpin[0];
+	}
+
+	set spinH( spin )
+	{
+		this.meshSpin[0] = Number( spin );
+		this.updateOrientation();
+	}
+	
+
+	get spinV( )
+	{
+		return this.meshSpin[1];
+	}
+
+	set spinV( spin )
+	{
+		this.meshSpin[1] = Number( spin );
+		this.updateOrientation();
+	}
+	
+
+	get spinT( )
+	{
+		return this.meshSpin[2];
+	}
+
+	set spinT( spin )
+	{
+		this.meshSpin[2] = Number( spin );
+		this.updateOrientation();
+	}
+	
+
 	addEventListener( type, listener, aux )
 	{
 		if( aux ) console.warn( 'Suica objects do not support third parameter of addEventListener');

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Drag and spin</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Drag and spin</h1>
+	<p>Using object events for drag-and-spin (spin with the mouse).</p>
+
+	<suica>
+		<prism y="-20" size="50,5" color="linen" onmouseenter="pick" onmouseleave="drop">
+		<prism y="-15" size="50,5" color="lightsalmon" onmouseenter="pick" onmouseleave="drop">
+		<prism y="-10" size="50,5" color="dimgray" onmouseenter="pick" onmouseleave="drop">
+		<prism y="-5" size="50,5" color="peachpuff" onmouseenter="pick" onmouseleave="drop">
+		<prism y="0" size="50,5" color="linen" onmouseenter="pick" onmouseleave="drop">
+		<prism y="5" size="50,5" color="lightsalmon" onmouseenter="pick" onmouseleave="drop">
+		<prism y="10" size="50,5" color="dimgray" onmouseenter="pick" onmouseleave="drop">
+		<prism y="15" size="50,5" color="peachpuff" onmouseenter="pick" onmouseleave="drop">
+	</suica>
+	
+	<script>
+		onTime( rotate );
+		
+		function pick( event )
+		{
+			this.speed = 200;
+		}
+		
+		function rotate( t, dT )
+		{
+			for( var object of allObjects() )
+			{
+				object.spinH += (object.speed|0)*dT;
+			}
+		}
+		
+		function drop( event )
+		{
+			this.speed = 0;
+		}
+	</script>
+</body>
+</html>
