@@ -1426,7 +1426,7 @@ function. The result is an array [*x*,*y*] of the position.
 JS:
 function onMouseMove( event )
 {
-	pos = findPosition( event );
+	var pos = findPosition( event );
 }
 ```
 
@@ -1439,11 +1439,44 @@ is used and the view point is not changed with [demo](#demo) or [lookAt](#lookat
 
 #### findObject
 
-TO DO 
+Function. Finds the Suica object where an event occured. The function requires
+an `event` as a parameter &ndash; the same as the one received by the event
+handling function. The result is the closest Suica object that is at the
+position of the event, or `null` if no such object exists.
+
+```js
+JS:
+function onMouseMove( event )
+{
+	var object = findObject( event );
+}
+```
+
+The function *findObject* is typically used with events of the Suica canvas.
+
+[<kbd><img src="../examples/snapshots/events-find-object.jpg" width="300"></kbd>](../examples/events-find-object.html)
+
+
 
 #### findObjects
 
-TO DO
+Function. Finds all Suica objects where an event occured. The function requires
+an `event` as a parameter &ndash; the same as the one received by the event
+handling function. The result is a sorted list (from nearest to farthest) of
+all Suica objects that are at the position of the event, or an empty list `[]`
+if no such objects exist.
+
+```js
+JS:
+function onMouseMove( event )
+{
+	var object = findObjects( event );
+}
+```
+
+The function *findObjects* is typically used with events of the Suica canvas.
+
+[<kbd><img src="../examples/snapshots/events-find-objects.jpg" width="300"></kbd>](../examples/events-find-objects.html)
 
 
 

@@ -153,6 +153,9 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="400"></kbd>](../examples/events-suica-enter.html)
 [<kbd><img src="../examples/snapshots/events-find-position.jpg" width="400"></kbd>](../examples/events-find-position.html)
 
+[<kbd><img src="../examples/snapshots/events-find-object.jpg" width="400"></kbd>](../examples/events-find-object.html)
+[<kbd><img src="../examples/snapshots/events-find-objects.jpg" width="400"></kbd>](../examples/events-find-objects.html)
+
 
 
 ## [Questions and answers](user-guide.md#questions-and-answers)

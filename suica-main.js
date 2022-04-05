@@ -531,8 +531,8 @@ class Suica
 				that.onTimeHandler( time, time-that.lastTime );
 			}
 			
-			if( that.demoViewPoint || that.onTimeHandler )
-				Suica.onMouseMoveUpdate( );
+			//if( that.demoViewPoint || that.onTimeHandler )
+			//	Suica.onMouseMoveUpdate( );
 			
 			that.render( );
 

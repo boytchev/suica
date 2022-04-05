@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Suica canvas click</title>
+	<title>Find object</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,30 +18,27 @@
 
 <body>
 
-	<h1>Suica canvas click</h1>
-	<p>Capturing click event on the Suica canvas (click on a cube).</p>
+	<h1>Find object</h1>
+	<p>Finding the object where a Suica event occured (click on bars).</p>
 
-	<suica onClick="onClick">
-		<demo>
-		<cube x="-40" size="18">
-		<cube x="-20" size="18">
-		<cube x="0" size="18">
-		<cube x="20" size="18">
-		<cube x="40" size="18">
+	<suica onclick="onClick">
 	</suica>
 	
 	<script>
-		const COLORS = ['peachpuff','gray','lightsalmon','black','lightgray','dimgray'];
+		var n = 40,
+			colors = ['peachpuff','lightsalmon','lightgray','white'];
+		
+		for( var i=0; i<n; i++ )
+			cube(
+				[random(-50,50),random(-20,20),random(-50,50)],
+				[40,10,1],
+				random(colors)
+			).style( {spin:[random(0,360),random(0,360),random(0,360)]} )
 		
 		function onClick( event )
 		{
 			var object = findObject( event );
-
-			if( object )
-			{
-				object.color = random(COLORS);
-				object.height = random(10,50);
-			}
+			if( object ) object.color = 'dimgray';
 		}
 	</script>
 </body>
