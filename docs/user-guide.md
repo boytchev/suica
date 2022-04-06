@@ -239,7 +239,7 @@ JS:
 list = allObjects( );
 ```
 
-[<kbd><img src="../examples/snapshots/allObjects.jpg" width="300"></kbd>](../examples/allobjects.html)
+[<kbd><img src="../examples/snapshots/allobjects.jpg" width="300"></kbd>](../examples/allobjects.html)
 
 
 
