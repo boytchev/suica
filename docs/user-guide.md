@@ -1415,22 +1415,39 @@ In Suica events can be captured for Suica canvas and for individual Suica object
 A Suica canvas event occurs on the whole Suica canvas. For example, *onClick* is
 triggered when the user clicks anywhere in the canvas, and *onMouseEnter* is
 triggered when the mouse cursor enters the canvas. There are several ways to
-capture canvas events: by attributes in the `<suica>` tag, by the canvas
+capture canvas events.
+
+: by attributes in the `<suica>` tag, by the canvas
 event propery, and with the function [addEventListener](#addEventListener).
 
+When the event is captured via HTML attributes, the name of the event could be
+prefixed by `on` or not prefixed at all:
 ```html
 HTML:
-<suica onclick="eventHandler">
+<suica onClick="eventHandler">
+   ...
+</suica>
+
+<suica click="eventHandler">
    ...
 </suica>
 ```
+
+When an event listener is installed, the name of the event could be prefixed by
+`on` or not prefixed at all:
+
+```js
+JS:
+s.addEventListener( 'onClick', eventHandler );
+s.addEventListener( 'click', eventHandler );
+```
+
+When the event handler is set directly, the event name must be prefixed by `on`
+and lowercased:
+
 ```js
 JS:
 s.onclick = eventHandler;
-```
-```js
-JS:
-s.addEventHandler( 'click', eventHandler );
 ```
 
 In the above code sniplets *eventHandler* is a user function that is called
@@ -1477,13 +1494,26 @@ event handler.
 
 #### addEventListener
 
-TO DO
-
-_**Note.** *addEventListener* mimics the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s
+Function. Activates an event listener to specific `event` that triggers an
+`eventHandler`. *addEventListener* mimics the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s
 [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
-which is used to set event listeners for HTML elements in a web page. However
-Suica's addEventListener: does not have a third parameter and does now support
-multiple listeners for the same event and object._
+which is used to set event listeners for HTML elements in a web page. However,
+there are several differences:
+
+- The *event* is the name of the event with or without `on` prefix,
+thus `mouseMove` and `onMouseMove` are considered the same event
+- Only one *eventHandler* per event per object can be set, i.e. setting another
+event handler will replace the previous one
+- There is no thirs parameter with event options
+
+```js
+JS:
+s.addEventListener( 'mouseMove', eventHandler );
+s.addEventListener( 'onMouseMove', eventHandler );
+```
+
+[<kbd><img src="../examples/snapshots/events-event-listener.jpg" width="300"></kbd>](../examples/events-event-listener.html)
+
 
 #### findPosition
 

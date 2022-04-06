@@ -555,7 +555,7 @@ class Mesh
 		if( !type.startsWith('on') )
 			type = 'on'+type;
 		
-		this[type] = listener;
+		this[type.toLowerCase()] = listener;
 	}
 	
 

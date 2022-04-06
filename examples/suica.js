@@ -56,7 +56,7 @@ console.log( `Suica 2.-1.39 (220405)` );
 
 // control flags
 const DEBUG_CALLS = false;
-const DEBUG_EVENTS = false;
+const DEBUG_EVENTS = !false;
 
 
 
@@ -1073,7 +1073,7 @@ class Suica
 		if( !type.startsWith('on') )
 			type = 'on'+type;
 		
-		this[type] = listener;
+		this[type.toLowerCase()] = listener;
 	}
 	
 	removeEventListener( type, listener, aux )
@@ -3507,7 +3507,7 @@ class Mesh
 		if( !type.startsWith('on') )
 			type = 'on'+type;
 		
-		this[type] = listener;
+		this[type.toLowerCase()] = listener;
 	}
 	
 
