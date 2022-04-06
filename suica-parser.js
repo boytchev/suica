@@ -324,6 +324,9 @@ class HTMLParser
 		if( parseOptions.spin )
 		{
 			if( elem.hasAttribute('spin') ) object.spin = elem.getAttribute('spin'); 
+			if( elem.hasAttribute('spinH') ) object.spinH = elem.getAttribute('spinH'); 
+			if( elem.hasAttribute('spinV') ) object.spinV = elem.getAttribute('spinV'); 
+			if( elem.hasAttribute('spinT') ) object.spinT = elem.getAttribute('spinT'); 
 		}
 		
 		if( parseOptions.wireframe )

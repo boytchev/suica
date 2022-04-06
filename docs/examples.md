@@ -6,7 +6,7 @@
 [Helpers](#helpers)
 [Cameras](#cameras)
 [Objects](#objects)
-[Objects properties](#properties)
+[Objects properties](#objects-properties)
 [Common 2D objects](#common-2d-objects)
 [Common 3D objects](#common-3d-objects)
 [Advanced 3D objects](#advanced-3d-objects)
@@ -68,6 +68,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="400"></kbd>](../examples/sizes-orientation.html)
 
 [<kbd><img src="../examples/snapshots/spin.jpg" width="400"></kbd>](../examples/spin.html)
+[<kbd><img src="../examples/snapshots/spin-angles.jpg" width="400"></kbd>](../examples/spin-angles.html)
+
 [<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="400"></kbd>](../examples/spin-orientation.html)
 
 [<kbd><img src="../examples/snapshots/clone.jpg" width="400"></kbd>](../examples/clone.html)

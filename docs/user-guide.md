@@ -632,13 +632,13 @@ a.depth = 40;
 #### Spin
 
 Property. Defines the rotation of an object in respect to its own axes. The
-value of `spin` is either an angle or an array of up to three angles. All angles
-are measured in degrees.
+value of `spin` is either an angle or an array of up to three angles [`spinH`, `spinV`, `spinT`].
+All angles are measured in degrees.
 
-The first *spin* value rotates around the vertical axis. The second *spin*
-value rotates around the horizontal axis and away from the global vertical axis.
-The third *spin* value rotates again around the vertical local axis of the
-object.
+Angle *spinH* (*H* from *horizontal*) defines horizontal rotation around the
+global vertical axis. Angle *spinV* (*V* from *vertical*) define vertical
+rotation away from the vertical axis. Angle *spinT* (*T* from *torsion*) defines
+rotation of the object around it own vertical axis..
 
 <img src="images/spin.png">
 
@@ -648,6 +648,8 @@ coordinate system axes differ. For example, if a square has a spin [&alpha;, &be
 a pyramid on that square should have spin [&alpha;, &beta;+90, &gamma;].
 
 [<kbd><img src="../examples/snapshots/spin.jpg" width="300"></kbd>](../examples/spin.html)
+[<kbd><img src="../examples/snapshots/spin-angles.jpg" width="300"></kbd>](../examples/spin-angles.html)
+
 [<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="300"></kbd>](../examples/spin-orientation.html)
 
 

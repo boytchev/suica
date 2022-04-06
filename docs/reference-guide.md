@@ -139,6 +139,7 @@ HTML:
 <square width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡">
 <square image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <square image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<square spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -155,6 +156,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
@@ -176,6 +180,7 @@ HTML:
 <circle width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡">
 <circle image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <circle image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<circle spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -192,6 +197,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
@@ -213,6 +221,7 @@ HTML:
 <polygon width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡">
 <polygon image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <polygon image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<polygon spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -230,6 +239,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
@@ -249,6 +261,7 @@ HTML:
 <cube width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
 <cube image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <cube image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<cube spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -266,6 +279,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
@@ -287,6 +303,7 @@ HTML:
 <sphere width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
 <sphere image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <sphere image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<sphere spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -304,6 +321,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = '𝑢𝑟𝑙';
@@ -323,6 +343,7 @@ HTML:
 <cylinder width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
 <cylinder image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <cylinder image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<cylinder spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -340,6 +361,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = '𝑢𝑟𝑙';
@@ -359,6 +383,7 @@ HTML:
 <prism width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
 <prism image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <prism image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<prism spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -377,6 +402,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
@@ -397,6 +425,7 @@ HTML:
 <cone width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
 <cone image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <cone image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<cone spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -414,6 +443,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = '𝑢𝑟𝑙';
@@ -433,6 +465,7 @@ HTML:
 <pyramid width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" depth="𝑑𝑒𝑝𝑡ℎ">
 <pyramid image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔" images="𝑥,𝑦">
 <pyramid image="𝑢𝑟𝑙" images="𝑥,𝑦">
+<pyramid spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
 ```
 ```js
 JS:
@@ -451,6 +484,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑜𝑏𝑗𝑒𝑐𝑡.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
 𝑜𝑏𝑗𝑒𝑐𝑡.image = 𝑖𝑚𝑎𝑔𝑒;
@@ -477,6 +513,9 @@ HTML:
   :
 </group>
 
+<group spinh="𝑠𝑝𝑖𝑛ℎ" spinv="𝑠𝑝𝑖𝑛𝑣" spint="𝑠𝑝𝑖𝑛𝑡">
+  :
+</group>
 ```
 ```js
 JS:
@@ -494,6 +533,9 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.color = 𝑐𝑜𝑙𝑜𝑟;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝑠𝑝𝑖𝑛ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝑠𝑝𝑖𝑛ℎ,𝑠𝑝𝑖𝑛𝑣,𝑠𝑝𝑖𝑛𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝑠𝑝𝑖𝑛ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝑠𝑝𝑖𝑛𝑣;
+𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝑠𝑝𝑖𝑛𝑡;
 𝑛𝑒𝑤𝑂𝑏𝑗𝑒𝑐𝑡 = 𝑜𝑏𝑗𝑒𝑐𝑡.clone;
 𝑜𝑏𝑗𝑒𝑐𝑡.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
 ```

@@ -23,7 +23,7 @@
 
 	<suica>
 		<demo distance="120">
-		<group id="pawn" center="0,-10,0" color="dimgray" spin="0,180">
+		<group id="pawn" center="0,10,0" color="linen">
 			<sphere y="25" size="10">
 			<sphere y="19" size="10,2,10">
 			<cone size="12,25">
@@ -34,9 +34,9 @@
 	</suica>
 
 	<script>
-		pawn.clone.style( {color: 'linen', center: [0,10,0], spin: [0,0]} );
-		pawn.clone.style( {color: 'lightcoral', center: [0,0,10], spin: [0,90]} );
-		pawn.clone.style( {color: 'peachpuff', center: [0,0,-10], spin: [180,90]} );
+		pawn.clone.style( {color: 'lightcoral', center: [0,0,10], spinV: 90} );
+		pawn.clone.style( {color: 'dimgray', center: [0,-10,0], spinV: 180} );
+		pawn.clone.style( {color: 'peachpuff', center: [0,0,-10], spinV: 270} );
 	</script>
 </body>
 </html>
