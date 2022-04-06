@@ -53,6 +53,7 @@ JS:
 𝑠𝑢𝑖𝑐𝑎.clone( 𝑜𝑏𝑗𝑒𝑐𝑡 );
 𝑠𝑢𝑖𝑐𝑎.onTime( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 );
 𝑠𝑢𝑖𝑐𝑎.onTime( );
+𝑎𝑟𝑟𝑎𝑦 = 𝑠𝑢𝑖𝑐𝑎.allObjects( );
 
 function 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛( t, dt )
 {

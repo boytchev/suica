@@ -33,6 +33,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/oxyz.jpg" width="400"></kbd>](../examples/oxyz.html)
 [<kbd><img src="../examples/snapshots/demo.jpg" width="400"></kbd>](../examples/demo.html)
 
+[<kbd><img src="../examples/snapshots/allObjects.jpg" width="400"></kbd>](../examples/allObjects.html)
+
 ## [Cameras](user-guide.md#cameras)
 
 [<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="400"></kbd>](../examples/camera-perspective.html)

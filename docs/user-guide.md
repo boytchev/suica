@@ -4,7 +4,7 @@
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
 - [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [onTime](#ontime) </small>] 
-    - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) </small>]
+    - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) | [allObjects](#allobjects) </small>]
     - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera) | [full window](#full-window-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) | [lookAt](#lookat) </small>] 
 - [Objects](#objects)
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [spin](#spin) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [images](#images) | [clone](#clone)  | [style](#style) </small>] 
@@ -226,6 +226,20 @@ demo( 100, 30 );
 ```
 
 [<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](../examples/demo.html)
+
+
+
+### allObjects
+
+Function. Get a list of all graphical objects in a Suica canvas. The result of
+the function is an array of these objects.
+
+```js
+JS:
+list = allObjects( );
+```
+
+[<kbd><img src="../examples/snapshots/allObjects.jpg" width="300"></kbd>](../examples/allobjects.html)
 
 
 
