@@ -1456,22 +1456,24 @@ parameter to them.
 
 When an event handler is activated, it receives a parameter with information
 about the event. For mouse events this parameter is the same as
-[MouseEvent)[https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)
-with an adittional element `suicaObject` containing the Suica canvas where the
-event occured. This is useful when the same event handler is bound to several
-objects. Some of the most important elements of event's information are:
+[MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent).
+Some of the most important elements of event's information are:
 
 - `altKey`, `ctrlKey`, `shiftKey` &ndash; flags whether the corresponding keys has been pressed 
 - `button`, `buttons` &ndash; mouse buttons that have been used 
-- `movementX`, `movementY` &ndash; how much the mouse moved since the previous
-event (distance is measured in pixels) 
-- `suicaObject` &ndash; this element is added by Suica and contains the Suica
-object, either canvas or graphical object, where the event occured
 
-The following examples show simple implementation of drag-and-drop implemented
-via canvas events and via object events.
+The following example shows drag-and-drop operation implemented via canvas
+events.
 
-[<kbd><img src="../examples/snapshots/events-drag-and-drop-canvas.jpg" width="300"></kbd>](../examples/events-drag-and-drop-canvas.html)
+[<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="300"></kbd>](../examples/events-drag-and-drop.html)
+
+Additionally to the event information, the system variable `this` in the event
+handler, points to the canvas or to the object where the event occured. This is
+used to identify the origin of an event when several objects share the same
+event handler.
+
+[<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="300"></kbd>](../examples/events-point-and-spin.html)
+
 
 #### addEventListener
 
