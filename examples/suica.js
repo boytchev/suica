@@ -1041,16 +1041,25 @@ class Suica
 
 		// cast a ray and find intersection with all objects
 		this.raycaster.setFromCamera( this.raycastPointer, this.camera );
-		var intersects = this.raycaster.intersectObjects( this.scene.children, false );
+		var intersects = this.raycaster.intersectObjects( this.scene.children, true );
 
 		// construct a list of all intersected objects
 		var foundObjects = [];
-			
-		for( var i=0; i<intersects.length; i++ )
+
+		for( var intersection of intersects )
 		{
-			var object = intersects[i].object.suicaObject;
-			if( foundObjects.indexOf(object) < 0 )
-				foundObjects.push( object );
+			var suicaObject = null;
+			
+			// get the topmost Suica object
+			for( var object=intersection.object; object; object=object.parent )
+			{
+				suicaObject = object.suicaObject || suicaObject;
+			}
+			
+			// if the object has Suica object that is not found,
+			// add it to the list of found objects
+			if( foundObjects.indexOf( suicaObject ) < 0 )
+				foundObjects.push( suicaObject );
 		}
 		
 		return foundObjects;
@@ -1079,7 +1088,13 @@ class Suica
 	
 	removeEventListener( type, listener, aux )
 	{
-		this.canvas.removeEventListener( type, listener, aux );
+		if( listener ) console.warn( 'Suica canvas does not support second parameter of removeEventListener');
+		if( aux ) console.warn( 'Suica canvas does not support third parameter of removeEventListener');
+
+		if( !type.startsWith('on') )
+			type = 'on'+type;
+		
+		this[type.toLowerCase()] = null;
 	}
 
 	static addEventListener( type, listener, aux )
@@ -1200,6 +1215,16 @@ class Suica
 		
 	} // Suica.onClick
 	
+	
+	static cloneEvents( target, source )
+	{
+		target.onmouseenter = source.onmouseenter;
+		target.onmousemove = source.onmousemove;
+		target.onmouseleave = source.onmouseleave;
+		target.onmousedown = source.onmousedown;
+		target.onclick = source.onclick;
+		target.onmouseup = source.onmouseup;
+	}
 	
 	// static onDblClick( event )
 	// {
@@ -3523,7 +3548,7 @@ class Mesh
 		if( !type.startsWith('on') )
 			type = 'on'+type;
 		
-		this['on'+type] = null;
+		this[type.toLowerCase()] = null;
 	}
 	
 
@@ -3613,6 +3638,7 @@ class Point extends Mesh
 		var object = new Point( this.suica, this.center, this.size, this.color );
 
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
@@ -3820,6 +3846,7 @@ class Line extends Mesh
 		var object = new Line( this.suica, this.from, this.to, this.color );
 		
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
@@ -3904,6 +3931,7 @@ class Square extends Mesh
 		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
@@ -4015,6 +4043,7 @@ class Cube extends Mesh
 		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
@@ -4153,6 +4182,7 @@ class Polygon extends Mesh
 		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
@@ -4239,6 +4269,7 @@ class Sphere extends Mesh
 		
 		object.spin = this.spin;
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 			
 		return object;
 		
@@ -4426,6 +4457,7 @@ class Prism extends Mesh
 		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
@@ -4615,6 +4647,7 @@ class Pyramid extends Mesh
 		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
@@ -4992,7 +5025,7 @@ class Group
 		if( !type.startsWith('on') )
 			type = 'on'+type;
 		
-		this['on'+type] = null;
+		this[type.toLowerCase()] = null;
 	}
 	
 	
@@ -5016,6 +5049,7 @@ class Group
 		object.center = this.center;
 		object.size = this.size;
 		object.spin = this.spin;
+		Suica.cloneEvents( object, this );
 
 		return object;
 		

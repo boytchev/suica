@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>One-time listener</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>One-time listener</h1>
+	<p>Removing click listener after the first click (click on pawns).</p>
+
+	<suica>
+		<lookat from="100,100,100" to="0,-10,0">
+		<group id="pawn" color="linen" onclick="shrink">
+			<sphere y="25" size="10">
+			<sphere y="19" size="10,2,10">
+			<cone size="12,25">
+			<cone size="20,10">
+		</group>
+		<!--cube id="pawn" size="18" color="linen" onclick="shrink"-->
+	</suica>
+
+	<script>
+		for( var x=-50; x<=50; x+=25 )
+		for( var z=-50; z<=50; z+=25 )
+			if( x || z )
+				pawn.clone.style( {center: [x,0,z]} );
+
+		function shrink( )
+		{
+			this.color = 'dimgray';
+			this.size = [0.5, 0.5, 0.5];
+			this.removeEventListener( 'onclick' );
+		}
+	</script>
+</body>
+</html>

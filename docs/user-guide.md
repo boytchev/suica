@@ -12,7 +12,7 @@
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
-- [Events](#events) [<small> [types](#types-of-events) | [capturing](#capturing-events) | [addEventListener](#addeventlistener) | [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
+- [Events](#events) [<small> [types](#types-of-events) | [capturing](#capturing-events) | [addEventListener](#addeventlistener) | [removeEventListener](#removeeventlistener) | [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -1385,20 +1385,15 @@ clear( 'crimson' );
 ## Events
 
 Events are something that happens 'outside' a Suica program at unknown moment
-of time. Examples of events are when the user click on an object with the mouse.
+of time. Examples of events are when the user clicks on an object with the mouse.
 Suica reimplements a part of the web page events system	onto Suica objects.
 
-Suica adds rudimentary support for events bound to Suica objects. It manages
-events for the Suica drawing canvas and for individual graphical objects in the
-canvas.
+An event is managed by two elements:
 
-An event is used in two steps:
+- **Event listener**: A declaration that an object is interested in specific event
+- **Event handler**: A user-defind function that is activated when an event occurs
 
-- An object declares that it is interested in a given message by providing a
-special event handling function
-- When the event occurs, its description is passed to the event handling
-function which processes the event
-- Events that are not listened to, are ignored
+Events that are not listened to, are ignored.
 
 
 ### Types of events
@@ -1520,7 +1515,7 @@ there are several differences:
 thus `mouseMove` and `onMouseMove` are considered the same event
 - Only one *eventHandler* per event per object can be set, i.e. setting another
 event handler will replace the previous one
-- There is no thirs parameter with event options
+- There is no third parameter with event options
 
 ```js
 JS:
@@ -1529,6 +1524,27 @@ s.addEventListener( 'onMouseMove', eventHandler );
 ```
 
 [<kbd><img src="../examples/snapshots/events-event-listener.jpg" width="300"></kbd>](../examples/events-event-listener.html)
+
+
+#### removeEventListener
+
+Function. Removes an event listener of specific `event`. *removeEventListener*
+mimics the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s
+[removeEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
+which is used to remove event listeners for HTML elements in a web page. However,
+there are several differences:
+
+- The *event* is the name of the event with or without `on` prefix,
+thus `mouseMove` and `onMouseMove` are considered the same event
+- There is no second and third parameter
+
+```js
+JS:
+s.removeEventListener( 'mouseMove' );
+s.removeEventListener( 'onMouseMove' );
+```
+
+[<kbd><img src="../examples/snapshots/events-one-time-listener.jpg" width="300"></kbd>](../examples/events-one-time-listener.html)
 
 
 #### findPosition

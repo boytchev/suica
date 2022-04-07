@@ -567,7 +567,7 @@ class Mesh
 		if( !type.startsWith('on') )
 			type = 'on'+type;
 		
-		this['on'+type] = null;
+		this[type.toLowerCase()] = null;
 	}
 	
 

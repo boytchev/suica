@@ -54,6 +54,7 @@ class Sphere extends Mesh
 		
 		object.spin = this.spin;
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 			
 		return object;
 		

@@ -345,7 +345,7 @@ class Group
 		if( !type.startsWith('on') )
 			type = 'on'+type;
 		
-		this['on'+type] = null;
+		this[type.toLowerCase()] = null;
 	}
 	
 	
@@ -369,6 +369,7 @@ class Group
 		object.center = this.center;
 		object.size = this.size;
 		object.spin = this.spin;
+		Suica.cloneEvents( object, this );
 
 		return object;
 		

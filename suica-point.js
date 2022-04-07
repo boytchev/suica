@@ -79,6 +79,7 @@ class Point extends Mesh
 		var object = new Point( this.suica, this.center, this.size, this.color );
 
 		object.image = this.image;
+		Suica.cloneEvents( object, this );
 		
 		return object;
 		
