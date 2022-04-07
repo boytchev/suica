@@ -12,7 +12,9 @@
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
-- [Events](#events) [<small> [types](#types-of-events) | [capturing](#capturing-events) | [addEventListener](#addeventlistener) | [removeEventListener](#removeeventlistener) | [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
+- [Events](#events)
+    - [Event workflow](#event-workflow) [<small> [listeners](#event-listeners) | [handlers](#event-handlers) </small>]
+	- [Event data](#event-data) [<small> [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
@@ -1388,6 +1390,21 @@ Events are something that happens 'outside' a Suica program at unknown moment
 of time. Examples of events are when the user clicks on an object with the mouse.
 Suica reimplements a part of the web page events system	onto Suica objects.
 
+Suica supports *motion events* and *click events*.
+
+Motion events are `onМouseEnter`, `onМouseMove` and `onМouseLeave`. They occur
+when the mouse enters, moves over or leaves Suica canvas or Suica object.
+
+<img src="images/events-motion.png">
+
+Click events are `onMouseDown`, `onMouseUp` and `onClick`. They occur when a
+mouse button is pressed, released or clicked over Suica canvas or Suica object.
+
+<img src="images/events-click.png">
+
+
+### Event workflow
+
 An event is managed by two elements:
 
 - **Event listener**: A declaration that an object is interested in specific event
@@ -1396,111 +1413,75 @@ An event is managed by two elements:
 Events that are not listened to, are ignored.
 
 
-### Types of events
+#### Event listeners
 
-Suica supports *motion events* (they occur when the mouse is moved over an object)
-and *click events* (they occur when a mouse button is used over an object).
+In Suica event listeners can be set for Suica canvas and for individual Suica
+objects. For example, a canvas onClick event occurs when the user clicks
+anywhere in the canvas, while an object onClick event occurs when the user
+clicks on the image of the object. Similarily, a canvas *onMouseEnter* occurs
+when the mouse cursor enters the canvas, while an object *onMouseEnter* occurs
+when the cursors enters the boundary of the object's image.
 
-**Motion events** are:
+In HTML event listeners are set as attributes. The name of the attribute is
+the name of the event, which is case-insensitive and it can be with or without
+*on-* prefix. The value of the attribute is the name of the event handler
+function.
 
-- `onМouseEnter` &ndash; the mouse enters the object
-- `onМouseMove` &ndash; the mouse is moves over the object
-- `onМouseLeave` &ndash; the mouse leaves the object
-
-<img src="images/events-motion.png">
-
-**Click events** are:
-
-- `onMouseDown` &ndash; a mouse button is pressed over the target zone
-- `onMouseUp` &ndash; a mouse button is released over the target zone
-- `onClick` &ndash; a mouse button is clicked over the target zone
-
-<img src="images/events-click.png">
-
-### Capturing events
-
-In Suica events can be captured for Suica canvas and for individual Suica objects.
-
-#### Suica canvas events
-
-A Suica canvas event occurs on the whole Suica canvas. For example, *onClick* is
-triggered when the user clicks anywhere in the canvas, and *onMouseEnter* is
-triggered when the mouse cursor enters the canvas. There are several ways to
-capture canvas events.
-
-: by attributes in the `<suica>` tag, by the canvas
-event propery, and with the function [addEventListener](#addEventListener).
-
-When the event is captured via HTML attributes, the name of the event could be
-prefixed by `on` or not prefixed at all:
 ```html
 HTML:
-<suica onClick="eventHandler">
-   ...
-</suica>
-
-<suica click="eventHandler">
-   ...
-</suica>
+<suica click="eventHandler">...</suica>
+<cube onClick="eventHandler">...</suica>
 ```
 
-When an event listener is installed, the name of the event could be prefixed by
-`on` or not prefixed at all:
+In JavaScript event listeners ar set by [addEventListener](#addeventlistener).
+The name of the event is case-insensitive and it can be with or without
+*on-* prefix. The event handler is a function name without parentheses.
 
 ```js
 JS:
-s.addEventListener( 'onClick', eventHandler );
-s.addEventListener( 'click', eventHandler );
+suica.addEventListener( 'click', eventHandler );
+cube.addEventListener( 'onClick', eventHandler );
 ```
 
-When the event handler is set directly, the event name must be prefixed by `on`
-and lowercased:
+In JavaScript an event listener can be set directly, but the event name must be
+*on-* prefixed and lowercased.
 
 ```js
 JS:
-s.onclick = eventHandler;
+// click, Click and onClick will not work
+suica.onclick = eventHandler;
+cube.onclick = eventHandler;
 ```
 
-In the above code sniplets *eventHandler* is a user function that is called
-when the event onClick occurs.
+Event listeners are removed by [removeEventListener](#removeeventlistener) or by
+assigning a null value.
 
 ```js
 JS:
-function eventHandler( event )
+suica.removeEventListener( 'click' );
+cube.onclick = null;
+```
+
+
+#### Event handlers
+
+In Suica event handlers are user functions that are activated from listeners
+when a specific event occurs. Often the name of the event handler is the same as
+the name of the corresponding event, although this is not enforced. The optional
+parameter *event* contains information about the event. It is used by
+[findPosition](#findposition), [findObject](#findobject) and [findObjects](#findobjects).
+
+
+```js
+JS:
+function onMouseMove( event )
 {
-	// parameter `event` contains information about the captured event
+	...
 }
 ```
 
 [<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="300"></kbd>](../examples/events-suica-enter.html)
 
-The parameter *event* contains information about the event. 
-
-To get the object(s) in the canvas where the event ocurred use either
-[findObject](#findObject) or [findObjects](#findObjects) passing the same *event*
-parameter to them.
-
-#### Information about event
-
-When an event handler is activated, it receives a parameter with information
-about the event. For mouse events this parameter is the same as
-[MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent).
-Some of the most important elements of event's information are:
-
-- `altKey`, `ctrlKey`, `shiftKey` &ndash; flags whether the corresponding keys has been pressed 
-- `button`, `buttons` &ndash; mouse buttons that have been used 
-
-The following example shows drag-and-drop operation implemented via canvas
-events.
-
-[<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="300"></kbd>](../examples/events-drag-and-drop.html)
-
-Additionally to the event information, the system variable `this` in the event
-handler, points to the canvas or to the object where the event occured. This is
-used to identify the origin of an event when several objects share the same
-event handler.
-
-[<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="300"></kbd>](../examples/events-point-and-spin.html)
 
 
 #### addEventListener
@@ -1547,14 +1528,46 @@ s.removeEventListener( 'onMouseMove' );
 [<kbd><img src="../examples/snapshots/events-one-time-listener.jpg" width="300"></kbd>](../examples/events-one-time-listener.html)
 
 
+### Event data
+
+An event handler can retrieve additional information about an event.
+
+As a function the event handler has one parameter (typically called *event*)
+that contains information about the event itself. For mouse events this
+parameter is [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent).
+It contains data about event time and place, mouse buttons, pressed keys, etc.
+These data can be used to implement drag-and-drop operations.
+
+Each event handler is run from within the object that reacyed to the event.
+The system variable `this` in the event handler points to this object. This is
+used to identify the object when several objects share the same event handler.
+
+Additional Suica-specific data can be extracted from the event by 
+[findPosition](#findposition), [findObject](#findobject) and [findObjects](#findobjects).
+
+
+```js
+JS:
+function onMouseMove( event )
+{
+   if( event.ctrlKey )
+   {
+      this.center = [0,0,0];
+      this.color = 'crimson';
+   }
+}
+```
+
+[<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="300"></kbd>](../examples/events-drag-and-drop.html)
+[<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="300"></kbd>](../examples/events-point-and-spin.html)
+
+
 #### findPosition
 
 Function. Finds the position of an event. The position is measured in pixels
-and is relative to the center of the Suica canvas. The function requires an
-`event` as a parameter &ndash; the same as the one received by the event handling
-function. The result is an array [*x*,*y*] of the position.
-
-<img src="images/event-coordinate-system.png">
+and is relative to the center of the Suica canvas. The function requires the
+*event* parameter of the event handler. The result is an array [*x*,*y*] of the
+position. *findPosition* is typically used with events of the Suica canvas.
 
 ```js
 JS:
@@ -1564,19 +1577,21 @@ function onMouseMove( event )
 }
 ```
 
-The function *findPosition* is typically used with events of the Suica canvas.
-The position coordinates map the Suica coordinate system when [orthographic camera](#orthographic-camera)
-is used and the view point is not changed with [demo](#demo) or [lookAt](#lookat).
-
 [<kbd><img src="../examples/snapshots/events-find-position.jpg" width="300"></kbd>](../examples/events-find-position.html)
+
+The returned position coincides with the Suica coordinate system when
+[orthographic camera](#orthographic-camera) is used and the view point is not
+changed with [demo](#demo) or [lookAt](#lookat).
+
+<img src="images/event-coordinate-system.png">
 
 
 #### findObject
 
 Function. Finds the Suica object where an event occured. The function requires
-an `event` as a parameter &ndash; the same as the one received by the event
-handling function. The result is the closest Suica object that is at the
-position of the event, or `null` if no such object exists.
+the *event* parameter of the event handler. The result is the closest Suica
+object that is at the position of the event, or `null` if no such object exists.
+*findObject* is typically used with events of the Suica canvas.
 
 ```js
 JS:
@@ -1586,8 +1601,6 @@ function onMouseMove( event )
 }
 ```
 
-The function *findObject* is typically used with events of the Suica canvas.
-
 [<kbd><img src="../examples/snapshots/events-find-object.jpg" width="300"></kbd>](../examples/events-find-object.html)
 
 
@@ -1595,10 +1608,10 @@ The function *findObject* is typically used with events of the Suica canvas.
 #### findObjects
 
 Function. Finds all Suica objects where an event occured. The function requires
-an `event` as a parameter &ndash; the same as the one received by the event
-handling function. The result is a sorted list (from nearest to farthest) of
-all Suica objects that are at the position of the event, or an empty list `[]`
-if no such objects exist.
+the *event* parameter of the event handler. The result is a sorted list (from
+nearest to farthest) of all Suica objects that are at the position of the event,
+or an empty list `[]` if no such objects exist. *findObjects* is typically used
+with events of the Suica canvas.
 
 ```js
 JS:
@@ -1607,8 +1620,6 @@ function onMouseMove( event )
 	var object = findObjects( event );
 }
 ```
-
-The function *findObjects* is typically used with events of the Suica canvas.
 
 [<kbd><img src="../examples/snapshots/events-find-objects.jpg" width="300"></kbd>](../examples/events-find-objects.html)
 

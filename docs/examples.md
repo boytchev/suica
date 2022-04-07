@@ -1,17 +1,17 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Examples
 
 
-[About](#about)
-[Suica canvas](#suica-canvas)
-[Helpers](#helpers)
-[Cameras](#cameras)
-[Objects](#objects)
-[Objects properties](#objects-properties)
-[Common 2D objects](#common-2d-objects)
-[Common 3D objects](#common-3d-objects)
-[Advanced 3D objects](#advanced-3d-objects)
-[Drawings](#drawings)
-[Events](#events)
+[About](#about) |
+[Suica](#suica-canvas) |
+[Helpers](#helpers) |
+[Cameras](#cameras) |
+[Objects](#objects) |
+[Properties](#objects-properties) |
+[2D](#common-2d-objects) |
+[3D](#common-3d-objects) |
+[Advanced](#advanced-3d-objects) |
+[Drawings](#drawings) |
+[Events](#events) |
 [Q&A](#questions-and-answers)
 
 Click on an image to run the example.
@@ -155,12 +155,13 @@ Click on an image to run the example.
 ## [Events](user-guide.md#events)
 
 [<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="400"></kbd>](../examples/events-suica-enter.html)
-[<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="400"></kbd>](../examples/events-drag-and-drop.html)
-
-[<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="400"></kbd>](../examples/events-point-and-spin.html)
 [<kbd><img src="../examples/snapshots/events-event-listener.jpg" width="400"></kbd>](../examples/events-event-listener.html)
 
 [<kbd><img src="../examples/snapshots/events-one-time-listener.jpg" width="400"></kbd>](../examples/events-one-time-listener.html)
+
+[<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="400"></kbd>](../examples/events-drag-and-drop.html)
+[<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="400"></kbd>](../examples/events-point-and-spin.html)
+
 [<kbd><img src="../examples/snapshots/events-find-position.jpg" width="400"></kbd>](../examples/events-find-position.html)
 
 [<kbd><img src="../examples/snapshots/events-find-object.jpg" width="400"></kbd>](../examples/events-find-object.html)

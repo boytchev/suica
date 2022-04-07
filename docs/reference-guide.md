@@ -1,6 +1,22 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
-[Suica](#suica) [Color](#color) [Point](#point) [Line](#line) [Square](#square) [Circle](#circle) [Polygon](#polygon) [Cube](#cube) [Sphere](#sphere) [Cylinder](#cylinder) [Prism](#prism) [Cone](#cone) [Pyramid](#pyramid) [Group](#group) [Drawing](#drawing) [Events](#events) [Functions](#functions)
+[Suica](#suica) |
+[Color](#color) |
+[Point](#point) |
+[Line](#line) |
+[Square](#square) |
+[Circle](#circle) |
+[Polygon](#polygon) |
+[Cube](#cube) |
+[Sphere](#sphere) |
+[Cylinder](#cylinder) |
+[Prism](#prism) |
+[Cone](#cone) |
+[Pyramid](#pyramid) |
+[Group](#group) |
+[Drawing](#drawing) |
+[Events](#events) |
+[Functions](#functions)
 
 ### [Suica](user-guide.md#suica-canvas)
 
