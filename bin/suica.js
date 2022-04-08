@@ -47,12 +47,13 @@
 //	2.-1.38 (220404) findPosition
 //	2.-1.39 (220405) spinH, spinV, spinT
 //	2.-1.40 (220406) allObjects
+//	2.-1.41 (220407) events of groups
 //
 //===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.40 (220406)` );
+console.log( `Suica 2.-1.41 (220407)` );
 
 
 // control flags
@@ -4127,8 +4128,8 @@ class Polygon extends Mesh
 
 		if( count == this.n ) return; // same number of side, no need to regenerate
 		
-		this.solidMesh.geometry = Polygon.getSolidGeometry( count );
-		this.frameMesh.geometry = Polygon.getFrameGeometry( count );
+		this.solidMesh.geometry = Polygon.getSolidGeometry( this.suica, count );
+		this.frameMesh.geometry = Polygon.getFrameGeometry( this.suica, count );
 		
 		this.threejs.geometry = this.isWireframe ? this.frameMesh.geometry : this.solidMesh.geometry;
 	}
@@ -4136,6 +4137,8 @@ class Polygon extends Mesh
 
 	static getSolidGeometry( suica, count )
 	{
+		console.log('a',suica);
+		console.log('_',suica._);
 		if( !suica._.solidGeometry.polygon[count] )
 			suica._.solidGeometry.polygon[count] = suica.flipNormal( new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) ).applyMatrix4( suica.orientation.MATRIX ) );
 		
