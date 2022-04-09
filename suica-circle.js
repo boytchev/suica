@@ -72,8 +72,6 @@ class Polygon extends Mesh
 
 	static getSolidGeometry( suica, count )
 	{
-		console.log('a',suica);
-		console.log('_',suica._);
 		if( !suica._.solidGeometry.polygon[count] )
 			suica._.solidGeometry.polygon[count] = suica.flipNormal( new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) ).applyMatrix4( suica.orientation.MATRIX ) );
 		

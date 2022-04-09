@@ -42,6 +42,8 @@ class Point extends Mesh
 		this.center = center;
 		this.color = color;
 		this.size = size;
+		
+		this._drawing = this.threejs.material.map;
 
 	} // Point.constructor
 

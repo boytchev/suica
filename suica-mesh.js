@@ -210,8 +210,7 @@ class Mesh
 	
 	get image( )
 	{
-		//return this.threejs.material.map;
-		return this._drawing;
+		return this._drawing;// this.threejs.material.map;
 	}
 	
 	set image( drawing )

@@ -3192,8 +3192,7 @@ class Mesh
 	
 	get image( )
 	{
-		//return this.threejs.material.map;
-		return this._drawing;
+		return this._drawing;// this.threejs.material.map;
 	}
 	
 	set image( drawing )
@@ -3602,6 +3601,8 @@ class Point extends Mesh
 		this.center = center;
 		this.color = color;
 		this.size = size;
+		
+		this._drawing = this.threejs.material.map;
 
 	} // Point.constructor
 
@@ -4137,8 +4138,6 @@ class Polygon extends Mesh
 
 	static getSolidGeometry( suica, count )
 	{
-		console.log('a',suica);
-		console.log('_',suica._);
 		if( !suica._.solidGeometry.polygon[count] )
 			suica._.solidGeometry.polygon[count] = suica.flipNormal( new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) ).applyMatrix4( suica.orientation.MATRIX ) );
 		
