@@ -26,14 +26,12 @@
 		<demo>
 	</suica>
 	
-	<suica width="148">
+	<suica width="148" ontime="rainbow">
 		<cube color="lightsalmon">
 		<demo distance="150" altitude="0">
 	</suica>
 	
 	<script>
-		onTime( rainbow );
-		
 		function rainbow( t )
 		{
 			background( 'hsl('+Math.round((100*t)%360)+',100%,90%)' );

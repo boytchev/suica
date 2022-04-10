@@ -21,7 +21,7 @@
 	<h1>Dynamic drawing</h1>
 	<p>Dynamic drawing on the surface of an object.</p>
 
-	<suica>
+	<suica onTime="onTime">
 		<demo>
 		<cube id="a" x="20" color="white">
 		<cube id="b" x="-20" color="white">
@@ -31,9 +31,7 @@
 		a.image = drawing( 100, 100, 'linen' );
 		b.image = drawing( 100, 100, 'linen' );
 		
-		onTime( loop );
-		
-		function loop( )
+		function onTime( )
 		{
 			a.image.arc( random(0,100), random(0,100), random(10,30) );
 			a.image.stroke( 'black', 5 );

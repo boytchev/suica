@@ -3,7 +3,7 @@
 ## Table of contents
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
-- [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [onTime](#ontime) </small>] 
+- [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) </small>] 
     - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) | [allObjects](#allobjects) </small>]
     - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera) | [full window](#full-window-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) | [lookAt](#lookat) </small>] 
 - [Objects](#objects)
@@ -146,41 +146,6 @@ HTML:
 <suica orientation="xyz">
 ```
 [<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](../examples/suica-orientation.html)
-
-
-
-
-### onTime
-
-Command. Supports frame-based animation. The animation approach of
-Suica is to react every time when the browser is ready to update the image on
-the canvas. The command `onTime` registers a user-defined JS function that
-adjusts the 3D scene whenever a new frame is required. 
-
-```html
-HTML:
-<ontime src="loop">
-```
-```js
-JS:
-onTime( loop ); // register a new ontime function
-onTime( );      // unregister the current ontime function
-```
-
-This user-defined function has two parameters &ndash; elapsed times since the
-start of Suica *t* and since the previous frame *td*. Both times are measured in
-seconds.
-
-```js
-JS:
-function loop( t, dt )
-{
-   // code that sets objects properties 
-   // depending on times t and dt
-}
-```
-
-[<kbd><img src="../examples/snapshots/ontime.jpg" width="300"></kbd>](../examples/ontime.html)
 
 
 
@@ -1390,17 +1355,17 @@ Events are something that happens 'outside' a Suica program at unknown moment
 of time. Examples of events are when the user clicks on an object with the mouse.
 Suica reimplements a part of the web page events system	onto Suica objects.
 
-Suica supports *motion events* and *click events*.
+Suica supports *motion events*, *click events* and *time events*.
 
-Motion events are `onМouseEnter`, `onМouseMove` and `onМouseLeave`. They occur
+- Motion events are `onМouseEnter`, `onМouseMove` and `onМouseLeave`. They occur
 when the mouse enters, moves over or leaves Suica canvas or Suica object.
-
 <img src="images/events-motion.png">
 
-Click events are `onMouseDown`, `onMouseUp` and `onClick`. They occur when a
+- Click events are `onMouseDown`, `onMouseUp` and `onClick`. They occur when a
 mouse button is pressed, released or clicked over Suica canvas or Suica object.
-
 <img src="images/events-click.png">
+
+- Time event is `onTime`. It occurs when the browser is ready for a new frame.
 
 
 ### Event workflow
@@ -1467,9 +1432,11 @@ cube.onclick = null;
 
 In Suica event handlers are user functions that are activated from listeners
 when a specific event occurs. Often the name of the event handler is the same as
-the name of the corresponding event, although this is not enforced. The optional
-parameter *event* contains information about the event. It is used by
-[findPosition](#findposition), [findObject](#findobject) and [findObjects](#findobjects).
+the name of the corresponding event, although this is not enforced.
+
+For mouse events the optional parameter *event* contains information about the
+event. It is used by [findPosition](#findposition), [findObject](#findobject)
+and [findObjects](#findobjects).
 
 
 ```js
@@ -1481,6 +1448,22 @@ function onMouseMove( event )
 ```
 
 [<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="300"></kbd>](../examples/events-suica-enter.html)
+
+
+
+For time events the optional parameters *t* and *dT* are elapsed times since the
+start of Suica and since the previous frame. Both are measured in seconds..
+
+
+```js
+JS:
+function onTime( t, dT )
+{
+	...
+}
+```
+
+[<kbd><img src="../examples/snapshots/events-ontime.jpg" width="300"></kbd>](../examples/events-ontime.html)
 
 
 
@@ -1532,7 +1515,7 @@ s.removeEventListener( 'onMouseMove' );
 
 An event handler can retrieve additional information about an event.
 
-As a function the event handler has one parameter (typically called *event*)
+As a function a mouse event handler has one parameter (typically called *event*)
 that contains information about the event itself. For mouse events this
 parameter is [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent).
 It contains data about event time and place, mouse buttons, pressed keys, etc.
@@ -1560,6 +1543,9 @@ function onMouseMove( event )
 
 [<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="300"></kbd>](../examples/events-drag-and-drop.html)
 [<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="300"></kbd>](../examples/events-point-and-spin.html)
+
+_**Note**: Parameter *event* is not passed to onTime event handlers, instead *t* and
+*dT* are passed to them._
 
 
 #### findPosition

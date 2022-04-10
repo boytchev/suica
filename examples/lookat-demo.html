@@ -21,7 +21,7 @@
 	<h1>LookAt demo</h1>
 	<p>Emulating and enriching the demo(...) command.</p>
 
-	<suica>
+	<suica ontime="onTime">
 		<cube color="dimgray">
 		
 		<cube size="24,24,38" color="linen">
@@ -47,7 +47,7 @@
 	</suica>
 
 	<script>
-		function loop( t )
+		function onTime( t )
 		{
 			var h = Math.cos( 2*t+0.5 ),
 				s = Math.sin( t ),

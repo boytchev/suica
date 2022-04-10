@@ -21,13 +21,11 @@
 	<h1>LookAt navigation</h1>
 	<p>Navigating the scene with dynamic lookAt(...).</p>
 
-	<suica>
+	<suica onTime="onTime">
 		<cylinder center="40,-10,0" size="4,20" color="black">
 		<cylinder center="-40,-10,0" size="4,20" color="black">
 		<cylinder center="70,-10,0" size="4,20" color="black">
 		<cylinder center="-70,-10,0" size="4,20" color="black">
-
-		<ontime src="loop">
 	</suica>
 
 	<script>
@@ -56,7 +54,7 @@
 		}
 
 		// dynamic lookAt
-		function loop( t )
+		function onTime( t )
 		{
 			lookAt( lemniscate(t/2), lemniscate(t/2+0.3) );
 		}

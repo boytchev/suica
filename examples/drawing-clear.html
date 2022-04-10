@@ -21,7 +21,7 @@
 	<h1>Drawing &ndash; clear</h1>
 	<p>Clearing the canvas area before a new drawing.</p>
 
-	<suica>
+	<suica onTime="onTime">
 		<square z="-66" size="400,200" color="white" image="https://boytchev.github.io/suica/textures/tile.png" images="80,40">
 		<square id="a" color="white" y="11" size="60,20">
 		<square id="b" color="white" y="-11" size="60,20">
@@ -31,9 +31,7 @@
 		a.image = drawing( 300, 100 );
 		b.image = drawing( 300, 100 );
 		
-		onTime( loop );
-		
-		function loop( t )
+		function onTime( t )
 		{
 			a.image.clear( 'lightsalmon' );
 			a.image.fillText( 18, 20, (new Date()).toTimeString(), 'black', 'bold 66px Arial' );

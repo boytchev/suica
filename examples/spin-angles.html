@@ -21,18 +21,16 @@
 	<h1>Spin angles</h1>
 	<p>Demonstrating <code>spinH</code>, <code>spinV</code> and <code>spinT</code>.</p>
 
-	<suica>
+	<suica onTime="onTime">
 		<cube x="-32" size="20" color="peachpuff">
 		<cube x="0" size="20" color="gray">
 		<cube x="32" size="20" color="lightsalmon" spinV="90">
 	</suica>
 
 	<script>
-		onTime( loop );
-		
 		var pyramids = allObjects();
 		
-		function loop( t )
+		function onTime( t )
 		{
 			pyramids[0].spinH = 100*t;
 			pyramids[1].spinV = 100*t;

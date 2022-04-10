@@ -21,13 +21,11 @@
 	<h1>LookAt navigation in VR</h1>
 	<p>Navigating the scene with dynamic lookAt(...).</p>
 
-	<suica vr>
+	<suica vr onTime="onTime">
 		<cylinder center="40,-10,0" size="4,20" color="black">
 		<cylinder center="-40,-10,0" size="4,20" color="black">
 		<cylinder center="70,-10,0" size="4,20" color="black">
 		<cylinder center="-70,-10,0" size="4,20" color="black">
-
-		<ontime src="loop">
 	</suica>
 
 	<script>
@@ -56,9 +54,8 @@
 		}
 
 		// dynamic lookAt
-		function loop( t )
+		function onTime( t )
 		{
-//			lookAt( [108,0,60], [-90,0,-50], [0,1,0] );
 			lookAt( lemniscate(t/2), lemniscate(t/2+0.3) );
 		}
 	</script>

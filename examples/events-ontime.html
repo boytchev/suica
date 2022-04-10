@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Stereo camera &ndash; wall-eyed viewing</title>
+	<title>onTime</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -14,32 +14,39 @@
 	<link rel="stylesheet" href="examples.css">
 	
 	<script src="suica.js"></script>
+	
+	<style>
+		suica {
+			position: relative;
+		}
+		
+		div {
+			width: calc( 100% - 1em );
+			position: absolute;
+			padding: 0.5em;
+			border-bottom: 1px gray dotted;
+		}
+	</style>
 </head>
 
 <body>
 
-	<h1>Stereo camera &ndash; wall-eyed viewing</h1>
-	<p>Setting stereo camera for wall-eyed (parallel) viewing.</p>
-
-	<suica stereo onTime="onTime">
+	<h1>onTime</h1>
+	<p>Capturing elapsed time for each rendered frame.</p>
+	
+	<suica>
+		<div id="log"></div>
+		<cube color="peachpuff">
+		<demo>
 	</suica>
 	
 	<script>
-		var cubes = [];
-		var grid = 5;
+		suica.ontime = showTime;
 		
-		for( var x = -3; x<=3; x++ )
-		for( var y = -3; y<=3; y++ )
+		function showTime( t, dt )
 		{
-			cubes.push( cube( [grid*x,grid*y,0], grid-1, random(['dimgray','linen','lightsalmon','peachpuff']) ) );
+			element('log').innerHTML = `Time: ${t.toFixed(1)} &Delta;Time: ${dt.toFixed(4)}`;
 		}
-		
-		function onTime( t )
-		{
-			for( var i=0; i<cubes.length; i++ )
-				cubes[i].depth = grid + 40 + 60*Math.sin( 5*t+i*i );
-		}
-	</script>
-	
+	</script>	
 </body>
 </html>

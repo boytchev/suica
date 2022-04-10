@@ -1,32 +1,6 @@
 ﻿//
 // Suica 2.0 Parser
 //
-// Parses custom tags inside <suica-canvas>.
-//
-// <vr>
-// <fullscreen>
-// <fullwindow>
-// <anaglyph distance="...">
-// <stereo distance="...">
-// <perspective near="..." far="..." fov="...">
-// <orthographic near="..." far="...">
-// <background color="...">
-// <oxyz size="..." color="...">
-// <ontime src="...">
-// <lookat from="..." to="..." up="...">
-// <point id="..." center="..." color="..." size="...">
-// <line id="..." center="..." color="..." to="...">
-// <square id="..." center="..." color="..." size="..." wireframe="...">
-// <cube id="..." center="..." color="..." size="..." wireframe="...">
-// <circle id="..." center="..." color="..." size="..." wireframe="...">
-// <polygon id="..." center="..." color="..." size="..." count="..." wireframe="...">
-// <sphere id="..." center="..." color="..." size="...">
-// <cylinder ...>
-// <prism ...>
-// <cone ...>
-// <pyramid ...>
-// <group>...</group>
-//
 
 
 
@@ -55,7 +29,6 @@ class HTMLParser
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
-		this.parseTag.ONTIME = this.parseTagONTIME;
 		
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.LINE = this.parseTagLINE;
@@ -286,13 +259,7 @@ class HTMLParser
 		);
 	} // HTMLParser.parseTagBACKGROUND
 	
-	
-	// <ontime src="...">
-	parseTagONTIME( suica, elem )
-	{
-		suica.onTime( elem.getAttribute('src') || Suica.DEFAULT.ONTIME.SRC );
-	} // HTMLParser.parseTagONTIME
-	
+		
 	
 	parseAttributes( elem, object, parseOptions = {} )
 	{
@@ -348,13 +315,14 @@ class HTMLParser
 	}
 	
 	
-	parseEvents( tag, object )
+	parseEvents( tag, object, suica=null )
 	{
 		// parse events
 		function parseEvent( actualName, name )
 		{
 			if( tag.hasAttribute(name) )
 			{
+		
 				object[actualName] = tag.getAttribute(name);
 
 				// if event is set to Suica.canvas, it cannot be set as a string,
@@ -387,6 +355,13 @@ class HTMLParser
 		parseEvent( 'onmouseup',	'mouseup' );
 		parseEvent( 'onclick',		'click' );
 		//parseEvent( 'ondblclick',	'dblclick' );
+		
+		if( suica )
+		{
+			object = suica;
+			parseEvent( 'ontime',	'ontime' );
+			parseEvent( 'ontime',	'time' );
+		}
 	}
 	
 	

@@ -21,7 +21,7 @@
 	<h1>Anaglyph camera</h1>
 	<p>Setting anaglyph stereo camera.</p>
 
-	<suica anaglyph>
+	<suica anaglyph onTime="onTime">
 	</suica>
 	
 	<script>
@@ -34,9 +34,7 @@
 			cubes.push( cube( [grid*x,grid*y,0], grid-1, random(['dimgray','linen','lightsalmon','peachpuff']) ) );
 		}
 		
-		onTime( loop );
-		
-		function loop( t )
+		function onTime( t )
 		{
 			for( var i=0; i<cubes.length; i++ )
 				cubes[i].depth = grid + 40 + 60*Math.sin( 5*t+i*i );

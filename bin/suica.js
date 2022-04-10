@@ -4,62 +4,18 @@
 // CC-3.0-SA-NC
 //
 //===================================================
-//
-// History
-//	2.-1.00 (220118) initiation
-//	2.-1.01 (220119) custom & nested tags, background, oxyz, animate
-//	2.-1.02 (220120) point
-//	2.-1.03 (220122) autoload js files, cube
-//	2.-1.04 (220124) demo, examples, onTime
-//	2.-1.05 (220126) random, drawing, lineTo, moveTo, stroke, fill, fillAndStroke
-//	2.-1.06 (220128) build process, mesh, cubeFrame, arc, cube.image
-//	2.-1.07 (220129) suica.orientation
-//	2.-1.08 (220130) size[x,y,z]
-//	2.-1.09 (220201) width, height, depth
-//	2.-1.10 (220201) square
-//	2.-1.11 (220203) attribute modification
-//	2.-1.12 (220204) line
-//	2.-1.13 (220205) object as position
-//	2.-1.14 (220205) circle, circleFrame
-//	2.-1.15 (220206) polygon, polygonFrame, sphere
-//	2.-1.16 (220209) cylinder, prism, prismFrame, cone, pyramid, pyramidFrame
-//	2.-1.17 (220212) radians degrees
-//	2.-1.18 (220213) added property wireframe, removed all xxxFrame objects
-//	2.-1.19 (220214) added property clone
-//	2.-1.20 (220215) added style
-//	2.-1.21 (220216) sizes of objects are independent on coordinate system orientation
-//	2.-1.22 (220217) perspective and orthographic
-//	2.-1.23 (220217) anaglyph and stereo
-//	2.-1.24 (220219) VR
-//	2.-1.25 (220220) fullScreen, fullwindow
-//	2.-1.26 (220227) lookAt, lookAt in VR
-//	2.-1.27 (220303) spin
-//	2.-1.28 (220306) group
-//	2.-1.29 (220311) tag <clone>
-//	2.-1.30 (220319) parameter 'close' in stroke and fillAndStroke
-//	2.-1.31 (220321) property image
-//	2.-1.32 (220326) dynamic drawings
-//	2.-1.33 (220327) drawing clear
-//	2.-1.34 (220330) <drawing>, <lineto>, <moveto>, <fill>
-//	2.-1.35 (220331) cw/ccw to arc, <stroke>, <filltext>, <arc>, <clear>, <curveto>
-//	2.-1.36 (220401) removed fillAndStroke
-//	2.-1.37 (220402) findObject, findObjects, addEventListener, removeEventListener
-//	2.-1.38 (220404) findPosition
-//	2.-1.39 (220405) spinH, spinV, spinT
-//	2.-1.40 (220406) allObjects
-//	2.-1.41 (220407) events of groups
-//
-//===================================================
 
 
 // show suica version
-console.log( `Suica 2.-1.41 (220407)` );
+console.log( `Suica 2.-1.42 (220410)` );
 
 
 // control flags
 const DEBUG_CALLS = false;
 const DEBUG_EVENTS = !false;
 
+// last Suica instance
+var suica = null;
 
 
 
@@ -156,7 +112,6 @@ class Suica
 		SIZE: '30',
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
-		ONTIME: { SRC: null },
 
 		POINT: { CENTER:[0,0,0], COLOR:'black', SIZE:7, SPIN:[0,0,0] },
 		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0], SPIN:[0,0,0] },
@@ -227,10 +182,7 @@ class Suica
 		this.parser = new HTMLParser( this );
 		
 		// parse event handlers (if any)
-		this.parser.parseEvents( suicaTag, this.canvas );
-		
-		// frame-based animation
-		this.onTimeHandler = null;
+		this.parser.parseEvents( suicaTag, this.canvas, this );
 		
 		// automatic rotation
 		this.demoViewPoint = null;
@@ -240,6 +192,7 @@ class Suica
 		this.raycastPointer = new THREE.Vector2();
 
 		// register this suica instance
+		window.suica = this;
 		Suica.current = this; // as current Suica
 		Suica.allSuicas.push( this ); // as one of all Suicas
 		window[this.id] = this; // as global variable
@@ -527,12 +480,12 @@ class Suica
 			}
 			
 			
-			if( that.onTimeHandler )
+			if( that.ontime )
 			{
-				if (typeof that.onTimeHandler === 'string' || that.onTimeHandler instanceof String)
-					that.onTimeHandler = window[that.onTimeHandler];
+				if (typeof that.ontime === 'string' || that.ontime instanceof String)
+					that.ontime = window[that.ontime];
 				
-				that.onTimeHandler( time, time-that.lastTime );
+				that.ontime( time, time-that.lastTime );
 			}
 			
 			//if( that.demoViewPoint || that.onTimeHandler )
@@ -694,15 +647,7 @@ class Suica
 		
 		this.demoViewPoint = {distance:distance, altitude:altitude};
 	} // Suica.demo
-	
-	
-	onTime( src=Suica.DEFAULT.ONTIME.SRC )
-	{
-		this.parser?.parseTags();
-		this.debugCall( 'onTime', src );
-				
-		this.onTimeHandler = src;
-	} // Suica.onTime
+
 	
 	
 	static precheck()
@@ -1319,11 +1264,6 @@ window.demo = function( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEF
 	Suica.current.demo( distance, altitude );
 }
 
-window.onTime = function( src=Suica.DEFAULT.ONTIME.SRC )
-{
-	Suica.precheck();
-	Suica.current.onTime( src );
-}
 
 window.element = function( id )
 {
@@ -1872,32 +1812,6 @@ class StereoEffect
 ﻿//
 // Suica 2.0 Parser
 //
-// Parses custom tags inside <suica-canvas>.
-//
-// <vr>
-// <fullscreen>
-// <fullwindow>
-// <anaglyph distance="...">
-// <stereo distance="...">
-// <perspective near="..." far="..." fov="...">
-// <orthographic near="..." far="...">
-// <background color="...">
-// <oxyz size="..." color="...">
-// <ontime src="...">
-// <lookat from="..." to="..." up="...">
-// <point id="..." center="..." color="..." size="...">
-// <line id="..." center="..." color="..." to="...">
-// <square id="..." center="..." color="..." size="..." wireframe="...">
-// <cube id="..." center="..." color="..." size="..." wireframe="...">
-// <circle id="..." center="..." color="..." size="..." wireframe="...">
-// <polygon id="..." center="..." color="..." size="..." count="..." wireframe="...">
-// <sphere id="..." center="..." color="..." size="...">
-// <cylinder ...>
-// <prism ...>
-// <cone ...>
-// <pyramid ...>
-// <group>...</group>
-//
 
 
 
@@ -1926,7 +1840,6 @@ class HTMLParser
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
-		this.parseTag.ONTIME = this.parseTagONTIME;
 		
 		this.parseTag.POINT = this.parseTagPOINT;
 		this.parseTag.LINE = this.parseTagLINE;
@@ -2157,13 +2070,7 @@ class HTMLParser
 		);
 	} // HTMLParser.parseTagBACKGROUND
 	
-	
-	// <ontime src="...">
-	parseTagONTIME( suica, elem )
-	{
-		suica.onTime( elem.getAttribute('src') || Suica.DEFAULT.ONTIME.SRC );
-	} // HTMLParser.parseTagONTIME
-	
+		
 	
 	parseAttributes( elem, object, parseOptions = {} )
 	{
@@ -2219,13 +2126,14 @@ class HTMLParser
 	}
 	
 	
-	parseEvents( tag, object )
+	parseEvents( tag, object, suica=null )
 	{
 		// parse events
 		function parseEvent( actualName, name )
 		{
 			if( tag.hasAttribute(name) )
 			{
+		
 				object[actualName] = tag.getAttribute(name);
 
 				// if event is set to Suica.canvas, it cannot be set as a string,
@@ -2258,6 +2166,13 @@ class HTMLParser
 		parseEvent( 'onmouseup',	'mouseup' );
 		parseEvent( 'onclick',		'click' );
 		//parseEvent( 'ondblclick',	'dblclick' );
+		
+		if( suica )
+		{
+			object = suica;
+			parseEvent( 'ontime',	'ontime' );
+			parseEvent( 'ontime',	'time' );
+		}
 	}
 	
 	

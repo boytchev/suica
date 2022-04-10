@@ -26,7 +26,6 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/background.jpg" width="400"></kbd>](../examples/background.html)
 
 [<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="400"></kbd>](../examples/suica-orientation.html)
-[<kbd><img src="../examples/snapshots/ontime.jpg" width="400"></kbd>](../examples/ontime.html)
 
 ## [Helpers](user-guide.md#helpers)
 
@@ -155,8 +154,9 @@ Click on an image to run the example.
 ## [Events](user-guide.md#events)
 
 [<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="400"></kbd>](../examples/events-suica-enter.html)
-[<kbd><img src="../examples/snapshots/events-event-listener.jpg" width="400"></kbd>](../examples/events-event-listener.html)
+[<kbd><img src="../examples/snapshots/events-ontime.jpg" width="400"></kbd>](../examples/events-ontime.html)
 
+[<kbd><img src="../examples/snapshots/events-event-listener.jpg" width="400"></kbd>](../examples/events-event-listener.html)
 [<kbd><img src="../examples/snapshots/events-one-time-listener.jpg" width="400"></kbd>](../examples/events-one-time-listener.html)
 
 [<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="400"></kbd>](../examples/events-drag-and-drop.html)
