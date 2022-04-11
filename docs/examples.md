@@ -162,6 +162,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/events-drag-and-drop.jpg" width="400"></kbd>](../examples/events-drag-and-drop.html)
 [<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="400"></kbd>](../examples/events-point-and-spin.html)
 
+[<kbd><img src="../examples/snapshots/events-proactive.jpg" width="400"></kbd>](../examples/events-proactive.html)
 [<kbd><img src="../examples/snapshots/events-find-position.jpg" width="400"></kbd>](../examples/events-find-position.html)
 
 [<kbd><img src="../examples/snapshots/events-find-object.jpg" width="400"></kbd>](../examples/events-find-object.html)
