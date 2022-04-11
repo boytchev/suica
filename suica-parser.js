@@ -26,6 +26,7 @@ class HTMLParser
 		this.parseTag.FULLWINDOW = this.parseTagFULLWINDOW;
 		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
 		this.parseTag.STEREO = this.parseTagSTEREO;
+		this.parseTag.PROACTIVE = this.parseTagPROACTIVE;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
@@ -207,6 +208,13 @@ class HTMLParser
 			elem.getAttribute('distance') || Suica.DEFAULT.ANAGLYPH.DISTANCE
 		);
 	} // HTMLParser.parseTagANAGLYPH
+	
+	
+	// <proactive>
+	parseTagPROACTIVE( suica, elem )
+	{
+		suica.proactive();
+	} // HTMLParser.parseTagPROACTIVE
 	
 	
 	// <stereo distance="...">

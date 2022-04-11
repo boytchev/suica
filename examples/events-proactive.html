@@ -18,42 +18,30 @@
 
 <body>
 
-	<h1>Suica mouse enter</h1>
-	<p>Capturing mouse motion over objects (hover the mouse over the cubes).</p>
+	<h1>Proactive events</h1>
+	<p>Capturing when an object moves under the mouse pointer.</p>
 
-	<suica>
+	<suica proactive>
+		<demo>
+		<cube x="+30" size="20" color="peachpuff" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube x="-30" size="20" color="lightsalmon" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube z="+30" size="20" color="linen" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube z="-30" size="20" color="gray" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
 	</suica>
 	
 	<script>
-		var cubes = [];
-		var colors = ['peachpuff','lightsalmon','lightgray'];
-		
-		<!-- for( var x=-30; x<=30; x+=10 ) -->
-		<!-- for( var y=-30; y<=30; y+=10 ) -->
-		for( var i = 0; i<40; i++ )
-		{
-			var c = cube( [random(-40,40),random(-40,40),random(-40,40)], 15, 'linen' );
-			c.spin = [random(0,360), random(0,360), random(0,360)];
-			
-			c.addEventListener( 'mouseenter', onMouseEnter );
-			c.addEventListener( 'mouseleave', onMouseLeave );
-			cubes.push( c );
-		}
-		
+
 		function onMouseEnter( event )
 		{
+			this.oldColor = this.color;
 			this.color = 'black';
 		}
 		
-		function onMouseLeave( event )
+		function onMouseLeave( )
 		{
-			this.color = 'linen';
+			this.color = this.oldColor;
 		}
 		
-		onTime( function( t )
-		{
-			lookAt( [100*Math.cos(t), 0, 100*Math.sin(t)] );
-		} );
 	</script>
 </body>
 </html>

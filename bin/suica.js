@@ -12,7 +12,7 @@ console.log( `Suica 2.-1.42 (220410)` );
 
 // control flags
 const DEBUG_CALLS = false;
-const DEBUG_EVENTS = !false;
+const DEBUG_EVENTS = false;
 
 // last Suica instance
 var suica = null;
@@ -162,6 +162,7 @@ class Suica
 		if( DEBUG_CALLS ) console.log(`Suica :: ${this.id}`);
 		
 		this.suicaTag = suicaTag;
+		this.isProactive = false;
 
 		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
@@ -207,6 +208,7 @@ class Suica
 		this.canvas.addEventListener( 'click', Suica.onClick );
 		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
+
 	} // Suica.constructor
 	
 	
@@ -352,6 +354,11 @@ class Suica
 			this.fullWindow( );
 		}
 
+		if( this.suicaTag.hasAttribute('PROACTIVE') )
+		{
+			this.proactive( );
+		}
+
 		// default light
 		this.light = new THREE.PointLight( 'white', 0.5 );
 			this.light.position.set( 1000, 1500, 3000 );
@@ -488,8 +495,8 @@ class Suica
 				that.ontime( time, time-that.lastTime );
 			}
 			
-			//if( that.demoViewPoint || that.onTimeHandler )
-			//	Suica.onMouseMoveUpdate( );
+			if( that.isProactive /*&& (that.demoViewPoint || that.onTimeHandler)*/ )
+				Suica.onMouseMoveUpdate( );
 			
 			that.render( );
 
@@ -545,6 +552,15 @@ class Suica
 		{
 			that.resizeCanvas();
 		});
+	}
+	
+	
+	proactive( )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'proactive' );
+
+		this.isProactive = true;
 	}
 	
 	
@@ -1216,6 +1232,12 @@ window.fullWindow = function( )
 	Suica.current.fullWindow(  );
 }
 	
+window.proactive = function( )
+{
+	Suica.precheck();
+	Suica.current.proactive(  );
+}
+	
 window.anaglyph = function( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
 {
 	Suica.precheck();
@@ -1837,6 +1859,7 @@ class HTMLParser
 		this.parseTag.FULLWINDOW = this.parseTagFULLWINDOW;
 		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
 		this.parseTag.STEREO = this.parseTagSTEREO;
+		this.parseTag.PROACTIVE = this.parseTagPROACTIVE;
 		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
 		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
 		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
@@ -2018,6 +2041,13 @@ class HTMLParser
 			elem.getAttribute('distance') || Suica.DEFAULT.ANAGLYPH.DISTANCE
 		);
 	} // HTMLParser.parseTagANAGLYPH
+	
+	
+	// <proactive>
+	parseTagPROACTIVE( suica, elem )
+	{
+		suica.proactive();
+	} // HTMLParser.parseTagPROACTIVE
 	
 	
 	// <stereo distance="...">
