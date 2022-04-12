@@ -3,7 +3,7 @@
 ## Table of contents
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
-- [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) </small>] 
+- [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [proactive](#proactive) </small>] 
     - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) | [allObjects](#allobjects) </small>]
     - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera) | [full window](#full-window-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) | [lookAt](#lookat) </small>] 
 - [Objects](#objects)
@@ -13,7 +13,7 @@
 	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
 - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
 - [Events](#events)
-    - [Event workflow](#event-workflow) [<small> [listeners](#event-listeners) | [handlers](#event-handlers) </small>]
+    - [Event workflow](#event-workflow) [<small> [listeners](#event-listeners) | [handlers](#event-handlers) </small> | [proactive](#proactive-events) </small> ]
 	- [Event data](#event-data) [<small> [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
@@ -146,6 +146,15 @@ HTML:
 <suica orientation="xyz">
 ```
 [<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](../examples/suica-orientation.html)
+
+
+
+
+### Proactive
+
+Property and command. Turns on proactive mode for mouse motion events. These
+events occur when the mouse pointer is moved over an object, or when an object
+is moved under the mouse pointer. For details see section [Proactive events](#proactive-events).
 
 
 
@@ -1509,6 +1518,34 @@ s.removeEventListener( 'onMouseMove' );
 ```
 
 [<kbd><img src="../examples/snapshots/events-one-time-listener.jpg" width="300"></kbd>](../examples/events-one-time-listener.html)
+
+
+#### Proactive events
+
+Suica supports proactive mode for mouse motion events `onМouseEnter`,
+`onМouseMove` and `onМouseLeave`. This mode can be turned on with HTML attribute,
+HTML tag or JavaScript command.
+
+```html
+HTML:
+<suica proactive>
+<proactive>
+```
+```js
+JS:
+proactive( );
+```
+
+Normal mouse motion events only occur when the mouse is moved into, over or out
+of an object. In proactive mode these events are triggered even when the mouse
+is stationary, but an object moves into, under or out of its pointer.
+
+[<kbd><img src="../examples/snapshots/events-proactive.jpg" width="300"></kbd>](../examples/events-proactive.html)
+
+Proactive mode is resource consuming, because for every frame objects in Suica
+are tested against the mouse position. When a proactive event occurs Suica
+executes the assigned event handler and passes the latest mouse event structure
+as a parameter to the handler.
 
 
 ### Event data
