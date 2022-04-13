@@ -239,10 +239,24 @@ class Suica
 	// readjust canvas (after resize)
 	resizeCanvas()
 	{
-		this.camera.aspect = this.suicaTag.clientWidth/this.suicaTag.clientHeight;
+		var w = this.suicaTag.clientWidth,
+			h = this.suicaTag.clientHeight;
+			
+		if( this.camera instanceof THREE.PerspectiveCamera )
+		{
+			this.camera.aspect = w/h;
+		}
+		else
+		if( this.camera instanceof THREE.OrthographicCamera )
+		{
+			this.camera.left = -w/2;
+			this.camera.right = +w/2;
+			this.camera.top = h/2;
+			this.camera.bottom = -h/2;
+		}
 		this.camera.updateProjectionMatrix();
-		this.renderer.setSize( this.suicaTag.clientWidth, this.suicaTag.clientHeight, true );
-		this.uberRenderer?.setSize( this.suicaTag.clientWidth, this.suicaTag.clientHeight, true );		
+		this.renderer.setSize( w, h, true );
+		this.uberRenderer?.setSize( w, h, true );		
 	}
 
 	// pseudo-element to calculates the canvas aspect
@@ -967,7 +981,7 @@ class Suica
 		var canvas = domEvent.target;
 		
 		console.assert( canvas == this.canvas );
-		
+
 		// get pixel position withing the Suica canvas
 		var rect = canvas.getBoundingClientRect(),
 			pixelX = Math.floor( domEvent.clientX - rect.left ),
