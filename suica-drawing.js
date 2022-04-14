@@ -45,10 +45,26 @@ class Drawing
 			
 //document.body.appendChild( this.canvas );			
 		}
+	
+		// register some local methods as public global functions
+		for( var methodName of ['moveTo', 'lineTo', 'curveTo', 'arc', 'fillText', 'stroke', 'fill', 'clear'] )
+		{
+			Drawing.register( methodName );
+		}
 		
 	} // Drawing.constructor
 
 
+
+	static register( methodName )
+	{
+		window[methodName] = function ( ...params )
+		{
+			Drawing.precheck();
+			Drawing.current[methodName]( ...params );
+		}
+	}
+		
 
 
 	managePath()
@@ -199,84 +215,86 @@ class Drawing
 
 
 
-window.drawing = function ( width=32, height=width, color=null )
+window.drawing = function ( ...params )
 {
-	Drawing.current = new Drawing( width, height, color );
+	Drawing.current = new Drawing( ...params );
 	return Drawing.current;
 }
 
 
 
 
-window.moveTo = function ( x = 0, y = 0 )
+
+/*
+window.moveTo = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.moveTo( x, y );
+	Drawing.current.moveTo( ...params );
 }
 	
 	
 	
-	
-window.lineTo = function ( x = 0, y = 0 )
+window.lineTo = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.lineTo( x, y );
-}
-
-
-
-
-window.curveTo = function ( mx = 0, my = 0, x = 0, y = 0 )
-{
-	Drawing.precheck();
-	Drawing.current.curveTo( mx, my, x, y );
+	Drawing.current.lineTo( ...params );
 }
 
 
 
 
-window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360, cw )
+window.curveTo = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.arc( x, y, r, from, to, cw );
+	Drawing.current.curveTo( ...params );
 }
 
 
 
 
-window.fillText = function ( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
+window.arc = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.fillText( x, y, text, color, font );
+	Drawing.current.arc( ...params );
 }
 
 
 
 
-window.stroke = function ( color = 'black', width = 1, close = false )
+window.fillText = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.stroke( color, width, close );
+	Drawing.current.fillText( ...params );
+}
+
+
+
+
+window.stroke = function ( ...params )
+{
+	Drawing.precheck();
+	Drawing.current.stroke( ...params );
 }
 	
 	
 	
 	
-window.fill = function ( color = 'gray' )
+window.fill = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.fill( color );
+	Drawing.current.fill( ...params );
 }
 
 
 
 
-window.clear = function ( color = null )
+window.clear = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.clear( color );
+	Drawing.current.clear( ...params );
 }
 
+*/	
 
 
 

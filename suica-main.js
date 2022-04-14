@@ -208,8 +208,22 @@ class Suica
 		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 
+		// register some local methods as public global functions
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon'] )
+		{
+			Suica.register( methodName );
+		}
 	} // Suica.constructor
+
 	
+	static register( methodName )
+	{
+		window[methodName] = function ( ...params )
+		{
+			Suica.precheck();
+			return Suica.current[methodName]( ...params );
+		}
+	}
 	
 	// create canvas element inside <suica>
 	createCanvas()

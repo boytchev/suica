@@ -209,8 +209,22 @@ class Suica
 		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 
+		// register some local methods as public global functions
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon'] )
+		{
+			Suica.register( methodName );
+		}
 	} // Suica.constructor
+
 	
+	static register( methodName )
+	{
+		window[methodName] = function ( ...params )
+		{
+			Suica.precheck();
+			return Suica.current[methodName]( ...params );
+		}
+	}
 	
 	// create canvas element inside <suica>
 	createCanvas()
@@ -2686,10 +2700,26 @@ class Drawing
 			
 //document.body.appendChild( this.canvas );			
 		}
+	
+		// register some local methods as public global functions
+		for( var methodName of ['moveTo', 'lineTo', 'curveTo', 'arc', 'fillText', 'stroke', 'fill', 'clear'] )
+		{
+			Drawing.register( methodName );
+		}
 		
 	} // Drawing.constructor
 
 
+
+	static register( methodName )
+	{
+		window[methodName] = function ( ...params )
+		{
+			Drawing.precheck();
+			Drawing.current[methodName]( ...params );
+		}
+	}
+		
 
 
 	managePath()
@@ -2840,84 +2870,86 @@ class Drawing
 
 
 
-window.drawing = function ( width=32, height=width, color=null )
+window.drawing = function ( ...params )
 {
-	Drawing.current = new Drawing( width, height, color );
+	Drawing.current = new Drawing( ...params );
 	return Drawing.current;
 }
 
 
 
 
-window.moveTo = function ( x = 0, y = 0 )
+
+/*
+window.moveTo = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.moveTo( x, y );
+	Drawing.current.moveTo( ...params );
 }
 	
 	
 	
-	
-window.lineTo = function ( x = 0, y = 0 )
+window.lineTo = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.lineTo( x, y );
-}
-
-
-
-
-window.curveTo = function ( mx = 0, my = 0, x = 0, y = 0 )
-{
-	Drawing.precheck();
-	Drawing.current.curveTo( mx, my, x, y );
+	Drawing.current.lineTo( ...params );
 }
 
 
 
 
-window.arc = function ( x = 0, y = 0, r = 10, from = 0, to = 360, cw )
+window.curveTo = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.arc( x, y, r, from, to, cw );
+	Drawing.current.curveTo( ...params );
 }
 
 
 
 
-window.fillText = function ( x = 0, y = 0, text = '', color = 'black', font = '20px Arial' )
+window.arc = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.fillText( x, y, text, color, font );
+	Drawing.current.arc( ...params );
 }
 
 
 
 
-window.stroke = function ( color = 'black', width = 1, close = false )
+window.fillText = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.stroke( color, width, close );
+	Drawing.current.fillText( ...params );
+}
+
+
+
+
+window.stroke = function ( ...params )
+{
+	Drawing.precheck();
+	Drawing.current.stroke( ...params );
 }
 	
 	
 	
 	
-window.fill = function ( color = 'gray' )
+window.fill = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.fill( color );
+	Drawing.current.fill( ...params );
 }
 
 
 
 
-window.clear = function ( color = null )
+window.clear = function ( ...params )
 {
 	Drawing.precheck();
-	Drawing.current.clear( color );
+	Drawing.current.clear( ...params );
 }
 
+*/	
 
 
 
@@ -3516,7 +3548,9 @@ class Mesh
 
 
 
-Mesh.createMaterials();﻿//
+Mesh.createMaterials();
+
+﻿//
 // Suica 2.0 Point
 // CC-3.0-SA-NC
 //
@@ -3609,7 +3643,7 @@ class Point extends Mesh
 
 
 
-
+/*
 window.point = function(
 					center = Suica.DEFAULT.POINT.CENTER,
 					size   = Suica.DEFAULT.POINT.SIZE,
@@ -3617,7 +3651,15 @@ window.point = function(
 {
 	Suica.precheck();
 	return Suica.current.point( center, size, color );
-}﻿//
+}
+*/
+
+// window.point = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.point( ...params );
+// }
+﻿//
 // Suica 2.0 Line
 // CC-3.0-SA-NC
 //
@@ -3817,7 +3859,7 @@ class Line extends Mesh
 
 
 
-
+/*
 window.line = function(
 					center = Suica.DEFAULT.LINE.CENTER,
 					to     = Suica.DEFAULT.LINE.TO,
@@ -3825,7 +3867,15 @@ window.line = function(
 {
 	Suica.precheck();
 	return Suica.current.line( center, to, color );
-}﻿//
+}
+*/
+
+// window.line = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.line( ...params );
+// }
+﻿//
 // Suica 2.0 Square
 // CC-3.0-SA-NC
 //
@@ -3902,7 +3952,7 @@ class Square extends Mesh
 
 
 
-
+/*
 window.square = function(
 				center = Suica.DEFAULT.SQUARE.CENTER,
 				size   = Suica.DEFAULT.SQUARE.SIZE,
@@ -3911,6 +3961,13 @@ window.square = function(
 	Suica.precheck();
 	return Suica.current.square( center, size, color );
 }
+*/
+
+// window.square = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.square( ...params );
+// }
 ﻿//
 // Suica 2.0 Cube
 // CC-3.0-SA-NC
@@ -4013,16 +4070,14 @@ class Cube extends Mesh
 } // class Cube
 
 
-
-
-window.cube = function(
-				center = Suica.DEFAULT.CUBE.CENTER,
-				size   = Suica.DEFAULT.CUBE.SIZE,
-				color  = Suica.DEFAULT.CUBE.COLOR )
+/*
+window.cube = function( ... params )
 {
 	Suica.precheck();
-	return Suica.current.cube( center, size, color );
+	return Suica.current.cube( ... params );
 }
+*/
+
 ﻿//
 // Suica 2.0 Circle
 // CC-3.0-SA-NC
@@ -4153,7 +4208,7 @@ class Polygon extends Mesh
 
 
 
-
+/*
 window.circle = function(
 				center = Suica.DEFAULT.CIRCLE.CENTER,
 				size   = Suica.DEFAULT.CIRCLE.SIZE,
@@ -4174,7 +4229,23 @@ window.polygon = function(
 {
 	Suica.precheck();
 	return Suica.current.polygon( count, center, size, color );
-}﻿//
+}
+*/
+
+// window.circle = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.circle( ...params );
+// }
+
+
+
+
+// window.polygon = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.polygon( ...params );
+// }﻿//
 // Suica 2.0 Sphere
 // CC-3.0-SA-NC
 //
@@ -4240,7 +4311,7 @@ class Sphere extends Mesh
 
 
 
-
+/*
 window.sphere = function(
 				center = Suica.DEFAULT.SPHERE.CENTER,
 				size   = Suica.DEFAULT.SPHERE.SIZE,
@@ -4249,6 +4320,13 @@ window.sphere = function(
 	Suica.precheck();
 	return Suica.current.sphere( center, size, color );
 }
+*/
+
+// window.sphere = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.sphere( ...params );
+// }
 ﻿//
 // Suica 2.0 Cylinder
 // CC-3.0-SA-NC
@@ -4428,7 +4506,7 @@ class Prism extends Mesh
 
 
 
-
+/*
 window.cylinder = function(
 				center = Suica.DEFAULT.CYLINDER.CENTER,
 				size   = Suica.DEFAULT.CYLINDER.SIZE,
@@ -4448,7 +4526,23 @@ window.prism = function(
 {
 	Suica.precheck();
 	return Suica.current.prism( count, center, size, color );
-}﻿//
+}
+*/
+
+// window.cylinder = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.cylinder( ...params );
+// }
+
+
+
+// window.prism = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.prism( ...params );
+// }
+﻿//
 // Suica 2.0 Cone
 // CC-3.0-SA-NC
 //
@@ -4618,7 +4712,7 @@ class Pyramid extends Mesh
 
 
 
-
+/*
 window.cone = function(
 				center = Suica.DEFAULT.CONE.CENTER,
 				size   = Suica.DEFAULT.CONE.SIZE,
@@ -4639,6 +4733,21 @@ window.pyramid = function(
 	Suica.precheck();
 	return Suica.current.pyramid( count, center, size, color );
 }
+*/
+
+// window.cone = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.cone( ...params );
+// }
+
+
+
+// window.pyramid = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.pyramid( ...params );
+// }
 ﻿//
 // Suica 2.0 Group
 // CC-3.0-SA-NC
@@ -5025,8 +5134,10 @@ class Group
 
 
 
-window.group = function( ...groupElements )
-{
-	Suica.precheck();
-	return Suica.current.group( ...groupElements );
-}} // LoadSuica 
+// window.group = function( ...groupElements )
+// {
+	// Suica.precheck();
+	// return Suica.current.group( ...groupElements );
+// }
+
+} // LoadSuica 

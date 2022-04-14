@@ -128,7 +128,7 @@ class Polygon extends Mesh
 
 
 
-
+/*
 window.circle = function(
 				center = Suica.DEFAULT.CIRCLE.CENTER,
 				size   = Suica.DEFAULT.CIRCLE.SIZE,
@@ -150,3 +150,19 @@ window.polygon = function(
 	Suica.precheck();
 	return Suica.current.polygon( count, center, size, color );
 }
+*/
+
+// window.circle = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.circle( ...params );
+// }
+
+
+
+
+// window.polygon = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.polygon( ...params );
+// }

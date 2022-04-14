@@ -168,7 +168,7 @@ class Pyramid extends Mesh
 
 
 
-
+/*
 window.cone = function(
 				center = Suica.DEFAULT.CONE.CENTER,
 				size   = Suica.DEFAULT.CONE.SIZE,
@@ -189,3 +189,18 @@ window.pyramid = function(
 	Suica.precheck();
 	return Suica.current.pyramid( count, center, size, color );
 }
+*/
+
+// window.cone = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.cone( ...params );
+// }
+
+
+
+// window.pyramid = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.pyramid( ...params );
+// }

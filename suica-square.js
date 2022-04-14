@@ -75,7 +75,7 @@ class Square extends Mesh
 
 
 
-
+/*
 window.square = function(
 				center = Suica.DEFAULT.SQUARE.CENTER,
 				size   = Suica.DEFAULT.SQUARE.SIZE,
@@ -84,3 +84,10 @@ window.square = function(
 	Suica.precheck();
 	return Suica.current.square( center, size, color );
 }
+*/
+
+// window.square = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.square( ...params );
+// }

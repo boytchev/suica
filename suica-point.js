@@ -91,7 +91,7 @@ class Point extends Mesh
 
 
 
-
+/*
 window.point = function(
 					center = Suica.DEFAULT.POINT.CENTER,
 					size   = Suica.DEFAULT.POINT.SIZE,
@@ -100,3 +100,10 @@ window.point = function(
 	Suica.precheck();
 	return Suica.current.point( center, size, color );
 }
+*/
+
+// window.point = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.point( ...params );
+// }

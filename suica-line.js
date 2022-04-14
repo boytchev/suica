@@ -198,7 +198,7 @@ class Line extends Mesh
 
 
 
-
+/*
 window.line = function(
 					center = Suica.DEFAULT.LINE.CENTER,
 					to     = Suica.DEFAULT.LINE.TO,
@@ -207,3 +207,10 @@ window.line = function(
 	Suica.precheck();
 	return Suica.current.line( center, to, color );
 }
+*/
+
+// window.line = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.line( ...params );
+// }

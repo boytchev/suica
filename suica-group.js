@@ -384,8 +384,9 @@ class Group
 
 
 
-window.group = function( ...groupElements )
-{
-	Suica.precheck();
-	return Suica.current.group( ...groupElements );
-}
+// window.group = function( ...groupElements )
+// {
+	// Suica.precheck();
+	// return Suica.current.group( ...groupElements );
+// }
+

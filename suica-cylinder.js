@@ -177,7 +177,7 @@ class Prism extends Mesh
 
 
 
-
+/*
 window.cylinder = function(
 				center = Suica.DEFAULT.CYLINDER.CENTER,
 				size   = Suica.DEFAULT.CYLINDER.SIZE,
@@ -198,3 +198,18 @@ window.prism = function(
 	Suica.precheck();
 	return Suica.current.prism( count, center, size, color );
 }
+*/
+
+// window.cylinder = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.cylinder( ...params );
+// }
+
+
+
+// window.prism = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.prism( ...params );
+// }

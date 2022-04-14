@@ -64,7 +64,7 @@ class Sphere extends Mesh
 
 
 
-
+/*
 window.sphere = function(
 				center = Suica.DEFAULT.SPHERE.CENTER,
 				size   = Suica.DEFAULT.SPHERE.SIZE,
@@ -73,3 +73,10 @@ window.sphere = function(
 	Suica.precheck();
 	return Suica.current.sphere( center, size, color );
 }
+*/
+
+// window.sphere = function( ...params )
+// {
+	// Suica.precheck();
+	// return Suica.current.sphere( ...params );
+// }

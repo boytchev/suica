@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Dynamic drawing</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Dynamic drawing</h1>
+	<p>Dynamic drawing on the surface of an object.</p>
+
+	<suica onTime="onTime">
+		<demo>
+		<cube id="a" x="20" color="white">
+		<cube id="b" x="-20" color="white">
+	</suica>
+	
+	<script>
+		a.image = drawing( 100, 100, 'linen' );
+		b.image = drawing( 100, 100, 'linen' );
+		
+		function onTime( )
+		{
+			a.image.arc( random(0,100), random(0,100), random(10,30) );
+			a.image.stroke( 'black', 5 );
+			a.image.fill( random(['peachpuff','linen','white','lightgray','lightsalmon']) );
+			
+			b.image.moveTo( random(-10,110), random(-10,110) );
+			b.image.lineTo( random(-10,110), random(-10,110) );
+			b.image.stroke( random(['peachpuff','linen','white','lightgray','lightsalmon','black','dimgray']), 1 );
+		}
+	</script>
+	
+</body>
+</html>

@@ -100,13 +100,11 @@ class Cube extends Mesh
 } // class Cube
 
 
-
-
-window.cube = function(
-				center = Suica.DEFAULT.CUBE.CENTER,
-				size   = Suica.DEFAULT.CUBE.SIZE,
-				color  = Suica.DEFAULT.CUBE.COLOR )
+/*
+window.cube = function( ... params )
 {
 	Suica.precheck();
-	return Suica.current.cube( center, size, color );
+	return Suica.current.cube( ... params );
 }
+*/
+
