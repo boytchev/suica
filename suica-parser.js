@@ -17,6 +17,7 @@ class HTMLParser
 	{
 		this.suica = suica;
 
+/*
 		this.parseTag = {};
 		this.parseTag.LOOKAT = this.parseTagLOOKAT;
 		this.parseTag.OXYZ = this.parseTagOXYZ;
@@ -60,7 +61,7 @@ class HTMLParser
 		this.parseTag.CANVAS = this.skipTagSilently;
 		this.parseTag.DIV = this.skipTag;
 		this.parseTag.SPAN = this.skipTag;
-
+*/
 		this.openGroups = [];
 		this.openDrawings = [];
 		
@@ -94,9 +95,10 @@ class HTMLParser
 
 			//console.log('tagName=',tagName);
 			
-			if( this.parseTag[tagName] )
+			var parseMethod = this['parseTag'+tagName];
+			if( parseMethod/*this.parseTag[tagName]*/ )
 			{
-				newObject = this.parseTag[tagName]( this.suica, tagElement );
+				newObject = /*this.parseTag[tagName]*/parseMethod( this.suica, tagElement );
 				
 				// if there is open group, add the new object to the latest open group
 				if( this.openGroups.length )
@@ -143,19 +145,25 @@ class HTMLParser
 		}
 	} // HTMLParser.parseTagsInElement
 		
-
+/*
 	// <some-unknown-tag> <div>
 	skipTag( suica, elem )
 	{
 		suica.debugCall( 'skipTag', elem.tagName ); // skip this tag
 	} // HTMLParser.skipTag
+*/	
 	
+	parseTagBUTTON( suica, elem ) {}
+	parseTagCANVAS( suica, elem ) {}
+	parseTagDIV( suica, elem ) {}
+	parseTagSPAN( suica, elem ) {}
 	
+/*	
 	// <canvas> <div>
 	skipTagSilently( suica, elem )
 	{
 	} // HTMLParser.skipTagSIlently
-	
+*/	
 	
 	// <oxyz size="..." color="...">
 	parseTagOXYZ( suica, elem )
@@ -592,7 +600,6 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagGROUP
-	
 	
 	// <clone id="..." src="..." center="..." color="..." size="..." spin="...">
 	parseTagCLONE( suica, elem )

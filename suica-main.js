@@ -6,11 +6,11 @@
 
 
 // show suica version
-console.log( `Suica 2.-1.42 (220410)` );
+console.log( `Suica 2.-1.43 (220415)` );
 
 
 // control flags
-const DEBUG_CALLS = false;
+const DEBUG_CALLS = !false;
 const DEBUG_EVENTS = false;
 
 // last Suica instance
@@ -125,6 +125,7 @@ class Suica
 		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0, SPIN:[0,0,0] },
 		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
+		TUBE: { CURVE: function(u){return [u-0.5,0,0]}, COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1 },
 		
 		DRAWING: { SIZE:32, COLOR:null },
 		MOVETO: { CENTER:[0,0] },
@@ -135,6 +136,7 @@ class Suica
 		FILL: { COLOR:'gray' },
 		FILLTEXT: { CENTER:[0,0], TEXT:'Suica', COLOR:'black', FONT:'20px Arial' },
 		CLEAR: { COLOR:null },
+		
 	} // Suica.DEFAULT
 	
 	
@@ -209,7 +211,7 @@ class Suica
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube'] )
 		{
 			Suica.register( methodName );
 		}
@@ -990,6 +992,14 @@ class Suica
 	} // Suica.group
 
 
+	tube( curve=Suica.DEFAULT.TUBE.CURVE, count=Suica.DEFAULT.TUBE.COUNT, center=Suica.DEFAULT.TUBE.CENTER, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
+	{
+		this.parser?.parseTags();
+
+		return new Tube( this, curve, count, center, size, color );
+	} // Suica.tube
+	
+	
 	findPosition( domEvent )
 	{
 		var canvas = domEvent.target;
