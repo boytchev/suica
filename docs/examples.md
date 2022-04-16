@@ -120,6 +120,9 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/group.jpg" width="400"></kbd>](../examples/group.html)
 [<kbd><img src="../examples/snapshots/group-tag.jpg" width="400"></kbd>](../examples/group-tag.html)
 
+[<kbd><img src="../examples/snapshots/tube.jpg" width="400"></kbd>](../examples/tube.html)
+[<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="400"></kbd>](../examples/tube-lathe.html)
+
 
 
 ## [Drawings](user-guide.md#drawings)

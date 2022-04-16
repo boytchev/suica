@@ -7,7 +7,7 @@
 
 class SuicaTubeGeometry extends THREE.BufferGeometry {
 
-	constructor( path = new Curves[ 'QuadraticBezierCurve3' ]( new Vector3( - 1, - 1, 0 ), new Vector3( - 1, 1, 0 ), new Vector3( 1, 1, 0 ) ), tubularSegments = 64, radius = 1, radialSegments = 8, closed = false ) {
+	constructor( path, tubularSegments, radialSegments, closed = false ) {
 
 		super();
 		this.type = 'SuicaTubeGeometry';
@@ -15,7 +15,6 @@ class SuicaTubeGeometry extends THREE.BufferGeometry {
 		this.parameters = {
 			path: path,
 			tubularSegments: tubularSegments,
-			radius: radius,
 			radialSegments: radialSegments,
 			closed: closed
 		};
@@ -55,12 +54,11 @@ class SuicaTubeGeometry extends THREE.BufferGeometry {
 
 		// functions
 
-		function generateBufferData() {
-
-			for ( let i = 0; i < tubularSegments; i ++ ) {
-
+		function generateBufferData()
+		{
+			for ( let i = 0; i < tubularSegments; i ++ )
+			{
 				generateSegment( i );
-
 			}
 
 			// if the geometry is not closed, generate the last row of vertices and normals
@@ -81,7 +79,8 @@ class SuicaTubeGeometry extends THREE.BufferGeometry {
 
 		}
 
-		function generateSegment( i ) {
+		function generateSegment( i )
+		{
 
 			// we use getPointAt to sample evenly distributed points from the given path
 
@@ -94,7 +93,8 @@ class SuicaTubeGeometry extends THREE.BufferGeometry {
 
 			// generate normals and vertices for the current segment
 
-			for ( let j = 0; j <= radialSegments; j ++ ) {
+			for ( let j = 0; j <= radialSegments; j ++ )
+			{
 
 				const v = j / radialSegments * Math.PI * 2;
 
@@ -116,12 +116,12 @@ class SuicaTubeGeometry extends THREE.BufferGeometry {
 				vertex.z = P.z + P.radius * normal.z;
 
 				vertices.push( vertex.x, vertex.y, vertex.z );
-
 			}
 
 		}
 
-		function generateIndices() {
+		function generateIndices()
+		{
 
 			for ( let j = 1; j <= tubularSegments; j ++ ) {
 
@@ -143,7 +143,8 @@ class SuicaTubeGeometry extends THREE.BufferGeometry {
 
 		}
 
-		function generateUVs() {
+		function generateUVs()
+		{
 
 			for ( let i = 0; i <= tubularSegments; i ++ ) {
 
@@ -201,18 +202,16 @@ class SuicaCurve extends THREE.Curve
 	{
 		var point = this._getPointAt( u );
 		optionalTarget.set( point[0]||0, point[1]||0, point[2]||0 );
-		optionalTarget.radius = point[3];
+		optionalTarget.radius = (typeof point[3] === 'undefined')?Suica.DEFAULT.TUBE.RADIUS:point[3];
 		return optionalTarget;
 	}
 	
 	getPointAt( u, optionalTarget = new THREE.Vector3() )
 	{
-		var point = this._getPointAt( u );
-		optionalTarget.set( point[0]||0, point[1]||0, point[2]||0 );
-		optionalTarget.radius = point[3];
-		return optionalTarget;
+		return this.getPoint( u, optionalTarget );
 	}
 }
+
 
 class Tube extends Mesh
 {
@@ -221,8 +220,28 @@ class Tube extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'tube', curveFunction.name+'()', count, center, size, color );
 
+		
+		
+		var tubularSegments, radialSegments;
+		
+		count = Suica.parseSize( count );
+		if( Array.isArray(count) )
+		{
+			tubularSegments = count[0] || Suica.DEFAULT.TUBE.COUNT[0];
+			radialSegments  = count[1] || Suica.DEFAULT.TUBE.COUNT[1];
+		}
+		else
+		{
+			console.log(222,count);
+			tubularSegments = count || Suica.DEFAULT.TUBE.COUNT[0];
+			radialSegments  = Suica.DEFAULT.TUBE.COUNT[1];
+		}
+		
+		//console.log('tubularSegments',tubularSegments);
+		//console.log('radialSegments',radialSegments);
+		
 		var curve = new SuicaCurve( curveFunction ),
-			geometry = new SuicaTubeGeometry( curve, count[0], 2, count[1], false );
+			geometry = new SuicaTubeGeometry( curve, tubularSegments, radialSegments, false );
 		
 		super( suica, 
 			new THREE.Mesh( geometry, Mesh.solidMaterial.clone() ),

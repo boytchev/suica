@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Tube</title>
+	<title>Tube lathe</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,34 +18,26 @@
 
 <body>
 
-	<h1>Tube</h1>
-	<p>Defining prisms with different properties.</p>
+	<h1>Tube lathe</h1>
+	<p>Defining lathe objects as tubes with varying radius.</p>
 
 	<suica>
 		<demo>
 	</suica>
 
 	<script>
-		function curve(u)
+		tube( u=>[ 0,50*u-25,0, Math.exp(3*u) ], [40, 120] );
+		tube( u=>[ 0,30*u-15,0, 20*Math.abs(u-0.5) ], [40, 120] ).style({color:'linen',x:-35});
+		tube( u=>[ 0,30*u-15,0, 8*Math.sin(Math.PI*u) ], [40, 120] ).style({color:'peachpuff',x:30});
+		
+		suica.ontime = function( t )
 		{
-
-			// optical illusion 4*Math.max(0,Math.exp(Math.sin(200*u)))
-			//1+4*( Math.pow(0.5+0.5*Math.sin(10*u),15))
-			];
-
-			u = 2*Math.PI*u;
-			return [
-				/* xyz */ 0, 25*Math.sin(u), 25*Math.cos(u), 
-
-			// arrows 10*((2*u/2/Math.PI)%1)
-
-			// optical illusion 4*Math.max(0,Math.exp(Math.sin(200*u)))
-			//1+4*( Math.pow(0.5+0.5*Math.sin(10*u),15))
-			];
+			for( var object of allObjects() )
+			{
+				object.spinV = 100*t - 30*Math.sin(200*t*Math.PI/180);
+				t += 2*Math.PI/3;
+			}
 		}
-		
-		tube( curve, [300,50] );
-		
 	</script>
 </body>
 </html>

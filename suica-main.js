@@ -125,7 +125,7 @@ class Suica
 		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0, SPIN:[0,0,0] },
 		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
-		TUBE: { CURVE: function(u){return [u-0.5,0,0]}, COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1 },
+		TUBE: { CURVE: function(u){return [60*u-30,0,0,1]}, COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		
 		DRAWING: { SIZE:32, COLOR:null },
 		MOVETO: { CENTER:[0,0] },

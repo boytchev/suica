@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Tube</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Tube</h1>
+	<p>Defining a torus and a sine curve as tubes.</p>
+
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		function torus(u)
+		{
+			u = 2*Math.PI*u;
+			
+			return [
+				0,
+				20*Math.sin(u),
+				20*Math.cos(u),
+				6
+			];
+		}
+		
+		function sine(u)
+		{
+			return [
+				80*u-40,
+				10*Math.sin(60*u),
+				10*Math.cos(60*u),
+				2];
+		}
+		
+		tube( torus, [400, 20] ).style({color:'linen'});
+		tube( sine, [400, 20] );
+		
+	</script>
+</body>
+</html>
