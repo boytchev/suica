@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Tube variations</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Tube variations</h1>
+	<p>Defining variations of tubes based on torus.</p>
+
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		function curve1(u)
+		{
+			u = 2*Math.PI*u;
+			return [
+				0, 22*Math.sin(u), 22*Math.cos(u), 
+				1+5*( Math.pow(0.5+0.5*Math.sin(10*u),15))
+			];
+		}
+		
+		function curve2(u)
+		{
+			u = 2*Math.PI*u;
+			return [
+				0, 20*Math.sin(u), 20*Math.cos(u), 
+				3*Math.max(0,Math.exp(Math.sin(200*u)))
+			];
+		}
+		
+		function curve3(u)
+		{
+			u = 2*Math.PI*u;
+			return [
+				0, 20*Math.sin(u), 20*Math.cos(u), 
+				4+2*Math.round(Math.abs(Math.sin(5*u)))
+			];
+		}
+		
+		function curve4(u)
+		{
+			u = 2*Math.PI*u;
+			return [
+				0, 20*Math.sin(u), 20*Math.cos(u), 
+				6*((4*u/2/Math.PI)%1)
+			];
+		}
+		
+		tube( curve1, [300,50] ).style({x:-30, color:'gray'});
+		tube( curve2, [300,50] ).style({x:-10, color:'linen'});
+		tube( curve3, [300,50] ).style({x:10, color:'lightsalmon'});
+		tube( curve4, [300,50] ).style({x:30, color:'peachpuff'});
+		
+		suica.ontime = function( t )
+		{
+			var speed = -30;
+			for( var object of allObjects() )
+			{
+				object.spinV = 3*speed*t;
+				speed += 20;
+			}
+		}
+	</script>
+</body>
+</html>
