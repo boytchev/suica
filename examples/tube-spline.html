@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Tube spline</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Tube spline</h1>
+	<p>Drawing a 3D signature with a spline tube.</p>
+
+	<suica>
+		<demo altitude="0">
+	</suica>
+
+	<script>
+		var spline = [];
+		for( var i=0; i<20; i++ )
+			spline.push([ 
+					random(-30,30),
+					random(-30,30),
+					random(-30,30),
+					random(0,1)
+				]);
+		spline[0][3] = spline[19][3] = 0;
+		
+		tube( spline, [600,8] ).style({color: 'black'});
+
+
+	</script>
+</body>
+</html>

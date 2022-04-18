@@ -124,6 +124,10 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="400"></kbd>](../examples/tube-lathe.html)
 
 [<kbd><img src="../examples/snapshots/tube-variations.jpg" width="400"></kbd>](../examples/tube-variations.html)
+[<kbd><img src="../examples/snapshots/tube-spline.jpg" width="400"></kbd>](../examples/tube-spline.html)
+
+[<kbd><img src="../examples/snapshots/tube-spline-explicit.jpg" width="400"></kbd>](../examples/tube-spline-explicit.html)
+[<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="400"></kbd>](../examples/tube-dynamic.html)
 
 
 

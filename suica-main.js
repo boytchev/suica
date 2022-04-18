@@ -6,7 +6,7 @@
 
 
 // show suica version
-console.log( `Suica 2.-1.43 (220415)` );
+console.log( `Suica 2.-1.44 (220418)` );
 
 
 // control flags
@@ -1033,14 +1033,27 @@ class Suica
 	}
 	
 
-	findObjects( domEvent )
+	findObjects( domEvent, onlyInteractive = false )
 	{
+		var scanObjects = [];
+		
+		if( onlyInteractive )
+		{
+			for( var object of this.scene.children )
+				if( object.onmousemove || object.onmousedown || object.onmouseup || object.onmouseenter || object.onmouseleave || object.onclick )
+					scanObjects.push( object );
+		}
+		else
+		{
+			scanObjects = this.scene.children;
+		}
+		
 		// sets this.raycastPointer
 		findPosition( domEvent );
 
 		// cast a ray and find intersection with all objects
 		this.raycaster.setFromCamera( this.raycastPointer, this.camera );
-		var intersects = this.raycaster.intersectObjects( this.scene.children, true );
+		var intersects = this.raycaster.intersectObjects( scanObjects, true );
 
 		// construct a list of all intersected objects
 		var foundObjects = [];
@@ -1065,9 +1078,9 @@ class Suica
 	}
 	
 
-	findObject( domEvent )
+	findObject( domEvent, onlyInteractive = false )
 	{
-		var objects = this.findObjects( domEvent );
+		var objects = this.findObjects( domEvent, onlyInteractive );
 		
 		if( objects.length )
 			return objects[0];
@@ -1132,7 +1145,7 @@ class Suica
 	{
 		Suica.globalHoverEvent = event;
 		
-		var object = findObject( event );
+		var object = findObject( event, true );
 		if( Suica.hoverObject )
 		{
 			if( object == Suica.hoverObject )
@@ -1162,7 +1175,7 @@ class Suica
 		
 		var event = Suica.globalHoverEvent;
 		
-		var object = findObject( event );
+		var object = findObject( event, true );
 		if( Suica.hoverObject )
 		{
 			if( object != Suica.hoverObject )
@@ -1182,7 +1195,7 @@ class Suica
 	
 	static onMouseDown( event )
 	{
-		var object = findObject( event );
+		var object = findObject( event, true );
 		if( object )
 		{
 			Suica.eventCall( object, 'onmousedown', event );
@@ -1193,7 +1206,7 @@ class Suica
 	
 	static onMouseUp( event )
 	{
-		var object = findObject( event );
+		var object = findObject( event, true );
 		if( object )
 		{
 			Suica.eventCall( object, 'onmouseup', event );
@@ -1203,7 +1216,7 @@ class Suica
 	
 	static onClick( event )
 	{
-		var object = findObject( event );
+		var object = findObject( event, true );
 
 		if( object )
 		{
@@ -1389,23 +1402,23 @@ window.allObjects = function( )
 }
 
 
-window.findObjects = function( domEvent )
+window.findObjects = function( domEvent, onlyInteractive = false )
 {
 	Suica.precheck();
 	
 	var suica = domEvent.target.suicaObject;
 	if( suica )
-		return suica.findObjects( domEvent );
+		return suica.findObjects( domEvent, onlyInteractive );
 }
 
 
-window.findObject = function( domEvent )
+window.findObject = function( domEvent, onlyInteractive = false )
 {
 	Suica.precheck();
 	
 	var suica = domEvent.target.suicaObject;
 	if( suica )
-		return suica.findObject( domEvent );
+		return suica.findObject( domEvent, onlyInteractive );
 }
 
 

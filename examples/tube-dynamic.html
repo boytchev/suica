@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Dynamic tube</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Dynamic tube</h1>
+	<p>Defining tubes that change over time.</p>
+
+	<suica>
+		<demo>
+		<sphere size="15" color="white">
+	</suica>
+
+	<script>
+		var tentacles = [];
+
+		for( var i=0; i<21; i++ )
+		{
+			tentacles.push( tube( [[0, 0, 0, 1]], [50,10] ).style({color:'dimgray'}) );
+		}
+		
+		suica.ontime = function( t )
+		{
+			for( var i in tentacles )
+			{
+				t = t+i*i;
+				
+				var alpha = 2*Math.PI*Math.sin( 1.73*t/15 );
+				var beta = 2*Math.PI*Math.sin( 2.23*t/15 );
+				
+				var x1 = 30*Math.cos(alpha)*Math.cos(beta);
+				var y1 = 30*Math.sin(alpha)*Math.cos(beta);
+				var z1 = 30*Math.sin(beta);
+				
+				alpha += Math.sin( 3.03*t/15-i );
+				beta += Math.sin( 2.58*t/15+i );
+				
+				var x2 = 20*Math.cos(alpha)*Math.cos(beta);
+				var y2 = 20*Math.sin(alpha)*Math.cos(beta);
+				var z2 = 20*Math.sin(beta);
+				
+				
+				var tentacle = [
+					[0, 0, 0, 1.5],
+					[x1,y1,z1, 0.2],
+					[x1+x2, y1+y2, z1+z2, 0.1],
+					[x1+1.1*x2, y1+1.1*y2, z1+1.1*z2, 1],
+				];
+
+				tentacles[i].curve = tentacle;
+			}
+		}
+	</script>
+</body>
+</html>
