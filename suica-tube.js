@@ -181,7 +181,6 @@ class SuicaTubeGeometry extends THREE.BufferGeometry {
 
 		const vertex = new THREE.Vector3();
 		const normal = new THREE.Vector3();
-		const uv = new THREE.Vector2();
 		let P = new THREE.Vector3();
 
 

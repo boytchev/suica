@@ -1039,7 +1039,7 @@ class Suica
 		
 		if( onlyInteractive )
 		{
-			for( var object of this.scene.children )
+			for( let object of this.scene.children )
 				if( object.onmousemove || object.onmousedown || object.onmouseup || object.onmouseenter || object.onmouseleave || object.onclick )
 					scanObjects.push( object );
 		}
@@ -1063,7 +1063,7 @@ class Suica
 			var suicaObject = null;
 			
 			// get the topmost Suica object
-			for( var object=intersection.object; object; object=object.parent )
+			for( let object=intersection.object; object; object=object.parent )
 			{
 				suicaObject = object.suicaObject || suicaObject;
 			}
