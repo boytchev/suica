@@ -1042,7 +1042,7 @@ class Suica
 		{
 			for( let object of this.scene.children )
 			{
-				var suicaObject = object.suicaObject;
+				let suicaObject = object.suicaObject;
 				if( !suicaObject ) continue;
 				
 				if( suicaObject.onmousemove ||
@@ -1071,7 +1071,7 @@ class Suica
 
 		for( var intersection of intersects )
 		{
-			var suicaObject = null;
+			let suicaObject = null;
 			
 			// get the topmost Suica object
 			for( let object=intersection.object; object; object=object.parent )
