@@ -1041,14 +1041,24 @@ class Suica
 		if( onlyInteractive )
 		{
 			for( let object of this.scene.children )
-				if( object.onmousemove || object.onmousedown || object.onmouseup || object.onmouseenter || object.onmouseleave || object.onclick )
+			{
+				var suicaObject = object.suicaObject;
+				if( !suicaObject ) continue;
+				
+				if( suicaObject.onmousemove ||
+					suicaObject.onmousedown ||
+					suicaObject.onmouseup ||
+					suicaObject.onmouseenter ||
+					suicaObject.onmouseleave ||
+					suicaObject.onclick )
 					scanObjects.push( object );
+			}
 		}
 		else
 		{
 			scanObjects = this.scene.children;
 		}
-		
+
 		// sets this.raycastPointer
 		findPosition( domEvent );
 
@@ -1082,7 +1092,7 @@ class Suica
 	findObject( domEvent, onlyInteractive = false )
 	{
 		var objects = this.findObjects( domEvent, onlyInteractive );
-		
+	
 		if( objects.length )
 			return objects[0];
 		
@@ -1147,6 +1157,7 @@ class Suica
 		Suica.globalHoverEvent = event;
 		
 		var object = findObject( event, true );
+
 		if( Suica.hoverObject )
 		{
 			if( object == Suica.hoverObject )
