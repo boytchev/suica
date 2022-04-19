@@ -6,7 +6,7 @@
 
 
 // show suica version
-console.log( `Suica 2.-1.44 (220418)` );
+console.log( `Suica 2.-1.45 (220419)` );
 
 
 // control flags
