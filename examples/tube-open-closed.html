@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Tube spline</title>
+	<title>Open and closed tube</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,27 +18,34 @@
 
 <body>
 
-	<h1>Tube spline</h1>
-	<p>Drawing a 3D signature with a spline tube.</p>
+	<h1>Open and closed tube</h1>
+	<p>Showing the difference between closed and open tube.</p>
 
 	<suica>
-		<demo altitude="0">
+		<demo>
 	</suica>
 
 	<script>
-		var points = [];
-		for( var i=0; i<20; i++ )
-			points.push([ 
-					random(-30,30),
-					random(-30,30),
-					random(-30,30),
-					random(0,1)
-				]);
-		points[19][3] = points[19][3];
+		var closedCurve = spline(
+			[-20,-20, 0, 5],
+			[-23, 20, 0, 1],
+			[  0, 23, 0, 5],
+			[ 23, 20, 0, 1],
+			[ 20,-20, 0, 5],
+			true
+		);
 		
-		tube( points, [600,8] ).style({color: 'black'});
-
-
+		var openCurve = spline(
+			[-20,-20, 0, 5],
+			[-23, 20, 0, 1],
+			[  0, 23, 0, 5],
+			[ 23, 20, 0, 1],
+			[ 20,-20, 0, 5],
+			false
+		);
+		
+		tube( openCurve, [150,20], [0,0,15] );
+		tube( closedCurve, [150,20], [0,0,-15] );
 	</script>
 </body>
 </html>

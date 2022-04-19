@@ -10,7 +10,7 @@
 // based on THREE.TubeGeometry
 class SuicaTubeGeometry extends THREE.BufferGeometry
 {
-	constructor( path, tubularSegments, radialSegments, closed = false )
+	constructor( path, tubularSegments, radialSegments/*, closed = false*/ )
 	{
 		super();
 
@@ -18,10 +18,10 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 			path: path,
 			tubularSegments: tubularSegments,
 			radialSegments: radialSegments,
-			closed: closed
+			/*closed: closed*/
 		};
 
-		var frames = path.computeFrenetFrames( tubularSegments, closed );
+		var frames = path.computeFrenetFrames( tubularSegments, false/*closed*/ );
 
 		// expose internals
 		this.tangents = frames.tangents;
@@ -56,7 +56,7 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 				generateSegment( i );
 			}
 
-			generateSegment( closed?0:tubularSegments );
+			generateSegment( /*closed?0:*/tubularSegments );
 			generateUVs();
 			generateIndices();
 		} // SuicaTubeGeometry.constructor.generateBufferData
@@ -125,13 +125,12 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 	} // SuicaTubeGeometry.constructor
 
 
-	update( path )
+	update( path/*, closed*/ )
 	{
 		var tubularSegments = this.parameters.tubularSegments,
-			radialSegments = this.parameters.radialSegments,
-			closed = this.parameters.closed;
-		
-		var frames = path.computeFrenetFrames( tubularSegments, closed );
+			radialSegments = this.parameters.radialSegments;
+
+		var frames = path.computeFrenetFrames( tubularSegments, false/*closed*/ );
 
 		// expose internals
 		this.tangents = frames.tangents;
@@ -161,7 +160,7 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 				updateSegment( i );
 			}
 
-			updateSegment( closed?0:tubularSegments );
+			updateSegment( /*closed?0:*/tubularSegments );
 		} // SuicaTubeGeometry.update.updateBufferData
 		
 
@@ -239,26 +238,67 @@ class SuicaCurve extends THREE.Curve
 class SuicaSplineCurve extends THREE.Curve
 {
 
-	constructor( points )
+	constructor( ...points )
 	{
 		super();
-		this.points = points;
+		
+		this.closed = Suica.DEFAULT.SPLINE.CLOSED;
+		points = points[0];
+//		console.log('points=',points,'length=',points.length);
+
+		if( points.length==1 )
+		{
+			// points = [[point, point, point, ...]]
+			this.points = points[0];
+		}
+		else
+		if( points.length==2 )
+		{
+			// points = [[point, point, point, ...], boolean]
+			this.points = points[0];
+			this.closed = points[1];
+		}
+		else
+		{
+			// points = [point, point, point, ... ]				count=N
+			// points = [point, point, point, ... boolean]		count=N+1
+			var last = points.pop();
+			if( typeof last==='boolean' )
+				this.closed = last;
+			else
+				points.push( last );
+			this.points = points;
+		}
+		
 	} // SuicaSplineCurve.constructor
 
 
 	getPoint( t )
 	{
 		var points = this.points,
-			p = (points.length-1) * t;
+			p = (points.length-(this.closed?0:1)) * t;
 
 		var intPoint = Math.floor( p ),
 			weight = p - intPoint;
 
-		var p0 = points[ intPoint === 0 ? intPoint : intPoint-1 ],
-			p1 = points[ intPoint ],
-			p2 = points[ intPoint > points.length-2 ? points.length-1 : intPoint+1 ],
-			p3 = points[ intPoint > points.length-3 ? points.length-1 : intPoint+2 ];
 
+		var p0, p1, p2, p3;
+		
+		if( this.closed )
+		{
+			p0 = points[ (intPoint+points.length-1)%points.length ];
+			p1 = points[ (intPoint+points.length  )%points.length ];
+			p2 = points[ (intPoint+points.length+1)%points.length ];
+			p3 = points[ (intPoint+points.length+2)%points.length ];
+		}
+		else
+		{
+			p0 = points[ intPoint === 0 ? intPoint : intPoint-1 ];
+			p1 = points[ intPoint ];
+			p2 = points[ intPoint > points.length-2 ? points.length-1 : intPoint+1 ];
+			p3 = points[ intPoint > points.length-3 ? points.length-1 : intPoint+2 ];
+		}
+		
 		function CatmullRom( t, p0, p1, p2, p3 )
 		{
 			var v0 = (p2-p0) * 0.5,
@@ -289,10 +329,12 @@ class SuicaSplineCurve extends THREE.Curve
 
 window['spline'] = function( ...points )
 {
-	if( points.length==1 )
-		return new SuicaSplineCurve( points[0] );
-	else
-		return new SuicaSplineCurve( points );
+	// spline( point, point, point, ... );
+	// spline( point, point, point, ... boolean );
+	// spline( [point, point, point, ...] );
+	// spline( [point, point, point, ...], boolean );
+
+	return new SuicaSplineCurve( points );
 }
 
 
@@ -334,9 +376,6 @@ class Tube extends Mesh
 		this.center = center;
 		this.color = color;
 		this.size = size;
-		
-//		this.tubularSegments = tubularSegments;
-//		this.radialSegments  = radialSegments;
 
 	} // Tube.constructor
 
@@ -344,11 +383,11 @@ class Tube extends Mesh
 	set curve( curveFunction )
 	{
 		if( Array.isArray(curveFunction) )
-			curveFunction.points = curveFunction;
-		
-		this.curveFunction = new SuicaCurve( curveFunction );
-		
-		this.threejs.geometry.update( this.curveFunction );
+			curveFunction = new SuicaSplineCurve( curveFunction );
+
+		var curve = new SuicaCurve( curveFunction );
+
+		this.threejs.geometry.update( curve );
 	}
 	
 	
@@ -358,6 +397,7 @@ class Tube extends Mesh
 		
 		object.spin = this.spin;
 		object.image = this.image;
+		/*object.close = this.close;*/
 		Suica.cloneEvents( object, this );
 			
 		return object;
