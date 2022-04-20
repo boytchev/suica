@@ -27,27 +27,26 @@
 
 	<script>
 		var splineCurve = spline(
-			[-20,-20,-20],
+			[[-20,-20,-20],
 			[-20,-20, 20],
 			[-20, 20, 20],
 			[-20, 20,-20],
 			[ 20, 20,-20],
 			[ 20, 20, 20],
 			[ 20,-20, 20],
-			[ 20,-20,-20],
+			[ 20,-20,-20]],
 			true
 		);
 		
 		function curve(u)
 		{
-
 			var p = splineCurve.getPoint(u);
-				p.push( 0.2+1.5*Math.round(0.5+0.5*Math.cos( 30*Math.PI*u )) );
+				p[3] = 0.2+1.5*Math.round(0.5+0.5*Math.cos( 30*Math.PI*u ));
 				
 			return p;
 		}
 		
-		tube( curve, [300,16] );
+		tube( [0,0,0], curve, [300,16] );
 
 
 	</script>

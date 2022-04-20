@@ -126,7 +126,7 @@ class Suica
 		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
 		TUBE: { CURVE: function(u){return [60*u-30,0,0,1]}, COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
-		SPLINE: { CLOSED:false },
+		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
 		
 		DRAWING: { SIZE:32, COLOR:null },
 		MOVETO: { CENTER:[0,0] },

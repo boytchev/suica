@@ -34,11 +34,8 @@
 					random(-30,30),
 					random(0,1)
 				]);
-		points[19][3] = points[19][3];
 		
-		tube( points, [600,8] ).style({color: 'black'});
-
-
+		tube( [0,0,0], spline(points,true), [600,8] ).style({color: 'black'});
 	</script>
 </body>
 </html>

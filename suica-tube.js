@@ -18,83 +18,14 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 			path: path,
 			tubularSegments: tubularSegments,
 			radialSegments: radialSegments,
-			/*closed: closed*/
 		};
 
-		var frames = path.computeFrenetFrames( tubularSegments, false/*closed*/ );
+		// number of vertices
+		var count = (tubularSegments+1)*(radialSegments+1);
 
-		// expose internals
-		this.tangents = frames.tangents;
-		this.normals = frames.normals;
-		this.binormals = frames.binormals;
-
-		// helper variables
-		var vertex = new THREE.Vector3(),
-			normal = new THREE.Vector3(),
-			uv = new THREE.Vector2(),
-			p = new THREE.Vector3();
-
-		// buffers
-		var vertices = [],
-			normals = [],
-			uvs = [],
-			indices = [];
-
-		generateBufferData();
-
-		// build geometry
-		this.setIndex( indices );
-		this.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-		this.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
-		this.setAttribute( 'uv', new THREE.Float32BufferAttribute( uvs, 2 ) );
-
-
-		function generateBufferData()
+		// indexed faces
 		{
-			for ( var i=0; i<tubularSegments; i++ )
-			{
-				generateSegment( i );
-			}
-
-			generateSegment( /*closed?0:*/tubularSegments );
-			generateUVs();
-			generateIndices();
-		} // SuicaTubeGeometry.constructor.generateBufferData
-
-
-		function generateSegment( i )
-		{
-			p = path.getPointAt( i/tubularSegments, p );
-
-			const N = frames.normals[i];
-			const B = frames.binormals[i];
-
-			// generate normals and vertices for the current segment
-			for ( var j=0; j<=radialSegments; j++ )
-			{
-				var v = j/radialSegments * 2*Math.PI;
-
-				var sin = Math.sin( v ),
-					cos = -Math.cos( v );
-
-				normal.x = cos*N.x + sin*B.x;
-				normal.y = cos*N.y + sin*B.y;
-				normal.z = cos*N.z + sin*B.z;
-				normal.normalize();
-				
-				normals.push( normal.x, normal.y, normal.z );
-
-				vertex.x = p.x + p.radius*normal.x;
-				vertex.y = p.y + p.radius*normal.y;
-				vertex.z = p.z + p.radius*normal.z;
-
-				vertices.push( vertex.x, vertex.y, vertex.z );
-			}
-		} // SuicaTubeGeometry.constructor.generateSegment
-
-
-		function generateIndices()
-		{
+			var indices = [];
 			for( var j=1; j<=tubularSegments; j++ )
 				for ( var i=1; i<=radialSegments; i++ )
 				{
@@ -107,21 +38,25 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 					indices.push( a, b, d );
 					indices.push( b, c, d );
 				}
-		} // SuicaTubeGeometry.constructor.generateIndices
-
-
-		function generateUVs()
+			this.setIndex( indices );
+		}
+		
+		// texture coordinates
 		{
-			for( var i=0; i<=tubularSegments; i++ )
+			var uvs = new THREE.Float32BufferAttribute( new Array(2*count), 2 );
+			for( var i=0, idx=0; i<=tubularSegments; i++ )
 				for ( var j=0; j<=radialSegments; j++ )
-				{
-					uv.x = i / tubularSegments;
-					uv.y = j / radialSegments;
-
-					uvs.push( uv.x, uv.y );
-				}
-		} // SuicaTubeGeometry.constructor.generateUVs
-
+					uvs.setXY( idx++, i/tubularSegments, j/radialSegments );
+			this.setAttribute( 'uv', uvs );
+		}
+		
+		// positions and normals
+		{
+			this.setAttribute( 'position', new THREE.Float32BufferAttribute( new Array(3*count), 3 ) );
+			this.setAttribute( 'normal', new THREE.Float32BufferAttribute( new Array(3*count), 3 ) );
+			this.update( path );
+		}
+		
 	} // SuicaTubeGeometry.constructor
 
 
@@ -144,27 +79,9 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 
 		// update buffer data
 		var pos = this.getAttribute( 'position' ),
-			nor = this.getAttribute( 'normal' ),
-			idx = 0;
+			nor = this.getAttribute( 'normal' );
 
-		updateBufferData();
-
-		pos.needsUpdate = true;
-		nor.needsUpdate = true;
-		
-		
-		function updateBufferData()
-		{
-			for( var i=0; i<tubularSegments; i++ )
-			{
-				updateSegment( i );
-			}
-
-			updateSegment( /*closed?0:*/tubularSegments );
-		} // SuicaTubeGeometry.update.updateBufferData
-		
-
-		function updateSegment( i )
+		for( var i=0, idx=0; i<=tubularSegments; i++ )
 		{
 			p = path.getPointAt( i/tubularSegments, p );
 
@@ -193,8 +110,11 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 				
 				idx++;
 			}
-		} // SuicaTubeGeometry.update.updateSegment
-
+		}
+		
+		pos.needsUpdate = true;
+		nor.needsUpdate = true;		
+		
 	} // SuicaTubeGeometry.update
 
 } // SuicaTubeGeometry
@@ -204,20 +124,22 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 
 class SuicaCurve extends THREE.Curve
 {
-	constructor( curveFunction )
+	constructor( curve )
 	{
 		super();
 		
-		if( Array.isArray(curveFunction) )
-			curveFunction = new SuicaSplineCurve( curveFunction );
-
-		if( curveFunction instanceof SuicaSplineCurve )
+		if( curve instanceof SuicaSplineCurve )
 		{
-			this.spline = curveFunction;
+			this.spline = curve;
+		}
+		else
+		if( curve instanceof Array )
+		{
+			this.spline = new SuicaSplineCurve( curve );
 		}
 		else
 		{
-			this._getPoint = curveFunction;
+			this._getPoint = curve;
 		}
 	} // SuicaCurve.constructor
 
@@ -238,49 +160,28 @@ class SuicaCurve extends THREE.Curve
 class SuicaSplineCurve extends THREE.Curve
 {
 
-	constructor( ...points )
+	constructor( points=Suica.DEFAULT.SPLINE.POINTS, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT  )
 	{
+
 		super();
 		
-		this.closed = Suica.DEFAULT.SPLINE.CLOSED;
-		points = points[0];
-//		console.log('points=',points,'length=',points.length);
-
-		if( points.length==1 )
-		{
-			// points = [[point, point, point, ...]]
-			this.points = points[0];
-		}
-		else
-		if( points.length==2 )
-		{
-			// points = [[point, point, point, ...], boolean]
-			this.points = points[0];
-			this.closed = points[1];
-		}
-		else
-		{
-			// points = [point, point, point, ... ]				count=N
-			// points = [point, point, point, ... boolean]		count=N+1
-			var last = points.pop();
-			if( typeof last==='boolean' )
-				this.closed = last;
-			else
-				points.push( last );
-			this.points = points;
-		}
+		if( !points.length ) points = Suica.DEFAULT.SPLINE.POINTS;
 		
+		this.closed = closed;
+		this.interpolant = interpolant;
+		this.points = points;
 	} // SuicaSplineCurve.constructor
 
 
 	getPoint( t )
 	{
+
 		var points = this.points,
 			p = (points.length-(this.closed?0:1)) * t;
-
 		var intPoint = Math.floor( p ),
-			weight = p - intPoint;
-
+			t = p - intPoint,
+			t2 = t*t,
+			t3 = t2*t;
 
 		var p0, p1, p2, p3;
 		
@@ -299,25 +200,28 @@ class SuicaSplineCurve extends THREE.Curve
 			p3 = points[ intPoint > points.length-3 ? points.length-1 : intPoint+2 ];
 		}
 		
-		function CatmullRom( t, p0, p1, p2, p3 )
+		function catmullRom( p0, p1, p2, p3 )
 		{
 			var v0 = (p2-p0) * 0.5,
-				v1 = (p3-p1) * 0.5,
-				t2 = t*t,
-				t3 = t*t2;
+				v1 = (p3-p1) * 0.5;
 			return (2*p1-2*p2+v0+v1)*t3 + (-3*p1+3*p2-2*v0-v1)*t2 + v0*t + p1;
 		}
 
+		function bSpline( p0, p1, p2, p3 )
+		{
+			return (p0*(1-3*t+3*t2-t3) + p1*(4-6*t2+3*t3) + p2*(1+3*t+3*t2-3*t3) + p3*t3)/6;
+		}
+
+		var splineFunction = this.interpolant ? catmullRom : bSpline;
+		
 		var point = [
-			CatmullRom( weight, p0[0], p1[0], p2[0], p3[0] ),
-			CatmullRom( weight, p0[1], p1[1], p2[1], p3[1] ),
-			CatmullRom( weight, p0[2], p1[2], p2[2], p3[2] )
+			splineFunction( p0[0], p1[0], p2[0], p3[0] ),
+			splineFunction( p0[1], p1[1], p2[1], p3[1] ),
+			splineFunction( p0[2], p1[2], p2[2], p3[2] )	
 		];
 
 		if( typeof p0[3] !== 'undefined' )
-		{
-			point.push( CatmullRom( weight, p0[3], p1[3], p2[3], p3[3] ) );
-		}
+			point.push( splineFunction( p0[3], p1[3], p2[3], p3[3] ) );
 		
 		return point;
 	} // SuicaSplineCurve.getPoint
@@ -327,25 +231,18 @@ class SuicaSplineCurve extends THREE.Curve
 
 
 
-window['spline'] = function( ...points )
+window['spline'] = function( points, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT )
 {
-	// spline( point, point, point, ... );
-	// spline( point, point, point, ... boolean );
-	// spline( [point, point, point, ...] );
-	// spline( [point, point, point, ...], boolean );
-
-	return new SuicaSplineCurve( points );
+	return new SuicaSplineCurve( points, closed, interpolant );
 }
 
 
-	
-
 class Tube extends Mesh
 {
-	constructor( suica, curveFunction, count, center, size, color )
+	constructor( suica, center=Suica.DEFAULT.TUBE.CENTER, curveFunction=Suica.DEFAULT.TUBE.POINTS, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
 	{
 		suica.parser?.parseTags();
-		suica.debugCall( 'tube', curveFunction.name+'()', count, center, size, color );
+		suica.debugCall( 'tube', center, curveFunction.name+'()', count, size, color );
 
 		if( Array.isArray(curveFunction) )
 			curveFunction = new SuicaSplineCurve( curveFunction );

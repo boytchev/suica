@@ -62,10 +62,10 @@
 			];
 		}
 		
-		tube( curve1, [300,50] ).style({x:-30, color:'gray'});
-		tube( curve2, [300,50] ).style({x:-10, color:'linen'});
-		tube( curve3, [300,50] ).style({x:10, color:'lightsalmon'});
-		tube( curve4, [300,50] ).style({x:30, color:'peachpuff'});
+		tube( [-30,0,0], curve1, [300,50], 1, 'gray' );
+		tube( [-10,0,0], curve2, [300,50], 1, 'linen' );
+		tube( [ 10,0,0], curve3, [300,50], 1, 'lightsalmon' );
+		tube( [ 30,0,0], curve4, [300,50], 1, 'peachpuff' );
 		
 		suica.ontime = function( t )
 		{

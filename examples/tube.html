@@ -29,7 +29,6 @@
 		function torus(u)
 		{
 			u = 2*Math.PI*u;
-			
 			return [
 				0,
 				20*Math.sin(u),
@@ -38,17 +37,18 @@
 			];
 		}
 		
-		function sine(u)
+		function screw(u)
 		{
 			return [
 				80*u-40,
 				10*Math.sin(60*u),
 				10*Math.cos(60*u),
-				2];
+				2
+			];
 		}
 		
-		tube( torus, [400, 20] ).style({color:'linen'});
-		tube( sine, [400, 20] );
+		tube( [0,0,0], torus, [400, 20] ).style({color:'linen'});
+		tube( [0,0,0], screw, [400, 20] );
 		
 	</script>
 </body>
