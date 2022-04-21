@@ -125,7 +125,7 @@ class Suica
 		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0, SPIN:[0,0,0] },
 		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
-		TUBE: { CURVE: function(u){return [60*u-30,0,0,1]}, COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
+		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
 		
 		DRAWING: { SIZE:32, COLOR:null },
@@ -993,11 +993,11 @@ class Suica
 	} // Suica.group
 
 
-	tube( curve=Suica.DEFAULT.TUBE.CURVE, count=Suica.DEFAULT.TUBE.COUNT, center=Suica.DEFAULT.TUBE.CENTER, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
+	tube( center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius=Suica.DEFAULT.TUBE.RADIUS, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
 	{
 		this.parser?.parseTags();
 
-		return new Tube( this, curve, count, center, size, color );
+		return new Tube( this, center, curve, radius, count, size, color );
 	} // Suica.tube
 	
 	
