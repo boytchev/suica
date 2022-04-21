@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Interpolated spline</title>
+	<title>Interpolating spline</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,34 +18,29 @@
 
 <body>
 
-	<h1>Interpolated spline</h1>
-	<p>Drawing an interpolated spline.</p>
+	<h1>Interpolating spline</h1>
+	<p>Drawing an interpolating spline that passes through points.</p>
 
 	<suica>
 		<demo altitude="0">
-		<square x="-25" size="40" wireframe color="gray">
-		<square x="+25" size="40" wireframe color="gray">
+		<cylinder id="a" center="-45,-20,-1" size="3,2" color="lightsalmon" spinv="90">
+		<clone src="a" center="-45,20,-1">
+		<clone src="a" center="-5,20,-1">
+		<clone src="a" center="-5,-20,-1">
+		<clone src="a" center="45,-20,-1">
+		<clone src="a" center="45,20,-1">
+		<clone src="a" center="5,20,-1">
+		<clone src="a" center="5,-20,-1">
 	</suica>
 
 	<script>
 		var points = [ [-20,20,0], [-20,-20,0], [20,-20,0], [20,20,0] ];
-		var curve = spline( points, !true, true );
-		function iCurve( u )
-		{
-			var p = curve.getPoint(u);
-			return [p[0],p[1],p[2],1];
-		}
-		
-		var curve2 = spline( points, !true, false );
-		function iCurve2( u )
-		{
-			var p = curve2.getPoint(u);
-			return [p[0],p[1],p[2],1];
-		}
-		
-		tube( [-25,0,0], iCurve ).style({color: 'black'});
-		tube( [25,0,0], iCurve2 ).style({color: 'black'});
 
+		var openCurve = spline( points, false );
+		var closedCurve = spline( points, true );
+
+		tube( [-25,0, 0], openCurve, 0.4 ).style({color: 'black'});
+		tube( [ 25,0, 0], closedCurve, 0.4 ).style({color: 'black'});
 
 	</script>
 </body>
