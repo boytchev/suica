@@ -15,7 +15,7 @@
 - [Events](#events)
     - [Event workflow](#event-workflow) [<small> [listeners](#event-listeners) | [handlers](#event-handlers) </small> | [proactive](#proactive-events) </small> ]
 	- [Event data](#event-data) [<small> [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
-- [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) </small>]
+- [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) | [spline](#spline) </small>]
 - [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
 
 
@@ -1681,12 +1681,90 @@ a = random( [1, 2, 3, 4] ); // from the list
 
 ### Style
 
-Function. Sets a group of properties of an object. 
+Function. Sets a group of properties of an object. The properties are note
+necessarily Suica properties.
 
 ```js
 JS:
 style( sphere(), {x:15, size:20, color:'peachpuff'} );
 ```
+
+### Spline
+
+Function. Implements [splines](https://en.wikipedia.org/wiki/Spline_(mathematics))
+by defining a function that for generating smoothly varying values. The first
+parameter of `spline` is an array of points. The result is a function *f(u)* 
+where *u* &isin; [0,1]. The result of *f(u)* is a point along the curve where
+*u*=0 corresponds to the beginning of the curve, *u*=1 corresponds to the end
+of the curve and intermediate values of *u* correspond to intermediate points
+on the curve.
+
+<img src="images/spline.png">
+
+```js
+JS:
+s = spline( [[0,0,0], [100,0,0], [0,100,0]] );
+
+a = s(0);   // beginning
+b = s(0.5); // middle
+c = s(1);   // end
+```
+
+[<kbd><img src="../examples/snapshots/spline.jpg" width="300"></kbd>](../examples/spline.html)
+
+Typically a spline is used to define a curve in the space and get coordinates of
+points on this curve. However, in Suica splines can be used to smooth any set of
+numerical values, like colors or sizes.
+
+[<kbd><img src="../examples/snapshots/spline-color.jpg" width="300"></kbd>](../examples/spline-color.html)
+[<kbd><img src="../examples/snapshots/spline-size.jpg" width="300"></kbd>](../examples/spline-size.html)
+
+Splines have two additional parameters &ndash; `closed` and `interpolating`.
+
+If parameter *closed* is *true* the spline curve is closed, i.e. the last point is
+connected back to the first point. This is used to define smooth loops. If
+*closed* is *false*, then the line is not closed. By default *closed* is *false*.
+
+The parameter *interpolating* defines the style of the curve. If it is *true*,
+the spline curve goes through the points (i.e. it interpolates them). If it is
+*false*, the spline curve goes near the points as if it is pulled by them (i.e.
+it approximates the points). Approximation splines tend to appear smaller and
+smoother.
+
+```js
+JS:
+s = spline( [[0,0,0], [100,0,0], [0,100,0]], true, false );
+```
+
+[<kbd><img src="../examples/snapshots/spline-interpolating.jpg" width="300"></kbd>](../examples/spline-interpolating.html)
+[<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="300"></kbd>](../examples/spline-approximating.html)
+
+
+Instead of an array of points, `spline` can also accept a function, although
+technically it is not a spline any more. This function should have 1, 2 or 3
+parameters. The first parameter is compusory and it *u* &isin; [0,1]. The other
+two parameters are optional and they are function-specific. The result of this
+function must be an array of 3 or 4 values, corresponding to a point along the
+curve defined by this function.
+
+```js
+JS:
+function flower( u, k, n=2 )
+{
+	u = n*Math.PI*u;
+	return [
+		Math.cos(u) + Math.cos(k*u), // x
+		Math.sin(u) - Math.sin(k*u), // y
+		0                            // z
+	];
+}
+
+s = spline( flower, 2 );
+```
+		
+[<kbd><img src="../examples/snapshots/spline-function.jpg" width="300"></kbd>](../examples/spline-function.html)
+
+
 
 
 

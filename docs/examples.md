@@ -183,13 +183,15 @@ Click on an image to run the example.
 ## [Functions](user-guide.md#functions)
 
 [<kbd><img src="../examples/snapshots/spline.jpg" width="400"></kbd>](../examples/spline.html)
-[<kbd><img src="../examples/snapshots/spline-function.jpg" width="400"></kbd>](../examples/spline-function.html)
 
 [<kbd><img src="../examples/snapshots/spline-color.jpg" width="400"></kbd>](../examples/spline-color.html)
 [<kbd><img src="../examples/snapshots/spline-size.jpg" width="400"></kbd>](../examples/spline-size.html)
 
 [<kbd><img src="../examples/snapshots/spline-interpolating.jpg" width="400"></kbd>](../examples/spline-interpolating.html)
 [<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="400"></kbd>](../examples/spline-approximating.html)
+
+[<kbd><img src="../examples/snapshots/spline-function.jpg" width="400"></kbd>](../examples/spline-function.html)
+
 
 
 
