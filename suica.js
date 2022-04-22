@@ -18,6 +18,5 @@ document.write( '<script src="suica-sphere.js"></script>' );
 document.write( '<script src="suica-cylinder.js"></script>' );
 document.write( '<script src="suica-cone.js"></script>' );
 document.write( '<script src="suica-group.js"></script>' );
-document.write( '<script src="suica-spline.js"></script>' );
 document.write( '<script src="suica-tube.js"></script>' );
 document.write( '<script src="suica-main.js"></script>' );

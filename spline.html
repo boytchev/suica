@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Tube explicit spline</title>
+	<title>Spline</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,37 +18,31 @@
 
 <body>
 
-	<h1>Tube explicit spline</h1>
-	<p>Defining a spline tube with explicit radius curve.</p>
+	<h1>Spline</h1>
+	<p>Defining a spline based on points or function.</p>
 
 	<suica>
 		<demo>
 	</suica>
 
 	<script>
-		var splineCurve = spline(
-			[[-20,-20,-20],
-			[-20,-20, 20],
-			[-20, 20, 20],
-			[-20, 20,-20],
-			[ 20, 20,-20],
-			[ 20, 20, 20],
-			[ 20,-20, 20],
-			[ 20,-20,-20]],
-			true
-		);
-		
-		function curve(u)
+		function torus(u)
 		{
-			var p = splineCurve(u);
-				p[3] = 0.2+1.5*Math.round(0.5+0.5*Math.cos( 30*Math.PI*u ));
-				
-			return p;
+			u = 2*Math.PI*u;
+			return [
+				0,
+				20*Math.sin(u),
+				20*Math.cos(u)
+			];
 		}
+
+		var s1 = spline( torus );
+		var s2 = spline( [[-40,-20,0], [-20,-20,0], [0,10,0], [20,-20,0], [40,-20,0]] );
+		console.log(s1.getPoint(0.2));
+		console.log(s2.getPoint(0.2));
+		tube( [0,0,0], s1, 6, 400, 1, 'linen' );
+		tube( [0,0,0], s2, 2, 400 );
 		
-		tube( [0,0,0], curve, 1, [300,16] );
-
-
 	</script>
 </body>
 </html>

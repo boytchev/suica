@@ -213,7 +213,7 @@ class Suica
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', /*'spline',*/ 'tube'] )
 		{
 			Suica.register( methodName );
 		}
@@ -222,6 +222,7 @@ class Suica
 	
 	static register( methodName )
 	{
+		console.log(`register('${methodName}')`);
 		window[methodName] = function ( ...params )
 		{
 			Suica.precheck();
@@ -994,6 +995,14 @@ class Suica
 	} // Suica.group
 
 
+	// spline( points=Suica.DEFAULT.SPLINE.POINTS, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT )
+	// {
+		// this.parser?.parseTags();
+
+		// return new Spline( points, closed, interpolant );
+	// } // Suica.spline
+	
+	
 	tube( center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius=Suica.DEFAULT.TUBE.RADIUS, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
 	{
 		this.parser?.parseTags();
@@ -1433,6 +1442,70 @@ window.findObject = function( domEvent, onlyInteractive = false )
 	if( suica )
 		return suica.findObject( domEvent, onlyInteractive );
 }
+
+
+window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT  )
+{
+	if( points instanceof Function )
+	{
+		return points;
+	}
+
+	if( !points.length ) points = Suica.DEFAULT.SPLINE.POINTS;
+
+	return function( t )
+	{
+
+		var p = (points.length-(closed?0:1)) * t;
+		var intPoint = Math.floor( p ),
+			t = p - intPoint,
+			t2 = t*t,
+			t3 = t2*t;
+
+		var p0, p1, p2, p3;
+		
+		if( closed )
+		{
+			p0 = points[ (intPoint+points.length-1)%points.length ];
+			p1 = points[ (intPoint+points.length  )%points.length ];
+			p2 = points[ (intPoint+points.length+1)%points.length ];
+			p3 = points[ (intPoint+points.length+2)%points.length ];
+		}
+		else
+		{
+			p0 = points[ intPoint === 0 ? intPoint : intPoint-1 ];
+			p1 = points[ intPoint ];
+			p2 = points[ intPoint > points.length-2 ? points.length-1 : intPoint+1 ];
+			p3 = points[ intPoint > points.length-3 ? points.length-1 : intPoint+2 ];
+		}
+		
+		function catmullRom( p0, p1, p2, p3 )
+		{
+			var v0 = (p2-p0) * 0.5,
+				v1 = (p3-p1) * 0.5;
+			return (2*p1-2*p2+v0+v1)*t3 + (-3*p1+3*p2-2*v0-v1)*t2 + v0*t + p1;
+		}
+
+		function bSpline( p0, p1, p2, p3 )
+		{
+			return (p0*(1-3*t+3*t2-t3) + p1*(4-6*t2+3*t3) + p2*(1+3*t+3*t2-3*t3) + p3*t3)/6;
+		}
+
+		var splineFunction = interpolant ? catmullRom : bSpline;
+		
+		var point = [
+			splineFunction( p0[0], p1[0], p2[0], p3[0] ),
+			splineFunction( p0[1], p1[1], p2[1], p3[1] ),
+			splineFunction( p0[2], p1[2], p2[2], p3[2] )	
+		];
+
+		if( typeof p0[3] !== 'undefined' )
+			point.push( splineFunction( p0[3], p1[3], p2[3], p3[3] ) );
+		
+		return point;
+	} // spline.getPoint
+	
+} // spline
 
 
 
@@ -5183,135 +5256,39 @@ class Group
 // }
 
 ﻿//
-// Suica 2.0 Spline
+// Suica 2.0 Tube
 // CC-3.0-SA-NC
 //
 //
 //===================================================
 
 
-
+// converts Suica spline, array of points or a path function into a THREE.Curve
 class SuicaCurve extends THREE.Curve
 {
 	constructor( curve )
 	{
 		super();
 		
-		if( curve instanceof SuicaSplineCurve )
-		{
-			this.spline = curve;
-		}
+		if( curve instanceof SuicaCurve )
+			return this;
 		else
-		if( curve instanceof Array )
-		{
-			this.spline = new SuicaSplineCurve( curve );
-		}
-		else
-		{
-			this._getPoint = curve;
-		}
+			this.spline = spline( curve );
 	} // SuicaCurve.constructor
 
 	
 	getPoint( u, optionalTarget = new THREE.Vector3() )
 	{
-		var point = this.spline?.getPoint( u ) || this._getPoint( u );
+		var point = this.spline( u );
+		
 		optionalTarget.set( point[0]||0, point[1]||0, point[2]||0 );
 		optionalTarget.radius = point[3];
+		
 		return optionalTarget;
 	} // SuicaCurve.getPoint
 	
 } // SuicaCurve
 
-
-
-
-class SuicaSplineCurve extends THREE.Curve
-{
-
-	constructor( points=Suica.DEFAULT.SPLINE.POINTS, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT  )
-	{
-
-		super();
-		
-		if( !points.length ) points = Suica.DEFAULT.SPLINE.POINTS;
-		
-		this.closed = closed;
-		this.interpolant = interpolant;
-		this.points = points;
-	} // SuicaSplineCurve.constructor
-
-
-	getPoint( t )
-	{
-
-		var points = this.points,
-			p = (points.length-(this.closed?0:1)) * t;
-		var intPoint = Math.floor( p ),
-			t = p - intPoint,
-			t2 = t*t,
-			t3 = t2*t;
-
-		var p0, p1, p2, p3;
-		
-		if( this.closed )
-		{
-			p0 = points[ (intPoint+points.length-1)%points.length ];
-			p1 = points[ (intPoint+points.length  )%points.length ];
-			p2 = points[ (intPoint+points.length+1)%points.length ];
-			p3 = points[ (intPoint+points.length+2)%points.length ];
-		}
-		else
-		{
-			p0 = points[ intPoint === 0 ? intPoint : intPoint-1 ];
-			p1 = points[ intPoint ];
-			p2 = points[ intPoint > points.length-2 ? points.length-1 : intPoint+1 ];
-			p3 = points[ intPoint > points.length-3 ? points.length-1 : intPoint+2 ];
-		}
-		
-		function catmullRom( p0, p1, p2, p3 )
-		{
-			var v0 = (p2-p0) * 0.5,
-				v1 = (p3-p1) * 0.5;
-			return (2*p1-2*p2+v0+v1)*t3 + (-3*p1+3*p2-2*v0-v1)*t2 + v0*t + p1;
-		}
-
-		function bSpline( p0, p1, p2, p3 )
-		{
-			return (p0*(1-3*t+3*t2-t3) + p1*(4-6*t2+3*t3) + p2*(1+3*t+3*t2-3*t3) + p3*t3)/6;
-		}
-
-		var splineFunction = this.interpolant ? catmullRom : bSpline;
-		
-		var point = [
-			splineFunction( p0[0], p1[0], p2[0], p3[0] ),
-			splineFunction( p0[1], p1[1], p2[1], p3[1] ),
-			splineFunction( p0[2], p1[2], p2[2], p3[2] )	
-		];
-
-		if( typeof p0[3] !== 'undefined' )
-			point.push( splineFunction( p0[3], p1[3], p2[3], p3[3] ) );
-		
-		return point;
-	} // SuicaSplineCurve.getPoint
-	
-} // SuicaSplineCurve
-
-
-
-
-window['spline'] = function( points, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT )
-{
-	return new SuicaSplineCurve( points, closed, interpolant );
-}
-
-
-﻿//
-// Suica 2.0 Tube
-// CC-3.0-SA-NC
-//
-//
-//===================================================
 
 
 
@@ -5375,7 +5352,7 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 			radialSegments = this.parameters.radialSegments,
 			radius = this.parameters.radius;
 
-		var frames = path.computeFrenetFrames( tubularSegments, false/*closed*/ );
+		var frames = path.computeFrenetFrames( tubularSegments, false );
 
 		// expose internals
 		this.tangents = frames.tangents;
@@ -5436,16 +5413,13 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 
 class Tube extends Mesh
 {
-	constructor( suica, center=Suica.DEFAULT.TUBE.CENTER, curveFunction=Suica.DEFAULT.TUBE.POINTS, radius, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
+	constructor( suica, center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
 	{
 		suica.parser?.parseTags();
-		suica.debugCall( 'tube', center, curveFunction.name+'()', radius, count, size, color );
+		suica.debugCall( 'tube', center, curve.name+'()', radius, count, size, color );
 
 		if( !radius && radius!==0 )
 			radius = Suica.DEFAULT.TUBE.RADIUS;
-		
-		if( Array.isArray(curveFunction) )
-			curveFunction = new SuicaSplineCurve( curveFunction );
 		
 		var tubularSegments, radialSegments;
 		
@@ -5461,15 +5435,14 @@ class Tube extends Mesh
 			radialSegments  = Suica.DEFAULT.TUBE.COUNT[1];
 		}
 
-		var curve = new SuicaCurve( curveFunction ),
-			geometry = new SuicaTubeGeometry( curve, tubularSegments, radialSegments, radius );
+		var geometry = new SuicaTubeGeometry( new SuicaCurve( curve ), tubularSegments, radialSegments, radius );
 		
 		super( suica, 
 			new THREE.Mesh( geometry, Mesh.solidMaterial.clone() ),
 			null, // no wireframe
 		);
 		
-		this.curveFunction = curve;
+		this._curve = curve;
 		this.center = center;
 		this.color = color;
 		this.size = size;
@@ -5490,20 +5463,23 @@ class Tube extends Mesh
 	}
 	
 	
-	set curve( curveFunction )
+	get curve( )
 	{
-		if( Array.isArray(curveFunction) )
-			curveFunction = new SuicaSplineCurve( curveFunction );
+		return this._curve;
+	}
+	
 
-		this.curveFunction = new SuicaCurve( curveFunction );
+	set curve( curve )
+	{
+		this._curve = curve;
 
-		this.threejs.geometry.update( this.curveFunction );
+		this.threejs.geometry.update( new SuicaCurve( curve ) );
 	}
 	
 	
 	get clone( )
 	{
-		var object = new Tube( this.suica, this.center, this.curveFunction, this.radius, this.size, this.color );
+		var object = new Tube( this.suica, this.center, this.curve, this.radius, this.size, this.color );
 		
 		object.spin = this.spin;
 		object.image = this.image;

@@ -6,6 +6,34 @@
 //===================================================
 
 
+// converts Suica spline, array of points or a path function into a THREE.Curve
+class SuicaCurve extends THREE.Curve
+{
+	constructor( curve )
+	{
+		super();
+		
+		if( curve instanceof SuicaCurve )
+			return this;
+		else
+			this.spline = spline( curve );
+	} // SuicaCurve.constructor
+
+	
+	getPoint( u, optionalTarget = new THREE.Vector3() )
+	{
+		var point = this.spline( u );
+		
+		optionalTarget.set( point[0]||0, point[1]||0, point[2]||0 );
+		optionalTarget.radius = point[3];
+		
+		return optionalTarget;
+	} // SuicaCurve.getPoint
+	
+} // SuicaCurve
+
+
+
 
 // based on THREE.TubeGeometry
 class SuicaTubeGeometry extends THREE.BufferGeometry
@@ -67,7 +95,7 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 			radialSegments = this.parameters.radialSegments,
 			radius = this.parameters.radius;
 
-		var frames = path.computeFrenetFrames( tubularSegments, false/*closed*/ );
+		var frames = path.computeFrenetFrames( tubularSegments, false );
 
 		// expose internals
 		this.tangents = frames.tangents;
@@ -128,16 +156,13 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 
 class Tube extends Mesh
 {
-	constructor( suica, center=Suica.DEFAULT.TUBE.CENTER, curveFunction=Suica.DEFAULT.TUBE.POINTS, radius, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
+	constructor( suica, center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
 	{
 		suica.parser?.parseTags();
-		suica.debugCall( 'tube', center, curveFunction.name+'()', radius, count, size, color );
+		suica.debugCall( 'tube', center, curve.name+'()', radius, count, size, color );
 
 		if( !radius && radius!==0 )
 			radius = Suica.DEFAULT.TUBE.RADIUS;
-		
-		if( Array.isArray(curveFunction) )
-			curveFunction = new SuicaSplineCurve( curveFunction );
 		
 		var tubularSegments, radialSegments;
 		
@@ -153,15 +178,14 @@ class Tube extends Mesh
 			radialSegments  = Suica.DEFAULT.TUBE.COUNT[1];
 		}
 
-		var curve = new SuicaCurve( curveFunction ),
-			geometry = new SuicaTubeGeometry( curve, tubularSegments, radialSegments, radius );
+		var geometry = new SuicaTubeGeometry( new SuicaCurve( curve ), tubularSegments, radialSegments, radius );
 		
 		super( suica, 
 			new THREE.Mesh( geometry, Mesh.solidMaterial.clone() ),
 			null, // no wireframe
 		);
 		
-		this.curveFunction = curve;
+		this._curve = curve;
 		this.center = center;
 		this.color = color;
 		this.size = size;
@@ -182,20 +206,23 @@ class Tube extends Mesh
 	}
 	
 	
-	set curve( curveFunction )
+	get curve( )
 	{
-		if( Array.isArray(curveFunction) )
-			curveFunction = new SuicaSplineCurve( curveFunction );
+		return this._curve;
+	}
+	
 
-		this.curveFunction = new SuicaCurve( curveFunction );
+	set curve( curve )
+	{
+		this._curve = curve;
 
-		this.threejs.geometry.update( this.curveFunction );
+		this.threejs.geometry.update( new SuicaCurve( curve ) );
 	}
 	
 	
 	get clone( )
 	{
-		var object = new Tube( this.suica, this.center, this.curveFunction, this.radius, this.size, this.color );
+		var object = new Tube( this.suica, this.center, this.curve, this.radius, this.size, this.color );
 		
 		object.spin = this.spin;
 		object.image = this.image;
