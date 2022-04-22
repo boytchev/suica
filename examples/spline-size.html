@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Spline of points</title>
+	<title>Spline color</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,27 +18,36 @@
 
 <body>
 
-	<h1>Spline of points</h1>
-	<p>Defining a spline from an array of points.</p>
+	<h1>Spline size</h1>
+	<p>Using spline to change size.</p>
 
 	<suica>
-		<demo>
+		<circle y="25.5" size="20" color="black">
+		<circle y="-1" size="20" color="black">
 	</suica>
 
 	<script>
-		s = sspline( [
-			[-25,0,0],
-			[-15,15,0],
-			[30,-30,0],
-			[50,0,0],
-			[30,30,0],
-			[-15,-15,0],
-		], true, false );
+		curve = spline( [[-20,-25,0], [-20,14,0], [20,14,0], [20,-25,0]], true, false );
+		size = spline( [[20], [6], [6], [20] ], true, true );
 		
-		tube( [0,0,0], s, 0.1 );
+		var s = [
+			circle( [0,0,0], 5, 'lightsalmon' ),
+			circle( [0,0,0], 5, 'lightsalmon' ),
+			circle( [0,0,0], 5, 'lightsalmon' )
+		];
 		
-		for( var u=0; u<=1; u+=1/48 )
-			sphere(s(u),2).style({color:'black'});
+		
+		suica.ontime = function( t )
+		{
+		t=0;
+			for( i=0; i<3; i++ )
+			{
+				s[i].center = curve(t/5);
+				s[i].size = size(t/5)[0];
+				t += 5/3;
+			}
+		}
+		
 	</script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 
 
 // show suica version
-console.log( `Suica 2.-1.45 (220419)` );
+console.log( `Suica 2.-1.46 (220421)` );
 
 
 // control flags
@@ -1443,13 +1443,22 @@ window.findObject = function( domEvent, onlyInteractive = false )
 }
 
 
-window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT  )
+window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed, interpolant )
 {
 	if( points instanceof Function )
 	{
-		return points;
+		return function( t )
+		{
+			return points( t, closed, interpolant );
+		}
 	}
 
+	if( typeof closed === 'undefined' )
+		closed = Suica.DEFAULT.SPLINE.CLOSED;
+	
+	if( typeof interpolant === 'undefined' )
+		interpolant = Suica.DEFAULT.SPLINE.INTERPOLANT;
+	
 	if( !points.length ) points = Suica.DEFAULT.SPLINE.POINTS;
 
 	return function( t )
