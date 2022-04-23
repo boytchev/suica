@@ -10,7 +10,7 @@
     - [Definition](#definition) [<small> [position](#position-center-x-y-z) | [size](#size-size-width-height-depth) | [spin](#spin) | [color](#color) | [wireframe](#wireframe) | [image](#image) | [images](#images) | [clone](#clone)  | [style](#style) </small>] 
 	- [Common 2D objects](#common-2d-objects) [<small> [point](#point) | [line](#line) | [square](#square) | [circle](#circle) | [polygon](#polygon) </small>]
 	- [Common 3D objects](#common-3d-objects) [<small> [cube](#cube) | [sphere](#sphere) | [cylinder](#cylinder) | [prism](#prism) | [cone](#cone) | [pyramid](#pyramid) </small>]
-	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) </small>]
+	- [Advanced 3D objects](#advanced-3d-objects) [<small> [group](#group) | [tube](#tube) </small>]
 - [Drawings](#drawings) [<small> [drawing](#drawing) | [moveTo](#moveto) | [lineTo](#lineto) | [curveTo](#curveto) | [arc](#arc) | [stroke](#stroke) | [fill](#fill) | [fillText](#filltext) | [clear](#clear) </small>] 
 - [Events](#events)
     - [Event workflow](#event-workflow) [<small> [listeners](#event-listeners) | [handlers](#event-handlers) </small> | [proactive](#proactive-events) </small> ]
@@ -1100,6 +1100,99 @@ parameters to `group(...)`. A group can be extended with new objects with
 - Cloning a group will also clone all its objects, setting `color` of a group
 sets it to all its objects overwriting their individual colors.
 
+
+
+### Tube
+
+Object. Represents a tubular object along a straight or a curved line. Its
+properties are `center` (or `x`, `y` and `z`), `curve`, `radius`, `count`,
+`size` (or `width`, `height` and `depth`), `color`, `spin` and `clone`. Tubes
+can also model [solids of revolution](https://en.wikipedia.org/wiki/Solid_of_revolution), also known as lathe shapes.
+
+<img src="images/tube.png">
+
+The curve is a [spline](#spline) function but can also be an array of points or
+user-defined function *f(u)* on which spline is automatically constructed:
+
+```js
+JS:
+tube( [0,0,0], [[50,0,0], [-50,0,0]], 5, 2 );
+```
+
+[<kbd><img src="../examples/snapshots/tube.jpg" width="300"></kbd>](../examples/tube.html)
+[<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="300"></kbd>](../examples/tube-lathe.html)
+
+
+The `radius` of a tube is the third paraeter. It is used in case there is no
+radius encoded in the spline curve itself:
+
+- if the spline points are 3D, then the *radius* parameter is used as a constant radius of the whole tube
+
+```js
+JS:
+function curve3D( u )
+{
+   return [
+      10*u, // x
+      0,    // y
+      0     // z
+	];
+}
+tube( [0,0,0], curve3D, 5 ); // radius=5, taken from tube
+```
+
+- if the spline points are 4D, then the 4th coordinate is used as radius and the *radius* parameter is ignored
+
+```js
+JS:
+function curve4D( u )
+{
+   return [
+      10*u, // x
+      0,    // y
+      0,    // z
+      1     // radius
+	];
+}
+tube( [0,0,0], curve4D, 5 ); // radius=1, taken from curve4D
+```
+
+
+The *count* parameter defines the granularity of the tube. It is either a number
+for the number of segments along the tube (i.e. tubular segments) or an array of
+two numbers for the number of tubural and radial segments. Higher number of
+segments results in smoother curve, but takes more memory space and processing
+time. By default the tubural segments are 60 and the radial segments are 20.
+
+<img src="images/tube-segments.png">
+
+The tube adheres to the other properties of splines &ndash; whether they are
+open or closed; and interpolating or approximating.
+
+[<kbd><img src="../examples/snapshots/tube-open-closed.jpg" width="300"></kbd>](../examples/tube-open-closed.html)
+[<kbd><img src="../examples/snapshots/tube-variations.jpg" width="300"></kbd>](../examples/tube-variations.html)
+
+[<kbd><img src="../examples/snapshots/tube-spline.jpg" width="300"></kbd>](../examples/tube-spline.html)
+[<kbd><img src="../examples/snapshots/tube-spline-explicit.jpg" width="300"></kbd>](../examples/tube-spline-explicit.html)
+
+Tubes allow dynamic change of their curve and curve radius. This is performance
+intensive operation, as it recalculates all vertices of the tube. Recalculation
+is done whenever the *curve* or *radius* property of a tube is assigned a value.
+
+```js
+JS:
+spiral = tube( [0,0,0], curve, 1 );
+		
+suica.ontime = function( t )
+{
+   spiral.radius = 3+2.8*Math.sin(4*t);
+}
+```
+		
+[<kbd><img src="../examples/snapshots/tube-dynamic-radius.jpg" width="300"></kbd>](../examples/tube-dynamic-radius.html)
+[<kbd><img src="../examples/snapshots/tube-dynamic-spline-radius.jpg" width="300"></kbd>](../examples/tube-dynamic-spline-radius.html)
+
+[<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="300"></kbd>](../examples/tube-dynamic.html)
 
 
 

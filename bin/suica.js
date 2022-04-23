@@ -5468,7 +5468,7 @@ class Tube extends Mesh
 	{
 		this._radius = radius;
 		this.threejs.geometry.parameters.radius = radius;
-		this.threejs.geometry.update( this.curveFunction );
+		this.threejs.geometry.update( new SuicaCurve( this._curve ) );
 	}
 	
 	
