@@ -38,6 +38,8 @@ class Mesh
 		this.meshImages = 1;
 
 		suica.scene.add( solidMesh );
+		
+		window.its = this;
 	}
 
 
