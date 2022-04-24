@@ -17,51 +17,6 @@ class HTMLParser
 	{
 		this.suica = suica;
 
-/*
-		this.parseTag = {};
-		this.parseTag.LOOKAT = this.parseTagLOOKAT;
-		this.parseTag.OXYZ = this.parseTagOXYZ;
-		this.parseTag.DEMO = this.parseTagDEMO;
-		this.parseTag.VR = this.parseTagVR;
-		this.parseTag.FULLSCREEN = this.parseTagFULLSCREEN;
-		this.parseTag.FULLWINDOW = this.parseTagFULLWINDOW;
-		this.parseTag.ANAGLYPH = this.parseTagANAGLYPH;
-		this.parseTag.STEREO = this.parseTagSTEREO;
-		this.parseTag.PROACTIVE = this.parseTagPROACTIVE;
-		this.parseTag.PERSPECTIVE = this.parseTagPERSPECTIVE;
-		this.parseTag.ORTHOGRAPHIC = this.parseTagORTHOGRAPHIC;
-		this.parseTag.BACKGROUND = this.parseTagBACKGROUND;
-		
-		this.parseTag.POINT = this.parseTagPOINT;
-		this.parseTag.LINE = this.parseTagLINE;
-		this.parseTag.SQUARE = this.parseTagSQUARE;
-		this.parseTag.CUBE = this.parseTagCUBE;
-		this.parseTag.CIRCLE = this.parseTagCIRCLE;
-		this.parseTag.POLYGON = this.parseTagPOLYGON;
-		this.parseTag.SPHERE = this.parseTagSPHERE;
-		this.parseTag.CYLINDER = this.parseTagCYLINDER;
-		this.parseTag.PRISM = this.parseTagPRISM;
-		this.parseTag.CONE = this.parseTagCONE;
-		this.parseTag.PYRAMID = this.parseTagPYRAMID;
-		this.parseTag.GROUP = this.parseTagGROUP;
-
-		this.parseTag.CLONE = this.parseTagCLONE;
-		
-		this.parseTag.DRAWING = this.parseTagDRAWING;
-		this.parseTag.MOVETO = this.parseTagMOVETO;
-		this.parseTag.LINETO = this.parseTagLINETO;
-		this.parseTag.CURVETO = this.parseTagCURVETO;
-		this.parseTag.ARC = this.parseTagARC;
-		this.parseTag.STROKE = this.parseTagSTROKE;
-		this.parseTag.FILL = this.parseTagFILL;
-		this.parseTag.FILLTEXT = this.parseTagFILLTEXT;
-		this.parseTag.CLEAR = this.parseTagCLEAR;
-
-		this.parseTag.BUTTON = this.skipTag;
-		this.parseTag.CANVAS = this.skipTagSilently;
-		this.parseTag.DIV = this.skipTag;
-		this.parseTag.SPAN = this.skipTag;
-*/
 		this.openGroups = [];
 		this.openDrawings = [];
 		
@@ -145,25 +100,10 @@ class HTMLParser
 		}
 	} // HTMLParser.parseTagsInElement
 		
-/*
-	// <some-unknown-tag> <div>
-	skipTag( suica, elem )
-	{
-		suica.debugCall( 'skipTag', elem.tagName ); // skip this tag
-	} // HTMLParser.skipTag
-*/	
-	
 	parseTagBUTTON( suica, elem ) {}
 	parseTagCANVAS( suica, elem ) {}
 	parseTagDIV( suica, elem ) {}
 	parseTagSPAN( suica, elem ) {}
-	
-/*	
-	// <canvas> <div>
-	skipTagSilently( suica, elem )
-	{
-	} // HTMLParser.skipTagSIlently
-*/	
 	
 	// <oxyz size="..." color="...">
 	parseTagOXYZ( suica, elem )
@@ -583,6 +523,36 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagPYRAMID
+
+
+	// <spline src="x,y,z; x,y,z; x,y,z; ..." interpolating="..." approximating="..." open="..." closed="...">
+	// <spline src="func_name" interpolating="..." approximating="..." open="..." closed="...">
+	parseTagSPLINE( suica, elem )
+	{
+		var src = elem.getAttribute('src') || Suica.DEFAULT.SPLINE.POINTS,
+			closed = Suica.DEFAULT.SPLINE.CLOSED,
+			interpolating = Suica.DEFAULT.SPLINE.INTERPOLANT;
+			
+		if( elem.hasAttribute('closed') )
+			closed = ['','true','yes','1'].indexOf(elem.getAttribute('closed').toLowerCase()) >= 0
+		else if( elem.hasAttribute('open') )
+			closed = ['','true','yes','1'].indexOf(elem.getAttribute('open').toLowerCase()) < 0;
+		
+		if( elem.hasAttribute('interpolating') )
+			interpolating = ['','true','yes','1'].indexOf(elem.getAttribute('interpolating').toLowerCase()) >= 0
+		else if( elem.hasAttribute('approximating') )
+			interpolating = ['','true','yes','1'].indexOf(elem.getAttribute('approximating').toLowerCase()) < 0;
+
+		var p = spline( src, closed, interpolating );
+		
+		suica.parserReadonly.parseAttributes( elem, p, {} );
+
+		//elem.suicaObject = p; <-- now, spline is not an object
+		
+		return p;
+	} // HTMLParser.parseTagSPLINE
+
+
 	
 	// <group id="..." center="..." color="..." size="..." spin="...">
 	parseTagGROUP( suica, elem )

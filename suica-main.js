@@ -994,14 +994,6 @@ class Suica
 	} // Suica.group
 
 
-	// spline( points=Suica.DEFAULT.SPLINE.POINTS, closed=Suica.DEFAULT.SPLINE.CLOSED, interpolant=Suica.DEFAULT.SPLINE.INTERPOLANT )
-	// {
-		// this.parser?.parseTags();
-
-		// return new Spline( points, closed, interpolant );
-	// } // Suica.spline
-	
-	
 	tube( center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius=Suica.DEFAULT.TUBE.RADIUS, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
 	{
 		this.parser?.parseTags();
@@ -1453,6 +1445,18 @@ window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed, interpolan
 		}
 	}
 
+	// if points is a string - array of points "x,y,z;x,y,z;..."
+	if( typeof points === 'string' )
+	{
+		if( points.indexOf(',') >= 0 )
+			points = eval( '[['+points.replaceAll(';','],[')+']]' );
+		else
+			return function( t )
+			{
+				return window[points]( t, closed, interpolant );
+			}
+	}
+	
 	if( typeof closed === 'undefined' )
 		closed = Suica.DEFAULT.SPLINE.CLOSED;
 	
@@ -1463,7 +1467,6 @@ window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed, interpolan
 
 	return function( t )
 	{
-
 		var p = (points.length-(closed?0:1)) * t;
 		var intPoint = Math.floor( p ),
 			t = p - intPoint,

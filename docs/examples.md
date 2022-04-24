@@ -198,6 +198,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="400"></kbd>](../examples/spline-approximating.html)
 
 [<kbd><img src="../examples/snapshots/spline-function.jpg" width="400"></kbd>](../examples/spline-function.html)
+[<kbd><img src="../examples/snapshots/spline-html.jpg" width="400"></kbd>](../examples/spline-html.html)
 
 
 

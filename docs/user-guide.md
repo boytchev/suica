@@ -1812,6 +1812,11 @@ on the curve.
 
 <img src="images/spline.png">
 
+```html
+HTML:
+<spline id="s" src="0,0,0; 100,0,0; 0,100,0">
+```
+
 ```js
 JS:
 s = spline( [[0,0,0], [100,0,0], [0,100,0]] );
@@ -1836,15 +1841,43 @@ If parameter *closed* is *true* the spline curve is closed, i.e. the last point 
 connected back to the first point. This is used to define smooth loops. If
 *closed* is *false*, then the line is not closed. By default *closed* is *false*.
 
+When a spline is defined in HTML, *close* can be set either by `close` attribute,
+or by `open` attribute. If the attribute *close* exist without value, or if its
+value is *yes*, *true* or *1*, the spline is closed. If the attribute *open*
+exist without value, or if its value is *yes*, *true* or *1*, the spline is open.
+
+```js
+JS:
+s = spline( [...], true );
+```
+
+```html
+HTML:
+<spline id="s" src="..." closed>
+<spline id="s" src="..." closed="true">
+<spline id="s" src="..." open="false">
+```
+
 The parameter *interpolating* defines the style of the curve. If it is *true*,
 the spline curve goes through the points (i.e. it interpolates them). If it is
 *false*, the spline curve goes near the points as if it is pulled by them (i.e.
 it approximates the points). Approximation splines tend to appear smaller and
 smoother.
 
+When a spline is defined in HTML, *interpolating* can be set either by
+`interpolating` attribute, or by `apploximating` attribute, similar to how
+attributes *closed* and *open* are used.
+
 ```js
 JS:
-s = spline( [[0,0,0], [100,0,0], [0,100,0]], true, false );
+s = spline( [...], true, true );
+```
+
+```html
+HTML:
+<spline id="s" src="..." interpolating>
+<spline id="s" src="..." interpolating="true">
+<spline id="s" src="..." apploximating="false">
 ```
 
 [<kbd><img src="../examples/snapshots/spline-interpolating.jpg" width="300"></kbd>](../examples/spline-interpolating.html)
@@ -1860,7 +1893,7 @@ curve defined by this function.
 
 ```js
 JS:
-function flower( u, k, n=2 )
+function flower( u, k=3, n=2 )
 {
 	u = n*Math.PI*u;
 	return [
@@ -1872,8 +1905,16 @@ function flower( u, k, n=2 )
 
 s = spline( flower, 2 );
 ```
-		
+	
+If a function is passed to a spline in HTML form, it is with only one patameter:
+
+```html
+HTML:
+<spline id="s" src="flower">
+```
+	
 [<kbd><img src="../examples/snapshots/spline-function.jpg" width="300"></kbd>](../examples/spline-function.html)
+[<kbd><img src="../examples/snapshots/spline-html.jpg" width="300"></kbd>](../examples/spline-html.html)
 
 
 

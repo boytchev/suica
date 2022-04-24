@@ -91,6 +91,9 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 
 	update( path/*, closed*/ )
 	{
+		
+console.log('path',path);
+		
 		var tubularSegments = this.parameters.tubularSegments,
 			radialSegments = this.parameters.radialSegments,
 			radius = this.parameters.radius;
