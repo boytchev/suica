@@ -1132,6 +1132,10 @@ can also model [solids of revolution](https://en.wikipedia.org/wiki/Solid_of_rev
 The curve is a [spline](#spline) function but can also be an array of points or
 user-defined function *f(u)* on which spline is automatically constructed:
 
+```html
+HTML:
+<tube curve="knot" radius="4" count="300">
+```
 ```js
 JS:
 tube( [0,0,0], [[50,0,0], [-50,0,0]], 5, 2 );
@@ -1139,9 +1143,10 @@ tube( [0,0,0], [[50,0,0], [-50,0,0]], 5, 2 );
 
 [<kbd><img src="../examples/snapshots/tube.jpg" width="300"></kbd>](../examples/tube.html)
 [<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="300"></kbd>](../examples/tube-lathe.html)
+[<kbd><img src="../examples/snapshots/tube-html.jpg" width="300"></kbd>](../examples/tube-html.html)
 
 
-The `radius` of a tube is the third paraeter. It is used in case there is no
+The `radius` of a tube is the third parameter. It is used in case there is no
 radius encoded in the spline curve itself:
 
 - if the spline points are 3D, then the *radius* parameter is used as a constant radius of the whole tube

@@ -2506,6 +2506,27 @@ class HTMLParser
 	} // HTMLParser.parseTagPYRAMID
 
 
+	// <tube id="..." center="..." curve="..." radius="..." count="..." color="..." size="...">
+	parseTagTUBE( suica, elem )
+	{
+		var p = suica.tube(
+			elem.getAttribute('center') || Suica.DEFAULT.TUBE.CENTER,
+			elem.getAttribute('curve') || Suica.DEFAULT.TUBE.POINTS,
+			elem.getAttribute('radius') || Suica.DEFAULT.TUBE.RADIUS,
+			elem.getAttribute('count') || Suica.DEFAULT.TUBE.COUNT,
+			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.TUBE.SIZE ),
+			elem.getAttribute('color') || Suica.DEFAULT.TUBE.COLOR
+		);
+		
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+
+		elem.suicaObject = p;
+		
+		return p;
+		
+	} // HTMLParser.parseTagTUBE
+
+
 	// <spline src="x,y,z; x,y,z; x,y,z; ..." interpolating="..." approximating="..." open="..." closed="...">
 	// <spline src="func_name" interpolating="..." approximating="..." open="..." closed="...">
 	parseTagSPLINE( suica, elem )
@@ -5332,8 +5353,6 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 
 	update( path/*, closed*/ )
 	{
-		
-console.log('path',path);
 		
 		var tubularSegments = this.parameters.tubularSegments,
 			radialSegments = this.parameters.radialSegments,

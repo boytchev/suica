@@ -126,6 +126,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/tube.jpg" width="400"></kbd>](../examples/tube.html)
 [<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="400"></kbd>](../examples/tube-lathe.html)
 
+[<kbd><img src="../examples/snapshots/tube-html.jpg" width="400"></kbd>](../examples/tube-html.html)
+
 [<kbd><img src="../examples/snapshots/tube-open-closed.jpg" width="400"></kbd>](../examples/tube-open-closed.html)
 [<kbd><img src="../examples/snapshots/tube-variations.jpg" width="400"></kbd>](../examples/tube-variations.html)
 
