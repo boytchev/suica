@@ -74,9 +74,9 @@ order to allow easy local development.
 
 ### Tag &lt;suica&gt;
 
-Tag. Defines a 3D drawing canvas. `<suica>` is the main Suica tag is . All other
-Suica-specific HTML tags are recognized only if used between `<suica>` and
-`</suica>`
+Tag and variable. Defines a 3D drawing canvas. `<suica>` is the main Suica tag.
+All other Suica-specific HTML tags are recognized only if used between `<suica>`
+and `</suica>`
 
 ```html
 <suica>
@@ -99,6 +99,10 @@ Example of creating drawing canvases with different sizes:
 
 The orientation of the coordinate system is set via attribute `orientation`.
 More information is available in section [Coordinate system](#coordinate-system).
+
+The global variable `suica` is set to reference the last created Suica instance.
+It is used to access the Suica canvas if it has no name.
+
 
 
 ### Background

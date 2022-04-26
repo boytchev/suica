@@ -21,7 +21,7 @@ Suica 2.-1 (220426)
 const DEBUG_CALLS = !false;
 const DEBUG_EVENTS = false;
 
-// last Suica instance
+// last (current) Suica instance
 var suica = null;
 
 
@@ -38,7 +38,7 @@ var suica = null;
 class Suica
 {
 	// current active Suica instance
-	static current;
+	//static current;
 	
 	// array of all Suicas
 	static allSuicas = [];
@@ -204,7 +204,7 @@ class Suica
 
 		// register this suica instance
 		window.suica = this;
-		Suica.current = this; // as current Suica
+		//Suica.current = this; // as current Suica
 		Suica.allSuicas.push( this ); // as one of all Suicas
 		window[this.id] = this; // as global variable
 		
@@ -233,7 +233,7 @@ class Suica
 		window[methodName] = function ( ...params )
 		{
 			Suica.precheck();
-			return Suica.current[methodName]( ...params );
+			return /*Suica.current*/window.suica[methodName]( ...params );
 		}
 	}
 	
@@ -707,7 +707,7 @@ class Suica
 	
 	static precheck()
 	{
-		if( !(Suica.current instanceof Suica) )
+		if( !(/*Suica.current*/window.suica instanceof Suica) )
 			throw 'error: No Suica instance is active';
 	} // Suica.precheck
 	
@@ -1131,12 +1131,12 @@ class Suica
 
 	static addEventListener( type, listener, aux )
 	{
-		Suica.current.addEventListener( type, listener, aux );
+		/*Suica.current*/window.suica.addEventListener( type, listener, aux );
 	}
 	
 	static removeEventListener( type, listener, aux )
 	{
-		Suica.current.removeEventListener( type, listener, aux );
+		/*Suica.current*/window.suica.removeEventListener( type, listener, aux );
 	}
 
 	
@@ -1244,7 +1244,7 @@ class Suica
 			Suica.eventCall( object, 'onclick', event );
 		}
 		
-		Suica.eventCall( Suica.current, 'onclick', event );
+		Suica.eventCall( /*Suica.current*/window.suica, 'onclick', event );
 		
 	} // Suica.onClick
 	
@@ -1288,73 +1288,73 @@ window.style = function( object, properties )
 window.lookAt = function( from = Suica.DEFAULT.LOOKAT.CAMERA.FROM, to = Suica.DEFAULT.LOOKAT.CAMERA.TO, up = Suica.orientations)
 {
 	Suica.precheck();
-	Suica.current.fullScreen( from, to, up );
+	/*Suica.current*/window.suica.lookAt( from, to, up );
 }
 	
 window.fullScreen = function( )
 {
 	Suica.precheck();
-	Suica.current.fullScreen(  );
+	/*Suica.current*/window.suica.fullScreen(  );
 }
 	
 window.fullWindow = function( )
 {
 	Suica.precheck();
-	Suica.current.fullWindow(  );
+	/*Suica.current*/window.suica.fullWindow(  );
 }
 	
 window.proactive = function( )
 {
 	Suica.precheck();
-	Suica.current.proactive(  );
+	/*Suica.current*/window.suica.proactive(  );
 }
 	
 window.anaglyph = function( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
 {
 	Suica.precheck();
-	Suica.current.anaglyph( distance );
+	/*Suica.current*/window.suica.anaglyph( distance );
 }
 	
 window.stereo = function( distance = Suica.DEFAULT.STEREO.DISTANCE )
 {
 	Suica.precheck();
-	Suica.current.stereo( distance );
+	/*Suica.current*/window.suica.stereo( distance );
 }
 
 window.perspective = function( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
 {
 	Suica.precheck();
-	Suica.current.perspective( near, far, fov );
+	/*Suica.current*/window.suica.perspective( near, far, fov );
 }
 	
 window.orthographic = function( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
 {
 	Suica.precheck();
-	Suica.current.orthographic( near, far );
+	/*Suica.current*/window.suica.orthographic( near, far );
 }
 	
 window.lookAt = function( from, to, up )
 {
 	Suica.precheck();
-	Suica.current.lookAt( from, to, up );
+	/*Suica.current*/window.suica.lookAt( from, to, up );
 }
 
 window.background = function( color=Suica.DEFAULT.BACKGROUND.COLOR )
 {
 	Suica.precheck();
-	Suica.current.background( color );
+	/*Suica.current*/window.suica.background( color );
 }
 
 window.oxyz = function( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 {
 	Suica.precheck();
-	Suica.current.oxyz( size, color );
+	/*Suica.current*/window.suica.oxyz( size, color );
 }
 
 window.demo = function( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
 {
 	Suica.precheck();
-	Suica.current.demo( distance, altitude );
+	/*Suica.current*/window.suica.demo( distance, altitude );
 }
 
 
@@ -1419,7 +1419,7 @@ window.findPosition = function( domEvent )
 window.allObjects = function( )
 {
 	Suica.precheck();
-	return Suica.current.allObjects( );
+	return /*Suica.current*/window.suica.allObjects( );
 }
 
 

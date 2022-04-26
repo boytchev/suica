@@ -98,13 +98,3 @@ class Cube extends Mesh
 	} // Cube.clone
 
 } // class Cube
-
-
-/*
-window.cube = function( ... params )
-{
-	Suica.precheck();
-	return Suica.current.cube( ... params );
-}
-*/
-

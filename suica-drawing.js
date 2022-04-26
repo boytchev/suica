@@ -180,7 +180,7 @@ class Drawing
 		if( !this.texture )
 		{
 			this.texture = new THREE.CanvasTexture( this.canvas );
-			this.texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+			this.texture.anisotropy = /*Suica.current*/window.suica.renderer.capabilities.getMaxAnisotropy();
 			this.texture.wrapS = THREE.RepeatWrapping;
 			this.texture.wrapT = THREE.RepeatWrapping;
 		}
@@ -308,7 +308,7 @@ window.image = function ( url = null )
 	texture.magFilter = THREE.LinearFilter;
 	texture.minFilter = THREE.LinearMipmapLinearFilter;
 
-	texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+	texture.anisotropy = /*Suica.current*/window.suica.renderer.capabilities.getMaxAnisotropy();
 
 	return texture;
 }

@@ -73,21 +73,3 @@ class Square extends Mesh
 
 } // class Square
 
-
-
-/*
-window.square = function(
-				center = Suica.DEFAULT.SQUARE.CENTER,
-				size   = Suica.DEFAULT.SQUARE.SIZE,
-				color  = Suica.DEFAULT.SQUARE.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.square( center, size, color );
-}
-*/
-
-// window.square = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.square( ...params );
-// }

@@ -376,17 +376,3 @@ class Group
 	} // Group.clone
 	
 } // class Group
-
-
-
-
-
-
-
-
-// window.group = function( ...groupElements )
-// {
-	// Suica.precheck();
-	// return Suica.current.group( ...groupElements );
-// }
-

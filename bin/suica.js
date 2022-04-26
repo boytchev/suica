@@ -22,7 +22,7 @@ Suica 2.-1 (220426)
 const DEBUG_CALLS = !false;
 const DEBUG_EVENTS = false;
 
-// last Suica instance
+// last (current) Suica instance
 var suica = null;
 
 
@@ -39,7 +39,7 @@ var suica = null;
 class Suica
 {
 	// current active Suica instance
-	static current;
+	//static current;
 	
 	// array of all Suicas
 	static allSuicas = [];
@@ -205,7 +205,7 @@ class Suica
 
 		// register this suica instance
 		window.suica = this;
-		Suica.current = this; // as current Suica
+		//Suica.current = this; // as current Suica
 		Suica.allSuicas.push( this ); // as one of all Suicas
 		window[this.id] = this; // as global variable
 		
@@ -234,7 +234,7 @@ class Suica
 		window[methodName] = function ( ...params )
 		{
 			Suica.precheck();
-			return Suica.current[methodName]( ...params );
+			return /*Suica.current*/window.suica[methodName]( ...params );
 		}
 	}
 	
@@ -708,7 +708,7 @@ class Suica
 	
 	static precheck()
 	{
-		if( !(Suica.current instanceof Suica) )
+		if( !(/*Suica.current*/window.suica instanceof Suica) )
 			throw 'error: No Suica instance is active';
 	} // Suica.precheck
 	
@@ -1132,12 +1132,12 @@ class Suica
 
 	static addEventListener( type, listener, aux )
 	{
-		Suica.current.addEventListener( type, listener, aux );
+		/*Suica.current*/window.suica.addEventListener( type, listener, aux );
 	}
 	
 	static removeEventListener( type, listener, aux )
 	{
-		Suica.current.removeEventListener( type, listener, aux );
+		/*Suica.current*/window.suica.removeEventListener( type, listener, aux );
 	}
 
 	
@@ -1245,7 +1245,7 @@ class Suica
 			Suica.eventCall( object, 'onclick', event );
 		}
 		
-		Suica.eventCall( Suica.current, 'onclick', event );
+		Suica.eventCall( /*Suica.current*/window.suica, 'onclick', event );
 		
 	} // Suica.onClick
 	
@@ -1289,73 +1289,73 @@ window.style = function( object, properties )
 window.lookAt = function( from = Suica.DEFAULT.LOOKAT.CAMERA.FROM, to = Suica.DEFAULT.LOOKAT.CAMERA.TO, up = Suica.orientations)
 {
 	Suica.precheck();
-	Suica.current.fullScreen( from, to, up );
+	/*Suica.current*/window.suica.lookAt( from, to, up );
 }
 	
 window.fullScreen = function( )
 {
 	Suica.precheck();
-	Suica.current.fullScreen(  );
+	/*Suica.current*/window.suica.fullScreen(  );
 }
 	
 window.fullWindow = function( )
 {
 	Suica.precheck();
-	Suica.current.fullWindow(  );
+	/*Suica.current*/window.suica.fullWindow(  );
 }
 	
 window.proactive = function( )
 {
 	Suica.precheck();
-	Suica.current.proactive(  );
+	/*Suica.current*/window.suica.proactive(  );
 }
 	
 window.anaglyph = function( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
 {
 	Suica.precheck();
-	Suica.current.anaglyph( distance );
+	/*Suica.current*/window.suica.anaglyph( distance );
 }
 	
 window.stereo = function( distance = Suica.DEFAULT.STEREO.DISTANCE )
 {
 	Suica.precheck();
-	Suica.current.stereo( distance );
+	/*Suica.current*/window.suica.stereo( distance );
 }
 
 window.perspective = function( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
 {
 	Suica.precheck();
-	Suica.current.perspective( near, far, fov );
+	/*Suica.current*/window.suica.perspective( near, far, fov );
 }
 	
 window.orthographic = function( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
 {
 	Suica.precheck();
-	Suica.current.orthographic( near, far );
+	/*Suica.current*/window.suica.orthographic( near, far );
 }
 	
 window.lookAt = function( from, to, up )
 {
 	Suica.precheck();
-	Suica.current.lookAt( from, to, up );
+	/*Suica.current*/window.suica.lookAt( from, to, up );
 }
 
 window.background = function( color=Suica.DEFAULT.BACKGROUND.COLOR )
 {
 	Suica.precheck();
-	Suica.current.background( color );
+	/*Suica.current*/window.suica.background( color );
 }
 
 window.oxyz = function( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
 {
 	Suica.precheck();
-	Suica.current.oxyz( size, color );
+	/*Suica.current*/window.suica.oxyz( size, color );
 }
 
 window.demo = function( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
 {
 	Suica.precheck();
-	Suica.current.demo( distance, altitude );
+	/*Suica.current*/window.suica.demo( distance, altitude );
 }
 
 
@@ -1420,7 +1420,7 @@ window.findPosition = function( domEvent )
 window.allObjects = function( )
 {
 	Suica.precheck();
-	return Suica.current.allObjects( );
+	return /*Suica.current*/window.suica.allObjects( );
 }
 
 
@@ -2961,7 +2961,7 @@ class Drawing
 		if( !this.texture )
 		{
 			this.texture = new THREE.CanvasTexture( this.canvas );
-			this.texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+			this.texture.anisotropy = /*Suica.current*/window.suica.renderer.capabilities.getMaxAnisotropy();
 			this.texture.wrapS = THREE.RepeatWrapping;
 			this.texture.wrapT = THREE.RepeatWrapping;
 		}
@@ -3089,7 +3089,7 @@ window.image = function ( url = null )
 	texture.magFilter = THREE.LinearFilter;
 	texture.minFilter = THREE.LinearMipmapLinearFilter;
 
-	texture.anisotropy = Suica.current.renderer.capabilities.getMaxAnisotropy();
+	texture.anisotropy = /*Suica.current*/window.suica.renderer.capabilities.getMaxAnisotropy();
 
 	return texture;
 }
@@ -3769,24 +3769,6 @@ class Point extends Mesh
 	
 } // class Point
 
-
-
-/*
-window.point = function(
-					center = Suica.DEFAULT.POINT.CENTER,
-					size   = Suica.DEFAULT.POINT.SIZE,
-					color  = Suica.DEFAULT.POINT.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.point( center, size, color );
-}
-*/
-
-// window.point = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.point( ...params );
-// }
 ﻿//
 // Suica 2.0 Line
 // CC-3.0-SA-NC
@@ -3985,24 +3967,6 @@ class Line extends Mesh
 	
 } // class Line
 
-
-
-/*
-window.line = function(
-					center = Suica.DEFAULT.LINE.CENTER,
-					to     = Suica.DEFAULT.LINE.TO,
-					color  = Suica.DEFAULT.LINE.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.line( center, to, color );
-}
-*/
-
-// window.line = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.line( ...params );
-// }
 ﻿//
 // Suica 2.0 Square
 // CC-3.0-SA-NC
@@ -4078,24 +4042,6 @@ class Square extends Mesh
 
 } // class Square
 
-
-
-/*
-window.square = function(
-				center = Suica.DEFAULT.SQUARE.CENTER,
-				size   = Suica.DEFAULT.SQUARE.SIZE,
-				color  = Suica.DEFAULT.SQUARE.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.square( center, size, color );
-}
-*/
-
-// window.square = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.square( ...params );
-// }
 ﻿//
 // Suica 2.0 Cube
 // CC-3.0-SA-NC
@@ -4196,16 +4142,6 @@ class Cube extends Mesh
 	} // Cube.clone
 
 } // class Cube
-
-
-/*
-window.cube = function( ... params )
-{
-	Suica.precheck();
-	return Suica.current.cube( ... params );
-}
-*/
-
 ﻿//
 // Suica 2.0 Circle
 // CC-3.0-SA-NC
@@ -4334,46 +4270,7 @@ class Polygon extends Mesh
 	
 } // class Polygon
 
-
-
-/*
-window.circle = function(
-				center = Suica.DEFAULT.CIRCLE.CENTER,
-				size   = Suica.DEFAULT.CIRCLE.SIZE,
-				color  = Suica.DEFAULT.CIRCLE.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.circle( center, size, color );
-}
-
-
-
-
-window.polygon = function(
-				count = Suica.DEFAULT.POLYGON.COUNT,
-				center = Suica.DEFAULT.POLYGON.CENTER,
-				size   = Suica.DEFAULT.POLYGON.SIZE,
-				color  = Suica.DEFAULT.POLYGON.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.polygon( count, center, size, color );
-}
-*/
-
-// window.circle = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.circle( ...params );
-// }
-
-
-
-
-// window.polygon = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.polygon( ...params );
-// }﻿//
+﻿//
 // Suica 2.0 Sphere
 // CC-3.0-SA-NC
 //
@@ -4437,24 +4334,6 @@ class Sphere extends Mesh
 	
 } // class Sphere
 
-
-
-/*
-window.sphere = function(
-				center = Suica.DEFAULT.SPHERE.CENTER,
-				size   = Suica.DEFAULT.SPHERE.SIZE,
-				color  = Suica.DEFAULT.SPHERE.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.sphere( center, size, color );
-}
-*/
-
-// window.sphere = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.sphere( ...params );
-// }
 ﻿//
 // Suica 2.0 Cylinder
 // CC-3.0-SA-NC
@@ -4631,45 +4510,6 @@ class Prism extends Mesh
 	} // Prism.clone
 	
 } // class Prism
-
-
-
-/*
-window.cylinder = function(
-				center = Suica.DEFAULT.CYLINDER.CENTER,
-				size   = Suica.DEFAULT.CYLINDER.SIZE,
-				color  = Suica.DEFAULT.CYLINDER.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.cylinder( center, size, color );
-}
-
-
-
-window.prism = function(
-				count = Suica.DEFAULT.PRISM.COUNT,
-				center = Suica.DEFAULT.PRISM.CENTER,
-				size   = Suica.DEFAULT.PRISM.SIZE,
-				color  = Suica.DEFAULT.PRISM.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.prism( count, center, size, color );
-}
-*/
-
-// window.cylinder = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.cylinder( ...params );
-// }
-
-
-
-// window.prism = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.prism( ...params );
-// }
 ﻿//
 // Suica 2.0 Cone
 // CC-3.0-SA-NC
@@ -4838,44 +4678,6 @@ class Pyramid extends Mesh
 	
 } // class Pyramid
 
-
-
-/*
-window.cone = function(
-				center = Suica.DEFAULT.CONE.CENTER,
-				size   = Suica.DEFAULT.CONE.SIZE,
-				color  = Suica.DEFAULT.CONE.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.cone( center, size, color );
-}
-
-
-
-window.pyramid = function(
-				count = Suica.DEFAULT.PYRAMID.COUNT,
-				center = Suica.DEFAULT.PYRAMID.CENTER,
-				size   = Suica.DEFAULT.PYRAMID.SIZE,
-				color  = Suica.DEFAULT.PYRAMID.COLOR )
-{
-	Suica.precheck();
-	return Suica.current.pyramid( count, center, size, color );
-}
-*/
-
-// window.cone = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.cone( ...params );
-// }
-
-
-
-// window.pyramid = function( ...params )
-// {
-	// Suica.precheck();
-	// return Suica.current.pyramid( ...params );
-// }
 ﻿//
 // Suica 2.0 Group
 // CC-3.0-SA-NC
@@ -5254,20 +5056,6 @@ class Group
 	} // Group.clone
 	
 } // class Group
-
-
-
-
-
-
-
-
-// window.group = function( ...groupElements )
-// {
-	// Suica.precheck();
-	// return Suica.current.group( ...groupElements );
-// }
-
 ﻿//
 // Suica 2.0 Tube
 // CC-3.0-SA-NC
