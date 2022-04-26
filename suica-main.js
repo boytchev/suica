@@ -6,7 +6,15 @@
 
 
 // show suica version
-console.log( `Suica 2.-1.46 (220421)` );
+console.log(`
+
+(\\/)
+( ..)		U speaks JS
+c(”)(”)		I can haz halp
+
+Suica 2.-1 (220426)
+
+`);
 
 
 // control flags

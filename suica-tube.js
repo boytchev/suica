@@ -191,9 +191,36 @@ class Tube extends Mesh
 		this.color = color;
 		this.size = size;
 		this._radius = radius;
+		this._count = count;
 
 	} // Tube.constructor
 
+	get count( )
+	{
+		return this._count;
+	}
+	
+	set count( count )
+	{
+		var tubularSegments, radialSegments;
+		
+		count = Suica.parseSize( count );
+		if( Array.isArray(count) )
+		{
+			tubularSegments = count[0] || Suica.DEFAULT.TUBE.COUNT[0];
+			radialSegments  = count[1] || Suica.DEFAULT.TUBE.COUNT[1];
+		}
+		else
+		{
+			tubularSegments = count || Suica.DEFAULT.TUBE.COUNT[0];
+			radialSegments  = Suica.DEFAULT.TUBE.COUNT[1];
+		}
+		this._count = count;
+
+		this.threejs.geometry.dispose();
+		this.threejs.geometry = new SuicaTubeGeometry( new SuicaCurve( this._curve ), tubularSegments, radialSegments, this._radius );
+	}
+	
 	get radius( )
 	{
 		return this._radius;
