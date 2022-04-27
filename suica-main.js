@@ -12,7 +12,7 @@ console.log(`
 ( ..)		U speaks JS
 c(”)(”)		I can haz halp
 
-Suica 2.-1 (220426)
+Suica 2.-1 (220427)
 
 `);
 
