@@ -124,7 +124,6 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
 		
 		DRAWING: { SIZE:32, COLOR:null },
@@ -211,7 +210,7 @@ class Suica
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', /*'spline',*/ 'tube'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -934,11 +933,10 @@ class Suica
 	} // Suica.group
 
 
-	tube( center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius=Suica.DEFAULT.TUBE.RADIUS, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
+	tube( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Tube( this, center, curve, radius, count, size, color );
+		return new Tube( this, ...args );
 	} // Suica.tube
 	
 	
@@ -2449,12 +2447,12 @@ class HTMLParser
 	parseTagTUBE( suica, elem )
 	{
 		var p = suica.tube(
-			elem.getAttribute('center') || Suica.DEFAULT.TUBE.CENTER,
-			elem.getAttribute('curve') || Suica.DEFAULT.TUBE.POINTS,
-			elem.getAttribute('radius') || Suica.DEFAULT.TUBE.RADIUS,
-			elem.getAttribute('count') || Suica.DEFAULT.TUBE.COUNT,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.TUBE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.TUBE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('curve'),
+			elem.getAttribute('radius'),
+			elem.getAttribute('count'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
@@ -4828,6 +4826,7 @@ class Group
 // converts Suica spline, array of points or a path function into a THREE.Curve
 class SuicaCurve extends THREE.Curve
 {
+
 	constructor( curve )
 	{
 		super();
@@ -4976,26 +4975,32 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 
 class Tube extends Mesh
 {
-	constructor( suica, center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
+	static POINTS = []
+	static COUNT = [60,20];
+	static COLOR = 'lightsalmon';
+	static SIZE = 1;
+	static RADIUS = 5;
+	static CLOSE = false;
+
+	constructor( suica, center, curve, radius, count, size, color )
 	{
 		suica.parser?.parseTags();
-		suica.debugCall( 'tube', center, curve.name+'()', radius, count, size, color );
+		suica.debugCall( 'tube', center, curve?.name || curve, radius, count, size, color );
 
-		if( !radius && radius!==0 )
-			radius = Suica.DEFAULT.TUBE.RADIUS;
+		radius = Suica.parseNumber( radius, Tube.RADIUS );
 		
 		var tubularSegments, radialSegments;
 		
-		count = Suica.parseSize( count );
+		count = Suica.parseSize( count, Tube.COUNT );
 		if( Array.isArray(count) )
 		{
-			tubularSegments = count[0] || Suica.DEFAULT.TUBE.COUNT[0];
-			radialSegments  = count[1] || Suica.DEFAULT.TUBE.COUNT[1];
+			tubularSegments = Suica.parseSize( count[0], Tube.COUNT[0] );
+			radialSegments = Suica.parseSize( count[1], Tube.COUNT[1] );
 		}
 		else
 		{
-			tubularSegments = count || Suica.DEFAULT.TUBE.COUNT[0];
-			radialSegments  = Suica.DEFAULT.TUBE.COUNT[1];
+			tubularSegments = count;
+			radialSegments  = Tube.COUNT[1];
 		}
 
 		var geometry = new SuicaTubeGeometry( new SuicaCurve( curve ), tubularSegments, radialSegments, radius );
@@ -5006,9 +5011,9 @@ class Tube extends Mesh
 		);
 		
 		this._curve = curve;
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Tube.SIZE );
+		this.color = Suica.parseColor( color, Tube.COLOR);
 		this._radius = radius;
 		this._count = count;
 
@@ -5026,13 +5031,13 @@ class Tube extends Mesh
 		count = Suica.parseSize( count );
 		if( Array.isArray(count) )
 		{
-			tubularSegments = count[0] || Suica.DEFAULT.TUBE.COUNT[0];
-			radialSegments  = count[1] || Suica.DEFAULT.TUBE.COUNT[1];
+			tubularSegments = Suica.parseSize( count[0], Tube.COUNT[0] );
+			radialSegments = Suica.parseSize( count[1], Tube.COUNT[1] );
 		}
 		else
 		{
-			tubularSegments = count || Suica.DEFAULT.TUBE.COUNT[0];
-			radialSegments  = Suica.DEFAULT.TUBE.COUNT[1];
+			tubularSegments = count;
+			radialSegments  = Tube.COUNT[1];
 		}
 		this._count = count;
 
@@ -5047,6 +5052,7 @@ class Tube extends Mesh
 
 	set radius( radius )
 	{
+		radius = Suica.parseNumber( radius );
 		this._radius = radius;
 		this.threejs.geometry.parameters.radius = radius;
 		this.threejs.geometry.update( new SuicaCurve( this._curve ) );

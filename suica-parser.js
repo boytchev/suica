@@ -529,12 +529,12 @@ class HTMLParser
 	parseTagTUBE( suica, elem )
 	{
 		var p = suica.tube(
-			elem.getAttribute('center') || Suica.DEFAULT.TUBE.CENTER,
-			elem.getAttribute('curve') || Suica.DEFAULT.TUBE.POINTS,
-			elem.getAttribute('radius') || Suica.DEFAULT.TUBE.RADIUS,
-			elem.getAttribute('count') || Suica.DEFAULT.TUBE.COUNT,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.TUBE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.TUBE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('curve'),
+			elem.getAttribute('radius'),
+			elem.getAttribute('count'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );

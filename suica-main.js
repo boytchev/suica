@@ -123,7 +123,6 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
 		
 		DRAWING: { SIZE:32, COLOR:null },
@@ -210,7 +209,7 @@ class Suica
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', /*'spline',*/ 'tube'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -933,11 +932,10 @@ class Suica
 	} // Suica.group
 
 
-	tube( center=Suica.DEFAULT.TUBE.CENTER, curve=Suica.DEFAULT.TUBE.POINTS, radius=Suica.DEFAULT.TUBE.RADIUS, count=Suica.DEFAULT.TUBE.COUNT, size=Suica.DEFAULT.TUBE.SIZE, color=Suica.DEFAULT.TUBE.COLOR )
+	tube( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Tube( this, center, curve, radius, count, size, color );
+		return new Tube( this, ...args );
 	} // Suica.tube
 	
 	
