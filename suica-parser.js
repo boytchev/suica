@@ -580,9 +580,9 @@ class HTMLParser
 	{
 		var p = suica.group();
 		
-		p.center = elem.getAttribute('center') || Suica.DEFAULT.GROUP.CENTER;
-		p.size = Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.GROUP.SIZE );
-		p.spin = elem.getAttribute('spin') || Suica.DEFAULT.GROUP.SPIN;
+		if( elem.hasAttribute('center') ) p.center = elem.getAttribute('center');
+		if( elem.hasAttribute('size') ) p.size = elem.getAttribute('size');
+		if( elem.hasAttribute('spin') ) p.spin = elem.getAttribute('spin');
 
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
 
@@ -591,6 +591,7 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagGROUP
+	
 	
 	// <clone id="..." src="..." center="..." color="..." size="..." spin="...">
 	parseTagCLONE( suica, elem )

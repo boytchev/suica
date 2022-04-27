@@ -17,6 +17,8 @@
 
 class Group
 {
+	static SIZE = [1,1,1];
+	
 	constructor( suica, ...groupElements )
 	{
 		suica.debugCall( 'group' );
@@ -214,6 +216,8 @@ class Group
 	{
 		this.suica.parser?.parseTags();
 		
+		size = Suica.parseSize( size, Group.SIZE );
+		
 		if( Array.isArray(size) )
 		{
 			if( size.length==0 )
@@ -286,6 +290,7 @@ class Group
 
 	set spin( spin )
 	{
+		console.log('set spin =',spin, '=', Suica.parseSize( spin ));
 		this.meshSpin = Suica.parseSize( spin );
 		this.updateOrientation();
 	}
@@ -361,6 +366,8 @@ class Group
 	
 	get clone( )
 	{
+		console.log('cloning',this.meshSpin);
+		
 		var object = new Group( this.suica );
 		for( var oneElement of this.groupElements )
 		{

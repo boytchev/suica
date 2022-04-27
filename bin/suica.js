@@ -124,7 +124,6 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
 		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
 		
@@ -2501,9 +2500,9 @@ class HTMLParser
 	{
 		var p = suica.group();
 		
-		p.center = elem.getAttribute('center') || Suica.DEFAULT.GROUP.CENTER;
-		p.size = Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.GROUP.SIZE );
-		p.spin = elem.getAttribute('spin') || Suica.DEFAULT.GROUP.SPIN;
+		if( elem.hasAttribute('center') ) p.center = elem.getAttribute('center');
+		if( elem.hasAttribute('size') ) p.size = elem.getAttribute('size');
+		if( elem.hasAttribute('spin') ) p.spin = elem.getAttribute('spin');
 
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
 
@@ -2512,6 +2511,7 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagGROUP
+	
 	
 	// <clone id="..." src="..." center="..." color="..." size="..." spin="...">
 	parseTagCLONE( suica, elem )
@@ -4451,6 +4451,8 @@ class Pyramid extends Mesh
 
 class Group
 {
+	static SIZE = [1,1,1];
+	
 	constructor( suica, ...groupElements )
 	{
 		suica.debugCall( 'group' );
@@ -4648,6 +4650,8 @@ class Group
 	{
 		this.suica.parser?.parseTags();
 		
+		size = Suica.parseSize( size, Group.SIZE );
+		
 		if( Array.isArray(size) )
 		{
 			if( size.length==0 )
@@ -4720,6 +4724,7 @@ class Group
 
 	set spin( spin )
 	{
+		console.log('set spin =',spin, '=', Suica.parseSize( spin ));
 		this.meshSpin = Suica.parseSize( spin );
 		this.updateOrientation();
 	}
@@ -4795,6 +4800,8 @@ class Group
 	
 	get clone( )
 	{
+		console.log('cloning',this.meshSpin);
+		
 		var object = new Group( this.suica );
 		for( var oneElement of this.groupElements )
 		{

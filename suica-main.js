@@ -123,7 +123,6 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
 		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
 		
