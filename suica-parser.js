@@ -492,9 +492,9 @@ class HTMLParser
 	parseTagCONE( suica, elem )
 	{
 		var p = suica.cone(
-			elem.getAttribute('center') || Suica.DEFAULT.CONE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CONE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
@@ -510,10 +510,10 @@ class HTMLParser
 	parseTagPYRAMID( suica, elem )
 	{
 		var p = suica.pyramid(
-			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
+			elem.getAttribute('count'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );

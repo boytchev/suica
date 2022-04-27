@@ -1,33 +1,20 @@
 ﻿//
-// Suica 2.0 Cone
+// Suica 2.0 Cone && Pyramid
 // CC-3.0-SA-NC
-//
-// cone( center, size, color )
-// pyramid( center, size, color )
-// pyramidFrame( center, size, color )
-//
-// <cone id="" center="" size="" color="" wireframe=""> 
-// <pyramid id="" center="" size="" color="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s)
-// width
-// height
-// depth
-// color	color [r,g,b]
-// wireframe
-// image	texture (drawing or canvas)
 //
 //===================================================
 
 
 class Pyramid extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static SIZE = 30;
+	static COUNT = 6;
+
 	constructor( suica, count, center, size, color, flatShading )
 	{
+		count = Suica.parseNumber( count, Pyramid.COUNT );
+		
 		suica.parser?.parseTags();
 		if( flatShading )
 			suica.debugCall( 'pyramid', count, center, size, color );
@@ -42,9 +29,9 @@ class Pyramid extends Mesh
 			new THREE.LineSegments( Pyramid.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Pyramid.SIZE);
+		this.color = Suica.parseColor( color, Pyramid.COLOR);
 		this.n = count;
 		this.flatShading = flatShading;
 

@@ -44,6 +44,7 @@ class Suica
 	static allSuicas = [];
 
 	static CIRCLECOUNT = 50;
+	static CONECOUNT = 50;
 
 	// coordinate system orientations
 	static OX = new THREE.Vector3(1,0,0);
@@ -123,9 +124,7 @@ class Suica
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
 		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
-		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0, SPIN:[0,0,0] },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
-		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0, SPIN:[0,0,0] },
 		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
 		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
@@ -919,19 +918,17 @@ class Suica
 	} // Suica.prims
 	
 
-	cone( center=Suica.DEFAULT.CONE.CENTER, size=Suica.DEFAULT.CONE.SIZE, color=Suica.DEFAULT.CONE.COLOR )
+	cone( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Pyramid( this, Suica.DEFAULT.CONE.COUNT, center, size, color, false );
+		return new Pyramid( this, Suica.CONECOUNT, ...args, false );
 	} // Suica.cone
 	
 
-	pyramid( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.COLOR )
+	pyramid( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Pyramid( this, count, center, size, color, true );
+		return new Pyramid( this, ...args, true );
 	} // Suica.pyramid
 
 	

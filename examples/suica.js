@@ -45,6 +45,7 @@ class Suica
 	static allSuicas = [];
 
 	static CIRCLECOUNT = 50;
+	static CONECOUNT = 50;
 
 	// coordinate system orientations
 	static OX = new THREE.Vector3(1,0,0);
@@ -124,9 +125,7 @@ class Suica
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
 		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
-		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0, SPIN:[0,0,0] },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
-		PYRAMID: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 0, SPIN:[0,0,0] },
 		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
 		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
@@ -920,19 +919,17 @@ class Suica
 	} // Suica.prims
 	
 
-	cone( center=Suica.DEFAULT.CONE.CENTER, size=Suica.DEFAULT.CONE.SIZE, color=Suica.DEFAULT.CONE.COLOR )
+	cone( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Pyramid( this, Suica.DEFAULT.CONE.COUNT, center, size, color, false );
+		return new Pyramid( this, Suica.CONECOUNT, ...args, false );
 	} // Suica.cone
 	
 
-	pyramid( count=Suica.DEFAULT.PYRAMID.COUNT, center=Suica.DEFAULT.PYRAMID.CENTER, size=Suica.DEFAULT.PYRAMID.SIZE, color=Suica.DEFAULT.PYRAMID.COLOR )
+	pyramid( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Pyramid( this, count, center, size, color, true );
+		return new Pyramid( this, ...args, true );
 	} // Suica.pyramid
 
 	
@@ -2422,9 +2419,9 @@ class HTMLParser
 	parseTagCONE( suica, elem )
 	{
 		var p = suica.cone(
-			elem.getAttribute('center') || Suica.DEFAULT.CONE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CONE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CONE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
@@ -2440,10 +2437,10 @@ class HTMLParser
 	parseTagPYRAMID( suica, elem )
 	{
 		var p = suica.pyramid(
-			elem.getAttribute('count') || Suica.DEFAULT.PYRAMID.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PYRAMID.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PYRAMID.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PYRAMID.COLOR
+			elem.getAttribute('count'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
@@ -4298,35 +4295,22 @@ class Prism extends Mesh
 	
 } // class Prism
 ﻿//
-// Suica 2.0 Cone
+// Suica 2.0 Cone && Pyramid
 // CC-3.0-SA-NC
-//
-// cone( center, size, color )
-// pyramid( center, size, color )
-// pyramidFrame( center, size, color )
-//
-// <cone id="" center="" size="" color="" wireframe=""> 
-// <pyramid id="" center="" size="" color="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s)
-// width
-// height
-// depth
-// color	color [r,g,b]
-// wireframe
-// image	texture (drawing or canvas)
 //
 //===================================================
 
 
 class Pyramid extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static SIZE = 30;
+	static COUNT = 6;
+
 	constructor( suica, count, center, size, color, flatShading )
 	{
+		count = Suica.parseNumber( count, Pyramid.COUNT );
+		
 		suica.parser?.parseTags();
 		if( flatShading )
 			suica.debugCall( 'pyramid', count, center, size, color );
@@ -4341,9 +4325,9 @@ class Pyramid extends Mesh
 			new THREE.LineSegments( Pyramid.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Pyramid.SIZE);
+		this.color = Suica.parseColor( color, Pyramid.COLOR);
 		this.n = count;
 		this.flatShading = flatShading;
 
