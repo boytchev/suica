@@ -1,34 +1,21 @@
 ﻿//
-// Suica 2.0 Circle
+// Suica 2.0 Circle & Polygon
 // CC-3.0-SA-NC
-//
-// circle( center, size, color )
-//
-// <circle id="" center="" size="" color="" wireframe=""> 
-// <circle x="" y="" z="">
-// <circle width="" height="">
-// <polygon id="" count="..." center="" size="" color="" wireframe=""> 
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s) of edge
-// width
-// height
-// color	color [r,g,b]
-// wireframe
-// image	texture (drawing or canvas)
 //
 //===================================================
 
 
 class Polygon extends Mesh
 {	
+	static COLOR = 'lightsalmon';
+	static FRAMECOLOR = 'black';
+	static SIZE = 30;
+	static COUNT = 3;
+
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CIRCLE.COUNT )
+		if( count < Suica.CIRCLECOUNT )
 			suica.debugCall( 'polygon', count, center, size, color );
 		else
 			suica.debugCall( 'circle', center, size, color );
@@ -41,10 +28,10 @@ class Polygon extends Mesh
 			new THREE.LineLoop( Polygon.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Polygon.SIZE);
+		this.color = Suica.parseColor( color, Polygon.COLOR);
+		this.n = Suica.parseNumber( count, Polygon.COUNT );
 
 	} // Polygon.constructor
 

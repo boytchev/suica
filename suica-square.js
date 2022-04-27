@@ -2,28 +2,14 @@
 // Suica 2.0 Square
 // CC-3.0-SA-NC
 //
-// square( center, size, color )
-//
-// <square id="" center="" size="" color="" wireframe="">
-// <square x="" y="" z="">
-// <square width="" height="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s) of edge
-// width
-// height
-// color	color [r,g,b]
-// wireframe true (wireframe) or false (solid)
-// image	texture (drawing or canvas)
-//
 //===================================================
 
 
 class Square extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static FRAMECOLOR = 'black';
+	static SIZE = 30;
 	
 	constructor( suica, center, size, color )
 	{
@@ -51,9 +37,9 @@ class Square extends Mesh
 			/*frame*/ new THREE.LineSegments( suica._.frameGeometry.square, Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter(center);
+		this.size = Suica.parseSize(size, Square.SIZE);
+		this.color = Suica.parseColor(color, Square.COLOR);
 		
 	} // Square.constructor
 

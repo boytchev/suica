@@ -43,6 +43,8 @@ class Suica
 	// array of all Suicas
 	static allSuicas = [];
 
+	static CIRCLECOUNT = 50;
+
 	// coordinate system orientations
 	static OX = new THREE.Vector3(1,0,0);
 	static OY = new THREE.Vector3(0,1,0);
@@ -122,9 +124,6 @@ class Suica
 
 		POINT: { CENTER:[0,0,0], COLOR:'black', SIZE:7, SPIN:[0,0,0] },
 		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0], SPIN:[0,0,0] },
-		SQUARE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, SPIN:[0,0,0] },
-		CIRCLE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:50, SPIN:[0,0,0] },
-		POLYGON: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:3, SPIN:[0,0,0] },
 		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
 		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0, SPIN:[0,0,0] },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
@@ -805,6 +804,16 @@ class Suica
 	} // Suica.parseCenter
 	
 	
+	static parseNumber( data, defaultValue )
+	{
+		// empty
+		if( data===null || data==='' || data===undefined  )
+			return defaultValue;
+
+		return Suica.evaluate( data );
+	} // Suica.parseNumber
+	
+	
 	static parseSize( data, defaultValue )
 	{
 		// empty
@@ -917,11 +926,11 @@ class Suica
 	} // Suica.line
 	
 	
-	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
+	square( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Square( this, center, size, color );
+		return new Square( this, ...args );
 	} // Suica.square
 	
 
@@ -933,19 +942,19 @@ class Suica
 	} // Suica.cube
 	
 	
-	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
+	circle( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
+		return new Polygon( this, Suica.CIRCLECOUNT, ...args );
 	} // Suica.circle
 	
 	
-	polygon( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.POLYGON.CENTER, size=Suica.DEFAULT.POLYGON.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
+	polygon( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Polygon( this, count, center, size, color );
+		return new Polygon( this, ...args );
 	} // Suica.polygon
 	
 	

@@ -44,6 +44,8 @@ class Suica
 	// array of all Suicas
 	static allSuicas = [];
 
+	static CIRCLECOUNT = 50;
+
 	// coordinate system orientations
 	static OX = new THREE.Vector3(1,0,0);
 	static OY = new THREE.Vector3(0,1,0);
@@ -123,9 +125,6 @@ class Suica
 
 		POINT: { CENTER:[0,0,0], COLOR:'black', SIZE:7, SPIN:[0,0,0] },
 		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0], SPIN:[0,0,0] },
-		SQUARE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, SPIN:[0,0,0] },
-		CIRCLE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:50, SPIN:[0,0,0] },
-		POLYGON: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:3, SPIN:[0,0,0] },
 		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
 		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0, SPIN:[0,0,0] },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
@@ -806,6 +805,16 @@ class Suica
 	} // Suica.parseCenter
 	
 	
+	static parseNumber( data, defaultValue )
+	{
+		// empty
+		if( data===null || data==='' || data===undefined  )
+			return defaultValue;
+
+		return Suica.evaluate( data );
+	} // Suica.parseNumber
+	
+	
 	static parseSize( data, defaultValue )
 	{
 		// empty
@@ -918,11 +927,11 @@ class Suica
 	} // Suica.line
 	
 	
-	square( center=Suica.DEFAULT.SQUARE.CENTER, size=Suica.DEFAULT.SQUARE.SIZE, color=Suica.DEFAULT.SQUARE.COLOR )
+	square( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Square( this, center, size, color );
+		return new Square( this, ...args );
 	} // Suica.square
 	
 
@@ -934,19 +943,19 @@ class Suica
 	} // Suica.cube
 	
 	
-	circle( center=Suica.DEFAULT.CIRCLE.CENTER, size=Suica.DEFAULT.CIRCLE.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
+	circle( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Polygon( this, Suica.DEFAULT.CIRCLE.COUNT, center, size, color );
+		return new Polygon( this, Suica.CIRCLECOUNT, ...args );
 	} // Suica.circle
 	
 	
-	polygon( count = Suica.DEFAULT.POLYGON.COUNT, center=Suica.DEFAULT.POLYGON.CENTER, size=Suica.DEFAULT.POLYGON.SIZE, color=Suica.DEFAULT.CIRCLE.COLOR )
+	polygon( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Polygon( this, count, center, size, color );
+		return new Polygon( this, ...args );
 	} // Suica.polygon
 	
 	
@@ -2346,9 +2355,9 @@ class HTMLParser
 	parseTagSQUARE( suica, elem )
 	{
 		var p = suica.square(
-			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
@@ -2382,9 +2391,9 @@ class HTMLParser
 	parseTagCIRCLE( suica, elem )
 	{
 		var p = suica.circle(
-			elem.getAttribute('center') || Suica.DEFAULT.CIRCLE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CIRCLE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
@@ -2400,10 +2409,10 @@ class HTMLParser
 	parseTagPOLYGON( suica, elem )
 	{
 		var p = suica.polygon(
-			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
+			elem.getAttribute('count'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
@@ -3967,28 +3976,14 @@ class Line extends Mesh
 // Suica 2.0 Square
 // CC-3.0-SA-NC
 //
-// square( center, size, color )
-//
-// <square id="" center="" size="" color="" wireframe="">
-// <square x="" y="" z="">
-// <square width="" height="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s) of edge
-// width
-// height
-// color	color [r,g,b]
-// wireframe true (wireframe) or false (solid)
-// image	texture (drawing or canvas)
-//
 //===================================================
 
 
 class Square extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static FRAMECOLOR = 'black';
+	static SIZE = 30;
 	
 	constructor( suica, center, size, color )
 	{
@@ -4016,9 +4011,9 @@ class Square extends Mesh
 			/*frame*/ new THREE.LineSegments( suica._.frameGeometry.square, Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter(center);
+		this.size = Suica.parseSize(size, Square.SIZE);
+		this.color = Suica.parseColor(color, Square.COLOR);
 		
 	} // Square.constructor
 
@@ -4123,36 +4118,23 @@ class Cube extends Mesh
 
 } // class Cube
 ﻿//
-// Suica 2.0 Circle
+// Suica 2.0 Circle & Polygon
 // CC-3.0-SA-NC
-//
-// circle( center, size, color )
-//
-// <circle id="" center="" size="" color="" wireframe=""> 
-// <circle x="" y="" z="">
-// <circle width="" height="">
-// <polygon id="" count="..." center="" size="" color="" wireframe=""> 
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s) of edge
-// width
-// height
-// color	color [r,g,b]
-// wireframe
-// image	texture (drawing or canvas)
 //
 //===================================================
 
 
 class Polygon extends Mesh
 {	
+	static COLOR = 'lightsalmon';
+	static FRAMECOLOR = 'black';
+	static SIZE = 30;
+	static COUNT = 3;
+
 	constructor( suica, count, center, size, color )
 	{
 		suica.parser?.parseTags();
-		if( count < Suica.DEFAULT.CIRCLE.COUNT )
+		if( count < Suica.CIRCLECOUNT )
 			suica.debugCall( 'polygon', count, center, size, color );
 		else
 			suica.debugCall( 'circle', center, size, color );
@@ -4165,10 +4147,10 @@ class Polygon extends Mesh
 			new THREE.LineLoop( Polygon.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
-		this.n = count;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Polygon.SIZE);
+		this.color = Suica.parseColor( color, Polygon.COLOR);
+		this.n = Suica.parseNumber( count, Polygon.COUNT );
 
 	} // Polygon.constructor
 

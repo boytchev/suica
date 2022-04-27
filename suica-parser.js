@@ -364,9 +364,9 @@ class HTMLParser
 	parseTagSQUARE( suica, elem )
 	{
 		var p = suica.square(
-			elem.getAttribute('center') || Suica.DEFAULT.SQUARE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SQUARE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.SQUARE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
@@ -400,9 +400,9 @@ class HTMLParser
 	parseTagCIRCLE( suica, elem )
 	{
 		var p = suica.circle(
-			elem.getAttribute('center') || Suica.DEFAULT.CIRCLE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CIRCLE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CIRCLE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
@@ -418,10 +418,10 @@ class HTMLParser
 	parseTagPOLYGON( suica, elem )
 	{
 		var p = suica.polygon(
-			elem.getAttribute('count') || Suica.DEFAULT.POLYGON.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.POLYGON.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.POLYGON.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.POLYGON.COLOR
+			elem.getAttribute('count'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
