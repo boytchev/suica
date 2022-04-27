@@ -325,9 +325,9 @@ class HTMLParser
 	parseTagPOINT( suica, elem )
 	{
 		var p = suica.point(
-			elem.getAttribute('center') || Suica.DEFAULT.POINT.CENTER,
-			elem.getAttribute('size') || Suica.DEFAULT.POINT.SIZE,
-			elem.getAttribute('color') || Suica.DEFAULT.POINT.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p );
@@ -343,9 +343,9 @@ class HTMLParser
 	parseTagLINE( suica, elem )
 	{
 		var p = suica.line(
-			elem.getAttribute('center') || elem.getAttribute('from') || Suica.DEFAULT.LINE.CENTER,
-			elem.getAttribute('to') || Suica.DEFAULT.LINE.TO,
-			elem.getAttribute('color') || Suica.DEFAULT.LINE.COLOR
+			elem.getAttribute('center') || elem.getAttribute('from'),
+			elem.getAttribute('to'),
+			elem.getAttribute('color')
 		);
 
 		suica.parserReadonly.parseAttributes( elem, p );

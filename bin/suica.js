@@ -123,8 +123,6 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		POINT: { CENTER:[0,0,0], COLOR:'black', SIZE:7, SPIN:[0,0,0] },
-		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0], SPIN:[0,0,0] },
 		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
 		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0, SPIN:[0,0,0] },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
@@ -911,19 +909,19 @@ class Suica
 	
 	
 	
-	point( center=Suica.DEFAULT.POINT.CENTER, size=Suica.DEFAULT.POINT.SIZE, color=Suica.DEFAULT.POINT.COLOR )
+	point( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Point( this, center, size, color );
+		return new Point( this, ...args );
 	} // Suica.point
 	
 	
-	line( center=Suica.DEFAULT.LINE.CENTER, to=Suica.DEFAULT.LINE.TO, color=Suica.DEFAULT.LINE.COLOR )
+	line( ...args )
 	{
 		this.parser?.parseTags();
 
-		return new Line( this, center, to, color );
+		return new Line( this, ...args );
 	} // Suica.line
 	
 	
@@ -2316,9 +2314,9 @@ class HTMLParser
 	parseTagPOINT( suica, elem )
 	{
 		var p = suica.point(
-			elem.getAttribute('center') || Suica.DEFAULT.POINT.CENTER,
-			elem.getAttribute('size') || Suica.DEFAULT.POINT.SIZE,
-			elem.getAttribute('color') || Suica.DEFAULT.POINT.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p );
@@ -2334,9 +2332,9 @@ class HTMLParser
 	parseTagLINE( suica, elem )
 	{
 		var p = suica.line(
-			elem.getAttribute('center') || elem.getAttribute('from') || Suica.DEFAULT.LINE.CENTER,
-			elem.getAttribute('to') || Suica.DEFAULT.LINE.TO,
-			elem.getAttribute('color') || Suica.DEFAULT.LINE.COLOR
+			elem.getAttribute('center') || elem.getAttribute('from'),
+			elem.getAttribute('to'),
+			elem.getAttribute('color')
 		);
 
 		suica.parserReadonly.parseAttributes( elem, p );
@@ -3687,24 +3685,14 @@ Mesh.createMaterials();
 // Suica 2.0 Point
 // CC-3.0-SA-NC
 //
-// point( center, size, color )
-//
-// <point id="" center="" size="" color="">
-// <point x="" y="" z="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		visual size
-// color	color [r,g,b]
-// image	texture (drawing or canvas)
-//
 //===================================================
 
 
 class Point extends Mesh
 {
+	static COLOR = 'black';
+	static SIZE = 7;
+
 	static solidGeometry;
 
 
@@ -3724,9 +3712,9 @@ class Point extends Mesh
 			null, // no wireframe
 		);
 
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Point.SIZE);
+		this.color = Suica.parseColor( color, Point.COLOR);
 		
 		this._drawing = this.threejs.material.map;
 
@@ -3778,24 +3766,14 @@ class Point extends Mesh
 // Suica 2.0 Line
 // CC-3.0-SA-NC
 //
-// line( center, to, color )
-//
-// <line id="" center="" to="" color="">
-// <line x="" y="" z="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// to		second point of line
-// size		visual size
-// color	color [r,g,b]
-//
 //===================================================
 
 
 class Line extends Mesh
 {
+	static COLOR = 'black';
+	static TO = [0,30,0];
+
 	static solidGeometry;
 
 
@@ -3816,9 +3794,9 @@ class Line extends Mesh
 			null, // no wireframe
 		);
 
-		this.center = center;
-		this.color = color;
-		this.to = to;
+		this.center = Suica.parseCenter( center );
+		this.to = Suica.parseCenter( to, Line.TO );
+		this.color = Suica.parseColor( color, Line.COLOR);
 
 	} // Line.constructor
 
@@ -3838,7 +3816,7 @@ class Line extends Mesh
 
 		center = Suica.parseCenter( center );
 		
-		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 0, center[0], center[1], center[2] );
+		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 0, ...center );
 		this.threejs.geometry.needsUpdate = true;
 	}
 
@@ -3872,91 +3850,10 @@ class Line extends Mesh
 
 		to = Suica.parseCenter( to );
 		
-		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 1, to[0], to[1], to[2] );
+		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 1, ...to );
 		this.threejs.geometry.needsUpdate = true;
 	}
 
-
-
-
-
-	get size()
-	{
-		throw 'error: size is not available for line';
-	}
-
-	set size( size )
-	{
-		throw 'error: size is not available for line';
-	}
-	
-	get width()
-	{
-		throw 'error: width is not available for line';
-	}
-
-	set width( width )
-	{
-		throw 'error: width is not available for line';
-	}
-	
-	get height()
-	{
-		throw 'error: height is not available for line';
-	}
-
-	set height( height )
-	{
-		throw 'error: height is not available for line';
-	}
-	
-	get depth()
-	{
-		throw 'error: depth is not available for line';
-	}
-
-	set depth( depth )
-	{
-		throw 'error: depth is not available for line';
-	}
-	
-	get x()
-	{
-		throw 'error: x is not available for line';
-	}
-
-	set x( x )
-	{
-		throw 'error: x is not available for line';
-	}
-	
-	get y()
-	{
-		throw 'error: y is not available for line';
-	}
-
-	set y( y )
-	{
-		throw 'error: y is not available for line';
-	}
-	
-	get z()
-	{
-		throw 'error: z is not available for line';
-	}
-
-	set z( z )
-	{
-		throw 'error: z is not available for line';
-	}
-
-
-	style( properties )
-	{
-		for( var n in properties ) this[n] = properties[n];
-		return this;
-		
-	} // Line.style
 
 
 	get clone( )

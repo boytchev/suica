@@ -2,24 +2,14 @@
 // Suica 2.0 Line
 // CC-3.0-SA-NC
 //
-// line( center, to, color )
-//
-// <line id="" center="" to="" color="">
-// <line x="" y="" z="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// to		second point of line
-// size		visual size
-// color	color [r,g,b]
-//
 //===================================================
 
 
 class Line extends Mesh
 {
+	static COLOR = 'black';
+	static TO = [0,30,0];
+
 	static solidGeometry;
 
 
@@ -40,9 +30,9 @@ class Line extends Mesh
 			null, // no wireframe
 		);
 
-		this.center = center;
-		this.color = color;
-		this.to = to;
+		this.center = Suica.parseCenter( center );
+		this.to = Suica.parseCenter( to, Line.TO );
+		this.color = Suica.parseColor( color, Line.COLOR);
 
 	} // Line.constructor
 
@@ -62,7 +52,7 @@ class Line extends Mesh
 
 		center = Suica.parseCenter( center );
 		
-		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 0, center[0], center[1], center[2] );
+		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 0, ...center );
 		this.threejs.geometry.needsUpdate = true;
 	}
 
@@ -96,91 +86,10 @@ class Line extends Mesh
 
 		to = Suica.parseCenter( to );
 		
-		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 1, to[0], to[1], to[2] );
+		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 1, ...to );
 		this.threejs.geometry.needsUpdate = true;
 	}
 
-
-
-
-
-	get size()
-	{
-		throw 'error: size is not available for line';
-	}
-
-	set size( size )
-	{
-		throw 'error: size is not available for line';
-	}
-	
-	get width()
-	{
-		throw 'error: width is not available for line';
-	}
-
-	set width( width )
-	{
-		throw 'error: width is not available for line';
-	}
-	
-	get height()
-	{
-		throw 'error: height is not available for line';
-	}
-
-	set height( height )
-	{
-		throw 'error: height is not available for line';
-	}
-	
-	get depth()
-	{
-		throw 'error: depth is not available for line';
-	}
-
-	set depth( depth )
-	{
-		throw 'error: depth is not available for line';
-	}
-	
-	get x()
-	{
-		throw 'error: x is not available for line';
-	}
-
-	set x( x )
-	{
-		throw 'error: x is not available for line';
-	}
-	
-	get y()
-	{
-		throw 'error: y is not available for line';
-	}
-
-	set y( y )
-	{
-		throw 'error: y is not available for line';
-	}
-	
-	get z()
-	{
-		throw 'error: z is not available for line';
-	}
-
-	set z( z )
-	{
-		throw 'error: z is not available for line';
-	}
-
-
-	style( properties )
-	{
-		for( var n in properties ) this[n] = properties[n];
-		return this;
-		
-	} // Line.style
 
 
 	get clone( )

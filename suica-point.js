@@ -2,24 +2,14 @@
 // Suica 2.0 Point
 // CC-3.0-SA-NC
 //
-// point( center, size, color )
-//
-// <point id="" center="" size="" color="">
-// <point x="" y="" z="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		visual size
-// color	color [r,g,b]
-// image	texture (drawing or canvas)
-//
 //===================================================
 
 
 class Point extends Mesh
 {
+	static COLOR = 'black';
+	static SIZE = 7;
+
 	static solidGeometry;
 
 
@@ -39,9 +29,9 @@ class Point extends Mesh
 			null, // no wireframe
 		);
 
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Point.SIZE);
+		this.color = Suica.parseColor( color, Point.COLOR);
 		
 		this._drawing = this.threejs.material.map;
 
