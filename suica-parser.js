@@ -382,9 +382,9 @@ class HTMLParser
 	parseTagCUBE( suica, elem )
 	{
 		var p = suica.cube(
-			elem.getAttribute('center') || Suica.DEFAULT.CUBE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CUBE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CUBE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
@@ -437,9 +437,9 @@ class HTMLParser
 	parseTagSPHERE( suica, elem )
 	{
 		var p = suica.sphere(
-			elem.getAttribute('center') || Suica.DEFAULT.SPHERE.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.SPHERE.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.SPHERE.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );

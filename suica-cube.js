@@ -2,38 +2,22 @@
 // Suica 2.0 Cube
 // CC-3.0-SA-NC
 //
-// cube( center, size, color )
-//
-// <cube id="" center="" size="" color="" wireframe="">
-// <cube x="" y="" z="">
-// <cube width="" height="" depth="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s) of edge
-// width
-// height
-// depth
-// color	color [r,g,b]
-// wireframe true (wireframe) or false (solid)
-// image	texture (drawing or canvas)
-//
 //===================================================
 
 
 class Cube extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static FRAMECOLOR = 'black';
+	static SIZE = 30;		
 	
 	constructor( suica, center, size, color )
 	{
-		
 		suica.parser?.parseTags();
 		suica.debugCall( 'cube', center, size, color );
 		
-		suica._.solidGeometry.cube = suica.flipNormal( new THREE.BoxGeometry( 1, 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) ); // array of geometries for different number of sides
-		suica._.frameGeometry.cube = new THREE.BufferGeometry(); // array of geometries for different number of sides
+		suica._.solidGeometry.cube = suica.flipNormal( new THREE.BoxGeometry( 1, 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) );
+		suica._.frameGeometry.cube = new THREE.BufferGeometry();
 
 		suica._.frameGeometry.cube.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
 			// bottom ring
@@ -77,9 +61,9 @@ class Cube extends Mesh
 			new THREE.LineSegments( suica._.frameGeometry.cube, Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter(center);
+		this.size = Suica.parseSize(size, Cube.SIZE);
+		this.color = Suica.parseColor(color, Cube.COLOR);
 		
 	} // Cube.constructor
 

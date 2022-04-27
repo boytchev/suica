@@ -122,11 +122,9 @@ class Suica
 
 		POINT: { CENTER:[0,0,0], COLOR:'black', SIZE:7, SPIN:[0,0,0] },
 		LINE: { CENTER:[0,0,0], COLOR:'black', TO:[0,30,0], SPIN:[0,0,0] },
-		CUBE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, SPIN:[0,0,0] },
 		SQUARE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, SPIN:[0,0,0] },
 		CIRCLE: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:50, SPIN:[0,0,0] },
 		POLYGON: { CENTER:[0,0,0], COLOR:'lightsalmon', FRAMECOLOR:'black', SIZE:30, COUNT:3, SPIN:[0,0,0] },
-		SPHERE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, SPIN:[0,0,0] },
 		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
 		CONE: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 0, SPIN:[0,0,0] },
 		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
@@ -222,19 +220,21 @@ class Suica
 		// register some local methods as public global functions
 		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', /*'spline',*/ 'tube'] )
 		{
-			Suica.register( methodName );
+			Suica.register( this, methodName );
 		}
 	} // Suica.constructor
 
 	
-	static register( methodName )
+	static register( suica, methodName )
 	{
-		console.log(`register('${methodName}')`);
+		//console.log(`register('${methodName}')`);
+
 		window[methodName] = function ( ...params )
 		{
 			Suica.precheck();
-			return /*Suica.current*/window.suica[methodName]( ...params );
+			return /*Suica.current*/suica[methodName]( ...params );
 		}
+		
 	}
 	
 	// create canvas element inside <suica>
@@ -731,102 +731,98 @@ class Suica
 	} // Suica.debugCall
 	
 	
-	static parseColor( color )
+	static evaluate( string )
 	{
-		if( color === null )
-			return color;
+		return Function('"use strict";return (' + string + ')')();
+	}
+	
+	static parseColor( data, defaultValue )
+	{
+		// empty
+		if( data===null || data==='' || data===undefined  )
+			return defaultValue;
+		
+		// Three.js color
+		if( data instanceof THREE.Color )
+			return data;
 
-		if( color instanceof THREE.Color )
-			return color;
+		// [r,g,b]
+		if( Array.isArray(data) )
+			return new THREE.Color( data[0], data[1]||0, data[2]||0 );
 
-		if( Array.isArray(color) )
-			return new THREE.Color( color[0], color[1]||0, color[2]||0 );
-
-		if( typeof color === 'string' || color instanceof String )
+		// string
+		if( typeof data === 'string' || data instanceof String )
 		{
-			color = color.toLowerCase().replaceAll(' ','');
-			
-			// 0x
-			if( color[0]=='0' && color[1]=='x' )
-				return new THREE.Color( Number(color) );
-
-			// rgb
-			if( color[0]=='r' && color[1]=='g' && color[2]=='b' )
-				return new THREE.Color( color );
-
-			// hsl
-			if( color[0]=='h' && color[1]=='s' && color[2]=='l' )
-			{
-				// hsl without %
-				color = color.substring(4).split(',');
-				return hsl( parseFloat(color[0]), parseFloat(color[1]), parseFloat(color[2]));
-			}
+			// try constant or function
+			// 0xFFFFFF, rgb(...), hsl(...)
+			if( data.indexOf('x')>=0 || data.indexOf('X')>=0  || data.indexOf('(')>=0 )
+				return Suica.evaluate( data );
 			
 			// r,g,b
-			if( color.indexOf(',') > 0 )
+			if( data.indexOf(',') > 0 )
 			{
-				color = color.split(',');
-				return new THREE.Color( Number(color[0]), Number(color[1]), Number(color[2]) );
+				return new THREE.Color( ...Suica.evaluate( '['+data+']' ) );
 			}
 		}
 
-		return new THREE.Color( color || 'white' );
-	} // Suica.parseCOlor
+		return new THREE.Color( data || 'white' );
+	} // Suica.parseColor
 	
 	
-	static parseCenter( center )
+	static parseCenter( data, defaultValue = [0,0,0] )
 	{
-		// center is object with center
-		if( center.center )
-			return center.center;
+		// empty
+		if( data===null || data==='' || data===undefined )
+			return defaultValue;
+		
+		// object with center
+		if( data.center )
+			return data.center;
 
-		// center is Three.js vector
-		if( center instanceof THREE.Vector3 )
-			return [center.x, center.y, center.z];
+		// array
+		if( data instanceof Array )
+			return data;
 
-		// center is array [x,y,z]
-		if( Array.isArray(center) )
-			return center;
+		// Three.js vector
+		if( data instanceof THREE.Vector3 )
+			return [data.x, data.y, data.z];
 
-		// center is string 'x,y,z'
-		if( typeof center === 'string' || center instanceof String )
+		// string 'x,y,z' or global object name
+		if( typeof data === 'string' || data instanceof String )
 		{
-			center = center.replaceAll(' ','');
-			
-			// x,y,z
-			if( center.indexOf(',') > 0 )
-			{
-				center = center.split(',').map(Number);
-				return [Number(center[0]), Number(center[1]), Number(center[2]) ];
-			}
-			
-			// object name - object exists and has center
-			if( window[center] && window[center].center )
-			{
-				return window[center].center;
-			}
+			// global object name
+			var global = window[data];
+			if( global && global.center )
+				return global.center;
+				
+			// 'x,y,z'
+			var center = Suica.evaluate( '['+data+']' );
+			if( center.length<3 ) center.push(0,0,0);
+			return center;
 		}
 
-		return center;
+		return data;
 	} // Suica.parseCenter
 	
 	
-	static parseSize( size )
+	static parseSize( data, defaultValue )
 	{
-		// size is string 'x,y,z'
-		if( typeof size === 'string' || size instanceof String )
+		// empty
+		if( data===null || data==='' || data===undefined  )
+			return defaultValue;
+
+		// string 'x,y,z'
+		if( typeof data === 'string' || data instanceof String )
 		{
-			size = size.replaceAll(' ','');
-			
-			if( size.indexOf(',') > 0 )
-			{
-				return size.split(',').map(Number);
-			}
+			// 'x,y,z'
+			var size = Suica.evaluate( '['+data+']' );
+			if( size.length == 1 )
+				return size[0]
 			else
-				return Number(size);
+				return size;
 		}
 
-		return size;
+		return data;
 	} // Suica.parseSize
 	
 	
@@ -930,11 +926,10 @@ class Suica
 	
 
 
-	cube( center=Suica.DEFAULT.CUBE.CENTER, size=Suica.DEFAULT.CUBE.SIZE, color=Suica.DEFAULT.CUBE.COLOR )
+	cube( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Cube( this, center, size, color );
+		return new Cube( this, ...args );
 	} // Suica.cube
 	
 	
@@ -954,13 +949,11 @@ class Suica
 	} // Suica.polygon
 	
 	
-	sphere( center=Suica.DEFAULT.SPHERE.CENTER, size=Suica.DEFAULT.SPHERE.SIZE, color=Suica.DEFAULT.SPHERE.COLOR )
+	sphere( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Sphere( this, center, size, color );
+		return new Sphere( this, ...args );
 	} // Suica.sphere
-	
 
 	cylinder( center=Suica.DEFAULT.CYLINDER.CENTER, size=Suica.DEFAULT.CYLINDER.SIZE, color=Suica.DEFAULT.CYLINDER.COLOR )
 	{
@@ -1457,7 +1450,7 @@ window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed, interpolan
 	if( typeof points === 'string' )
 	{
 		if( points.indexOf(',') >= 0 )
-			points = eval( '[['+points.replaceAll(';','],[')+']]' );
+			points = Suica.evaluate( '[['+points.replaceAll(';','],[')+']]' );
 		else
 			return function( t )
 			{

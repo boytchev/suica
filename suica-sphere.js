@@ -2,28 +2,15 @@
 // Suica 2.0 Sphere
 // CC-3.0-SA-NC
 //
-// sphere( center, size, color )
-//
-// <sphere id="" center="" size="" color="">
-// <sphere x="" y="" z="">
-// <sphere width="" height="" depth="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s) of edge
-// width
-// height
-// depth
-// color	color [r,g,b]
-// image	texture (drawing or canvas)
-//
 //===================================================
 
 
-class Sphere extends Mesh
+Sphere = class Sphere extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static SIZE = 30;
+	static COUNT = 50;
+	
 	constructor( suica, center, size, color )
 	{
 		suica.parser?.parseTags();
@@ -33,17 +20,17 @@ class Sphere extends Mesh
 
 		if( !suica._.solidGeometry.sphere )
 		{
-			suica._.solidGeometry.sphere = suica.flipNormal( new THREE.SphereGeometry( 0.5, Suica.DEFAULT.SPHERE.COUNT, Math.round(Suica.DEFAULT.SPHERE.COUNT/2) ).applyMatrix4( suica.orientation.MATRIX ) );
+			suica._.solidGeometry.sphere = suica.flipNormal( new THREE.SphereGeometry( 0.5, Sphere.COUNT, Math.round(Sphere.COUNT/2) ).applyMatrix4( suica.orientation.MATRIX ) );
 		}
 		
 		super( suica, 
 			new THREE.Mesh( suica._.solidGeometry.sphere, Mesh.solidMaterial.clone() ),
 			null, // no wireframe
 		);
-		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+
+		this.center = Suica.parseCenter(center);
+		this.size = Suica.parseSize(size, Sphere.SIZE);
+		this.color = Suica.parseColor(color, Sphere.COLOR);
 
 	} // Sphere.constructor
 
