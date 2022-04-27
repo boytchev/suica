@@ -753,14 +753,12 @@ class Suica
 		{
 			// try constant or function
 			// 0xFFFFFF, rgb(...), hsl(...)
-			if( data.indexOf('x')>=0 || data.indexOf('X')>=0  || data.indexOf('(')>=0 )
-				return Suica.evaluate( data );
+			if( data.indexOf('0x')>=0 || data.indexOf('0X')>=0  || data.indexOf('(')>=0 )
+				return Suica.parseColor( Suica.evaluate( data.toLowerCase() ) );
 			
 			// r,g,b
 			if( data.indexOf(',') > 0 )
-			{
 				return new THREE.Color( ...Suica.evaluate( '['+data+']' ) );
-			}
 		}
 
 		return new THREE.Color( data || 'white' );
@@ -849,63 +847,6 @@ class Suica
 
 		return radius;
 	} // Suica.parseRadius
-	
-	
-	static parseColorTest( )
-	{
-		function test( color )
-		{
-			var parsedColor = Suica.parseColor( color );
-			
-			if( parsedColor.r==1 && parsedColor.g==0 && parsedColor.b==0 )
-				return null;
-			
-			return color;
-		}
-		
-		var testValues = [
-				'red',
-				'Red',
-				'RED',
-				
-				0xFF0000,
-				0XFF0000,
-				'0XFF0000',
-				'0xFF0000',
-				'0xff0000',
-				'0Xff0000',
-				
-				[1, 0, 0],
-				'1,0,0',
-				'1, 0, 0',
-				
-				'rgb(255,0,0)',
-				'rgb( 255, 0, 0)',
-				' rgb ( 255 , 0 , 0 ) ',
-				'RGB( 255, 0, 0 )',
-				rgb( 255, 0, 0 ),
-				
-				'hsl(0,100,50)',
-				'hsl( 0, 100, 50 )',
-				' hsl ( 0 , 100 , 50 ) ',
-				'HSL( 0, 100, 50 )',
-				hsl( 0, 100, 50 ),		
-				
-				new THREE.Color('red')
-			]
-			
-		var summary = [];
-		for( var value of testValues )
-		{
-			var result = test( value );
-			if( result ) summary.push( result );
-		}
-		
-		if( summary.length )
-			console.log( `Suica::parseColorTest() - failed at: \n\t|${summary.join('|\n\t|')}|` );
-		else
-			console.log( `Suica::parseColorTest() - passed OK` );
-	} // Suica.parseColorTest
 	
 	
 	
