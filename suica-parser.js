@@ -455,9 +455,9 @@ class HTMLParser
 	parseTagCYLINDER( suica, elem )
 	{
 		var p = suica.cylinder(
-			elem.getAttribute('center') || Suica.DEFAULT.CYLINDER.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CYLINDER.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
@@ -473,10 +473,10 @@ class HTMLParser
 	parseTagPRISM( suica, elem )
 	{
 		var p = suica.prism(
-			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
+			elem.getAttribute('count'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );

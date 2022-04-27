@@ -44,7 +44,7 @@ class Suica
 	static allSuicas = [];
 
 	static CIRCLECOUNT = 50;
-	static CONECOUNT = 50;
+	static CONECOUNT = 50; // also cylinder
 
 	// coordinate system orientations
 	static OX = new THREE.Vector3(1,0,0);
@@ -123,9 +123,6 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
-		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
-		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
 		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
@@ -902,19 +899,17 @@ class Suica
 		return new Sphere( this, ...args );
 	} // Suica.sphere
 
-	cylinder( center=Suica.DEFAULT.CYLINDER.CENTER, size=Suica.DEFAULT.CYLINDER.SIZE, color=Suica.DEFAULT.CYLINDER.COLOR )
+	cylinder( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Prism( this, Suica.DEFAULT.CYLINDER.COUNT, center, size, color, false );
+		return new Prism( this, Suica.CONECOUNT, ...args, false );
 	} // Suica.cylinder
 	
 
-	prism( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.COLOR )
+	prism( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Prism( this, count, center, size, color, true );
+		return new Prism( this, ...args, true );
 	} // Suica.prims
 	
 
@@ -932,11 +927,10 @@ class Suica
 	} // Suica.pyramid
 
 	
-	group( ...groupElements )
+	group( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Group( this, ...groupElements );
+		return new Group( this, ...args );
 	} // Suica.group
 
 

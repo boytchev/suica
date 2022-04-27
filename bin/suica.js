@@ -45,7 +45,7 @@ class Suica
 	static allSuicas = [];
 
 	static CIRCLECOUNT = 50;
-	static CONECOUNT = 50;
+	static CONECOUNT = 50; // also cylinder
 
 	// coordinate system orientations
 	static OX = new THREE.Vector3(1,0,0);
@@ -124,9 +124,6 @@ class Suica
 		OXYZ: { COLOR: 'black', SIZE: 30 },
 		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		CYLINDER: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 50, RATIO: 1, SPIN:[0,0,0] },
-		PRISM: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:30, COUNT: 6, RATIO: 1, SPIN:[0,0,0] },
-		
 		GROUP: { CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:[1,1,1], SPIN:[0,0,0] },
 		TUBE: { POINTS: [], COUNT:[60,20], CENTER:[0,0,0], COLOR:'lightsalmon', SIZE:1, RADIUS:5, CLOSE:false },
 		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
@@ -903,19 +900,17 @@ class Suica
 		return new Sphere( this, ...args );
 	} // Suica.sphere
 
-	cylinder( center=Suica.DEFAULT.CYLINDER.CENTER, size=Suica.DEFAULT.CYLINDER.SIZE, color=Suica.DEFAULT.CYLINDER.COLOR )
+	cylinder( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Prism( this, Suica.DEFAULT.CYLINDER.COUNT, center, size, color, false );
+		return new Prism( this, Suica.CONECOUNT, ...args, false );
 	} // Suica.cylinder
 	
 
-	prism( count=Suica.DEFAULT.PRISM.COUNT, center=Suica.DEFAULT.PRISM.CENTER, size=Suica.DEFAULT.PRISM.SIZE, color=Suica.DEFAULT.PRISM.COLOR )
+	prism( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Prism( this, count, center, size, color, true );
+		return new Prism( this, ...args, true );
 	} // Suica.prims
 	
 
@@ -933,11 +928,10 @@ class Suica
 	} // Suica.pyramid
 
 	
-	group( ...groupElements )
+	group( ...args )
 	{
 		this.parser?.parseTags();
-
-		return new Group( this, ...groupElements );
+		return new Group( this, ...args );
 	} // Suica.group
 
 
@@ -2382,9 +2376,9 @@ class HTMLParser
 	parseTagCYLINDER( suica, elem )
 	{
 		var p = suica.cylinder(
-			elem.getAttribute('center') || Suica.DEFAULT.CYLINDER.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.CYLINDER.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.CYLINDER.COLOR
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
@@ -2400,10 +2394,10 @@ class HTMLParser
 	parseTagPRISM( suica, elem )
 	{
 		var p = suica.prism(
-			elem.getAttribute('count') || Suica.DEFAULT.PRISM.COUNT,
-			elem.getAttribute('center') || Suica.DEFAULT.PRISM.CENTER,
-			Suica.parseSize( elem.getAttribute('size') || Suica.DEFAULT.PRISM.SIZE ),
-			elem.getAttribute('color') || Suica.DEFAULT.PRISM.COLOR
+			elem.getAttribute('count'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
@@ -4119,34 +4113,23 @@ Sphere = class Sphere extends Mesh
 } // class Sphere
 
 ﻿//
-// Suica 2.0 Cylinder
+// Suica 2.0 Cylinder & Prism
 // CC-3.0-SA-NC
 //
-// cylinder( center, size, color )
-// prism( center, size, color )
-//
-// <cylinder id="" center="" size="" color="" wireframe=""> 
-// <prism id="" center="" size="" color="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s)
-// width
-// height
-// depth
-// color	color [r,g,b]
-// wireframe
-// image	texture (drawing or canvas)
 //
 //===================================================
 
 
 class Prism extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static SIZE = 30;
+	static COUNT = 6;
+
 	constructor( suica, count, center, size, color, flatShading )
 	{
+		count = Suica.parseNumber( count, Prism.COUNT );
+
 		suica.parser?.parseTags();
 		if( flatShading )
 			suica.debugCall( 'prism', count, center, size, color );
@@ -4161,9 +4144,9 @@ class Prism extends Mesh
 			new THREE.LineSegments( Prism.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Prism.SIZE);
+		this.color = Suica.parseColor( color, Prism.COLOR);
 		this.n = count;
 		this.flatShading = flatShading;
 		
@@ -4295,7 +4278,7 @@ class Prism extends Mesh
 	
 } // class Prism
 ﻿//
-// Suica 2.0 Cone && Pyramid
+// Suica 2.0 Cone & Pyramid
 // CC-3.0-SA-NC
 //
 //===================================================

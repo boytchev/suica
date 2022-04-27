@@ -1,32 +1,21 @@
 ﻿//
-// Suica 2.0 Cylinder
+// Suica 2.0 Cylinder & Prism
 // CC-3.0-SA-NC
 //
-// cylinder( center, size, color )
-// prism( center, size, color )
-//
-// <cylinder id="" center="" size="" color="" wireframe=""> 
-// <prism id="" center="" size="" color="">
-//
-// center	center [x,y,z]
-// x		x coordinate of center
-// y		y coordinate of center
-// z		z coordinate of center
-// size		size(s)
-// width
-// height
-// depth
-// color	color [r,g,b]
-// wireframe
-// image	texture (drawing or canvas)
 //
 //===================================================
 
 
 class Prism extends Mesh
 {
+	static COLOR = 'lightsalmon';
+	static SIZE = 30;
+	static COUNT = 6;
+
 	constructor( suica, count, center, size, color, flatShading )
 	{
+		count = Suica.parseNumber( count, Prism.COUNT );
+
 		suica.parser?.parseTags();
 		if( flatShading )
 			suica.debugCall( 'prism', count, center, size, color );
@@ -41,9 +30,9 @@ class Prism extends Mesh
 			new THREE.LineSegments( Prism.getFrameGeometry(suica,count), Mesh.lineMaterial.clone() ),
 		);
 		
-		this.center = center;
-		this.color = color;
-		this.size = size;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Prism.SIZE);
+		this.color = Suica.parseColor( color, Prism.COLOR);
 		this.n = count;
 		this.flatShading = flatShading;
 		
