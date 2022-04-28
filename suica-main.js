@@ -111,30 +111,20 @@ class Suica
 	
 	
 	// default values for Suica commands
+	static OXYZ = { COLOR: 'black', SIZE: 30 };
+	static DEMO = { DISTANCE: 100, ALTITUDE: 30 };
+	static BACKGROUND = 'whitesmoke';
+	
 	static DEFAULT = {
 		VR: {  },
 		ANAGLYPH: { DISTANCE: 5 },
 		STEREO: { DISTANCE: 1 },
 		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
 		ORTHOGRAPHIC: { NEAR: 0, FAR: 1000 },
-		BACKGROUND: { COLOR: 'whitesmoke' },
 		ORIENTATION: 'XYZ',
 		SIZE: '30',
-		OXYZ: { COLOR: 'black', SIZE: 30 },
-		DEMO: { DISTANCE: 100, ALTITUDE: 30 },
 
-		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },
-		
-		DRAWING: { SIZE:32, COLOR:null },
-		MOVETO: { CENTER:[0,0] },
-		LINETO: { CENTER:[0,0] },
-		CURVETO: { CENTER:[0,0], M:[0,0] },
-		ARC: { CENTER:[0,0], RADIUS:10, FROM:0, TO:360, CW:true },
-		STROKE: { COLOR:'black', WIDTH:1, CLOSE:false },
-		FILL: { COLOR:'gray' },
-		FILLTEXT: { CENTER:[0,0], TEXT:'Suica', COLOR:'black', FONT:'20px Arial' },
-		CLEAR: { COLOR:null },
-		
+		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },		
 	} // Suica.DEFAULT
 	
 	
@@ -208,8 +198,9 @@ class Suica
 		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
 		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 
+
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -219,7 +210,6 @@ class Suica
 	static register( suica, methodName )
 	{
 		//console.log(`register('${methodName}')`);
-
 		window[methodName] = function ( ...params )
 		{
 			Suica.precheck();
@@ -316,7 +306,7 @@ class Suica
 		var color = getComputedStyle(this.suicaTag).backgroundColor;
 		if( color == 'rgba(0, 0, 0, 0)' )
 		{
-			color = this.suicaTag.getAttribute('background') || Suica.DEFAULT.BACKGROUND.COLOR;
+			color = this.suicaTag.getAttribute('background') || Suica.BACKGROUND;
 		}
 		this.scene.background = Suica.parseColor( color );
 
@@ -666,19 +656,22 @@ class Suica
 	} // Suica.lookAt
 	
 	
-	background( color=Suica.DEFAULT.BACKGROUND.COLOR )
+	background( color )
 	{
 		this.parser?.parseTags();
-		this.debugCall( 'background', color );
-		
-		this.scene.background = new THREE.Color( color );
+		this.debugCall( 'background', ...arguments );
+		console.log('coco',color);
+		this.scene.background = Suica.parseColor( color );
 	} // Suica.background
 	
 	
-	oxyz( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
+	oxyz( size, color )
 	{
 		this.parser?.parseTags();
-		this.debugCall( 'oxyz', size, color );
+		this.debugCall( 'oxyz', ...arguments );
+		
+		size = Suica.parseNumber( size, Suica.OXYZ.SIZE );
+		color = Suica.parseColor( color, Suica.OXYZ.COLOR );
 		
 		var axes = new THREE.AxesHelper( size )
 			axes.setColors( color, color, color );
@@ -686,12 +679,15 @@ class Suica
 	} // Suica.oxyz
 	
 	
-	demo( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
+	demo( distance, altitude )
 	{
 		this.parser?.parseTags();
-		this.debugCall( 'demo', distance, altitude );
+		this.debugCall( 'demo', ...arguments );
 		
-		this.demoViewPoint = {distance:distance, altitude:altitude};
+		this.demoViewPoint = {
+			distance : Suica.parseNumber( distance, Suica.DEMO.DISTANCE ),
+			altitude : Suica.parseNumber( altitude, Suica.DEMO.ALTITUDE )
+		};
 	} // Suica.demo
 
 	
@@ -746,8 +742,9 @@ class Suica
 		{
 			// try constant or function
 			// 0xFFFFFF, rgb(...), hsl(...)
+			// note: '%' is removed, '%' is often used in hsl()
 			if( data.indexOf('0x')>=0 || data.indexOf('0X')>=0  || data.indexOf('(')>=0 )
-				return Suica.parseColor( Suica.evaluate( data.toLowerCase() ) );
+				return Suica.parseColor( Suica.evaluate( data.toLowerCase().replaceAll('%','') ) );
 			
 			// r,g,b
 			if( data.indexOf(',') > 0 )
@@ -825,28 +822,10 @@ class Suica
 	} // Suica.parseSize
 	
 	
-	static parseRadius( radius )
-	{
-		// radius is string 'x,y,z'
-		if( typeof radius === 'string' || radius instanceof String )
-		{
-			radius = radius.replaceAll(' ','');
-			
-			if( radius.indexOf(',') > 0 )
-			{
-				return radius.split(',').map(Number);
-			}
-		}
-
-		return radius;
-	} // Suica.parseRadius
-	
-	
 	
 	point( ...args )
 	{
 		this.parser?.parseTags();
-
 		return new Point( this, ...args );
 	} // Suica.point
 	
@@ -854,7 +833,6 @@ class Suica
 	line( ...args )
 	{
 		this.parser?.parseTags();
-
 		return new Line( this, ...args );
 	} // Suica.line
 	
@@ -862,7 +840,6 @@ class Suica
 	square( ...args )
 	{
 		this.parser?.parseTags();
-
 		return new Square( this, ...args );
 	} // Suica.square
 	
@@ -878,7 +855,6 @@ class Suica
 	circle( ...args )
 	{
 		this.parser?.parseTags();
-
 		return new Polygon( this, Suica.CIRCLECOUNT, ...args );
 	} // Suica.circle
 	
@@ -886,7 +862,6 @@ class Suica
 	polygon( ...args )
 	{
 		this.parser?.parseTags();
-
 		return new Polygon( this, ...args );
 	} // Suica.polygon
 	
@@ -1214,79 +1189,6 @@ window.style = function( object, properties )
 }
 
 
-window.lookAt = function( from = Suica.DEFAULT.LOOKAT.CAMERA.FROM, to = Suica.DEFAULT.LOOKAT.CAMERA.TO, up = Suica.orientations)
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.lookAt( from, to, up );
-}
-	
-window.fullScreen = function( )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.fullScreen(  );
-}
-	
-window.fullWindow = function( )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.fullWindow(  );
-}
-	
-window.proactive = function( )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.proactive(  );
-}
-	
-window.anaglyph = function( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.anaglyph( distance );
-}
-	
-window.stereo = function( distance = Suica.DEFAULT.STEREO.DISTANCE )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.stereo( distance );
-}
-
-window.perspective = function( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.perspective( near, far, fov );
-}
-	
-window.orthographic = function( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.orthographic( near, far );
-}
-	
-window.lookAt = function( from, to, up )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.lookAt( from, to, up );
-}
-
-window.background = function( color=Suica.DEFAULT.BACKGROUND.COLOR )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.background( color );
-}
-
-window.oxyz = function( size=Suica.DEFAULT.OXYZ.SIZE, color=Suica.DEFAULT.OXYZ.COLOR )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.oxyz( size, color );
-}
-
-window.demo = function( distance=Suica.DEFAULT.DEMO.DISTANCE, altitude=Suica.DEFAULT.DEMO.ALTITUDE )
-{
-	Suica.precheck();
-	/*Suica.current*/window.suica.demo( distance, altitude );
-}
-
-
 window.element = function( id )
 {
 	return document.getElementById( id );
@@ -1342,13 +1244,6 @@ window.findPosition = function( domEvent )
 	var suica = domEvent.target.suicaObject;
 	if( suica )
 		return suica.findPosition( domEvent );
-}
-
-
-window.allObjects = function( )
-{
-	Suica.precheck();
-	return /*Suica.current*/window.suica.allObjects( );
 }
 
 

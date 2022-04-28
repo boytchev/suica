@@ -16,14 +16,23 @@
 
 class Drawing
 {
+	static SIZE = 32;
+	static COLOR = null;
+	static ARC_RADIUS = 10;
+	static ARC_FROM = 0;
+	static ARC_TO = 360;
+	static ARC_CW = true;
+	static FILL_COLOR = 'gray';
+	static STROKE_COLOR = 'black';
+	static STROKE_WIDTH = 1;
+	static STROKE_CLOSE = false;
+	static FONT = '20px Arial';
 
 	// current active Drawing instance
 	static current;
 
 
-
-		
-	constructor( width=Suica.DEFAULT.DRAWING.SIZE, height=width, color=Suica.DEFAULT.DRAWING.COLOR, newCanvas=true )
+	constructor( width=Drawing.SIZE, height=width, color=Drawing.COLOR, newCanvas=true )
 	{
 		if( newCanvas )
 		{
@@ -67,6 +76,39 @@ class Drawing
 		
 
 
+	// parse a number
+	static parseN( elem, name, defaultValue )
+	{
+		return Suica.parseNumber( elem.getAttribute(name), defaultValue );
+	}
+	
+	// parse 2D coordinates in centerName and alternatively
+	// individual coordinates xName and yName
+	static parseXY( elem, centerName, xName, yName )
+	{
+		var xy = Suica.parseSize( elem.getAttribute(centerName), [0,0] );
+		if( elem.hasAttribute(xName) )
+			xy[0] = Drawing.parseN( elem, xName, 0 );
+		if( elem.hasAttribute(yName) )
+			xy[1] = Drawing.parseN( elem, yName, 0 );
+		return xy;
+	}
+	
+	// parse exclusive boolean value trueName; or its opposite falseName
+	static parseBool( elem, trueName, falseName, defaultValue )
+	{
+		const TRUTH = [null,'','true','yes','TRUE','True','YES','Yes','1'];
+		
+		if( trueName && elem.hasAttribute(trueName) )
+			return TRUTH.indexOf(elem.getAttribute(trueName)) > -1;
+
+		if( falseName && elem.hasAttribute(falseName) )
+			return TRUTH.indexOf(elem.getAttribute(falseName)) == -1;
+		
+		return defaultValue;
+	}
+
+
 	managePath()
 	{
 		if( this.needsNewPath )
@@ -78,7 +120,7 @@ class Drawing
 
 
 
-	moveTo( x = Suica.DEFAULT.MOVETO.CENTER[0], y = Suica.DEFAULT.MOVETO.CENTER[1] )
+	moveTo( x=0, y=0 )
 	{
 		this.managePath();
 		this.context.moveTo( x, this.canvas.height-y );
@@ -87,7 +129,7 @@ class Drawing
 	
 	
 	
-	lineTo( x = Suica.DEFAULT.LINETO.CENTER[0], y = Suica.DEFAULT.LINETO.CENTER[1] )
+	lineTo( x=0, y=0 )
 	{
 		this.managePath();
 		this.context.lineTo( x, this.canvas.height-y );
@@ -96,7 +138,7 @@ class Drawing
 	
 	
 	
-	curveTo( mx = Suica.DEFAULT.CURVETO.M[0], my = Suica.DEFAULT.CURVETO.M[1], x = Suica.DEFAULT.CURVETO.CENTER[0], y = Suica.DEFAULT.CURVETO.CENTER[1] )
+	curveTo( mx=0, my=0, x=0, y=0 )
 	{
 		this.managePath();
 		this.context.quadraticCurveTo( mx, this.canvas.height-my, x, this.canvas.height-y );
@@ -105,7 +147,7 @@ class Drawing
 	
 	
 
-	arc( x = Suica.DEFAULT.ARC.CENTER[0], y = Suica.DEFAULT.ARC.CENTER[1], r = Suica.DEFAULT.ARC.RADIUS, from = Suica.DEFAULT.ARC.FROM, to = Suica.DEFAULT.ARC.TO, cw = Suica.DEFAULT.ARC.CW )
+	arc( x=0, y=0, r=Drawing.ARC_RADIUS, from = Drawing.ARC_FROM, to = Drawing.ARC_TO, cw = Drawing.ARC_CW )
 	{
 		this.managePath();
 		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90), !cw );
@@ -114,7 +156,7 @@ class Drawing
 	
 	
 
-	fillText( x = Suica.DEFAULT.FILLTEXT.CENTER[0], y = Suica.DEFAULT.FILLTEXT.CENTER[1], text = Suica.DEFAULT.FILLTEXT.TEXT, color = Suica.DEFAULT.FILLTEXT.COLOR, font = Suica.DEFAULT.FILLTEXT.FONT )
+	fillText( x=0, y=0, text='', color = Drawing.FILL_COLOR, font = Drawing.FONT )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 		
@@ -126,10 +168,9 @@ class Drawing
 	
 	
 
-	stroke( color = Suica.DEFAULT.STROKE.COLOR, width = Suica.DEFAULT.STROKE.WIDTH, close = Suica.DEFAULT.STROKE.CLOSE )
+	stroke( color = Drawing.STROKE_COLOR, width = Drawing.STROKE_WIDTH, close = Drawing.STROKE_CLOSE )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
-//		this.texture = null; // clear the texture
 		
 		if( close ) this.context.closePath();
 		
@@ -143,10 +184,9 @@ class Drawing
 	
 	
 	
-	fill( color = Suica.DEFAULT.FILL.COLOR )
+	fill( color = Drawing.FILL_COLOR )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
-//		this.texture = null; // clear the texture
 		
 		this.context.fillStyle = color;
 		this.context.fill( );
@@ -155,8 +195,8 @@ class Drawing
 	} // Drawing.fill
 	
 	
-	
-	clear( color = Suica.DEFAULT.CLEAR.COLOR )
+	// if color is missing, clear canvas to transparent
+	clear( color )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 
@@ -220,81 +260,6 @@ window.drawing = function ( ...params )
 	Drawing.current = new Drawing( ...params );
 	return Drawing.current;
 }
-
-
-
-
-
-/*
-window.moveTo = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.moveTo( ...params );
-}
-	
-	
-	
-window.lineTo = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.lineTo( ...params );
-}
-
-
-
-
-window.curveTo = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.curveTo( ...params );
-}
-
-
-
-
-window.arc = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.arc( ...params );
-}
-
-
-
-
-window.fillText = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.fillText( ...params );
-}
-
-
-
-
-window.stroke = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.stroke( ...params );
-}
-	
-	
-	
-	
-window.fill = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.fill( ...params );
-}
-
-
-
-
-window.clear = function ( ...params )
-{
-	Drawing.precheck();
-	Drawing.current.clear( ...params );
-}
-
-*/	
 
 
 
