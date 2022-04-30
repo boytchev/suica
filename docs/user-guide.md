@@ -16,7 +16,7 @@
     - [Event workflow](#event-workflow) [<small> [listeners](#event-listeners) | [handlers](#event-handlers) | [proactive](#proactive-events) </small> ]
 	- [Event data](#event-data) [<small> [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) | [spline](#spline) </small>]
-- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Q&A](#questions-and-answers) </small>] 
+- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
 
 
 ## About
@@ -1987,6 +1987,13 @@ many other web services for such conversion, like [Site24x7](https://www.site24x
 [Online JPG Tools](https://onlinejpgtools.com/convert-jpg-to-data-uri),
 [webSemantics](https://websemantics.uk/tools/image-to-data-uri-converter/),
 [Base64 Image](https://www.base64-image.de/) and others.
+
+### Tester
+
+A rudimentery tester for Suica is availble [here](../test/test.html).
+It runs predefined test cases and compares the produced images. It reports the
+percentage of colour match and the number of mismatch pixels.
+
 
 ### Questions and answers
 - [How to change the attribute of an object created in HTML?](#how-to-change-the-attribute-of-an-object-created-in-html)
