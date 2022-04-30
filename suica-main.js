@@ -16,10 +16,23 @@ Suica 2.-1 (220427)
 
 `);
 
-
 // control flags
-const DEBUG_CALLS = !false;
+const DEBUG_CALLS = false;
 const DEBUG_EVENTS = false;
+
+// SUICA_TEST_MODE must be set before loading suica.js:
+//
+// 	SUICA_TEST_MODE==1
+//		- right click on canvas is allowed
+//		- preserveDrawingBuffer in renderer set to  true
+//		- time is rounded to 0.1s
+
+if( typeof SUICA_TEST_MODE === 'undefined' )
+{
+	const SUICA_TEST_MODE = 0;
+}
+
+
 
 // last (current) Suica instance
 var suica = null;
@@ -196,8 +209,11 @@ class Suica
 		this.canvas.addEventListener( 'mouseup', Suica.onMouseUp );
 		this.canvas.addEventListener( 'click', Suica.onClick );
 		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
-		this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
-
+		
+		if( SUICA_TEST_MODE!== 1 )
+		{
+			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
+		}
 
 		// register some local methods as public global functions
 		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects'] )
@@ -292,7 +308,8 @@ class Suica
 		this.renderer = new THREE.WebGLRenderer( {
 							canvas: this.canvas,
 							alpha: true,
-							antialias: true
+							antialias: true,
+							preserveDrawingBuffer: SUICA_TEST_MODE==1,
 						} );
 
 		// renderer with effects; if set, it is used instead of the normal renderer
@@ -495,6 +512,11 @@ class Suica
 		{
 			time /= 1000; // convert miliseconds to seconds
 
+			if( SUICA_TEST_MODE == 1 )
+			{
+				time = Math.round( 10*time ) / 10;
+			}
+			
 			//time=Math.PI/2;
 			
 			if( that.demoViewPoint )

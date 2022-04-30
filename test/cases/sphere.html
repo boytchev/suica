@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<script>var SUICA_TEST_MODE = 1;</script>
+	<script src="../../bin/suica.js"></script>
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica width="400" height="400">
+		<demo>
+		<sphere color="black" wireframe>
+		<sphere x="40"  size="15" color="dimgray">
+		<sphere x="-40" size="15" color="linen">
+		<sphere z="40"  size="15" color="lightsalmon">
+		<sphere z="-40" size="15" color="peachpuff">
+	</suica>
+	
+	<script>
+		suica.ontime = t=>{
+			if( Math.abs(t-1)<0.001 )
+			{
+				sendResult( suica.canvas.toDataURL() );
+				suica.ontime = null;
+			}
+		};
+	</script>
+</body>
+</html>
