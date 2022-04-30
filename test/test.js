@@ -155,7 +155,6 @@ console.log('::> comparing');
 	context.drawImage( document.getElementById('target-image'), 0, 0, 400, 400, 0, 0, 400, 400 );
 	var targetPixels = context.getImageData( 0, 0, 400, 400).data;
 
-	var diff = 0;
 	var pnts = 0;
 	var totals = 0;
 	for( var i=0; i<resultPixels.length; i+=4 )

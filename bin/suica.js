@@ -13,25 +13,21 @@ console.log(`
 ( ..)		U speaks JS
 c(”)(”)		I can haz halp
 
-Suica 2.-1 (220427)
+Suica 2.-1 (220430)
 
 `);
 
 // control flags
 const DEBUG_CALLS = false;
 const DEBUG_EVENTS = false;
+const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
-// SUICA_TEST_MODE must be set before loading suica.js:
+// SUICA_TEST_MODE must be declared before loading suica.js:
 //
-// 	SUICA_TEST_MODE==1
+// 	SUICA_TEST_MODE
 //		- right click on canvas is allowed
 //		- preserveDrawingBuffer in renderer set to  true
 //		- time is rounded to 0.1s
-
-if( typeof SUICA_TEST_MODE === 'undefined' )
-{
-	const SUICA_TEST_MODE = 0;
-}
 
 
 
@@ -211,7 +207,7 @@ class Suica
 		this.canvas.addEventListener( 'click', Suica.onClick );
 		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
 		
-		if( SUICA_TEST_MODE!== 1 )
+		if( TEST_MODE )
 		{
 			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 		}
@@ -310,7 +306,7 @@ class Suica
 							canvas: this.canvas,
 							alpha: true,
 							antialias: true,
-							preserveDrawingBuffer: SUICA_TEST_MODE==1,
+							preserveDrawingBuffer: TEST_MODE,
 						} );
 
 		// renderer with effects; if set, it is used instead of the normal renderer
@@ -513,7 +509,7 @@ class Suica
 		{
 			time /= 1000; // convert miliseconds to seconds
 
-			if( SUICA_TEST_MODE == 1 )
+			if( TEST_MODE )
 			{
 				time = Math.round( 10*time ) / 10;
 			}
