@@ -6,8 +6,11 @@
 
 const CASES_DIR = 'cases/';
 const IMAGES_DIR = 'snapshots/';
-const TEST_TIMEOUT = 10000; // per test, in milliseconds
-
+const TEST_TIMEOUT = 3000; // per test, in milliseconds
+const FULL_SIZE = 400;
+const TEST_SIZE = 100;
+//const COLOR_DIFF = 0.1;
+//const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
 	'cube',
@@ -24,12 +27,17 @@ var resultReady, targetReady, canvas, testName;
 
 // show string in the log window
 
+var logEntry;
 function log( string )
 {
-	var logEntry = document.createElement( 'div' );
-		logEntry.innerHTML = string;
+	logEntry = document.createElement( 'div' );
+	logEntry.innerHTML = string;
 	
 	document.getElementById( 'log' ).appendChild( logEntry );
+}
+function logAppend( string )
+{
+	logEntry.innerHTML += string;
 }
 
 
@@ -76,8 +84,8 @@ console.log('::> target is ready');
 	}, false);
 
 	canvas = document.createElement( 'canvas' );
-	canvas.width = 400;
-	canvas.height = 400;
+	canvas.width = TEST_SIZE;
+	canvas.height = TEST_SIZE;
 	
 	startNextTest();
 }
@@ -149,40 +157,57 @@ function compareImages( )
 console.log('::> comparing');
 	var context = canvas.getContext( '2d' );
 	
-	context.drawImage( document.getElementById('result-image'), 0, 0, 400, 400, 0, 0, 400, 400 );
-	var resultPixels = context.getImageData( 0, 0, 400, 400).data;
+	context.drawImage( document.getElementById('result-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
+	var resultPixels = context.getImageData( 0, 0, TEST_SIZE, TEST_SIZE ).data;
 	
-	context.drawImage( document.getElementById('target-image'), 0, 0, 400, 400, 0, 0, 400, 400 );
-	var targetPixels = context.getImageData( 0, 0, 400, 400).data;
+	context.drawImage( document.getElementById('target-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
+	var targetPixels = context.getImageData( 0, 0, TEST_SIZE, TEST_SIZE ).data;
 
-	var pnts = 0;
-	var totals = 0;
+//	var pnts = 0;
+//	var totals = 0;
+	var totalDiff = 0;
 	for( var i=0; i<resultPixels.length; i+=4 )
 	{
-		if( 
-			resultPixels[i+0]==245 &&
-			resultPixels[i+1]==245 &&
-			resultPixels[i+2]==245 &&
-			targetPixels[i+0]==245 &&
-			targetPixels[i+1]==245 &&
-			targetPixels[i+2]==245
-		) continue;
+		// if( 
+			// resultPixels[i+0]==245 &&
+			// resultPixels[i+1]==245 &&
+			// resultPixels[i+2]==245 &&
+			// targetPixels[i+0]==245 &&
+			// targetPixels[i+1]==245 &&
+			// targetPixels[i+2]==245
+		// ) continue;
 
-		totals++;
-		var diff = Math.sqrt(
-					Math.pow( resultPixels[i+0]-targetPixels[i+0], 2 ) +
-					Math.pow( resultPixels[i+1]-targetPixels[i+1], 2 ) +
-					Math.pow( resultPixels[i+2]-targetPixels[i+2], 2 )
-				)/255;
+//		totals++;
 		
-		if( diff>0.001 ) pnts++;
+		var sumR = resultPixels[i+0]+resultPixels[i+1]+resultPixels[i+2]+1;
+		var sumT = targetPixels[i+0]+targetPixels[i+1]+targetPixels[i+2]+1;
+		
+		var diff = Math.max(
+					Math.abs( resultPixels[i+0]/sumR-targetPixels[i+0]/sumT ),
+					Math.abs( resultPixels[i+1]/sumR-targetPixels[i+1]/sumT ),
+					Math.abs( resultPixels[i+2]/sumR-targetPixels[i+2]/sumT )
+				);
+		totalDiff += diff*diff;
+		
+/*
+		var diff = Math.max(
+					Math.abs( resultPixels[i+0]-targetPixels[i+0] ),
+					Math.abs( resultPixels[i+1]-targetPixels[i+1] ),
+					Math.abs( resultPixels[i+2]-targetPixels[i+2] )
+				);
+*/		
+//		if( diff>COLOR_DIFF ) pnts++;
+		
 	}
 	
 	//var match = Math.round(100-100*pnts/totals);
-	var match = (100-100*pnts/totals).toFixed(2);
-	log( `match ${match}%; difference in ${pnts} pixels` );
+	//var match = (100-100*pnts/totals).toFixed(2);
+	//log( `match ${match}%; difference in ${pnts} pixels (of ${totals}) totDiff=${totalDiff}` );
+	var match = Math.max( 100-100*totalDiff, 0 );
+	logAppend( ` &ndash; match ${match.toFixed(2)}%;` );
 	
-	if( match<90 || pnts>10 )
+	//if( match<90 || pnts>PIXELS_DIFF )
+	if( match<90 )
 	{
 		log('it is this:<span style="width:350px; display:inline-block;"></span>should be this:');
 		var a = document.getElementById('result-image').cloneNode();
@@ -192,6 +217,21 @@ console.log('::> comparing');
 		a = document.getElementById('target-image').cloneNode();
 		a.setAttribute('id','');
 		document.getElementById( 'log' ).appendChild( a );
+	
+		// log('<br>');
+		// var resultCanvas = document.createElement( 'canvas' );
+		// resultCanvas.width = TEST_SIZE;
+		// resultCanvas.height = TEST_SIZE;
+		// var resultContext = resultCanvas.getContext( '2d' );
+		// resultContext.drawImage( document.getElementById('result-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
+		// document.getElementById( 'log' ).appendChild( resultCanvas );
+
+		// resultCanvas = document.createElement( 'canvas' );
+		// resultCanvas.width = TEST_SIZE;
+		// resultCanvas.height = TEST_SIZE;
+		// var resultContext = resultCanvas.getContext( '2d' );
+		// resultContext.drawImage( document.getElementById('target-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
+		// document.getElementById( 'log' ).appendChild( resultCanvas );
 	}
 	
 	log('<br>');
