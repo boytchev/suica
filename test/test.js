@@ -71,6 +71,11 @@ console.log('::> starting all tests');
 
 	document.getElementById( 'result-image' ).addEventListener( 'load', (event) =>
 	{
+		// if the test image is loaded, do not compare images
+		if( event.target.currentSrc.indexOf('/test/test.png')>0 )
+			return;
+		
+		
 		resultReady = true;
 console.log('::> result is ready');
 		if( targetReady ) compareImages();
@@ -113,9 +118,11 @@ function startNextTest( )
 		resultReady = false;
 		targetReady = false;
 
+		document.getElementById( 'sandbox' ).src = 'about:blank';
 		document.getElementById( 'sandbox' ).src = CASES_DIR + testName + '.html';
-		document.getElementById( 'result-image' ).src = '';
+		document.getElementById( 'result-image' ).src = 'test.png';
 		document.getElementById( 'target-image' ).src = IMAGES_DIR + testName + '.png';
+		console.log( `iFrame = ${document.getElementById( 'sandbox' ).src}` );
 	}
 	else
 	{
@@ -240,5 +247,5 @@ console.log('::> comparing');
 	
 	log('<br>');
 
-	startNextTest();
+	setTimeout( startNextTest, 1000 );
 }
