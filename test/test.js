@@ -212,10 +212,14 @@ console.log('::> comparing');
 		log('it is this:<span style="width:350px; display:inline-block;"></span>should be this:');
 		var a = document.getElementById('result-image').cloneNode();
 		a.setAttribute('id','');
+		a.setAttribute('width','402');
+		a.setAttribute('height','402');
 		document.getElementById( 'log' ).appendChild( a );
 
 		a = document.getElementById('target-image').cloneNode();
 		a.setAttribute('id','');
+		a.setAttribute('width','402');
+		a.setAttribute('height','402');
 		document.getElementById( 'log' ).appendChild( a );
 	
 		// log('<br>');
