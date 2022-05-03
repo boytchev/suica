@@ -551,19 +551,9 @@ class HTMLParser
 	parseTagSPLINE( suica, elem )
 	{
 		var src = elem.getAttribute('src') || Suica.DEFAULT.SPLINE.POINTS,
-			closed = Suica.DEFAULT.SPLINE.CLOSED,
-			interpolating = Suica.DEFAULT.SPLINE.INTERPOLANT;
-			
-		if( elem.hasAttribute('closed') )
-			closed = ['','true','yes','1'].indexOf(elem.getAttribute('closed').toLowerCase()) >= 0
-		else if( elem.hasAttribute('open') )
-			closed = ['','true','yes','1'].indexOf(elem.getAttribute('open').toLowerCase()) < 0;
+			closed = Drawing.parseBool( elem, 'closed', 'open', Suica.DEFAULT.SPLINE.CLOSED ),
+			interpolating = Drawing.parseBool( elem, 'interpolating', 'approximating', Suica.DEFAULT.SPLINE.INTERPOLANT );
 		
-		if( elem.hasAttribute('interpolating') )
-			interpolating = ['','true','yes','1'].indexOf(elem.getAttribute('interpolating').toLowerCase()) >= 0
-		else if( elem.hasAttribute('approximating') )
-			interpolating = ['','true','yes','1'].indexOf(elem.getAttribute('approximating').toLowerCase()) < 0;
-
 		var p = spline( src, closed, interpolating );
 		
 		suica.parserReadonly.parseAttributes( elem, p, {} );
