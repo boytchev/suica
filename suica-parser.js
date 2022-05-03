@@ -153,7 +153,7 @@ class HTMLParser
 	parseTagANAGLYPH( suica, elem )
 	{
 		suica.anaglyph(
-			elem.getAttribute('distance') || Suica.DEFAULT.ANAGLYPH.DISTANCE
+			elem.getAttribute('distance') || Suica.ANAGLYPH.DISTANCE
 		);
 	} // HTMLParser.parseTagANAGLYPH
 	
@@ -169,7 +169,7 @@ class HTMLParser
 	parseTagSTEREO( suica, elem )
 	{
 		suica.stereo(
-			elem.getAttribute('distance') || Suica.DEFAULT.STEREO.DISTANCE
+			elem.getAttribute('distance') || Suica.STEREO.DISTANCE
 		);
 	} // HTMLParser.parseTagSTEREO
 	
@@ -178,9 +178,9 @@ class HTMLParser
 	parseTagPERSPECTIVE( suica, elem )
 	{
 		suica.perspective(
-			elem.getAttribute('near') || Suica.DEFAULT.PERSPECTIVE.NEAR,
-			elem.getAttribute('far') || Suica.DEFAULT.PERSPECTIVE.FAR,
-			elem.getAttribute('fov') || Suica.DEFAULT.PERSPECTIVE.FOV
+			elem.getAttribute('near') || Suica.PERSPECTIVE.NEAR,
+			elem.getAttribute('far') || Suica.PERSPECTIVE.FAR,
+			elem.getAttribute('fov') || Suica.PERSPECTIVE.FOV
 		);
 	} // HTMLParser.parseTagPERSPECTIVE
 	
@@ -189,8 +189,8 @@ class HTMLParser
 	parseTagORTHOGRAPHIC( suica, elem )
 	{
 		suica.perspective(
-			elem.getAttribute('near') || Suica.DEFAULT.ORTHOGRAPHIC.NEAR,
-			elem.getAttribute('far') || Suica.DEFAULT.ORTHOGRAPHIC.FAR
+			elem.getAttribute('near') || Suica.ORTHOGRAPHIC.NEAR,
+			elem.getAttribute('far') || Suica.ORTHOGRAPHIC.FAR
 		);
 	} // HTMLParser.parseTagORTHOGRAPHIC
 	
@@ -550,9 +550,9 @@ class HTMLParser
 	// <spline src="func_name" interpolating="..." approximating="..." open="..." closed="...">
 	parseTagSPLINE( suica, elem )
 	{
-		var src = elem.getAttribute('src') || Suica.DEFAULT.SPLINE.POINTS,
-			closed = Drawing.parseBool( elem, 'closed', 'open', Suica.DEFAULT.SPLINE.CLOSED ),
-			interpolating = Drawing.parseBool( elem, 'interpolating', 'approximating', Suica.DEFAULT.SPLINE.INTERPOLANT );
+		var src = elem.getAttribute('src') || Suica.SPLINE.POINTS,
+			closed = Drawing.parseBool( elem, 'closed', 'open', Suica.SPLINE.CLOSED ),
+			interpolating = Drawing.parseBool( elem, 'interpolating', 'approximating', Suica.SPLINE.INTERPOLANT );
 		
 		var p = spline( src, closed, interpolating );
 		

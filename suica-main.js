@@ -47,8 +47,7 @@ class Suica
 	// array of all Suicas
 	static allSuicas = [];
 
-	static CIRCLECOUNT = 50;
-	static CONECOUNT = 50; // also cylinder
+	static CIRCLECOUNT = 50; // also cone and cylinder
 
 	// coordinate system orientations
 	static OX = new THREE.Vector3(1,0,0);
@@ -80,21 +79,21 @@ class Suica
 					RIGHT: Suica.OZ,
 					UP: Suica.OX,
 					FORWARD: Suica.OY,
-					FLIP_NORMAL: false,
+//					FLIP_NORMAL: false,
 			},
 			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [0,1,0]},
 					RIGHT: Suica.OX,
 					UP: Suica.OY,
 					FORWARD: Suica.OZ,
-					FLIP_NORMAL: false,
+//					FLIP_NORMAL: false,
 			},
 			YZX: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,0,1]},
 					RIGHT: Suica.OY,
 					UP: Suica.OZ,
 					FORWARD: Suica.OX,
-					FLIP_NORMAL: false,
+//					FLIP_NORMAL: false,
 			},
 		} // Suica.ORIENTATIONS
 
@@ -118,19 +117,12 @@ class Suica
 	static OXYZ = { COLOR: 'black', SIZE: 30 };
 	static DEMO = { DISTANCE: 100, ALTITUDE: 30 };
 	static BACKGROUND = 'whitesmoke';
-	
-	static DEFAULT = {
-		VR: {  },
-		ANAGLYPH: { DISTANCE: 5 },
-		STEREO: { DISTANCE: 1 },
-		PERSPECTIVE: { NEAR: 1, FAR: 1000, FOV: 40 },
-		ORTHOGRAPHIC: { NEAR: 0, FAR: 1000 },
-		ORIENTATION: 'XYZ',
-		SIZE: '30',
-
-		SPLINE: { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true },		
-	} // Suica.DEFAULT
-	
+	static ANAGLYPH = { DISTANCE: 5 };
+	static STEREO = { DISTANCE: 1 };
+	static PERSPECTIVE = { NEAR: 1, FAR: 1000, FOV: 40 };
+	static ORTHOGRAPHIC = { NEAR: 0, FAR: 1000 };
+	static DEFAULT_ORIENTATION = 'XYZ';
+	static SPLINE = { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true };	
 	
 	constructor( suicaTag )
 	{
@@ -158,7 +150,7 @@ class Suica
 		this.isProactive = false;
 
 		// set Suica orientation data
-		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT.ORIENTATION];
+		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT_ORIENTATION];
 		this.orientation.MATRIX = new THREE.Matrix4().makeBasis(this.orientation.RIGHT,this.orientation.UP,this.orientation.FORWARD);
 		this.orientation.FLIP_NORMAL = this.orientation.SCALE.x<0 || this.orientation.SCALE.y<0 || this.orientation.SCALE.z<0;
 		
@@ -597,7 +589,7 @@ class Suica
 	}
 	
 	
-	anaglyph( distance = Suica.DEFAULT.ANAGLYPH.DISTANCE )
+	anaglyph( distance = Suica.ANAGLYPH.DISTANCE )
 	{
 		this.parser?.parseTags();
 		this.debugCall( 'anaglyph', distance );
@@ -608,7 +600,7 @@ class Suica
 	}
 	
 	
-	stereo( distance = Suica.DEFAULT.STEREO.DISTANCE )
+	stereo( distance = Suica.STEREO.DISTANCE )
 	{
 		this.parser?.parseTags();
 		this.debugCall( 'stereo', distance );
@@ -619,7 +611,7 @@ class Suica
 	}
 	
 	
-	perspective( near=Suica.DEFAULT.PERSPECTIVE.NEAR, far=Suica.DEFAULT.PERSPECTIVE.FAR, fov=Suica.DEFAULT.PERSPECTIVE.FOV )
+	perspective( near=Suica.PERSPECTIVE.NEAR, far=Suica.PERSPECTIVE.FAR, fov=Suica.PERSPECTIVE.FOV )
 	{
 		this.parser?.parseTags();
 		this.debugCall( 'perspective', near, far, fov );
@@ -633,7 +625,7 @@ class Suica
 	} // Suica.perspective
 	
 	
-	orthographic( near=Suica.DEFAULT.ORTHOGRAPHIC.NEAR, far=Suica.DEFAULT.ORTHOGRAPHIC.FAR )
+	orthographic( near=Suica.ORTHOGRAPHIC.NEAR, far=Suica.ORTHOGRAPHIC.FAR )
 	{
 		this.parser?.parseTags();
 		this.debugCall( 'orthographic', near, far );
@@ -888,7 +880,7 @@ class Suica
 	cylinder( ...args )
 	{
 		this.parser?.parseTags();
-		return new Prism( this, Suica.CONECOUNT, ...args, false );
+		return new Prism( this, Suica.CIRCLECOUNT, ...args, false );
 	} // Suica.cylinder
 	
 
@@ -902,7 +894,7 @@ class Suica
 	cone( ...args )
 	{
 		this.parser?.parseTags();
-		return new Pyramid( this, Suica.CONECOUNT, ...args, false );
+		return new Pyramid( this, Suica.CIRCLECOUNT, ...args, false );
 	} // Suica.cone
 	
 
@@ -1280,7 +1272,7 @@ window.findObject = function( domEvent, onlyInteractive = false )
 }
 
 
-window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed, interpolant )
+window.spline = function( points=Suica.SPLINE.POINTS, closed, interpolant )
 {
 	if( points instanceof Function )
 	{
@@ -1303,12 +1295,12 @@ window.spline = function( points=Suica.DEFAULT.SPLINE.POINTS, closed, interpolan
 	}
 	
 	if( typeof closed === 'undefined' )
-		closed = Suica.DEFAULT.SPLINE.CLOSED;
+		closed = Suica.SPLINE.CLOSED;
 	
 	if( typeof interpolant === 'undefined' )
-		interpolant = Suica.DEFAULT.SPLINE.INTERPOLANT;
+		interpolant = Suica.SPLINE.INTERPOLANT;
 	
-	if( !points.length ) points = Suica.DEFAULT.SPLINE.POINTS;
+	if( !points.length ) points = Suica.SPLINE.POINTS;
 
 	return function( t )
 	{
