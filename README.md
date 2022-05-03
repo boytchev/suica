@@ -1,6 +1,6 @@
 # <img src="logo.min.png" height="40" style="position:relative; top:7px;"/> Suica
 
-Mobile 3D made simple. As simple, as this ([live demo](https://boytchev.github.io/suica/examples/minimal-example.html)):
+Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 ```html
 <!DOCTYPE html>
 
@@ -28,4 +28,4 @@ Suica is licensed under **GPL-3.0**.
 
 ---
 
-April, 2022
+May, 2022

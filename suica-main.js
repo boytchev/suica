@@ -6,14 +6,9 @@
 
 
 // show suica version
-console.log(`
-
-(\\/)
-( ..)		U speaks JS
-c(”)(”)		I can haz halp
-
-Suica 2.-1 (220430)
-
+console.log(`(\\/)
+( ..)		Suica 2.-1
+c(”)(”)		(220503)
 `);
 
 // control flags
