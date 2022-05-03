@@ -11,7 +11,7 @@ class Pyramid extends Mesh
 	static SIZE = 30;
 	static COUNT = 6;
 
-	constructor( suica, count, center, size, color, flatShading )
+	constructor( suica, count, center, size, color, flatShading=true )
 	{
 		count = Suica.parseNumber( count, Pyramid.COUNT );
 		
@@ -152,4 +152,13 @@ class Pyramid extends Mesh
 	} // Pyramid.clone
 	
 } // class Pyramid
+
+
+class Cone extends Pyramid
+{
+	constructor( suica, center, size, color )
+	{
+		super( suica, Suica.CIRCLECOUNT, center, size, color, false );
+	}
+} // class Cone
 

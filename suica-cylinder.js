@@ -12,7 +12,7 @@ class Prism extends Mesh
 	static SIZE = 30;
 	static COUNT = 6;
 
-	constructor( suica, count, center, size, color, flatShading )
+	constructor( suica, count, center, size, color, flatShading=true )
 	{
 		count = Suica.parseNumber( count, Prism.COUNT );
 
@@ -163,3 +163,12 @@ class Prism extends Mesh
 	} // Prism.clone
 	
 } // class Prism
+
+
+class Cylinder extends Prism
+{
+	constructor( suica, center, size, color )
+	{
+		super( suica, Suica.CIRCLECOUNT, center, size, color, false );
+	}
+} // class Cylinder

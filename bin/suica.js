@@ -199,6 +199,12 @@ class Suica
 			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 		}
 
+		// register local methods that have stereotypical code
+		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle] )
+		{
+			Suica.registerClass( this, classObject );
+		}
+		
 		// register some local methods as public global functions
 		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects'] )
 		{
@@ -217,6 +223,16 @@ class Suica
 		}
 		
 	}
+	
+	static registerClass( suica, classObject )
+	{
+		suica[classObject.name.toLowerCase()] = function( ...args )
+		{
+			suica.parser?.parseTags();
+			return new classObject( suica, ...args );
+		}
+	}
+	
 	
 	// create canvas element inside <suica>
 	createCanvas()
@@ -647,17 +663,10 @@ class Suica
 	lookAt( from, to, up )
 	{
 		this.parser?.parseTags();
-		// if( up ) this.debugCall( 'lookAt', from, to, up )
-		// else if( to ) this.debugCall( 'lookAt', from, to )
-		// else if( from ) this.debugCall( 'lookAt', from )
 
-		if( typeof from === 'undefined' ) from = this.orientation.LOOKAT.FROM;
-		if( typeof to === 'undefined' )   to   = this.orientation.LOOKAT.TO;
-		if( typeof up === 'undefined' )   up   = this.orientation.LOOKAT.UP;
-
-		this.viewPoint.from = Suica.parseCenter( from );
-		this.viewPoint.to = Suica.parseCenter( to );
-		this.viewPoint.up = Suica.parseCenter( up );
+		this.viewPoint.from = Suica.parseCenter( from, this.orientation.LOOKAT.FROM );
+		this.viewPoint.to = Suica.parseCenter( to, this.orientation.LOOKAT.TO );
+		this.viewPoint.up = Suica.parseCenter( up, this.orientation.LOOKAT.UP );
 		
 	} // Suica.lookAt
 	
@@ -666,7 +675,7 @@ class Suica
 	{
 		this.parser?.parseTags();
 		this.debugCall( 'background', ...arguments );
-		console.log('coco',color);
+
 		this.scene.background = Suica.parseColor( color );
 	} // Suica.background
 	
@@ -828,7 +837,7 @@ class Suica
 	} // Suica.parseSize
 	
 	
-	
+/*	
 	point( ...args )
 	{
 		this.parser?.parseTags();
@@ -849,7 +858,6 @@ class Suica
 		return new Square( this, ...args );
 	} // Suica.square
 	
-
 
 	cube( ...args )
 	{
@@ -878,19 +886,20 @@ class Suica
 		return new Sphere( this, ...args );
 	} // Suica.sphere
 
+
 	cylinder( ...args )
 	{
 		this.parser?.parseTags();
 		return new Prism( this, Suica.CIRCLECOUNT, ...args, false );
 	} // Suica.cylinder
-	
+
 
 	prism( ...args )
 	{
 		this.parser?.parseTags();
 		return new Prism( this, ...args, true );
 	} // Suica.prims
-	
+
 
 	cone( ...args )
 	{
@@ -918,7 +927,7 @@ class Suica
 		this.parser?.parseTags();
 		return new Tube( this, ...args );
 	} // Suica.tube
-	
+*/	
 	
 	findPosition( domEvent )
 	{
@@ -3869,7 +3878,16 @@ class Polygon extends Mesh
 	
 } // class Polygon
 
-﻿//
+
+
+
+class Circle extends Polygon
+{
+	constructor( suica, center, size, color )
+	{
+		super( suica, Suica.CIRCLECOUNT, center, size, color );
+	}
+} // class Circle﻿//
 // Suica 2.0 Sphere
 // CC-3.0-SA-NC
 //
@@ -3934,7 +3952,7 @@ class Prism extends Mesh
 	static SIZE = 30;
 	static COUNT = 6;
 
-	constructor( suica, count, center, size, color, flatShading )
+	constructor( suica, count, center, size, color, flatShading=true )
 	{
 		count = Suica.parseNumber( count, Prism.COUNT );
 
@@ -4085,6 +4103,15 @@ class Prism extends Mesh
 	} // Prism.clone
 	
 } // class Prism
+
+
+class Cylinder extends Prism
+{
+	constructor( suica, center, size, color )
+	{
+		super( suica, Suica.CIRCLECOUNT, center, size, color, false );
+	}
+} // class Cylinder
 ﻿//
 // Suica 2.0 Cone & Pyramid
 // CC-3.0-SA-NC
@@ -4098,7 +4125,7 @@ class Pyramid extends Mesh
 	static SIZE = 30;
 	static COUNT = 6;
 
-	constructor( suica, count, center, size, color, flatShading )
+	constructor( suica, count, center, size, color, flatShading=true )
 	{
 		count = Suica.parseNumber( count, Pyramid.COUNT );
 		
@@ -4239,6 +4266,15 @@ class Pyramid extends Mesh
 	} // Pyramid.clone
 	
 } // class Pyramid
+
+
+class Cone extends Pyramid
+{
+	constructor( suica, center, size, color )
+	{
+		super( suica, Suica.CIRCLECOUNT, center, size, color, false );
+	}
+} // class Cone
 
 ﻿//
 // Suica 2.0 Group

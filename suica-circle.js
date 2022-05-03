@@ -113,3 +113,13 @@ class Polygon extends Mesh
 	
 } // class Polygon
 
+
+
+
+class Circle extends Polygon
+{
+	constructor( suica, center, size, color )
+	{
+		super( suica, Suica.CIRCLECOUNT, center, size, color );
+	}
+} // class Circle
