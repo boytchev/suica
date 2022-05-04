@@ -50,15 +50,11 @@ var colors=[				'red',
 		{
 			circle( [12*(x-2),12*(y-2),0], 12, colors.shift() );
 		}
-		
-	
-		suica.ontime = t=>{	
-			if( Math.abs(t-1)<0.001 )
-			{
-				sendResult( suica.canvas.toDataURL() );
-				suica.ontime = null;
-			}
-		};
 	</script>
+	
+	<script>
+		sendSnapshot( );
+	</script>
+	
 </body>
 </html>

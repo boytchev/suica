@@ -5,23 +5,28 @@
 //===================================================
 
 
-// show suica version
-console.log(`(\\/)
-( ..)		Suica 2.-1
-c(”)(”)		(220503)
-`);
-
 // control flags
 const DEBUG_CALLS = false;
 const DEBUG_EVENTS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
+
+
+// show suica version
+if( TEST_MODE )
+	console.log('::> suica');
+else
+	console.log(`(\\/)
+( ..)		Suica 2.-1
+c(”)(”)		(220503)
+`);
+
 
 // SUICA_TEST_MODE must be declared before loading suica.js:
 //
 // 	SUICA_TEST_MODE
 //		- right click on canvas is allowed
 //		- preserveDrawingBuffer in renderer set to  true
-//		- time is rounded to 0.1s
+//		- time is rounded to 0.05s
 
 
 
@@ -136,9 +141,9 @@ class Suica
 		suicaTag.style.display = 'inline-block';
 		suicaTag.style.boxSizing = 'border-box';
 		if( !getComputedStyle(suicaTag).width && !suicaTag.hasAttribute('width') )
-			suicaTag.style.width = '500px';
+			suicaTag.style.width = TEST_MODE?'400px':'500px';
 		if( !getComputedStyle(suicaTag).height && !suicaTag.hasAttribute('height') )
-			suicaTag.style.height = '300px';
+			suicaTag.style.height = TEST_MODE?'400px':'300px';
 		
 		if( !suicaTag.style.position ) suicaTag.style.position = 'relative';
 		
@@ -246,10 +251,10 @@ class Suica
 		// calculates size - if size is not defined in CSS,
 		// than use <suica> attributes, or default values
 		if( this.suicaTag.clientWidth < 1 )
-			this.suicaTag.style.width = (this.suicaTag.getAttribute('width') || 500) + 'px';
+			this.suicaTag.style.width = (this.suicaTag.getAttribute('width') || (TEST_MODE?400:500)) + 'px';
 
 		if( this.suicaTag.clientHeight < 1 )
-			this.suicaTag.style.height = (this.suicaTag.getAttribute('height') || 300) + 'px';
+			this.suicaTag.style.height = (this.suicaTag.getAttribute('height') || (TEST_MODE?400:300)) + 'px';
 
 		// create canvas elements
 		this.canvas = document.createElement( 'canvas' );
@@ -520,7 +525,7 @@ class Suica
 
 			if( TEST_MODE )
 			{
-				time = Math.round( 10*time ) / 10;
+				time = Math.floor( 20*time ) / 20;
 			}
 			
 			//time=Math.PI/2;

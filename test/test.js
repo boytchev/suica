@@ -4,15 +4,19 @@
 //
 //===================================================
 
+
 const CASES_DIR = 'cases/';
 const IMAGES_DIR = 'snapshots/';
 const TEST_TIMEOUT = 3000; // per test, in milliseconds
 const FULL_SIZE = 400;
 const TEST_SIZE = 100;
-//const COLOR_DIFF = 0.1;
+const COLOR_DIFF = 0.1;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'allobjects',
+	'background',
+
 	'cube',
 	'colors',
 	'sphere',
@@ -64,7 +68,7 @@ console.log('::> starting all tests');
 
 	window.addEventListener( 'message', (event) =>
 	{
-		console.log('received message');
+		//console.log('received message');
 		document.getElementById( 'result-image' ).src = event.data;
 	}, false);
 
@@ -77,14 +81,14 @@ console.log('::> starting all tests');
 		
 		
 		resultReady = true;
-console.log('::> result is ready');
+		console.log('::> result is ready');
 		if( targetReady ) compareImages();
 	}, false);
 
 	document.getElementById( 'target-image' ).addEventListener( 'load', (event) =>
 	{
 		targetReady = true;
-console.log('::> target is ready');
+		console.log('::> target is ready');
 		if( resultReady ) compareImages();
 	}, false);
 
@@ -112,8 +116,11 @@ function startNextTest( )
 		// set timeout timer; if there is result before the timeout, the the timer is cleared
 		timeout = setTimeout( testTimeout, TEST_TIMEOUT );
 	
-		log( `testing <b>${testName.toUpperCase()}</b>` );
-		console.log( `testing ${testName.toUpperCase()}` );
+		log( `<b>${testName.toUpperCase()}</b>` );
+		
+		
+		console.groupEnd( );
+		console.group( `${testName.toUpperCase()}` );
 	
 		resultReady = false;
 		targetReady = false;
@@ -122,13 +129,14 @@ function startNextTest( )
 		document.getElementById( 'sandbox' ).src = CASES_DIR + testName + '.html';
 		document.getElementById( 'result-image' ).src = 'test.png';
 		document.getElementById( 'target-image' ).src = IMAGES_DIR + testName + '.png';
-		console.log( `iFrame = ${document.getElementById( 'sandbox' ).src}` );
+		//console.log( `iFrame = ${document.getElementById( 'sandbox' ).src}` );
 	}
 	else
 	{
-console.log('::> no more tests');
+		console.groupEnd( );
+		console.log('::> no more tests');
 		// no more tests
-		document.getElementById( 'sandbox' ).src = 'about:blank';
+		//document.getElementById( 'sandbox' ).src = 'about:blank';
 		document.getElementById( 'sandbox' ).style.display = 'none';
 		document.getElementById( 'result-image' ).style.display = 'none';
 		document.getElementById( 'target-image' ).style.display = 'none';
@@ -161,7 +169,7 @@ function testTimeout( )
 
 function compareImages( )
 {
-console.log('::> comparing');
+	console.log('::> comparing');
 	var context = canvas.getContext( '2d' );
 	
 	context.drawImage( document.getElementById('result-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
@@ -170,12 +178,12 @@ console.log('::> comparing');
 	context.drawImage( document.getElementById('target-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
 	var targetPixels = context.getImageData( 0, 0, TEST_SIZE, TEST_SIZE ).data;
 
-//	var pnts = 0;
-//	var totals = 0;
-	var totalDiff = 0;
+	var pnts = 0;
+	var totals = 0;
+//	var totalDiff = 0;
 	for( var i=0; i<resultPixels.length; i+=4 )
 	{
-		// if( 
+		 // if( 
 			// resultPixels[i+0]==245 &&
 			// resultPixels[i+1]==245 &&
 			// resultPixels[i+2]==245 &&
@@ -184,34 +192,36 @@ console.log('::> comparing');
 			// targetPixels[i+2]==245
 		// ) continue;
 
-//		totals++;
+		totals++;
 		
-		var sumR = resultPixels[i+0]+resultPixels[i+1]+resultPixels[i+2]+1;
-		var sumT = targetPixels[i+0]+targetPixels[i+1]+targetPixels[i+2]+1;
+		// var sumR = resultPixels[i+0]+resultPixels[i+1]+resultPixels[i+2]+1;
+		// var sumT = targetPixels[i+0]+targetPixels[i+1]+targetPixels[i+2]+1;
 		
-		var diff = Math.max(
-					Math.abs( resultPixels[i+0]/sumR-targetPixels[i+0]/sumT ),
-					Math.abs( resultPixels[i+1]/sumR-targetPixels[i+1]/sumT ),
-					Math.abs( resultPixels[i+2]/sumR-targetPixels[i+2]/sumT )
-				);
-		totalDiff += diff*diff;
+		// var diff = Math.max(
+					// Math.abs( resultPixels[i+0]/sumR-targetPixels[i+0]/sumT ),
+					// Math.abs( resultPixels[i+1]/sumR-targetPixels[i+1]/sumT ),
+					// Math.abs( resultPixels[i+2]/sumR-targetPixels[i+2]/sumT )
+				// );
+		// totalDiff += diff*diff;
 		
-/*
-		var diff = Math.max(
-					Math.abs( resultPixels[i+0]-targetPixels[i+0] ),
-					Math.abs( resultPixels[i+1]-targetPixels[i+1] ),
-					Math.abs( resultPixels[i+2]-targetPixels[i+2] )
-				);
-*/		
-//		if( diff>COLOR_DIFF ) pnts++;
+
+		var diff = Math.abs( resultPixels[i+0]-targetPixels[i+0] )+
+					Math.abs( resultPixels[i+1]-targetPixels[i+1] )+
+					Math.abs( resultPixels[i+2]-targetPixels[i+2] );
+		
+		if( diff/3/255>COLOR_DIFF ) pnts++;
 		
 	}
 	
+	//console.log(`::> total diff ${totalDiff}` );
+	
 	//var match = Math.round(100-100*pnts/totals);
-	//var match = (100-100*pnts/totals).toFixed(2);
-	//log( `match ${match}%; difference in ${pnts} pixels (of ${totals}) totDiff=${totalDiff}` );
-	var match = Math.max( 100-100*totalDiff, 0 );
-	logAppend( ` &ndash; match ${match.toFixed(2)}%;` );
+	var match = Math.round( 100 - 100*pnts/totals );
+	//	log( `match ${match}%;` );
+	console.log( `::>match ${match}%;` );
+	//log( `match ${match}%; difference in ${pnts} pixels` );
+	//var match = Math.max( 100-100*totalDiff, 0 );
+	logAppend( ` &ndash; match ${match}%;` );
 	
 	//if( match<90 || pnts>PIXELS_DIFF )
 	if( match<90 )
@@ -248,4 +258,29 @@ console.log('::> comparing');
 	log('<br>');
 
 	setTimeout( startNextTest, 1000 );
+}
+
+
+
+function sendSnapshot( seconds = 1 )
+{
+	var _onTime = suica.onTime,
+		_oldT = -1;
+	
+	suica.ontime = (t, dT)=>{
+		
+		// call the original onTime (if any)
+		if( _onTime ) _onTime( t, dT );
+		
+		// send result when time elapses
+		
+		if( _oldT<seconds && t>=seconds )
+		{
+			console.log( '::> capture delay',(t-seconds).toFixed(3),'seconds' );
+			sendResult( suica.canvas.toDataURL() );
+			suica.ontime = null;
+		}
+		
+		_oldT = t;
+	};
 }

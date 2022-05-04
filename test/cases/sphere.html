@@ -18,13 +18,7 @@
 	</suica>
 	
 	<script>
-		suica.ontime = t=>{
-			if( Math.abs(t-1)<0.001 )
-			{
-				sendResult( suica.canvas.toDataURL() );
-				suica.ontime = null;
-			}
-		};
+		sendSnapshot( );
 	</script>
 </body>
 </html>
