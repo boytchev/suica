@@ -196,8 +196,15 @@ class Suica
 		if( TEST_MODE )
 		{
 			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
+			THREE.Math.seededRandom(1); // fixed seed, so random number will be the same
+		}
+		else
+		{
+			THREE.Math.seededRandom( Math.round(Number.MAX_SAFE_INTEGER*Math.random()));
 		}
 
+		
+		
 		// register local methods that have stereotypical code
 		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle] )
 		{
@@ -1225,10 +1232,11 @@ window.random = function( a=0, b=1 )
 {
 	if( Array.isArray(a) )
 	{
-		return a[ THREE.Math.randInt(0,a.length-1) ];
+		var index = Math.floor( a.length*THREE.Math.seededRandom() );
+		return a[ index ];
 	}
 	
-	return a+(b-a)*Math.random();
+	return a+(b-a)*THREE.Math.seededRandom();
 }
 
 
