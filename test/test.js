@@ -5,12 +5,16 @@
 //===================================================
 
 
+var SUICA_TEST_MODE = 1;
+
+document.write('<script src="../../bin/suica.js"></script>');
+
 const CASES_DIR = 'cases/';
 const IMAGES_DIR = 'snapshots/';
 const TEST_TIMEOUT = 3000; // per test, in milliseconds
 const FULL_SIZE = 400;
 const TEST_SIZE = 100;
-const COLOR_DIFF = 0.1;
+const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
@@ -257,30 +261,43 @@ function compareImages( )
 	
 	log('<br>');
 
-	setTimeout( startNextTest, 1000 );
+	setTimeout( startNextTest, 100 );
 }
 
 
 
-function sendSnapshot( seconds = 1 )
+function sendSnapshot( )
 {
-	var _onTime = suica.onTime,
-		_oldT = -1;
+	if( typeof suica === 'undefined' ) return;
 	
+	const DELAY = 1;
+	
+	var _onTime = suica.ontime,
+		_oldT = -1;
+
 	suica.ontime = (t, dT)=>{
-		
+
 		// call the original onTime (if any)
-		if( _onTime ) _onTime( t, dT );
+		if( _onTime )
+		{
+			if( typeof _onTime === 'string' )
+				_onTime = window[_onTime];
+			
+			_onTime( t, dT );
+		}
 		
 		// send result when time elapses
 		
-		if( _oldT<seconds && t>=seconds )
+		if( t>=DELAY )
 		{
-			console.log( '::> capture delay',(t-seconds).toFixed(3),'seconds' );
+			console.log( '::> capture delay',(t-DELAY).toFixed(3),'seconds' );
 			sendResult( suica.canvas.toDataURL() );
-			suica.ontime = null;
+			suica.ontime = _onTime;
 		}
 		
 		_oldT = t;
 	};
 }
+
+
+window.addEventListener( 'load', sendSnapshot );

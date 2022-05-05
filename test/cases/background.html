@@ -2,13 +2,12 @@
 <html lang="en">
 
 <head>
-	<script>var SUICA_TEST_MODE = 1;</script>
-	<script src="../../bin/suica.js"></script>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 	<script src="../test.js"></script>
 </head>
 
 <body>
-	<suica width="400" height="400" ontime="rainbow">
+	<suica ontime="rainbow">
 		<cube color="lightsalmon">
 		<demo distance="150" altitude="0">
 	</suica>
@@ -19,10 +18,5 @@
 			background( 'hsl('+Math.round((100*t)%360)+',100%,90%)' );
 		}
 	</script>
-
-	<script>
-		sendSnapshot( );
-	</script>
-	
 </body>
 </html>

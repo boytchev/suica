@@ -2,13 +2,12 @@
 <html lang="en">
 
 <head>
-	<script>var SUICA_TEST_MODE = 1;</script>
-	<script src="../../bin/suica.js"></script>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 	<script src="../test.js"></script>
 </head>
 
 <body>
-	<suica width="400" height="400">
+	<suica>
 	</suica>
 	
 	
@@ -51,10 +50,6 @@ var colors=[				'red',
 			circle( [12*(x-2),12*(y-2),0], 12, colors.shift() );
 		}
 	</script>
-	
-	<script>
-		sendSnapshot( );
-	</script>
-	
+
 </body>
 </html>
