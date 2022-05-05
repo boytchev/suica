@@ -272,8 +272,7 @@ function sendSnapshot( )
 	
 	const DELAY = 1;
 	
-	var _onTime = suica.ontime,
-		_oldT = -1;
+	var _onTime = suica.ontime;
 
 	suica.ontime = (t, dT)=>{
 
@@ -294,8 +293,6 @@ function sendSnapshot( )
 			sendResult( suica.canvas.toDataURL() );
 			suica.ontime = _onTime;
 		}
-		
-		_oldT = t;
 	};
 }
 
