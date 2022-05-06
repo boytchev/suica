@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo distance="120">
+		<group id="pawn" center="0,10,0" color="linen">
+			<sphere y="25" size="10">
+			<sphere y="19" size="10,2,10">
+			<cone size="12,25">
+			<cone size="20,10">
+		</group>
+		
+		<sphere size="29" color="black">
+	</suica>
+
+	<script>
+		pawn.clone.style( {color: 'lightcoral', center: [0,0,10], spinV: 90} );
+		pawn.clone.style( {color: 'dimgray', center: [0,-10,0], spinV: 180} );
+		pawn.clone.style( {color: 'peachpuff', center: [0,0,-10], spinV: 270} );
+	</script>
+</body>
+</html>

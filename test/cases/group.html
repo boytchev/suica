@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		var pawn = group(
+			sphere( [0,25,0], 10, 'dimgray' ),
+			sphere( [0,19,0], [10,2,10], 'dimgray' ),
+			cone( [0,0,0], [12,25], 'dimgray' ),
+			cone( [0,0,0], [20,10], 'dimgray' ),
+		);
+		pawn.center = [30,-5,0];
+		
+		pawn = pawn.clone;
+		pawn.color = 'linen';
+		pawn.center = [-30,-5,0];
+		
+		pawn = pawn.clone;
+		pawn.color = 'lightcoral';
+		pawn.center = [0,-5,30];
+		
+		pawn = pawn.clone;
+		pawn.color = 'peachpuff';
+		pawn.center = [0,-5,-30];
+
+	</script>
+</body>
+</html>

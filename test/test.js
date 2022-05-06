@@ -18,6 +18,25 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'group',
+	'group-tag',
+	'image-datauri',
+	'image-file',
+	'images',
+	'its',
+	'line',
+
+	'circle',
+	'circle-ellipse',
+	'clone',
+	'clone-tag',
+	'cone',
+	'cone-conoid',
+	'cube',
+	'cube-cuboid',
+	'cylinder',
+	'cylinder-cylindroid',
+	
 	'tag-suica',
 	'tube-dynamic-radius',
 	'tube-dynamic-spline-radius',
@@ -33,7 +52,6 @@ var cases = [
 	'allobjects',
 	'background',
 
-	'cube',
 	'colors',
 	'sphere',
 	
@@ -192,7 +210,7 @@ function testTimeout( )
 {
 	log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
 	var a = document.getElementById('result-image').cloneNode();
-	a.style.margin = "0 0 0 1em;";
+	a.style.margin = "0 1em 0 0";
 	a.style.padding = "0";
 	a.style.width = "200px";
 	a.style.height = "200px";
@@ -279,7 +297,7 @@ function compareImages( )
 		log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
 		var a = document.getElementById('result-image').cloneNode();
 		a.setAttribute('id','');
-		a.style.margin = "0";
+		a.style.margin = "0 1em 0 0";
 		a.style.padding = "0";
 		a.style.width = "200px";
 		a.style.height = "200px";
@@ -288,7 +306,7 @@ function compareImages( )
 
 		a = document.getElementById('target-image').cloneNode();
 		a.setAttribute('id','');
-		a.style.margin = "0 0 0 1em;";
+		a.style.margin = "0";
 		a.style.padding = "0";
 		a.style.width = "200px";
 		a.style.height = "200px";
