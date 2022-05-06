@@ -18,6 +18,18 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'tag-suica',
+	'tube-dynamic-radius',
+	'tube-dynamic-spline-radius',
+	'tube-dynamic',
+	'tube-html',
+	'tube-lathe',
+	'tube-open-closed',
+	'tube-spline-explicit',
+	'tube-spline',
+	'tube-variations',
+	'tube',
+
 	'allobjects',
 	'background',
 
@@ -90,7 +102,7 @@ function sendResult( string )
 
 function startTests()
 {
-console.log('::> starting all tests');
+	console.log('::> starting all tests');
 
 
 	// install listeners for messages from test cases and images load
@@ -174,19 +186,24 @@ function startNextTest( )
 }
 
 
+var ids = 0;
 
 function testTimeout( )
 {
 	log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
 	var a = document.getElementById('result-image').cloneNode();
-	a.style.margin = "0";
+	a.style.margin = "0 0 0 1em;";
 	a.style.padding = "0";
+	a.style.width = "200px";
+	a.style.height = "200px";
 	a.setAttribute('id','');
 	document.getElementById( 'log' ).appendChild( a );
 
 	a = document.getElementById('target-image').cloneNode();
 	a.style.margin = "0";
 	a.style.padding = "0";
+	a.style.width = "200px";
+	a.style.height = "200px";
 	a.setAttribute('id','');
 	document.getElementById( 'log' ).appendChild( a );
 	
@@ -259,17 +276,23 @@ function compareImages( )
 	//if( match<90 || pnts>PIXELS_DIFF )
 	if( match<90 )
 	{
-		log('it is this:<span style="width:350px; display:inline-block;"></span>should be this:');
+		log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
 		var a = document.getElementById('result-image').cloneNode();
 		a.setAttribute('id','');
-		a.setAttribute('width','402');
-		a.setAttribute('height','402');
+		a.style.margin = "0";
+		a.style.padding = "0";
+		a.style.width = "200px";
+		a.style.height = "200px";
+		a.setAttribute('id','');
 		document.getElementById( 'log' ).appendChild( a );
 
 		a = document.getElementById('target-image').cloneNode();
 		a.setAttribute('id','');
-		a.setAttribute('width','402');
-		a.setAttribute('height','402');
+		a.style.margin = "0 0 0 1em;";
+		a.style.padding = "0";
+		a.style.width = "200px";
+		a.style.height = "200px";
+		a.setAttribute('id','');
 		document.getElementById( 'log' ).appendChild( a );
 	
 		// log('<br>');

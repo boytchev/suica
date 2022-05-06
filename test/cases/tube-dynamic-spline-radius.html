@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+	</suica>
+
+	<script>
+		var time = 0;
+		
+		function screw(u)
+		{
+			return [
+				80*u-40,
+				20*Math.sin(40*u),
+				20*Math.cos(40*u),
+				0.5+3.5*Math.pow(0.5+0.5*Math.cos( 60*u+3*time+3*Math.sin(2*u+time) ),10)
+			];
+		}
+		
+		spiral = tube( [0,0,0], screw, 1, 400 );
+		
+		suica.ontime = function( t )
+		{
+			time = t;
+			spiral.radius = 0; // activates recalculation of the tube
+		}
+	</script>
+</body>
+</html>

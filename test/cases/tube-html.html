@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+		
+		<drawing id="design" size="40" color="white">
+			<moveto center="5,0"> <lineto center="5,40"> <stroke width="8" color="peachpuff">
+			<moveto center="15,0"> <lineto center="15,40"> <stroke width="8" color="gray">
+			<moveto center="25,0"> <lineto center="25,40"> <stroke width="8" color="linen">
+			<moveto center="35,0"> <lineto center="35,40"> <stroke width="8" color="black">
+		</drawing>
+		
+		<spline
+			id = "knot"
+			src = "	-30, 30,0;  12, 30,-20;  12,-30,20;
+					-30,-30,0; -30, 12,-20;  30, 12,20;
+					 30,-30,0; -12,-30,-20; -12, 30,20;
+					 30, 30,0;  30,-12,-20; -30,-12,20"
+			closed approximating>
+			
+		<tube curve="knot" radius="4" count="300" color="white" image="design" images="50,1">
+	</suica>
+</body>
+</html>

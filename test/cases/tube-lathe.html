@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		tube( [0,0,0], u=>[ 0,50*u-25,0, Math.exp(3*u) ], 0, [40, 120] );
+		tube( [0,0,0], u=>[ 0,30*u-15,0, 20*Math.abs(u-0.5) ], 0, [40, 120] ).style({color:'linen',x:-35});
+		tube( [0,0,0], u=>[ 0,30*u-15,0, 8*Math.sin(Math.PI*u) ], 0, [40, 120] ).style({color:'peachpuff',x:30});
+		
+		suica.ontime = function( t )
+		{
+			for( var object of allObjects() )
+			{
+				object.spinV = 100*t - 30*Math.sin(200*t*Math.PI/180);
+				t += 2*Math.PI/3;
+			}
+		}
+	</script>
+</body>
+</html>

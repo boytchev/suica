@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+	</suica>
+
+	<script>
+		var points = [];
+		for( var i=0; i<20; i++ )
+			points.push([ 
+					random(-30,30),
+					random(-30,30),
+					random(-30,30),
+					random(0,1)
+				]);
+		
+		tube( [0,0,0], spline(points,true), 0, [600,8], 1, 'black' );
+	</script>
+</body>
+</html>

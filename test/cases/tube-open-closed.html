@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		var closedCurve = spline(
+			[[-20,-20, 0, 5],
+			[-23, 20, 0, 1],
+			[  0, 23, 0, 5],
+			[ 23, 20, 0, 1],
+			[ 20,-20, 0, 5]],
+			true
+		);
+		
+		var openCurve = spline(
+			[[-20,-20, 0, 5],
+			[-23, 20, 0, 1],
+			[  0, 23, 0, 5],
+			[ 23, 20, 0, 1],
+			[ 20,-20, 0, 5]],
+			false
+		);
+		
+		tube( [0,0,15], openCurve, 1, 150 );
+		tube( [0,0,-15], closedCurve, 1, 150 );
+	</script>
+</body>
+</html>
