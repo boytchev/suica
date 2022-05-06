@@ -32,9 +32,23 @@ var cases = [
 	'spline-html',
 	'spline-interpolating',
 	'spline-size',
-	
-	
-	
+
+	'drawing-arc',
+	'drawing-clear',
+	'drawing-curveto',
+	'drawing-custom-point',
+	'drawing-dotted-lines',
+	'drawing-fill-and-stroke',
+	'drawing-fill',
+	'drawing-filltext',
+	'drawing-heart-point',
+	'drawing-html',
+	'drawing-js',
+	'drawing-moveto-lineto',
+	'drawing-opaque',
+	'drawing-stroke',
+	'drawing-transparent',
+
 ];
 
 

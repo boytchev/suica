@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+		<cube id="c" color="white">
+		<square id="a" color="white" center="28,0,15" size="21,7">
+		<square id="b" color="white" center="-28,0,-15" size="21,7" spin="180">
+	</suica>
+	
+	<script>
+		var pic = drawing( 100, 100, 'gray' );
+		
+		fillText( 5, 7, 'A', 'white', 'bold 7em "Times New Roman"' );
+		fillText( 55, 7, 'a', 'white', 'italic 7em "Times New Roman"' );
+		
+		c.image = pic;
+
+
+		var pic = drawing( 100, 33 );
+		
+		moveTo( 0.5, 1.5 );
+			lineTo( 99.5, 1.5 );
+			lineTo( 99.5, 30.5 );
+			lineTo( 0.5, 30.5 );
+		stroke( 'black', 1, true );	
+		fill( 'white' );	
+				
+		fillText( 28, 9, 'Save it', 'lightsalmon', '16px Arial' );
+		fillText( 5, 7, '🖫', 'black', 'bold 22px WingDings' );
+		
+		a.image = pic;
+
+
+		var pic = drawing( 100, 33 );
+		
+		moveTo( 0.5, 1.5 );
+			lineTo( 99.5, 1.5 );
+			lineTo( 99.5, 30.5 );
+			lineTo( 0.5, 30.5 );
+		stroke( 'black', 1, true );	
+		fill( 'white' );	
+				
+		fillText( 33, 9, 'Email it', 'lightsalmon', '16px Arial' );
+		fillText( 5, 7, '🖂', 'black', 'bold 22px WingDings' );
+		
+		b.image = pic;
+	</script>
+	
+</body>
+</html>

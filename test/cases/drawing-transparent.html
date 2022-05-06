@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<cube id="a" color="white">
+	</suica>
+	
+	<script>
+		var pic = drawing( 100, 100 );
+		
+		pic.moveTo( 50, 10 );
+			pic.lineTo( 90, 10 );
+			pic.lineTo( 90, 90 );
+			pic.lineTo( 10, 90 );
+			pic.lineTo( 10, 10 );
+			pic.lineTo( 50, 10 );
+		stroke( 'lightsalmon', 6 );	
+		
+		pic.moveTo( 20, 20 );
+			pic.lineTo( 80, 20 );
+			pic.lineTo( 80, 80 );
+			pic.lineTo( 20, 80 );
+			pic.lineTo( 20, 20 );
+		stroke( 'black', 1 );	
+		fill( 'peachpuff' );	
+
+		pic.moveTo( 0, 0 );
+			pic.lineTo( 100, 0 );
+			pic.lineTo( 100, 100 );
+			pic.lineTo( 0, 100 );
+			pic.lineTo( 0, 0 );
+		stroke( 'black', 1 );		
+		
+		a.image = pic;
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+	
+	<script>
+		var heart = drawing( 128 );
+
+		moveTo( 64, 8 );
+			curveTo( 120, 64, 120, 96 );
+			curveTo( 120, 120, 96, 120 );
+			curveTo( 64, 120, 64, 96 );
+			curveTo( 64, 120, 32, 120 );
+			curveTo( 8, 120, 8, 96 );
+			curveTo( 8, 64, 64, 8 );
+		fill( 'white' );
+		
+		var colors = [
+			'lightsalmon', 'peachpuff', 'linen',
+			'lightsalmon', 'peachpuff', 'linen',
+			'lightgray', 'dimgray', 'white', 'black' ];
+
+
+		// number of points
+		const N = 200;
+		
+		// creating all points
+		for( var i=0; i<N; i++ )
+		{
+			var center = [random(-50,50), random(-30,30), random(-50,50)];
+			point( center, random(5,25), random(colors) ).image = heart;
+		}
+		
+		
+	</script>
+	
+</body>
+</html>

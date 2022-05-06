@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<cube id="a" color="white">
+	</suica>
+	
+	<script>
+		var pic = drawing( 100, 100, 'lightgray' );
+		
+		moveTo( 10, 90 );
+			lineTo( 10, 10 );
+			lineTo( 90, 10 );
+			lineTo( 90, 90 );
+		stroke( 'lightsalmon', 10 );
+		
+		moveTo( 22, 78 );
+			lineTo( 22, 22 );
+			lineTo( 78, 22 );
+			lineTo( 78, 78 );
+		stroke( 'white', 7, true );
+		
+		moveTo( 32, 68 );
+			lineTo( 32, 32 );
+			lineTo( 68, 32 );
+			lineTo( 68, 68 );
+		stroke( 'dimgray', 5 );
+		
+		a.image = pic;
+	</script>
+	
+</body>
+</html>

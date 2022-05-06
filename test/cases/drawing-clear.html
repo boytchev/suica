@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica onTime="onTime">
+		<square z="-66" size="400,200" color="white" image="https://boytchev.github.io/suica/textures/tile.png" images="80,40">
+		<square id="a" color="white" y="11" size="60,20">
+		<square id="b" color="white" y="-11" size="60,20">
+	</suica>
+	
+	<script>
+		a.image = drawing( 300, 100 );
+		b.image = drawing( 300, 100 );
+		
+		function onTime( t )
+		{
+			var d = new Date();
+			d.setTime( 1234567890+1000*t );
+			
+			a.image.clear( 'lightsalmon' );
+			a.image.fillText( 18, 20, d.toTimeString(), 'black', 'bold 66px Arial' );
+			a.spin = [100*t - 50*Math.sin(100*t*Math.PI/180)];
+			
+			t = t+Math.PI/2;
+			
+			b.image.clear( );
+			b.image.fillText( 18, 20, d.toTimeString(), 'black', 'bold 66px Arial' );
+			b.spin = [100*t - 50*Math.sin(100*t*Math.PI/180)];
+		}
+		
+	</script>
+	
+</body>
+</html>

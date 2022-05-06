@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica onTime="onTime">
+		<demo>
+		<cube id="a" x="20" color="white">
+		<cube id="b" x="-20" color="white">
+	</suica>
+	
+	<script>
+		a.image = drawing( 100, 100, 'linen' );
+		b.image = drawing( 100, 100, 'linen' );
+		
+		function onTime( )
+		{
+			a.image.arc( random(0,100), random(0,100), random(10,30) );
+			a.image.stroke( 'black', 5 );
+			a.image.fill( random(['peachpuff','linen','white','lightgray','lightsalmon']) );
+			
+			b.image.moveTo( random(-10,110), random(-10,110) );
+			b.image.lineTo( random(-10,110), random(-10,110) );
+			b.image.stroke( random(['peachpuff','linen','white','lightgray','lightsalmon','black','dimgray']), 1 );
+		}
+	</script>
+	
+</body>
+</html>

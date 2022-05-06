@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<script>
+		pic = drawing( 132, 132, 'lightsalmon' );
+
+		// border
+		moveTo( 21, 4 );
+		lineTo( 111, 4 );
+		curveTo( 128, 4, 128, 21 );
+		lineTo( 128, 111 );
+		curveTo( 128, 128, 111, 128 );
+		lineTo( 21, 128 );
+		curveTo( 4, 128, 4, 111 );
+		lineTo( 4, 21 );
+		curveTo( 4, 4, 21, 4 );
+		fill( 'linen' );
+		stroke( 'black', 1 );
+
+		// infinity
+		arc( 90, 66, 16, -45, 225 );
+		arc( 42, 66, 16, 45, -225, false );
+		stroke( 'black', 30 );
+		stroke( 'linen', 20 );
+		stroke( 'lightsalmon', 13 );
+		stroke( 'peachpuff', 10 );
+
+		// text
+		fillText( 21, 12, 'JavaScript', 'black', 'italic 20px TimesNewRoman' );
+	</script>
+	
+	<suica>
+		<demo>
+		<cube id="a" color="white" image="pic">
+	</suica>
+	
+</body>
+</html>
