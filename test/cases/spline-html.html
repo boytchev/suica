@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+		
+		<spline id="mouth" src="-35,10,0; 0,-30,0; 35,10,0; 0,-20,0" closed approximating>
+		<spline id="eye" src="0,10,0; -5,0,0; 0,-5,0; 5,0,0" closed approximating>
+		<spline id="face" src="curve">
+	</suica>
+
+	<script>
+		function curve( u )
+		{
+			u = 2*Math.PI*u;
+			return [30*Math.cos(u), 30*Math.sin(u), 0];
+		}
+		
+		tube( [0,-4,0], mouth, 0.4, 100, 1, 'black' );
+		tube( [10,6,0], eye, 0.4 );
+		tube( [-10,6,0], eye, 0.4 );
+		tube( [0,0,0], face, 0.4 );
+	</script>
+</body>
+</html>

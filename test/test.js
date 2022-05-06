@@ -24,6 +24,17 @@ var cases = [
 	'cube',
 	'colors',
 	'sphere',
+	
+	'spline',
+	'spline-approximating',
+	'spline-color',
+	'spline-function',
+	'spline-html',
+	'spline-interpolating',
+	'spline-size',
+	
+	
+	
 ];
 
 
@@ -120,7 +131,7 @@ function startNextTest( )
 		// set timeout timer; if there is result before the timeout, the the timer is cleared
 		timeout = setTimeout( testTimeout, TEST_TIMEOUT );
 	
-		log( `<b>${testName.toUpperCase()}</b>` );
+		log( `<b>${testName}</b>` );
 		
 		
 		console.groupEnd( );
@@ -152,12 +163,16 @@ function startNextTest( )
 
 function testTimeout( )
 {
-	log('it is this:<span style="width:350px; display:inline-block;"></span>should be this:');
+	log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
 	var a = document.getElementById('result-image').cloneNode();
+	a.style.margin = "0";
+	a.style.padding = "0";
 	a.setAttribute('id','');
 	document.getElementById( 'log' ).appendChild( a );
 
 	a = document.getElementById('target-image').cloneNode();
+	a.style.margin = "0";
+	a.style.padding = "0";
 	a.setAttribute('id','');
 	document.getElementById( 'log' ).appendChild( a );
 	

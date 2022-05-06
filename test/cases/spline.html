@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		curve = spline( [
+			[-25,0,0],
+			[-15,15,0],
+			[30,-30,0],
+			[50,0,0],
+			[30,30,0],
+			[-15,-15,0],
+		], true, false );
+		
+		tube( [0,0,0], curve, 0.2, 100, 1, 'black' );
+		
+		s = sphere( [0,0,0], 10, 'lightsalmon' );
+		
+		suica.ontime = t=> s.center=curve(t/3);
+		
+	</script>
+</body>
+</html>

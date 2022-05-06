@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+		<cylinder id="a" center="-45,-20,-1" size="3,2" color="lightsalmon" spinv="90">
+		<clone src="a" center="-45,20,-1">
+		<clone src="a" center="-5,20,-1">
+		<clone src="a" center="-5,-20,-1">
+		<clone src="a" center="45,-20,-1">
+		<clone src="a" center="45,20,-1">
+		<clone src="a" center="5,20,-1">
+		<clone src="a" center="5,-20,-1">
+	</suica>
+
+	<script>
+		var points = [ [-20,20,0], [-20,-20,0], [20,-20,0], [20,20,0] ];
+
+		var openCurve = spline( points, false, false );
+		var closedCurve = spline( points, true, false );
+
+		tube( [-25,0, 0], openCurve, 0.4 ).style({color: 'black'});
+		tube( [ 25,0, 0], closedCurve, 0.4 ).style({color: 'black'});
+
+	</script>
+</body>
+</html>

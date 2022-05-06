@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+	</suica>
+
+	<script>
+		function flower( u, k, n=2 )
+		{
+			u = n*Math.PI*u;
+			return [
+				Math.cos(u) + Math.cos(k*u),
+				Math.sin(u) - Math.sin(k*u),
+				0
+			];
+		}
+		
+		function frame( u, n )
+		{
+			u = 2*Math.PI*u;
+			return [
+				8*Math.pow(Math.abs(Math.cos(u)),2/n)*Math.sign(Math.cos(u)),
+				5*Math.pow(Math.abs(Math.sin(u)),2/n)*Math.sign(Math.sin(u)),
+				0,
+				0.2+0.1*Math.sin(100*u)
+			];
+		}
+		
+		tube( [-25,12,0], spline(flower,2), 0.05, [300,4], 5, 'black' );
+		tube( [0,12,0], spline(flower,3), 0.05, [300,4], 5, 'black' );
+		tube( [25,12,0], spline(flower,4), 0.05, [300,4], 5, 'black' );
+
+		tube( [-25,-12,0], spline(flower,1.5,4), 0.05, [300,4], 5, 'black' );
+		tube( [0,-12,0], spline(flower,2.5,4), 0.05, [300,4], 5, 'black' );
+		tube( [25,-12,0], spline(flower,-3.5,4), 0.05, [300,4], 5, 'black' );
+
+		tube( [0,0,0], spline(frame,5), 0.05, [400,6], 5, 'lightsalmon' );
+
+	</script>
+</body>
+</html>

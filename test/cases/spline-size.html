@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<circle y="25.5" size="20" color="black">
+		<circle y="-1" size="20" color="black">
+	</suica>
+
+	<script>
+		curve = spline( [[-20,-25,0], [-20,14,0], [20,14,0], [20,-25,0]], true, false );
+		size = spline( [[20], [6], [6], [20] ], true, true );
+		
+		var s = [
+			circle( [0,0,0], 5, 'lightsalmon' ),
+			circle( [0,0,0], 5, 'lightsalmon' ),
+			circle( [0,0,0], 5, 'lightsalmon' )
+		];
+		
+		
+		suica.ontime = function( t )
+		{
+			for( i=0; i<3; i++ )
+			{
+				s[i].center = curve(t/5);
+				s[i].size = size(t/5)[0];
+				t += 5/3;
+			}
+		}
+		
+	</script>
+</body>
+</html>
