@@ -18,6 +18,21 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'camera-anaglyph',
+	'camera-orthographic',
+	'camera-perspective',
+	'camera-stereo-cross-eyed',
+	'camera-stereo-wall-eyed',
+	'camera-vr',
+	'sizes',
+	'sphere',
+	'sphere-spheroid',
+	'spin',
+	'spin-angles',
+	'square',
+	'square-rectangle',
+	'style',
+	
 	'group',
 	'group-tag',
 	'image-datauri',
@@ -69,7 +84,6 @@ var cases = [
 	'background',
 
 	'colors',
-	'sphere',
 	
 	'spline',
 	'spline-approximating',

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica vr onTime="onTime">
+	</suica>
+	
+	<script>
+		var cubes = [];
+		
+		for( var x = -20; x<=20; x++ )
+		for( var y = -20; y<=20; y++ )
+		if( Math.max( Math.abs(x), Math.abs(y) ) == 20 )
+		{
+			cubes.push( cube( [x,y,0], 3, random(['dimgray','linen','lightsalmon','peachpuff']) ) );
+		}
+		
+		function onTime( t )
+		{
+			for( var i=0; i<cubes.length; i++ )
+				cubes[i].z = 60*Math.sin( (0.6+0.4*Math.sin(i))*t+i*i );
+		}
+	</script>
+
+</body>
+</html>

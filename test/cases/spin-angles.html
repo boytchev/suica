@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica onTime="onTime">
+		<cube x="-32" size="20" color="peachpuff">
+		<cube x="0" size="20" color="gray">
+		<cube x="32" size="20" color="lightsalmon" spinV="90">
+	</suica>
+
+	<script>
+		var pyramids = allObjects();
+		
+		function onTime( t )
+		{
+			pyramids[0].spinH = 100*t;
+			pyramids[1].spinV = 100*t;
+			pyramids[2].spinT = 100*t;
+		}
+	</script>
+</body>
+</html>

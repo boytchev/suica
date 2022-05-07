@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica></suica>
+	
+	<script>
+		demo();
+		
+
+		// direct styling
+		a = cube().style({color:'white'});
+		
+		// indirect styling + chained styling
+		framed = {wireframe: true};
+		a.clone.style(framed).style({color:'gray'});
+		
+		sphere().style( {x:+15, size:[8,20,20], color:'peachpuff'} );
+		sphere().style( {x:-15, size:[8,20,20], color:'lightsalmon'} );
+		sphere().style( {z:+15, size:[20,20,8], color:'dimgray'} );
+		
+		// styling function
+		style( sphere(), {z:-15, size:[20,20,8], color:'linen'} );
+		
+	</script>
+	
+</body>
+</html>
