@@ -16,7 +16,7 @@
     - [Event workflow](#event-workflow) [<small> [listeners](#event-listeners) | [handlers](#event-handlers) | [proactive](#proactive-events) </small> ]
 	- [Event data](#event-data) [<small> [findPosition](#findposition) | [findObject](#findobject) | [findObjects](#findobjects) </small>]
 - [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) | [spline](#spline) </small>]
-- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
+- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
 
 
 ## About
@@ -1991,8 +1991,21 @@ many other web services for such conversion, like [Site24x7](https://www.site24x
 ### Tester
 
 A rudimentery tester for Suica is availble [here](../test/test.html).
-It runs predefined test cases and compares the produced images. It reports the
-percentage of colour match and the number of mismatch pixels.
+It runs predefined test cases and compares the produced images.
+
+It reports the percentage of match:
+
+- A match of 90% or more is considered normal.
+- A match between 70% and 90% is most likely due to some rendering fluctuations
+and a visual inspection is needed.
+- A match below 70% most likely indicates a problem.
+
+
+### Suica 1
+
+The previous version of Suica is [Suica 1](https://github.com/boytchev/Suica-1).
+It uses WebGL directly (i.e. without Three.js). It is made available as a legacy.
+The latest version is Suica 1.12. Suica 1 is not maintained any more.
 
 
 ### Questions and answers
@@ -2045,4 +2058,4 @@ p.spin = [0,45];
 
 ---
 
-April, 2022
+May, 2022

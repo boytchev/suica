@@ -13,10 +13,9 @@ Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io
 ```
 
 [**Suica.js**](https://github.com/boytchev/suica) is a library for easy
-programming of mobile 3D graphics in JavaScript. The old version Suica 1.0 used
-WebGL. The new Suica 2.0, which is currently **under heavy but rapid development**
-is based on [Three.js](https://threejs.org). Suica is created to support 
-undergraduate courses for students from the
+programming of mobile 3D graphics in JavaScript. Suica 2.0, which is currently
+**under heavy but rapid development**, is based on [Three.js](https://threejs.org).
+Suica is used in several undergraduate courses in the
 [Faculty of Mathematics and Informatics](https://www.fmi.uni-sofia.bg/en) at
 [Sofia University](https://www.uni-sofia.bg/index.php/eng).
 
