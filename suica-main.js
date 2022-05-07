@@ -525,7 +525,7 @@ class Suica
 
 			if( TEST_MODE )
 			{
-				time = Math.floor( 20*time ) / 20;
+				time = Math.floor( 5*time ) / 5;
 			}
 			
 			//time=Math.PI/2;

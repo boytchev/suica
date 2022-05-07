@@ -27,7 +27,7 @@ c(”)(”)		(220503)
 // 	SUICA_TEST_MODE
 //		- right click on canvas is allowed
 //		- preserveDrawingBuffer in renderer set to  true
-//		- REMOVED: time is rounded to 0.1s
+//		- time is rounded to 0.05s
 
 
 
@@ -524,10 +524,10 @@ class Suica
 		{
 			time /= 1000; // convert miliseconds to seconds
 
-//			if( TEST_MODE )
-//			{
-//				time = Math.floor( 10*time ) / 10;
-//			}
+			if( TEST_MODE )
+			{
+				time = Math.floor( 5*time ) / 5;
+			}
 			
 			//time=Math.PI/2;
 			

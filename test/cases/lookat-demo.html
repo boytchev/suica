@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="onTime">
+		<cube color="dimgray">
+		
+		<cube size="24,24,38" color="linen">
+		<cube size="24,38,24" color="linen">
+		<cube size="38,24,24" color="linen">
+		
+		<cube size="19,19,48" color="lightsalmon">
+		<cube size="19,48,19" color="lightsalmon">
+		<cube size="48,19,19" color="lightsalmon">
+		
+		<cube size="15,15,60" color="black">
+		<cube size="15,60,15" color="black">
+		<cube size="60,15,15" color="black">
+		
+		<cube size="12,12,70" color="peachpuff">
+		<cube size="12,70,12" color="peachpuff">
+		<cube size="70,12,12" color="peachpuff">
+		
+		<cube size="2,8,130" color="lightgray">
+		<cube size="130,8,2" color="lightgray">
+		
+		<onTime src="loop">
+	</suica>
+
+	<script>
+		function onTime( t )
+		{
+			var h = Math.cos( 2*t+0.5 ),
+				s = Math.sin( t ),
+				c = Math.cos( t );
+				
+			lookAt( [100*c, 30*h, 100*s] );
+		}
+	</script>
+</body>
+</html>

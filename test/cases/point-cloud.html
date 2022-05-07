@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica>
+		<demo>
+	</suica>
+	
+	<script>
+		const N = 200;
+		
+		for( var i=0; i<N; i++ )
+		{
+			var center = [random(-50,50), random(-30,30), random(-50,50)],
+				color  = random( ['dimgray', 'linen', 'lightsalmon', 'peachpuff'] );
+			
+			point( center, 10, color );
+		}
+	</script>
+	
+</body>
+</html>

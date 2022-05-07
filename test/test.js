@@ -37,6 +37,22 @@ var cases = [
 	'cylinder',
 	'cylinder-cylindroid',
 	
+	'lookat',
+	'lookat-demo',
+	'lookat-navigation',
+	'lookat-navigation-vr',
+	'minimal-example',
+	'object-as-position',
+	'object-html',
+	'object-js',
+	'oxyz-html',
+	'oxyz-js',
+	'point',
+	'point-cloud',
+	'polygon',
+	'prism',
+	'pyramid',
+	
 	'tag-suica',
 	'tube-dynamic-radius',
 	'tube-dynamic-spline-radius',
@@ -122,6 +138,7 @@ function startTests()
 {
 	console.log('::> starting all tests');
 
+	document.getElementById( 'progress' ).max = cases.length-1;
 
 	// install listeners for messages from test cases and images load
 
@@ -166,6 +183,8 @@ function startTests()
 function startNextTest( )
 {
 	clearTimeout( timeout );
+
+	document.getElementById( 'progress' ).value++;
 
 	// more tests?
 	if( cases.length )
@@ -340,7 +359,7 @@ function sendSnapshot( )
 {
 	if( typeof suica === 'undefined' ) return;
 	
-	const DELAY = 1;
+	const DELAY = 0.9;
 	
 	var _onTime = suica.ontime;
 
