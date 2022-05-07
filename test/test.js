@@ -18,6 +18,30 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'demo-js',
+	'demo-html',
+	
+	'suica-orientation-xyz',
+	'suica-orientation-xzy',
+	'suica-orientation-yxz',
+	'suica-orientation-yzx',
+	'suica-orientation-zxy',
+	'suica-orientation-zyx',
+	
+	'spin-orientation-xyz',
+	'spin-orientation-xzy',
+	'spin-orientation-yxz',
+	'spin-orientation-yzx',
+	'spin-orientation-zxy',
+	'spin-orientation-zyx',
+	
+	'sizes-orientation-xyz',
+	'sizes-orientation-xzy',
+	'sizes-orientation-yxz',
+	'sizes-orientation-yzx',
+	'sizes-orientation-zxy',
+	'sizes-orientation-zyx',
+	
 	'camera-anaglyph',
 	'camera-orthographic',
 	'camera-perspective',
