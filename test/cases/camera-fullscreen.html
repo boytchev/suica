@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica fullscreen>
+	</suica>
+	
+	<script>
+		demo();
+		
+		for( var x = -10; x<=10; x++ )
+		for( var y = -10; y<=10; y++ )
+		if( Math.max( Math.abs(x), Math.abs(y) ) == 10 )
+		{
+			cube( [2*x,2*y,0], 2, random(['dimgray','linen','lightsalmon','peachpuff']) );
+		}
+	</script>
+
+	
+</body>
+</html>

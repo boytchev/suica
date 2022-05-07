@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<cube id="a" x="-40" size="20">
+		<cube id="b" x="-20" size="20">
+		<cube id="c" x="0" size="20">
+		<cube id="d" x="20" size="20">
+		<cube id="e" x="40" size="20">
+	</suica>
+	
+	<script>
+	
+		setInterval( function ()
+		{
+			a.size = random(10,20);
+			a.color = random(['dimgray','linen']);
+			
+			b.size = random(10,20);
+			b.color = random(['dimgray','linen']);
+			
+			c.size = random(10,20);
+			c.color = random(['dimgray','linen']);
+			
+			d.size = random(10,20);
+			d.color = random(['dimgray','linen']);
+			
+			e.size = random(10,20);
+			e.color = random(['dimgray','linen']);
+		}, 125 );
+		
+	</script>
+</body>
+</html>

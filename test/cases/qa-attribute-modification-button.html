@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<cube x="-40" size="20">
+		<cube x="-20" size="20">
+		<cube x="0" size="20">
+		<cube x="20" size="20">
+		<cube x="40" size="20">
+	</suica>
+
+	<button onclick="randomize()">Randomize</button>
+	
+	<script>
+		document.getElementsByTagName( 'button' )[0].click();
+		
+		function randomize()
+		{
+			var cubes = document.getElementsByTagName( 'cube' );
+			for( var cube of cubes )
+			{
+				cube.setAttribute( 'size', random(10,20) );
+				cube.setAttribute( 'color', random(['dimgray','linen']) );
+			}
+		}
+	</script>
+</body>
+</html>

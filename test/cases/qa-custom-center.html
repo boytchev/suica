@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<group id="p">
+			<pyramid spinv="90" size="10" z="30" color="linen">
+		</group>
+		<sphere size="20" color="lightsalmon">
+	</suica>
+	
+	<script>
+		for( var i=1; i<120; i++ )
+		{
+			p.clone.style( {
+				spin:  [random(0,360),random(-45,45)+random(-45,45)],
+				color: random(['linen','gray','peachpuff'])
+			} );
+		}
+	</script>
+</body>
+</html>

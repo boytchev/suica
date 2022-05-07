@@ -18,6 +18,13 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'qa-custom-center',
+	'qa-property-modification',
+	'qa-attribute-modification',
+	'qa-attribute-modification-button',
+	'camera-fullwindow',
+	'camera-fullscreen',
+	
 	'demo-js',
 	'demo-html',
 	

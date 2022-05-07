@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<cube x="-40" size="20">
+		<cube x="-20" size="20">
+		<cube x="0" size="20">
+		<cube x="20" size="20">
+		<cube x="40" size="20">
+	</suica>
+	
+	<script>
+	
+		var cubes = document.getElementsByTagName( 'cube' );
+
+		setInterval( function ()
+		{
+			for( var cube of cubes )
+			{
+				cube.setAttribute( 'size', random(10,20) );
+				cube.setAttribute( 'color', random(['dimgray','linen']) );
+			}
+		}, 125 );
+		
+	</script>
+</body>
+</html>
