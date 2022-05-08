@@ -447,14 +447,9 @@ function sendSnapshot( )
 	{
 		// x,y -- mouse coordinates relative to the Suica canvas element
 		
-		var element = suica.canvas;
-		
-		var oEvent;
-
 		var rect = suica.canvas.getBoundingClientRect();
 
-
-		oEvent = new MouseEvent( eventName,
+		var oEvent = new MouseEvent( eventName,
 			{
 				screenX: window.screenX + rect.x + x,
 				screenY: window.screenY + rect.y + y,
