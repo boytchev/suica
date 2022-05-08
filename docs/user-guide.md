@@ -1997,8 +1997,15 @@ It reports the percentage of match:
 
 - A match of 90% or more is considered normal.
 - A match between 70% and 90% is most likely due to some rendering fluctuations
-and a visual inspection is needed.
-- A match below 70% most likely indicates a problem.
+and a visual inspection is recommended.
+- A match below 70% most likely indicates a problem and a visula inspection is
+required.
+
+Because timings cannot be set absolutely, some test cases may not produce the
+expected result. In this case run the tester another time to check whether the
+result is consistent.
+
+
 
 
 ### Suica 1
