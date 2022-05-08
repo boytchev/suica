@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica orthographic onmousemove="onMouseMove" ontime="onTime">
+	</suica>
+	
+	<script>
+		setTimeout( ()=>simulateMouseEvent('mousemove',100,300), 100 );
+
+		var n = 40,
+			circles = [],
+			colors = ['peachpuff','gray','lightsalmon','black','lightgray','dimgray'],
+			pos = [0,0];
+		
+		for( var i=0; i<n; i++ )
+			circles.push( circle( [0,0,-i], 10+5*i, random(colors) ) );
+		
+		function onMouseMove( event )
+		{
+			pos = findPosition( event );
+		}
+		
+		function onTime( t )
+		{
+			for( var i=0; i<n; i++ )
+			{
+				circles[i].x = pos[0] + Math.sin(10*t+i);
+				circles[i].y = pos[1] + Math.sin(10*t-i);
+			}
+		}
+	</script>
+</body>
+</html>

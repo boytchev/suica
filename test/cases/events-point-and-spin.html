@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="rotate">
+		<prism y="-20" size="50,5" color="linen" onmouseenter="pick" onmouseleave="drop">
+		<prism y="-15" size="50,5" color="lightsalmon" onmouseenter="pick" onmouseleave="drop">
+		<prism y="-10" size="50,5" color="dimgray" onmouseenter="pick" onmouseleave="drop">
+		<prism y="-5" size="50,5" color="peachpuff" onmouseenter="pick" onmouseleave="drop">
+		<prism y="0" size="50,5" color="linen" onmouseenter="pick" onmouseleave="drop">
+		<prism y="5" size="50,5" color="lightsalmon" onmouseenter="pick" onmouseleave="drop">
+		<prism y="10" size="50,5" color="dimgray" onmouseenter="pick" onmouseleave="drop">
+		<prism y="15" size="50,5" color="peachpuff" onmouseenter="pick" onmouseleave="drop">
+	</suica>
+	
+	<script>
+		setTimeout( ()=>simulateMouseEvent('mousemove',200,200), 100 );
+
+		function pick( event )
+		{
+			this.speed = 1;
+		}
+		
+		function rotate( t, dT )
+		{
+			for( var object of allObjects() )
+			{
+				object.spinH += (object.speed|0)*t;
+			}
+		}
+		
+		function drop( event )
+		{
+			this.speed = 0;
+		}
+	</script>
+</body>
+</html>

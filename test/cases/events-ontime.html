@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+
+	<style>
+		suica {
+			position: relative;
+		}
+		
+		div {
+			width: calc( 100% - 1em );
+			position: absolute;
+			padding: 0.5em;
+			border-bottom: 1px gray dotted;
+		}
+	</style>
+</head>
+
+<body>
+	<suica>
+		<div id="log"></div>
+		<cube color="peachpuff">
+		<demo>
+	</suica>
+	
+	<script>
+		suica.ontime = showTime;
+		
+		function showTime( t, dt )
+		{
+			element('log').innerHTML = `Time: ${t.toFixed(1)} &Delta;Time: ${dt.toFixed(4)}`;
+		}
+	</script>	
+</body>
+</html>

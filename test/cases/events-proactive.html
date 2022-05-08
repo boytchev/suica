@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica proactive>
+		<demo>
+		<cube x="+30" size="20" color="peachpuff" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube x="-30" size="20" color="lightsalmon" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube z="+30" size="20" color="linen" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube z="-30" size="20" color="gray" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+	</suica>
+	
+	<script>
+		setTimeout( ()=>simulateMouseEvent('mousemove',350,200), 100 );
+		
+		function onMouseEnter( event )
+		{
+			this.oldColor = this.color;
+			this.color = 'black';
+		}
+		
+		function onMouseLeave( )
+		{
+			this.color = this.oldColor;
+		}
+		
+	</script>
+</body>
+</html>

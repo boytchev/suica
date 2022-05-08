@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica orthographic onmousedown="pick" onmousemove="drag" onmouseup="drop">
+		<sphere center="-60,-60,-800" size="100" color="peachpuff">
+		<sphere center="+60,+60,-800" size="100" color="lightsalmon">
+		<sphere center="-60,+60,-800" size="100" color="lightgray">
+		<sphere center="+60,-60,-800" size="100" color="dimgray">
+	</suica>
+	
+	<script>
+		setTimeout( ()=>simulateMouseEvent('mousedown',250,250), 100 );
+		setTimeout( ()=>simulateMouseEvent('mousemove',200,200), 200 );
+		setTimeout( ()=>simulateMouseEvent('mouseup',200,200), 300 );
+
+		var activeObject, oldX, oldY;
+		
+		function pick( event )
+		{
+			activeObject = findObject( event );
+			oldX = event.clientX;
+			oldY = event.clientY;
+		}
+		
+		function drag( event )
+		{
+			if( activeObject )
+			{
+				activeObject.x += event.clientX-oldX;
+				activeObject.y -= event.clientY-oldY;
+				oldX = event.clientX;
+				oldY = event.clientY;
+			}
+		}
+		
+		function drop( event )
+		{
+			activeObject = null;
+		}
+	</script>
+</body>
+</html>

@@ -200,11 +200,11 @@ class Suica
 		
 		if( TEST_MODE )
 		{
-			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 			THREE.Math.seededRandom(1); // fixed seed, so random number will be the same
 		}
 		else
 		{
+			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
 			THREE.Math.seededRandom( Math.round(Number.MAX_SAFE_INTEGER*Math.random()));
 		}
 
@@ -1206,6 +1206,14 @@ class Suica
 	
 	
 } // class Suica
+
+
+
+// propagate Suica into the parent window (if Suica is run inside <iframe>)
+//if( parent?.Suica )
+//{
+//	parent.Suica = Suica;
+//}
 
 
 window.style = function( object, properties )

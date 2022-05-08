@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<lookat from="100,100,100" to="0,-10,0">
+		
+		<group id="pawn" color="linen" onclick="shrink">
+			<sphere y="25" size="10">
+			<sphere y="19" size="10,2,10">
+			<cone size="12,25">
+			<cone size="20,10">
+		</group>
+	</suica>
+
+	<script>
+		setTimeout( ()=>simulateMouseEvent('click',200,200), 100 );
+		setTimeout( ()=>simulateMouseEvent('click',200,160), 110 );
+		setTimeout( ()=>simulateMouseEvent('click',250,120), 120 );
+
+		for( var x=-50; x<=50; x+=25 )
+		for( var z=-50; z<=50; z+=25 )
+			if( x || z )
+				pawn.clone.style( {center: [x,0,z]} );
+
+		function shrink( )
+		{
+			this.color = 'dimgray';
+			this.size = [0.5, 0.5, 0.5];
+			this.removeEventListener( 'onclick' );
+		}
+	</script>
+</body>
+</html>

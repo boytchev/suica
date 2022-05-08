@@ -18,6 +18,17 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'events-suica-enter',
+	'events-point-and-spin',
+	'events-event-listener',
+	'events-drag-and-drop',
+	'events-proactive',
+	'events-one-time-listener',
+	'events-find-position',
+	'events-ontime',
+	'events-find-object',
+	'events-find-objects',
+	
 	'qa-custom-center',
 	'qa-property-modification',
 	'qa-attribute-modification',
@@ -431,4 +442,29 @@ function sendSnapshot( )
 }
 
 
+
+	function simulateMouseEvent( eventName, x, y, button=0 )
+	{
+		// x,y -- mouse coordinates relative to the Suica canvas element
+		
+		var element = suica.canvas;
+		
+		var oEvent;
+
+		var rect = suica.canvas.getBoundingClientRect();
+
+
+		oEvent = new MouseEvent( eventName,
+			{
+				screenX: window.screenX + rect.x + x,
+				screenY: window.screenY + rect.y + y,
+				clientX: rect.x + x,
+				clientY: rect.y + y,
+				button: button
+			} );
+		
+		suica.canvas.dispatchEvent( oEvent );
+	}
+		
+		
 window.addEventListener( 'load', sendSnapshot );

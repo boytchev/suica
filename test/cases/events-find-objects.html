@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica onclick="onClick">
+	</suica>
+	
+	<script>
+
+		setTimeout( ()=>simulateMouseEvent('click',200,200), 200 );
+		
+		var n = 40,
+			colors = ['peachpuff','lightsalmon','lightgray','white'];
+		
+		for( var i=0; i<n; i++ )
+			cube(
+				[random(-50,50),random(-20,20),random(-50,50)],
+				[40,10,1],
+				random(colors)
+			).style( {spin:[random(0,360),random(0,360),random(0,360)]} )
+		
+		function onClick( event )
+		{
+			for( var object of findObjects( event ) )
+				object.color = 'dimgray';
+		}
+	</script>
+</body>
+</html>

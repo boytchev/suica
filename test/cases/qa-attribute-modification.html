@@ -20,14 +20,14 @@
 	
 		var cubes = document.getElementsByTagName( 'cube' );
 
-		setInterval( function ()
+		setTimeout( function ()
 		{
 			for( var cube of cubes )
 			{
 				cube.setAttribute( 'size', random(10,20) );
 				cube.setAttribute( 'color', random(['dimgray','linen']) );
 			}
-		}, 125 );
+		}, 500 );
 		
 	</script>
 </body>
