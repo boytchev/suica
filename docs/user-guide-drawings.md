@@ -1,5 +1,7 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/>Drawings
 
+<small>[Suica](#suica-canvas) | [Objects](#objects) | Drawings | [Events](#events) | [Functions](#functions) | [References](#references)</small>
+
 Suica drawings are 2D images generated in Suica (instead of being loaded from [JPEG or
 PNG files](#image)) that can be stamped onto 2D and 3D objects.
 
@@ -22,7 +24,7 @@ drawing can be done only in JavaScript.
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
 
-- ### [Suica](#suica-canvas) | [Objects](#objects) | Drawings | [Events](#events) | [Functions](#functions) | [References](#references)
+
 
 
 
