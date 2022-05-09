@@ -2,11 +2,13 @@
 
 <small>[Suica](#suica-canvas) | [Objects](#objects) | Drawings | [Events](#events) | [Functions](#functions) | [References](#references)</small>
 
-Suica drawings are 2D images generated in Suica (instead of being loaded from [JPEG or
-PNG files](#image)) that can be stamped onto 2D and 3D objects.
+Suica drawings are 2D images generated in Suica (instead of being loaded from
+JPEG or PNG files) that can be stamped onto 2D and 3D objects. Suica
+drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). 
 
-- [**Drawings**](#drawings)
-	- [drawing](#drawing)
+
+
+- [**Drawing**](#drawing)
 - [**Paths**](#paths)
 	- [moveTo](#moveto)
 	- [lineTo](#lineto)
@@ -18,19 +20,6 @@ PNG files](#image)) that can be stamped onto 2D and 3D objects.
 	- [fillText](#filltext)
 	- [clear](#clear)
 
- A drawing can be constructed in HTML or in JavaScript. Modifications of existing
-drawing can be done only in JavaScript.
-
-[<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
-[<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
-
-
-
-
-
-
-
-
 
 
 
@@ -38,16 +27,32 @@ drawing can be done only in JavaScript.
 
 # Drawing
 
-Command. Defines a 2D drawing canvas. Parameters are `width` and `height` for
-the canvas size in pixels; and `color` for the initial background colour. By
-default the size is 32&times;32 pixels. If *height* is not provided, it is
-assumed to be the same as the *width*. If `colour` is set, the background of the
-canvas is filled with this color; otherwise it is kept *transparent*.
+Command. Defines a 2D drawing canvas. 
 
-The coordinate system of a drawing has origin (0,0) at the bottom left side of
-the canvas. The X axis extends to the right, Y extends to the top.
+#### Syntax:
 
-<img src="images/drawing-coordinates.png">
+> ```html
+HTML:
+<drawing id="𝘯𝘢𝘮𝘦" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+```
+> ```js
+JS:
+𝘯𝘢𝘮𝘦 = drawing( 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡, 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+Parameter `id` sets the name of the canvas (and also the name of the variable
+that holds the canvas). This name is used when the drawing is applied to the
+surface of an object's [image](user-guide-properties.md#image) or when the
+drawing is updated.
+
+Parameter `size` sets the canvas size in pixels. If `height` is not provided, it
+is assumed to be the same as `width`. By default the drawing canvas is
+32&times;32 pixels. In HTML `size` can be split into individual parameters
+`width` and `height`.
+
+Parameter `color` sets the initial background color of the canvas. If `colour`
+is set, the background of the canvas is filled with this color; otherwise it is
+kept transparent.
 
 ```html
 HTML:
@@ -61,15 +66,23 @@ var a = drawing( 32 );
 var b = drawing( 32, 48, 'crimson' );
 ```
 
+A drawing can be constructed in HTML or in JavaScript. Modifications of existing
+drawing can be done only in JavaScript.
+
+[<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
+[<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
+
+The transparancy of a drawing is used when it is applied to an object. Areas of
+the object surface are transparent if they correspond to transparent areas of
+the drawing.
+
 [<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="300"></kbd>](../examples/drawing-transparent.html)
 [<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="300"></kbd>](../examples/drawing-opaque.html)
 
-When a drawing canvas is initialized and stored in a variable, this variable has
-commands for drawing on the canvas.
-
-Drawings can be applied to points and lines. For points the drawings act like
-sprites &ndash; they are not subject to orientation and they always face the
-screen. For lines drawings are used to created dot-and-dash patterns.
+Apart from 2D and 3D objects drawings can be applied to points and lines. For
+points the drawings act like [sprites](https://en.wikipedia.org/wiki/Sprite_(computer_graphics))
+&ndash; they are not subject to orientation and they always face the screen. For
+lines the drawings are used to create dot-and-dash patterns.
 
 [<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
 [<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
@@ -80,12 +93,22 @@ a drawing is managed by the [images](#images) property.
 
 [<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
 
+
+
+
+
+
 # Paths
 
 Suica drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-and are made of lines and filled areas. A virtual pen defines a path on the canvas.
-This path can be *stroked* by drawing a line over the path; or it contents can
-be *filled* with a color.
+and are made of stroked lines and filled areas. A virtual pen defines a path on
+the canvas. This path can be *stroked* by drawing a line over it; or its
+contents can be *filled* with a color.
+
+The coordinate system of a drawing canvas has origin (0,0) at the bottom left
+side of the canvas. The X axis extends to the right, Y extends to the top.
+
+<img src="images/drawing-coordinates.png">
 
 ## MoveTo
 
