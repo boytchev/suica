@@ -1,6 +1,6 @@
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/>Drawings
 
-<small>[Suica](#suica-canvas) | [Objects](#objects) | Drawings | [Events](#events) | [Functions](#functions) | [References](#references)</small>
+<small>[Suica](#suica-canvas) | [Properties](#properties) | [Objects](#objects) | Drawings | [Events](#events) | [Functions](#functions) | [References](#references)</small>
 
 Suica drawings are 2D images generated in Suica (instead of being loaded from
 JPEG or PNG files) that can be stamped onto 2D and 3D objects. Suica
@@ -29,13 +29,11 @@ drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/AP
 
 Command. Defines a 2D drawing canvas. 
 
-#### Syntax:
-
-> ```html
+```html
 HTML:
 <drawing id="𝘯𝘢𝘮𝘦" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
 ```
-> ```js
+```js
 JS:
 𝘯𝘢𝘮𝘦 = drawing( 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡, 𝑐𝑜𝑙𝑜𝑟 );
 ```
@@ -110,12 +108,29 @@ side of the canvas. The X axis extends to the right, Y extends to the top.
 
 <img src="images/drawing-coordinates.png">
 
+
+
+
+
+
 ## MoveTo
 
-Command. Sets the position of the virtual. This command moves the virtual
-pen from its current location to (`x`,`y`) without generating a path. This is
-used to set the starting point of a line or to start a new line, that is not
-connected to the current line. By default the both *x* and *y* are 0.
+Command. Sets the position of the virtual pen.
+
+```html
+HTML:
+<moveto center="𝑥,𝑦">
+```
+```js
+JS:
+moveTo( 𝑥, 𝑦 );
+```
+
+The `moveTo` command moves the virtual pen from its current location to (`x`,`y`)
+without generating a path. This is used to set the starting point of a line or
+to start a new line, that is not connected to the current line. By default the
+both `x` and *y* are 0. In HTML `center` can be split into individual parameters
+`x` and `y`.
 
 <img src="images/moveto-lineto.png">
 
@@ -128,13 +143,29 @@ HTML:
 JS:
 moveTo( 10, 0 );
 ```
+
+
+
+
+
 	
 ## LineTo
 
-Command. Adds a line segment to the path. This command moves the virtual pen
-along a straight line from its current location to (`x`,`y`) and adds that line
-to the current path. This is used to define straignt line sections of the path.
-By default the both *x* and *y* are 0.
+Command. Adds a line segment to the path.
+
+```html
+HTML:
+<lineTo center="𝑥,𝑦">
+```
+```js
+JS:
+lineTo( 𝑥, 𝑦 );
+```
+
+This command moves the virtual pen along a straight line from its current
+location to (`x`,`y`) and adds that line to the current path. This is used to
+define straignt line sections of the path. By default the both `x` and `y` are
+0. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
