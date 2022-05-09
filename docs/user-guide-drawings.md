@@ -33,14 +33,10 @@ drawing can be done only in JavaScript.
 
 
 
-Suica drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-and are made of lines and filled areas. A virtual pen defines a path on the canvas.
-This path can be *stroked* by drawing a line over the path; or it contents can
-be *filled* with a color.
 
 
 
-## Drawing
+# Drawing
 
 Command. Defines a 2D drawing canvas. Parameters are `width` and `height` for
 the canvas size in pixels; and `color` for the initial background colour. By
@@ -83,6 +79,13 @@ updated both before and after this assignment. The scale of
 a drawing is managed by the [images](#images) property. 
 
 [<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
+
+# Paths
+
+Suica drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+and are made of lines and filled areas. A virtual pen defines a path on the canvas.
+This path can be *stroked* by drawing a line over the path; or it contents can
+be *filled* with a color.
 
 ## MoveTo
 
