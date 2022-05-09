@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<square id="a" color="white" x="16">
+		<square id="b" color="white" x="-16">
+	</suica>
+	
+	<script>
+		var pic1 = drawing( ); 
+		clear( 'crimson' ); // clears pic1
+
+		var pic2 = drawing();
+		clear( 'lightsalmon' ); // clears pic2
+		
+		pic1.clear( 'gray' ); // clears pic1
+		
+		a.image = pic1; 
+		b.image = pic2
+	</script>
+</body>
+</html>

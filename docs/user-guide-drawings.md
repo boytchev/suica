@@ -14,7 +14,7 @@ drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/AP
 	- [lineTo](#lineto)
 	- [curveTo](#curveto)
 	- [arc](#arc)
-- [**Stroke and fill**](#stroke-and-fill)
+- [**Strokes and fills**](#strokes-and-fills)
 	- [stroke](#stroke)
 	- [fill](#fill)
 	- [fillText](#filltext)
@@ -54,14 +54,15 @@ kept transparent.
 
 ```html
 HTML:
-<drawing id="pic">
-<drawing id="pic" size="32,48">
-<drawing id="pic" width="32" height="48">
+<drawing id="a">
+<drawing id="b" size="32,48">
+<drawing id="c" width="32" height="48">
 ```
 ```js
 JS:
-var a = drawing( 32 );
-var b = drawing( 32, 48, 'crimson' );
+a = drawing( );
+b = drawing( 32 );
+c = drawing( 32, 48, 'crimson' );
 ```
 
 A drawing can be constructed in HTML or in JavaScript. Modifications of existing
@@ -90,6 +91,20 @@ updated both before and after this assignment. The scale of
 a drawing is managed by the [images](#images) property. 
 
 [<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
+
+The rest of this document describes the drawing commands. When they are used
+without prefix, they refer to the latest drawing. Otherwise, they refer to the
+drawing in the prefix.
+
+```js
+var pic1 = drawing();
+clear( 'crimson' ); // clears pic1
+
+var pic2 = drawing();
+clear( 'linen' ); // clears pic2
+
+pic1.clear( 'gray' ); // clears pic1
+```
 
 
 
@@ -162,7 +177,7 @@ JS:
 lineTo( 𝑥, 𝑦 );
 ```
 
-This command moves the virtual pen along a straight line from its current
+The `lineTo` command moves the virtual pen along a straight line from its current
 location to (`x`,`y`) and adds that line to the current path. This is used to
 define straignt line sections of the path. By default the both `x` and `y` are
 0. In HTML `center` can be split into individual parameters `x` and `y`.
@@ -179,13 +194,29 @@ lineTo( 10, 0 );
 
 [<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="300"></kbd>](../examples/drawing-moveto-lineto.html)
 		
+		
+		
+		
+		
+		
 ## CurveTo
 
-Command. Adds a curved segment to the path. This command moves the virtual pen
-along a curved line from its current location to (`x`,`y`) and adds that curve
-to the current path. The line is quadratic curve and is attracted towards point
-(`mx`, `my`), which is defined by the first pair of parameters of *curveTo*.
-By default all coordinates *mx*, *my*, *x* and *y* are 0.
+Command. Adds a curved segment to the path.
+
+```html
+HTML:
+<curveTo m="𝑚𝑥,𝑚𝑦" center="𝑥,𝑦">
+```
+```js
+JS:
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
+```
+
+The `curveTo` command moves the virtual pen along a curved line from its current
+location to (`x`,`y`) and adds that curve to the current path. The line is
+quadratic curve and is attracted towards point (`mx`, `my`). By default all
+coordinates `mx`, `my`, `x` and `y` are 0. In HTML `center` can be split into
+individual parameters `x` and `y`, and `m` can be split into `mx` and `my`.
 
 <img src="images/curveto.png">
 
@@ -209,14 +240,28 @@ of a heart, for examples, can be constructed by 6 connected curves.
 [<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="300"></kbd>](../examples/drawing-heart-point.html)
 
 
+
+
+
+
 ## Arc
 
-Command. Adds a circle оr a circular arc to the path. This command creates an
-arc from a circle with center (`x`,`y`) and `radius`. The arc stars from angle
-`from` and ends at angle `to`. The last parameter is direction of drawing &ndash;
-either clockwise or counter-clockwise. Coordinates and radius are measured in
-pixels, angles are measured in degrees. If the angles are not provided, a full
-circle is generated. 
+Command. Adds a circle оr a circular arc to the path.
+
+```html
+HTML:
+<arc center="𝑥,𝑦" radius="𝑟𝑎𝑑𝑖𝑢𝑠" from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" cw="𝑐𝑤">
+```
+```js
+JS:
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚, 𝑡𝑜, 𝑐𝑤 );
+```
+
+The `arc` command creates an arc from a circle with center (`x`,`y`) and given
+`radius`. The arc stars from angle `from` and ends at angle `to`. The direction
+of drawing `cw` is either clockwise (`cw` is *true*) or counter-clockwise (`cw`
+is *false*). Coordinates and radius are measured in pixels, angles are measured
+in degrees. If the angles are not provided, a full circle is generated. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -229,16 +274,14 @@ arc( 10, 0, 5);
 arc( 10, 0, 5, 0, 180, false);
 ```
 
-The coordinate system of a drawing has origin (0,0) at the bottom left side of
-the canvas. The X axis extends to the right, Y extends to the top.
-
 <img src="images/drawing-arc.png">
 
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](../examples/drawing-arc.html)
 
-In HTML the direction of drawing is set by attributes `cw` or `ccw` which values
-are either *true* or *false*. If the attributes have no values, they are assumed
-to be *true*. The following commanda are equivalent:
+In HTML the direction of drawing is set by attribute `cw` or its antagonistic
+attribute `ccw`. Their values are either *true* or *false*. If any of the
+attributes is present, but has no value, it is assumed to be *true*. The
+following commands are equivalent:
 
 ```html
 HTML:
@@ -247,15 +290,36 @@ HTML:
 <arc x="10" y="0" radius="5" ccw="false">
 ```
 
-In JS the direction of drawing is set by the last 6th parameter of *arc* that
-corresponds to *cw* and by default is *true*.
+In JS the direction of drawing is set only by `cw` and by default it is *true*.
+
+
+
+
+
+
+# Strokes and fills
+
+A path in a drawing is an invisible entity. To visualize a path it mist be
+stroked and/or filled.
+
+<img src="images/stroked-and-filled.png">
+
 
 ## Stroke
 
-Command. Draws a line over the current path. The line has given `color` and 
-`width`. If the `close` parameter is *true*, then the end of the path is
-conneted to the beginning of the path. A *stroke* immediately after another
-*stroke* or *fill* will reuse the same path.
+Command. Draws a line over the current path.
+
+```html
+HTML:
+<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" close="𝑐𝑙𝑜𝑠𝑒">
+```
+```js
+JS:
+stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
+```
+
+The command `stroke` draws a solid line over the current path with given `color`
+and `width` (in pixels). If the `close` parameter is *true*, then the end of the stroked line is conneted to its beginning. A `stroke` immediately after another `stroke` or `fill` reuses the same path.
 
 ```html
 HTML:
@@ -272,10 +336,25 @@ stroke( 'crimson', 10, true );
 [<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="300"></kbd>](../examples/drawing-stroke.html)
 	
 	
+	
+	
+	
+	
 ## Fill
 
-Command. Fills the area defined by a path. The area is filled with the given
-`color`.  A *fill* immediately after another *stroke* or *fill* will reuse the
+Command. Fills the area defined by a path.
+
+```html
+HTML:
+<fill color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+fill( 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+The command `fill` fills the area defined by a boundary path with the given
+`color`.  A `fill` immediately after another `stroke` or `fill` reuses the
 same path. 
 
 ```html
@@ -291,11 +370,27 @@ fill( 'crimson' );
 [<kbd><img src="../examples/snapshots/drawing-fill-and-stroke.jpg" width="300"></kbd>](../examples/drawing-fill-and-stroke.html)
 
 
+
+
+
+
 ## FillText
 
-Command. Draws a text. The `text` is drawn at given coordinates (`x`,`y`) with
-given `color` and `font` style. The *font* parameter is a string with a
+Command. Draws a text.
+
+```html
+HTML:
+<fillText center="𝑥,𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
+```
+```js
+JS:
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillText( 𝑥, 𝑦, 𝑡𝑒𝑥𝑡, 𝑐𝑜𝑙𝑜𝑟, 𝑓𝑜𝑛𝑡 );
+```
+
+The command `fillText` renders the text in `text` at given coordinates (`x`,`y`),
+with given `color` and `font` style. The `font` parameter is a string with a
 [CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description.
+In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -309,11 +404,24 @@ fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 [<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="300"></kbd>](../examples/drawing-filltext.html)
 	
 	
+	
+	
+	
+	
 ## Clear
 
-Command. Clears a drawing canvas. The drawing canvas is filled with the given
-`color` if it is provided, or is cleared to transparent if it is not provided.
-Next commands after *clear* start a new path.
+Command. Clears a drawing canvas.
+
+```html
+HTML:
+<clear color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+clear( 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+The command `clear` fills the drawing canvas with the given `color`, if it is provided; otherwise it clears the canvas to transparent.
 
 ```html
 HTML:

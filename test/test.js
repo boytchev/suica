@@ -18,6 +18,8 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'drawing-clear-2',
+	
 	'events-suica-enter',
 	'events-point-and-spin',
 	'events-event-listener',
