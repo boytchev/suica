@@ -1,14 +1,9 @@
-# <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/>Drawings
+# <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/>Suica Drawings
 
-<small>[Suica](#suica-canvas) | [Properties](#properties) | [Objects](#objects) | Drawings | [Events](#events) | [Functions](#functions) | [References](#references)</small>
+<small>[Suica](user-guide-suica.md) | [Properties](user-guide-properties.md) | [Objects](user-guide-objects.md) | Drawings | [Events](user-guide-events.md) | [Functions](user-guide-functions.md) | [References](user-guide-references.md)</small>
 
-Suica drawings are 2D images generated in Suica (instead of being loaded from
-JPEG or PNG files) that can be stamped onto 2D and 3D objects. Suica
-drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). 
-
-
-
-- [**Drawing**](#drawing)
+- [**Drawing**](#drawings)
+	- [drawing](#drawing)
 - [**Paths**](#paths)
 	- [moveTo](#moveto)
 	- [lineTo](#lineto)
@@ -25,7 +20,18 @@ drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/AP
 
 
 
-# Drawing
+# Drawings
+
+Suica drawings are 2D images generated in Suica (instead of being loaded from
+JPEG or PNG files) that can be stamped onto 2D and 3D objects. Suica
+drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). 
+
+
+
+
+
+
+## Drawing
 
 Command. Defines a 2D drawing canvas. 
 
@@ -86,9 +92,9 @@ lines the drawings are used to create dot-and-dash patterns.
 [<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
 [<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
 
-A drawing is applied to an object via the [image](#image) property and can be
+A drawing is applied to an object via the [image](user-guide-properties.md#image) property and can be
 updated both before and after this assignment. The scale of
-a drawing is managed by the [images](#images) property. 
+a drawing is managed by the [images](user-guide-properties.md#images) property. 
 
 [<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
 
