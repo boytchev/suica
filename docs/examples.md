@@ -76,11 +76,9 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/clone-tag.jpg" width="400"></kbd>](../examples/clone-tag.html)
 
 [<kbd><img src="../examples/snapshots/style.jpg" width="400"></kbd>](../examples/style.html)
-[<kbd><img src="../examples/snapshots/its.jpg" width="400"></kbd>](../examples/its.html)
-
 [<kbd><img src="../examples/snapshots/image-file.jpg" width="400"></kbd>](../examples/image-file.html)
-[<kbd><img src="../examples/snapshots/image-datauri.jpg" width="400"></kbd>](../examples/image-datauri.html)
 
+[<kbd><img src="../examples/snapshots/image-datauri.jpg" width="400"></kbd>](../examples/image-datauri.html)
 [<kbd><img src="../examples/snapshots/images.jpg" width="400"></kbd>](../examples/images.html)
 
 ## [Common 2D objects](user-guide.md#common-2d-objects)
@@ -191,6 +189,7 @@ Click on an image to run the example.
 
 ## [Functions](user-guide.md#functions)
 
+[<kbd><img src="../examples/snapshots/its.jpg" width="400"></kbd>](../examples/its.html)
 [<kbd><img src="../examples/snapshots/spline.jpg" width="400"></kbd>](../examples/spline.html)
 
 [<kbd><img src="../examples/snapshots/spline-color.jpg" width="400"></kbd>](../examples/spline-color.html)
