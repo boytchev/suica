@@ -139,7 +139,7 @@ Click on an image to run the example.
 
 
 
-## [Drawings](user-guide.md#drawings)
+## [Drawings](user-guide-drawings.md)
 
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="400"></kbd>](../examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="400"></kbd>](../examples/drawing-js.html)
@@ -168,7 +168,7 @@ Click on an image to run the example.
 
 
 
-## [Events](user-guide.md#events)
+## [Events](user-guide-events.md)
 
 [<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="400"></kbd>](../examples/events-suica-enter.html)
 [<kbd><img src="../examples/snapshots/events-ontime.jpg" width="400"></kbd>](../examples/events-ontime.html)
@@ -187,7 +187,7 @@ Click on an image to run the example.
 
 
 
-## [Functions](user-guide.md#functions)
+## [Functions](user-guide-functions.md)
 
 [<kbd><img src="../examples/snapshots/its.jpg" width="400"></kbd>](../examples/its.html)
 [<kbd><img src="../examples/snapshots/spline.jpg" width="400"></kbd>](../examples/spline.html)
