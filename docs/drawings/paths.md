@@ -21,6 +21,6 @@ side of the canvas. The X axis extends to the right, Y extends to the top.
 The commands to generate paths are:
 
 - [moveTo](moveto.md) &ndash; sets the position of the virtual pen
-- [lineTo](lineto.md) &ndash; adds a line segment to the path.
+- [lineTo](lineto.md) &ndash; adds a line segment to the path
 - [curveTo](curveto.md) &ndash; adds a curved segment to the path
 - [arc](arcto.md) &ndash; adds a circle оr a circular arc to the path
