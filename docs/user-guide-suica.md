@@ -23,8 +23,8 @@ The complete code of this example is:
 <!DOCTYPE html>
 <script src="suica.js"></script>
 <suica>
-	<cube>
-	<demo>
+    <cube>
+    <demo>
 </suica>
 ```
 {: .lh-0 }

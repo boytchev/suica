@@ -11,6 +11,7 @@ Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io
     <cube>
 </suica>
 ```
+{: .lh-0 }
 
 [**Suica.js**](https://github.com/boytchev/suica) is a library for easy
 programming of mobile 3D graphics in JavaScript. Suica 2.0, which is currently
