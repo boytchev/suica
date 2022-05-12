@@ -2,7 +2,8 @@
 layout: default
 title: Principles
 nav_order: 1
-parent: Suica
+parent: README
+has_chindren: false
 ---
 
 # Suica Principles
