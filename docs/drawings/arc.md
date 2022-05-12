@@ -8,18 +8,16 @@ grand_parent: Drawings
 
 Command. Adds a circle оr a circular arc to the path.
 
-Syntax
-{: .label }
-
-```html
+#### Syntax
+```
 HTML:
 <arc center="𝑥,𝑦" radius="𝑟𝑎𝑑𝑖𝑢𝑠" from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" cw="𝑐𝑤">
-```
 
-```js
 JS:
 var a = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚, 𝑡𝑜, 𝑐𝑤 );
 ```
+{: .lh-0 }
+
 
 The `arc` command creates an arc from a circle with center (`x`,`y`) and given
 `radius`. The arc stars from angle `from` and ends at angle `to`. The direction
