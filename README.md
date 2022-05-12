@@ -1,4 +1,4 @@
-# <img src="logo.min.png" height="40" style="position:relative; top:7px;"/> Suica
+# Suica
 
 Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 ```html

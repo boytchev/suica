@@ -27,6 +27,7 @@ The complete code of this example is:
 	<demo>
 </suica>
 ```
+{: .lh-0 }
 
 
 Suica is built upon these principles:
