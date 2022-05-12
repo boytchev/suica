@@ -1,6 +1,5 @@
 #theme: jekyll-theme-cayman
 remote_theme: just-the-docs/just-the-docs
-logo: "logo.min.png"
 defaults:
   -
     scope:
@@ -8,3 +7,4 @@ defaults:
     values:
       layout: "default"
       nav_order: 1
+      has_children: true
