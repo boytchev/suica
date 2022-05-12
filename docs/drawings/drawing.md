@@ -1,10 +1,11 @@
 ---
 nav_order: 10
 parent: Drawings
+title: ‹drawing›
 has_children: false
 ---
 
-# Drawing
+# drawing
 
 Command. Defines a 2D drawing canvas. 
 
