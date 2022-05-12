@@ -10,9 +10,9 @@ has_chindren: false
 
 
 
-# Principles
+## Principles
 
-Suica is built upon these principles:
+The design and implementation of Suica is built upon these principles:
 
 - **MINIMAL**<br>Less is more ([details](https://en.wikipedia.org/wiki/Minimalism_(computing))). 
 
@@ -36,7 +36,7 @@ examples. Tools that validate HTML pages may complain about Suica HTML code.
 
 
 
-# Distribution
+## Distribution
 
 Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the
 `<script>` tag. Once loaded, the library will look for HTML tags `<suica>` and

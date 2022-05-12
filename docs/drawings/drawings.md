@@ -5,33 +5,11 @@ title: Drawings
 has_chindren: true
 ---
 
-# <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/>Suica Drawings
-
-<small>[Suica](user-guide-suica.md) | [Properties](user-guide-properties.md) | [Objects](user-guide-objects.md) | Drawings | [Events](user-guide-events.md) | [Functions](user-guide-functions.md) | [References](user-guide-references.md)</small>
-
-- [**Drawing**](#drawings)
-	- [drawing](#drawing)
-- [**Paths**](#paths)
-	- [moveTo](#moveto)
-	- [lineTo](#lineto)
-	- [curveTo](#curveto)
-	- [arc](#arc)
-- [**Strokes and fills**](#strokes-and-fills)
-	- [stroke](#stroke)
-	- [fill](#fill)
-	- [fillText](#filltext)
-	- [clear](#clear)
-
-
-
-
-
-
-# Drawings
+# Suica Drawings
 
 Suica drawings are 2D images generated in Suica (instead of being loaded from
-JPEG or PNG files) that can be stamped onto 2D and 3D objects. Suica
-drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). 
+JPEG or PNG files) that can be stamped onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping).
+Suica drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D). 
 
 
 
