@@ -1,3 +1,9 @@
+---
+layout: default
+title: 404
+nav_exclude: true
+---
+
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/>Suica Drawings
 
 <small>[Suica](user-guide-suica.md) | [Properties](user-guide-properties.md) | [Objects](user-guide-objects.md) | Drawings | [Events](user-guide-events.md) | [Functions](user-guide-functions.md) | [References](user-guide-references.md)</small>
