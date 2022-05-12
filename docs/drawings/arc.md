@@ -12,14 +12,16 @@ Command. Adds a circle оr a circular arc to the path.
 #### Syntax:
 ```html
 HTML:
-<arc center="𝑥,𝑦" radius="𝑟𝑎𝑑𝑖𝑢𝑠" from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" cw="𝑐𝑤">
+<arc center="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟">
+<arc center="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟" from="𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒" to="𝑡𝑜𝐴𝑛𝑔𝑙𝑒" cw="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
 ```
-{: .lh-0 }
+
 ```js
 JS:
-𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚, 𝑡𝑜, 𝑐𝑤 );
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠 );
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒, 𝑡𝑜𝐴𝑛𝑔𝑙𝑒, 𝑐𝑤 );
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.arc( x, y, radius, from, to, cw );
 ```
-{: .lh-0 }
 
 
 The `arc` command creates a circle or abn arc from a circle with center (`x`,`y`) and given
@@ -28,7 +30,7 @@ of drawing `cw` is either clockwise (`cw` is *true*) or counter-clockwise (`cw`
 is *false*). Coordinates and radius are measured in pixels, angles are measured
 in degrees. If the angles are not provided, a full circle is generated. In HTML `center` can be split into individual parameters `x` and `y`.
 
-#### Code examples:
+#### Code Examples:
 ```html
 HTML:
 <arc center="10,0" radius="5">
@@ -36,8 +38,8 @@ HTML:
 ```
 ```js
 JS:
-arc( 10, 0, 5);
-arc( 10, 0, 5, 0, 180, false);
+arc( 10, 0, 5 );
+arc( 10, 0, 5, 0, 180, false );
 ```
 
 <img src="../images/drawing-arc.png">
@@ -58,4 +60,4 @@ HTML:
 <arc x="10" y="0" radius="5" ccw="false">
 ```
 
-In JS the direction of drawing is set only by `cw` and by default it is *true*.
+In JavaSCript the direction of drawing is set only by `cw` and by default it is *true*.
