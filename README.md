@@ -20,11 +20,11 @@ Suica is used in several undergraduate courses in the
 [Sofia University](https://www.uni-sofia.bg/index.php/eng).
 
 Suica is licensed under **GPL-3.0**.
-
+<!--
 - [User guide](docs/user-guide.md)
 - [Reference guide](docs/reference-guide.md)
 - [List of examples](docs/examples.md)
-
+-->
 ---
 
 May, 2022
