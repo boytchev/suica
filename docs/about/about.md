@@ -1,11 +1,16 @@
 ---
 layout: default
-nav_order: 1
-parent: README
+nav_order: 10
+title: About
 has_chindren: false
 ---
 
-# Suica Principles
+# About Suica
+
+
+
+
+# Principles
 
 Suica is built upon these principles:
 
@@ -27,3 +32,13 @@ points, cubes and spheres.
 Browsers have a standard way of reaction on non-standard web pages (e.g. missing
 closing tags, unregistered custom tags, etc). This is heavily used in all Suica
 examples. Tools that validate HTML pages may complain about Suica HTML code.
+
+
+
+
+# Distribution
+
+Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the
+`<script>` tag. Once loaded, the library will look for HTML tags `<suica>` and
+use them as drawing canvases for 3D graphics. Suica does not use JS modules in
+order to allow easy local development.
