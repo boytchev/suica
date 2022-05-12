@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Customization
-nav_order: 4
+nav_order: 1
 ---
 
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica User Guide - Suica

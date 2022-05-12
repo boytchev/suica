@@ -1,3 +1,9 @@
+---
+layout: default
+title: 404
+nav_exclude: true
+---
+
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/>Suica Events
 
 <small>[Suica](user-guide-suica.md) | [Properties](user-guide-properties.md) | [Objects](user-guide-objects.md) | [Drawings](user-guide-drawings.md) | Events | [Functions](user-guide-functions.md) | [References](user-guide-references.md)</small>

@@ -1,3 +1,9 @@
+---
+layout: default
+title: 404
+nav_exclude: true
+---
+
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Reference Guide
 
 [Suica](#suica) |
