@@ -2,6 +2,7 @@
 layout: default
 nav_order: 30
 title: Strokes and fills
+parent: Drawings
 has_children: false
 ---
 
