@@ -1,9 +1,7 @@
 ---
----
 layout: default
 nav_order: 1
 title: Drawings
-parent: README
 has_chindren: true
 ---
 
