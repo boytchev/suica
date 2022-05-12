@@ -1,10 +1,7 @@
 ---
-layout: default
 nav_order: 40
-title: arc
 parent: Paths
 grand_parent: Drawings
-has_children: false
 ---
 
 # arc

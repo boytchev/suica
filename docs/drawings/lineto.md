@@ -1,10 +1,7 @@
 ---
-layout: default
 nav_order: 20
-title: lineTo
 parent: Paths
 grand_parent: Drawings
-has_children: false
 ---
 
 # lineTo

@@ -1,10 +1,7 @@
 ---
-layout: default
 nav_order: 10
-title: moveTo
 parent: Paths
 grand_parent: Drawings
-has_children: false
 ---
 
 # moveTo

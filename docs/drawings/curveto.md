@@ -1,10 +1,7 @@
 ---
-layout: default
 nav_order: 30
-title: curveTo
 parent: Paths
 grand_parent: Drawings
-has_children: false
 ---
 
 # curveTo

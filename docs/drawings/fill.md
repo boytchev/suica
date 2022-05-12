@@ -1,10 +1,7 @@
 ---
-layout: default
 nav_order: 20
-title: moveTo
 parent: Paths
 grand_parent: Painting
-has_children: false
 ---
 
 # fill

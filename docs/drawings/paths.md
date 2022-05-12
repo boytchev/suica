@@ -1,7 +1,5 @@
 ---
-layout: default
 nav_order: 20
-title: Paths
 parent: Drawings
 has_children: true
 ---

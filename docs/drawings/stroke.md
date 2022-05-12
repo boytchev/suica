@@ -1,10 +1,7 @@
 ---
-layout: default
-nav_order: 10
-title: moveTo
+]nav_order: 10
 parent: Paths
 grand_parent: Painting
-has_children: false
 ---
 
 # stroke
