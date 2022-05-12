@@ -1,7 +1,7 @@
 #theme: jekyll-theme-cayman
 remote_theme: just-the-docs/just-the-docs
 
-search_enabled: true
+search_enabled: false
 
 search:
   heading_level: 2
@@ -17,10 +17,9 @@ aux_links:
     - "//github.com/boytchev/suica"
  
 last_edit_timestamp: true
-last_edit_time_format: "%b %e %Y at %I:%M %p"
 
 gh_edit_link: true
-gh_edit_link_text: "Edit this page on GitHub."
+gh_edit_link_text: "View this page on GitHub."
 gh_edit_repository: "https://github.com/boytchev/suica" # the github URL for your repo
 gh_edit_branch: "main" # the branch that your docs is served from
 # gh_edit_source: docs # the source that your files originate from
@@ -35,4 +34,4 @@ defaults:
       nav_order: 1
       has_children: false
       has_toc: true
-      last_modified_date: true
+
