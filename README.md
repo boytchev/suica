@@ -1,9 +1,3 @@
----
-layout: default
-title: Suica
-nav_order: 1
----
-
 # Suica
 
 Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
@@ -27,11 +21,11 @@ Suica is used in several undergraduate courses in the
 [Sofia University](https://www.uni-sofia.bg/index.php/eng).
 
 Suica is licensed under **GPL-3.0**.
-<!--
-- [User guide](docs/user-guide.md)
-- [Reference guide](docs/reference-guide.md)
-- [List of examples](docs/examples.md)
--->
----
 
 May, 2022
+
+---
+layout: default
+title: Suica
+nav_order: 1
+---
