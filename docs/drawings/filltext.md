@@ -1,7 +1,7 @@
 ---
 nav_order: 30
-parent: Paths
-grand_parent: Painting
+parent: Painting
+grand_parent: Drawings
 ---
 
 # fillText

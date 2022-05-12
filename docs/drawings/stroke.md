@@ -1,7 +1,7 @@
 ---
-]nav_order: 10
-parent: Paths
-grand_parent: Painting
+nav_order: 10
+parent: Painting
+grand_parent: Drawings
 ---
 
 # stroke

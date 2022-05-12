@@ -1,7 +1,7 @@
 ---
 nav_order: 40
-parent: Paths
-grand_parent: Painting
+parent: Painting
+grand_parent: Drawings
 ---
 
 # clear
