@@ -8,7 +8,8 @@ grand_parent: Drawings
 
 Command. Adds a circle оr a circular arc to the path.
 
-#### Syntax
+#### Syntax:
+{: .lh-0 .mb-0 pb-0 }
 ```
 HTML:
 <arc center="𝑥,𝑦" radius="𝑟𝑎𝑑𝑖𝑢𝑠" from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" cw="𝑐𝑤">
@@ -25,6 +26,8 @@ of drawing `cw` is either clockwise (`cw` is *true*) or counter-clockwise (`cw`
 is *false*). Coordinates and radius are measured in pixels, angles are measured
 in degrees. If the angles are not provided, a full circle is generated. In HTML `center` can be split into individual parameters `x` and `y`.
 
+#### Examples:
+{: .lh-0 .mb-0 pb-0 }
 ```html
 HTML:
 <arc center="10,0" radius="5">
