@@ -1,7 +1,7 @@
 ---
 nav_order: 10
 parent: Drawings
-title: ‹drawing›
+title: drawing
 has_children: false
 ---
 
