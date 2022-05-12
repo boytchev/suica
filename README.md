@@ -1,3 +1,9 @@
+---
+layout: default
+title: Suica
+nav_order: 1
+---
+
 # Suica
 
 Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
