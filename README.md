@@ -1,9 +1,3 @@
----
-layout: default
-title: Suica
-nav_order: 1
----
-
 # <img src="logo.min.png" height="40" style="position:relative; top:7px;"/> Suica
 
 Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
