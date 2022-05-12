@@ -3,7 +3,7 @@ layout: default
 nav_order: 30
 title: Painting
 parent: Drawings
-has_children: false
+has_children: true
 ---
 
 # Painting
