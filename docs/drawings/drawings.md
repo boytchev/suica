@@ -2,7 +2,7 @@
 layout: default
 nav_order: 20
 title: Drawings
-has_chindren: true
+has_children: true
 ---
 
 # Suica Drawings
