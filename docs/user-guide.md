@@ -1,7 +1,6 @@
 ---
-layout: default
-title: 404
-nav_exclude: true
+title: Suica User Guide
+description: [A short guide through Suica features]
 ---
 
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica User Guide
