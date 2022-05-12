@@ -22,6 +22,6 @@ Suica is used in several undergraduate courses in the
 
 Suica is licensed under **GPL-3.0**.
 
-To lear more about Suica, go to [The User Guide](docs/user-guide.md)
+To lear more about Suica, visit [The User Guide](docs/user-guide.md)
 
 May, 2022
