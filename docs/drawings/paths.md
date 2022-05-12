@@ -2,13 +2,14 @@
 nav_order: 20
 parent: Drawings
 has_children: true
+last_modified_date: May, 2022
 ---
 
 # Paths
 
 Suica drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-and are made of stroked lines and filled areas. A virtual pen defines a path on
-the canvas. This path can be *stroked* by drawing a line over it; or its
+and they are made of stroked lines and filled areas. A virtual pen defines a
+path on the canvas. This path can be *stroked* by drawing a line over it; or its
 contents can be *filled* with a color.
 
 The coordinate system of a drawing canvas has origin (0,0) at the bottom left
