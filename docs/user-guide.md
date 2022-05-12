@@ -2,10 +2,7 @@
 title: Suica User Guide
 description: [A short guide through Suica features]
 ---
-
-# <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica User Guide
-
-## Table of contents
+# Table of contents
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
 - [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [proactive](#proactive) </small>] 
