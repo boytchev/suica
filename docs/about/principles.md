@@ -1,6 +1,5 @@
 ---
 layout: default
-title: Principles
 nav_order: 1
 parent: README
 has_chindren: false
@@ -28,7 +27,3 @@ points, cubes and spheres.
 Browsers have a standard way of reaction on non-standard web pages (e.g. missing
 closing tags, unregistered custom tags, etc). This is heavily used in all Suica
 examples. Tools that validate HTML pages may complain about Suica HTML code.
-
----
-
-May, 2022
