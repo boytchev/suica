@@ -10,16 +10,17 @@ search:
   preview_words_after: 10
   tokenizer_separator: /[\s/]+/
   rel_url: true
-  button: true
+  button: false
   
 aux_links:
   "Suica on GitHub":
     - "//github.com/boytchev/suica"
  
 last_edit_timestamp: true
+last_edit_time_format: "%b %e %Y at %I:%M %p"
 
 gh_edit_link: true
-gh_edit_link_text: "View this page on GitHub."
+gh_edit_link_text: "Edit this page on GitHub."
 gh_edit_repository: "https://github.com/boytchev/suica" # the github URL for your repo
 gh_edit_branch: "main" # the branch that your docs is served from
 # gh_edit_source: docs # the source that your files originate from
@@ -33,5 +34,5 @@ defaults:
       layout: "default"
       nav_order: 1
       has_children: false
-      has_toc: true
+      has_toc: false
 
