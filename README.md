@@ -1,4 +1,4 @@
-# Suica
+## Suica
 
 Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 ```html
@@ -22,10 +22,5 @@ Suica is used in several undergraduate courses in the
 
 Suica is licensed under **GPL-3.0**.
 
+---
 May, 2022
-
----
-layout: default
-title: Suica
-nav_order: 1
----
