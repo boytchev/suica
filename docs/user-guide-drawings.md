@@ -1,6 +1,6 @@
 ---
 title: Suica Drawings
-description: [Drawings that could be stamped on objects]
+description: [Drawings that could be stamped onto objects]
 ---
 
 <small>[About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)</small>
