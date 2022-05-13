@@ -4,19 +4,19 @@ description: [Drawings that could be stamped onto objects]
 ---
 ##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)
 
-**Suica drawings** are 2D images generated in directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
+**Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 
 ## Table of contents
 - [Introduction](#introduction)
 	- <small>[Creating drawings](#creating-drawings)</small>
 	- <small>[Working with drawings](#working-with-drawings)</small>
 	- <small>[Using drawings](#using-drawings)</small>
-- [Drawing with a pen](#drawing-with-a-pen)
-	- <small>[Defining a path](#defining-a-path): [```moveTo```](#moveto), [```lineTo```](#lineto), [```curveTo```](#curveto), [```arc```](#arc)  </small>
-	- <small>[Curved lines](#curved-lines)</small>
-- [Painting](#painting)
-	- <small>[Stroking and filling a path](#stroking-and-filling-a-path)</small>
-	- <small>[Painting text](#painting-text)</small>
+- [Drawing shapes](#drawing-shapes)
+	- <small>[Defining shapes](#defining-shapes): [```moveTo```](#moveto), [```lineTo```](#lineto), [```curveTo```](#curveto), [```arc```](#arc)  </small>
+	- <small>[Outlined shapes](#oulined-shapes): [```stroke```](#stroke)</small>
+	- <small>[Solid shapes](#solid-shapes): [```fill```](#fill)</small>
+- [Drawing texts](#drawing-texts): <small>[```fillText```](#fill-text)</small>
+
 	- <small>[Resetting the canvas](#resetting-the-canvas)</small>
 
 
@@ -112,19 +112,19 @@ screen. For lines drawings are used to created dot-and-dash patterns.
 
 
 
-# Drawing with a pen
+# Drawing shapes
 
-The basic way to draw objects in a drawing is to draw lines or fill areas with specific color. The lines and the boundary of areas are defined as paths.
+The basic way to draw objects in a drawing is to draw outlined or solid shapes. The boundary of these shapes are defined as *paths*.
 
 
 
-## Defining a path
+## Defining shapes
 
-A path is an invisible trace that is used to define a line or area boundary. A path is constructed with a virtual pen and a few commands to move the pen. The simplest way to define a path is to move the virtual pen to the beginning of the path and move the pen till the end of the path.
+A shape is defined with a virtual pen moved along the boundary of the shape. The simplest way to define a shape is to move the virtual pen to the starting point of the shape and then move the pen along its boundary.
 
 <img src="images/moveto-lineto.png">
 
-Paths are define with the following commands:
+Shapes are define with the following commands:
 - [```moveTo```](#moveto) &ndash; moves the pen
 - [```lineTo```](#lineto) &ndash; adds a line segment
 - [```curveTo```](#curveto) &ndash; adds a curved segment
@@ -136,15 +136,15 @@ Paths are define with the following commands:
 #### moveTo
 ```html
 HTML:
-<moveto center="𝑥,𝑦">
-<moveto x="𝑥" y="𝑦">
+<moveTo center="𝑥,𝑦">
+<moveTo x="𝑥" y="𝑦">
 ```
 ```js
 JS:
 moveTo( 𝑥, 𝑦 );
 ```
 
-Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a path. This is used to set the starting point of a path. By default the both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
+Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment. This is used to set the starting point of a shape boundary. By default both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -162,15 +162,15 @@ moveTo( 10, 0 );
 #### lineTo
 ```html
 HTML:
-<lineto center="𝑥,𝑦">
-<lineto x="𝑥" y="𝑦">
+<lineTo center="𝑥,𝑦">
+<lineTo x="𝑥" y="𝑦">
 ```
 ```js
 JS:
 lineTo( 𝑥, 𝑦 );
 ```
 
-Command. Adds a line segment to the path. This command moves the pen along a straight line from its current location to (`x`,`y`) and adds that line to the path. This is used to define straignt line sections of the path. By default the both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
+Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. This is used to define straignt segments of the shape. By default both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -188,8 +188,17 @@ lineTo( 10, 0 );
 
 
 #### curveTo
+```html
+HTML:
+<curveTo m="𝑚𝑥,𝑚𝑦" center="𝑥,𝑦">
+<curveTo mx="𝑚𝑥" mt="𝑚𝑦" x="𝑥" y="𝑦">
+```
+```js
+JS:
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
+```
 
-Command. Adds a curved segment to the path. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the path. The line is [quadratic curve](https://mathworld.wolfram.com/QuadraticCurve.html) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
+Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape boundary. The line is [quadratic curve](https://mathworld.wolfram.com/QuadraticCurve.html) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
 
 <img src="images/curveto.png">
 
@@ -205,7 +214,7 @@ curveTo( 10, 0, 20, 15 );
 
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](../examples/drawing-curveto.html)
 
-A more complex curve can be constructed by joining individual curves. The shape of a heart in the following example is composed of 6 connected curves.
+Complex shapes can be constructed by joining individual curves. The shape of a heart in the following example is composed of 6 connected curves.
 
 <img src="images/drawing-heart.png">
 
@@ -215,8 +224,18 @@ A more complex curve can be constructed by joining individual curves. The shape 
 
 
 #### arc
+```html
+HTML:
+<arc center="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟">
+<arc center="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟" from="𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒" to="𝑡𝑜𝐴𝑛𝑔𝑙𝑒" cw="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+```
+```js
+JS:
+arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠 );
+arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒, 𝑡𝑜𝐴𝑛𝑔𝑙𝑒, 𝑐𝑤 );
+```
 
-Command. Adds a circular arc to the path. This command creates an arc of a circle with center (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees. Parameter `cw` set the direction of arc &ndash; either clockwise (if `cw` is true) or counterclockwise (if `cw` is false). If the angles are omitted, a full circle is generated. 
+Command. Adds a circular arc to the shape. This command creates an arc of a circle with center (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees, by default 0 and 360. Parameter `cw` sets the direction of the arc &ndash; either clockwise (if `cw` is true, this is by default) or counterclockwise (if `cw` is false). If the angles are omitted, a full circle is generated. 
 
 <img src="images/drawing-arc.png">
 
@@ -235,9 +254,7 @@ arc( 10, 0, 5, 0, 180, false);
 
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](../examples/drawing-arc.html)
 
-In HTML the direction of drawing is set by attributes `cw` or `ccw` which values
-are either *true* or *false*. If the attributes have no values, they are assumed
-to be *true*. The following commanda are equivalent:
+In HTML `center` can be split into individual parameters `x` and `y`. Also in HTML the `cw` attribute has antagonist attribute `ccw`. If the values of `cw` or `ccw` are omitted, they are assumed to be *true*. The following commands are equivalent:
 
 ```html
 HTML:
@@ -246,15 +263,25 @@ HTML:
 <arc x="10" y="0" radius="5" ccw="false">
 ```
 
-In JS the direction of drawing is set by the last 6th parameter of *arc* that
-corresponds to *cw* and by default is *true*.
 
-#### Stroke
 
-Command. Draws a line over the current path. The line has given `color` and 
-`width`. If the `close` parameter is *true*, then the end of the path is
-conneted to the beginning of the path. A *stroke* immediately after another
-*stroke* or *fill* will reuse the same path.
+
+
+## Outlined shapes
+
+The outline of a shape is drawn with ```stroke```. 
+
+#### stroke
+```html
+HTML:
+<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" close="𝑐𝑙𝑜𝑠𝑒">
+```
+```js
+JS:
+stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
+```
+
+Command. Draws a line around a shape. The line has given `color` and `width` (in pixels). If the `close` parameter is *true*, then a line is closed &ndash; its end is connected to its beginning. A ```stroke``` immediately after another ```stroke``` or [```fill```](#fill) reuses the same shape.
 
 ```html
 HTML:
@@ -271,11 +298,23 @@ stroke( 'crimson', 10, true );
 [<kbd><img src="../examples/snapshots/drawing-stroke.jpg" width="300"></kbd>](../examples/drawing-stroke.html)
 	
 	
-#### Fill
+	
+	
+## Solid shapes
 
-Command. Fills the area defined by a path. The area is filled with the given
-`color`.  A *fill* immediately after another *stroke* or *fill* will reuse the
-same path. 
+Solid shapes are drawn by ```fill```.
+
+#### fill
+```html
+HTML:
+<fill color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+fill( 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+Command. Fills a shape with the given `color`.  A ```fill``` immediately after another ```fill``` or [```stroke```](#stroke) reuses the same shape.
 
 ```html
 HTML:
@@ -290,11 +329,25 @@ fill( 'crimson' );
 [<kbd><img src="../examples/snapshots/drawing-fill-and-stroke.jpg" width="300"></kbd>](../examples/drawing-fill-and-stroke.html)
 
 
-#### FillText
+
+
+# Drawing texts
+
+Drawing texts is done with the `fillText` command.
+
+#### fillText
+```html
+HTML:
+<fillText center="𝑥,𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
+<fillText x="𝑥" y="𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
+```
+```js
+JS:
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillText( 𝑥, 𝑦, 𝑡𝑒𝑥𝑡, 𝑐𝑜𝑙𝑜𝑟, 𝑓𝑜𝑛𝑡 );
+```
 
 Command. Draws a text. The `text` is drawn at given coordinates (`x`,`y`) with
-given `color` and `font` style. The *font* parameter is a string with a
-[CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description.
+given `color` and `font` style &ndash; a string with a [CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description (the default font is ```'20px Arial'```). In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -306,6 +359,9 @@ fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 ```	
 	
 [<kbd><img src="../examples/snapshots/drawing-filltext.jpg" width="300"></kbd>](../examples/drawing-filltext.html)
+	
+	
+	
 	
 	
 #### Clear
