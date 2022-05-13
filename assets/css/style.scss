@@ -7,6 +7,15 @@ header.page-header {
 }
 
 h1, h2, h3 {
+	color: MediumSeaGreen;
+	font-weight: bold;
+	border-bottom: 1px dotted green;
+}
+
+h4 {
+	font-family: Consolas, monospace;
+	background: MediumSeaGreen;
+	color: white;
 	font-weight: bold;
 	border-bottom: 1px dotted green;
 }
