@@ -7,20 +7,19 @@ description: [Drawings that could be stamped onto objects]
 
 ## Table of contents
 - [About Suica drawings](#about-suica-drawings)
-- [Creating a drawing](#creating-a-drawing)
-- Paths
-	- [moveTo](#moveto)
-	- [lineTo](#lineto)
-	- [curveTo](#curveto)
-	- [arc](#arc)
-- Painting
-	- [stroke](#stroke)
-	- [fill](#fill)
-	- [fillText](#filltext)
-	- [clear](#clear)
+	- [Creating a drawing](#creating-drawings)
+	- [Working with a drawing](#working-with-drawings)
+	- [Using a drawing](#using-drawings)
+- [Paths](#defining-paths)
+	- [Straight lines](#straight-lines)
+	- [Curved lines](#curved-lines)
+- [Painting](#painting)
+	- [Stroking and filling a path](#stroking-and-filling-a-path)
+	- [Painting text](#painting-text)
+	- [Resetting the canvas](#resetting-the-canvas)
 
 
-# About Suica drawings
+# Suica drawings
 
 Suica drawings are 2D images generated in directly in Suica, instead of being
 loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D
@@ -28,7 +27,7 @@ objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica
 drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D),
 but they provide simplified set of commands. 
 
-## Priciples
+## About drawings
 
 Suica drawings are created on a rectangular drawing canvas.
 A virtual pen traces a path on the canvas. This path can be stroked by drawing a
@@ -47,8 +46,6 @@ examples demonstrate the same drawing generated in HTML and in JavaScript.
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
 
-## Workflow
-
 Using drawings in Suica is fairly straighforward process:
 
 1. Create a drawing canvas
@@ -57,7 +54,7 @@ Using drawings in Suica is fairly straighforward process:
 4. Map the drawing onto an object
 
 
-# Creating a drawing
+## Creating a drawing
 
 
 #### ```drawing```
@@ -69,29 +66,53 @@ HTML:
 JS:
 𝘯𝘢𝘮𝘦 = drawing( 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡, 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Command. Defines a 2D drawing canvas. Parameters are `width` and `height` for
-the canvas size in pixels; and `color` for the initial background colour. By
-default the size is 32&times;32 pixels. If *height* is not provided, it is
-assumed to be the same as the *width*. If `colour` is set, the background of the
-canvas is filled with this color; otherwise it is kept *transparent*.
+
+Command. Creates a 2D drawing canvas. Parameters `width` and `height` set the
+drawings canvas size in pixels. By default it is 32&times;32 pixels. If `height`
+is omitted, its is the same as `width`. Parameter `color` sets the background
+color of the canvas. If `color` is omitted, the background is transparent
+&ndash; i.e. when the drawing is mapped onto an objects, the background areas
+will be transparent.
 
 ```html
 HTML:
-<drawing id="pic">
-<drawing id="pic" size="32,48">
-<drawing id="pic" width="32" height="48">
+<drawing id="a">
+<drawing id="b" size="32,48">
+<drawing id="c" width="32" height="48">
 ```
 ```js
 JS:
-var a = drawing( 32 );
-var b = drawing( 32, 48, 'crimson' );
+a = drawing( );
+b = drawing( 32 );
+c = drawing( 32, 48, 'crimson' );
 ```
 
 [<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="300"></kbd>](../examples/drawing-transparent.html)
 [<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="300"></kbd>](../examples/drawing-opaque.html)
 
-When a drawing canvas is initialized and stored in a variable, this variable has
-commands for drawing on the canvas.
+## Working with a drawing
+
+When a drawing is given a name via attribute `ID` in HTML or when a drawing is
+initialized and stored in a variable, this variable has commands for drawing on
+the canvas.
+
+```html
+HTML:
+<drawing id="a">
+```
+```js
+JS:
+a.moveTo( 10, 10 );
+a.lineTo( 20, 20 );
+a.stroke( 'crimson' );
+```
+
+A drawing is applied to an object via the [image](#image) property and can be
+updated both before and after this assignment. The scale of
+a drawing is managed by the [images](#images) property. 
+
+[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
+
 
 Drawings can be applied to points and lines. For points the drawings act like
 sprites &ndash; they are not subject to orientation and they always face the
@@ -100,20 +121,39 @@ screen. For lines drawings are used to created dot-and-dash patterns.
 [<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
 [<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
 
-A drawing is applied to an object via the [image](#image) property and can be
-updated both before and after this assignment. The scale of
-a drawing is managed by the [images](#images) property. 
+## Using a drawing
 
-[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
 
-#### MoveTo
 
-Command. Sets the position of the virtual. This command moves the virtual
-pen from its current location to (`x`,`y`) without generating a path. This is
-used to set the starting point of a line or to start a new line, that is not
-connected to the current line. By default the both *x* and *y* are 0.
+
+
+
+# Paths
+
+
+## Straight lines
+
+The simplest way of creating a path is to move the virtual pen to the path
+starting position and then define a straight segment.
 
 <img src="images/moveto-lineto.png">
+
+
+#### moveTo
+```html
+HTML:
+<moveto center="𝑥,𝑦">
+<moveto x="𝑥" y="𝑦">
+```
+```js
+JS:
+moveTo( 𝑥, 𝑦 );
+```
+
+Command. Sets the position of the virtual pen. This command moves the pen from
+its current location to (`x`,`y`) without generating a path. This is used to set
+the starting point of a path. By default the both *x* and *y* are 0.
+
 
 ```html
 HTML:
@@ -125,7 +165,16 @@ JS:
 moveTo( 10, 0 );
 ```
 	
-#### LineTo
+#### lineTo
+```html
+HTML:
+<lineto center="𝑥,𝑦">
+<lineto x="𝑥" y="𝑦">
+```
+```js
+JS:
+lineTo( 𝑥, 𝑦 );
+```
 
 Command. Adds a line segment to the path. This command moves the virtual pen
 along a straight line from its current location to (`x`,`y`) and adds that line
@@ -143,6 +192,8 @@ lineTo( 10, 0 );
 ```
 
 [<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="300"></kbd>](../examples/drawing-moveto-lineto.html)
+
+## Curved lines
 		
 #### CurveTo
 
