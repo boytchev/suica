@@ -60,7 +60,7 @@ Using drawings in Suica is fairly straighforward process:
 # Creating a drawing
 
 
-#### Drawing
+#### ```Drawing```
 
 Command. Defines a 2D drawing canvas. Parameters are `width` and `height` for
 the canvas size in pixels; and `color` for the initial background colour. By
