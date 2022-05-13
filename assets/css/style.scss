@@ -22,6 +22,8 @@ h4 {
 	font-size: 115% !important;
 	font-weight: bold;
 	border-bottom: 1px dotted gray;
+	font-family: Consolas, monospace;
+	background: var(--color-bg-tertiary);
 }
 
 h1.project-name,
@@ -31,9 +33,10 @@ h2.project-tagline {
 
 /* breadcrumbs */
 h5 {
-	margin: 0;
-	padding: 0;
-	background: lightgray;
+	text-align: center;
+	margin: 0 0 1em 0;
+	padding: 0.2em 0.5em;
+	background: var(--color-bg-tertiary);
 	border-bottom: 1px dotted gray;
 	
 }

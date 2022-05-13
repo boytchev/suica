@@ -2,21 +2,19 @@
 title: Suica Drawings
 description: [Drawings that could be stamped onto objects]
 ---
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)
 
-# Suica drawings
-
-Suica drawings are 2D images generated in directly in Suica, instead of being
+**Suica drawings** are 2D images generated in directly in Suica, instead of being
 loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D
 objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica
 drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D),
 but they provide simplified set of commands. 
 
 ## Table of contents
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)
 - [About Suica drawings](#about-suica-drawings)
-	- <small>Creating a drawing](#creating-drawings)</small>
-	- <small>[Working with a drawing](#working-with-drawings)</small>
-	- <small>[Using a drawing](#using-drawings)</small>
+	- <small>[Creating drawings](#creating-drawings)</small>
+	- <small>[Working with drawings](#working-with-drawings)</small>
+	- <small>[Using drawings](#using-drawings)</small>
 - [Paths](#paths)
 	- <small>[Straight lines](#straight-lines)</small>
 	- <small>[Curved lines](#curved-lines)</small>
@@ -26,21 +24,15 @@ but they provide simplified set of commands.
 	- <small>[Resetting the canvas](#resetting-the-canvas)</small>
 
 
-## About drawings
+# About drawings
 
-Suica drawings are created on a rectangular drawing canvas.
-A virtual pen traces a path on the canvas. This path can be stroked by drawing a
-line over it; or its contents can be filled with a color.
+Suica drawings are created on a rectangular drawing canvas. A virtual pen traces a path on the canvas. This path can be stroked by drawing a line over it; or its contents can be filled with a color.
 
-The coordinate system of a drawing has origin (0,0) at the bottom left side of
-the canvas. The X axis extends to the right, Y extends to the top.
+The coordinate system of a drawing has origin (0,0) at the bottom left side of the canvas. The X axis extends to the right, Y extends to the top.
 
 <img src="images/drawing-coordinates.png">
 
-Following the main pricipals of Suica, a drawing can be created entirely in HTML
-or entirely in JavaScript. Usually HTML is used for static drawings, while
-JavaSCript is used for both static and dynamic drawings. The following two
-examples demonstrate the same drawing generated in HTML and in JavaScript.
+Following the main pricipals of Suica, a drawing can be created entirely in HTML or entirely in JavaScript. Usually HTML is used for static drawings, while JavaSCript is used for both static and dynamic drawings. The following two examples demonstrate the same drawing generated in HTML and in JavaScript.
 
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
@@ -53,10 +45,10 @@ Using drawings in Suica is fairly straighforward process:
 4. Map the drawing onto an object
 
 
-## Creating a drawing
+# Creating drawings
 
 
-#### ```drawing```
+#### drawing
 ```html
 HTML:
 <drawing id="𝘯𝘢𝘮𝘦" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
