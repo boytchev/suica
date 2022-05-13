@@ -4,19 +4,15 @@ description: [Drawings that could be stamped onto objects]
 ---
 ##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)
 
-**Suica drawings** are 2D images generated in directly in Suica, instead of being
-loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D
-objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica
-drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D),
-but they provide simplified set of commands. 
+**Suica drawings** are 2D images generated in directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 
 ## Table of contents
 - [Introduction](#introduction)
 	- <small>[Creating drawings](#creating-drawings)</small>
 	- <small>[Working with drawings](#working-with-drawings)</small>
 	- <small>[Using drawings](#using-drawings)</small>
-- [Defining paths](#defining-paths)
-	- <small>[Straight lines](#straight-lines)</small>
+- [Drawing with a pen](#drawing-with-a-pen)
+	- <small>[Defining a path](#defining-a-path): [```moveTo```](#moveto), [```lineTo```](#lineto), [```curveTo```](#curveto), [```arc```](#arc)  </small>
 	- <small>[Curved lines](#curved-lines)</small>
 - [Painting](#painting)
 	- <small>[Stroking and filling a path](#stroking-and-filling-a-path)</small>
@@ -26,7 +22,7 @@ but they provide simplified set of commands.
 
 # Introduction
 
-Suica drawings are created on a rectangular drawing canvas. A virtual pen traces a path on the canvas. This path can be stroked by drawing a line over it; or the area bounded by the path can be filled with a color. The origin of the coordinate system of a drawing i.e. point (0,0) is at the bottom left corner of the canvas. The X axis extends to the right, Y extends to the top. All coordinates are measured in pixels.
+Suica drawings are created on a rectangular drawing canvas. The origin of the coordinate system of a drawing i.e. point (0,0) is at the bottom left corner of the canvas. The X axis extends to the right, Y extends to the top. All coordinates are measured in pixels.
 
 <img src="images/drawing-coordinates.png">
 
@@ -38,9 +34,8 @@ Following the main pricipals of Suica, a drawing can be created entirely in HTML
 Using drawings in Suica is fairly straighforward process:
 
 1. Create a drawing canvas
-2. Define a path
-3. Stroke and/or fill the path
-4. Map the drawing onto an object
+2. Draw objects with pen or text
+3. Map the drawing onto an object
 
 
 # Creating drawings
@@ -117,18 +112,28 @@ screen. For lines drawings are used to created dot-and-dash patterns.
 
 
 
-# Defining paths
+# Drawing with a pen
+
+The basic way to draw objects in a drawing is to draw lines or fill areas with specific color. The lines and the boundary of areas are defined as paths.
 
 
-## Straight lines
 
-The simplest way of creating a path is to move the virtual pen to the path
-starting position and then define a sequence of straight segments.
+## Defining a path
+
+A path is an invisible trace that is used to define a line or area boundary. A path is constructed with a virtual pen and a few commands to move the pen. The simplest way to define a path is to move the virtual pen to the beginning of the path and move the pen till the end of the path.
 
 <img src="images/moveto-lineto.png">
 
+Paths are define with the following commands:
+- [```moveTo```](#moveto) &ndash; moves the pen
+- [```lineTo```](#lineto) &ndash; adds a line segment
+- [```curveTo```](#curveto) &ndash; adds a curved segment
+- [```arc```](#arc) &ndash; adds a circular arc
 
-#### ```moveTo```
+
+
+
+#### moveTo
 ```html
 HTML:
 <moveto center="𝑥,𝑦">
@@ -139,11 +144,7 @@ JS:
 moveTo( 𝑥, 𝑦 );
 ```
 
-Command. Sets the position of the virtual pen. This command moves the pen from
-its current location to (`x`,`y`) without generating a path. This is used to set
-the starting point of a path. By default the both *x* and *y* are 0. In HTML
-`center` can be split into individual parameters `x` and `y`.
-
+Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a path. This is used to set the starting point of a path. By default the both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -154,8 +155,11 @@ HTML:
 JS:
 moveTo( 10, 0 );
 ```
+
+
+
 	
-#### ```lineTo```
+#### lineTo
 ```html
 HTML:
 <lineto center="𝑥,𝑦">
@@ -166,11 +170,7 @@ JS:
 lineTo( 𝑥, 𝑦 );
 ```
 
-Command. Adds a line segment to the path. This command moves the virtual pen
-along a straight line from its current location to (`x`,`y`) and adds that line
-to the current path. This is used to define straignt line sections of the path.
-By default the both *x* and *y* are 0. In HTML `center` can be split into
-individual parameters `x` and `y`.
+Command. Adds a line segment to the path. This command moves the pen along a straight line from its current location to (`x`,`y`) and adds that line to the path. This is used to define straignt line sections of the path. By default the both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -187,17 +187,9 @@ lineTo( 10, 0 );
 
 
 
+#### curveTo
 
-
-## Curved lines
-		
-#### ```curveTo```
-
-Command. Adds a curved segment to the path. This command moves the virtual pen
-along a curved line from its current location to (`x`,`y`) and adds that curve
-to the current path. The line is quadratic curve and is attracted towards point
-(`mx`, `my`), which is defined by the first pair of parameters of *curveTo*.
-By default all coordinates *mx*, *my*, *x* and *y* are 0.
+Command. Adds a curved segment to the path. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the path. The line is [quadratic curve](https://mathworld.wolfram.com/QuadraticCurve.html) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
 
 <img src="images/curveto.png">
 
@@ -213,22 +205,21 @@ curveTo( 10, 0, 20, 15 );
 
 [<kbd><img src="../examples/snapshots/drawing-curveto.jpg" width="300"></kbd>](../examples/drawing-curveto.html)
 
-A more complex curve can be constructed by joining individual curves. The shape
-of a heart, for examples, can be constructed by 6 connected curves.
+A more complex curve can be constructed by joining individual curves. The shape of a heart in the following example is composed of 6 connected curves.
 
 <img src="images/drawing-heart.png">
 
 [<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="300"></kbd>](../examples/drawing-heart-point.html)
 
 
-#### Arc
 
-Command. Adds a circle оr a circular arc to the path. This command creates an
-arc from a circle with center (`x`,`y`) and `radius`. The arc stars from angle
-`from` and ends at angle `to`. The last parameter is direction of drawing &ndash;
-either clockwise or counter-clockwise. Coordinates and radius are measured in
-pixels, angles are measured in degrees. If the angles are not provided, a full
-circle is generated. 
+
+#### arc
+
+Command. Adds a circular arc to the path. This command creates an arc of a circle with center (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees. Parameter `cw` set the direction of arc &ndash; either clockwise (if `cw` is true) or counterclockwise (if `cw` is false). If the angles are omitted, a full circle is generated. 
+
+<img src="images/drawing-arc.png">
+
 
 ```html
 HTML:
@@ -241,10 +232,6 @@ arc( 10, 0, 5);
 arc( 10, 0, 5, 0, 180, false);
 ```
 
-The coordinate system of a drawing has origin (0,0) at the bottom left side of
-the canvas. The X axis extends to the right, Y extends to the top.
-
-<img src="images/drawing-arc.png">
 
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](../examples/drawing-arc.html)
 
