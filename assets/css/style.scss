@@ -6,13 +6,13 @@ header.page-header {
 	padding: 1em 0;
 }
 
-h1, h2, h3 {
+body h1, body h2, body h3 {
 	color: MediumSeaGreen;
 	font-weight: bold;
 	border-bottom: 1px dotted green;
 }
 
-h4 {
+body h4 {
 	font-family: Consolas, monospace;
 	background: MediumSeaGreen;
 	color: white;
