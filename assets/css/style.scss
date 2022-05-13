@@ -2,8 +2,13 @@
 ---
 
 @import "{{ site.theme }}";
+
 header.page-header {
 	padding: 1em 0;
+}
+
+code {
+	font-size: 115% !important;
 }
 
 h1, h2, h3 {
@@ -13,7 +18,7 @@ h1, h2, h3 {
 }
 
 h4 {
-	font-size: 150%;
+	font-size: 150% !important;
 	font-weight: bold;
 	border-bottom: 1px dotted gray;
 }
@@ -23,6 +28,3 @@ h2.project-tagline {
 	color: white;
 }
 
-code {
-	font-size: 115%;
-}
