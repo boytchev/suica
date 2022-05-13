@@ -6,17 +6,22 @@ header.page-header {
 	padding: 1em 0;
 }
 
-main h1, main h2, main h3 {
+h1, h2, h3 {
 	color: MediumSeaGreen;
 	font-weight: bold;
 	border-bottom: 1px dotted green;
 }
 
-main h4 {
+h4 {
 	font-family: Consolas, monospace;
 	font-weight: bold;
 	border-top: 1px dotted green;
 	border-bottom: 1px dotted green;
+}
+
+h1.project-name,
+h2.project-tagline {
+	color: white;
 }
 
 code {
