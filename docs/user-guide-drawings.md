@@ -3,22 +3,6 @@ title: Suica Drawings
 description: [Drawings that could be stamped onto objects]
 ---
 
-<small>[About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)</small>
-
-## Table of contents
-- [About Suica drawings](#about-suica-drawings)
-	- [Creating a drawing](#creating-drawings)
-	- [Working with a drawing](#working-with-drawings)
-	- [Using a drawing](#using-drawings)
-- [Paths](#defining-paths)
-	- [Straight lines](#straight-lines)
-	- [Curved lines](#curved-lines)
-- [Painting](#painting)
-	- [Stroking and filling a path](#stroking-and-filling-a-path)
-	- [Painting text](#painting-text)
-	- [Resetting the canvas](#resetting-the-canvas)
-
-
 # Suica drawings
 
 Suica drawings are 2D images generated in directly in Suica, instead of being
@@ -26,6 +10,21 @@ loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D
 objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica
 drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D),
 but they provide simplified set of commands. 
+
+## Table of contents
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)
+- [About Suica drawings](#about-suica-drawings)
+	- <small>Creating a drawing](#creating-drawings)</small>
+	- <small>[Working with a drawing](#working-with-drawings)</small>
+	- <small>[Using a drawing](#using-drawings)</small>
+- [Paths](#paths)
+	- <small>[Straight lines](#straight-lines)</small>
+	- <small>[Curved lines](#curved-lines)</small>
+- [Painting](#painting)
+	- <small>[Stroking and filling a path](#stroking-and-filling-a-path)</small>
+	- <small>[Painting text](#painting-text)</small>
+	- <small>[Resetting the canvas](#resetting-the-canvas)</small>
+
 
 ## About drawings
 
@@ -134,12 +133,12 @@ screen. For lines drawings are used to created dot-and-dash patterns.
 ## Straight lines
 
 The simplest way of creating a path is to move the virtual pen to the path
-starting position and then define a straight segment.
+starting position and then define a sequence of straight segments.
 
 <img src="images/moveto-lineto.png">
 
 
-#### moveTo
+#### ```moveTo```
 ```html
 HTML:
 <moveto center="𝑥,𝑦">
@@ -152,7 +151,8 @@ moveTo( 𝑥, 𝑦 );
 
 Command. Sets the position of the virtual pen. This command moves the pen from
 its current location to (`x`,`y`) without generating a path. This is used to set
-the starting point of a path. By default the both *x* and *y* are 0.
+the starting point of a path. By default the both *x* and *y* are 0. In HTML
+`center` can be split into individual parameters `x` and `y`.
 
 
 ```html
@@ -165,7 +165,7 @@ JS:
 moveTo( 10, 0 );
 ```
 	
-#### lineTo
+#### ```lineTo```
 ```html
 HTML:
 <lineto center="𝑥,𝑦">
@@ -179,7 +179,8 @@ lineTo( 𝑥, 𝑦 );
 Command. Adds a line segment to the path. This command moves the virtual pen
 along a straight line from its current location to (`x`,`y`) and adds that line
 to the current path. This is used to define straignt line sections of the path.
-By default the both *x* and *y* are 0.
+By default the both *x* and *y* are 0. In HTML `center` can be split into
+individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -193,9 +194,14 @@ lineTo( 10, 0 );
 
 [<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="300"></kbd>](../examples/drawing-moveto-lineto.html)
 
+
+
+
+
+
 ## Curved lines
 		
-#### CurveTo
+#### ```curveTo```
 
 Command. Adds a curved segment to the path. This command moves the virtual pen
 along a curved line from its current location to (`x`,`y`) and adds that curve
