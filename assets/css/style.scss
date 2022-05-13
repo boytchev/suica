@@ -15,8 +15,10 @@ h1, h2, h3 {
 h4 {
 	font-family: Consolas, monospace;
 	font-weight: bold;
-	border-top: 1px dotted green;
-	border-bottom: 1px dotted green;
+	border-top: 1px dotted gray;
+	border-bottom: 1px dotted gray;
+	background: SeaShell;
+	padding: 0.25em 0.5em;
 }
 
 h1.project-name,
