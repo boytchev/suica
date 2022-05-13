@@ -11,11 +11,11 @@ drawings are based on [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/AP
 but they provide simplified set of commands. 
 
 ## Table of contents
-- [About Suica drawings](#about-suica-drawings)
+- [Introduction](#introduction)
 	- <small>[Creating drawings](#creating-drawings)</small>
 	- <small>[Working with drawings](#working-with-drawings)</small>
 	- <small>[Using drawings](#using-drawings)</small>
-- [Paths](#paths)
+- [Defining paths](#defining-paths)
 	- <small>[Straight lines](#straight-lines)</small>
 	- <small>[Curved lines](#curved-lines)</small>
 - [Painting](#painting)
@@ -24,11 +24,9 @@ but they provide simplified set of commands.
 	- <small>[Resetting the canvas](#resetting-the-canvas)</small>
 
 
-# About drawings
+# Introduction
 
-Suica drawings are created on a rectangular drawing canvas. A virtual pen traces a path on the canvas. This path can be stroked by drawing a line over it; or its contents can be filled with a color.
-
-The coordinate system of a drawing has origin (0,0) at the bottom left side of the canvas. The X axis extends to the right, Y extends to the top.
+Suica drawings are created on a rectangular drawing canvas. A virtual pen traces a path on the canvas. This path can be stroked by drawing a line over it; or the area bounded by the path can be filled with a color. The origin of the coordinate system of a drawing i.e. point (0,0) is at the bottom left corner of the canvas. The X axis extends to the right, Y extends to the top. All coordinates are measured in pixels.
 
 <img src="images/drawing-coordinates.png">
 
@@ -119,7 +117,7 @@ screen. For lines drawings are used to created dot-and-dash patterns.
 
 
 
-# Paths
+# Defining paths
 
 
 ## Straight lines
