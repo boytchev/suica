@@ -60,8 +60,15 @@ Using drawings in Suica is fairly straighforward process:
 # Creating a drawing
 
 
-#### ```Drawing```
-
+#### ```drawing```
+```html
+HTML:
+<drawing id="𝘯𝘢𝘮𝘦" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝘯𝘢𝘮𝘦 = drawing( 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡, 𝑐𝑜𝑙𝑜𝑟 );
+```
 Command. Defines a 2D drawing canvas. Parameters are `width` and `height` for
 the canvas size in pixels; and `color` for the initial background colour. By
 default the size is 32&times;32 pixels. If *height* is not provided, it is
