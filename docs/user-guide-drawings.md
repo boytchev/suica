@@ -8,16 +8,19 @@ description: [Drawings that could be stamped onto objects]
 
 ## Table of contents
 - [Introduction](#introduction)
-	- <small>[Creating drawings](#creating-drawings)</small>
-	- <small>[Working with drawings](#working-with-drawings)</small>
-	- <small>[Using drawings](#using-drawings)</small>
+	- <small>[Starting a drawing](#starting-a-drawing): [```drawing```](#drawing)</small>
+	- <small>[The actual drawing](#the-actual-drawing)</small>
+	- <small>[Applying drawings](#applying-drawings)</small>
 - [Drawing shapes](#drawing-shapes)
 	- <small>[Defining shapes](#defining-shapes): [```moveTo```](#moveto), [```lineTo```](#lineto), [```curveTo```](#curveto), [```arc```](#arc)  </small>
 	- <small>[Outlined shapes](#oulined-shapes): [```stroke```](#stroke)</small>
 	- <small>[Solid shapes](#solid-shapes): [```fill```](#fill)</small>
-- [Drawing texts](#drawing-texts): <small>[```fillText```](#fill-text)</small>
+- [Drawing texts](#drawing-texts): <small>[```fillText```](#filltext)</small>
+- [Advanced techniques](#advanced-techniques)
+	- <small>[Sprites](#sprites)</small>
+	- <small>[Dotted and dashed lines](#dotted-and-dashed-lines)</small>
+	- <small>[Dynamic drawing](#dynamic-drawing): [```clear```](#clear)</small>
 
-	- <small>[Resetting the canvas](#resetting-the-canvas)</small>
 
 
 # Introduction
@@ -26,20 +29,23 @@ Suica drawings are created on a rectangular drawing canvas. The origin of the co
 
 <img src="images/drawing-coordinates.png">
 
-Following the main pricipals of Suica, a drawing can be created entirely in HTML or entirely in JavaScript. Usually HTML is used for static drawings, while JavaSCript is used for both static and dynamic drawings. The following two examples demonstrate the same drawing generated in HTML and in JavaScript.
+Following the main pricipals of Suica, a drawing can be created entirely in HTML or entirely in JavaScript. Usually HTML is used for static drawings, while JavaScript is used for both static and dynamic drawings. The other difference between HTML and JavaScript drawings is that in HTML names of commands are case-insensitive and parameters can be freely omitted or rearranged. In JavaScript, however, there is no need to type the names of the parameters. The following two examples demonstrate the same drawing generated in HTML and in JavaScript.
 
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
 
-Using drawings in Suica is fairly straighforward process:
-
-1. Create a drawing canvas
-2. Draw objects with pen or text
-3. Map the drawing onto an object
 
 
-# Creating drawings
+Using drawings in Suica is a three-step process:
 
+- Step 1. Prepare a drawing canvas
+- Step 2. Draw shapes or text
+- Step 3. Stamp it onto an object
+
+
+## Starting a drawing
+
+A drawing is created with the ```drawing``` command and then it is possible to draw shapes and text in it. The drawing canvas is cleared with ```clear``` command to remove all drawn shapes. 
 
 #### drawing
 ```html
@@ -51,12 +57,7 @@ JS:
 𝘯𝘢𝘮𝘦 = drawing( 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡, 𝑐𝑜𝑙𝑜𝑟 );
 ```
 
-Command. Creates a 2D drawing canvas. Parameters `width` and `height` set the
-drawings canvas size in pixels. By default it is 32&times;32 pixels. If `height`
-is omitted, its is the same as `width`. Parameter `color` sets the background
-color of the canvas. If `color` is omitted, the background is transparent
-&ndash; i.e. when the drawing is mapped onto an objects, the background areas
-will be transparent.
+Command. Creates a drawing canvas. Parameters `width` and `height` set the canvas size in pixels. By default it is 32&times;32 pixels. If `height` is omitted, its is the same as `width`. Parameter `color` sets the background color of the canvas. If `color` is omitted, the background is transparent &ndash; i.e. when the drawing is mapped onto an object, the background areas will be transparent.
 
 ```html
 HTML:
@@ -71,46 +72,82 @@ b = drawing( 32 );
 c = drawing( 32, 48, 'crimson' );
 ```
 
+The following examples demonstrate transparent versus non-transparent drawing canvases.
+
 [<kbd><img src="../examples/snapshots/drawing-transparent.jpg" width="300"></kbd>](../examples/drawing-transparent.html)
 [<kbd><img src="../examples/snapshots/drawing-opaque.jpg" width="300"></kbd>](../examples/drawing-opaque.html)
 
-## Working with a drawing
 
-When a drawing is given a name via attribute `ID` in HTML or when a drawing is
-initialized and stored in a variable, this variable has commands for drawing on
-the canvas.
+
+
+
+
+## The actual drawing
+
+The actual drawing of shapes and texts in a drawing depends on how it is created. If a drawing is created in HTML, the drawing commands are placed as subtags in the main `<drawing>` tag.
 
 ```html
 HTML:
-<drawing id="a">
+<drawing id="a" width="100" height="100" color="lightsalmon">
+   <moveTo center="10,10">
+   <lineTo x="90">
+   <lineTo y="90">
+   <lineTo x="10">
+   <lineTo y="10">
+   <fill color="linen">
+   <stroke color="black" width="1">
+</drawing>
+```
+
+If a drawing is created in JavaScript, the drawing commands follow the `drawing` command.
+
+```js
+JS:
+var a = drawing( 100, 100, 'lightsalmon' );
+moveTo( 10, 10 );
+lineTo( 90, 10 );
+lineTo( 90, 90 );
+lineTo( 10, 90 );
+lineTo( 10, 10 );
+fill( 'linen' );
+stroke( 'black', 5 );
+```
+
+Drawing commands refer to the latest created drawing. If another drawing is used, its name must be set as a command prefix.
+
+```js
+JS:
+var a = drawing( );
+var b = drawing( );
+
+a.moveTo( 10, 10 );
+a.lineTo( 90, 90 );
+a.stroke( 'black', 5 );
+
+b.moveTo( 10, 90 );
+b.lineTo( 10, 90 );
+b.stroke( 'black', 5 );
+```
+
+
+
+
+## Applying drawings
+
+A drawing is applied to an object via the [```image```](user-guide-objects.md#image) property. The scale of a drawing is managed by the [```images```](user-guide-objects.md##images) property. 
+
+```html
+HTML:
+<drawing id="a"> ... </drawing>
+<cube image="a" images="4,2">
 ```
 ```js
 JS:
-a.moveTo( 10, 10 );
-a.lineTo( 20, 20 );
-a.stroke( 'crimson' );
+a = drawing( ... );
+b = cube();
+b.image = a;
+b.images = [4, 2];
 ```
-
-A drawing is applied to an object via the [image](#image) property and can be
-updated both before and after this assignment. The scale of
-a drawing is managed by the [images](#images) property. 
-
-[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
-
-
-Drawings can be applied to points and lines. For points the drawings act like
-sprites &ndash; they are not subject to orientation and they always face the
-screen. For lines drawings are used to created dot-and-dash patterns.
-
-[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
-[<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
-
-## Using a drawing
-
-
-
-
-
 
 # Drawing shapes
 
@@ -362,13 +399,56 @@ fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 	
 	
 	
+# Advanced techniques
 	
-	
-#### Clear
+## Sprites
 
-Command. Clears a drawing canvas. The drawing canvas is filled with the given
-`color` if it is provided, or is cleared to transparent if it is not provided.
-Next commands after *clear* start a new path.
+[Sprites](https://en.wikipedia.org/wiki/Sprite_(computer_graphics)) are flat images that always face the user. They are drawn on the screen ignoring any rotation. In Suica sprites are created by applying drawings (and images) onto [points](#user-guide-objects.md#point).
+
+[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
+[<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="300"></kbd>](../examples/drawing-heart-point.html)
+
+
+
+## Dotted and dashed lines
+
+A drawing (or an image) can be applied onto [lines](#user-guide-objects.md#line) or [wireframed objects](#user-guide-objects.md#wireframe). In this case the drawing provides the color pattern for the segments. If a drawing uses a transparent background, this results in dotted and/or dashed lines.
+
+[<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
+
+## Dynamic drawing
+
+A dynamic drawing is a drawing which images changes in real-time. A Suica drawing can be modified after it is applied to an object. This can be done only in JavaScript by accessing the [```image```](user-guide-objects.md#image) property of the object.
+
+```js
+JS:
+function onTime( )
+{
+   a.image.arc( 50, 50, random(10,30) );
+   a.image.stroke( 'black', 1 );
+   a.image.fill( 'white' );
+}
+```
+[<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
+
+
+In some cases it is easier to redraw the canvas from scratch. One way to clear the canvas is to define a large shape over it and then [```fill```](#fill) the shape with a color. This can clears the canvas, but it canno erase it to transparent. The command ```clear``` is the only way to clear the canvas to transparent. 
+
+
+
+#### clear
+```html
+HTML:
+<clear>
+<clear color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+clear( );
+clear( 𝑐𝑜𝑙𝑜𝑟 );
+```
+
+Command. Clears a drawing canvas. The canvas is filled with the given `color`. If `color` is omitted, the canvas is completely erased, i.e. cleared to transparent. 
 
 ```html
 HTML:
@@ -380,9 +460,14 @@ HTML:
 JS:
 clear( 'crimson' );
 ```
-	
+
+The following example demonstrates the use of `clear` to reset the drawing canvas to a background color or to transparent background.
+
 [<kbd><img src="../examples/snapshots/drawing-clear.jpg" width="300"></kbd>](../examples/drawing-clear.html)
 
+
+
+	
 ---
 
 May, 2022
