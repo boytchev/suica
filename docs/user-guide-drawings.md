@@ -1,10 +1,10 @@
 ---
 title: Suica Drawings
-description: [Drawings that could be stamped onto objects]
+description: [Drawings that could be applied onto objects]
 ---
 ##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)
 
-**Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are stamped onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
+**Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are applied onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 
 ## Table of contents
 - [Introduction](#introduction)
@@ -29,7 +29,7 @@ Suica drawings are created on a rectangular drawing canvas. The origin of the co
 
 <img src="images/drawing-coordinates.png">
 
-Following the main pricipals of Suica, a drawing can be created entirely in HTML or entirely in JavaScript. Usually HTML is used for static drawings, while JavaScript is used for both static and dynamic drawings. The other difference between HTML and JavaScript drawings is that in HTML names of commands are case-insensitive and parameters can be freely omitted or rearranged. In JavaScript, however, there is no need to type the names of the parameters. The following two examples demonstrate the same drawing generated in HTML and in JavaScript.
+Following the main principles of Suica, a drawing can be created entirely in HTML or entirely in JavaScript. Usually HTML is used for static drawings, while JavaScript is used for both static and dynamic drawings. The other difference between HTML and JavaScript drawings is that in HTML names of commands are case-insensitive and parameters can be freely omitted or rearranged. In JavaScript, however, there is no need to type the names of the parameters. The following two examples demonstrate the same drawing generated in HTML and in JavaScript.
 
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
 [<kbd><img src="../examples/snapshots/drawing-js.jpg" width="300"></kbd>](../examples/drawing-js.html)
@@ -40,7 +40,7 @@ Using drawings in Suica is a three-step process:
 
 - Step 1. Prepare a drawing canvas
 - Step 2. Draw shapes or text
-- Step 3. Stamp it onto an object
+- Step 3. Apply it onto an object
 
 
 ## Starting a drawing
@@ -151,7 +151,7 @@ b.images = [4, 2];
 
 # Drawing shapes
 
-The basic way to draw objects in a drawing is to draw outlined or solid shapes. The boundary of these shapes are defined as *paths*.
+The basic way to draw objects in a drawing is to draw outlined or solid shapes.
 
 
 
@@ -181,7 +181,7 @@ JS:
 moveTo( 𝑥, 𝑦 );
 ```
 
-Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment. This is used to set the starting point of a shape boundary. By default both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
+Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment. This is used to set the starting point of a shape boundary. By default, both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -207,7 +207,7 @@ JS:
 lineTo( 𝑥, 𝑦 );
 ```
 
-Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. This is used to define straignt segments of the shape. By default both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
+Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. This is used to define straight segments of the shape. By default, both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -432,7 +432,7 @@ function onTime( )
 [<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
 
 
-In some cases it is easier to redraw the canvas from scratch. One way to clear the canvas is to define a large shape over it and then [```fill```](#fill) the shape with a color. This can clears the canvas, but it canno erase it to transparent. The command ```clear``` is the only way to clear the canvas to transparent. 
+In some cases, it is easier to redraw the canvas from scratch. One way to clear the canvas is to define a large shape over it and then [```fill```](#fill) the shape with a color. This can clear the canvas, but it cannot erase it to transparent. The command ```clear``` is the only way to clear the canvas to transparent. 
 
 
 
