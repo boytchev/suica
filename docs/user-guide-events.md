@@ -16,7 +16,7 @@ description: [Reacting to user interaction]
 	- <small>[Event listeners](#event-listeners): [`addEventListener`](#addeventlistener), [`removeEventListener`](#removeeventlistener)</small>
 	- <small>[Mouse event handlers](#mouse-event-handlers): [`findPosition`](#findposition), [`findObject`](#findobject), [`findObjects`](#findobjects)</small>
 	- <small>[Time event handlers](#time-event-handlers)</small>
-	- <small>[Proactive events](#proactive-events)</small>
+	- <small>[Proactive events](#proactive-events): [`proactive`](#proactive)</small>
 
 
 
@@ -49,14 +49,14 @@ Time event is `onTime`. It occurs when the browser is ready for a new frame.
 An event is managed by two elements:
 
 - **Event listener**: An HTML or JavaScript declaration that an object is interested in a specific event
-- **Event handler**: A JavaScript user-defind function that is activated when an event occurs
+- **Event handler**: A JavaScript user-defined function that is activated when an event occurs
 
 Events that are not listened to, are ignored.
 
 
 ## Event listeners
 
-In Suica event listeners can be set for Suica canvas and for individual Suica objects. For example, a canvas `onClick` event occurs when the user clicks anywhere in the canvas, while an object `onClick` event occurs when the user clicks on the image of the object. Similarily, a canvas `onMouseEnter` occurs when the mouse cursor enters the canvas, while an object `onMouseEnter` occurs when the cursors enters the boundary of the object's image.
+In Suica event listeners can be set for Suica canvas and for individual Suica objects. For example, a canvas `onClick` event occurs when the user clicks anywhere in the canvas, while an object `onClick` event occurs when the user clicks on the image of the object. Similarly, a canvas `onMouseEnter` occurs when the mouse cursor enters the canvas, while an object `onMouseEnter` occurs when the cursors enters the boundary of the object's image.
 
 In HTML event listeners are set as attributes.
 
@@ -73,7 +73,7 @@ HTML:
 <cube onClick="clickOnObject">
 ```
 
-In JavaScript event listeners arе set by `addEventListener` and removed by `removeEventListener`.
+In JavaScript event listeners are set by `addEventListener` and removed by `removeEventListener`.
 
 
 #### addEventListener
@@ -81,7 +81,7 @@ In JavaScript event listeners arе set by `addEventListener` and removed by `rem
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.addEventListener( 𝑒𝑣𝑒𝑛𝑡𝑁𝑎𝑚𝑒, 𝑒𝑣𝑒𝑛𝑡𝐻𝑎𝑛𝑑𝑙𝑒𝑟 );
 ```
-Function. Adds an event listener to specific `eventname` that triggers an `eventHandler` function. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `mouseMove` and `onMouseMove` are considered the same event. Only one event handler per event per object can be set, i.e. setting another event handler will replace the previous one. Suica's `addEventListener` mimics to some extent the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) which is used to set event listeners for HTML elements in a web page.
+Function. Adds an event listener to specific `eventName` that triggers an `eventHandler` function. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `mouseMove` and `onMouseMove` are considered the same event. Only one event handler per event per object can be set, i.e. setting another event handler will replace the previous one. Suica's `addEventListener` mimics to some extent the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) which is used to set event listeners for HTML elements in a web page.
 
 ```js
 JS:
@@ -194,7 +194,7 @@ function onMouseMove( event )
 
 The returned position coincides with the Suica coordinate system when
 [orthographic camera](#orthographic-camera) is used and the view point is not
-changed with [demo](#demo) or [lookAt](#lookat).
+changed with [demo](user-guide-suica.md#demo) or [lookAt](user-guide-suica.md#lookat).
 
 <img src="images/event-coordinate-system.png">
 
@@ -205,7 +205,7 @@ changed with [demo](#demo) or [lookAt](#lookat).
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.findObject( 𝑒𝑣𝑒𝑛𝑡 );
 ```
-Function. Finds the Suica object where a mouse event occured. The function requires the `event` parameter of the event handler. The result is the closest to the viewer Suica object that is at the position of the event, or `null` if no such object exists. `findObject` is typically used with events of the Suica canvas.
+Function. Finds the Suica object where a mouse event occurred. The function requires the `event` parameter of the event handler. The result is the closest to the viewer Suica object that is at the position of the event, or `null` if no such object exists. `findObject` is typically used with events of the Suica canvas.
 
 ```js
 JS:
@@ -244,7 +244,7 @@ function onMouseMove( event )
 
 ## Time event handlers
 
-The time event `onTime` occurs when the browser is ready for a new frame. The browser tries to generate the event at regular time intervals, usually 60 or 30 times per second, but this is not quaranteed. The time event provides two parameters `t` and `dT` &ndash;  elapsed times since the start of Suica and since the previous frame. Both are measured in seconds, thus 2.3 means 2.3 seconds (2 seconds and 300 milliseconds).
+The time event `onTime` occurs when the browser is ready for a new frame. The browser tries to generate the event at regular time intervals, usually 60 or 30 times per second, but this is not guaranteed. The time event provides two parameters `t` and `dT` &ndash;  elapsed times since the start of Suica and since the previous frame. Both are measured in seconds, thus 2.3 means 2.3 seconds (2 seconds and 300 milliseconds).
 
 
 ```js
