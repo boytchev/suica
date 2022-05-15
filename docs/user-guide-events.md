@@ -1,6 +1,6 @@
 ---
 title: Suica Events
-description: [Reacting to user interaction]
+description: [Things that help making interactive programs]
 ---
 ##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; [Drawings](user-guide-drawings.md) &middot; **Events** &middot; [Functions](#functions) &middot; [References](#references)
 
