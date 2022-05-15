@@ -2,24 +2,24 @@
 title: Suica Drawings
 description: [Drawings that could be applied onto objects]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](#events) &middot; [Functions](#functions) &middot; [References](#references)
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](#objects) &middot; **Drawings** &middot; [Events](user-guide-events.md) &middot; [Functions](#functions) &middot; [References](#references)
 
 **Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are applied onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 
 ## Table of contents
 - [Introduction](#introduction)
-	- <small>[Starting a drawing](#starting-a-drawing): [```drawing```](#drawing)</small>
+	- <small>[Starting a drawing](#starting-a-drawing): [`drawing`](#drawing)</small>
 	- <small>[The actual drawing](#the-actual-drawing)</small>
 	- <small>[Applying drawings](#applying-drawings)</small>
 - [Drawing shapes](#drawing-shapes)
-	- <small>[Defining shapes](#defining-shapes): [```moveTo```](#moveto), [```lineTo```](#lineto), [```curveTo```](#curveto), [```arc```](#arc)  </small>
-	- <small>[Outlined shapes](#oulined-shapes): [```stroke```](#stroke)</small>
-	- <small>[Solid shapes](#solid-shapes): [```fill```](#fill)</small>
-- [Drawing texts](#drawing-texts): <small>[```fillText```](#filltext)</small>
+	- <small>[Defining shapes](#defining-shapes): [`moveTo`](#moveto), [`lineTo`](#lineto), [`curveTo`](#curveto), [`arc`](#arc)  </small>
+	- <small>[Outlined shapes](#oulined-shapes): [`stroke`](#stroke)</small>
+	- <small>[Solid shapes](#solid-shapes): [`fill`](#fill)</small>
+- [Drawing texts](#drawing-texts): <small>[`fillText`](#filltext)</small>
 - [Advanced techniques](#advanced-techniques)
 	- <small>[Sprites](#sprites)</small>
 	- <small>[Dotted and dashed lines](#dotted-and-dashed-lines)</small>
-	- <small>[Dynamic drawing](#dynamic-drawing): [```clear```](#clear)</small>
+	- <small>[Dynamic drawing](#dynamic-drawing): [`clear`](#clear)</small>
 
 
 
@@ -45,7 +45,7 @@ Using drawings in Suica is a three-step process:
 
 ## Starting a drawing
 
-A drawing is created with the ```drawing``` command and then it is possible to draw shapes and text in it. The drawing canvas is cleared with ```clear``` command to remove all drawn shapes. 
+A drawing is created with the `drawing` command and then it is possible to draw shapes and text in it. The drawing canvas is cleared with `clear` command to remove all drawn shapes. 
 
 #### drawing
 ```html
@@ -134,7 +134,7 @@ b.stroke( 'black', 5 );
 
 ## Applying drawings
 
-A drawing is applied to an object via the [```image```](user-guide-objects.md#image) property. The scale of a drawing is managed by the [```images```](user-guide-objects.md##images) property. 
+A drawing is applied to an object via the [`image`](user-guide-objects.md#image) property. The scale of a drawing is managed by the [`images`](user-guide-objects.md##images) property. 
 
 ```html
 HTML:
@@ -162,10 +162,10 @@ A shape is defined with a virtual pen moved along the boundary of the shape. The
 <img src="images/moveto-lineto.png">
 
 Shapes are define with the following commands:
-- [```moveTo```](#moveto) &ndash; moves the pen
-- [```lineTo```](#lineto) &ndash; adds a line segment
-- [```curveTo```](#curveto) &ndash; adds a curved segment
-- [```arc```](#arc) &ndash; adds a circular arc
+- [`moveTo`](#moveto) &ndash; moves the pen
+- [`lineTo`](#lineto) &ndash; adds a line segment
+- [`curveTo`](#curveto) &ndash; adds a curved segment
+- [`arc`](#arc) &ndash; adds a circular arc
 
 
 
@@ -306,7 +306,7 @@ HTML:
 
 ## Outlined shapes
 
-The outline of a shape is drawn with ```stroke```. 
+The outline of a shape is drawn with `stroke`. 
 
 #### stroke
 ```html
@@ -318,7 +318,7 @@ JS:
 stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
 ```
 
-Command. Draws a line around a shape. The line has given `color` and `width` (in pixels). If the `close` parameter is *true*, then a line is closed &ndash; its end is connected to its beginning. A ```stroke``` immediately after another ```stroke``` or [```fill```](#fill) reuses the same shape.
+Command. Draws a line around a shape. The line has given `color` and `width` (in pixels). If the `close` parameter is *true*, then a line is closed &ndash; its end is connected to its beginning. A `stroke` immediately after another `stroke` or [`fill`](#fill) reuses the same shape.
 
 ```html
 HTML:
@@ -339,7 +339,7 @@ stroke( 'crimson', 10, true );
 	
 ## Solid shapes
 
-Solid shapes are drawn by ```fill```.
+Solid shapes are drawn by `fill`.
 
 #### fill
 ```html
@@ -351,7 +351,7 @@ JS:
 fill( 𝑐𝑜𝑙𝑜𝑟 );
 ```
 
-Command. Fills a shape with the given `color`.  A ```fill``` immediately after another ```fill``` or [```stroke```](#stroke) reuses the same shape.
+Command. Fills a shape with the given `color`.  A `fill` immediately after another `fill` or [`stroke`](#stroke) reuses the same shape.
 
 ```html
 HTML:
@@ -384,7 +384,7 @@ JS:
 ```
 
 Command. Draws a text. The `text` is drawn at given coordinates (`x`,`y`) with
-given `color` and `font` style &ndash; a string with a [CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description (the default font is ```'20px Arial'```). In HTML `center` can be split into individual parameters `x` and `y`.
+given `color` and `font` style &ndash; a string with a [CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description (the default font is `'20px Arial'`). In HTML `center` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
@@ -418,7 +418,7 @@ A drawing (or an image) can be applied onto [lines](#user-guide-objects.md#line)
 
 ## Dynamic drawing
 
-A dynamic drawing is a drawing which images changes in real-time. A Suica drawing can be modified after it is applied to an object. This can be done only in JavaScript by accessing the [```image```](user-guide-objects.md#image) property of the object.
+A dynamic drawing is a drawing which images changes in real-time. A Suica drawing can be modified after it is applied to an object. This can be done only in JavaScript by accessing the [`image`](user-guide-objects.md#image) property of the object.
 
 ```js
 JS:
@@ -432,7 +432,7 @@ function onTime( )
 [<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
 
 
-In some cases, it is easier to redraw the canvas from scratch. One way to clear the canvas is to define a large shape over it and then [```fill```](#fill) the shape with a color. This can clear the canvas, but it cannot erase it to transparent. The command ```clear``` is the only way to clear the canvas to transparent. 
+In some cases, it is easier to redraw the canvas from scratch. One way to clear the canvas is to define a large shape over it and then [`fill`](#fill) the shape with a color. This can clear the canvas, but it cannot erase it to transparent. The command `clear` is the only way to clear the canvas to transparent. 
 
 
 
