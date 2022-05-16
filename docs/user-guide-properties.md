@@ -26,7 +26,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 
 # Introduction
 
-Suica objects have properties, like size and color, that specify how they are created and how thet are shown on teh screen. All properties of Suica objects are optional. When a property is not set, Suica uses its default value. Properties can be defined in several ways:
+Suica objects have properties, like size and color, that specify how they are created and how they are shown on the screen. All properties of Suica objects are optional. When a property is not set, Suica uses its default value. Properties can be defined in several ways:
 
 ## Setting properties
 
@@ -61,7 +61,7 @@ cube( [10,30,15], 100, 'blue' );
 
 ## Multiple properties
 
-In JavaScript a group of properties can be represented as a JavaSvript object. They can be applied to an object with the `style` method.
+In JavaScript a group of properties can be represented as a JavaScript object. They can be applied to an object with the `style` method.
 
 #### Style
 ```js
@@ -168,9 +168,9 @@ p.z = 15;
 
 ## Size
 
-All objects in Suica have size. It determins the visual appearance of the object &ndash; how big or small it is. In 3D space the size is also 3D and it defines the width, height and depth of the object. When the depth of an object is not set, it is assumed to be the same as the width.
+All objects in Suica have size. It determines the visual appearance of the object &ndash; how big or small it is. In 3D space the size is also 3D and it defines the width, height and depth of the object. When the depth of an object is not set, it is assumed to be the same as the width.
 
-There are several exceptional objects: [`line`](#line) has no size; [`point`](#point) has a single size; all flat objects, like [`square`](#square), have two sizes &ndash; width and height, but no depth; [`group`](#group)uses its size as a scale factor, not as an actual size.  
+There are several exceptional objects: [`line`](#line) has no size; [`point`](#point) has a single size; all flat objects, like [`square`](#square), have two sizes &ndash; width and height, but no depth; [`group`](#group) uses its size as a scale factor, not as an actual size.  
 
 
 #### size
@@ -185,7 +185,7 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.size = 𝑤𝑖𝑑𝑡ℎ;
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ];
 ```
-Property. The size of a Suica object. Property `size` that defines how big is the objects along its dimensions. If `size` is a single number, then the object is uniformly sized. Generally, `size` is an array of at leat one and up to three numbers for object's width, height and depth. Their order does not depend on the orientation of [the coordinate system](#coordinate-system). Thus height corresponds to the axis that is upwards.
+Property. The size of a Suica object. Property `size` that defines how big is the objects along its dimensions. If `size` is a single number, then the object is uniformly sized. Generally, `size` is an array of at least one and up to three numbers for object's width, height and depth. Their order does not depend on the orientation of [the coordinate system](#coordinate-system). Thus, height corresponds to the axis that is upwards.
 
 <img src="images/sizes.png">
 
@@ -240,7 +240,7 @@ a.depth = 40;
 
 ## Orientation
 
-The orientation of objects in Suica refers to their rotation. Similarly to positions in 3D, rotations in 3D can be represented by three numbers &ndash; rotation angles around three axes that pass through the object `center`.
+The orientation of objects in Suica refers to their rotation. Like positions in 3D, rotations in 3D can be represented by three numbers &ndash; rotation angles around three axes that pass through the object `center`.
 
 There is a significant difference between handling positions and orientations. The order of rotations is important as different order will produce different final orientation. Suica adopts one specific order, which is close to how people would describe the individual rotations.
 
@@ -462,7 +462,7 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
 ```
 
-Property. Defines whether to visualize an object as wireframe. By default objects in Suica are drawn with solid surfaces. The property `wireframe` is used to change surface visualization into wireframe mode &ndash; i.e. only edges are drawn. Values *yes* and *1* are condered `true`, values *no* and *0* are cosidered `false`. In HTML the value of `wireframe` can be omitted and this assumes it is `true`.
+Property. Defines whether to visualize an object as wireframe. By default, objects in Suica are drawn with solid surfaces. The property `wireframe` is used to change surface visualization into wireframe mode &ndash; i.e. only edges are drawn. Values *yes* and *1* are considered `true`, values *no* and *0* are considered `false`. In HTML the value of `wireframe` can be omitted and this assumes it is `true`.
 
 ```html
 HTML:
