@@ -4,7 +4,7 @@ description: [The core of Suica &ndash; from point to sphere]
 ---
 ##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; Objects &middot; [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
 
-**Suica objects** are the core functionality of Suica. They are the objects that are used to construct 3D scenes. These object are designed to provide a foundation for a diverse  
+**Suica objects** are the core functionality of Suica. They are the objects that are used to construct 3D scenes. These object are designed to provide a foundation for a diverse mobile computer graphics visualizations.
 
 # Table of contents
 
@@ -53,7 +53,7 @@ Suica keeps track of all created objects. They are created as JavaScript variabl
 #### id
 ```html
 HTML:
-<𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦 id="𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦" ...>
+<𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦 id="𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦">
 ```
 ```js
 JS:
@@ -82,11 +82,12 @@ By design Suica attempts to use the same properties for all objects as much as i
 
 ## Position
 
-All Suica objects are placed in 3D space. The position is defined by a special central point of the object. When the center is set to a given position in 3D space, the whole object is positioned there.
+All Suica objects are placed in 3D space. The position is defined by a special central point of the object. When the center is set to a given position in 3D space, the whole object is positioned there. The position of a Suica object is set by the property `center` or by individual properties for coordinates `x`, `y` and `z`.
 
 <img src="images/center.png">
 
-The position of a Suica object is set by the property `cenetr` or by individual properties for coordinates `x`, `y` and `z`.
+An exceptional object is the [`line`](#line) &ndash; it has no central point, because it is defined by two points.
+
 
 #### center
 ```html
@@ -98,7 +99,7 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝘹,𝘺,𝘻], ... );
 𝑜𝑏𝑗𝑒𝑐𝑡.center = [𝘹,𝘺,𝘻];
 ```
-Property. Defines object position in 3D space. Property `center` is an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and *z* coordinates (in this order). The actual visual position depends on the orientation of the (coordinate system](#coordinate-system). All coordinates are optional. Default values are 0.
+Property. Defines object position in 3D space. Property `center` is an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and *z* coordinates (in this order). The actual visual position depends on the orientation of the [coordinate system](#coordinate-system). All coordinates are optional. Default values are 0.
 
 ```html
 HTML:
@@ -114,19 +115,18 @@ p.center = [25, 0, 15];
 
 In JavaScript the center of many but not all objects is the first parameter.
 
-An object as be passed as a center of another object. In this case its center
-is used. 
+An object can be used as a center of another object. 
 
 ```html
 HTML:
-<cubeFrame id="a" x="-20">
-<cubeFrame id="b" x="20">
+<cube id="a" x="-20">
+<cube id="b" x="20">
 <line from="a" to="b">
 ```
 ```js
 JS:
-a = cubeFrame( [20,0,0] );
-b = cubeFrame( [-20,0,0] );
+a = cube( [20,0,0] );
+b = cube( [-20,0,0] );
 line( a, b );
 ```
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](../examples/object-as-position.html)
@@ -143,7 +143,7 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.y = 𝘺;
 𝑜𝑏𝑗𝑒𝑐𝑡.z = 𝘻;
 ```
-Properties. The individual x, y or z coordinates of the object position in 3D space.
+Properties. The individual x, y or z coordinates of the object position in 3D space. These properties provide an alternative access to object `center`.
 
 ```html
 HTML:
@@ -160,28 +160,35 @@ p.z = 15;
 
 
 
-#### Size (size, width, height, depth)
+## Size
 
-Properties. The size of a Suica object in 3D space is maintained via the
-property `size` that defines how big is the objects along its dimensions. If
-size is a single number, that the object if uniformly big. If object's size
-varies than the property is an array of three numbers for object's *width*,
-*height* and *depth*. The order *width*, *height* and *depth* is fixed and does
-not depend on the [orientation of the coordinate system](#coordinate-system).
-Thus height corresponds to the axis that is upwards.
+All objects in Suica have size. It determins the visual appearance of the object &ndash; how big or small it is. In 3D space the size is also 3D and it defines width, height and depth of the object. When the depth of an object is not set, it is assumed to be the same as the width.
+
+There are several exceptional objects: [`line`](#line) has no size; [`point`](#point) has a single size; all flat objects, like [`square`](#square), have two sizes &ndash; width and height, but no depth; [`group`](#group)uses its size as a scale factor, not as an actual size.  
+
+
+#### Size
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 size="𝑤𝑖𝑑𝑡ℎ">
+<𝑜𝑏𝑗𝑒𝑐𝑡 size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡">
+<𝑜𝑏𝑗𝑒𝑐𝑡 size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡( ..., 𝑤𝑖𝑑𝑡ℎ, ... );
+𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝑤𝑖𝑑𝑡ℎ], ... );
+𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], ... );
+𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], ... );
+𝑜𝑏𝑗𝑒𝑐𝑡.size = 𝑤𝑖𝑑𝑡ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡.size = [𝑤𝑖𝑑𝑡ℎ];
+𝑜𝑏𝑗𝑒𝑐𝑡.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡];
+𝑜𝑏𝑗𝑒𝑐𝑡.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ];
+```
+Property. The size of a Suica object. Property `size` that defines how big is the objects along its dimensions. If `size` is a single number, then the object is uniformly sized. Generally, `size` is an array of up to three numbers for object's width, height and depth. Their order does not depend on the orientation of [the coordinate system](#coordinate-system). Thus height corresponds to the axis that is upwards.
 
 <img src="images/sizes.png">
 
-Flat objects like squares and circles have no depth.
-
-_**Note <small><sup>1</sup></small>**: Omitting the depth property of a 3D object makes its depth the same
-as its width. This maintains uniform horizontal size._
-
-_**Note <small><sup>2</sup></small>**: The object [line](#line) has no size,
-width, height and depth._
-
-_**Note <small><sup>3</sup></small>**: The object [group](#group) uses size as
-a scale factor, npt as an actual size._
 
 ```html
 HTML:
@@ -191,9 +198,10 @@ HTML:
 ```
 ```js
 JS:
-cube( [0,0,0], 25 );
-cube( [0,0,0], [25,10] );
-cube( [0,0,0], [25,10,15] );
+cube( pos, 25 );
+cube( pos, [25] );
+cube( pos, [25,10] );
+cube( pos, [25,10,15] );
 ```
 
 
@@ -201,20 +209,34 @@ cube( [0,0,0], [25,10,15] );
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](../examples/sizes-orientation.html)
 
 
-Alternative access to the size is with the properties `width`, `height` and
-`depth`. 
+#### width, height, depth)
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 width="𝘸𝘪𝘥𝘵𝘩" height="𝘩𝘦𝘪𝘨𝘩𝘵" depth="𝘥𝘦𝘱𝘵𝘩">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡.width = 𝘸𝘪𝘥𝘵𝘩;
+𝑜𝑏𝑗𝑒𝑐𝑡.height = 𝘩𝘦𝘪𝘨𝘩𝘵;
+𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝘥𝘦𝘱𝘵𝘩;
+```
+Properties. The individual width, height and depth of an object. These properties provide an alternative access to object `size`. 
 
 ```html
 <cube size="3,15,40">
 <cube width="3" height="15" depth="40">
 ```
 ```js
-cube( [0,0,0], [3,15,40] );
-a = cube( [0,0,0] );
+cube( pos, [3,15,40] );
+a = cube( );
 a.width = 3;
 a.height = 15;
 a.depth = 40;
 ```
+
+
+
+
 
 #### Spin
 
