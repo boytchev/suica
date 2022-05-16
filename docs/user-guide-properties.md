@@ -445,7 +445,13 @@ a.images = [2,3];
 
 
 
-#### Wireframe
+## Wire-frame
+
+A [wire-frame model](https://en.wikipedia.org/wiki/Wire-frame_model) is an object which is visualized with lines. These lines are most often edges of the object's shape. Suica implements wire-frame models as a mode &ndash; i.e. an object can be switched to wire-frame mode with the `wireframe` property.
+
+Only objects with edges have wireframe mode &ndash; [`square`](user-guide-objects.md#square), [`circle`](user-guide-objects.md#circle), [`polygon`](user-guide-objects.md#polygon), [`cube`](user-guide-objects.md#cube), [`prism`](user-guide-objects.md#prism) and [`pyramid`](user-guide-objects.md#pyramid).
+
+#### wireframe
 ```html
 HTML:
 <𝑜𝑏𝑗𝑒𝑐𝑡 wireframe>
@@ -468,15 +474,6 @@ JS:
 a = cube( [0,0,0], 30);
 a.wireframe = true;
 ```
-
-Only objects with edges have wireframe mode &ndash; [`square`](user-guide-objects.md#square), [`circle`](user-guide-objects.md#circle), [`polygon`](user-guide-objects.md#polygon), [`cube`](user-guide-objects.md#cube), [`prism`](user-guide-objects.md#prism) and [`pyramid`](user-guide-objects.md#pyramid).
-
-
-
-
-
-
-
 
 
 ---
