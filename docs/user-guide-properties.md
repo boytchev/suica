@@ -8,6 +8,9 @@ By design Suica attempts to use the same properties for all objects as much as i
 
 # Table of contents
 
+- [Introduction](#introduction)
+	- <small>[Setting properties](#setting-properties)</small>
+	- <small>[Multiple properties](#multiple-properties): [`style`](#style)</small>
 - [Geometrical properties](#geometrical-properties)
 	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
@@ -15,10 +18,67 @@ By design Suica attempts to use the same properties for all objects as much as i
 - [Material properties](#material-properties)
 	- <small>[Color](#color): [`color`](#color)</small>
 	- <small>[Texture](#texture): [`image`](#image), [`images`](#images)</small>
-- [Other properties](#other-properties)
 	- <small>[Wire-frame](#wire-frame): [`wireframe`](#wireframe-1)</small>
-	- <small>[Style](#style): [`style`](#style-1)</small>
 
+
+
+
+
+# Introduction
+
+Suica objects have properties, like size and color, that specify how they are created and how thet are shown on teh screen. All properties of Suica objects are optional. When a property is not set, Suica uses its default value. Properties can be defined in several ways:
+
+## Setting properties
+
+In HTML all properties are set as tag attributes. The names of the properties are case-insensitive. The order of attributes is arbitrary. A property set in HTML cannot be changed with another HTML tag.
+```html
+HTML:
+<cube center="20,0,5" color="crimson">
+<cube color="blue" center="10,30,15">
+```
+
+In JavaScript all properties are set as properties of JavaScript objects, i.e. using the dot notation. The order of setting properties is arbitrary. The names of the properties are case-sensitive.
+```js
+JS:
+a = cube();
+a.center = [20,0,5];
+a.color = 'crimson';
+b = cube();
+b.color = 'blue';
+b.center = [10,30,15];
+```
+
+Some properties are use so often, that they are included as parameters of the functions that create objects. In this case the names of the properties are not used, but the order of parameters is fixed. Only the trailing parameters can be omitted.
+
+In the next example the value 100 is the `size` of the cube. It is included in the code, because the creation  of a cube is done with function [`cube(𝘤𝘦𝘯𝘵𝘦𝘳,𝑠𝑖𝑧𝑒,𝑐𝑜𝑙𝑜𝑟)`](user-guide-objects.md#cube).
+
+```js
+JS:
+cube( [20,0,5], 100, 'crimson' );
+cube( [10,30,15], 100, 'blue' );
+```
+
+
+## Multiple properties
+
+In JavaScript a group of properties can be represented as a JavaSvript object. They can be applied to an object with the `style` method.
+
+#### Style
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
+```
+Method. Sets a group of properties of an object. The properties are defined as a set of *name:value* pairs. New, custom user-defined properties are allowed. As `style` returns the same object, styling can be chained.
+
+```js
+JS:
+sphere().style( {x:15, size:20, color:'peachpuff'} );
+sphere().style( {x:15} ).style( {size:20} ).style( {color:'peachpuff'} );
+```
+
+[<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](../examples/style.html)
+
+`style` can also be used as function [`style`](user-guide-suica.md#style).
 
 
 
@@ -296,36 +356,6 @@ Setting the `color` of a [group](#group) sets it to all its objects.
 
 
 
-
-## Other properties
-
-#### Wireframe
-```html
-HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe>
-<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
-```
-```js
-JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
-```
-
-Property. Defines whether to visualize an object as wireframe. By default objects in Suica are drawn with solid surfaces. The property `wireframe` is used to change surface visualization into wireframe mode &ndash; i.e. only edges are drawn. Values *yes* and *1* are condered `true`, values *no* and *0* are cosidered `false`. In HTML the value of `wireframe` can be omitted and this assumes it is `true`.
-
-```html
-HTML:
-<cube size="30" wireframe>
-<cube size="30" wireframe="true">
-```
-```js
-JS:
-a = cube( [0,0,0], 30);
-a.wireframe = true;
-```
-
-Only objects with edges have wireframe mode &ndash; [`square`](user-guide-objects.md#square), [`circle`](user-guide-objects.md#circle), [`polygon`](user-guide-objects.md#polygon), [`cube`](user-guide-objects.md#cube), [`prism`](user-guide-objects.md#prism) and [`pyramid`](user-guide-objects.md#pyramid).
-
-
 #### Image
 
 Property. Decorates object surface with an image. Images can be stamped onto
@@ -403,45 +433,40 @@ a.images = [2,3];
 [<kbd><img src="../examples/snapshots/images.jpg" width="300"></kbd>](../examples/images.html)
 
 
-#### Clone
 
-Readonly property. Generates a clone of the object. Whenever the value of `clone`
-is retrieved, it is a clone of the object. Cloning is used to generate objects
-from a single object-template.
+
+#### Wireframe
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe>
+<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
+```
+
+Property. Defines whether to visualize an object as wireframe. By default objects in Suica are drawn with solid surfaces. The property `wireframe` is used to change surface visualization into wireframe mode &ndash; i.e. only edges are drawn. Values *yes* and *1* are condered `true`, values *no* and *0* are cosidered `false`. In HTML the value of `wireframe` can be omitted and this assumes it is `true`.
 
 ```html
 HTML:
-<cube id="a" size="15">
-<clone id="b" src="a">
+<cube size="30" wireframe>
+<cube size="30" wireframe="true">
 ```
 ```js
 JS:
-a = cube( [0,0,0], 25 );
-b = a.clone;
+a = cube( [0,0,0], 30);
+a.wireframe = true;
 ```
 
-[<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](../examples/clone.html)
-[<kbd><img src="../examples/snapshots/clone-tag.jpg" width="300"></kbd>](../examples/clone-tag.html)
-
-_**Note**: Cloning an object [group](#group) also clones all its objects._
+Only objects with edges have wireframe mode &ndash; [`square`](user-guide-objects.md#square), [`circle`](user-guide-objects.md#circle), [`polygon`](user-guide-objects.md#polygon), [`cube`](user-guide-objects.md#cube), [`prism`](user-guide-objects.md#prism) and [`pyramid`](user-guide-objects.md#pyramid).
 
 
 
-#### Style
 
-Method. Sets a group of properties of an object. The properties are defined as a
-set of *name:value* pairs. New, custom user-defined properties are allowed. 
-As `style` return the same object, styling can be chained.
 
-```js
-JS:
-sphere().style( {x:15, size:20, color:'peachpuff'} );
-sphere().style( {x:15} ).style( {size:20} ).style( {color:'peachpuff'} );
-```
 
-[<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](../examples/style.html)
 
-_**Note**. Style can also be used as a [function](#style-1)._
 
 
 ---

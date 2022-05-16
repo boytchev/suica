@@ -480,6 +480,31 @@ suica.ontime = function( t )
 
 [<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="300"></kbd>](../examples/tube-dynamic.html)
 
+
+#### Clone
+
+Readonly property. Generates a clone of the object. Whenever the value of `clone`
+is retrieved, it is a clone of the object. Cloning is used to generate objects
+from a single object-template.
+
+```html
+HTML:
+<cube id="a" size="15">
+<clone id="b" src="a">
+```
+```js
+JS:
+a = cube( [0,0,0], 25 );
+b = a.clone;
+```
+
+[<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](../examples/clone.html)
+[<kbd><img src="../examples/snapshots/clone-tag.jpg" width="300"></kbd>](../examples/clone-tag.html)
+
+_**Note**: Cloning an object [group](#group) also clones all its objects._
+
+
+
 ---
 
 May, 2022
