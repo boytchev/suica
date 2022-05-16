@@ -8,13 +8,14 @@ By design Suica attempts to use the same properties for all objects as much as i
 
 # Table of contents
 
-- [Spatial properties](#spatial-properties)
+- [Geometrical properties](#geometrical-properties)
 	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint)</small>
-- [Artistic properties](#artistic-properties)
+- [Material properties](#material-properties)
 	- <small>[Color](#color): [`color`](#color)</small>
 	- <small>[Texture](#texture): [`image`](#image), [`images`](#images)</small>
+- [Other properties](#other-properties)
 	- <small>[Wire-frame](#wire-frame): [`wireframe`](#wireframe-1)</small>
 	- <small>[Style](#style): [`style`](#style-1)</small>
 
@@ -22,9 +23,9 @@ By design Suica attempts to use the same properties for all objects as much as i
 
 
 
-# Spatial properties
+# Geometrical properties
 
-The spatial properties of Suica objects define their relation with the 3D space &ndash; i.e. their position, size and orientation. These three properties correspond to the fundamental geometrical transformations: [translation](https://en.wikipedia.org/wiki/Translation_(geometry)), [scaling](https://en.wikipedia.org/wiki/Scaling_(geometry)) and [rotation](https://en.wikipedia.org/wiki/Rotation_(mathematics)).
+The geometrical properties of Suica objects define their relation with the 3D space &ndash; i.e. their position, size and orientation. These three properties correspond to the fundamental geometrical transformations: [translation](https://en.wikipedia.org/wiki/Translation_(geometry)), [scaling](https://en.wikipedia.org/wiki/Scaling_(geometry)) and [rotation](https://en.wikipedia.org/wiki/Rotation_(mathematics)).
 
 
 ## Position
@@ -44,7 +45,7 @@ HTML:
 ```js
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝘹,𝘺,𝘻], ... );
-𝑜𝑏𝑗𝑒𝑐𝑡.center = [𝘹,𝘺,𝘻];
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.center = [𝘹,𝘺,𝘻];
 ```
 Property. Defines object position in 3D space. Property `center` is an array of three numbers [`x`, `y`, `z`] for the x, y and z coordinates (in this order). The actual visual position depends on the orientation of the [coordinate system](#coordinate-system). All coordinates are optional. Default values are 0.
 
@@ -84,9 +85,9 @@ HTML:
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡.x = 𝘹;
-𝑜𝑏𝑗𝑒𝑐𝑡.y = 𝘺;
-𝑜𝑏𝑗𝑒𝑐𝑡.z = 𝘻;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.x = 𝘹;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.y = 𝘺;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.z = 𝘻;
 ```
 Properties. The individual x, y or z coordinates of the object position in 3D space. These properties provide an alternative access to object `center`. They are often use to modify one of the coordinates keeping the other two unchanged.
 
@@ -121,8 +122,8 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡( ..., 𝑤𝑖𝑑𝑡ℎ, ... );
 𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], ... );
-𝑜𝑏𝑗𝑒𝑐𝑡.size = 𝑤𝑖𝑑𝑡ℎ;
-𝑜𝑏𝑗𝑒𝑐𝑡.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ];
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.size = 𝑤𝑖𝑑𝑡ℎ;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ];
 ```
 Property. The size of a Suica object. Property `size` that defines how big is the objects along its dimensions. If `size` is a single number, then the object is uniformly sized. Generally, `size` is an array of at leat one and up to three numbers for object's width, height and depth. Their order does not depend on the orientation of [the coordinate system](#coordinate-system). Thus height corresponds to the axis that is upwards.
 
@@ -155,9 +156,9 @@ HTML:
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡.width = 𝘸𝘪𝘥𝘵𝘩;
-𝑜𝑏𝑗𝑒𝑐𝑡.height = 𝘩𝘦𝘪𝘨𝘩𝘵;
-𝑜𝑏𝑗𝑒𝑐𝑡.depth = 𝘥𝘦𝘱𝘵𝘩;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.width = 𝘸𝘪𝘥𝘵𝘩;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.height = 𝘩𝘦𝘪𝘨𝘩𝘵;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.depth = 𝘥𝘦𝘱𝘵𝘩;
 ```
 Properties. The individual width, height and depth of an object. These properties provide an alternative access to object `size`. 
 
@@ -185,6 +186,10 @@ There is a significant difference between handling positions and orientations. T
 
 The property for orientation is `spin`. Individual rotations are in properties `spinH`, `spinV` and `spinT`.
 
+Angle `spinH` (*H* from *horizontal*) defines horizontal rotation around the global vertical axis. Angle `spinV` (*V* from *vertical*) define vertical rotation away from the vertical axis. Angle `spinT` (*T* from *torsion*) defines rotation of the object around it own vertical axis.
+
+<img src="images/spin.png">
+
 
 #### spin
 ```html
@@ -194,14 +199,10 @@ HTML:
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡.spin = 𝘴𝘱𝘪𝘯𝘏;
-𝑜𝑏𝑗𝑒𝑐𝑡.spin = [𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛];
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spin = 𝘴𝘱𝘪𝘯𝘏;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spin = [𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛];
 ```
 Property. Defines the rotation of an object in respect to its own axes. The value of `spin` is either an angle or an array of up to three angles [`spinH`, `spinV`, `spinT`]. All angles are measured in degrees.
-
-Angle `spinH` (*H* from *horizontal*) defines horizontal rotation around the global vertical axis. Angle `spinV` (*V* from *vertical*) define vertical rotation away from the vertical axis. Angle `spinT` (*T* from *torsion*) defines rotation of the object around it own vertical axis.
-
-<img src="images/spin.png">
 
 ```html
 HTML:
@@ -227,9 +228,9 @@ HTML:
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡.spinH = 𝘴𝘱𝘪𝘯𝘏;
-𝑜𝑏𝑗𝑒𝑐𝑡.spinV = 𝘴𝘱𝘪𝘯𝘝;
-𝑜𝑏𝑗𝑒𝑐𝑡.spinT = 𝘴𝘱𝘪𝘯𝘛;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinH = 𝘴𝘱𝘪𝘯𝘏;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinV = 𝘴𝘱𝘪𝘯𝘝;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinT = 𝘴𝘱𝘪𝘯𝘛;
 ```
 Properties. The individual rotation angles of an object. These properties provide an alternative access to object `spin`. The order of application of rotation is fixed and does not depend on the order of setting individual angles.
 
@@ -251,35 +252,65 @@ a.spinT = 180;
 
 
 
-#### Color
+# Material properties
 
-Property. Defines the color of a graphical object. Color in Suica can be
-expressed in a variety of ways. The [RGB scheme](https://www.w3schools.com/colors/colors_rgb.asp) represents colors as three
-components *red*, *green* and *blue*, while the
-[HSL scheme](https://www.w3schools.com/colors/colors_hsl.asp) components are
+The material properties of Suica objects define their visual styling, like colors and textures. These properties are used to give the feeling of object being made of specific material.
+
+
+
+
+#### color
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡( ..., 𝑐𝑜𝑙𝑜𝑟, ... );
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.color = 𝑐𝑜𝑙𝑜𝑟;
+```
+
+Property. Defines the color of a graphical object. Color in Suica can be expressed in a variety of ways. The [RGB scheme](https://www.w3schools.com/colors/colors_rgb.asp) represents colors as three components *red*, *green* and *blue*, while the [HSL scheme](https://www.w3schools.com/colors/colors_hsl.asp) components are
 *hue*, *saturation* and *lightness*.
+```js
+'𝑐𝑜𝑙𝑜𝑟𝘕𝑎𝑚𝑒'
+#𝐹𝐹𝐹𝐹𝐹𝐹                     // 000000..FFFFFF
+0x𝐹𝐹𝐹𝐹𝐹𝐹                    // 000000..FFFFFF
+'𝑟𝑒𝑑,𝑔𝑟𝑒𝑒𝑛,𝑏𝑙𝑢𝑒'             // 0..1
+[𝑟𝑒𝑑,𝑔𝑟𝑒𝑒𝑛,𝑏𝑙𝑢𝑒]             // 0..1
+rgb(𝑟𝑒𝑑,𝑔𝑟𝑒𝑒𝑛,𝑏𝑙𝑢𝑒)          // 0..255
+hsl(ℎ𝑢𝑒,𝑠𝑎𝑡𝑢𝑟𝑎𝑡𝑖𝑜𝑛,𝑙𝑖𝑔ℎ𝑡𝑛𝑒𝑠𝑠)  // 0..360, 0..100, 0..100
+```
 
+The following table elaborates how colors are set in HTML, CSS and JavaScript values.
 
 | Context | Descriptive<br>name | Hexadecimal<br>number | Normalized<br>RGB array | RGB<br>function | HSL<br>function |
 |---|:---:|:---:|:---:|:---:|:---:|
 | | <small>[List of color names](https://www.w3schools.com/colors/colors_names.asp)</small>| *RRGGBB*<br><small>*RR*,*GG*,*BB* &isin; [00,FF]</small> | *r*,*g*,*b*<br><small>*r*,*g*,*b* &isin; [0,1]</small> | rgb(*r*,*g*,*b*)<br><small>*r*,*g*,*b* &isin; [0,255] | hsl(*h*,*s*,*l*)<br><small>*h* &isin; [0,360], *s*,*l* &isin; [0,100]</small> |
-| Tag<br>attribute | [crimson](https://www.color-name.com/crimson.color) | 0xDC143C | 0.86,&nbsp;0.08,&nbsp;0.24 | rgb(&nbsp;220,&nbsp;20,&nbsp;60&nbsp;) | hsl(&nbsp;348,&nbsp;91,&nbsp;86&nbsp;) |
-| CSS<br>property | crimson | #DC143C | | rgb( 220, 20, 60 ) | hsl( 348, 91, 86 ) |
-| JS<br>code | "crimson" | 0xDC143C | [0.86,&nbsp;0.08,&nbsp;0.24] | rgb(&nbsp;220,&nbsp;20,&nbsp;60) | hsl(&nbsp;348,&nbsp;91,&nbsp;86) |
+| Tag<br>attribute | <small>[crimson](https://www.color-name.com/crimson.color)</small> | <small>0xDC143C</small> | <small>0.86,&nbsp;0.08,&nbsp;0.24</small> | <small>rgb(&nbsp;220,&nbsp;20,&nbsp;60&nbsp;)</small> | <small>hsl(&nbsp;348,&nbsp;91,&nbsp;86&nbsp;)</small> |
+| CSS<br>property | <small>crimson</small> | <small>#DC143C</small> | | <small>rgb( 220, 20, 60 )</small> | <small>hsl( 348, 91, 86 )</small> |
+| JS<br>code | <small>"crimson"</small> | <small>0xDC143C</small> | <small>[0.86,&nbsp;0.08,&nbsp;0.24]</small> | <small>rgb(&nbsp;220,&nbsp;20,&nbsp;60)</small> | <small>hsl(&nbsp;348,&nbsp;91,&nbsp;86&nbsp;)</small> |
 
-_**Note**: Setting the color of object [group](#group) sets it to all its objects._
+Setting the `color` of a [group](#group) sets it to all its objects.
 
+
+
+
+
+## Other properties
 
 #### Wireframe
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe>
+<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
+```
 
-Property. Defines whether to visualize objects as wireframes. By default objects
-in Suica are drawn with solid surfaces. The property `wireframe` is used to
-change switch surface visualization into wireframe mode &ndash; i.e. only edges
-are drawn.
-
-To turn on wireframe mode set the property to `true`, `yes` or `1`. When used as
-HTML attributes, the value may be omitted. To turn off wireframe mode set the
-property to `false`, `no` or `0`.
+Property. Defines whether to visualize an object as wireframe. By default objects in Suica are drawn with solid surfaces. The property `wireframe` is used to change surface visualization into wireframe mode &ndash; i.e. only edges are drawn. Values *yes* and *1* are condered `true`, values *no* and *0* are cosidered `false`. In HTML the value of `wireframe` can be omitted and this assumes it is `true`.
 
 ```html
 HTML:
@@ -292,7 +323,7 @@ a = cube( [0,0,0], 30);
 a.wireframe = true;
 ```
 
-_**Note**. Not all objects have wireframe mode._
+Only objects with edges have wireframe mode &ndash; [`square`](user-guide-objects.md#square), [`circle`](user-guide-objects.md#circle), [`polygon`](user-guide-objects.md#polygon), [`cube`](user-guide-objects.md#cube), [`prism`](user-guide-objects.md#prism) and [`pyramid`](user-guide-objects.md#pyramid).
 
 
 #### Image
