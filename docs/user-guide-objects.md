@@ -9,8 +9,9 @@ description: [The core of Suica &ndash; from point to sphere]
 # Table of contents
 
 - [Creating an object](#creating-an-object)
+	-  <small>[Objects and variables](#objects-and-variables): [`id`](#id)</small>
 - [Object properties](#object-properties)
-	- <small>[Position](#position): [`center`](#center), [`x`](#x), [`y`](#y), [`z`](#z)</small>
+	- <small>[Position](#position): [`center`](#center), [`x`](#xyz), [`y`](#xyz), [`z`](#xyz)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width), [`height`](#height), [`depth`](#depth)</small>
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinH), [`spinV`](#spinV), [`spinT`](#spinT), </small>
 	- <small>[Decoration](#decoration): [`color`](#color), [`image`](#image), [`images`](#images), [`wireframe`](#wireframe), [`style`](#style)</small>
@@ -21,29 +22,45 @@ description: [The core of Suica &ndash; from point to sphere]
 	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube)</small>
 
 
-## Objects
-
-This section describes the graphical objects in Suica.
 
 
-### Definition
 
-In Suica object may be created as HTML tag or via JavaScript function. Each
-object has properties, however, they are all optional. In HTML the properties
-are provided as tag attributes in no specific order. In JavaScript the
-properties are provided as function parameters and the order is fixed.
+## Creating an object
+
+In Suica object may be created as HTML tag or via JavaScript function. Each object has properties, however, they are all optional. In HTML the properties are provided as tag attributes in no specific order. In JavaScript the properties are provided as function parameters and the order is fixed.
 
 ```html
 HTML:
-<object attribute1="value1" properties2="value2" ...>
+<𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" ...>
 ```
 ```js
 JS:
-object( value1, value2, ... );
+𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦( 𝘷𝘢𝘭𝘶𝘦, 𝘷𝘢𝘭𝘶𝘦, ...);
 ```
 
-Objects with names are created as JavaScript variables. In HTML the name is
-taken from the `id` attribute. 
+The following examples show the same 3D scene created in HTML and in JavaScript.
+
+[<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](../examples/object-html.html)
+[<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](../examples/object-js.html)
+
+Most Suica objects share the same basic properties for [position](#position), [orientation](#orientation),
+[size](#size), [color](#color) and so on. Some objects have specific properties. Properties related to events are described in chapter [Suica events](user-guide-events).
+
+### Objects and variables
+
+Suica keeps track of all created objects. They are created as JavaScript variables and stored in an internal Suica list of objects. When an object is created with a name, this object is also created as a global JavaScript variable. This allows to reuse or to reference the object later on.
+
+#### id
+```html
+HTML:
+<𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦 id="𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦" ...>
+```
+```js
+JS:
+𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦 = 𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦( ... );
+```
+
+In HTML the name of an object is set in the `id` attribute. In JavaScript the name of an object is set by using the JavaScript way of creating variable.
 
 ```html
 HTML:
@@ -54,22 +71,34 @@ JS:
 p = point( [25,0,15] );
 ```
 
-[<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](../examples/object-html.html)
-[<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](../examples/object-js.html)
-
-Most Suica objects share the same basic properties, like position, orientation,
-size, color and so on. Some objects have specific properties.
-
-Properties related to events are described in section [Events](#events).
 
 
-#### Position (center, x, y, z)
 
-Properties. Define the position of a Suica object in 3D space. Propery `center`
-is an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and *z*
-coordinates (in this order). The actual visual position depends on the
-orientation of the (coordinate system](#coordinate-system). All coordinates are
-optional. Default values are 0.
+
+
+# Object properties
+
+By design Suica attempts to use the same properties for all objects as much as it is reasonable. This section describes the properties that are common to many obects. 
+
+## Position
+
+All Suica objects are placed in 3D space. The position is defined by a special central point of the object. When the center is set to a given position in 3D space, the whole object is positioned there.
+
+<img src="images/center.png">
+
+The position of a Suica object is set by the property `cenetr` or by individual properties for coordinates `x`, `y` and `z`.
+
+#### center
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 center="𝘹,𝘺,𝘻">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝘹,𝘺,𝘻], ... );
+𝑜𝑏𝑗𝑒𝑐𝑡.center = [𝘹,𝘺,𝘻];
+```
+Property. Defines object position in 3D space. Property `center` is an array of three numbers [*x*, *y*, *z*] for the *x*, *y* and *z* coordinates (in this order). The actual visual position depends on the orientation of the (coordinate system](#coordinate-system). All coordinates are optional. Default values are 0.
 
 ```html
 HTML:
@@ -83,21 +112,7 @@ p = point( );
 p.center = [25, 0, 15];
 ```
 
-There are alternative properties `x`, `y` and `z` that provide individual access
-to the elements of the position. 
-
-```html
-HTML:
-<point x="25">
-```
-```js
-JS:
-p = point( );
-p.x = 25;
-```
-
-_**Note**: The object [line](#line) is an exception. It has `from` as synonym of
-`center`, and it has no `x`, `y` and `z`._
+In JavaScript the center of many but not all objects is the first parameter.
 
 An object as be passed as a center of another object. In this case its center
 is used. 
@@ -115,6 +130,35 @@ b = cubeFrame( [-20,0,0] );
 line( a, b );
 ```
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](../examples/object-as-position.html)
+
+
+#### x, y, z
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 x="𝘹" y="𝘺" z="𝘻">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡.x = 𝘹;
+𝑜𝑏𝑗𝑒𝑐𝑡.y = 𝘺;
+𝑜𝑏𝑗𝑒𝑐𝑡.z = 𝘻;
+```
+Properties. The individual x, y or z coordinates of the object position in 3D space.
+
+```html
+HTML:
+<point x="25" y="10" z="15">
+```
+```js
+JS:
+p = point( );
+p.x = 25;
+p.y = 10;
+p.z = 15;
+```
+
+
+
 
 #### Size (size, width, height, depth)
 
