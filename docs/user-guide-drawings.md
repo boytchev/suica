@@ -2,7 +2,7 @@
 title: Suica Drawings
 description: [Drawings that could be applied onto objects]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; **Drawings** &middot; [Events](user-guide-events.md) &middot; [References](#references)
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; [Properties](user-guide-properties.md) &middot; **Drawings** &middot; [Events](user-guide-events.md) &middot; [References](#references)
 
 **Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are applied onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 

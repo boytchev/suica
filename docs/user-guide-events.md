@@ -2,7 +2,7 @@
 title: Suica Events
 description: [Things that help making interactive programs]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; [Drawings](user-guide-drawings.md) &middot; **Events** &middot; [References](#references)
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; [Properties](user-guide-properties.md) &middot; [Drawings](user-guide-drawings.md) &middot; **Events** &middot; [References](#references)
 
 **Suica events** are actions that happen 'outside' a Suica program and it is impossible to predict when they will happen. A typical example of an event is when users click on Suica objects.
 
