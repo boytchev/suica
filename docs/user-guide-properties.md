@@ -173,7 +173,7 @@ All objects in Suica have size. It determins the visual appearance of the object
 There are several exceptional objects: [`line`](#line) has no size; [`point`](#point) has a single size; all flat objects, like [`square`](#square), have two sizes &ndash; width and height, but no depth; [`group`](#group)uses its size as a scale factor, not as an actual size.  
 
 
-#### Size
+#### size
 ```html
 HTML:
 <𝑜𝑏𝑗𝑒𝑐𝑡 size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
@@ -355,13 +355,23 @@ Setting the `color` of a [group](#group) sets it to all its objects.
 
 
 
+## Texture
 
-#### Image
+[Textures](https://en.wikipedia.org/wiki/Texture_mapping) are 2D images that are applied onto 2D and 3D objects. Textures are generally used to decorate objects with visual details. Suica supports two sources for textures &ndash; external image files and [drawings](#user-guide-drawings.md) generated with Suica. The properties that implement textures in Suica are `image` and `images`.
 
-Property. Decorates object surface with an image. Images can be stamped onto
-Suica object via the property `image`. The property accepts a drawing or a
-texture image. For more information of how to generate a drawing instead of
-loading an image file see section [Drawings](#drawings). 
+#### image
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔">
+<𝑜𝑏𝑗𝑒𝑐𝑡 image="𝑢𝑟𝑙">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = 𝑖𝑚𝑎𝑔𝑒;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = '𝑢𝑟𝑙';
+```
+Property. Decorates object surface with an image. Images can be stamped onto Suica object via the property `image`. The property accepts a drawing or a texture image. For examples of how to use drawings see chapter [Drawings](user-guide-drawings.md). 
 
 ```html
 HTML:
@@ -377,11 +387,8 @@ a.image = image( 'https://boytchev.github.io/suica/textures/flower.jpg' );
 [<kbd><img src="../examples/snapshots/image-datauri.jpg" width="300"></kbd>](../examples/image-datauri.html)
 
 
-When an object has both `color` and `image`, the resulting color is the product
-of the RGB normalized colors (i.e. components r,g,b&isin;[0,1]) of the color and
-the image pixels. If the object color is [R,G,B] and the image color is [r,g,b],
-then the combined color is [R,G,B]&times;[r,g,b] = [R&times;r,G&times;g,B&times;b].
-The following tabel shows some combinations of colors:
+When an object has both `color` and `image`, the resulting color is the product of the RGB normalized colors (i.e. components r,g,b&isin;[0,1]) of the color and the image pixels. If the object color is [R,G,B] and the image color is [r,g,b], then the combined color is [R,G,B]&times;[r,g,b] = [R&times;r,G&times;g,B&times;b].
+The following table shows some combinations of colors:
 
 | Object color | Image color | Resulting color |
 |---|---|---|
@@ -392,11 +399,7 @@ The following tabel shows some combinations of colors:
 | Red<br><small>[R,0,0]</small> | Any<br><small>[r,g,b]</small> | Only the red component of the image color<br><small>[1,0,0]&times;[r,g,b] = [r,0,0]</small> |
 | Yellow<br><small>[1,1,0]</small> | Cyan<br><small>[0,1,1]</small> | Green<br><small>[1,1,0]&times;[0,1,1] = [0,1,0]</small> |
 
-Due to a security mechanism in browsers &ndash; [Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
-(SOP) and [Cross-origin resource sharing](https://developer.mozilla.org/en-US/docs/Glossary/CORS) (CORS),
-a file can be used as image only if it is located in the same online domain;
-or the image host allows cross-origin requests. An image file can be used in
-these cases:
+Due to a security mechanism in browsers &ndash; [Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) (SOP) and [Cross-origin resource sharing](https://developer.mozilla.org/en-US/docs/Glossary/CORS) (CORS), a file can be used as image only if it is located in the same online domain; or the image host allows cross-origin requests. An image file can be used in these cases:
 
 - the image file is in the same domain as the Suica file and is accessed by
 `http://` or `https://` protocols
@@ -406,16 +409,23 @@ these cases:
 - CORS is disabled in the browser configuration (not recommended)
 - an old SOP-less and CORS-less browser is used (not recommended)
 
-For online tools to generate Data URI from images see section
-[External libraries](#external-libraries).
 
-#### Images
 
+
+
+#### images
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 images="𝘤𝘰𝘶𝘯𝘵">
+<𝑜𝑏𝑗𝑒𝑐𝑡 images="𝘤𝘰𝘶𝘯𝘵𝘟,𝘤𝘰𝘶𝘯𝘵𝘠">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.images = 𝘤𝘰𝘶𝘯𝘵;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.images = [𝘤𝘰𝘶𝘯𝘵𝘟, 𝘤𝘰𝘶𝘯𝘵𝘠];
+```
 Property. Defines the number of copies of a drawing or image across the surface
-of an object. For more information of how to generate a drawing or use an image
-see section [Drawings](#idrawings).
-
-If the value of *images* is a number, it defines the number of copies in both
+of an object. If the value of *images* is a number, it defines the number of copies in both
 horizontal and vertical direction. If the value is an array, the first element
 if for the horizontal direction and the second is for the vertical direction.
 
