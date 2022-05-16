@@ -11,8 +11,8 @@ description: [The core of Suica &ndash; from point to sphere]
 - [Creating an object](#creating-an-object)
 	-  <small>[Objects and variables](#objects-and-variables): [`id`](#id)</small>
 - [Object properties](#object-properties)
-	- <small>[Position](#position): [`center`](#center), [`x`](#xyz), [`y`](#xyz), [`z`](#xyz)</small>
-	- <small>[Size](#size): [`size`](#size-1), [`width`](#width), [`height`](#height), [`depth`](#depth)</small>
+	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z)</small>
+	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinH), [`spinV`](#spinV), [`spinT`](#spinT), </small>
 	- <small>[Decoration](#decoration): [`color`](#color), [`image`](#image), [`images`](#images), [`wireframe`](#wireframe), [`style`](#style)</small>
 - [Objects](#objects)
