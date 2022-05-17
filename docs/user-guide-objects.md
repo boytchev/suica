@@ -394,15 +394,56 @@ pyramid( 3, [0,0,0], 10, 'crimson' );
 
 # Advanced objects
 
-The advanced objects are constructed from other objects. They provide more complex shapes.
+The advanced objects are constructed from other objects. They provide either a way to create more complex shapes, or a way to create objects in a different way.
 
 
-## Group
+#### clone
+```html
+HTML:
+<clone id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝑡𝑒𝑚𝑝𝑙𝑎𝑡𝑒𝑂𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧"
+       size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟" spin="𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑡𝑒𝑚𝑝𝑙𝑎𝑡𝑒𝑂𝑏𝑗𝑒𝑐𝑡.clone;
+```
+Object and readonly property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](user-guide-properties.md#center), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color) and [`spin`](user-guide-properties.md#spin). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
+```html
+HTML:
+<cube id="a" size="15">
+<clone id="b" src="a">
+```
 
-Object. Represents a collection of objects grouped into a single object. A group
-can be positioned, scaled, rotated and colored as other objects. Its properties
-are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color`, `spin` and `clone`; it has method `add`.
+In JavaScript `clone` is a readonly property. When it is read, it creates a clone of the object.
+```js
+JS:
+a = cube( [0,0,0], 25 );
+b = a.clone;
+```
+
+[<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](../examples/clone.html)
+[<kbd><img src="../examples/snapshots/clone-tag.jpg" width="300"></kbd>](../examples/clone-tag.html)
+
+Cloning a [group](#group) also clones all its objects.
+
+
+
+
+#### group
+```html
+HTML:
+<group id="𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟" spin="𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛">
+   <𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵 ...>
+   <𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵 ...>
+   :
+</group>
+```
+```js
+JS:
+𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵 = group( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
+𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵.add( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
+```
+Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](user-guide-properties.md#center), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) and [`clone`](user-guide-properties.md#clone). The child objects are defined as tags withing the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
 
 ```html
 HTML:
@@ -423,28 +464,29 @@ group(
 [<kbd><img src="../examples/snapshots/group-tag.jpg" width="300"></kbd>](../examples/group-tag.html)
 
 A group is a special objects, and some aspects of group management are:
-- A group has own center, size and spin. Values of `size` of a group are scale
-factors, not sizes. Centers and spins of objects in a group are relative to the
-group's center and spin.
-- Group objects are defined between `<group>` and `</group>` tags or as
-parameters to `group(...)`. A group can be extended with new objects with
-`add(...)`.
-- Cloning a group will also clone all its objects, setting `color` of a group
-sets it to all its objects overwriting their individual colors.
+- A group has own [`center`](user-guide-properties.md#center), [`size`](user-guide-properties.md#size) and [`spin`](user-guide-properties.md#spin). Values of `size` of a group are scale factors, not sizes. Centers and spins of objects in a group are relative to the group's `center` and `spin`.
+- A group can be extended with new objects with the method `add`.
+- Cloning a group will also clone all its objects, setting `color` of a group sets it to all its objects overwriting their individual colors.
 
 
 
-### Tube
+#### tube
+```html
+HTML:
+<tube id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" curve="𝑐𝑢𝑟𝑣𝑒" radius="𝑟𝑎𝑑𝑖𝑢𝑠" count="𝑡𝑢𝑏𝑢𝑙𝑎𝑟,𝑟𝑎𝑑𝑖𝑎𝑙"
+      size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = tube( [𝑥,𝑦,𝑧], 𝑐𝑢𝑟𝑣𝑒, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝘤𝘰𝘶𝘯𝘵, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a tubular object along a straight or a curved line. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), `curve`, `radius`, `count`, [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<tube>` tag.
 
-Object. Represents a tubular object along a straight or a curved line. Its
-properties are `center` (or `x`, `y` and `z`), `curve`, `radius`, `count`,
-`size` (or `width`, `height` and `depth`), `color`, `spin` and `clone`. Tubes
-can also model [solids of revolution](https://en.wikipedia.org/wiki/Solid_of_revolution), also known as lathe shapes.
+Tubes can also model [solids of revolution](https://en.wikipedia.org/wiki/Solid_of_revolution), also known as lathe shapes.
 
 <img src="images/tube.png">
 
-The curve is a [spline](#spline) function but can also be an array of points or
-user-defined function *f(u)* on which spline is automatically constructed:
+Parameter `curve` is a [`spline`](yser-guide-suica.md#spline) function but can also be an array of points or user-defined function *f(u)* on which spline is automatically constructed:
 
 ```html
 HTML:
@@ -460,10 +502,7 @@ tube( [0,0,0], [[50,0,0], [-50,0,0]], 5, 2 );
 [<kbd><img src="../examples/snapshots/tube-html.jpg" width="300"></kbd>](../examples/tube-html.html)
 
 
-The `radius` of a tube is the third parameter. It is used in case there is no
-radius encoded in the spline curve itself:
-
-- if the spline points are 3D, then the *radius* parameter is used as a constant radius of the whole tube
+Parameter `radius` defines the radius of a tube. It is used in case there is no radius encoded in the spline curve itself. If the spline points are 3D, then the `radius` parameter is used as a constant radius of the whole tube
 
 ```js
 JS:
@@ -478,7 +517,7 @@ function curve3D( u )
 tube( [0,0,0], curve3D, 5 ); // radius=5, taken from tube
 ```
 
-- if the spline points are 4D, then the 4th coordinate is used as radius and the *radius* parameter is ignored
+If the spline points are 4D, then the 4th coordinate is used as radius and the `radius` parameter is ignored.
 
 ```js
 JS:
@@ -495,16 +534,11 @@ tube( [0,0,0], curve4D, 5 ); // radius=1, taken from curve4D
 ```
 
 
-The *count* parameter defines the granularity of the tube. It is either a number
-for the number of segments along the tube (i.e. tubular segments) or an array of
-two numbers for the number of tubural and radial segments. Higher number of
-segments results in smoother curve, but takes more memory space and processing
-time. By default the tubural segments are 60 and the radial segments are 20.
+Parameter `count` defines the granularity of the tube. It is either a number for the number of segments along the tube (i.e. *tubular* segments) or an array of two numbers for the number of *tubular* and *radial* segments. Higher number of segments results in a smoother curve, but it takes more memory space and processing time. By default the tubural segments are 60 and the radial segments are 20.
 
 <img src="images/tube-segments.png">
 
-The tube adheres to the other properties of splines &ndash; whether they are
-open or closed; and interpolating or approximating.
+Tubes adhere to the other properties of splines &ndash; whether they are open or closed; and interpolating or approximating.
 
 [<kbd><img src="../examples/snapshots/tube-open-closed.jpg" width="300"></kbd>](../examples/tube-open-closed.html)
 [<kbd><img src="../examples/snapshots/tube-variations.jpg" width="300"></kbd>](../examples/tube-variations.html)
@@ -512,9 +546,7 @@ open or closed; and interpolating or approximating.
 [<kbd><img src="../examples/snapshots/tube-spline.jpg" width="300"></kbd>](../examples/tube-spline.html)
 [<kbd><img src="../examples/snapshots/tube-spline-explicit.jpg" width="300"></kbd>](../examples/tube-spline-explicit.html)
 
-Tubes allow dynamic change of their curve and curve radius. This is performance
-intensive operation, as it recalculates all vertices of the tube. Recalculation
-is done whenever the *curve* or *radius* property of a tube is assigned a value.
+Tubes support dynamic change of their curve and curve radius. This is performance intensive operation, as it recalculates all vertices of the tube. Recalculation is done whenever the properties `curve` or `radius` are changed.
 
 ```js
 JS:
@@ -530,30 +562,6 @@ suica.ontime = function( t )
 [<kbd><img src="../examples/snapshots/tube-dynamic-spline-radius.jpg" width="300"></kbd>](../examples/tube-dynamic-spline-radius.html)
 
 [<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="300"></kbd>](../examples/tube-dynamic.html)
-
-
-#### Clone
-
-Readonly property. Generates a clone of the object. Whenever the value of `clone`
-is retrieved, it is a clone of the object. Cloning is used to generate objects
-from a single object-template.
-
-```html
-HTML:
-<cube id="a" size="15">
-<clone id="b" src="a">
-```
-```js
-JS:
-a = cube( [0,0,0], 25 );
-b = a.clone;
-```
-
-[<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](../examples/clone.html)
-[<kbd><img src="../examples/snapshots/clone-tag.jpg" width="300"></kbd>](../examples/clone-tag.html)
-
-_**Note**: Cloning an object [group](#group) also clones all its objects._
-
 
 
 ---
