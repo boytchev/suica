@@ -407,7 +407,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑡𝑒𝑚𝑝𝑙𝑎𝑡𝑒𝑂𝑏𝑗𝑒𝑐𝑡.clone;
 ```
-Object and readonly property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](user-guide-properties.md#center), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color) and [`spin`](user-guide-properties.md#spin). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
+Object and readonly property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color) and [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
 ```html
 HTML:
 <cube id="a" size="15">
@@ -443,7 +443,7 @@ JS:
 𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵 = group( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
 𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵.add( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
 ```
-Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](user-guide-properties.md#center), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) and [`clone`](user-guide-properties.md#clone). The child objects are defined as tags withing the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
+Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)) and [`clone`](user-guide-properties.md#clone). The child objects are defined as tags withing the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
 
 ```html
 HTML:
