@@ -4,7 +4,7 @@ description: [The core of Suica &ndash; from point to sphere]
 ---
 ##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; **Objects** &middot; [Properties](user-guide-properties.md) &middot; [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
 
-**Suica objects** are the core functionality of Suica. They are the elements that are used to construct 3D scenes. These object are designed to provide a foundation for a diverse mobile computer graphics visualizations.
+**Suica objects** are the core functionality of Suica. They are the elements that are used to construct 3D scenes. These objects are designed to provide a foundation for a diverse mobile computer graphics visualizations.
 
 # Table of contents
 
@@ -99,7 +99,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a point. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). By default a point is drawn as a small cirlce, but it can be changed with a custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<point>` tag.
+Object. Represents a point. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). By default, a point is drawn as a small circle, but it can be changed with a custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<point>` tag.
 
 ```html
 HTML:
@@ -124,7 +124,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = line( [𝑥,𝑦,𝑧], [𝑥,𝑦,𝑧], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a straight segment. Its properties are `from` (or [`center`](user-guide-properties.md#center)), `to`, [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default a line is drawn as a solid line, but it can be changed with custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<line>` tag.
+Object. Represents a straight segment. Its properties are `from` (or [`center`](user-guide-properties.md#center)), `to`, [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default, a line is drawn as a solid line, but it can be changed with custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<line>` tag.
 
 ```html
 HTML:
@@ -228,7 +228,7 @@ polygon( 5, [0,0,0], 10, 'crimson' ); // pentagon
 
 # Spatial objects
 
-The spatial objects represents common 3D geometrical shapes: [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone) and [`pyramid`](#pyramid). 
+The spatial objects represent common 3D geometrical shapes: [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone) and [`pyramid`](#pyramid). 
 
 #### cube
 ```html
@@ -407,14 +407,14 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑡𝑒𝑚𝑝𝑙𝑎𝑡𝑒𝑂𝑏𝑗𝑒𝑐𝑡.clone;
 ```
-Object and readonly property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color) and [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
+Object and read-only property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color) and [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
 ```html
 HTML:
 <cube id="a" size="15">
 <clone id="b" src="a">
 ```
 
-In JavaScript `clone` is a readonly property. When it is read, it creates a clone of the object.
+In JavaScript `clone` is a read-only property. When it is read, it creates a clone of the object.
 ```js
 JS:
 a = cube( [0,0,0], 25 );
@@ -443,7 +443,7 @@ JS:
 𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵 = group( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
 𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵.add( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
 ```
-Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)) and [`clone`](user-guide-properties.md#clone). The child objects are defined as tags withing the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
+Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)) and [`clone`](user-guide-properties.md#clone). The child objects are defined as tags within the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
 
 ```html
 HTML:
@@ -463,7 +463,7 @@ group(
 [<kbd><img src="../examples/snapshots/group.jpg" width="300"></kbd>](../examples/group.html)
 [<kbd><img src="../examples/snapshots/group-tag.jpg" width="300"></kbd>](../examples/group-tag.html)
 
-A group is a special objects, and some aspects of group management are:
+A group is a special object, and some aspects of group management are:
 - A group has own [`center`](user-guide-properties.md#center), [`size`](user-guide-properties.md#size) and [`spin`](user-guide-properties.md#spin). Values of `size` of a group are scale factors, not sizes. Centers and spins of objects in a group are relative to the group's `center` and `spin`.
 - A group can be extended with new objects with the method `add`.
 - Cloning a group will also clone all its objects, setting `color` of a group sets it to all its objects overwriting their individual colors.
@@ -534,7 +534,7 @@ tube( [0,0,0], curve4D, 5 ); // radius=1, taken from curve4D
 ```
 
 
-Parameter `count` defines the granularity of the tube. It is either a number for the number of segments along the tube (i.e. *tubular* segments) or an array of two numbers for the number of *tubular* and *radial* segments. Higher number of segments results in a smoother curve, but it takes more memory space and processing time. By default the tubural segments are 60 and the radial segments are 20.
+Parameter `count` defines the granularity of the tube. It is either a number for the number of segments along the tube (i.e. *tubular* segments) or an array of two numbers for the number of *tubular* and *radial* segments. Higher number of segments results in a smoother curve, but it takes more memory space and processing time. By default, the tubular segments are 60 and the radial segments are 20.
 
 <img src="images/tube-segments.png">
 
