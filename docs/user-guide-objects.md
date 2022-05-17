@@ -226,20 +226,20 @@ polygon( 5, [0,0,0], 10, 'crimson' ); // pentagon
 
 
 
-## Common 3D objects
+# Spatial objects
 
-The common 3D objects represents shapes, like cubes, spheres, and so on. Their
-constructions requires to set just a few properties. Some of the objects have
-framed variants, where only their edges are drawn with lines.
+The spatial objects represents common 3D geometrical shapes: [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone) and [`pyramid`](#pyramid). 
 
-_**Note:** The width of the lines is 1 pixel and this limitation is set in the
-underlying technology._
-
-### Cube
-
-Object. Represents a regular cube or a deformed cube (called *cuboid*).
-Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color`, `spin`, `wireframe`, `image`, `images` and `clone`. 
+#### cube
+```html
+HTML:
+<cube id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = cube( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a regular cube or a deformed cube (called *cuboid*). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<cube>` tag.
 
 ```html
 HTML:
@@ -257,11 +257,16 @@ cube( [0,0,0], 10, 'crimson' );
 
 
 
-### Sphere
-
-Object. Represents a regular sphere or a deformed sphere (spheroid). Its
-properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color`, `spin`, `image`, `images` and `clone`. 
+#### sphere
+```html
+HTML:
+<sphere id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = sphere( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a regular sphere or a deformed sphere (spheroid). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<sphere>` tag. 
 
 ```html
 HTML:
@@ -279,11 +284,16 @@ sphere( [0,0,0], 10, 'crimson' );
 
 
 
-### Cylinder
-
-Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder).
-Its properties are `center` (or `x`, `y` and `z`), `size` (or `width`, `height`
-and `depth`), `color`, `spin`, `image`, `images` and `clone`. 
+#### cylinder
+```html
+HTML:
+<cylinder id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = cylinder( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<cylinder>` tag.
 
 ```html
 HTML:
@@ -301,12 +311,17 @@ cylinder( [0,0,0], 10, 'crimson' );
 
 
 
-### Prism
-
+#### prism
+```html
+HTML:
+<prism id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = prism( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
 Object. Represents a regular prism or prismoid (an elliptical prism). Its
-properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color`, `spin`, `wireframe`, `image`, `images` and `clone`. The
-property `count` defines the number of sides of the prism.
+properties are `count`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The property `count` defines the number of sides of the prism. In HTML all properties can be included in the `<prism>` tag.
 
 ```html
 HTML:
@@ -323,11 +338,16 @@ prism( 3, [0,0,0], 10, 'crimson' );
 
 
 
-### Cone
-
-Object. Represents a regular cone or conoid (an elliptical cone). Its properties
-are `center` (or `x`, `y` and `z`), `size` (or `width`, `height` and `depth`),
-`color`, `spin`, `image`, `images` and `clone`. 
+#### cone
+```html
+HTML:
+<cone id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = cone( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a regular cone or conoid (an elliptical cone). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<cone>` tag.
 
 ```html
 HTML:
@@ -345,12 +365,16 @@ cone( [0,0,0], 10, 'crimson' );
 
 
 
-### Pyramid
-
-Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its
-properties are `count`, `center` (or `x`, `y` and `z`), `size` (or `width`,
-`height` and `depth`), `color`, `spin`, `wireframe`, `image`, `images` and `clone`. The
-property `count` defines the number of sides of the pyramid.
+#### pyramid
+```html
+HTML:
+<pyramid id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = pyramid( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its properties are `count`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The property `count` defines the number of sides of the pyramid. In HTML all properties can be included in the `<pyramid>` tag.
 
 ```html
 HTML:
