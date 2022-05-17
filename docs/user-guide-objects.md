@@ -2,35 +2,34 @@
 title: Suica Objects
 description: [The core of Suica &ndash; from point to sphere]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; Objects &middot; [Properties](user-guide-properties.md) [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; **Objects** &middot; [Properties](user-guide-properties.md) &middot; [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
 
-**Suica objects** are the core functionality of Suica. They are the objects that are used to construct 3D scenes. These object are designed to provide a foundation for a diverse mobile computer graphics visualizations.
+**Suica objects** are the core functionality of Suica. They are the elements that are used to construct 3D scenes. These object are designed to provide a foundation for a diverse mobile computer graphics visualizations.
 
 # Table of contents
 
 - [Creating an object](#creating-an-object)
 	-  <small>[Objects and variables](#objects-and-variables): [`id`](#id)</small>
 - [Objects](#objects)
-	- <small>[Primitive objects](#primitive-objects): [`point`](#point), [`line`](#line)</small>
-	- <small>[Flat objects](#flat-objects): [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
-	- <small>[3D objects](#3D-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
+	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
+	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
 	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube)</small>
 
 
 
 
 
-## Creating an object
+# Creating an object
 
-In Suica object may be created as HTML tag or via JavaScript function. Each object has properties, however, they are all optional. In HTML the properties are provided as tag attributes in no specific order. In JavaScript the properties are provided as function parameters and the order is fixed.
+In Suica object is created via HTML tag or via JavaScript function. Each object has properties. In HTML the properties are provided as tag attributes in no specific order. In JavaScript the properties are provided as function parameters and the order is fixed. 
 
 ```html
 HTML:
-<𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" ...>
+<𝘰𝘣𝘫𝘦𝘤𝘵 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" ...>
 ```
 ```js
 JS:
-𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦( 𝘷𝘢𝘭𝘶𝘦, 𝘷𝘢𝘭𝘶𝘦, ...);
+𝘰𝘣𝘫𝘦𝘤𝘵( 𝘷𝘢𝘭𝘶𝘦, 𝘷𝘢𝘭𝘶𝘦, ...);
 ```
 
 The following examples show the same 3D scene created in HTML and in JavaScript.
@@ -38,12 +37,11 @@ The following examples show the same 3D scene created in HTML and in JavaScript.
 [<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](../examples/object-html.html)
 [<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](../examples/object-js.html)
 
-Most Suica objects share the same basic properties for [position](#position), [orientation](#orientation),
-[size](#size), [color](#color) and so on. Some objects have specific properties. Properties related to events are described in chapter [Suica events](user-guide-events).
+Most Suica objects share the same basic properties for position, orientation, color and so on. More information about properties are in chapter [Suica properties](user-guide-properties.md). Properties related to events are described in chapter [Suica events](user-guide-events.md).
 
-### Objects and variables
+## Objects and variables
 
-Suica keeps track of all created objects. They are created as JavaScript variables and stored in an internal Suica list of objects. When an object is created with a name, this object is also created as a global JavaScript variable. This allows to reuse or to reference the object later on.
+Suica keeps track of all created objects. They are created as JavaScript variables and stored in an internal Suica list of objects [`allObjects`](user-guide-suica.md#allobjects). When an object is created with a name, this object is also created as a global JavaScript variable. This allows to reuse or to reference the object later on.
 
 #### id
 ```html
@@ -55,8 +53,9 @@ JS:
 𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦 = 𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦( ... );
 ```
 
-In HTML the name of an object is set in the `id` attribute. In JavaScript the name of an object is set by using the JavaScript way of creating variable.
+In HTML the name of an object is set in the `id` attribute. If the `id` is omitted, the object is created without a name. In JavaScript the name of an object is set by using the JavaScript way of creating variable.
 
+Examples of named objects:
 ```html
 HTML:
 <point id="p" center="25,0,15">
@@ -66,6 +65,15 @@ JS:
 p = point( [25,0,15] );
 ```
 
+Examples of anonymous objects:
+```html
+HTML:
+<point center="25,0,15">
+```
+```js
+JS:
+point( [25,0,15] );
+```
 
 
 
@@ -73,23 +81,25 @@ p = point( [25,0,15] );
 
 
 
+# Objects
 
-## Common 2D objects
+## Flat objects
 
-The common 2D objects represents flat 1D and 2D shapes, like points, squares,
-circles and so on. Their constructions requires to set just a few properties.
-Some of the objects have framed variants, where only their edges are drawn with
-lines.
+Flat objects are all objects that can exist in a plane. These objects have at most two [dimensions](https://en.wikipedia.org/wiki/Dimension). [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle) and [`polygon`](#polygon).
 
-_**Note:** The width of the lines is 1 pixel and this limitation is set in the
-underlying technology._
+
 
 
 ### Point
-
-Object. Represents a point. Its properties are `center` (or `x`, `y` and `z`),
-`size`, `color`, `image`, `images` and `clone`. By default a point is drawn as a small cirlce, but
-it can be changed with custom [drawing](#images-and-drawings).
+```html
+HTML:
+<point id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a point. Its properties are `center` (or `x`, `y` and `z`), `size`, `color`, `image`, `images` and `clone`. By default a point is drawn as a small cirlce, but it can be changed with a custom [drawing](#user-guide-drawings.md). In HTML all parameters can be included in the `<point>` tag.
 
 ```html
 HTML:

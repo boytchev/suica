@@ -2,7 +2,7 @@
 title: Suica Object Properties
 description: [The common properties of Suica objects]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; Properties &middot; [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; **Properties** &middot; [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
 
 By design Suica attempts to use the same properties for all objects as much as it is reasonable. This document describes the properties that are common to many objects. 
 
