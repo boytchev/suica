@@ -99,7 +99,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a point. Its properties are `center` (or `x`, `y` and `z`), `size`, `color`, `image`, `images` and `clone`. By default a point is drawn as a small cirlce, but it can be changed with a custom [drawing](#user-guide-drawings.md). In HTML all parameters can be included in the `<point>` tag.
+Object. Represents a point. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). By default a point is drawn as a small cirlce, but it can be changed with a custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<point>` tag.
 
 ```html
 HTML:
@@ -115,13 +115,16 @@ point( [25,0,15], 10, 'crimson' );
 [<kbd><img src="../examples/snapshots/point.jpg" width="300"></kbd>](../examples/point.html)&emsp;[<kbd><img src="../examples/snapshots/point-cloud.jpg" width="300"></kbd>](../examples/point-cloud.html)
 
 
-### Line
-
-Object. Represents a straight segment. Its properties are `center` (or `from`),
-`to`, `color`, `image`, `images` and `clone`. The properties `center` and `from` are synonyms and
-they set the starting point of the segment, while `to` sets the ending point. By
-default a line is drawn as a solid line, but it can be changed with custom
-[drawing](#images-and-drawings).
+#### line
+```html
+HTML:
+<line id="𝑜𝑏𝑗𝑒𝑐𝑡" from="𝑥,𝑦,𝑧" to="𝑥,𝑦,𝑧" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = line( [𝑥,𝑦,𝑧], [𝑥,𝑦,𝑧], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a straight segment. Its properties are `from` (or [`center`](user-guide-properties.md#center)), `to`, [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default a line is drawn as a solid line, but it can be changed with custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<line>` tag.
 
 ```html
 HTML:
@@ -136,14 +139,19 @@ point( [25,0,15], [100,-20,35], 'red' );
 
 [<kbd><img src="../examples/snapshots/line.jpg" width="300"></kbd>](../examples/line.html)
 
-_**Note**: Lines have no properties x, y, z, size, width, height and depth._
 
 
-### Square
-
+#### square
+```html
+HTML:
+<square id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.square( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
+```
 Object. Represents a regular square or a rectangle. Its properties are
-`center` (or `x`, `y` and `z`), `size` (or `width` and `height`), `color`, `spin`, 
-`wireframe`, `image`, `images` and `clone`. 
+[`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth) and [`height`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<square>` tag.
 
 ```html
 HTML:
@@ -161,11 +169,17 @@ square( [0,0,0], 10, 'crimson' );
 
 
 
-### Circle
-
-Object. Represents a circle or an ellipse. Its properties are `center` (or `x`,
-`y` and `z`), `size` (or `width` and `height`), `color`, `spin`, `wireframe`,
-`image`, `images` and `clone`. 
+#### circle
+```html
+HTML:
+<circle id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = circle( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a circle or an ellipse. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth) and [`height`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe),
+[`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<circle>` tag.
 
 ```html
 HTML:
@@ -183,12 +197,17 @@ circle( [0,0,0], 10, 'crimson' );
 
 
 
-### Polygon
-
-Object. Represents a regular polygon or an elliptical polygon. Its properties
-are `count`, `center` (or `x`, `y` and `z`), `size` (or `width` and `height`),
-`color`, `spin`, `wireframe`, `image`, `images` and `clone`. The property `count` defines
-the number of sides of the polygon.
+#### polygon
+```html
+HTML:
+<polygon id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = polygon( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a regular polygon or an elliptical polygon. Its properties are `count`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth) and [`height`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The property `count` defines
+the number of sides of the polygon. The properties `size`, `width` and `height` refer to the polygon circumscribed circle, rather than the polygon itself. In HTML all properties can be included in the `<polygon>` tag.
 
 ```html
 HTML:
@@ -203,8 +222,6 @@ polygon( 5, [0,0,0], 10, 'crimson' ); // pentagon
 
 [<kbd><img src="../examples/snapshots/polygon.jpg" width="300"></kbd>](../examples/polygon.html)
 
-_**Note:** Properties size, width and height refer to the polygon circumscribed
-circle, rather than the polygon itself._
 
 
 
