@@ -2,6 +2,10 @@
 title: Suica User Guide
 description: [A short guide through Suica features]
 ---
+##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; [Properties](user-guide-properties.md) &middot; **Drawings** &middot; [Events](user-guide-events.md) &middot; [References](#references)
+
+
+
 # Table of contents
 
 - [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
