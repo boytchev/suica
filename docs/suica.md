@@ -14,11 +14,11 @@ description: [A short guide through Suica features]
 	- <small>[TODO: Creating scenes](#creating-scenes)</small>
 	- <small>[TODO: Creating animations](#creating-animations)</small>
 - [Views and cameras](#views-and-cameras)
+    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
 	- <small>[Projections](#projections): [`perspective`](#perspective-camera) | [`orthographic`](#orthographic-camera)</small>
 	- <small>[Screen and window](#screen-and-window): [`fullScreen`](#full-screen-camera) | [`fullWindow`](#full-window-camera)</small>
 	- <small>[VR](#vr): [`stereo`](#stereo-camera), [`anaglyph`](#anaglyph-camera), [`vr`](#vr-camera)</small>
 - [Additional commands](#additional-commands)
-    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
 	- <small>[Objects and styles](#objects-and-styles): [`spline`](#spline), [`allObjects`](#allobjects)</small>
 - [TODO References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
@@ -169,11 +169,6 @@ Property and command. Turns on proactive mode for mouse motion events. These eve
 
 
 
-
-
----
-
-
 ## Creating scenes
 
 TODO
@@ -184,30 +179,30 @@ TODO
 TODO
 
 
-# Canvas features
 
 
 
 
+# Views and cameras
+
+Suica provides several commands and modes to set and control how a 3D scene is rendered on the drawing canvas.
+
+
+## View point
 
 
 
+#### oxyz
+```html
+HTML:
+<oxyz size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+oxyz( 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
+```
 
-
-
-
-### Helpers
-
-Helpers are functions that provide supplimentary functionality. They are
-supposed to aid fast prototyping.
-
-
-#### Oxyz
-
-Command. Vizualizes the coordinate system. The coordinate system is an abstract
-object and it has no graphical representation. The command `oxyz`, however,
-visualizes the system as three segments with custom size and color. By default
-the size is 30 and the color is [black](https://www.color-hex.com/color/000000).
+Command. Vizualizes the coordinate system. The coordinate system is an abstract object and it has no graphical representation. The command `oxyz` visualizes the system as three segments with custom size and color. By default `size` is 30 and `color` is [black](https://www.color-hex.com/color/000000).
 
 ```html
 HTML:
@@ -222,12 +217,16 @@ oxyz( 30, 'black' );
 
 
 
-### Demo
-
-Command. Turns on *demo mode* &ndash; atomatic scene rotation. The
-parameters define the viewpoint position as distance from the origin of the
-the coordinate system and altitude. By default the distance is 100 and the
-altitude is 30.
+#### demo
+```html
+HTML:
+<demo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" altitude="𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒">
+```
+```js
+JS:
+demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
+```
+Command. Turns on *demo mode* &ndash; atomatic scene rotation. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the the coordinate system and altitude. By default `distance` is 100 and `altitude` is 30.
 
 ```html
 HTML:
@@ -239,6 +238,57 @@ demo( 100, 30 );
 ```
 
 [<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](../examples/demo.html)
+
+
+
+
+#### lookAt
+```html
+HTML:
+<lookat from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" up="𝑢𝑝">
+```
+```js
+JS:
+lookAt( 𝑓𝑟𝑜𝑚, 𝑡𝑜, 𝑢𝑝 );
+```
+
+Command. Defines the viewing position and orientation. The command `lookAt` takes three parameters: `from` is a 3D location for the viewing position (the camera is placed there), `to` is a 3D position of the viewing target (the camera is facing it), and `up` is a vector defining the head orientation (the direction that is considered upwards). By default the target position is (0,0,0), and the up direction corresponds to the up axis of the coordinate system.
+
+```html
+HTML:
+<lookat from="100,10,50">
+<lookat from="100,10,50" to="0,0,10" up="1,0,0">
+```
+```js
+JS:
+lookAt( [100,10,50] );
+lookAt( [100,10,50], [0,0,10], [1,0,0] );
+```
+
+[<kbd><img src="../examples/snapshots/lookat.jpg" width="300"></kbd>](../examples/lookat.html)
+
+The command [`demo`](#demo) can be simulated and enriched by `lookAt` &ndash; i.e. adding dynamic change of distance and elevation to the default rotation.
+
+[<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="300"></kbd>](../examples/lookat-demo.html)
+
+
+To implement a navigation (walking or flying) in a 3D scene the viewing position must be modified in the animation loop.
+
+[<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](../examples/lookat-navigation.html)
+[<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="300"></kbd>](../examples/lookat-navigation-vr.html)
+
+
+
+
+
+
+---
+---
+---
+---
+---
+---
+
 
 
 
@@ -449,43 +499,6 @@ vr( );
 _**Note.** Currently the VR camera does not provide access to the controllers._
 
 _**Note.** VR mode is not supported in local HTML files._
-
-
-
-
-#### lookAt
-
-Command. Defines the viewing position and orientation. LookAt takes three
-parameters: *from* is a 3D location for the viewing position (i.e. the camera is
-placed there), *to* is a 3D position of the viewing target (i.e. the came is
-facing it), and *up* is a vector defining the head orientation (i.e. the
-direction that is considered upwards). By default the target position is (0,0,0)
-and the up direction corresponds to the up axis of the coordinate system.
-
-```html
-HTML:
-<lookat from="100,10,50">
-<lookat from="100,10,50" to="0,0,10" up="1,0,0">
-```
-```js
-JS:
-lookAt( [100,10,50] );
-lookAt( [100,10,50], [0,0,10], [1,0,0] );
-```
-
-[<kbd><img src="../examples/snapshots/lookat.jpg" width="300"></kbd>](../examples/lookat.html)
-
-The command [demo](#demo) can be simulated and enriched by *lookAt* &ndash; i.e.
-adding dynamic change of distance and elevation to the default rotation.
-
-[<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="300"></kbd>](../examples/lookat-demo.html)
-
-
-To implement a navigation (walking or flying) in a 3D scene the viewing position
-must be modified in the animation loop.
-
-[<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](../examples/lookat-navigation.html)
-[<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="300"></kbd>](../examples/lookat-navigation-vr.html)
 
 
 
