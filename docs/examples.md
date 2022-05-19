@@ -6,6 +6,9 @@ nav_exclude: true
 
 # <img src="../logo.min.png" height="40" style="position:relative; top:7px;"/> Suica Examples
 
+Browsers have a standard way of reaction on non-standard web pages (e.g. missing
+closing tags, unregistered custom tags, etc). This is heavily used in all Suica
+examples. Tools that validate HTML pages may complain about Suica HTML code.
 
 [About](#about) |
 [Suica](#suica-canvas) |

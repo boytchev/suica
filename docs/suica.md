@@ -2,112 +2,117 @@
 title: Suica User Guide
 description: [A short guide through Suica features]
 ---
-##### **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; **Drawings** &middot; [Events](events.md) &middot; [References](references.md)
+##### **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md) &middot; [References](references.md)
 
+**Suica is a JavaScript library** that provides a minimal, dual, optional and uniform approach to mobile 3D graphics. 
 
 
 # Table of contents
 
-- [About](#about) [<small> [Home](../README.md) | [License](../LICENSE) </small>] 
-- [Suica canvas](#suica-canvas) [<small> [&lt;suica&gt;](#tag-suica) | [background](#background) | [orientation](#orientation) | [proactive](#proactive) </small>] 
-    - [Helpers](#helpers) [<small> [oxyz](#oxyz) | [demo](#demo) | [allObjects](#allobjects) </small>]
-    - [Cameras](#cameras) [<small> [perspective](#perspective-camera) | [orthographic](#orthographic-camera) | [full screen](#full-screen-camera) | [full window](#full-window-camera)  | [stereo](#stereo-camera) | [anaglyph](#anaglyph-camera) | [vr](#vr-camera) | [lookAt](#lookat) </small>] 
-- [Functions](#functions) [<small> [radians](#radians) | [degrees](#degrees) | [random](#random) | [style](#style-1) | [spline](#spline) </small>]
-- [References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
+- [Introduction](#introduction)
+	- <small>[Drawing canvas](#drawing-canvas): [`suica`](#suica), [`background`](#background),  [`orientation`](#orientation), [`proactive`](#proactive)</small>
+	- <small>[TODO: Creating scenes](#creating-scenes)</small>
+	- <small>[TODO: Creating animations](#creating-animations)</small>
+- [Views and cameras](#views-and-cameras)
+	- <small>[Projections](#projections): [`perspective`](#perspective-camera) | [`orthographic`](#orthographic-camera)</small>
+	- <small>[Screen and window](#screen-and-window): [`fullScreen`](#full-screen-camera) | [`fullWindow`](#full-window-camera)</small>
+	- <small>[VR](#vr): [`stereo`](#stereo-camera), [`anaglyph`](#anaglyph-camera), [`vr`](#vr-camera)</small>
+- [Additional commands](#additional-commands)
+    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
+	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
+	- <small>[Objects and styles](#objects-and-styles): [`spline`](#spline), [`allObjects`](#allobjects)</small>
+- [TODO References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
 
 
-## About
+# Introduction
 
-**Suica is a JavaScript library** that provides a minimalistic approach to
-mobile 3D graphics. Here is a minimal example of a rotating cube in the browser
-(*click on the image to run the example*):
+Suica is a JavaScript library for creating 3D scenes that work or various platforms. Only a browser with a GPU support is needed. Suica is built upon these principles:
 
-[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="300"></kbd>](../examples/minimal-example.html)
+- **MINIMAL**<br>Less is more ([details](https://en.wikipedia.org/wiki/Minimalism)). 
 
-The complete code of this example is:
+- **DUAL**<br>Scenes can be defined in HTML or in JavaScript. Or in both.
+
+- **OPTIONAL**<br>All properties of 2D and 3D graphical objects are optional. 
+
+- **UNIFORM**<br>Features are consistent across all objects that share them.
+
+
+## Drawing canvas
+
+Suica creates 3D images and animations in a web page. Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the `<script>` tag. Once loaded, it scans for HTML tags `<suica>` and uses them as drawing canvases. Suica does not use JS modules in order to allow easier local development in educational environments.
+
+The general structure of a web page that uses Suica needs a few tags. The tag `<script>` with attrbute `src` pointing to the Suica library loads and activates Suica. The drawing canvas is defined with `<suica>` tag inside `<body>`. The part of the scene that is created in HTML is inside this `<suica>` tag. The part of the scene that is created with JavaScript commands is inside a separate `<script>` tag.
+
 
 ```html
 <!DOCTYPE html>
-<script src="suica.js"></script>
-<suica>
-	<cube>
-	<demo>
-</suica>
+<html lang="en">
+<head>
+   <!-- Loading and activating Suica -->
+   <script src="suica.js"></script>
+</head>
+
+<body>
+   <suica>
+      <!-- Suica tags describing a 3D scene -->
+   </suica>
+
+   <script>
+      // Suica JavaScript code describing 3D scene or animation
+   </script>
+</body>
+</html>
 ```
 
-
-Suica is built upon these principles:
-
-- **MINIMAL**<br>Less is more ([details](https://en.wikipedia.org/wiki/Minimalism_(computing))). 
-
-- **DUAL**<br>Objects can be defined as HTML tags or in JS code, and their
-properties are defined as tag attributes or function parameters. Using HTML is
-a declarative create-and-forget approach, while JS is more suitable for scenes
-that require continuous changes.
-
-- **OPTIONAL**<br>All object properties are optional and may be skipped. Due to the
-nature of the HTML syntax tag attributes may have any order. However, the order
-of function parameters is fixed and only the trailing parameters may be skipped.
-
-- **UNIFORM**<br>Properties are consistent across all objects that share
-them. For example, object color is defined and changed in the same way for
-points, cubes and spheres.
-
-Browsers have a standard way of reaction on non-standard web pages (e.g. missing
-closing tags, unregistered custom tags, etc). This is heavily used in all Suica
-examples. Tools that validate HTML pages may complain about Suica HTML code.
-
-_**Note.** Three.js and other libraries are included in this repository to safeguard
-against incompatibilities with future versions. They are not a part of Suica._
+Suica can create 3D object only inside Suica canvas. It is created with HTML tag `<suica>`.
 
 
-## Suica canvas
-
-Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the
-`<script>` tag. Once loaded, the library will look for HTML tags `<suica>` and
-use them as drawing canvases for 3D graphics. Suica does not use JS modules in
-order to allow easy local development.
-
-
-### Tag &lt;suica&gt;
-
-Tag and variable. Defines a 3D drawing canvas. `<suica>` is the main Suica tag.
-All other Suica-specific HTML tags are recognized only if used between `<suica>`
-and `</suica>`
-
+#### suica
 ```html
-<suica>
-   <!-- all other Suica tags appear here-->
-</suica>
+HTML:
+<suica id="𝑠𝑢𝑖𝑐𝑎" width="𝑤𝑖𝑑𝑡ℎ" height="ℎ𝑒𝑖𝑔ℎ𝑡" ...>
 ```
-
-The size of the canvas is set via attributes `width` and `height`. Sizes are
-measured in pixels. The default size is 500&times;300 pixels. Alternatively,
-sizes can be set as CSS properties (either inlined or not), which may use any
-CSS unit.
+Tag and variable. As a tag it defines a 3D drawing canvas. `<suica>` is the main Suica tag. All other Suica-specific HTML tags are recognized only if used between `<suica>` and `</suica>`. The name of the Suica canvas is set in the `id` attribute. The size of the canvas is set via attributes `width` and `height`. Sizes are measured in pixels. The default size is 500&times;300 pixels. Alternatively, sizes can be set as CSS properties (either inlined or not), which may use any CSS unit.
 
 Example of creating drawing canvases with different sizes:
 
 ```html
+HTML:
 <suica width="400" height="300">
+
+HTML+CSS:
 <suica style="width:15em; height:300px;">
 ```
 [<kbd><img src="../examples/snapshots/tag-suica.jpg" width="300"></kbd>](../examples/tag-suica.html)
 
-The orientation of the coordinate system is set via attribute `orientation`.
-More information is available in section [Coordinate system](#coordinate-system).
+The drawing canvas has additional properties, that can be set as HTML attributes of `<suica>`, as standalone HTML tags inside `<suica>...</suica>` or as JavaScript commands in `<script>...</script>`.
 
-The global variable `suica` is set to reference the last created Suica instance.
-It is used to access the Suica canvas if it has no name.
+As a global vairbale `suica` references the last created Suica instance. It is used to access the Suica canvas if it has no name.
 
 
+#### background
+```html
+HTML:
+<suica background="𝑐𝑜𝑙𝑜𝑟">
 
-### Background
+HTML:
+<background color="𝑐𝑜𝑙𝑜𝑟">
 
-Property and command. Defines the background color of the
-Suica canvas. It can be set as HTML attribute, CSS style (both inlined and
-non-inlined), HTML tag and JS function. By default the background color is
-[white smoke](https://www.color-hex.com/color/f5f5f5).
+HTML+CSS:
+<suica style="background:𝑐𝑜𝑙𝑜𝑟;">
+
+```
+```css
+CSS:
+suica {
+   background: 𝑐𝑜𝑙𝑜𝑟;
+}
+```
+```js
+JS:
+background( 𝑐𝑜𝑙𝑜𝑟 );
+```
+Property and command. Defines the background color of the Suica canvas. It can be set as HTML attribute, CSS style (both inlined and non-inlined), HTML tag and JavaScript function. By default the background color is [white smoke](https://www.color-hex.com/color/f5f5f5).
 
 ```html
 HTML/CSS:
@@ -125,13 +130,12 @@ background( 'linen' );
 
 
 
-### Orientation
-
-Property. Controls how objects [positions](#position) and [sizes](#size) are
-defined. Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts
-attribute `orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX`
-(these are all possible permutations of the letters *X*, *Y* and *Z*. Each
-orientation defines a coordinate system in the following manner:
+#### orientation
+```html
+HTML:
+<suica orientation="𝑥𝑦𝑧">
+```
+Property. Controls how objects [positions](properties.md#position) and [sizes](properties.md#size) are defined. Suica uses Cartesian 3D coordinate system. The tag `<suica>` accepts attribute `orientation` with values `XYZ`, `XZY`, `YXZ`, `YZX`, `ZXY` and `ZYX` (these are all possible permutations of the letters *X*, *Y* and *Z*). Each orientation defines a coordinate system in the following manner:
 
 - the first axis points to the right
 - the second axis points upwards
@@ -139,8 +143,7 @@ orientation defines a coordinate system in the following manner:
 
 <img src="images/coordinate-system-orientation.png">
 
-The default orientation in Suica is *XYZ*. All examples in this user guide use
-this orientation, unless explicitely stated that other orientations are used.
+The default orientation in Suica is `XYZ`. All examples in this user guide use this orientation, unless explicitely stated that other orientations are used.
 
 ```html
 HTML:
@@ -151,11 +154,44 @@ HTML:
 
 
 
-### Proactive
+#### proactive
+```html
+HTML:
+<suica proactive>
+<proactive>
+```
+```js
+JS:
+𝑠𝑢𝑖𝑐𝑎.proactive( );
+```
+Property and command. Turns on proactive mode for mouse motion events. These events occur when the mouse pointer is moved over an object, or when an object is moved under the mouse pointer. For details see [proactive events](events.md#proactive).
 
-Property and command. Turns on proactive mode for mouse motion events. These
-events occur when the mouse pointer is moved over an object, or when an object
-is moved under the mouse pointer. For details see section [Proactive events](#proactive-events).
+
+
+
+
+
+---
+
+
+## Creating scenes
+
+TODO
+
+
+## Creating animations
+
+TODO
+
+
+# Canvas features
+
+
+
+
+
+
+
 
 
 
