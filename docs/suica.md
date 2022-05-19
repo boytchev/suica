@@ -20,7 +20,7 @@ description: [A short guide through Suica features]
 	- <small>[VR](#vr): [`stereo`](#stereo-camera), [`anaglyph`](#anaglyph-camera), [`vr`](#vr-camera)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
-	- <small>[Objects and styles](#objects-and-styles): [`spline`](#spline), [`allObjects`](#allobjects)</small>
+	- <small>[Objects and styles](#objects-and-styles): [`style`](#style), [`spline`](#spline), [`allObjects`](#allobjects)</small>
 - [TODO References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
 
 
@@ -278,6 +278,48 @@ To implement a navigation (walking or flying) in a 3D scene the viewing position
 [<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="300"></kbd>](../examples/lookat-navigation-vr.html)
 
 
+## General functions
+
+#### radians
+```js
+JS:
+radians( 𝑑𝑒𝑔𝑟𝑒𝑒𝑠 );
+```
+Function. Converts degrees into radians.
+
+```js
+JS:
+rad = radians( 120 );
+```
+
+
+#### degrees
+```js
+JS:
+degrees( 𝑟𝑎𝑑𝑖𝑎𝑛𝑠 );
+```
+Function. Converts radians into degrees.
+
+```js
+JS:
+deg = degrees( 3.14159 );
+```
+
+
+#### random
+```js
+JS:
+random( 𝑓𝑟𝑜𝑚, 𝑡𝑜 );
+random( [𝑎, 𝑏, 𝑐, ...] );
+```
+
+Function. Generates a pseudo-random floating-point number in a range or picks a random value from an array of values.
+
+```js
+JS:
+a = random( 5, 10 ); // from 5 to 10
+a = random( [1, 2, 3, 4] ); // from the list
+```
 
 
 
@@ -505,33 +547,6 @@ _**Note.** VR mode is not supported in local HTML files._
 
 ## Functions
 
-### Radians
-
-Function. Converts degrees into radians.
-
-```js
-JS:
-rad = radians( 120 );
-```
-
-### Degrees
-
-Function. Converts radians into degrees.
-
-```js
-JS:
-deg = degrees( 3.14159 );
-```
-
-### Random
-
-Function. Generates a pseudo-random floating-point number in a range or picks a random value from an array of values.
-
-```js
-JS:
-a = random( 5, 10 ); // from 5 to 10
-a = random( [1, 2, 3, 4] ); // from the list
-```
 
 ### Style
 
