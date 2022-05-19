@@ -2,7 +2,7 @@
 title: Suica Objects
 description: [The core of Suica &ndash; from point to sphere]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; **Objects** &middot; [Properties](user-guide-properties.md) &middot; [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
+##### [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md) &middot; [References](references.md)
 
 **Suica objects** are the core functionality of Suica. They are the elements that are used to construct 3D scenes. These objects are designed to provide a foundation for a diverse mobile computer graphics visualizations.
 
@@ -37,11 +37,11 @@ The following examples show the same 3D scene created in HTML and in JavaScript.
 [<kbd><img src="../examples/snapshots/object-html.jpg" width="300"></kbd>](../examples/object-html.html)
 [<kbd><img src="../examples/snapshots/object-js.jpg" width="300"></kbd>](../examples/object-js.html)
 
-Most Suica objects share the same basic properties for position, orientation, color and so on. More information about properties are in chapter [Suica properties](user-guide-properties.md). Properties related to events are described in chapter [Suica events](user-guide-events.md).
+Most Suica objects share the same basic properties for position, orientation, color and so on. More information about properties are in chapter [Suica properties](properties.md). Properties related to events are described in chapter [Suica events](events.md).
 
 ## Objects and variables
 
-Suica keeps track of all created objects. They are created as JavaScript variables and stored in an internal Suica list of objects [`allObjects`](user-guide-suica.md#allobjects). When an object is created with a name, this object is also created as a global JavaScript variable. This allows to reuse or to reference the object later on.
+Suica keeps track of all created objects. They are created as JavaScript variables and stored in an internal Suica list of objects [`allObjects`](suica.md#allobjects). When an object is created with a name, this object is also created as a global JavaScript variable. This allows to reuse or to reference the object later on.
 
 #### id
 ```html
@@ -99,7 +99,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a point. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size), [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). By default, a point is drawn as a small circle, but it can be changed with a custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<point>` tag.
+Object. Represents a point. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size), [`color`](properties.md#color), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). By default, a point is drawn as a small circle, but it can be changed with a custom [drawing](#drawings.md). In HTML all properties can be included in the `<point>` tag.
 
 ```html
 HTML:
@@ -124,7 +124,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = line( [𝑥,𝑦,𝑧], [𝑥,𝑦,𝑧], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a straight segment. Its properties are `from` (or [`center`](user-guide-properties.md#center)), `to`, [`color`](user-guide-properties.md#color), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default, a line is drawn as a solid line, but it can be changed with custom [drawing](#user-guide-drawings.md). In HTML all properties can be included in the `<line>` tag.
+Object. Represents a straight segment. Its properties are `from` (or [`center`](properties.md#center)), `to`, [`color`](properties.md#color), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default, a line is drawn as a solid line, but it can be changed with custom [drawing](#drawings.md). In HTML all properties can be included in the `<line>` tag.
 
 ```html
 HTML:
@@ -151,7 +151,7 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.square( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
 ```
 Object. Represents a regular square or a rectangle. Its properties are
-[`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth) and [`height`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<square>` tag.
+[`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<square>` tag.
 
 ```html
 HTML:
@@ -178,8 +178,8 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = circle( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a circle or an ellipse. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth) and [`height`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe),
-[`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<circle>` tag.
+Object. Represents a circle or an ellipse. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe),
+[`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<circle>` tag.
 
 ```html
 HTML:
@@ -206,7 +206,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = polygon( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a regular polygon or an elliptical polygon. Its properties are `count`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth) and [`height`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The property `count` defines
+Object. Represents a regular polygon or an elliptical polygon. Its properties are `count`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The property `count` defines
 the number of sides of the polygon. The properties `size`, `width` and `height` refer to the polygon circumscribed circle, rather than the polygon itself. In HTML all properties can be included in the `<polygon>` tag.
 
 ```html
@@ -239,7 +239,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = cube( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a regular cube or a deformed cube (called *cuboid*). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<cube>` tag.
+Object. Represents a regular cube or a deformed cube (called *cuboid*). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<cube>` tag.
 
 ```html
 HTML:
@@ -266,7 +266,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = sphere( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a regular sphere or a deformed sphere (spheroid). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<sphere>` tag. 
+Object. Represents a regular sphere or a deformed sphere (spheroid). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<sphere>` tag. 
 
 ```html
 HTML:
@@ -293,7 +293,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = cylinder( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<cylinder>` tag.
+Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<cylinder>` tag.
 
 ```html
 HTML:
@@ -321,7 +321,7 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = prism( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
 Object. Represents a regular prism or prismoid (an elliptical prism). Its
-properties are `count`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The property `count` defines the number of sides of the prism. In HTML all properties can be included in the `<prism>` tag.
+properties are `count`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The property `count` defines the number of sides of the prism. In HTML all properties can be included in the `<prism>` tag.
 
 ```html
 HTML:
@@ -347,7 +347,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = cone( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a regular cone or conoid (an elliptical cone). Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<cone>` tag.
+Object. Represents a regular cone or conoid (an elliptical cone). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<cone>` tag.
 
 ```html
 HTML:
@@ -374,7 +374,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = pyramid( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its properties are `count`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`wireframe`](user-guide-properties.md#wireframe), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). The property `count` defines the number of sides of the pyramid. In HTML all properties can be included in the `<pyramid>` tag.
+Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its properties are `count`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The property `count` defines the number of sides of the pyramid. In HTML all properties can be included in the `<pyramid>` tag.
 
 ```html
 HTML:
@@ -407,7 +407,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑡𝑒𝑚𝑝𝑙𝑎𝑡𝑒𝑂𝑏𝑗𝑒𝑐𝑡.clone;
 ```
-Object and read-only property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color) and [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
+Object and read-only property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color) and [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
 ```html
 HTML:
 <cube id="a" size="15">
@@ -443,7 +443,7 @@ JS:
 𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵 = group( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
 𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵.add( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
 ```
-Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)) and [`clone`](user-guide-properties.md#clone). The child objects are defined as tags within the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
+Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). The child objects are defined as tags within the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
 
 ```html
 HTML:
@@ -464,7 +464,7 @@ group(
 [<kbd><img src="../examples/snapshots/group-tag.jpg" width="300"></kbd>](../examples/group-tag.html)
 
 A group is a special object, and some aspects of group management are:
-- A group has own [`center`](user-guide-properties.md#center), [`size`](user-guide-properties.md#size) and [`spin`](user-guide-properties.md#spin). Values of `size` of a group are scale factors, not sizes. Centers and spins of objects in a group are relative to the group's `center` and `spin`.
+- A group has own [`center`](properties.md#center), [`size`](properties.md#size) and [`spin`](properties.md#spin). Values of `size` of a group are scale factors, not sizes. Centers and spins of objects in a group are relative to the group's `center` and `spin`.
 - A group can be extended with new objects with the method `add`.
 - Cloning a group will also clone all its objects, setting `color` of a group sets it to all its objects overwriting their individual colors.
 
@@ -480,13 +480,13 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = tube( [𝑥,𝑦,𝑧], 𝑐𝑢𝑟𝑣𝑒, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝘤𝘰𝘶𝘯𝘵, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a tubular object along a straight or a curved line. Its properties are [`center`](user-guide-properties.md#center) (or [`x`](user-guide-properties.md#x-y-z), [`y`](user-guide-properties.md#x-y-z) and [`z`](user-guide-properties.md#x-y-z)), `curve`, `radius`, `count`, [`size`](user-guide-properties.md#size) (or [`width`](user-guide-properties.md#width-height-depth), [`height`](user-guide-properties.md#width-height-depth) and [`depth`](user-guide-properties.md#width-height-depth)), [`color`](user-guide-properties.md#color), [`spin`](user-guide-properties.md#spin) (or [`spinH`](user-guide-properties.md#spinh-spinv-spint), [`spinV`](user-guide-properties.md#spinh-spinv-spint) and [`spinT`](user-guide-properties.md#spinh-spinv-spint)), [`image`](user-guide-properties.md#image), [`images`](user-guide-properties.md#images) and [`clone`](user-guide-properties.md#clone). In HTML all properties can be included in the `<tube>` tag.
+Object. Represents a tubular object along a straight or a curved line. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), `curve`, `radius`, `count`, [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<tube>` tag.
 
 Tubes can also model [solids of revolution](https://en.wikipedia.org/wiki/Solid_of_revolution), also known as lathe shapes.
 
 <img src="images/tube.png">
 
-Parameter `curve` is a [`spline`](yser-guide-suica.md#spline) function but can also be an array of points or user-defined function *f(u)* on which spline is automatically constructed:
+Parameter `curve` is a [`spline`](suica.md#spline) function but can also be an array of points or user-defined function *f(u)* on which spline is automatically constructed:
 
 ```html
 HTML:

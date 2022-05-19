@@ -2,7 +2,7 @@
 title: Suica Events
 description: [Things that help making interactive programs]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; [Properties](user-guide-properties.md) &middot; [Drawings](user-guide-drawings.md) &middot; **Events** &middot; [References](#references)
+##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; **Events** &middot; [References](references.md)
 
 **Suica events** are actions that happen 'outside' a Suica program and it is impossible to predict when they will happen. A typical example of an event is when users click on Suica objects.
 
@@ -194,7 +194,7 @@ function onMouseMove( event )
 
 The returned position coincides with the Suica coordinate system when
 [orthographic camera](#orthographic-camera) is used and the view point is not
-changed with [demo](user-guide-suica.md#demo) or [lookAt](user-guide-suica.md#lookat).
+changed with [demo](suica.md#demo) or [lookAt](suica.md#lookat).
 
 <img src="images/event-coordinate-system.png">
 

@@ -2,7 +2,7 @@
 title: Suica Object Properties
 description: [The common properties of Suica objects]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; **Properties** &middot; [Drawings](user-guide-drawings.md) &middot; [Events](user-guide-events.md) &middot; [References](#references)
+##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; **Properties** &middot; [Drawings](drawings.md) &middot; [Events](events.md) &middot; [References](references.md)
 
 By design Suica attempts to use the same properties for all objects as much as it is reasonable. This document describes the properties that are common to many objects. 
 
@@ -50,7 +50,7 @@ b.center = [10,30,15];
 
 Some properties are use so often, that they are included as parameters of the functions that create objects. In this case the names of the properties are not used, but the order of parameters is fixed. Only the trailing parameters can be omitted.
 
-In the next example the value 100 is the `size` of the cube. It is included in the code, because the creation  of a cube is done with function [`cube(𝘤𝘦𝘯𝘵𝘦𝘳,𝑠𝑖𝑧𝑒,𝑐𝑜𝑙𝑜𝑟)`](user-guide-objects.md#cube).
+In the next example the value 100 is the `size` of the cube. It is included in the code, because the creation  of a cube is done with function [`cube(𝘤𝘦𝘯𝘵𝘦𝘳,𝑠𝑖𝑧𝑒,𝑐𝑜𝑙𝑜𝑟)`](objects.md#cube).
 
 ```js
 JS:
@@ -78,7 +78,7 @@ sphere().style( {x:15} ).style( {size:20} ).style( {color:'peachpuff'} );
 
 [<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](../examples/style.html)
 
-`style` can also be used as function [`style`](user-guide-suica.md#style).
+`style` can also be used as function [`style`](suica.md#style).
 
 
 
@@ -357,7 +357,7 @@ Setting the `color` of a [group](#group) sets it to all its objects.
 
 ## Texture
 
-[Textures](https://en.wikipedia.org/wiki/Texture_mapping) are 2D images that are applied onto 2D and 3D objects. Textures are generally used to decorate objects with visual details. Suica supports two sources for textures &ndash; external image files and [drawings](#user-guide-drawings.md) generated with Suica. The properties that implement textures in Suica are `image` and `images`.
+[Textures](https://en.wikipedia.org/wiki/Texture_mapping) are 2D images that are applied onto 2D and 3D objects. Textures are generally used to decorate objects with visual details. Suica supports two sources for textures &ndash; external image files and [drawings](drawings.md) generated with Suica. The properties that implement textures in Suica are `image` and `images`.
 
 #### image
 ```html
@@ -371,7 +371,7 @@ JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = 𝑖𝑚𝑎𝑔𝑒;
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = '𝑢𝑟𝑙';
 ```
-Property. Decorates object surface with an image. Images can be stamped onto Suica object via the property `image`. The property accepts a drawing or a texture image. For examples of how to use drawings see chapter [Drawings](user-guide-drawings.md). 
+Property. Decorates object surface with an image. Images can be stamped onto Suica object via the property `image`. The property accepts a drawing or a texture image. For examples of how to use drawings see chapter [Drawings](drawings.md). 
 
 ```html
 HTML:
@@ -449,7 +449,7 @@ a.images = [2,3];
 
 A [wire-frame model](https://en.wikipedia.org/wiki/Wire-frame_model) is an object which is visualized with lines. These lines are most often edges of the object's shape. Suica implements wire-frame models as a mode &ndash; i.e. an object can be switched to wire-frame mode with the `wireframe` property.
 
-Only objects with edges have wireframe mode &ndash; [`square`](user-guide-objects.md#square), [`circle`](user-guide-objects.md#circle), [`polygon`](user-guide-objects.md#polygon), [`cube`](user-guide-objects.md#cube), [`prism`](user-guide-objects.md#prism) and [`pyramid`](user-guide-objects.md#pyramid).
+Only objects with edges have wireframe mode &ndash; [`square`](objects.md#square), [`circle`](objects.md#circle), [`polygon`](objects.md#polygon), [`cube`](objects.md#cube), [`prism`](objects.md#prism) and [`pyramid`](objects.md#pyramid).
 
 #### wireframe
 ```html

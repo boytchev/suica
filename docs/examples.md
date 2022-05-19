@@ -18,7 +18,6 @@ nav_exclude: true
 [Advanced](#advanced-3d-objects) |
 [Drawings](#drawings) |
 [Events](#events) |
-[Functions](#functions) |
 [Q&A](#questions-and-answers)
 
 Click on an image to run the example.
@@ -60,6 +59,25 @@ Click on an image to run the example.
 
 [<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="400"></kbd>](../examples/lookat-navigation.html)
 [<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="400"></kbd>](../examples/lookat-navigation-vr.html)
+
+## Functions
+
+[<kbd><img src="../examples/snapshots/its.jpg" width="400"></kbd>](../examples/its.html)
+[<kbd><img src="../examples/snapshots/spline.jpg" width="400"></kbd>](../examples/spline.html)
+
+[<kbd><img src="../examples/snapshots/spline-color.jpg" width="400"></kbd>](../examples/spline-color.html)
+[<kbd><img src="../examples/snapshots/spline-size.jpg" width="400"></kbd>](../examples/spline-size.html)
+
+[<kbd><img src="../examples/snapshots/spline-interpolating.jpg" width="400"></kbd>](../examples/spline-interpolating.html)
+[<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="400"></kbd>](../examples/spline-approximating.html)
+
+[<kbd><img src="../examples/snapshots/spline-function.jpg" width="400"></kbd>](../examples/spline-function.html)
+[<kbd><img src="../examples/snapshots/spline-html.jpg" width="400"></kbd>](../examples/spline-html.html)
+
+
+
+
+
 
 ## [Objects](user-guide.md#objects)
 
@@ -190,24 +208,6 @@ Click on an image to run the example.
 
 [<kbd><img src="../examples/snapshots/events-find-object.jpg" width="400"></kbd>](../examples/events-find-object.html)
 [<kbd><img src="../examples/snapshots/events-find-objects.jpg" width="400"></kbd>](../examples/events-find-objects.html)
-
-
-
-## [Functions](user-guide-functions.md)
-
-[<kbd><img src="../examples/snapshots/its.jpg" width="400"></kbd>](../examples/its.html)
-[<kbd><img src="../examples/snapshots/spline.jpg" width="400"></kbd>](../examples/spline.html)
-
-[<kbd><img src="../examples/snapshots/spline-color.jpg" width="400"></kbd>](../examples/spline-color.html)
-[<kbd><img src="../examples/snapshots/spline-size.jpg" width="400"></kbd>](../examples/spline-size.html)
-
-[<kbd><img src="../examples/snapshots/spline-interpolating.jpg" width="400"></kbd>](../examples/spline-interpolating.html)
-[<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="400"></kbd>](../examples/spline-approximating.html)
-
-[<kbd><img src="../examples/snapshots/spline-function.jpg" width="400"></kbd>](../examples/spline-function.html)
-[<kbd><img src="../examples/snapshots/spline-html.jpg" width="400"></kbd>](../examples/spline-html.html)
-
-
 
 
 

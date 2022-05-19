@@ -2,7 +2,7 @@
 title: Suica Drawings
 description: [Drawings that could be applied onto objects]
 ---
-##### [About](#about) &middot; [Suica canvas](#suica-canvas) &middot; [Objects](user-guide-objects.md) &middot; [Properties](user-guide-properties.md) &middot; **Drawings** &middot; [Events](user-guide-events.md) &middot; [References](#references)
+##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; **Drawings** &middot; [Events](events.md) &middot; [References](references.md)
 
 **Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are applied onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 
@@ -134,7 +134,7 @@ b.stroke( 'black', 5 );
 
 ## Applying drawings
 
-A drawing is applied to an object via the [`image`](user-guide-objects.md#image) property. The scale of a drawing is managed by the [`images`](user-guide-objects.md##images) property. 
+A drawing is applied to an object via the [`image`](objects.md#image) property. The scale of a drawing is managed by the [`images`](objects.md#images) property. 
 
 ```html
 HTML:
@@ -403,7 +403,7 @@ fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 	
 ## Sprites
 
-[Sprites](https://en.wikipedia.org/wiki/Sprite_(computer_graphics)) are flat images that always face the user. They are drawn on the screen ignoring any rotation. In Suica sprites are created by applying drawings (and images) onto [points](#user-guide-objects.md#point).
+[Sprites](https://en.wikipedia.org/wiki/Sprite_(computer_graphics)) are flat images that always face the user. They are drawn on the screen ignoring any rotation. In Suica sprites are created by applying drawings (and images) onto [points](#objects.md#point).
 
 [<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
 [<kbd><img src="../examples/snapshots/drawing-heart-point.jpg" width="300"></kbd>](../examples/drawing-heart-point.html)
@@ -412,13 +412,13 @@ fillText( 10, 5, 'Sample text', 'crimson', 'bold 20px Courier' );
 
 ## Dotted and dashed lines
 
-A drawing (or an image) can be applied onto [lines](#user-guide-objects.md#line) or [wireframed objects](#user-guide-objects.md#wireframe). In this case the drawing provides the color pattern for the segments. If a drawing uses a transparent background, this results in dotted and/or dashed lines.
+A drawing (or an image) can be applied onto [lines](#objects.md#line) or [wireframed objects](#objects.md#wireframe). In this case the drawing provides the color pattern for the segments. If a drawing uses a transparent background, this results in dotted and/or dashed lines.
 
 [<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
 
 ## Dynamic drawing
 
-A dynamic drawing is a drawing which images changes in real-time. A Suica drawing can be modified after it is applied to an object. This can be done only in JavaScript by accessing the [`image`](user-guide-objects.md#image) property of the object.
+A dynamic drawing is a drawing which images changes in real-time. A Suica drawing can be modified after it is applied to an object. This can be done only in JavaScript by accessing the [`image`](objects.md#image) property of the object.
 
 ```js
 JS:
