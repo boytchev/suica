@@ -9,11 +9,12 @@ description: [The core of Suica &ndash; from point to sphere]
 # Table of contents
 
 - [Creating an object](#creating-an-object)
-	-  <small>[Objects and variables](#objects-and-variables): [`id`](#id)</small>
+	-  <small>[Objects and variables](#objects-and-variables): [`id`](#id) [`allObjects`](#allobjects)</small>
 - [Objects](#objects)
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
 	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube)</small>
+	- <small>[Invisibles](#invisibles): [`spline points`](#spline-points), [`spline function`](#spline-function)</small>
 
 
 
@@ -41,7 +42,7 @@ Most Suica objects share the same basic properties for position, orientation, co
 
 ## Objects and variables
 
-Suica keeps track of all created objects. They are created as JavaScript variables and stored in an internal Suica list of objects [`allObjects`](suica.md#allobjects). When an object is created with a name, this object is also created as a global JavaScript variable. This allows to reuse or to reference the object later on.
+Suica keeps track of all created objects. They are created as JavaScript variables and stored in an internal Suica list of objects `allObjects`. When an object is created with an `id`, this object is also created as a global JavaScript variable. This allows to reuse or to reference the object later on.
 
 #### id
 ```html
@@ -74,6 +75,22 @@ HTML:
 JS:
 point( [25,0,15] );
 ```
+
+#### allObjects
+```js
+JS:
+𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦 = 𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦( ... );
+```
+Function. Get a list of all graphical objects in a Suica canvas. The result of
+the function is an array of these objects.
+
+```js
+JS:
+list = allObjects( );
+```
+
+[<kbd><img src="../examples/snapshots/allobjects.jpg" width="300"></kbd>](../examples/allobjects.html)
+
 
 
 
@@ -562,6 +579,124 @@ suica.ontime = function( t )
 [<kbd><img src="../examples/snapshots/tube-dynamic-spline-radius.jpg" width="300"></kbd>](../examples/tube-dynamic-spline-radius.html)
 
 [<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="300"></kbd>](../examples/tube-dynamic.html)
+
+
+
+
+
+# Invisibles
+
+Invisibles are abstract constructions used to calculated object shape, position or motion. In Suica they are implemented as JavaScript functions.
+
+
+#### spline points
+```html
+HTML:
+<spline src="𝑥,𝑦,𝑧;..." 𝑐𝑙𝑜𝑠𝑒𝑑="..." 𝑜𝑝𝑒𝑛="..." 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔="..." 𝑎𝑝𝑝𝑟𝑜𝑥𝑖𝑚𝑎𝑡𝑖𝑛𝑔="...">
+```
+```js
+JS:
+spline( [[𝑥,𝑦,𝑧],...], 𝑐𝑙𝑜𝑠𝑒𝑑, 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔 );
+```
+Function. Implements [splines](https://en.wikipedia.org/wiki/Spline_(mathematics)) by defining a function that for generating smoothly varying values. The first parameter of `spline` is an array of points. The result is a function *f(u)* where *u* &isin; [0,1]. The result of *f(u)* is a point along the curve where *u*=0 corresponds to the beginning of the curve, *u*=1 corresponds to the end of the curve and intermediate values of *u* correspond to intermediate points on the curve.
+
+<img src="images/spline.png">
+
+```html
+HTML:
+<spline id="s" src="0,0,0; 100,0,0; 0,100,0">
+```
+
+```js
+JS:
+s = spline( [[0,0,0], [100,0,0], [0,100,0]] );
+
+a = s(0);   // beginning
+b = s(0.5); // middle
+c = s(1);   // end
+```
+
+[<kbd><img src="../examples/snapshots/spline.jpg" width="300"></kbd>](../examples/spline.html)
+
+Typically a spline is used to define a curve in the space and get coordinates of points on this curve. However, in Suica splines can be used to smooth any set of numerical values, like colors or sizes.
+
+[<kbd><img src="../examples/snapshots/spline-color.jpg" width="300"></kbd>](../examples/spline-color.html)
+[<kbd><img src="../examples/snapshots/spline-size.jpg" width="300"></kbd>](../examples/spline-size.html)
+
+Splines have two additional parameters &ndash; `closed` and `interpolating`.
+
+If `closed` is `true` the spline curve is closed, i.e. the last point is connected back to the first point. This is used to define smooth loops. If `closed` is `false`, then the line is not closed. By default `closed` is *false*. When a spline is defined in HTML, `close` can be set either by `close` attribute, or by the opposite alternative `open` attribute. If the value of `close` is omitted, or if it is `yes`, `true` or `1`, the spline is closed. If the value of `open` is omitted, or if it is `yes`, `true` or `1`, the spline is open.
+
+```js
+JS:
+s = spline( [...], true );
+```
+
+```html
+HTML:
+<spline id="s" src="..." closed>
+<spline id="s" src="..." closed="true">
+<spline id="s" src="..." open="false">
+```
+
+The parameter `interpolating` defines the style of the curve. If it is `true`, the spline curve goes through the points (i.e. it interpolates them). If it is `false`, the spline curve goes near the points as if it is pulled by them (i.e. it approximates the points). Approximation splines tend to appear smaller and smoother.
+
+When a spline is defined in HTML, `interpolating` can be set either by `interpolating` attribute, or by `apploximating` attribute, similar to how attributes *closed* and *open* are used.
+
+```js
+JS:
+s = spline( [...], true, true );
+```
+
+```html
+HTML:
+<spline id="s" src="..." interpolating>
+<spline id="s" src="..." interpolating="true">
+<spline id="s" src="..." apploximating="false">
+```
+
+[<kbd><img src="../examples/snapshots/spline-interpolating.jpg" width="300"></kbd>](../examples/spline-interpolating.html)
+[<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="300"></kbd>](../examples/spline-approximating.html)
+
+
+#### spline function
+```html
+HTML:
+<spline src="𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒">
+```
+```js
+JS:
+spline( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2 );
+// where:
+function 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒 (𝑢, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2) {...}
+```
+Instead of an array of points, `spline` can also accept a function, although technically it is not a spline any more. This function should have 1, 2 or 3 parameters. The first parameter is compusory and it `u` &isin; [0,1]. The other two parameters are optional and they are function-specific. The result of this function must be an array of 3 or 4 values, corresponding to a point along the curve defined by this function.
+
+```js
+JS:
+function flower( u, k=3, n=2 )
+{
+   u = n*Math.PI*u;
+   return [
+      Math.cos(u) + Math.cos(k*u), // x
+      Math.sin(u) - Math.sin(k*u), // y
+      0                            // z
+   ];
+}
+
+s = spline( flower, 2 );
+```
+	
+If a function is passed to a spline in HTML form, it is with only one patameter:
+
+```html
+HTML:
+<spline id="s" src="flower">
+```
+	
+[<kbd><img src="../examples/snapshots/spline-function.jpg" width="300"></kbd>](../examples/spline-function.html)
+[<kbd><img src="../examples/snapshots/spline-html.jpg" width="300"></kbd>](../examples/spline-html.html)
+
 
 
 ---

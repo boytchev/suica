@@ -61,14 +61,15 @@ cube( [10,30,15], 100, 'blue' );
 
 ## Multiple properties
 
-In JavaScript a group of properties can be represented as a JavaScript object. They can be applied to an object with the `style` method.
+In JavaScript a group of properties can be represented as a JavaScript object. They can be applied to an object with `style`.
 
 #### Style
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.style({𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …});
+𝑜𝑏𝑗𝑒𝑐𝑡.style( {𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …} );
+style( 𝑜𝑏𝑗𝑒𝑐𝑡, {𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …} );
 ```
-Method. Sets a group of properties of an object. The properties are defined as a set of *name:value* pairs. New, custom user-defined properties are allowed. As `style` returns the same object, styling can be chained.
+Function. Sets a group of properties of an object. The properties are defined as a set of *name:value* pairs. New, custom user-defined properties are allowed. As `style` returns the same object, styling can be chained.
 
 ```js
 JS:
@@ -77,8 +78,6 @@ sphere().style( {x:15} ).style( {size:20} ).style( {color:'peachpuff'} );
 ```
 
 [<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](../examples/style.html)
-
-`style` can also be used as function [`style`](suica.md#style).
 
 
 

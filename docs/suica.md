@@ -13,14 +13,13 @@ description: [A short guide through Suica features]
 	- <small>[Drawing canvas](#drawing-canvas): [`suica`](#suica), [`background`](#background),  [`orientation`](#orientation), [`proactive`](#proactive)</small>
 	- <small>[TODO: Creating scenes](#creating-scenes)</small>
 	- <small>[TODO: Creating animations](#creating-animations)</small>
-- [Views and cameras](#views-and-cameras)
-    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
-	- <small>[Projections](#projections): [`perspective`](#perspective-camera) | [`orthographic`](#orthographic-camera)</small>
-	- <small>[Screen and window](#screen-and-window): [`fullScreen`](#full-screen-camera) | [`fullWindow`](#full-window-camera)</small>
-	- <small>[VR](#vr): [`stereo`](#stereo-camera), [`anaglyph`](#anaglyph-camera), [`vr`](#vr-camera)</small>
+- [TODO: Views and cameras](#views-and-cameras)
+    - <small>[TODO: View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
+	- <small>[TODO: Projections](#projections): [`perspective`](#perspective-camera) | [`orthographic`](#orthographic-camera)</small>
+	- <small>[TODO: Screen and window](#screen-and-window): [`fullScreen`](#full-screen-camera) | [`fullWindow`](#full-window-camera)</small>
+	- <small>[TODO: VR](#vr): [`stereo`](#stereo-camera), [`anaglyph`](#anaglyph-camera), [`vr`](#vr-camera)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
-	- <small>[Objects and styles](#objects-and-styles): [`style`](#style), [`spline`](#spline), [`allObjects`](#allobjects)</small>
 - [TODO References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
 
 
@@ -324,30 +323,13 @@ a = random( [1, 2, 3, 4] ); // from the list
 
 
 
+
 ---
 ---
 ---
 ---
 ---
 ---
-
-
-
-
-### allObjects
-
-Function. Get a list of all graphical objects in a Suica canvas. The result of
-the function is an array of these objects.
-
-```js
-JS:
-list = allObjects( );
-```
-
-[<kbd><img src="../examples/snapshots/allobjects.jpg" width="300"></kbd>](../examples/allobjects.html)
-
-
-
 
 
 ### Cameras
@@ -548,131 +530,6 @@ _**Note.** VR mode is not supported in local HTML files._
 ## Functions
 
 
-### Style
-
-Function. Sets a group of properties of an object. The properties are note
-necessarily Suica properties.
-
-```js
-JS:
-style( sphere(), {x:15, size:20, color:'peachpuff'} );
-```
-
-### Spline
-
-Function. Implements [splines](https://en.wikipedia.org/wiki/Spline_(mathematics))
-by defining a function that for generating smoothly varying values. The first
-parameter of `spline` is an array of points. The result is a function *f(u)* 
-where *u* &isin; [0,1]. The result of *f(u)* is a point along the curve where
-*u*=0 corresponds to the beginning of the curve, *u*=1 corresponds to the end
-of the curve and intermediate values of *u* correspond to intermediate points
-on the curve.
-
-<img src="images/spline.png">
-
-```html
-HTML:
-<spline id="s" src="0,0,0; 100,0,0; 0,100,0">
-```
-
-```js
-JS:
-s = spline( [[0,0,0], [100,0,0], [0,100,0]] );
-
-a = s(0);   // beginning
-b = s(0.5); // middle
-c = s(1);   // end
-```
-
-[<kbd><img src="../examples/snapshots/spline.jpg" width="300"></kbd>](../examples/spline.html)
-
-Typically a spline is used to define a curve in the space and get coordinates of
-points on this curve. However, in Suica splines can be used to smooth any set of
-numerical values, like colors or sizes.
-
-[<kbd><img src="../examples/snapshots/spline-color.jpg" width="300"></kbd>](../examples/spline-color.html)
-[<kbd><img src="../examples/snapshots/spline-size.jpg" width="300"></kbd>](../examples/spline-size.html)
-
-Splines have two additional parameters &ndash; `closed` and `interpolating`.
-
-If parameter *closed* is *true* the spline curve is closed, i.e. the last point is
-connected back to the first point. This is used to define smooth loops. If
-*closed* is *false*, then the line is not closed. By default *closed* is *false*.
-
-When a spline is defined in HTML, *close* can be set either by `close` attribute,
-or by `open` attribute. If the attribute *close* exist without value, or if its
-value is *yes*, *true* or *1*, the spline is closed. If the attribute *open*
-exist without value, or if its value is *yes*, *true* or *1*, the spline is open.
-
-```js
-JS:
-s = spline( [...], true );
-```
-
-```html
-HTML:
-<spline id="s" src="..." closed>
-<spline id="s" src="..." closed="true">
-<spline id="s" src="..." open="false">
-```
-
-The parameter *interpolating* defines the style of the curve. If it is *true*,
-the spline curve goes through the points (i.e. it interpolates them). If it is
-*false*, the spline curve goes near the points as if it is pulled by them (i.e.
-it approximates the points). Approximation splines tend to appear smaller and
-smoother.
-
-When a spline is defined in HTML, *interpolating* can be set either by
-`interpolating` attribute, or by `apploximating` attribute, similar to how
-attributes *closed* and *open* are used.
-
-```js
-JS:
-s = spline( [...], true, true );
-```
-
-```html
-HTML:
-<spline id="s" src="..." interpolating>
-<spline id="s" src="..." interpolating="true">
-<spline id="s" src="..." apploximating="false">
-```
-
-[<kbd><img src="../examples/snapshots/spline-interpolating.jpg" width="300"></kbd>](../examples/spline-interpolating.html)
-[<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="300"></kbd>](../examples/spline-approximating.html)
-
-
-Instead of an array of points, `spline` can also accept a function, although
-technically it is not a spline any more. This function should have 1, 2 or 3
-parameters. The first parameter is compusory and it *u* &isin; [0,1]. The other
-two parameters are optional and they are function-specific. The result of this
-function must be an array of 3 or 4 values, corresponding to a point along the
-curve defined by this function.
-
-```js
-JS:
-function flower( u, k=3, n=2 )
-{
-	u = n*Math.PI*u;
-	return [
-		Math.cos(u) + Math.cos(k*u), // x
-		Math.sin(u) - Math.sin(k*u), // y
-		0                            // z
-	];
-}
-
-s = spline( flower, 2 );
-```
-	
-If a function is passed to a spline in HTML form, it is with only one patameter:
-
-```html
-HTML:
-<spline id="s" src="flower">
-```
-	
-[<kbd><img src="../examples/snapshots/spline-function.jpg" width="300"></kbd>](../examples/spline-function.html)
-[<kbd><img src="../examples/snapshots/spline-html.jpg" width="300"></kbd>](../examples/spline-html.html)
 
 
 
