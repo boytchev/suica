@@ -15,8 +15,8 @@ description: [A short guide through Suica features]
 	- <small>[**TODO**: Creating animations](#creating-animations)</small>
 - [Viewing 3D](#viewing-3d)
     - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
-	- <small>[Projections](#projections): [`perspective`](#perspective) | [`orthographic`](#orthographic)</small>
-	- <small>[Windows](#windows): [`fullScreen`](#fullscreen) | [`fullWindow`](#fullwindow)</small>
+	- <small>[Projections](#projections): [`perspective`](#perspective), [`orthographic`](#orthographic)</small>
+	- <small>[Canvases](#canvses): [`fullScreen`](#fullscreen), [`fullWindow`](#fullwindow)</small>
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
@@ -184,7 +184,16 @@ TODO
 
 # Viewing 3D
 
-Suica provides several commands and modes to set and control how a 3D scene is rendered on the drawing canvas.
+Suica provides several commands and modes to set and control how a 3D scene is rendered on the drawing canvas. The following table shows how different projections, cameras and canvas sizes can be combined. The default mode for Suica is 3D mode with perspective projection, normal camera and canvas rendering.
+
+|Mode|Projection|Camera|Canvas|
+|---|---|---|---|
+|3D mode|Perspective|Normal, stereo or anaglyph|Canvas, window or screen|
+|2D mode|Orthographic|Always normal|Canvas, window or screen|
+|VR mode|Always perspective|Always stereo|Always screen|
+
+
+
 
 
 ## View point
@@ -349,7 +358,7 @@ orthographic( 0, 1000 );
 
 
 
-## Windows
+## Canvases
 
 Suica always draws only inside the `<suica>` tag. The size of the drawing canvas determines the size of the generated visuals. Although this size can be controlled via CSS and JavaScript, Suica provides a quick way to switch into full window and full screen.
 
@@ -399,7 +408,7 @@ To exit full screen mode press `Esc` or follow the browser's instruction shown a
 
 Suica supports several virtual stereo cameras. They split the image of the scene into two images &ndash; one for the left eye and another one for the right eye. Both images are then combined into a single image, shown on the screen. Viewing such stereo images reqiures additional hardware like 3D glasses or special viewing techniques like cross-eyed viewing.
 
-The `stereo` camera implements wall-eyed and cross-eyed viewing, as well as stereoscopic glasses that use user's smartphone as screen. The `anaglyph` camera produces images for anaglyhph red-cyan glasses. Th `vr` camera can be used only with VR headsets.
+The `stereo` camera implements wall-eyed and cross-eyed viewing, as well as stereoscopic glasses that use user's smartphone as screen. The `anaglyph` camera produces images for anaglyhph red-cyan glasses. The `vr` camera can be used only with VR headsets.
 
 <img src="images/camera-types.png">
 
@@ -553,18 +562,6 @@ a = random( [1, 2, 3, 4] ); // from the list
 ---
 ---
 ---
-
-
-### Cameras
-
-A camera in Suica is a colelctive term that refers to how a scene is visualized
-on the screen. A camera may define a projection (perspective or orthographic),
-canvas span (normal span, full-window or full-screen) and stereoscopic mode
-(mono, stereo, anaglyph and vr). Some cameras can be combined, others are
-mutually exclusive. The following illustration shows available camera
-combinations.
-
-<img src="images/cameras.png">
 
 
 ## References
