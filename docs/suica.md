@@ -11,7 +11,7 @@ description: [A short guide through Suica features]
 
 - [Introduction](#introduction)
 	- <small>[Drawing canvas](#drawing-canvas): [`suica`](#suica), [`background`](#background),  [`orientation`](#orientation), [`proactive`](#proactive)</small>
-	- <small>[**TODO**: Creating scenes](#creating-scenes)</small>
+	- <small>[Creating scenes](#creating-scenes)</small>
 	- <small>[**TODO**: Creating animations](#creating-animations)</small>
 - [Viewing 3D](#viewing-3d)
     - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
@@ -170,7 +170,56 @@ Property and command. Turns on proactive mode for mouse motion events. These eve
 
 ## Creating scenes
 
-TODO
+Graphical scenes in Suica can be created in HTML or in JavaScript. Independent on how objects are created, they are always visualized in the `<suica>` tag. The following table compares both approaches. Most of the differences are caused by inherent properties of HTML and JavaScript.
+
+||HTML scenes|JavaScript scenes|
+|---|---|---|
+|Application|Static scenes|Static and dynamic scenes|
+|Names of entities|Case-insensitive|Case-sensitive|
+|[Objects](#objects.md)|Defined as HTML tags|Defined as JS functions|
+|[Object properties](#properties.md)|Defined as named tag attributes, arbitrary order, any property can e omitted|Defined as anonumous parameters, fixed order, only trailing parameters can be omitted|
+|Object modification|Cannot be modified|Can be modified|
+
+
+HTML definitions are more suitable for static scenes. Objects are declared with HTML tags, and their properties are attributes in these tags. For example, a cube is defined as:
+
+```html
+HTML:
+<cube center="25,0,15" size="10" color="crimson">
+```
+
+A scene is defined as a sequence of HTML tags for each object in the scene. These tags must be enclosed in the `<suica>` tag. The following example creates a scene with a cube and a sphere.
+
+```html
+HTML:
+<suica>
+   <cube center="25,0,15" size="10" color="crimson">
+   <sphere size="15" color="yellow">
+</suica>
+```
+
+Suica does not require that all tags are properly closed. Exceptions are `<suica>`, [`<group>`](objects.md#group) and [`<drawing>`](drawings.md#drawing) tags &ndash; they are containers and their exact content is important for Suica. Unclosed tags will make HTML validators scream in horror.
+
+When a scene is defined in JavaScript, all objects are created with functions inside a `<script>` tag ouside the `<suica>` tag.
+```js
+HTML+JS:
+<suica></suica>
+<script>
+   cube( [25,0,15], 10, 'crimson' );
+   sphere( [0,0,0], 15, 'yellow' );
+</script>
+```
+
+JavaScript commands that create object in several canvases can be placed in a single `<script>` tag.
+```js
+HTML+JS:
+<suica id="a"></suica>
+<suica id="b"></suica>
+<script>
+   a.cube( [25,0,15], 10, 'crimson' );
+   b.sphere( [0,0,0], 15, 'yellow' );
+</script>
+```
 
 
 ## Creating animations
