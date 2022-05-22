@@ -11,16 +11,16 @@ description: [A short guide through Suica features]
 
 - [Introduction](#introduction)
 	- <small>[Drawing canvas](#drawing-canvas): [`suica`](#suica), [`background`](#background),  [`orientation`](#orientation), [`proactive`](#proactive)</small>
-	- <small>[TODO: Creating scenes](#creating-scenes)</small>
-	- <small>[TODO: Creating animations](#creating-animations)</small>
-- [TODO: Views and cameras](#views-and-cameras)
-    - <small>[TODO: View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
-	- <small>[TODO: Projections](#projections): [`perspective`](#perspective-camera) | [`orthographic`](#orthographic-camera)</small>
-	- <small>[TODO: Screen and window](#screen-and-window): [`fullScreen`](#full-screen-camera) | [`fullWindow`](#full-window-camera)</small>
-	- <small>[TODO: VR](#vr): [`stereo`](#stereo-camera), [`anaglyph`](#anaglyph-camera), [`vr`](#vr-camera)</small>
+	- <small>[**TODO**: Creating scenes](#creating-scenes)</small>
+	- <small>[**TODO**: Creating animations](#creating-animations)</small>
+- [Viewing 3D](#viewing-3d)
+    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
+	- <small>[Projections](#projections): [`perspective`](#perspective) | [`orthographic`](#orthographic)</small>
+	- <small>[Windows](#windows): [`fullScreen`](#fullscreen) | [`fullWindow`](#fullwindow)</small>
+	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
-- [TODO References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
+- [**TODO** References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
 
 
 # Introduction
@@ -182,7 +182,7 @@ TODO
 
 
 
-# Views and cameras
+# Viewing 3D
 
 Suica provides several commands and modes to set and control how a 3D scene is rendered on the drawing canvas.
 
@@ -277,6 +277,229 @@ To implement a navigation (walking or flying) in a 3D scene the viewing position
 [<kbd><img src="../examples/snapshots/lookat-navigation-vr.jpg" width="300"></kbd>](../examples/lookat-navigation-vr.html)
 
 
+
+
+
+
+## Projections
+
+A projection is required to visualize a 3D shape onto a 2D screen. Suica supports two types of projections: `perspective` and `orthographic`. By default, `perspective` is used.
+
+#### perspective
+```html
+HTML:
+<suica perspective="𝑛𝑒𝑎𝑟,𝑓𝑎𝑟,𝑓𝑜𝑣">
+<perspective near="𝑛𝑒𝑎𝑟" far="𝑓𝑎𝑟" fov="𝑓𝑜𝑣">
+```
+```js
+JS:
+perspective( 𝑛𝑒𝑎𝑟, 𝑓𝑎𝑟, 𝑓𝑜𝑣 );
+```
+
+Property and command. Sets a perspective camera projection. Objects further away appear smaller. The perspective is defined by `near` distance , `far` distance and `field of view` angle.
+
+The `near` and `far` distances (by default 1 and 1000) define the depth span of the viewing area. Objects and part of objects outside this area are not drawn. The `field of view` angle is measured in degrees (by default 40&deg;) and it defines the vertical span of the viewing area. Smaller angles make objects appear bigger and reduce the perspective effect; larger angles make objects appear smaller and increases the perspective effect.
+
+A valid perspective requires that 0<`near`<`far` and 0&deg;<`field of view`<180&deg;.
+
+```html
+HTML:
+<suica perspective>
+<suica perspective="1,1000,40">
+```
+```js
+JS:
+perspective( );
+perspective( 1, 1000, 40 );
+```
+
+[<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="300"></kbd>](../examples/camera-perspective.html)
+
+
+
+#### orthographic
+```html
+HTML:
+<suica orthographic="𝑛𝑒𝑎𝑟,𝑓𝑎𝑟">
+<orthographic near="𝑛𝑒𝑎𝑟" far="𝑓𝑎𝑟">
+```
+```js
+JS:
+orthographic( 𝑛𝑒𝑎𝑟, 𝑓𝑎𝑟 );
+```
+Property and command. Sets an orthographic camera projection. Objects do not change their visual size depending on how close or distant they are. The orthographic camera is defined by `near` and `far` distances. By default, they are 0 and 1000; and they define the depth span of the viewing area. Objects and part of objects outside this area are not drawn. 
+
+A valid orthographic projection requires that 0&leq;`near`<`far`.
+
+```html
+HTML:
+<suica orthographic>
+<suica orthographic="0,1000">
+```
+```js
+JS:
+orthographic( );
+orthographic( 0, 1000 );
+```
+
+[<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="300"></kbd>](../examples/camera-orthographic.html)
+
+
+
+
+
+
+## Windows
+
+Suica always draws only inside the `<suica>` tag. The size of the drawing canvas determines the size of the generated visuals. Although this size can be controlled via CSS and JavaScript, Suica provides a quick way to switch into full window and full screen.
+
+<img src="images/windows.png">
+
+
+
+
+#### fullWindow
+```html
+HTML:
+<suica fullwindow>
+<fullwindow>
+```
+```js
+JS:
+fullWindow( );
+```
+Property and command. Sets the size of the drawing canvas to match the size of the browser's window. 
+
+[<kbd><img src="../examples/snapshots/camera-fullwindow.jpg" width="300"></kbd>](../examples/camera-fullwindow.html)
+
+
+
+#### fullScreen
+```html
+HTML:
+<suica fullscreen>
+<fullscreen>
+```
+```js
+JS:
+fullScreen( );
+```
+
+Property and command. Asks Suica to go into full screen mode. Using full screen mode adds a button at the bottom of the canvas. If the button says `[ENTER FULLSCREEN]` the user must click it to enter full screen mode. If full screen is not supported, the button says `[FULLSCREEN NOT SUPPORTED]`. 
+
+To exit full screen mode press `Esc` or follow the browser's instruction shown at the time of activating the mode.
+
+
+[<kbd><img src="../examples/snapshots/camera-fullscreen.jpg" width="300"></kbd>](../examples/camera-fullscreen.html)
+
+
+
+
+## Cameras
+
+Suica supports several virtual stereo cameras. They split the image of the scene into two images &ndash; one for the left eye and another one for the right eye. Both images are then combined into a single image, shown on the screen. Viewing such stereo images reqiures additional hardware like 3D glasses or special viewing techniques like cross-eyed viewing.
+
+The `stereo` camera implements wall-eyed and cross-eyed viewing, as well as stereoscopic glasses that use user's smartphone as screen. The `anaglyph` camera produces images for anaglyhph red-cyan glasses. Th `vr` camera can be used only with VR headsets.
+
+<img src="images/camera-types.png">
+
+#### stereo
+```html
+HTML:
+<suica stereo="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
+<stereo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
+```
+```js
+JS:
+stereo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 );
+```
+
+Property and command. Sets a stereo camera. The scene is drawb twice &ndash; side-by-side, once for each of the eyes. The stereo effect is controlled by `distance` parameter, which determines the stereo effect. By default, it is 5. Values closer to 0 decreases the stereo effect.
+
+Both positive and negative distances are allowed. Positive distances correspond to wall-eyed viewing or vewing with a smartphone and low-end stereoscopic glasses. Negative distances swap left and right images and correspond to cross-eyed viewing.
+
+```html
+HTML:
+<suica stereo>
+<suica stereo="1">
+<suica stereo="-1">
+```
+```js
+JS:
+stereo( );
+stereo( 1 ); // wall-eyed
+stereo( -1 ); // cross-eyed
+```
+
+[<kbd><img src="../examples/snapshots/camera-stereo-wall-eyed.jpg" width="300"></kbd>](../examples/camera-stereo-wall-eyed.html)
+[<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="300"></kbd>](../examples/camera-stereo-cross-eyed.html)
+
+
+
+#### anaglyph
+```html
+HTML:
+<suica anaglyph="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
+<anaglyph distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒">
+```
+```js
+JS:
+anaglyph( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 );
+```
+
+Property and command. Sets an [anaglyph](https://en.wikipedia.org/wiki/Anaglyph_3D) stereo camera. The scene is projected twice with different colors, suited for red-cyan glasses. The anaglyph effect is controlled by the `distance` parameter, which determines the focal distance. By default, it is 5. Smaller values will increase the anaglyphic effect, larger values will decrease it.
+
+```html
+HTML:
+<suica anaglyph>
+<suica anaglyph="5">
+```
+```js
+JS:
+anaglyph( );
+anaglyph( 5 );
+```
+
+[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](../examples/camera-anaglyph.html)
+
+
+
+
+#### vr
+```html
+HTML:
+<suica vr>
+<vr>
+```
+```js
+JS:
+vr( );
+```
+
+Property and command. Allows Suica to go into emmersive 3D environment. Using a VR stereo camera adds a button at the bottom of the canvas. If the button says `[ENTER VR]` the user must click it to enter VR mode. If VR is not supported, the button says `[VR NOT SUPPORTED]`. 
+
+Currently the VR camera in Suica does not provide access to the controllers. Also, VR mode is not supported when the HTML file is loaded locally from `file:`.
+
+```html
+HTML:
+<suica vr>
+```
+```js
+JS:
+vr( );
+```
+
+[<kbd><img src="../examples/snapshots/camera-vr.jpg" width="300"></kbd>](../examples/camera-vr.html)
+
+
+
+
+
+
+
+
+
+
 ## General functions
 
 #### radians
@@ -342,198 +565,6 @@ mutually exclusive. The following illustration shows available camera
 combinations.
 
 <img src="images/cameras.png">
-
-
-
-
-#### Perspective camera
-
-Property and command. Sets a perspective camera projection. Objects further
-away appear smaller. The perspective is defined by three numbers &ndash; *near*
-distance , *far* distance  and *field of view* angle.
-
-The *near* and *far* distances (by default 1 and 1000) define the depth span of
-the viewing area. Objects and part of objects outside this area are not drawn.
-If *near* and *far* are too close, this may truncate some objects; it they are
-too far away, this may reduce the precision of overlapping distant objects.
-
-The *field of view* angle is measured in degrees (by default 40&deg;) and
-defines the vertical span of the viewing area. Smaller angles make objects
-appear bigger and reduce the perspective effect; larger angles make objects
-appear smaller and increases the perspective effect.
-
-A valid perspective requires that 0<*near*<*far* and 0&deg;<*field of view*<180&deg;.
-
-```html
-HTML:
-<suica perspective>
-<suica perspective="1,1000,40">
-```
-```js
-JS:
-perspective( );
-perspective( 1, 1000, 40 );
-```
-
-[<kbd><img src="../examples/snapshots/camera-perspective.jpg" width="300"></kbd>](../examples/camera-perspective.html)
-
-
-
-#### Orthographic camera
-
-Property and command. Sets an orthographic camera projection. Objects do not
-change their visual size depending on how close or distant they are. The
-orthographic camera is defined by two numbers &ndash; *near* and *far* distances.
-By default they are 0 and 1000; and rhey define the depth span of the viewing
-area. Objects and part of objects outside this area are not drawn. If *near* and
-*far* are too close, this may truncate some objects; it they are too far away,
-this may reduce the precision of overlapping distant objects.
-
-A valid orthographic projection requires that 0&leq;*near*<*far*.
-
-```html
-HTML:
-<suica orthographic>
-<suica orthographic="0,1000">
-```
-```js
-JS:
-orthographic( );
-orthographic( 0, 1000 );
-```
-
-[<kbd><img src="../examples/snapshots/camera-orthographic.jpg" width="300"></kbd>](../examples/camera-orthographic.html)
-
-
-
-#### Full screen camera
-
-Property and command. Allows Suica to go into full screen mode. Using full
-screen camera adds a button at the bottom of the canvas. If the button says
-`[ENTER FULLSCREEN]` the user must click it to enter full screen mode. If full
-screen is not supported, the button says `[FULLSCREEN NOT SUPPORTED]`. 
-
-```html
-HTML:
-<suica fullscreen>
-```
-```js
-JS:
-fullScreen( );
-```
-
-[<kbd><img src="../examples/snapshots/camera-fullscreen.jpg" width="300"></kbd>](../examples/camera-fullscreen.html)
-
-_**Note.** To exit full screen mode press `Esc` or follow the browser's
-instructions._
-
-
-
-#### Full window camera
-
-Property and command. Allows Suica to go into full window mode. 
-
-```html
-HTML:
-<suica fullwindow>
-```
-```js
-JS:
-fullWindow( );
-```
-
-[<kbd><img src="../examples/snapshots/camera-fullwindow.jpg" width="300"></kbd>](../examples/camera-fullwindow.html)
-
-
-
-
-#### Stereo camera
-
-Property and command. Sets a stereo camera projection. The scene is projected
-twice &ndash; side-by-side, once for each of the eyes. The stereo effect is
-controlled by *distance* parameter, which determines the simulated distance
-between the eyes. By default it is 5. Values closer to 0 will decrease the
-stereo effect.
-
-Both positive and negative distances are allowed. Positive distances correspond
-to wall-eyed viewing or vewing with a smartphone and low-end stereoscopic
-glasses. Negative distances swap left and right images and correspond to
-cross-eyed viewing.
-
-```html
-HTML:
-<suica stereo>
-<suica stereo="1">
-<suica stereo="-1">
-```
-```js
-JS:
-stereo( );
-stereo( 1 ); // wall-eyed
-stereo( -1 ); // cross-eyed
-```
-
-[<kbd><img src="../examples/snapshots/camera-stereo-wall-eyed.jpg" width="300"></kbd>](../examples/camera-stereo-wall-eyed.html)
-[<kbd><img src="../examples/snapshots/camera-stereo-cross-eyed.jpg" width="300"></kbd>](../examples/camera-stereo-cross-eyed.html)
-
-
-
-#### Anaglyph camera
-
-Property and command. Sets an [anaglyph](https://en.wikipedia.org/wiki/Anaglyph_3D)
-camera projection. The scene is projected twice with different colors, suited for
-red-cyan glasses. The anaglyph effect is controlled by *distance* parameter,
-which determines the focal distance. By default it is 5. Smaller values will
-increase the anaglyphic effect, larger values will decrease it.
-
-```html
-HTML:
-<suica anaglyph>
-<suica anaglyph="5">
-```
-```js
-JS:
-anaglyph( );
-anaglyph( 5 );
-```
-
-[<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](../examples/camera-anaglyph.html)
-
-
-
-
-#### VR camera
-
-Property and command. Allows Suica to go into emmersive 3D environment. Using a
-VR camera adds a button at the bottom of the canvas. If the button says
-`[ENTER VR]` the user must click it to enter VR mode. If VR is not supported,
-the button says `[VR NOT SUPPORTED]`. 
-
-```html
-HTML:
-<suica vr>
-```
-```js
-JS:
-vr( );
-```
-
-[<kbd><img src="../examples/snapshots/camera-vr.jpg" width="300"></kbd>](../examples/camera-vr.html)
-
-_**Note.** Currently the VR camera does not provide access to the controllers._
-
-_**Note.** VR mode is not supported in local HTML files._
-
-
-
-
-## Functions
-
-
-
-
-
-
 
 
 ## References
