@@ -1,6 +1,6 @@
 ---
 title: Suica User Guide
-description: [A short guide through Suica features]
+description: A short guide through Suica features
 ---
 
 &nbsp;

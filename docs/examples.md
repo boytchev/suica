@@ -1,6 +1,6 @@
 ---
 title: Suica Examples
-description: [All examples, just the examples, only the examples]
+description: All examples, just the examples, only the examples
 ---
 ##### [User guide](user-guide.md)
 

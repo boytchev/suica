@@ -1,6 +1,6 @@
 ---
 title: Suica Objects
-description: [The core of Suica &ndash; from point to sphere]
+description: The core of Suica &ndash; from point to sphere
 ---
 ##### [User guide](user-guide.md) &middot; [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 

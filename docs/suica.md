@@ -1,6 +1,6 @@
 ---
 title: Suica
-description: [The main tag of Suica and its properties]
+description: The main tag of Suica and its properties
 ---
 ##### [User guide](user-guide.md) &middot; **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
