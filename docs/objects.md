@@ -2,7 +2,7 @@
 title: Suica Objects
 description: [The core of Suica &ndash; from point to sphere]
 ---
-##### [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md) &middot; [References](references.md)
+##### [User guide](user-guide.md) &middot; [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
 **Suica objects** are the core functionality of Suica. They are the elements that are used to construct 3D scenes. These objects are designed to provide a foundation for a diverse mobile computer graphics visualizations.
 
@@ -699,6 +699,4 @@ HTML:
 
 
 
----
-
-May, 2022
+<small>{{site.time | date: "%B, %Y"}}</small>

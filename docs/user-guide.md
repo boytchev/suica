@@ -3,7 +3,7 @@ title: Suica User Guide
 description: [A short guide through Suica features]
 ---
 
-## Table of contents
+&nbsp;
 
 - <big>[CHAPTER 1: **Suica**](suica.md)</big><br>The main tag of Suica and its properties
 - <big>[CHAPTER 2: **Objects**](objects.md)</big><br>The core of Suica &ndash; from point to sphere
@@ -11,6 +11,7 @@ description: [A short guide through Suica features]
 - <big>[CHAPTER 4: **Drawings**](drawings.md)</big><br>Drawings that could be applied onto objects
 - <big>[CHAPTER 5: **Events**](events.md)</big><br>Things that help making interactive programs
 - <big>[**Examples**](examples.md)</big><br>A collection of all Suica examples
+
 
 
 <small>{{site.time | date: "%B, %Y"}}</small>

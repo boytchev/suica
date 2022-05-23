@@ -222,6 +222,6 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/qa-attribute-modification-button.jpg" width="400"></kbd>](../examples/qa-attribute-modification-button.html)
 [<kbd><img src="../examples/snapshots/qa-custom-center.jpg" width="400"></kbd>](../examples/qa-custom-center.html)
 
----
 
-April, 2022
+
+<small>{{site.time | date: "%B, %Y"}}</small>

@@ -2,7 +2,7 @@
 title: Suica
 description: [The main tag of Suica and its properties]
 ---
-##### **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md) &middot; [References](references.md)
+##### [User guide](user-guide.md) &middot; **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
 **Suica is a JavaScript library** that provides a minimal, dual, optional and uniform approach to mobile 3D graphics. 
 
@@ -732,6 +732,5 @@ p.spin = [0,45];
 [<kbd><img src="../examples/snapshots/qa-custom-center.jpg" width="300"></kbd>](../examples/qa-custom-center.html)
 
 
----
 
-May, 2022
+<small>{{site.time | date: "%B, %Y"}}</small>

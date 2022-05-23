@@ -2,7 +2,7 @@
 title: Suica Object Properties
 description: [The common properties of Suica objects]
 ---
-##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; **Properties** &middot; [Drawings](drawings.md) &middot; [Events](events.md) &middot; [References](references.md)
+##### [User guide](user-guide.md) &middot; [Suica](suica.md) &middot; [Objects](objects.md) &middot; **Properties** &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
 By design Suica attempts to use the same properties for all objects as much as it is reasonable. This document describes the properties that are common to many objects. 
 
@@ -496,6 +496,5 @@ a.wireframe = true;
 ```
 
 
----
 
-May, 2022
+<small>{{site.time | date: "%B, %Y"}}</small>

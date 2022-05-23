@@ -2,7 +2,7 @@
 title: Suica Drawings
 description: [Drawings that could be applied onto objects]
 ---
-##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; **Drawings** &middot; [Events](events.md) &middot; [References](references.md)
+##### [User guide](user-guide.md) &middot; [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; **Drawings** &middot; [Events](events.md)
 
 **Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are applied onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 
@@ -467,7 +467,4 @@ The following example demonstrates the use of `clear` to reset the drawing canva
 
 
 
-	
----
-
-May, 2022
+<small>{{site.time | date: "%B, %Y"}}</small>
