@@ -13,7 +13,7 @@ description: [A short guide through Suica features]
 - <big>[**Examples**](examples.md)</big><br>A collection of all Suica examples
 
 
-
+<small><small>{{site.time}}</small></small>
 ---
 
 May, 2022
