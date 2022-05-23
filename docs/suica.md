@@ -1,6 +1,6 @@
 ---
-title: Suica User Guide
-description: [A short guide through Suica features]
+title: Suica
+description: [The main tag of Suica and its properties]
 ---
 ##### **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md) &middot; [References](references.md)
 
@@ -12,7 +12,7 @@ description: [A short guide through Suica features]
 - [Introduction](#introduction)
 	- <small>[Drawing canvas](#drawing-canvas): [`suica`](#suica), [`background`](#background),  [`orientation`](#orientation), [`proactive`](#proactive)</small>
 	- <small>[Creating scenes](#creating-scenes)</small>
-	- <small>[**TODO**: Creating animations](#creating-animations)</small>
+	- <small>[Creating animations](#creating-animations)</small>
 - [Viewing 3D](#viewing-3d)
     - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
 	- <small>[Projections](#projections): [`perspective`](#perspective), [`orthographic`](#orthographic)</small>
@@ -20,7 +20,7 @@ description: [A short guide through Suica features]
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
-- [**TODO** References](#references) [<small> [reference](reference-guide.md) | [examples](examples.md) | [images](#available-images) | [libraries](#external-libraries) | [Suica 1](#suica-1)  | [tester](#tester) | [Q&A](#questions-and-answers) </small>] 
+- [**TODO** References](#references) [<small>[tester](#tester) | [Q&A](#questions-and-answers) </small>] 
 
 
 # Introduction
@@ -39,6 +39,8 @@ Suica is a JavaScript library for creating 3D scenes that work or various platfo
 ## Drawing canvas
 
 Suica creates 3D images and animations in a web page. Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the `<script>` tag. Once loaded, it scans for HTML tags `<suica>` and uses them as drawing canvases. Suica does not use JS modules in order to allow easier local development in educational environments.
+
+[**Three.js**](https://threejs.org/) provides the graphical backbone of Suica. It is loaded automatically by Suica, so `three.min.js` file must be present alongside `suica.js` or `suica.min.js`.
 
 The general structure of a web page that uses Suica needs a few tags. The tag `<script>` with attrbute `src` pointing to the Suica library loads and activates Suica. The drawing canvas is defined with `<suica>` tag inside `<body>`. The part of the scene that is created in HTML is inside this `<suica>` tag. The part of the scene that is created with JavaScript commands is inside a separate `<script>` tag.
 
@@ -201,8 +203,8 @@ HTML:
 Suica does not require that all tags are properly closed. Exceptions are `<suica>`, [`<group>`](objects.md#group) and [`<drawing>`](drawings.md#drawing) tags &ndash; they are containers and their exact content is important for Suica. Unclosed tags will make HTML validators scream in horror.
 
 When a scene is defined in JavaScript, all objects are created with functions inside a `<script>` tag ouside the `<suica>` tag.
-```js
-HTML+JS:
+```html
+HTML/JS:
 <suica></suica>
 <script>
    cube( [25,0,15], 10, 'crimson' );
@@ -211,8 +213,8 @@ HTML+JS:
 ```
 
 JavaScript commands that create object in several canvases can be placed in a single `<script>` tag.
-```js
-HTML+JS:
+```html
+HTML/JS:
 <suica id="a"></suica>
 <suica id="b"></suica>
 <script>
@@ -224,12 +226,49 @@ HTML+JS:
 
 ## Creating animations
 
-TODO
+In Suica animations are implemented in JavaScript. Animation in a mobile platform is controlled by browser ticks. For each tick the browser notifies the user application which must provide one frame from the animation. Thus a motion from point A to point B is split into numerous small steps that eventually end up to B. Each small step is processed individually and separately from all other steps of the motion.
+
+<img src="images/animation.png">
+
+Browsers try to keep ticks at consistent speed, measured in [frames per seconds](https://en.wikipedia.org/wiki/Frame_rate). The result of this approach is that the actual fps can vary and is not guaranteed.
+
+The command [`demo`](#demo) provides a default system animation. It can be defined in HTML or in JavaScript.
+
+Custom animations in Suica are bound to [`onTime`](events.md#ontime) event &ndash; i.e. for each frame the `onTime` event is generated. If there is event listener, it will be called with two parameters &ndash; the current time `t` and the elapsed time since the previous frame `dT`.
+
+A typical code that spins a cube in response to onTime event ticks is:
+
+```html
+HTML/JS:
+<suica ontime="tick">
+   <cube id="a">
+</suica>
+
+<script>
+   function tick( t, dt )
+   {
+      a.spinV = t;
+   }
+</script>
+```
+
+It is important to split motion into separate steps. If multiple motions are defined in a single step, they will be merged in a visually single motion. The following example will spin the cube from 0&deg; to 90&deg; but the motion will be invisible to the user. A frame will be created only at the end of `tick`, when the cube's spin is 90&deg;, for intermediate angles there will be no frames.
 
 
+```html
+HTML/JS:
+<suica ontime="tick">
+   <cube id="a">
+</suica>
 
-
-
+<script>
+   function tick( t, dt )
+   {
+      for( var i=0; i<=90; i++ )
+		a.spinV = i;
+   }
+</script>
+```
 
 # Viewing 3D
 
@@ -623,53 +662,7 @@ A reference guide and code templates are collected [here](reference-guide.md)
 
 All examples are collected in a single page [here](examples.md)
 
-### Available images
 
-This is a list of available images in Suica. They can be accessed from URL
-`https://boytchev.github.io/suica/textures/` e.g. `https://boytchev.github.io/suica/textures/flower.jpg`.
-
-<kbd>
-	<img width="128" src="../textures/flower.jpg">
-	<br>
-	flower.jpg
-</kbd>
-<kbd>
-	<img width="128" src="../textures/blobs.jpg">
-	<br>
-	blobs.jpg
-</kbd>
-<kbd>
-	<img width="128" src="../textures/tile.png">
-	<br>
-	tile.png
-</kbd>
-<kbd>
-	<img width="128" src="../textures/grid.png">
-	<br>
-	grid.png
-</kbd>
-
-### External libraries
-
-Suica uses several external libraries.
-
-- [**Three.js** &ndash; JavaScript 3D Library](https://threejs.org/) provides the graphical backbone of Suica. It
-is used at runtime, so `three.min.js` file must be present alongside `suica.js`
-or `suica.min.js`.
-
-- [**JSMin** &ndash; JavaScript Minification Filter](https://github.com/douglascrockford/JSMin) is
-used in the development process to generate minified `suica.min.js` from the
-original `suica.js` file. 
-
-Other tools and site that might be usful to Suica users:
-
-- [**EasyGIF** &ndash; Image to Data URI converter](https://ezgif.com/image-to-datauri)
-can convert image to Data URI in order to avoid SOP and CORS issues. There are
-many other web services for such conversion, like [Site24x7](https://www.site24x7.com/tools/image-to-datauri.html),
-[Online Image Tools](https://onlineimagetools.com/convert-image-to-data-uri),
-[Online JPG Tools](https://onlinejpgtools.com/convert-jpg-to-data-uri),
-[webSemantics](https://websemantics.uk/tools/image-to-data-uri-converter/),
-[Base64 Image](https://www.base64-image.de/) and others.
 
 ### Tester
 
@@ -689,13 +682,6 @@ expected result. In this case run the tester another time to check whether the
 result is consistent.
 
 
-
-
-### Suica 1
-
-The previous version of Suica is [Suica 1](https://github.com/boytchev/Suica-1).
-It uses WebGL directly (i.e. without Three.js). It is made available as a legacy.
-The latest version is Suica 1.12. Suica 1 is not maintained any more.
 
 
 ### Questions and answers

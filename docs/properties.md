@@ -408,7 +408,28 @@ Due to a security mechanism in browsers &ndash; [Same-origin policy](https://dev
 - CORS is disabled in the browser configuration (not recommended)
 - an old SOP-less and CORS-less browser is used (not recommended)
 
+Suica provides a limited set of images that can be used for textures. They can be accessed from URL `https://boytchev.github.io/suica/textures/` e.g. `https://boytchev.github.io/suica/textures/flower.jpg`.
 
+<kbd>
+	<img width="128" src="../textures/flower.jpg">
+	<br>
+	flower.jpg
+</kbd>
+<kbd>
+	<img width="128" src="../textures/blobs.jpg">
+	<br>
+	blobs.jpg
+</kbd>
+<kbd>
+	<img width="128" src="../textures/tile.png">
+	<br>
+	tile.png
+</kbd>
+<kbd>
+	<img width="128" src="../textures/grid.png">
+	<br>
+	grid.png
+</kbd>
 
 
 
