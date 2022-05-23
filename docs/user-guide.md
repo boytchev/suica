@@ -14,6 +14,8 @@ description: [A short guide through Suica features]
 
 
 <small><small>{{site.time}}</small></small>
----
+<small><small>{{ page.date | date_to_long_string }}</small></small>
+
+
 
 May, 2022
