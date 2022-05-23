@@ -13,9 +13,5 @@ description: [A short guide through Suica features]
 - <big>[**Examples**](examples.md)</big><br>A collection of all Suica examples
 
 
-<small><small>{{site.time | date_to_long_string}}</small></small>
-<small><small>{{ page.date | date_to_long_string }}</small></small>
-
-
-
-May, 2022
+<small>{{site.time | date_to_long_string}}</small>
+<small>{{site.time | date: "%B %Y"}}</small>
