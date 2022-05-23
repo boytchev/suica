@@ -9,7 +9,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 # Table of contents
 
 - [Introduction](#introduction)
-	- <small>[Setting properties](#setting-properties)</small>
+	- <small>[Setting properties](#setting-properties): [`its`](#its)</small>
 	- <small>[Multiple properties](#multiple-properties): [`style`](#style)</small>
 - [Geometrical properties](#geometrical-properties)
 	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z)</small>
@@ -47,6 +47,24 @@ b = cube();
 b.color = 'blue';
 b.center = [10,30,15];
 ```
+
+Suica defines a system variable `its` that is an alternative way to attach properties.
+
+#### its
+```js
+JS:
+its.𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦 = 𝑣𝑎𝑙𝑢𝑒;
+```
+Variable. Points to the latest created object. This variable is used to define properties of an object without using its name. This includeс anonymous objects.
+
+```js
+JS:
+cube();
+its.size = [40,30,30];
+its.color = 'white';
+```
+[<kbd><img src="../examples/snapshots/its.jpg" width="400"></kbd>](../examples/its.html)
+
 
 Some properties are use so often, that they are included as parameters of the functions that create objects. In this case the names of the properties are not used, but the order of parameters is fixed. Only the trailing parameters can be omitted.
 

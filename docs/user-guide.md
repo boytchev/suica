@@ -10,7 +10,8 @@ description: [A short guide through Suica features]
 - <big>[CHAPTER 3: **Properties**](properties.md)</big><br>The common properties of Suica objects
 - <big>[CHAPTER 4: **Drawings**](drawings.md)</big><br>Drawings that could be applied onto objects
 - <big>[CHAPTER 5: **Events**](events.md)</big><br>Things that help making interactive programs
-- <big>[**Examples**](examples.md)</big><br>A collection of all Suica examples
+
+- [EXAMPLES](examples.md)<br>A collection of all Suica examples
 
 
 
