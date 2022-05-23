@@ -3,7 +3,7 @@ title: Suica User Guide
 description: [A short guide through Suica features]
 ---
 
-&nbsp;
+## Table of contents
 
 - <big>[CHAPTER 1: **Suica**](suica.md)</big><br>The main tag of Suica and its properties
 - <big>[CHAPTER 2: **Objects**](objects.md)</big><br>The core of Suica &ndash; from point to sphere
@@ -13,5 +13,4 @@ description: [A short guide through Suica features]
 - <big>[**Examples**](examples.md)</big><br>A collection of all Suica examples
 
 
-<small>{{site.time | date_to_long_string}}</small>
-<small>{{site.time | date: "%B %Y"}}</small>
+<small>{{site.time | date: "%B, %Y"}}</small>
