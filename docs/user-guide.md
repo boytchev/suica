@@ -13,7 +13,7 @@ description: [A short guide through Suica features]
 - <big>[**Examples**](examples.md)</big><br>A collection of all Suica examples
 
 
-<small><small>{{site.time}}</small></small>
+<small><small>{{site.time | date_to_long_string}}</small></small>
 <small><small>{{ page.date | date_to_long_string }}</small></small>
 
 
