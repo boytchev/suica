@@ -20,7 +20,7 @@ description: [The main tag of Suica and its properties]
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
-- [**TODO** References](#references) [<small>[tester](#tester) | [Q&A](#questions-and-answers) </small>] 
+- [Questions and answers](#questions-and-answers)
 
 
 # Introduction
@@ -42,7 +42,7 @@ Suica creates 3D images and animations in a web page. Suica is distributed as `s
 
 [**Three.js**](https://threejs.org/) provides the graphical backbone of Suica. It is loaded automatically by Suica, so `three.min.js` file must be present alongside `suica.js` or `suica.min.js`.
 
-The general structure of a web page that uses Suica needs a few tags. The tag `<script>` with attrbute `src` pointing to the Suica library loads and activates Suica. The drawing canvas is defined with `<suica>` tag inside `<body>`. The part of the scene that is created in HTML is inside this `<suica>` tag. The part of the scene that is created with JavaScript commands is inside a separate `<script>` tag.
+The general structure of a web page that uses Suica needs a few tags. The tag `<script>` with attribute `src` pointing to the Suica library loads and activates Suica. The drawing canvas is defined with `<suica>` tag inside `<body>`. The part of the scene that is created in HTML is inside this `<suica>` tag. The part of the scene that is created with JavaScript commands is inside a separate `<script>` tag.
 
 
 ```html
@@ -88,7 +88,7 @@ HTML+CSS:
 
 The drawing canvas has additional properties, that can be set as HTML attributes of `<suica>`, as standalone HTML tags inside `<suica>...</suica>` or as JavaScript commands in `<script>...</script>`.
 
-As a global vairbale `suica` references the last created Suica instance. It is used to access the Suica canvas if it has no name.
+As a global variable `suica` references the last created Suica instance. It is used to access the Suica canvas if it has no name.
 
 
 #### background
@@ -113,7 +113,7 @@ suica {
 JS:
 background( 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Property and command. Defines the background color of the Suica canvas. It can be set as HTML attribute, CSS style (both inlined and non-inlined), HTML tag and JavaScript function. By default the background color is [white smoke](https://www.color-hex.com/color/f5f5f5).
+Property and command. Defines the background color of the Suica canvas. It can be set as HTML attribute, CSS style (both inlined and non-inlined), HTML tag and JavaScript function. By default, the background color is [white smoke](https://www.color-hex.com/color/f5f5f5).
 
 ```html
 HTML/CSS:
@@ -144,7 +144,7 @@ Property. Controls how objects [positions](properties.md#position) and [sizes](p
 
 <img src="images/coordinate-system-orientation.png">
 
-The default orientation in Suica is `XYZ`. All examples in this user guide use this orientation, unless explicitely stated that other orientations are used.
+The default orientation in Suica is `XYZ`. All examples in this user guide use this orientation, unless explicitly stated that other orientations are used.
 
 ```html
 HTML:
@@ -179,7 +179,7 @@ Graphical scenes in Suica can be created in HTML or in JavaScript. Independent o
 |Application|Static scenes|Static and dynamic scenes|
 |Names of entities|Case-insensitive|Case-sensitive|
 |[Objects](#objects.md)|Defined as HTML tags|Defined as JS functions|
-|[Object properties](#properties.md)|Defined as named tag attributes, arbitrary order, any property can e omitted|Defined as anonumous parameters, fixed order, only trailing parameters can be omitted|
+|[Object properties](#properties.md)|Defined as named tag attributes, arbitrary order, any property can e omitted|Defined as anonymous parameters, fixed order, only trailing parameters can be omitted|
 |Object modification|Cannot be modified|Can be modified|
 
 
@@ -202,7 +202,7 @@ HTML:
 
 Suica does not require that all tags are properly closed. Exceptions are `<suica>`, [`<group>`](objects.md#group) and [`<drawing>`](drawings.md#drawing) tags &ndash; they are containers and their exact content is important for Suica. Unclosed tags will make HTML validators scream in horror.
 
-When a scene is defined in JavaScript, all objects are created with functions inside a `<script>` tag ouside the `<suica>` tag.
+When a scene is defined in JavaScript, all objects are created with functions inside a `<script>` tag outside the `<suica>` tag.
 ```html
 HTML/JS:
 <suica></suica>
@@ -226,7 +226,7 @@ HTML/JS:
 
 ## Creating animations
 
-In Suica animations are implemented in JavaScript. Animation in a mobile platform is controlled by browser ticks. For each tick the browser notifies the user application which must provide one frame from the animation. Thus a motion from point A to point B is split into numerous small steps that eventually end up to B. Each small step is processed individually and separately from all other steps of the motion.
+In Suica animations are implemented in JavaScript. Animation in a mobile platform is controlled by browser ticks. For each tick the browser notifies the user application which must provide one frame from the animation. Thus, a motion from point A to point B is split into numerous small steps that eventually end up to B. Each small step is processed individually and separately from all other steps of the motion.
 
 <img src="images/animation.png">
 
@@ -298,7 +298,7 @@ JS:
 oxyz( 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
 ```
 
-Command. Vizualizes the coordinate system. The coordinate system is an abstract object and it has no graphical representation. The command `oxyz` visualizes the system as three segments with custom size and color. By default `size` is 30 and `color` is [black](https://www.color-hex.com/color/000000).
+Command. Visualizes the coordinate system. The coordinate system is an abstract object and it has no graphical representation. The command `oxyz` visualizes the system as three segments with custom size and color. By default, `size` is 30 and `color` is [black](https://www.color-hex.com/color/000000).
 
 ```html
 HTML:
@@ -322,7 +322,7 @@ HTML:
 JS:
 demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
 ```
-Command. Turns on *demo mode* &ndash; atomatic scene rotation. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the the coordinate system and altitude. By default `distance` is 100 and `altitude` is 30.
+Command. Turns on *demo mode* &ndash; automatic scene rotation. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the coordinate system and altitude. By default `distance` is 100 and `altitude` is 30.
 
 ```html
 HTML:
@@ -348,7 +348,7 @@ JS:
 lookAt( 𝑓𝑟𝑜𝑚, 𝑡𝑜, 𝑢𝑝 );
 ```
 
-Command. Defines the viewing position and orientation. The command `lookAt` takes three parameters: `from` is a 3D location for the viewing position (the camera is placed there), `to` is a 3D position of the viewing target (the camera is facing it), and `up` is a vector defining the head orientation (the direction that is considered upwards). By default the target position is (0,0,0), and the up direction corresponds to the up axis of the coordinate system.
+Command. Defines the viewing position and orientation. The command `lookAt` takes three parameters: `from` is a 3D location for the viewing position (the camera is placed there), `to` is a 3D position of the viewing target (the camera is facing it), and `up` is a vector defining the head orientation (the direction that is considered upwards). By default, the target position is (0,0,0), and the up direction corresponds to the up axis of the coordinate system.
 
 ```html
 HTML:
@@ -393,7 +393,7 @@ JS:
 perspective( 𝑛𝑒𝑎𝑟, 𝑓𝑎𝑟, 𝑓𝑜𝑣 );
 ```
 
-Property and command. Sets a perspective camera projection. Objects further away appear smaller. The perspective is defined by `near` distance , `far` distance and `field of view` angle.
+Property and command. Sets a perspective camera projection. Objects further away appear smaller. The perspective is defined by `near` distance, `far` distance and `field of view` angle.
 
 The `near` and `far` distances (by default 1 and 1000) define the depth span of the viewing area. Objects and part of objects outside this area are not drawn. The `field of view` angle is measured in degrees (by default 40&deg;) and it defines the vertical span of the viewing area. Smaller angles make objects appear bigger and reduce the perspective effect; larger angles make objects appear smaller and increases the perspective effect.
 
@@ -494,9 +494,9 @@ To exit full screen mode press `Esc` or follow the browser's instruction shown a
 
 ## Cameras
 
-Suica supports several virtual stereo cameras. They split the image of the scene into two images &ndash; one for the left eye and another one for the right eye. Both images are then combined into a single image, shown on the screen. Viewing such stereo images reqiures additional hardware like 3D glasses or special viewing techniques like cross-eyed viewing.
+Suica supports several virtual stereo cameras. They split the image of the scene into two images &ndash; one for the left eye and another one for the right eye. Both images are then combined into a single image, shown on the screen. Viewing such stereo images requires additional hardware like 3D glasses or special viewing techniques like cross-eyed viewing.
 
-The `stereo` camera implements wall-eyed and cross-eyed viewing, as well as stereoscopic glasses that use user's smartphone as screen. The `anaglyph` camera produces images for anaglyhph red-cyan glasses. The `vr` camera can be used only with VR headsets.
+The `stereo` camera implements wall-eyed and cross-eyed viewing, as well as stereoscopic glasses that use user's smartphone as screen. The `anaglyph` camera produces images for anaglyph red-cyan glasses. The `vr` camera can be used only with VR headsets.
 
 <img src="images/camera-types.png">
 
@@ -511,9 +511,9 @@ JS:
 stereo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 );
 ```
 
-Property and command. Sets a stereo camera. The scene is drawb twice &ndash; side-by-side, once for each of the eyes. The stereo effect is controlled by `distance` parameter, which determines the stereo effect. By default, it is 5. Values closer to 0 decreases the stereo effect.
+Property and command. Sets a stereo camera. The scene is drawn twice &ndash; side-by-side, once for each of the eyes. The stereo effect is controlled by `distance` parameter, which determines the stereo effect. By default, it is 5. Values closer to 0 decreases the stereo effect.
 
-Both positive and negative distances are allowed. Positive distances correspond to wall-eyed viewing or vewing with a smartphone and low-end stereoscopic glasses. Negative distances swap left and right images and correspond to cross-eyed viewing.
+Both positive and negative distances are allowed. Positive distances correspond to wall-eyed viewing or viewing with a smartphone and low-end stereoscopic glasses. Negative distances swap left and right images and correspond to cross-eyed viewing.
 
 ```html
 HTML:
@@ -573,7 +573,7 @@ JS:
 vr( );
 ```
 
-Property and command. Allows Suica to go into emmersive 3D environment. Using a VR stereo camera adds a button at the bottom of the canvas. If the button says `[ENTER VR]` the user must click it to enter VR mode. If VR is not supported, the button says `[VR NOT SUPPORTED]`. 
+Property and command. Allows Suica to go into immersive 3D environment. Using a VR stereo camera adds a button at the bottom of the canvas. If the button says `[ENTER VR]` the user must click it to enter VR mode. If VR is not supported, the button says `[VR NOT SUPPORTED]`. 
 
 Currently the VR camera in Suica does not provide access to the controllers. Also, VR mode is not supported when the HTML file is loaded locally from `file:`.
 
@@ -644,55 +644,33 @@ a = random( [1, 2, 3, 4] ); // from the list
 
 
 
----
----
----
----
----
----
+# Questions and answers
 
-
-## References
-
-### Reference guide
-
-A reference guide and code templates are collected [here](reference-guide.md)
-
-### List of examples
-
-All examples are collected in a single page [here](examples.md)
+- [How to test Suica on my system?](#how-to-test-suica-on-my-system)
+- [How to change the attribute of an object created in HTML?](#how-to-change-the-attribute-of-an-object-created-in-html)
+- [How to change the center of an object in respect to the object?](#how-to-change-the-center-of-an-object-in-respect-to-the-object)
 
 
 
-### Tester
 
-A rudimentery tester for Suica is availble [here](../test/test.html).
-It runs predefined test cases and compares the produced images.
+## How to test Suica on my system?
 
-It reports the percentage of match:
+There is a rudimentary automatic [Suica tester](../test/test.html). It runs predefined test cases and compares the produced images. It reports the percentage of match:
 
 - A match of 90% or more is considered normal.
 - A match between 70% and 90% is most likely due to some rendering fluctuations
 and a visual inspection is recommended.
-- A match below 70% most likely indicates a problem and a visula inspection is
+- A match below 70% most likely indicates a problem and a visual inspection is
 required.
 
-Because timings cannot be set absolutely, some test cases may not produce the
-expected result. In this case run the tester another time to check whether the
-result is consistent.
+Because timings cannot be set absolutely, some test cases may not produce the expected result. In this case run the tester another time to check whether the result is consistent.
 
 
 
 
-### Questions and answers
-- [How to change the attribute of an object created in HTML?](#how-to-change-the-attribute-of-an-object-created-in-html)
-- [How to change the center of an object in respect to the object?](#how-to-change-the-center-of-an-object-in-respect-to-the-object)
+## How to change the attribute of an object created in HTML?
 
-#### How to change the attribute of an object created in HTML?
-
-The prefered way is to create the object with a name in attribute `id`. Suica
-will create a global variable with that name, which can be modified. The
-alternative way is to modify the attribute itself with a string value.
+The preferred way is to create the object with a name in attribute `id`. Suica will create a global variable with that name, which can be modified. The alternative way is to modify the attribute itself with a string value.
 
 ```html
 HTML:
@@ -714,12 +692,10 @@ cube.setAttribute( 'size', 10 );
 
 
 
-#### How to change the center of an object in respect to the object?
 
-The center of an object is important point as translation, scaling and rotation
-is done in respect to the center. To define a custom center of an object it can
-be put in a group. Then the center of the group can be used instead of a custom
-object center.
+## How to change the center of an object in respect to the object?
+
+The center of an object is important point as translation, scaling and rotation is done in respect to the center. To define a custom center of an object it can be put in a group. Then the center of the group can be used instead of a custom object center.
 
 <img src="images/custom-center.png">
 
