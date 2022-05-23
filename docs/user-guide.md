@@ -5,12 +5,12 @@ description: [A short guide through Suica features]
 
 &nbsp;
 
-## [**Chapter 1: Suica**](suica.md) <small>&ndash; The main tag of Suica and its properties</small>
-## [**Chapter 2: Objects**](objects.md) <small>&ndash; The core of Suica &ndash; from point to sphere</small>
-## [**Chapter 3: Properties**](properties.md) <small>&ndash; The common properties of Suica objects</small>
-## [**Chapter 4: Drawings**](drawings.md) <small>&ndash; Drawings that could be applied onto objects</small>
-## [**Chapter 5: Events**](events.md) <small>&ndash; Things that help making interactive programs</small>
-## [**Examples**](examples.md)<br><small>A collection of all Suica examples</small>
+- <big>[CHAPTER 1: **Suica**](suica.md)</big><br>The main tag of Suica and its properties
+- <big>[CHAPTER 2: **Objects**](objects.md)</big><br>The core of Suica &ndash; from point to sphere
+- <big>[CHAPTER 3: **Properties**](properties.md)</big><br>The common properties of Suica objects
+- <big>[CHAPTER 4: **Drawings**](drawings.md)</big><br>Drawings that could be applied onto objects
+- <big>[CHAPTER 5: **Events**](events.md)</big><br>Things that help making interactive programs
+- <big>[**Examples**](examples.md)</big><br>A collection of all Suica examples
 
 
 
