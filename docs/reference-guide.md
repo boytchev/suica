@@ -607,7 +607,7 @@ HTML:
 <lineto center="𝑥,𝑦" x="𝑥" y="𝑦">
 <curveto m="𝑚𝑥,𝑚𝑦" mx="𝑚𝑥" my="𝑚𝑦" center="𝑥,𝑦" x="𝑥" y="𝑦">
 <arc center="𝑥,𝑦" x="𝑥" y="𝑦" radius="𝑟𝑎𝑑𝑖𝑢𝑠" from="𝑓𝑟𝑜𝑚" to="𝑡𝑜" cw cw="𝑐𝑤" ccw ccw="𝑐𝑐𝑤">
-<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" close close="𝑐𝑙𝑜𝑠𝑒">
+<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" closed close="𝑐𝑙𝑜𝑠𝑒𝑑">
 <fill color="𝑐𝑜𝑙𝑜𝑟">
 <filltext center="𝑥,𝑦" x="𝑥" y="𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
 <clear>

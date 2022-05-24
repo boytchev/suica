@@ -311,20 +311,20 @@ The outline of a shape is drawn with `stroke`.
 #### stroke
 ```html
 HTML:
-<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" close="𝑐𝑙𝑜𝑠𝑒">
+<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" closed="𝘤𝘭𝘰𝘴𝘦𝘥">
 ```
 ```js
 JS:
-stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝑐𝑙𝑜𝑠𝑒 );
+stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝘤𝘭𝘰𝘴𝘦𝘥 );
 ```
 
-Command. Draws a line around a shape. The line has given `color` and `width` (in pixels). If the `close` parameter is *true*, then a line is closed &ndash; its end is connected to its beginning. A `stroke` immediately after another `stroke` or [`fill`](#fill) reuses the same shape.
+Command. Draws a line around a shape. The line has given `color` and `width` (in pixels). If the `closed` parameter is *true*, then a line is closed &ndash; its end is connected to its beginning. A `stroke` immediately after another `stroke` or [`fill`](#fill) reuses the same shape.
 
 ```html
 HTML:
 <stroke color="crimson">
-<stroke color="crimson" width="10" close>
-<stroke color="crimson" width="10" close="true">
+<stroke color="crimson" width="10" closed>
+<stroke color="crimson" width="10" closed="true">
 ```
 ```js
 JS:

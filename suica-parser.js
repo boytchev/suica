@@ -693,16 +693,16 @@ class HTMLParser
 	} // HTMLParser.parseTagARC
 
 
-	// <stroke color="..." width="..." close close="...">
+	// <stroke color="..." width="..." closed closed="...">
 	parseTagSTROKE( suica, elem )
 	{
 		var color = elem.getAttribute('color') || Suica.DEFAULT.STROKE.COLOR,
 			width = Drawing.parseN( elem, 'width', Drawing.STROKE_WIDTH ),
-			close = Drawing.parseBool( elem, 'close', '', Drawing.STROKE_CLOSE );
+			closed = Drawing.parseBool( elem, 'closed', '', Drawing.STROKE_CLOSED );
 		
-		if( elem.hasAttribute('close') && elem.getAttribute('close')=="") close = true;
+		if( elem.hasAttribute('closed') && elem.getAttribute('closed')=="") closed = true;
 
-		stroke( color, width, close );
+		stroke( color, width, closed );
 	} // HTMLParser.parseTagSTROKE
 
 

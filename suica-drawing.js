@@ -8,7 +8,7 @@
 // curveTo( mx, my, x, y )
 // arc( x, y, r, from, to )
 // fillText( x, y, text, color, font )
-// stroke( color, width, close )
+// stroke( color, width, closed )
 // fill( color )
 //
 //===================================================
@@ -25,7 +25,7 @@ class Drawing
 	static FILL_COLOR = 'gray';
 	static STROKE_COLOR = 'black';
 	static STROKE_WIDTH = 1;
-	static STROKE_CLOSE = false;
+	static STROKE_CLOSED = false;
 	static FONT = '20px Arial';
 
 	// current active Drawing instance
@@ -168,11 +168,11 @@ class Drawing
 	
 	
 
-	stroke( color = Drawing.STROKE_COLOR, width = Drawing.STROKE_WIDTH, close = Drawing.STROKE_CLOSE )
+	stroke( color = Drawing.STROKE_COLOR, width = Drawing.STROKE_WIDTH, closed = Drawing.STROKE_CLOSED )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 		
-		if( close ) this.context.closePath();
+		if( closed ) this.context.closePath();
 		
 		this.context.strokeStyle = color;
 		this.context.lineWidth = width;
