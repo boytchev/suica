@@ -18,7 +18,7 @@ if( TEST_MODE )
 else
 	console.log(`(\\/)
 ( ..)		Suica 2.-1
-c(”)(”)		(220503)
+c(”)(”)		(220524)
 `);
 
 
@@ -121,7 +121,7 @@ class Suica
 	
 	// default values for Suica commands
 	static OXYZ = { COLOR: 'black', SIZE: 30 };
-	static DEMO = { DISTANCE: 100, ALTITUDE: 30 };
+	static DEMO = { DISTANCE: 100, ALTITUDE: 30, SPEED: 1 };
 	static BACKGROUND = 'whitesmoke';
 	static ANAGLYPH = { DISTANCE: 5 };
 	static STEREO = { DISTANCE: 1 };
@@ -423,6 +423,8 @@ class Suica
 		
 		function adjustDemoViewPoint( time )
 		{
+			time *= that.demoViewPoint.speed;
+			
 			var x = that.demoViewPoint.distance*Math.cos(time),
 				y = that.demoViewPoint.altitude,
 				z = that.demoViewPoint.distance*Math.sin(time);
@@ -706,14 +708,15 @@ class Suica
 	} // Suica.oxyz
 	
 	
-	demo( distance, altitude )
+	demo( distance, altitude, speed )
 	{
 		this.parser?.parseTags();
 		this.debugCall( 'demo', ...arguments );
 		
 		this.demoViewPoint = {
 			distance : Suica.parseNumber( distance, Suica.DEMO.DISTANCE ),
-			altitude : Suica.parseNumber( altitude, Suica.DEMO.ALTITUDE )
+			altitude : Suica.parseNumber( altitude, Suica.DEMO.ALTITUDE ),
+			speed    : Suica.parseNumber( speed, Suica.DEMO.SPEED ),
 		};
 	} // Suica.demo
 
@@ -1963,12 +1966,13 @@ class HTMLParser
 	} // HTMLParser.parseTagOXYZ
 	
 	
-	// <demo distance="..." altitude="...">
+	// <demo distance="..." altitude="..." speed="...">
 	parseTagDEMO( suica, elem )
 	{
 		suica.demo(
 			elem.getAttribute('distance'),
-			elem.getAttribute('altitude')
+			elem.getAttribute('altitude'),
+			elem.getAttribute('speed'),
 		);
 	} // HTMLParser.parseTagDEMO
 	

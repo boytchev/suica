@@ -316,13 +316,13 @@ oxyz( 30, 'black' );
 #### demo
 ```html
 HTML:
-<demo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" altitude="𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒">
+<demo distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" altitude="𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒" speed="𝘴𝘱𝘦𝘦𝘥">
 ```
 ```js
 JS:
-demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
+demo( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒, 𝘴𝘱𝘦𝘦𝘥 );
 ```
-Command. Turns on *demo mode* &ndash; automatic scene rotation. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the coordinate system and altitude. By default `distance` is 100 and `altitude` is 30.
+Command. Turns on *demo mode* &ndash; automatic scene rotation. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the coordinate system and altitude. By default, `distance` is 100 and `altitude` is 30. Parameter `speed` sets the rotation speed. The default speed is 1 radian per seconds (i.e. approximately 6.3 seconds for full revolution).
 
 ```html
 HTML:

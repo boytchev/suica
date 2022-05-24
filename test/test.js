@@ -40,6 +40,7 @@ var cases = [
 	
 	'demo-js',
 	'demo-html',
+	'demo-fast',
 	
 	'suica-orientation-xyz',
 	'suica-orientation-xzy',

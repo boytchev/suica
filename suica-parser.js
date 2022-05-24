@@ -115,12 +115,13 @@ class HTMLParser
 	} // HTMLParser.parseTagOXYZ
 	
 	
-	// <demo distance="..." altitude="...">
+	// <demo distance="..." altitude="..." speed="...">
 	parseTagDEMO( suica, elem )
 	{
 		suica.demo(
 			elem.getAttribute('distance'),
-			elem.getAttribute('altitude')
+			elem.getAttribute('altitude'),
+			elem.getAttribute('speed'),
 		);
 	} // HTMLParser.parseTagDEMO
 	
