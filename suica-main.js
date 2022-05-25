@@ -17,7 +17,7 @@ if( TEST_MODE )
 else
 	console.log(`(\\/)
 ( ..)		Suica 2.-1
-c(”)(”)		(220524)
+c(”)(”)		(220525)
 `);
 
 
