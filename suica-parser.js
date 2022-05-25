@@ -651,32 +651,32 @@ class HTMLParser
 
 
 	
-	// <moveto center="x,y">
+	// <moveto point="x,y">
 	// <moveto x="..." y="...">
 	parseTagMOVETO( suica, elem )
 	{
-		moveTo( ...Drawing.parseXY( elem, 'center', 'x', 'y' ) );
+		moveTo( ...Drawing.parseXY( elem, 'point', 'x', 'y' ) );
 	} // HTMLParser.parseTagMOVETO
 
 
-	// <lineto center="x,y">
+	// <lineto point="x,y">
 	// <lineto x="..." y="...">
 	parseTagLINETO( suica, elem )
 	{
-		lineTo( ...Drawing.parseXY( elem, 'center', 'x', 'y' ) );
+		lineTo( ...Drawing.parseXY( elem, 'point', 'x', 'y' ) );
 	} // HTMLParser.parseTagLINETO
 
 
-	// <curveto m="mx,my" center="x,y">
+	// <curveto m="mx,my" point="x,y">
 	// <curveto mx="..." my="..." x="..." y="...">
 	parseTagCURVETO( suica, elem )
 	{
 		var m = Drawing.parseXY( elem, 'm', 'mx', 'my' );
-		curveTo( ...m, ...Drawing.parseXY( elem, 'center', 'x', 'y' ) );
+		curveTo( ...m, ...Drawing.parseXY( elem, 'point', 'x', 'y' ) );
 	} // HTMLParser.parseTagCURVETO
 
 
-	// <arc center="..." x="..." y="..." radius="..." from="..." to="..." cw cw="..." ccw ccw="ccw">
+	// <arc point="..." x="..." y="..." radius="..." from="..." to="..." cw cw="..." ccw ccw="ccw">
 	parseTagARC( suica, elem )
 	{
 		var radius = Drawing.parseN( elem, 'radius', Drawing.ARC_RADIUS ),
@@ -684,7 +684,7 @@ class HTMLParser
 			to = Drawing.parseN( elem, 'to', Drawing.ARC_TO );
 
 		arc(
-			...Drawing.parseXY( elem, 'center', 'x', 'y' ),
+			...Drawing.parseXY( elem, 'point', 'x', 'y' ),
 			radius,
 			from,
 			to,
@@ -715,14 +715,14 @@ class HTMLParser
 	} // HTMLParser.parseTagFILL
 
 
-	// <fillText center="..." x="..." y="..." text="..." color="..." font="...">
+	// <fillText point="..." x="..." y="..." text="..." color="..." font="...">
 	parseTagFILLTEXT( suica, elem )
 	{
 		var text = elem.getAttribute('text') || '',
 			color = elem.getAttribute('color') || Drawing.FILL_COLOR,
 			font = elem.getAttribute('font') || Drawing.FONT;
 		
-		fillText( ...Drawing.parseXY( elem, 'center', 'x', 'y' ), text, color, font );
+		fillText( ...Drawing.parseXY( elem, 'point', 'x', 'y' ), text, color, font );
 	} // HTMLParser.parseTagFILLTEXT
 
 

@@ -89,7 +89,7 @@ The actual drawing of shapes and texts in a drawing depends on how it is created
 ```html
 HTML:
 <drawing id="a" width="100" height="100" color="lightsalmon">
-   <moveTo center="10,10">
+   <moveTo point="10,10">
    <lineTo x="90">
    <lineTo y="90">
    <lineTo x="10">
@@ -173,7 +173,7 @@ Shapes are define with the following commands:
 #### moveTo
 ```html
 HTML:
-<moveTo center="𝑥,𝑦">
+<moveTo point="𝑥,𝑦">
 <moveTo x="𝑥" y="𝑦">
 ```
 ```js
@@ -181,11 +181,11 @@ JS:
 moveTo( 𝑥, 𝑦 );
 ```
 
-Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment. This is used to set the starting point of a shape boundary. By default, both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
+Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment. This is used to set the starting point of a shape boundary. By default, both *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
-<moveTo center="10,0">
+<moveTo point="10,0">
 <moveTo x="10" y="0">
 ```
 ```js
@@ -199,7 +199,7 @@ moveTo( 10, 0 );
 #### lineTo
 ```html
 HTML:
-<lineTo center="𝑥,𝑦">
+<lineTo point="𝑥,𝑦">
 <lineTo x="𝑥" y="𝑦">
 ```
 ```js
@@ -207,11 +207,11 @@ JS:
 lineTo( 𝑥, 𝑦 );
 ```
 
-Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. This is used to define straight segments of the shape. By default, both *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`.
+Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. This is used to define straight segments of the shape. By default, both *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
-<lineTo center="10,0">
+<lineTo point="10,0">
 <lineTo x="10" y="0">
 ```
 ```js
@@ -227,7 +227,7 @@ lineTo( 10, 0 );
 #### curveTo
 ```html
 HTML:
-<curveTo m="𝑚𝑥,𝑚𝑦" center="𝑥,𝑦">
+<curveTo m="𝑚𝑥,𝑚𝑦" point="𝑥,𝑦">
 <curveTo mx="𝑚𝑥" mt="𝑚𝑦" x="𝑥" y="𝑦">
 ```
 ```js
@@ -235,13 +235,13 @@ JS:
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
 ```
 
-Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape boundary. The line is [quadratic curve](https://mathworld.wolfram.com/QuadraticCurve.html) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `center` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
+Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape boundary. The line is [quadratic curve](https://mathworld.wolfram.com/QuadraticCurve.html) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
 
 <img src="images/curveto.png">
 
 ```html
 HTML:
-<curveTo m="10,0" center="20,15">
+<curveTo m="10,0" point="20,15">
 <curveTo mx="10" my="0" x="20" y="15">
 ```
 ```js
@@ -263,8 +263,8 @@ Complex shapes can be constructed by joining individual curves. The shape of a h
 #### arc
 ```html
 HTML:
-<arc center="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟">
-<arc center="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟" from="𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒" to="𝑡𝑜𝐴𝑛𝑔𝑙𝑒" cw="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟">
+<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟" from="𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒" to="𝑡𝑜𝐴𝑛𝑔𝑙𝑒" cw="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
 ```
 ```js
 JS:
@@ -272,14 +272,14 @@ arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠 );
 arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒, 𝑡𝑜𝐴𝑛𝑔𝑙𝑒, 𝑐𝑤 );
 ```
 
-Command. Adds a circular arc to the shape. This command creates an arc of a circle with center (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees, by default 0 and 360. Parameter `cw` sets the direction of the arc &ndash; either clockwise (if `cw` is true, this is by default) or counterclockwise (if `cw` is false). If the angles are omitted, a full circle is generated. 
+Command. Adds a circular arc to the shape. This command creates an arc of a circle with point (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees, by default 0 and 360. Parameter `cw` sets the direction of the arc &ndash; either clockwise (if `cw` is true, this is by default) or counterclockwise (if `cw` is false). If the angles are omitted, a full circle is generated. 
 
 <img src="images/drawing-arc.png">
 
 
 ```html
 HTML:
-<arc center="10,0" radius="5">
+<arc point="10,0" radius="5">
 <arc x="10" y="0" radius="5" from="0" to="180" ccw>
 ```
 ```js
@@ -291,7 +291,7 @@ arc( 10, 0, 5, 0, 180, false);
 
 [<kbd><img src="../examples/snapshots/drawing-arc.jpg" width="300"></kbd>](../examples/drawing-arc.html)
 
-In HTML `center` can be split into individual parameters `x` and `y`. Also in HTML the `cw` attribute has antagonist attribute `ccw`. If the values of `cw` or `ccw` are omitted, they are assumed to be *true*. The following commands are equivalent:
+In HTML `point` can be split into individual parameters `x` and `y`. Also in HTML the `cw` attribute has antagonist attribute `ccw`. If the values of `cw` or `ccw` are omitted, they are assumed to be *true*. The following commands are equivalent:
 
 ```html
 HTML:
@@ -375,7 +375,7 @@ Drawing texts is done with the `fillText` command.
 #### fillText
 ```html
 HTML:
-<fillText center="𝑥,𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
+<fillText point="𝑥,𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
 <fillText x="𝑥" y="𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
 ```
 ```js
@@ -384,11 +384,11 @@ JS:
 ```
 
 Command. Draws a text. The `text` is drawn at given coordinates (`x`,`y`) with
-given `color` and `font` style &ndash; a string with a [CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description (the default font is `'20px Arial'`). In HTML `center` can be split into individual parameters `x` and `y`.
+given `color` and `font` style &ndash; a string with a [CSS font](https://developer.mozilla.org/en-US/docs/Web/CSS/font) description (the default font is `'20px Arial'`). In HTML `point` can be split into individual parameters `x` and `y`.
 
 ```html
 HTML:
-<fillText center="10,5" text="Sample text" color="crimson" font="bold 20px Courier">
+<fillText point="10,5" text="Sample text" color="crimson" font="bold 20px Courier">
 ```
 ```js
 JS:
