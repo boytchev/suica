@@ -1363,14 +1363,25 @@ window.spline = function( points=Suica.SPLINE.POINTS, closed, interpolant )
 		
 		function catmullRom( p0, p1, p2, p3 )
 		{
-			var v0 = (p2-p0) * 0.5,
-				v1 = (p3-p1) * 0.5;
-			return (2*p1-2*p2+v0+v1)*t3 + (-3*p1+3*p2-2*v0-v1)*t2 + v0*t + p1;
+			// var v0 = (p2-p0) * 0.5,
+			//     v1 = (p3-p1) * 0.5;
+			// return (2*p1-2*p2+v0+v1)*t3 + (-3*p1+3*p2-2*v0-v1)*t2 + v0*t + p1;
+			var B0 = (-t3+2*t2-t)/2,
+				B1 = (3*t3-5*t2+2)/2,
+				B2 = (-3*t3+4*t2+t)/2,
+				B3 = (t3-t2)/2;
+				
+			return p0*B0 + p1*B1 + p2*B2 + p3*B3;
 		}
 
 		function bSpline( p0, p1, p2, p3 )
 		{
-			return (p0*(1-3*t+3*t2-t3) + p1*(4-6*t2+3*t3) + p2*(1+3*t+3*t2-3*t3) + p3*t3)/6;
+			var B0 = (1-3*t+3*t2-t3)/6,
+				B1 = (4-6*t2+3*t3)/6,
+				B2 = (1+3*t+3*t2-3*t3)/6,
+				B3 = (t3)/6;
+				
+			return p0*B0 + p1*B1 + p2*B2 + p3*B3;
 		}
 
 		var splineFunction = interpolant ? catmullRom : bSpline;
