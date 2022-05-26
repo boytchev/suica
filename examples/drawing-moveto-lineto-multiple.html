@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Drawing &ndash; extended moveTo and lineTo</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Drawing &ndash; extended moveTo and lineTo</h1>
+	<p>Drawing a multisegment line with extended moveTo and lineTo.</p>
+
+	<suica>
+		<demo>
+		<cube id="a" color="white">
+		
+		<drawing id="pic" size="50">
+
+			<moveTo point="20,49,1,49,1,30">
+			<moveTo point="10,49,10,30,20,30,20,20">
+			<moveTo point="20,40,40,40,40,30">
+			
+			<moveTo point="30,49"> <lineTo point="49,49,49,30">
+			<moveTo point="20,1"> <lineTo point="2,1,2,20">
+			
+			<stroke color="lightsalmon" width="4">
+		</drawing>
+	</suica>
+	
+	<script>
+		pic.moveTo( 10, 20, 10, 10, 40, 10, 40, 20, 30, 20, 30, 30 );
+		pic.moveTo( 30, 1 );
+		pic.lineTo( 49, 1, 49, 20 );
+		
+		pic.stroke( "lightsalmon", 4 );
+		
+		a.image = pic;
+	</script>
+	
+</body>
+</html>

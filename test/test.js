@@ -153,6 +153,7 @@ var cases = [
 	'drawing-opaque',
 	'drawing-stroke',
 	'drawing-transparent',
+	'drawing-moveto-lineto-multiple',
 
 ];
 

@@ -193,6 +193,26 @@ JS:
 moveTo( 10, 0 );
 ```
 
+Command `moveTo` has an extended variant with more points. The first point is used for `moveTo` and the rest points are used for `lineTo`. These examples:
+```html
+HTML:
+<moveTo point="10,0,20,0,15,10,30,10">
+```
+```js
+JS:
+moveTo( 10, 0, 20, 0, 15, 10, 30, 10 );
+```
+are equivalent to:
+```html
+HTML:
+<moveTo point="10,0">
+<lineTo point="20,0,15,10,30,10">
+```
+```js
+JS:
+moveTo( 10, 0 );
+lineTo( 20, 0, 15, 10, 30, 10 );
+```
 
 
 	
@@ -221,7 +241,32 @@ lineTo( 10, 0 );
 
 [<kbd><img src="../examples/snapshots/drawing-moveto-lineto.jpg" width="300"></kbd>](../examples/drawing-moveto-lineto.html)
 
+Command `lineTo` has an extended variant with more points, so that several consequitives `lineTo` commands can be merged ino one `lineTo`. These examples:
+```html
+HTML:
+<lineTo point="10,0,20,0,15,10,30,10">
+```
+```js
+JS:
+lineTo( 10, 0, 20, 0, 15, 10, 30, 10 );
+```
+are equivalent to:
+```html
+HTML:
+<lineTo point="10,0">
+<lineTo point="20,0">
+<lineTo point="15,10">
+<lineTo point="30,10">
+```
+```js
+JS:
+lineTo( 10, 0 );
+lineTo( 20, 0 );
+lineTo( 15, 10 );
+lineTo( 30, 10 );
+```
 
+[<kbd><img src="../examples/snapshots/drawing-moveto-lineto-multiple.jpg" width="300"></kbd>](../examples/drawing-moveto-lineto-multiple.html)
 
 
 #### curveTo

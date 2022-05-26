@@ -2710,19 +2710,33 @@ class Drawing
 
 
 
-	moveTo( x=0, y=0 )
+	moveTo( x=0, y=0, ...morePoints )
 	{
 		this.managePath();
 		this.context.moveTo( x, this.canvas.height-y );
+
+		for( var i=0; i<morePoints.length; i+=2 )
+		{
+			x = morePoints[i] || 0;
+			y = morePoints[i+1] || 0;
+			this.context.lineTo( x, this.canvas.height-y );
+		}
 	} // Drawing.moveTo
 	
 	
 	
 	
-	lineTo( x=0, y=0 )
+	lineTo( x=0, y=0, ...morePoints )
 	{
 		this.managePath();
 		this.context.lineTo( x, this.canvas.height-y );
+		
+		for( var i=0; i<morePoints.length; i+=2 )
+		{
+			x = morePoints[i] || 0;
+			y = morePoints[i+1] || 0;
+			this.context.lineTo( x, this.canvas.height-y );
+		}
 	} // Drawing.lineTo
 	
 	
