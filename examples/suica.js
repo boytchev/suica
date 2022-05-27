@@ -212,13 +212,13 @@ class Suica
 		
 		
 		// register local methods that have stereotypical code
-		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle] )
+		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex] )
 		{
 			Suica.registerClass( this, classObject );
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -4681,4 +4681,56 @@ class Tube extends Mesh
 	} // Tube.clone
 	
 } // class Tube
+﻿//
+// Suica 2.0 Convex
+// CC-3.0-SA-NC
+//
+//
+//===================================================
+
+
+
+class Convex extends Mesh
+{
+	static POINTS = []
+	static COLOR = 'lightsalmon';
+
+	constructor( suica, points, size, color )
+	{
+		suica.parser?.parseTags();
+		suica.debugCall( 'convex', points, size, color );
+
+		var threejsPoints = [];
+		for( var pnt of points )
+		{
+			threejsPoints.push( new THREE.Vector3( ...pnt ) );
+		}
+		var geometry = new THREE.ConvexGeometry( threejsPoints );
+		
+		super( suica, 
+			new THREE.Mesh( geometry, Mesh.solidMaterial.clone() ),
+			null, // no wireframe
+		);
+		
+		this.center = [0,0,0];
+		this.size = Suica.parseSize( size, Tube.SIZE );
+		this.color = Suica.parseColor( color, Tube.COLOR);
+		this._points = points;
+
+	} // Convex.constructor
+
+	get clone( )
+	{
+		var object = new Tube( this.suica, this.points, this.size, this.color );
+		
+		object.spin = this.spin;
+		object.image = this.image;
+
+		Suica.cloneEvents( object, this );
+			
+		return object;
+		
+	} // Convex.clone
+	
+} // class Convex
 } // LoadSuica 

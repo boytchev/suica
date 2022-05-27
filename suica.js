@@ -5,6 +5,9 @@
 //===================================================
 
 document.write( '<script src="three.min.js"></script>' );
+document.write( '<script src="ConvexHull.js"></script>' );
+document.write( '<script src="ConvexGeometry.js"></script>' );
+
 document.write( '<script src="suica-vr.js"></script>' );
 document.write( '<script src="suica-parser.js"></script>' );
 document.write( '<script src="suica-drawing.js"></script>' );
@@ -19,4 +22,6 @@ document.write( '<script src="suica-cylinder.js"></script>' );
 document.write( '<script src="suica-cone.js"></script>' );
 document.write( '<script src="suica-group.js"></script>' );
 document.write( '<script src="suica-tube.js"></script>' );
+document.write( '<script src="suica-convex.js"></script>' );
+
 document.write( '<script src="suica-main.js"></script>' );

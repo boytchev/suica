@@ -1,4 +1,4 @@
-copy three.min.js bin
+copy /b three.min.js + ConvexHull.js + ConvexGeometry.js bin\three.min.js
 
 
 rem Create suica.js prefix
@@ -15,7 +15,7 @@ rem alternative: the same chars are between these quotes:    "﻿"
 echo ﻿ document.write( '^<script src^="three.min.js" onload^="LoadSuica();"^>^</script^>' );﻿function LoadSuica(){ > bin\suica.js
 
 rem Copy Suica files one by one
-copy /b bin\suica.js + suica-main.js + suica-vr.js + suica-parser.js + suica-drawing.js + suica-mesh.js + suica-point.js + suica-line.js + suica-square.js + suica-cube.js + suica-circle.js + suica-sphere.js + suica-cylinder.js + suica-cone.js + suica-group.js + suica-tube.js bin\suica.js
+copy /b bin\suica.js + suica-main.js + suica-vr.js + suica-parser.js + suica-drawing.js + suica-mesh.js + suica-point.js + suica-line.js + suica-square.js + suica-cube.js + suica-circle.js + suica-sphere.js + suica-cylinder.js + suica-cone.js + suica-group.js + suica-tube.js + suica-convex.js bin\suica.js
 
 
 rem Create suica.js postfix
