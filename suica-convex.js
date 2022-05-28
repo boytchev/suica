@@ -23,6 +23,44 @@ class Convex extends Mesh
 			threejsPoints.push( new THREE.Vector3( ...pnt ) );
 		}
 		var geometry = new THREE.ConvexGeometry( threejsPoints );
+
+		const MAX_X = 1, MAX_Y = 2, MAX_Z = 3;
+		
+		var uvs = [];
+		var pos = geometry.getAttribute( 'position' ),
+			nor = geometry.getAttribute( 'normal' );
+		for( var i=0; i<pos.count; i++ )
+		{
+			// get the two minimal components of normal vector: XY, XZ or YZ
+			var nx = Math.abs( nor.getX( i ) ),
+				ny = Math.abs( nor.getY( i ) ),
+				nz = Math.abs( nor.getZ( i ) );
+				
+			var max = MAX_X;
+			if( ny>=nx && ny>=nz ) max = MAX_Y
+			else
+			if( nz>=nx && nz>=nx ) max = MAX_Z;
+			
+			var x = pos.getX( i ),
+				y = pos.getY( i ),
+				z = pos.getZ( i );
+
+			switch( max )
+			{
+				case MAX_X:
+					uvs.push( y, z );
+					break;
+				case MAX_Y:
+					uvs.push( x, z );
+					break;
+				case MAX_Z:
+					uvs.push( x, y );
+					break;
+			}
+		}
+		
+		geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
+		
 		
 		super( suica, 
 			new THREE.Mesh( geometry, Mesh.solidMaterial.clone() ),

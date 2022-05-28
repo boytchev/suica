@@ -1,5 +1,8 @@
-copy /b three.min.js + ConvexHull.js + ConvexGeometry.js bin\three.min.js
-
+misc\jsmin\jsmin <ConvexHull.js >ConvexHull.min.js
+misc\jsmin\jsmin <ConvexGeometry.js >ConvexGeometry.min.js
+copy /b three.min.js + ConvexHull.min.js + ConvexGeometry.min.js bin\three.min.js
+del ConvexHull.min.js
+del ConvexGeometry.min.js
 
 rem Create suica.js prefix
 rem IMPORTANT: Between "echo" and "document: there are invisible

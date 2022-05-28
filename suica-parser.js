@@ -584,6 +584,27 @@ class HTMLParser
 	} // HTMLParser.parseTagGROUP
 	
 	
+	// <convex src="x,y,z; x,y,z; x,y,z; ..." center="..." size="..." color="...">
+	parseTagCONVEX( suica, elem )
+	{
+		var points = elem.getAttribute('src');
+			points = Suica.evaluate( '[['+points.replaceAll(';','],[')+']]' );
+
+		var p = convex(
+			points,
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
+		);
+		
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+
+		//elem.suicaObject = p; <-- now, spline is not an object
+		
+		return p;
+	} // HTMLParser.parseTagCONVEX
+
+
+	
 	// <clone id="..." src="..." center="..." color="..." size="..." spin="...">
 	parseTagCLONE( suica, elem )
 	{
