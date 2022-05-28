@@ -1,8 +1,6 @@
-misc\jsmin\jsmin <ConvexHull.js >ConvexHull.min.js
-misc\jsmin\jsmin <ConvexGeometry.js >ConvexGeometry.min.js
-copy /b three.min.js + ConvexHull.min.js + ConvexGeometry.min.js bin\three.min.js
-del ConvexHull.min.js
-del ConvexGeometry.min.js
+misc\jsmin\jsmin <misc/threejs/ConvexHull.js >misc/threejs/ConvexHull.min.js
+misc\jsmin\jsmin <misc/threejs/ConvexGeometry.js >misc/threejs/ConvexGeometry.min.js
+copy /b misc/threejs/three.min.js + misc/threejs/ConvexHull.min.js + misc/threejs/ConvexGeometry.min.js bin\three.min.js
 
 rem Create suica.js prefix
 rem IMPORTANT: Between "echo" and "document: there are invisible
@@ -26,6 +24,9 @@ echo } // LoadSuica >> bin\suica.js
 
 misc\jsmin\jsmin <bin\suica.js >bin\suica.min.js "Suica 2.0"
 
+copy bin\three.min.js .
 copy bin\three.min.js examples
+copy bin\three.min.js test\cases
+
 copy bin\suica.js examples
 

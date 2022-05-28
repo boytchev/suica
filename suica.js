@@ -5,8 +5,6 @@
 //===================================================
 
 document.write( '<script src="three.min.js"></script>' );
-document.write( '<script src="ConvexHull.js"></script>' );
-document.write( '<script src="ConvexGeometry.js"></script>' );
 
 document.write( '<script src="suica-vr.js"></script>' );
 document.write( '<script src="suica-parser.js"></script>' );

@@ -18,6 +18,11 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var cases = [
+	'convex',
+	'convex-brick-wall',
+	'convex-platonic-solids',
+	'convex-truncated-block',
+
 	'drawing-clear-2',
 	
 	'events-suica-enter',
@@ -154,7 +159,6 @@ var cases = [
 	'drawing-stroke',
 	'drawing-transparent',
 	'drawing-moveto-lineto-multiple',
-
 ];
 
 

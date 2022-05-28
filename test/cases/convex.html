@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		points = [];
+		for( var i=0; i<20; i++ )
+		{
+			var p = [random(-30,30), random(-30,30), random(-30,30)];
+			points.push( p );
+		}
+			
+		convex( points );
+	</script>
+</body>
+</html>
