@@ -26,7 +26,8 @@ Suica is used in several undergraduate courses in the
 Suica is licensed under **GPL-3.0**.
 
 
-To learn more about Suica, visit [The User Guide](docs/user-guide.md).
+To learn more about Suica, visit [The User Guide](docs/user-guide.md) or see [The Examples](docs/examples.md).
 
 
-May, 2022
+
+<small>{{site.time | date: "%B, %Y"}}</small>
