@@ -105,8 +105,12 @@ Click on an image to run the example.
 
 [<kbd><img src="../examples/snapshots/clone.jpg" width="300"></kbd>](../examples/clone.html)
 [<kbd><img src="../examples/snapshots/clone-tag.jpg" width="300"></kbd>](../examples/clone-tag.html)
+
+
 [<kbd><img src="../examples/snapshots/group.jpg" width="300"></kbd>](../examples/group.html)
 [<kbd><img src="../examples/snapshots/group-tag.jpg" width="300"></kbd>](../examples/group-tag.html)
+
+
 [<kbd><img src="../examples/snapshots/tube.jpg" width="300"></kbd>](../examples/tube.html)
 [<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="300"></kbd>](../examples/tube-lathe.html)
 [<kbd><img src="../examples/snapshots/tube-html.jpg" width="300"></kbd>](../examples/tube-html.html)
@@ -117,10 +121,13 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/tube-dynamic-radius.jpg" width="300"></kbd>](../examples/tube-dynamic-radius.html)
 [<kbd><img src="../examples/snapshots/tube-dynamic-spline-radius.jpg" width="300"></kbd>](../examples/tube-dynamic-spline-radius.html)
 [<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="300"></kbd>](../examples/tube-dynamic.html)
+
+
 [<kbd><img src="../examples/snapshots/convex.jpg" width="300"></kbd>](../examples/convex.html)
 [<kbd><img src="../examples/snapshots/convex-platonic-solids.jpg" width="300"></kbd>](../examples/convex-platonic-solids.html)
 [<kbd><img src="../examples/snapshots/convex-truncated-block.jpg" width="300"></kbd>](../examples/convex-truncated-block.html)
 [<kbd><img src="../examples/snapshots/convex-brick-wall.jpg" width="300"></kbd>](../examples/convex-brick-wall.html)
+[<kbd><img src="../examples/snapshots/convex-dyamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
 
 
 ## [Invisibles](objects.md#invisibles)
