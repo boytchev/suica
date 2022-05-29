@@ -615,7 +615,7 @@ In JavaScript the property `center` is not included as a parameter. However, it 
 
 [<kbd><img src="../examples/snapshots/convex-brick-wall.jpg" width="300"></kbd>](../examples/convex-brick-wall.html)
 
-The `src` property can be reset &ndash; this changes the shape of the object. The algorithm that generates a convex hull over a set of points has a non-linear average complexity of *O*(*n*.log(*n*)). The actual time needed for generating a hull depends on the number of points and the complexity of the resulting shape.
+The `src` property can be reset &ndash; this changes the shape of the object. The algorithm that generates a convex hull over a set of points has a non-linear average complexity of O(n log(n)). The actual time needed for generating a hull depends on the number of points and the complexity of the resulting shape.
 
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
 
