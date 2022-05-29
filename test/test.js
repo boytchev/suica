@@ -22,6 +22,7 @@ var cases = [
 	'convex-brick-wall',
 	'convex-platonic-solids',
 	'convex-truncated-block',
+	'convex-dynamic',
 
 	'drawing-clear-2',
 	
@@ -202,6 +203,12 @@ function startTests()
 {
 	console.log('::> starting all tests');
 
+	if( window.location.search )
+	{
+		cases = cases.filter( (name)=>name.indexOf(window.location.search.substring(1))>=0 );
+	}
+
+	
 	document.getElementById( 'progress' ).max = cases.length-1;
 
 	// install listeners for messages from test cases and images load

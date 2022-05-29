@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo speed="0.5">
+	</suica>
+
+	<script>
+		function r()
+		{
+			return THREE.Math.randInt(-6,6);
+		}
+		function randomPoints()
+		{
+			var points = [];
+			for( var i=0; i<40; i++ )
+			{
+				points.push( [r(),r(),r()] );
+			}
+			return points;
+		}
+			
+		convex( randomPoints(), 5, 'linen' );
+		its.image = 'https://boytchev.github.io/suica/textures/grid.png';
+		its.images = 0.25;
+		
+		setInterval( ()=>its.src=randomPoints(), 2000 );
+		
+	</script>
+</body>
+</html>
