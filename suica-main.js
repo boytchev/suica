@@ -570,7 +570,8 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'vr' );
 
-		this.suicaTag.appendChild( createVRButton( this.renderer ) );
+		var button = this.suicaTag.appendChild( VRButton.createButton( this.renderer ) );
+		button.style.background = 'rgba(0, 0, 0, 0.5)';
 
 		this.renderer.xr.enabled = true;
 		
