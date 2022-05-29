@@ -4713,19 +4713,38 @@ class Tube extends Mesh
 
 class Convex extends Mesh
 {
-	static POINTS = []
+	static POINTS = [[1,1,1], [1,1,-1], [1,-1,1], [1,-1,-1], [-1,1,1], [-1,1,-1], [-1,-1,1], [-1,-1,-1]];
+	static SIZE = [1,1,1];
 	static COLOR = 'lightsalmon';
 
 	constructor( suica, points, size, color )
 	{
 		suica.parser?.parseTags();
 		suica.debugCall( 'convex', points, size, color );
+		
+		var geometry = Convex.generateGeometry( points );
+		
+		super( suica, 
+			new THREE.Mesh( geometry, Mesh.solidMaterial.clone() ),
+			null, // no wireframe
+		);
+		
+		this.center = [0,0,0];
+		this.size = Suica.parseSize( size, Convex.SIZE );
+		this.color = Suica.parseColor( color, Convex.COLOR);
+		this._points = points;
 
+	} // Convex.constructor
+
+
+	static generateGeometry( points )
+	{
 		var threejsPoints = [];
 		for( var pnt of points )
 		{
 			threejsPoints.push( new THREE.Vector3( ...pnt ) );
 		}
+
 		var geometry = new THREE.ConvexGeometry( threejsPoints );
 
 		const MAX_X = 1, MAX_Y = 2, MAX_Z = 3;
@@ -4765,22 +4784,13 @@ class Convex extends Mesh
 		
 		geometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
 		
-		
-		super( suica, 
-			new THREE.Mesh( geometry, Mesh.solidMaterial.clone() ),
-			null, // no wireframe
-		);
-		
-		this.center = [0,0,0];
-		this.size = Suica.parseSize( size, Tube.SIZE );
-		this.color = Suica.parseColor( color, Tube.COLOR);
-		this._points = points;
-
-	} // Convex.constructor
-
+		return geometry;
+	} // Convex.generateGeometry
+	
+	
 	get clone( )
 	{
-		var object = new Tube( this.suica, this.points, this.size, this.color );
+		var object = new Tube( this.suica, this._points, this.size, this.color );
 		
 		object.spin = this.spin;
 		object.image = this.image;
@@ -4790,6 +4800,14 @@ class Convex extends Mesh
 		return object;
 		
 	} // Convex.clone
+
+
+	set src( points )
+	{
+		this._points = points;
+		this.threejs.geometry.dispose();
+		this.threejs.geometry = Convex.generateGeometry( points );
+	}
 	
 } // class Convex
 } // LoadSuica 

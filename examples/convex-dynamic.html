@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Dynamic convex</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Dynamic convex</h1>
+	<p>Dynamically changing the point set of a convex object.</p>
+
+	<suica>
+		<demo speed="0.5">
+	</suica>
+
+	<script>
+		function r()
+		{
+			return THREE.Math.randInt(-6,6);
+		}
+		function randomPoints()
+		{
+			var points = [];
+			for( var i=0; i<40; i++ )
+			{
+				points.push( [r(),r(),r()] );
+			}
+			return points;
+		}
+			
+		convex( randomPoints(), 5, 'linen' );
+		//its.image = 'https://boytchev.github.io/suica/textures/grid.png';
+		its.image = 'https://boytchev.github.io/suica/textures/blobs.jpg';
+		its.images = 0.25;
+		
+		setInterval( ()=>its.src=randomPoints(), 1000 );
+		
+	</script>
+</body>
+</html>
