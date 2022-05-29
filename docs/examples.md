@@ -127,7 +127,7 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/convex-platonic-solids.jpg" width="300"></kbd>](../examples/convex-platonic-solids.html)
 [<kbd><img src="../examples/snapshots/convex-truncated-block.jpg" width="300"></kbd>](../examples/convex-truncated-block.html)
 [<kbd><img src="../examples/snapshots/convex-brick-wall.jpg" width="300"></kbd>](../examples/convex-brick-wall.html)
-[<kbd><img src="../examples/snapshots/convex-dyamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
+[<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
 
 
 ## [Invisibles](objects.md#invisibles)
