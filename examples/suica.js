@@ -1684,58 +1684,18 @@ class AnaglyphEffect extends THREE.AnaglyphEffect
 } // class AnaglyphEffect
 
 
-
-class StereoEffect
+class StereoEffect extends THREE.StereoEffect
 {
 
 	constructor( suica, distance )
 	{
+		super( suica.renderer, suica.canvas.width, suica.canvas.height );
+		
 		this.suica = suica;
 		
-		this.stereo = new THREE.StereoCamera();
-		this.stereo.aspect = 0.5;
-		this.stereo.eyeSep = distance;
-		
-		this.size = new THREE.Vector2();
-
+		this.setEyeSeparation( distance );
 	} // StereoEffect.constructor
-
-
-	setSize( width, height )
-	{
-		this.suica.renderer.setSize( width, height );
-		
-	} // StereoEffect.setSize
-
-
-	render( scene, camera )
-	{
-		scene.updateMatrixWorld();
-		if ( camera.parent === null ) camera.updateMatrixWorld();
-
-		this.stereo.update( camera );
-
-		this.suica.renderer.getSize( this.size );
-		if ( this.suica.renderer.autoClear ) this.suica.renderer.clear();
-		this.suica.renderer.setScissorTest( true );
-		this.suica.renderer.setScissor( 0, 0, this.size.width / 2, this.size.height );
-		this.suica.renderer.setViewport( 0, 0, this.size.width / 2, this.size.height );
-		this.suica.renderer.render( scene, this.stereo.cameraL );
-		this.suica.renderer.setScissor( this.size.width / 2, 0, this.size.width / 2, this.size.height );
-		this.suica.renderer.setViewport( this.size.width / 2, 0, this.size.width / 2, this.size.height );
-		this.suica.renderer.render( scene, this.stereo.cameraR );
-		this.suica.renderer.setScissorTest( false );
-
-	}; // StereoEffect.render
-
-
-	dispose()
-	{		
-	}; // StereoEffect.dispose
-	
 } // class StereoEffect
-
-
 ﻿//
 // Suica 2.0 Parser
 //

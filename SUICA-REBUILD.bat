@@ -1,8 +1,9 @@
 misc\jsmin\jsmin <misc\threejs\ConvexHull.js >misc\threejs\ConvexHull.min.js
 misc\jsmin\jsmin <misc\threejs\ConvexGeometry.js >misc\threejs\ConvexGeometry.min.js
 misc\jsmin\jsmin <misc\threejs\AnaglyphEffect.js >misc\threejs\AnaglyphEffect.min.js
+misc\jsmin\jsmin <misc\threejs\StereoEffect.js >misc\threejs\StereoEffect.min.js
 
-copy /b misc\threejs\three.min.js + misc\threejs\ConvexHull.min.js + misc\threejs\ConvexGeometry.min.js + misc\threejs\AnaglyphEffect.min.js bin\three.min.js
+copy /b misc\threejs\three.min.js + misc\threejs\ConvexHull.min.js + misc\threejs\ConvexGeometry.min.js + misc\threejs\AnaglyphEffect.min.js + misc\threejs\StereoEffect.min.js bin\three.min.js
 
 rem Create suica.js prefix
 rem IMPORTANT: Between "echo" and "document: there are invisible
