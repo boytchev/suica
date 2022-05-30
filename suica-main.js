@@ -84,21 +84,18 @@ class Suica
 					RIGHT: Suica.OZ,
 					UP: Suica.OX,
 					FORWARD: Suica.OY,
-//					FLIP_NORMAL: false,
 			},
 			XYZ: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [0,0,100], TO: [0,0,0], UP: [0,1,0]},
 					RIGHT: Suica.OX,
 					UP: Suica.OY,
 					FORWARD: Suica.OZ,
-//					FLIP_NORMAL: false,
 			},
 			YZX: {	SCALE: new THREE.Vector3(1,1,1),
 					LOOKAT: {FROM: [100,0,0], TO: [0,0,0], UP: [0,0,1]},
 					RIGHT: Suica.OY,
 					UP: Suica.OZ,
 					FORWARD: Suica.OX,
-//					FLIP_NORMAL: false,
 			},
 		} // Suica.ORIENTATIONS
 
@@ -334,78 +331,49 @@ class Suica
 		var color = getComputedStyle(this.suicaTag).backgroundColor;
 		if( color == 'rgba(0, 0, 0, 0)' )
 		{
-			color = this.suicaTag.getAttribute('background') || Suica.BACKGROUND;
+			color = this.suicaTag.getAttribute('BACKGROUND') || Suica.BACKGROUND;
 		}
 		this.scene.background = Suica.parseColor( color );
 
 
 		// set camera
 		this.vrCamera = new THREE.Group();
+		this.perspective();
+
+
+		for( var attribute of this.suicaTag.getAttributeNames() )
+		{
+			var value = this.suicaTag.getAttribute( attribute );
+			
+			switch( attribute.toUpperCase() )
+			{
+				case 'PERSPECTIVE':
+						this.perspective( ... Suica.evaluate( '['+value+']' ) );
+						break;
+				case 'ORTHOGRAPHIC':
+						this.orthographic( ... Suica.evaluate( '['+value+']' ) );
+						break;
+				case 'ANAGLYPH':
+						this.anaglyph( ... Suica.evaluate( '['+value+']' ) );
+						break;
+				case 'STEREO':
+						this.stereo( ... Suica.evaluate( '['+value+']' ) );
+						break;
+				case 'VR':
+						this.vr( );
+						break;
+				case 'FULLSCREEN':
+						this.fullScreen( );
+						break;
+				case 'FULLWINDOW':
+						this.fullWindow( );
+						break;
+				case 'PROACTIVE':
+						this.proactive( );
+						break;
+			}
+		}
 		
-		if( this.suicaTag.hasAttribute('PERSPECTIVE') )
-		{
-			// perspective camera
-			let values = this.suicaTag.getAttribute('PERSPECTIVE').replaceAll(' ','');
-				values = values ? values.split(',').map(Number) : [];
-				
-			this.perspective( ... values );
-		}
-		else
-		if( this.suicaTag.hasAttribute('ORTHOGRAPHIC') )
-		{
-			// orthographic camera
-			let values = this.suicaTag.getAttribute('ORTHOGRAPHIC').replaceAll(' ','');
-				values = values ? values.split(',').map(Number) : [];
-			this.orthographic( ...values );
-		}
-		else
-		{
-			// default perspective camera
-			this.perspective();
-		}
-
-
-		if( this.suicaTag.hasAttribute('ANAGLYPH') )
-		{
-			// anaglyph camera
-			let values = this.suicaTag.getAttribute('ANAGLYPH').replaceAll(' ','');
-				values = values ? values.split(',').map(Number) : [];
-
-			this.anaglyph( ... values );
-		}
-		else
-		if( this.suicaTag.hasAttribute('STEREO') )
-		{
-			// stereo camera
-			let values = this.suicaTag.getAttribute('STEREO').replaceAll(' ','');
-				values = values ? values.split(',').map(Number) : [];
-
-			this.stereo( ... values );
-		}
-
-		if( this.suicaTag.hasAttribute('VR') )
-		{
-			// vr camera
-			let values = this.suicaTag.getAttribute('VR').replaceAll(' ','');
-				values = values ? values.split(',').map(Number) : [];
-
-			this.vr( ... values );
-		}
-
-		if( this.suicaTag.hasAttribute('FULLSCREEN') )
-		{
-			this.fullScreen( );
-		}
-
-		if( this.suicaTag.hasAttribute('FULLWINDOW') )
-		{
-			this.fullWindow( );
-		}
-
-		if( this.suicaTag.hasAttribute('PROACTIVE') )
-		{
-			this.proactive( );
-		}
 
 		// default light
 		this.light = new THREE.PointLight( 'white', 0.5 );

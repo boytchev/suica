@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<suica onTime="onTime">
+	<suica>
 		<demo>
 		<cube id="a" x="20" color="white">
 		<cube id="b" x="-20" color="white">
@@ -17,7 +17,7 @@
 		a.image = drawing( 100, 100, 'linen' );
 		b.image = drawing( 100, 100, 'linen' );
 		
-		function onTime( )
+		for( var i=0; i<1000; i++ )
 		{
 			a.image.arc( random(0,100), random(0,100), random(10,30) );
 			a.image.stroke( 'black', 5 );
