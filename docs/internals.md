@@ -22,7 +22,7 @@ required.
 
 Because timings cannot be set absolutely, some test cases may not produce the expected result. In this case run the tester another time to check whether the result is consistent.
 
-To test only part of the test cases, a string template is given as a parameter to the tester. The following code`test.html?convex` will test all test cases with the substring *convex* in their names &ndash; [live example](../test/test.html?convex).
+To test only part of the test cases, a string template is given as a parameter to the tester. The following code [`test.html?convex`](../test/test.html?convex) will test all test cases with the substring *convex* in their names.
 
 
 
