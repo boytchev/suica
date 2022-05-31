@@ -41,14 +41,13 @@ class Model extends Mesh
 		this._src = src;
 		
 		// check file extension
-		var fileExt = src.split('.').pop().toUpperCase(),
-			loader;
+		var fileExt = src.split('.').pop().toUpperCase();
 
 		switch( fileExt )
 		{
 			case 'GLTF':
 			case 'GLB':
-				loader = new THREE.GLTFLoader().load( src, objectLoadedGLTF );
+				new THREE.GLTFLoader().load( src, objectLoadedGLTF );
 				break;
 			
 			default:
