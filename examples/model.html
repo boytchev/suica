@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Anaglyph camera</title>
+	<title>Model</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,28 +18,22 @@
 
 <body>
 
-	<h1>Anaglyph camera</h1>
-	<p>Setting anaglyph stereo camera.</p>
+	<h1>Model</h1>
+	<p>Creating object from external GLTF model.</p>
 
-	<suica anaglyph onTime="onTime">
+	<suica>
+		<demo>
 	</suica>
-	
+
 	<script>
-		var cubes = [];
-		var grid = 10;
+		// models are provided by www.kenney.nl
+		// models license is Public Domain / CC0
 		
-		for( var x = -3; x<=3; x++ )
-		for( var y = -3; y<=3; y++ )
-		{
-			cubes.push( cube( [grid*x,grid*y,0], grid-1, random(['dimgray','linen','lightsalmon','peachpuff']) ) );
-		}
-		
-		function onTime( t )
-		{
-			for( var i=0; i<cubes.length; i++ )
-				cubes[i].depth = grid + 40 + 60*Math.sin( 5*t+i*i );
-		}
+		model( 'models/cars/race.glb', [40,0,0], 10 );
+		model( 'models/cars/ambulance.glb', [20,0,0], 10 );
+		model( 'models/cars/suvLuxury.glb', [0,0,0], 10 );
+		model( 'models/cars/garbageTruck.glb', [-20,0,0], 10 );
+		model( 'models/cars/tractor.glb', [-40,0,0], 10 );
 	</script>
-	
 </body>
 </html>

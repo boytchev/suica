@@ -15,6 +15,7 @@ class Model extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'model', src, center, size );
 
+		// create empty object, it will be set when the model is loaded
 		super( suica, 
 			new THREE.Mesh( ),
 			null, // no wireframe
@@ -35,20 +36,62 @@ class Model extends Mesh
 	
 	set src( src )
 	{
+		var that = this;
+
 		this._src = src;
 		
-		var loader = new THREE.GLTFLoader().load( src, objectLoaded );
-		var that = this;
-		
-		function objectLoaded( object )
+		// check file extension
+		var fileExt = src.split('.').pop().toUpperCase(),
+			loader;
+
+		switch( fileExt )
 		{
+			case 'GLTF':
+			case 'GLB':
+				loader = new THREE.GLTFLoader().load( src, objectLoadedGLTF );
+				break;
+			
+			default:
+				throw `error: ${fileExt} models cannot be loaded`;
+		}
+		
+		
+		function objectLoadedGLTF( object )
+		{
+			object = object.scene;
+
+			// scan all meshes in GLTF model and change metalness to 0
+			// because it is always set to 1 and it makes very dark colors
+			
+			object.traverse( noMetal );
+		
+			function noMetal( child )
+			{
+				if( child.isMesh ) child.material.metalness = 0;
+				if( child.children.lenhth ) child.traverse( noMetal );
+			}
+
+			replaceObject( object );
+		} // Model.src.objectLoadedGLTF
+		
+		
+		function replaceObject( object )
+		{
+			var pos = new THREE.Vector3();
+				pos.copy( that.threejs.position );
+
 			that.suica.scene.remove( that.threejs );
-object.scene.scale.set(10,10,10);			
-			that.solidMesh = object.scene;
-			that.threejs = object.scene;
+
+			that.solidMesh = object;
+			that.threejs = object;
 			
 			that.suica.scene.add( that.threejs );
-		}
+			
+			that.threejs.position.copy( pos );
+			that.updateScale();
+			that.updateOrientation();
+		} // Model.src.replaceObject
+		
 		
 	}
 	
