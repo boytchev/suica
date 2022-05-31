@@ -625,6 +625,57 @@
 			}
 
 		}
+
+		buildMetalRoughTexture( metalnessMap, roughnessMap ) {
+
+			if ( metalnessMap === roughnessMap ) return metalnessMap;
+			console.warn( 'THREE.GLTFExporter: Merged metalnessMap and roughnessMap textures.' );
+			const metalness = metalnessMap?.image;
+			const roughness = roughnessMap?.image;
+			const width = Math.max( metalness?.width || 0, roughness?.width || 0 );
+			const height = Math.max( metalness?.height || 0, roughness?.height || 0 );
+			const canvas = document.createElement( 'canvas' );
+			canvas.width = width;
+			canvas.height = height;
+			const context = canvas.getContext( '2d' );
+			context.fillStyle = '#00ffff';
+			context.fillRect( 0, 0, width, height );
+			const composite = context.getImageData( 0, 0, width, height );
+
+			if ( metalness ) {
+
+				context.drawImage( metalness, 0, 0, width, height );
+				const data = context.getImageData( 0, 0, width, height ).data;
+
+				for ( let i = 2; i < data.length; i += 4 ) {
+
+					composite.data[ i ] = data[ i ];
+
+				}
+
+			}
+
+			if ( roughness ) {
+
+				context.drawImage( roughness, 0, 0, width, height );
+				const data = context.getImageData( 0, 0, width, height ).data;
+
+				for ( let i = 1; i < data.length; i += 4 ) {
+
+					composite.data[ i ] = data[ i ];
+
+				}
+
+			}
+
+			context.putImageData( composite, 0, 0 ); //
+
+			const reference = metalnessMap || roughnessMap;
+			const texture = reference.clone();
+			texture.source = new THREE.Source( canvas );
+			return texture;
+
+		}
 		/**
    * Process a buffer to append to the default one.
    * @param  {ArrayBuffer} buffer
@@ -866,13 +917,14 @@
 		/**
    * Process image
    * @param  {Image} image to process
-   * @param  {Integer} format of the image (e.g. THREE.RGBFormat, THREE.RGBAFormat etc)
+   * @param  {Integer} format of the image (THREE.RGBAFormat)
    * @param  {Boolean} flipY before writing out the image
+   * @param  {String} mimeType export format
    * @return {Integer}     Index of the processed texture in the "images" array
    */
 
 
-		processImage( image, format, flipY ) {
+		processImage( image, format, flipY, mimeType = 'image/png' ) {
 
 			const writer = this;
 			const cache = writer.cache;
@@ -881,7 +933,6 @@
 			const pending = writer.pending;
 			if ( ! cache.images.has( image ) ) cache.images.set( image, {} );
 			const cachedImages = cache.images.get( image );
-			const mimeType = format === THREE.RGBAFormat ? 'image/png' : 'image/jpeg';
 			const key = mimeType + ':flipY/' + flipY.toString();
 			if ( cachedImages[ key ] !== undefined ) return cachedImages[ key ];
 			if ( ! json.images ) json.images = [];
@@ -909,9 +960,9 @@
 
 				} else {
 
-					if ( format !== THREE.RGBAFormat && format !== THREE.RGBFormat ) {
+					if ( format !== THREE.RGBAFormat ) {
 
-						console.error( 'GLTFExporter: Only RGB and RGBA formats are supported.' );
+						console.error( 'GLTFExporter: Only THREE.RGBAFormat is supported.' );
 
 					}
 
@@ -923,27 +974,12 @@
 
 					const data = new Uint8ClampedArray( image.height * image.width * 4 );
 
-					if ( format === THREE.RGBAFormat ) {
+					for ( let i = 0; i < data.length; i += 4 ) {
 
-						for ( let i = 0; i < data.length; i += 4 ) {
-
-							data[ i + 0 ] = image.data[ i + 0 ];
-							data[ i + 1 ] = image.data[ i + 1 ];
-							data[ i + 2 ] = image.data[ i + 2 ];
-							data[ i + 3 ] = image.data[ i + 3 ];
-
-						}
-
-					} else {
-
-						for ( let i = 0, j = 0; i < data.length; i += 4, j += 3 ) {
-
-							data[ i + 0 ] = image.data[ j + 0 ];
-							data[ i + 1 ] = image.data[ j + 1 ];
-							data[ i + 2 ] = image.data[ j + 2 ];
-							data[ i + 3 ] = 255;
-
-						}
+						data[ i + 0 ] = image.data[ i + 0 ];
+						data[ i + 1 ] = image.data[ i + 1 ];
+						data[ i + 2 ] = image.data[ i + 2 ];
+						data[ i + 3 ] = image.data[ i + 3 ];
 
 					}
 
@@ -1018,9 +1054,11 @@
 			const json = this.json;
 			if ( cache.textures.has( map ) ) return cache.textures.get( map );
 			if ( ! json.textures ) json.textures = [];
+			let mimeType = map.userData.mimeType;
+			if ( mimeType === 'image/webp' ) mimeType = 'image/png';
 			const textureDef = {
 				sampler: this.processSampler( map ),
-				source: this.processImage( map.image, map.format, map.flipY )
+				source: this.processImage( map.image, map.format, map.flipY, mimeType )
 			};
 			if ( map.name ) textureDef.name = map.name;
 
@@ -1091,19 +1129,12 @@
 
 			if ( material.metalnessMap || material.roughnessMap ) {
 
-				if ( material.metalnessMap === material.roughnessMap ) {
-
-					const metalRoughMapDef = {
-						index: this.processTexture( material.metalnessMap )
-					};
-					this.applyTextureTransform( metalRoughMapDef, material.metalnessMap );
-					materialDef.pbrMetallicRoughness.metallicRoughnessTexture = metalRoughMapDef;
-
-				} else {
-
-					console.warn( 'THREE.GLTFExporter: Ignoring metalnessMap and roughnessMap because they are not the same Texture.' );
-
-				}
+				const metalRoughTexture = this.buildMetalRoughTexture( material.metalnessMap, material.roughnessMap );
+				const metalRoughMapDef = {
+					index: this.processTexture( metalRoughTexture )
+				};
+				this.applyTextureTransform( metalRoughMapDef, metalRoughTexture );
+				materialDef.pbrMetallicRoughness.metallicRoughnessTexture = metalRoughMapDef;
 
 			} // pbrMetallicRoughness.baseColorTexture or pbrSpecularGlossiness diffuseTexture
 
@@ -1309,7 +1340,7 @@
 			for ( let attributeName in geometry.attributes ) {
 
 				// Ignore morph target attributes, which are exported later.
-				if ( attributeName.substr( 0, 5 ) === 'morph' ) continue;
+				if ( attributeName.slice( 0, 5 ) === 'morph' ) continue;
 				const attribute = geometry.attributes[ attributeName ];
 				attributeName = nameConversion[ attributeName ] || attributeName.toUpperCase(); // Prefix all geometry attributes except the ones specifically
 				// listed in the spec; non-spec attributes are considered custom.
@@ -2034,7 +2065,7 @@
 	/**
  * Specular-Glossiness Extension
  *
- * Specification: https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_materials_pbrSpecularGlossiness
+ * Specification: https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Archived/KHR_materials_pbrSpecularGlossiness
  */
 
 

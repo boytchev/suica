@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Model</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Model</h1>
+	<p>Creating object from external GLTF model.</p>
+
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		var a = model( 'models/car-kit-3d-model/Models/ambulance.glb', [0,0,0], 10 );
+		a.size = 10;
+	</script>
+</body>
+</html>
