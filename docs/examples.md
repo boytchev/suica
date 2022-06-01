@@ -130,6 +130,9 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
 
 
+[<kbd><img src="../examples/snapshots/model.jpg" width="300"></kbd>](../examples/model.html)
+
+
 ## [Invisibles](objects.md#invisibles)
 
 [<kbd><img src="../examples/snapshots/spline.jpg" width="300"></kbd>](../examples/spline.html)
