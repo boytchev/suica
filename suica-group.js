@@ -64,8 +64,6 @@ class Group extends Mesh
 	
 	get clone( )
 	{
-		console.log('cloning',this.meshSpin);
-		
 		var object = new Group( this.suica );
 		for( var oneElement of this.groupElements )
 		{

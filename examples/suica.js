@@ -1307,6 +1307,9 @@ window.spline = function( points=Suica.SPLINE.POINTS, closed, interpolant )
 
 	return function( t )
 	{
+		// set t in [0,1]
+		t = ((t%1)+1)%1;
+		
 		var p = (points.length-(closed?0:1)) * t;
 		var intPoint = Math.floor( p ),
 			t = p - intPoint,
@@ -4083,8 +4086,6 @@ class Group extends Mesh
 	
 	get clone( )
 	{
-		console.log('cloning',this.meshSpin);
-		
 		var object = new Group( this.suica );
 		for( var oneElement of this.groupElements )
 		{
@@ -4503,9 +4504,13 @@ class Model extends Mesh
 			null, // no wireframe
 		);
 		
+		this.ready = false;
+		
 		this.src = src;
 		this.center = Suica.parseCenter( center );
 		this.size = Suica.parseSize( size, Tube.SIZE );
+		
+		this.waitingList = [];
 		
 	} // Model.constructor
 
@@ -4518,9 +4523,19 @@ class Model extends Mesh
 	
 	set src( src )
 	{
+		if( !src ) return;
+		
 		var that = this;
 
+		// if( src instanceof Mesh )
+		// {
+			// this._src = src._src;
+			// replaceObject( src.threejs.clone() );
+			// return;
+		// }
+		
 		this._src = src;
+		
 		
 		// check file extension
 		var fileExt = src.split('.').pop().toUpperCase();
@@ -4553,24 +4568,41 @@ class Model extends Mesh
 			}
 
 			replaceObject( object );
+			that.ready = true;
+			
+			// check whether othe objects are waiting for the same model
+			for( var waiting of that.waitingList )
+			{
+				waiting.threejs.add( object.clone() );
+			}
+			that.waitingList = [];
 		} // Model.src.objectLoadedGLTF
 		
 		
 		function replaceObject( object )
 		{
-			var pos = new THREE.Vector3();
-				pos.copy( that.threejs.position );
-
-			that.suica.scene.remove( that.threejs );
-
-			that.solidMesh = object;
-			that.threejs = object;
+			// remove current object
+			if( that.threejs.children.length) that.threejs.remove( that.threejs.children[0] );
 			
-			that.suica.scene.add( that.threejs );
+			// add new object
+			that.threejs.add( object );
 			
-			that.threejs.position.copy( pos );
-			that.updateScale();
-			that.updateOrientation();
+			
+//			var pos = new THREE.Vector3();
+//				pos.copy( that.threejs.position );
+				
+//			var parent = that.threejs.parent;
+
+//			that.suica.scene.remove( that.threejs );
+
+//			that.solidMesh = object;
+//			that.threejs = object;
+			
+//			parent.add( object );
+			
+//			that.threejs.position.copy( pos );
+//			that.updateScale();
+//			that.updateOrientation();
 		} // Model.src.replaceObject
 		
 		
@@ -4579,7 +4611,19 @@ class Model extends Mesh
 	
 	get clone( )
 	{
-		var object = new Model( this.suica, this.src, this.center, this.size );
+		var object = new Model( this.suica, '', this.center, this.size );
+		
+		if( this.ready )
+		{
+			// object is ready, clone it
+			object.threejs.add( this.threejs.children[0].clone() );
+		}
+		else
+		{
+			// object is not ready, add to waiting list
+			this.waitingList.push( object );
+		}
+		
 		
 		object.spin = this.spin;
 		object.image = this.image;

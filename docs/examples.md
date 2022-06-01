@@ -131,6 +131,7 @@ Click on an image to run the example.
 
 
 [<kbd><img src="../examples/snapshots/model.jpg" width="300"></kbd>](../examples/model.html)
+[<kbd><img src="../examples/snapshots/model-race.jpg" width="300"></kbd>](../examples/model-race.html)
 
 
 ## [Invisibles](objects.md#invisibles)
