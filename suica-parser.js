@@ -547,14 +547,13 @@ class HTMLParser
 	} // HTMLParser.parseTagTUBE
 
 
-	// <model id="..." src="..." center="..." color="..." size="...">
+	// <model id="..." src="..." center="..." size="...">
 	parseTagMODEL( suica, elem )
 	{
 		var p = suica.model(
 			elem.getAttribute('src'),
 			elem.getAttribute('center'),
-			elem.getAttribute('size'),
-			elem.getAttribute('color')
+			elem.getAttribute('size')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );

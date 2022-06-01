@@ -13,7 +13,7 @@ description: The core of Suica &ndash; from point to sphere
 - [Objects](#objects)
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
-	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex)</small>
+	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex), [`model`](#model)</small>
 	- <small>[Invisibles](#invisibles): [`spline points`](#spline-points), [`spline function`](#spline-function)</small>
 
 
@@ -618,6 +618,34 @@ In JavaScript the property `center` is not included as a parameter. However, it 
 The `src` property can be reset &ndash; this changes the shape of the object. The algorithm that generates a convex hull over a set of points has a non-linear average complexity of O(n log(n)). The actual time needed for generating a hull depends on the number of points and the complexity of the resulting shape.
 
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
+
+
+
+#### model
+```html
+HTML:
+<model id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = model( 𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ] );
+```
+Object. Loads an external model. The `src` parameter is a file name of a model in [GLTF or GLB format](https://en.wikipedia.org/wiki/GlTF). GLTF is a text format, GLB is a binary format. Similar to external [images](properties.md#image), models can be loaded only from HTTP adresses. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<model>` tag.
+
+When a model is loaded, its structure is not made of Suica objects. The `size` of a model is the scale factor, which is multiplied with the actual size of the model.
+
+
+```html
+HTML:
+<model src="tractor.glb" size="10">
+```
+```js
+JS:
+model( 'tractor.glb', 10 );
+```
+
+[<kbd><img src="../examples/snapshots/model.jpg" width="300"></kbd>](../examples/model.html)
+[<kbd><img src="../examples/snapshots/model-race.jpg" width="300"></kbd>](../examples/model-race.html)
 
 
 
