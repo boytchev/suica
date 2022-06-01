@@ -33,12 +33,17 @@ This version of Suica is based on [Three.js](https://threejs.org). Programs that
 
 In Suica, the file `three.min.js` is extended and it contains:
 
-- The original `three.min.js`
-- The original `ConvexHull.js`
-- The original `ConvexGeometry.js`
-- The original `StereoEffect.js`
-- Modified `AnaglyphEffect.js` &ndash; color matrices are set to color identities
-- Modified `VRButton.js` &ndash; converted to non-module
+- Original files:
+	- `three.min.js`
+- Minified version of original files:
+	- `ConvexHull.js`
+	- `ConvexGeometry.js`
+	- `StereoEffect.js`
+	- `GLTFLoader.js`
+	- `GLTFExporter.js`
+- Modified and minified versions of:
+	- `AnaglyphEffect.js` &ndash; color matrices are set to color identities
+	- `VRButton.js` &ndash; converted to non-module
 
 
 
