@@ -2060,6 +2060,25 @@ class HTMLParser
 	} // HTMLParser.parseTagTUBE
 
 
+	// <model id="..." src="..." center="..." color="..." size="...">
+	parseTagMODEL( suica, elem )
+	{
+		var p = suica.model(
+			elem.getAttribute('src'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
+		);
+		
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+
+		elem.suicaObject = p;
+		
+		return p;
+		
+	} // HTMLParser.parseTagMODEL
+
+
 	// <spline src="x,y,z; x,y,z; x,y,z; ..." interpolating="..." approximating="..." open="..." closed="...">
 	// <spline src="func_name" interpolating="..." approximating="..." open="..." closed="...">
 	parseTagSPLINE( suica, elem )

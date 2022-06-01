@@ -19,20 +19,21 @@
 <body>
 
 	<h1>Model</h1>
-	<p>Creating object from external GLTF model.</p>
+	<p>Creating object from external GLTF/GLB model.</p>
+
+	<!-- Car models provided by www.kenney.nl -->
+	<!-- https://www.kenney.nl/assets/car-kit -->
+	<!-- License: Public Domain / CC0 -->
 
 	<suica>
-		<demo>
+		<demo speed="0.3">
+		<model src="../models/cars/ambulance.glb" x="20" size="10">
+		<model src="../models/cars/suvLuxury.glb" size="10">
+		<model src="../models/cars/garbageTruck.glb" x="-20" size="10">
 	</suica>
 
 	<script>
-		// models are provided by www.kenney.nl
-		// models license is Public Domain / CC0
-		
 		model( '../models/cars/race.glb', [40,0,0], 10 );
-		model( '../models/cars/ambulance.glb', [20,0,0], 10 );
-		model( '../models/cars/suvLuxury.glb', [0,0,0], 10 );
-		model( '../models/cars/garbageTruck.glb', [-20,0,0], 10 );
 		model( '../models/cars/tractor.glb', [-40,0,0], 10 );
 	</script>
 </body>
