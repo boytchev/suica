@@ -87,7 +87,7 @@ class Convex extends Mesh
 	
 	get clone( )
 	{
-		var object = new Tube( this.suica, this._points, this.size, this.color );
+		var object = new Convex( this.suica, this._points, this.size, this.color );
 		
 		object.spin = this.spin;
 		object.image = this.image;

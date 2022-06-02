@@ -218,7 +218,31 @@ class Suica
 		{
 			Suica.register( this, methodName );
 		}
+		
+		// manual fix of some special functions
+		// (`save` is a static method of `Model`)
+		this.model.save = function( ...params )
+		{
+			this.parser?.parseTags();
+			return Model.save( ...params );
+		}
+		window.model.save = function ( ...params )
+		{
+			Suica.precheck();
+			return Model.save( ...params );
+		}
+		
 	} // Suica.constructor
+
+	
+	static registerClass( suica, classObject )
+	{
+		suica[classObject.name.toLowerCase()] = function( ...params )
+		{
+			suica.parser?.parseTags();
+			return new classObject( suica, ...params );
+		}
+	}
 
 	
 	static register( suica, methodName )
@@ -230,15 +254,6 @@ class Suica
 			return /*Suica.current*/suica[methodName]( ...params );
 		}
 		
-	}
-	
-	static registerClass( suica, classObject )
-	{
-		suica[classObject.name.toLowerCase()] = function( ...args )
-		{
-			suica.parser?.parseTags();
-			return new classObject( suica, ...args );
-		}
 	}
 	
 	

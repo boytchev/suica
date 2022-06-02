@@ -145,25 +145,44 @@ class Model extends Mesh
 		for( var obj of suicaObjects )
 			objects.push( obj.threejs );
 		
-		var exporter = new THREE.GLTFExporter(),
-			result = '';
+		var exporter = new THREE.GLTFExporter()
 		
-		try
+		if( !fileName )
 		{
 			// if no fileName, return GLTF text
-			if( !fileName )
-			{
-				exporter.parse( objects,
-					(data) => result = data,
-					null,
-					{binary: false}
-				);
-			}
+			exporter.parse(
+				objects,
+				(gltf)  => prompt( 'GLTF text', JSON.stringify(gltf) ), 
+				(error) => {throw error;},
+				{binary: false}
+			);
 		}
-		finally
+		else
 		{
-			return result;
+			// there is fileName, check file extension
+			var fileExt = fileName.split('.').pop().toUpperCase(),
+				binary = fileExt=='GLB';
+			
+			if( fileExt!='GLB' && fileExt!='GLTF' ) fileName += '.gltf';
+
+			
+			exporter.parse(
+				objects,
+				(gltf) => {
+							var type = binary ? 'application/octet-stream' : 'text/plain;charset=utf-8',
+								data = binary ? gltf : JSON.stringify( gltf ),
+								blob = new Blob( [data], {type: type} );
+							
+							var link = document.createElement('a');
+							link.href = URL.createObjectURL( blob );
+							link.download = fileName;
+							link.click();
+						},
+				(error) => { throw error },
+				{binary: binary}
+			);
 		}
+
 	} // Model.save
 	
 	

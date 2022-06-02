@@ -615,12 +615,9 @@ In JavaScript the property `center` is not included as a parameter. However, it 
 
 [<kbd><img src="../examples/snapshots/convex-brick-wall.jpg" width="300"></kbd>](../examples/convex-brick-wall.html)
 
-The `src` property can be reset &ndash; this changes the shape of the object. The algorithm that generates a convex hull over a set of points has a non-linear average complexity of O(n log(n)). The actual time needed for generating a hull depends on the number of points and the complexity of the resulting shape.
+The `src` property can be reset &ndash; this changes the shape of the object. The algorithm that generates a convex hull over a set of points has a non-linear average complexity of O(n log(n)). The actual time needed for generating a hull depends on the number of points and the complexity of the resulting shape. When a convex shape is constructed, its vertices are stored in the read-only`vertices` property.
 
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
-
-When a convex shape is constructed, its vertices are stored in the read-only`vertices` property.
-
 [<kbd><img src="../examples/snapshots/convex-vertices.jpg" width="300"></kbd>](../examples/convex-vertices.html)
 ---
 
@@ -654,7 +651,16 @@ model( 'tractor.glb', 10 );
 [<kbd><img src="../examples/snapshots/model-race.jpg" width="300"></kbd>](../examples/model-race.html)
 
 
+#### model.save
+```js
+JS:
+model.save( 𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦, [𝑜𝑏𝑗𝑒𝑐𝑡,...] );
+```
+Method. Save 3D objects into external GLTF or GLB file. The `fileName` parameter is the desired file name. Its extension must be either `.gltf` or `.glb`. The second parameter is an array of Suica objects so save. If the parameter is omitted, all objects are saved (as if [`allObjects`](#allObjects) is used).
 
+When objects are save to external file they are transformed into a GLFT structure. When such file is read, it is recreated as a single Suica object &ndash; i.e. the individual Suica objects are not distinguishable. Objects events are not saved to GLTF.
+
+[<kbd><img src="../examples/snapshots/model-safe.jpg" width="300"></kbd>](../examples/model-safe.html)
 
 
 # Invisibles
