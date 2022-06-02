@@ -69,6 +69,8 @@ var cases = [
 'lookat-navigation', 
 'lookat', 
 'minimal-example', 
+'model-race', 
+'model', 
 'object-as-position', 
 'object-html', 
 'object-js', 

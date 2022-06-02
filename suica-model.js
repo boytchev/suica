@@ -104,22 +104,6 @@ class Model extends Mesh
 			// add new object
 			that.threejs.add( object );
 			
-			
-//			var pos = new THREE.Vector3();
-//				pos.copy( that.threejs.position );
-				
-//			var parent = that.threejs.parent;
-
-//			that.suica.scene.remove( that.threejs );
-
-//			that.solidMesh = object;
-//			that.threejs = object;
-			
-//			parent.add( object );
-			
-//			that.threejs.position.copy( pos );
-//			that.updateScale();
-//			that.updateOrientation();
 		} // Model.src.replaceObject
 		
 		
