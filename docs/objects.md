@@ -658,7 +658,7 @@ model.save( 𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦, [𝑜𝑏𝑗𝑒𝑐𝑡,...] );
 ```
 Method. Save 3D objects into external GLTF or GLB file. The `fileName` parameter is the desired file name. Its extension must be either `.gltf` or `.glb`. The second parameter is an array of Suica objects so save. If the parameter is omitted, all objects are saved (as if [`allObjects`](#allObjects) is used).
 
-When objects are save to external file they are transformed into a GLFT structure. When such file is read, it is recreated as a single Suica object &ndash; i.e. the individual Suica objects are not distinguishable. Objects events are not saved to GLTF.
+When objects are save to external file they are transformed into a GLFT structure. When such file is read, it is recreated as a single Suica object &ndash; i.e. the original Suica objects used for the file are not distinguishable. Objects events are not saved to GLTF.
 
 [<kbd><img src="../examples/snapshots/model-save.jpg" width="300"></kbd>](../examples/model-save.html)
 
