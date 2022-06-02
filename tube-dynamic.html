@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Dynamic tube</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Dynamic tube</h1>
+	<p>Defining tubes that change over time.</p>
+
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		curve = spline([
+			[0, 0, 0, 1.5],
+			[29.888954592738376, 1.578746145276222, 2.0391061674172115, 0.2],
+			[49.778737979838915, 2.922970858628796, 3.648322353711542, 0.1],
+			[51.76771631854897, 13.0573933299640537, 3.8092439723409757, 1]
+		]);
+		tentacle = tube( [0,0,0], curve );
+	</script>
+</body>
+</html>

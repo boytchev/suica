@@ -1308,7 +1308,10 @@ window.spline = function( points=Suica.SPLINE.POINTS, closed, interpolant )
 	return function( t )
 	{
 		// set t in [0,1]
-		t = ((t%1)+1)%1;
+		if( t<0 || t>1 )
+		{
+			t = ((t%1)+1)%1;
+		}
 		
 		var p = (points.length-(closed?0:1)) * t;
 		var intPoint = Math.floor( p ),
@@ -2063,14 +2066,13 @@ class HTMLParser
 	} // HTMLParser.parseTagTUBE
 
 
-	// <model id="..." src="..." center="..." color="..." size="...">
+	// <model id="..." src="..." center="..." size="...">
 	parseTagMODEL( suica, elem )
 	{
 		var p = suica.model(
 			elem.getAttribute('src'),
 			elem.getAttribute('center'),
-			elem.getAttribute('size'),
-			elem.getAttribute('color')
+			elem.getAttribute('size')
 		);
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
@@ -4587,22 +4589,6 @@ class Model extends Mesh
 			// add new object
 			that.threejs.add( object );
 			
-			
-//			var pos = new THREE.Vector3();
-//				pos.copy( that.threejs.position );
-				
-//			var parent = that.threejs.parent;
-
-//			that.suica.scene.remove( that.threejs );
-
-//			that.solidMesh = object;
-//			that.threejs = object;
-			
-//			parent.add( object );
-			
-//			that.threejs.position.copy( pos );
-//			that.updateScale();
-//			that.updateOrientation();
 		} // Model.src.replaceObject
 		
 		

@@ -1307,7 +1307,10 @@ window.spline = function( points=Suica.SPLINE.POINTS, closed, interpolant )
 	return function( t )
 	{
 		// set t in [0,1]
-		t = ((t%1)+1)%1;
+		if( t<0 || t>1 )
+		{
+			t = ((t%1)+1)%1;
+		}
 		
 		var p = (points.length-(closed?0:1)) * t;
 		var intPoint = Math.floor( p ),
