@@ -38,6 +38,7 @@ class Convex extends Mesh
 		var threejsPoints = [];
 		for( var pnt of points )
 		{
+			if( pnt.center ) pnt = pnt.center;
 			threejsPoints.push( new THREE.Vector3( ...pnt ) );
 		}
 
@@ -103,6 +104,19 @@ class Convex extends Mesh
 		this._points = points;
 		this.threejs.geometry.dispose();
 		this.threejs.geometry = Convex.generateGeometry( points );
-	}
+	} // Convex.src = ...
+	
+	
+	get vertices( )
+	{
+		var vertices = [],
+			pos = this.threejs.geometry.getAttribute( 'position' );
+		
+		for( var i=0; i<pos.count; i++ )
+			vertices.push( [pos.getX(i), pos.getY(i), pos.getZ(i)] );
+		
+		return vertices;
+	} // Convex.vertices
+	
 	
 } // class Convex

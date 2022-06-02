@@ -591,7 +591,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = convex( [[𝑥,𝑦,𝑧],...], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Constructs a [convex hull](https://en.wikipedia.org/wiki/Convex_hull) or a [convex polyhedron](https://en.wikipedia.org/wiki/Polyhedron) on a set of points. The `src` parameter of `convex` is a set of points in 3D. The shape of the object is the minimal shape that wraps these points. Not all points from `src` are vertices of the convex object. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<convex>` tag.
+Object. Constructs a [convex hull](https://en.wikipedia.org/wiki/Convex_hull) or a [convex polyhedron](https://en.wikipedia.org/wiki/Polyhedron) on a set of points. The `src` parameter of `convex` is a set of points in 3D. The shape of the object is the minimal shape that wraps these points. Not all points from `src` are vertices of the convex object. Other properties are `vertices`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties except `vertices` can be included in the `<convex>` tag.
 
 <img src="images/comvex.png">
 
@@ -618,6 +618,12 @@ In JavaScript the property `center` is not included as a parameter. However, it 
 The `src` property can be reset &ndash; this changes the shape of the object. The algorithm that generates a convex hull over a set of points has a non-linear average complexity of O(n log(n)). The actual time needed for generating a hull depends on the number of points and the complexity of the resulting shape.
 
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
+
+When a convex shape is constructed, its vertices are stored in the read-only`vertices` property.
+
+[<kbd><img src="../examples/snapshots/convex-vertices.jpg" width="300"></kbd>](../examples/convex-vertices.html)
+---
+
 
 
 

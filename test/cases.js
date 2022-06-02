@@ -21,6 +21,7 @@ var cases = [
 'convex-dynamic', 
 'convex-platonic-solids', 
 'convex-truncated-block', 
+'convex-vertices', 
 'convex', 
 'cube-cuboid', 
 'cube', 

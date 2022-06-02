@@ -135,4 +135,36 @@ class Model extends Mesh
 		
 	} // Model.clone
 	
+	
+	static save( fileName, suicaObjects )
+	{
+		// if no objects then use all objects
+		if( !suicaObjects ) suicaObjects = allObjects();
+		
+		var objects = [];
+		for( var obj of suicaObjects )
+			objects.push( obj.threejs );
+		
+		var exporter = new THREE.GLTFExporter(),
+			result = '';
+		
+		try
+		{
+			// if no fileName, return GLTF text
+			if( !fileName )
+			{
+				exporter.parse( objects,
+					(data) => result = data,
+					null,
+					{binary: false}
+				);
+			}
+		}
+		finally
+		{
+			return result;
+		}
+	} // Model.save
+	
+	
 } // class Model

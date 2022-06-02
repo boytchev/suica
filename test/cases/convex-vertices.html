@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+	</suica>
+
+	<script>
+		points = [ [0,0,10], [0,0,-10] ];
+		for( var i=0; i<20; i++ )
+		{
+			points.push( sphere( [random(-30,30), random(-30,30), 0], 2.5, 'linen' ) );
+		}
+			
+		var c = convex( points );
+		c.size = 0;
+		
+		for( var pnt of c.vertices ) if( pnt[2]==0 )
+		{
+			sphere( pnt, 3, 'black' );
+		}
+	</script>
+</body>
+</html>
