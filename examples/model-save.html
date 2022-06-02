@@ -27,7 +27,7 @@
 
 	<script>
 		for( var i=1; i<50; i++ )
-			cube( [0,0,0], [i,i,9-i/10], random(['linen','lightsalmon','peachpuff','black','white','gray']) ).style({spin:[90,45*i,90]});
+			cube( [0,0,0], [i,i,30-i/2], random(['linen','lightsalmon','peachpuff','black','white','gray']) ).style({spin:[90,45*i,90]});
 
 		model.save( 'model-save.gltf' );
 	</script>

@@ -660,7 +660,7 @@ Method. Save 3D objects into external GLTF or GLB file. The `fileName` parameter
 
 When objects are save to external file they are transformed into a GLFT structure. When such file is read, it is recreated as a single Suica object &ndash; i.e. the individual Suica objects are not distinguishable. Objects events are not saved to GLTF.
 
-[<kbd><img src="../examples/snapshots/model-safe.jpg" width="300"></kbd>](../examples/model-safe.html)
+[<kbd><img src="../examples/snapshots/model-save.jpg" width="300"></kbd>](../examples/model-save.html)
 
 
 # Invisibles
