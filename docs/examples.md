@@ -135,6 +135,12 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/model-race.jpg" width="300"></kbd>](../examples/model-race.html)
 [<kbd><img src="../examples/snapshots/model-save.jpg" width="300"></kbd>](../examples/model-save.html)
 
+[<kbd><img src="../examples/snapshots/construct-union.jpg" width="300"></kbd>](../examples/construct-union.html)
+[<kbd><img src="../examples/snapshots/construct-intersect.jpg" width="300"></kbd>](../examples/construct-intersect.html)
+[<kbd><img src="../examples/snapshots/construct-subtract.jpg" width="300"></kbd>](../examples/construct-subtract.html)
+[<kbd><img src="../examples/snapshots/construct-expression.jpg" width="300"></kbd>](../examples/construct-expression.html)
+[<kbd><img src="../examples/snapshots/construct-grooves.jpg" width="300"></kbd>](../examples/construct-grooves.html)
+
 
 ## [Invisibles](objects.md#invisibles)
 

@@ -4294,6 +4294,15 @@ class SuicaTubeGeometry extends THREE.BufferGeometry
 		
 	} // SuicaTubeGeometry.update
 
+	clone( )
+	{
+		return new SuicaTubeGeometry( 
+			this.parameters.path,
+			this.parameters.tubularSegments,
+			this.parameters.radialSegments,
+			this.parameters.radius
+		);
+	}
 } // SuicaTubeGeometry
 
 

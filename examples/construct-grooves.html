@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Construct - Lemniscate of Bernoulli</title>
+	<title>Construct - Grooves</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,28 +18,37 @@
 
 <body>
 
-	<h1>Construct - Lemniscate of Bernoulli</h1>
-	<p>Constructing Lemniscate of Bernoulli from truncated torus.</p>
+	<h1>Construct - Grooves</h1>
+	<p>Making grooves with object subtraction.</p>
 
-	<suica>
-		<demo altitude="0">
+	<suica ontime="spin">
 	</suica>
 	
 	<script>
-		function torus(u)
+		var d = cube( [0,0,0], 48, 'linen' );
+		var a = cube( [0,0,0], 50 );
+		its.threejs.visible = false;
+		var b = [];
+		
+		var expr = 'a';
+
+		for( var i=0; i<10; i++ )
 		{
-			u = 2*Math.PI*u;
-			return [
-				0,
-				20*Math.sin(u),
-				20*Math.cos(u)
-			];
+			b.push( cube( [0,random(-10,10),0], [100,100,3] ) );
+			its.spin = [random(0,360),random(0,180),0];
+			its.threejs.visible = false;
+			expr += `-b[${i}]`;
 		}
 
-		var torus = tube( [0,0,0], torus, 10, 400, 1, 'linen' );
-		var cutter = cube( [0,0,20], [20,60,30], 'gray' );
+
+		var c = construct( expr );
+
+		var g = group( c, d );
 		
-		construct( 'torus-cutter', [40,0,0], 1, 'lightsalmon' );
+		function spin( t )
+		{
+			g.spin = [40*t, 30*t, 20*t];
+		}
 	</script>
 	
 </body>
