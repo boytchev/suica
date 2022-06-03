@@ -22,5 +22,6 @@ document.write( '<script src="suica-group.js"></script>' );
 document.write( '<script src="suica-tube.js"></script>' );
 document.write( '<script src="suica-convex.js"></script>' );
 document.write( '<script src="suica-model.js"></script>' );
+document.write( '<script src="suica-construct.js"></script>' );
 
 document.write( '<script src="suica-main.js"></script>' );

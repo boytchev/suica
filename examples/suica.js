@@ -209,13 +209,13 @@ class Suica
 		
 		
 		// register local methods that have stereotypical code
-		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model] )
+		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct] )
 		{
 			Suica.registerClass( this, classObject );
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -1754,6 +1754,11 @@ class HTMLParser
 	
 	parseAttributes( elem, object, parseOptions = {} )
 	{
+		if( parseOptions.center )
+		{
+			if( elem.hasAttribute('center') ) object.center = elem.getAttribute('center'); 
+		}
+
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) object.z = Number(elem.getAttribute('z')); 
@@ -2097,6 +2102,24 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagMODEL
+
+
+	// <construct id="..." src="..." center="..." size="..." color="...">
+	parseTagCONSTRUCT( suica, elem )
+	{
+		var p = suica.construct(
+			elem.getAttribute('src'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
+		);
+		
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, center:true} );
+
+		elem.suicaObject = p;
+		
+		return p;
+		
+	} // HTMLParser.parseTagCONSTRUCT
 
 
 	// <spline src="x,y,z; x,y,z; x,y,z; ..." interpolating="..." approximating="..." open="..." closed="...">
@@ -4701,4 +4724,117 @@ class Model extends Mesh
 	
 	
 } // class Model
+﻿//
+// Suica 2.0 Construct
+// CC-3.0-SA-NC
+//
+//
+//===================================================
+
+
+
+class Construct extends Mesh
+{
+	static SIZE = [1,1,1];
+	static COLOR = 'lightsalmon';
+
+	constructor( suica, expression, size, color )
+	{
+		suica.parser?.parseTags();
+		suica.debugCall( 'construct', expression, size, color );
+		
+		expression = '('+expression+')';
+		
+		// tokenize
+		
+		var tokens = '';
+		for( var i=0; i<expression.length; i++ )
+		{
+			var ch = expression[i];
+			if( '*+-()'.indexOf(ch) > -1 ) ch = ' '+ch+' ';
+			tokens += ch;
+		}
+		tokens = tokens.split(' ').filter( token => token );
+
+		// parse
+
+		var polish = [],
+			stack = [],
+			p, q;
+			
+		for( var token of tokens )
+		{
+			switch( token )
+			{
+				case ')':
+					while( p=stack.pop(), p != '(' )
+						polish.push( p );
+					break;
+
+				case '+':
+				case '-':
+					while( p=stack.pop(), p == '*' || p == '+' || p == '-' )
+						polish.push( p );
+					if( p ) stack.push( p ); // no break!
+
+				case '(':
+				case '*':
+					stack.push( token );
+					break;
+
+				default:
+					polish.push( token );
+			}
+		}
+		
+		
+console.log( expression );
+console.log( tokens );
+console.log( polish );
+		
+		// evaluate
+		console.assert( stack.length==0 );
+		stack = [];
+		for( var token of polish )
+			switch( token )
+			{
+				case '*':
+					var csg = new CSG();
+					q = stack.pop();
+					p = stack.pop();
+					stack.push( csg.intersect([p,q]).toMesh() );
+					break;
+				case '+':
+					var csg = new CSG();
+					q = stack.pop();
+					p = stack.pop();
+					stack.push( csg.union([p,q]).toMesh() );
+					break;
+				case '-':
+					var csg = new CSG();
+					q = stack.pop();
+					p = stack.pop();
+					stack.push( csg.subtract([p,q]).toMesh() );
+					break;
+				default:
+					stack.push( Suica.evaluate(token).threejs );
+			}
+		// var geometry = Convex.generateGeometry( points );
+		
+		p = stack.pop();
+		p.material = p.material.clone();
+		
+		super( suica, 
+			p,
+			null, // no wireframe
+		);
+		
+		this.center = [0,0,0];
+		this.size = Suica.parseSize( size, Construct.SIZE );
+		this.color = Suica.parseColor( color, Construct.COLOR);
+
+	} // Construct.constructor
+
+
+} // class Construct
 } // LoadSuica 

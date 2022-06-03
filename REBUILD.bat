@@ -1,3 +1,15 @@
+
+
+
+rem Minify CSG.js and its files
+misc\jsmin\jsmin <misc\csg\BSPNode.js >misc\csg\BSPNode.min.js
+misc\jsmin\jsmin <misc\csg\CSG.js >misc\csg\CSG.min.js
+misc\jsmin\jsmin <misc\csg\CSGCuttingPlane.js >misc\csg\CSGCuttingPlane.min.js
+misc\jsmin\jsmin <misc\csg\CSGPolygon.js >misc\csg\CSGPolygon.min.js
+misc\jsmin\jsmin <misc\csg\CSGVertex.js >misc\csg\CSGVertex.min.js
+
+
+rem Minify Three.js and its libraries
 misc\jsmin\jsmin <misc\threejs\ConvexHull.js >misc\threejs\ConvexHull.min.js
 misc\jsmin\jsmin <misc\threejs\ConvexGeometry.js >misc\threejs\ConvexGeometry.min.js
 misc\jsmin\jsmin <misc\threejs\AnaglyphEffect.js >misc\threejs\AnaglyphEffect.min.js
@@ -6,7 +18,7 @@ misc\jsmin\jsmin <misc\threejs\VRButton.js >misc\threejs\VRButton.min.js
 misc\jsmin\jsmin <misc\threejs\GLTFExporter.js >misc\threejs\GLTFExporter.min.js
 misc\jsmin\jsmin <misc\threejs\GLTFLoader.js >misc\threejs\GLTFLoader.min.js
 
-copy /b misc\threejs\three.min.js + misc\threejs\ConvexHull.min.js + misc\threejs\ConvexGeometry.min.js + misc\threejs\AnaglyphEffect.min.js + misc\threejs\StereoEffect.min.js + misc\threejs\VRButton.min.js + misc\threejs\GLTFExporter.min.js + misc\threejs\GLTFLoader.min.js bin\three.min.js
+copy /b misc\threejs\three.min.js + misc\threejs\ConvexHull.min.js + misc\threejs\ConvexGeometry.min.js + misc\threejs\AnaglyphEffect.min.js + misc\threejs\StereoEffect.min.js + misc\threejs\VRButton.min.js + misc\threejs\GLTFExporter.min.js + misc\threejs\GLTFLoader.min.js + misc\csg\BSPNode.min.js + misc\csg\CSGCuttingPlane.min.js + misc\csg\CSGPolygon.min.js + misc\csg\CSGVertex.min.js + misc\csg\CSG.min.js bin\three.min.js
 
 rem Create suica.js prefix
 rem IMPORTANT: Between "echo" and "document: there are invisible
@@ -22,7 +34,7 @@ rem alternative: the same chars are between these quotes:    "﻿"
 echo ﻿ document.write( '^<script src^="three.min.js" onload^="LoadSuica();"^>^</script^>' );﻿function LoadSuica(){ > bin\suica.js
 
 rem Copy Suica files one by one
-copy /b bin\suica.js + suica-main.js + suica-vr.js + suica-parser.js + suica-drawing.js + suica-mesh.js + suica-point.js + suica-line.js + suica-square.js + suica-cube.js + suica-circle.js + suica-sphere.js + suica-cylinder.js + suica-cone.js + suica-group.js + suica-tube.js + suica-convex.js + suica-model.js bin\suica.js
+copy /b bin\suica.js + suica-main.js + suica-vr.js + suica-parser.js + suica-drawing.js + suica-mesh.js + suica-point.js + suica-line.js + suica-square.js + suica-cube.js + suica-circle.js + suica-sphere.js + suica-cylinder.js + suica-cone.js + suica-group.js + suica-tube.js + suica-convex.js + suica-model.js + suica-construct.js bin\suica.js
 
 
 rem Create suica.js postfix

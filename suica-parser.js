@@ -220,6 +220,11 @@ class HTMLParser
 	
 	parseAttributes( elem, object, parseOptions = {} )
 	{
+		if( parseOptions.center )
+		{
+			if( elem.hasAttribute('center') ) object.center = elem.getAttribute('center'); 
+		}
+
 		if( elem.hasAttribute('x') ) object.x = Number(elem.getAttribute('x')); 
 		if( elem.hasAttribute('y') ) object.y = Number(elem.getAttribute('y')); 
 		if( elem.hasAttribute('z') ) object.z = Number(elem.getAttribute('z')); 
@@ -563,6 +568,24 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagMODEL
+
+
+	// <construct id="..." src="..." center="..." size="..." color="...">
+	parseTagCONSTRUCT( suica, elem )
+	{
+		var p = suica.construct(
+			elem.getAttribute('src'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
+		);
+		
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, center:true} );
+
+		elem.suicaObject = p;
+		
+		return p;
+		
+	} // HTMLParser.parseTagCONSTRUCT
 
 
 	// <spline src="x,y,z; x,y,z; x,y,z; ..." interpolating="..." approximating="..." open="..." closed="...">
