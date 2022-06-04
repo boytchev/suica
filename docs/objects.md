@@ -13,7 +13,7 @@ description: The core of Suica &ndash; from point to sphere
 - [Objects](#objects)
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
-	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex), [`model`](#model)</small>
+	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex), [`model`](#model), [`construct`](#construct)</small>
 	- <small>[Invisibles](#invisibles): [`spline points`](#spline-points), [`spline function`](#spline-function)</small>
 
 
@@ -593,7 +593,7 @@ JS:
 ```
 Object. Constructs a [convex hull](https://en.wikipedia.org/wiki/Convex_hull) or a [convex polyhedron](https://en.wikipedia.org/wiki/Polyhedron) on a set of points. The `src` parameter of `convex` is a set of points in 3D. The shape of the object is the minimal shape that wraps these points. Not all points from `src` are vertices of the convex object. Other properties are `vertices`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties except `vertices` can be included in the `<convex>` tag.
 
-<img src="images/comvex.png">
+<img src="images/convex.png">
 
 ```html
 HTML:
@@ -661,6 +661,57 @@ Method. Save 3D objects into external GLTF or GLB file. The `fileName` parameter
 When objects are save to external file they are transformed into a GLFT structure. When such file is read, it is recreated as a single Suica object &ndash; i.e. the original Suica objects used for the file are not distinguishable. Objects events are not saved to GLTF.
 
 [<kbd><img src="../examples/snapshots/model-save.jpg" width="300"></kbd>](../examples/model-save.html)
+
+
+#### construct
+```html
+HTML:
+<construct id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝘦𝘹𝘱𝘳𝘦𝘴𝘴𝘪𝘰𝘯" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = construct( 𝘦𝘹𝘱𝘳𝘦𝘴𝘴𝘪𝘰𝘯, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Constructs an object with [Constructive Solid Geometry (CSG)](https://en.wikipedia.org/wiki/Constructive_solid_geometry) operations. The `src` parameter is a CSG expression. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<construct>` tag. The `size` of a model is the scale factor, which is multiplied with the actual size of the model.
+
+The CSG expressions are made of CSG operations and Suica objects. The CSG operations are:
+- `A+B`: Union. Constructs an object containing both A and B. `A+B` is the same as `B+A`.
+- `A-B`: Substraction. Constructs an object containing A but with B removed.  `A-B` is not the same as `B-A`.
+- `A*B`: Intersection. Constructs an object containing the common parts of A and B.  `A*B` is the same as `B*A`.
+
+<img src="images/construct.png">
+
+Operations have the default mathematical precedence: calculations are from left to right, but `*` is calculated before `+` and `-`. Parenthesis `(...)` are used to change the precedence. For example, `A-B*C+D` is calculated as `(A-(B*C))+D`, which is dfferent from `(A-B)*C+D`. The data in CSG are the names of Suica objects, array notation (e.g. `a[2]` is allowed).
+
+
+```html
+HTML:
+<cube id="box">
+<sphere id="ball">
+<construct src="box-ball">
+```
+```js
+JS:
+box = cube();
+ball = sphere();
+construct( 'box-ball' );
+```
+
+[<kbd><img src="../examples/snapshots/construct-union.jpg" width="300"></kbd>](../examples/construct-union.html)
+[<kbd><img src="../examples/snapshots/construct-subtract.jpg" width="300"></kbd>](../examples/construct-subtract.html)
+[<kbd><img src="../examples/snapshots/construct-intersect.jpg" width="300"></kbd>](../examples/construct-intersect.html)
+[<kbd><img src="../examples/snapshots/construct-expression.jpg" width="300"></kbd>](../examples/construct-subtract.html)
+
+Suica CSG uses experimental [CSG library](https://github.com/looeee/threejs-csg) and have some limitations:
+- CSG operations are not fast. Round objects, like spheres, are processed very slow. A general advice is to build offline the object once, save it as GLB file with [`model.save`](#model-save) and then use [`model`](#model) to load it online.
+- CSG operation are not bug-free. In some situations the resulting object might be with wrong or missing faces. In other situations the construction process may break with an error. In such cases the only possibility is to try and use simpler shapes or to perform the operations in a dedicated modelling software.
+
+The next example carves 10 grooves on a cube. When the grooves are 20, the construction breaks.
+
+[<kbd><img src="../examples/snapshots/construct-grooves.jpg" width="300"></kbd>](../examples/construct-grooves.html)
+
+
+
 
 
 # Invisibles

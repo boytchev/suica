@@ -33,7 +33,7 @@ This version of Suica is based on Three.js. Programs that use Suica should inclu
 
 In Suica, the file `three.min.js` is extended and it contains:
 
-- Original files:
+- The original [Three.js](https://github.com/mrdoob/three.js/) file:
 	- `three.min.js`
 - Minified version of original [Three.js](https://github.com/mrdoob/three.js/) files:
 	- `ConvexHull.js`
