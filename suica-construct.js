@@ -34,9 +34,9 @@ class Construct extends Mesh
 
 		var polish = [],
 			stack = [],
-			p, q;
+			p, q, token;
 			
-		for( var token of tokens )
+		for( token of tokens )
 		{
 			switch( token )
 			{
@@ -60,32 +60,33 @@ class Construct extends Mesh
 					polish.push( token );
 			}
 		}
-		
-		
-console.log( expression );
-console.log( tokens );
-console.log( polish );
+				
+//console.log( expression );
+//console.log( tokens );
+//console.log( polish );
 		
 		// evaluate
 		console.assert( stack.length==0 );
+
+		var csg;
 		stack = [];
-		for( var token of polish )
+		for( token of polish )
 			switch( token )
 			{
 				case '*':
-					var csg = new CSG();
+					csg = new CSG();
 					q = stack.pop();
 					p = stack.pop();
 					stack.push( csg.intersect([p,q]).toMesh() );
 					break;
 				case '+':
-					var csg = new CSG();
+					csg = new CSG();
 					q = stack.pop();
 					p = stack.pop();
 					stack.push( csg.union([p,q]).toMesh() );
 					break;
 				case '-':
-					var csg = new CSG();
+					csg = new CSG();
 					q = stack.pop();
 					p = stack.pop();
 					stack.push( csg.subtract([p,q]).toMesh() );
@@ -93,7 +94,6 @@ console.log( polish );
 				default:
 					stack.push( Suica.evaluate(token).threejs );
 			}
-		// var geometry = Convex.generateGeometry( points );
 		
 		p = stack.pop();
 		p.material = p.material.clone();
