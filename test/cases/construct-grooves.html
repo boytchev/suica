@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="spin">
+	</suica>
+	
+	<script>
+		var d = cube( [0,0,0], 48, 'linen' );
+		var a = cube( [0,0,0], 50 );
+		its.threejs.visible = false;
+		var b = [];
+		
+		var expr = 'a';
+
+		for( var i=0; i<10; i++ )
+		{
+			b.push( cube( [0,random(-10,10),0], [100,100,3] ) );
+			its.spin = [random(0,360),random(0,180),0];
+			its.threejs.visible = false;
+			expr += `-b[${i}]`;
+		}
+
+
+		var c = construct( expr );
+
+		var g = group( c, d );
+		
+		function spin( t )
+		{
+			g.spin = [40*t, 30*t, 20*t];
+		}
+	</script>
+	
+</body>
+</html>

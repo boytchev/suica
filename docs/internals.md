@@ -29,21 +29,27 @@ To test only part of the test cases, a string template is given as a parameter t
 
 # Using Three.js
 
-This version of Suica is based on [Three.js](https://threejs.org). Programs that use Suica should include either `suica.js` or `suica.min.js`. Suica automatically loads `three.min.js`, it must be in the same folder.
+This version of Suica is based on Three.js. Programs that use Suica should include either `suica.js` or `suica.min.js`. Suica automatically loads `three.min.js`, it must be in the same folder.
 
 In Suica, the file `three.min.js` is extended and it contains:
 
 - Original files:
 	- `three.min.js`
-- Minified version of original files:
+- Minified version of original [Three.js](https://github.com/mrdoob/three.js/) files:
 	- `ConvexHull.js`
 	- `ConvexGeometry.js`
 	- `StereoEffect.js`
 	- `GLTFLoader.js`
 	- `GLTFExporter.js`
-- Modified and minified versions of:
+- Modified and minified versions of [Three.js](https://github.com/mrdoob/three.js/) files:
 	- `AnaglyphEffect.js` &ndash; color matrices are set to color identities
 	- `VRButton.js` &ndash; converted to non-module
+- Modified and minified versions of [CSG.js](https://github.com/looeee/threejs-csg) files:
+	- `BSPNode.js` &ndash; converted to non-module
+	- `CSG.js` &ndash; converted to non-module
+	- `CSGCuttingPlane.js` &ndash; converted to non-module
+	- `CSGPolygon.js` &ndash; converted to non-module
+	- `CSGVertex.js` &ndash; converted to non-module
 
 
 
