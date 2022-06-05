@@ -34,7 +34,7 @@ rem alternative: the same chars are between these quotes:    "﻿"
 echo ﻿ document.write( '^<script src^="three.min.js" onload^="LoadSuica();"^>^</script^>' );﻿function LoadSuica(){ > bin\suica.js
 
 rem Copy Suica files one by one
-copy /b bin\suica.js + suica-main.js + suica-vr.js + suica-parser.js + suica-drawing.js + suica-mesh.js + suica-point.js + suica-line.js + suica-square.js + suica-cube.js + suica-circle.js + suica-sphere.js + suica-cylinder.js + suica-cone.js + suica-group.js + suica-tube.js + suica-convex.js + suica-model.js + suica-construct.js bin\suica.js
+copy /b bin\suica.js + suica-main.js + suica-vr.js + suica-parser.js + suica-drawing.js + suica-mesh.js + suica-point.js + suica-line.js + suica-square.js + suica-cube.js + suica-circle.js + suica-sphere.js + suica-cylinder.js + suica-cone.js + suica-group.js + suica-tube.js + suica-convex.js + suica-model.js + suica-construct.js + suica-scorm.js bin\suica.js
 
 
 rem Create suica.js postfix
@@ -44,6 +44,7 @@ misc\jsmin\jsmin <bin\suica.js >bin\suica.min.js "Suica 2.0"
 
 copy bin\three.min.js .
 copy bin\three.min.js examples
+copy bin\three.min.js test
 copy bin\three.min.js test\cases
 
 copy bin\suica.js examples

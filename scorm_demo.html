@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>SCORM - Pick a color</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>SCORM - Pick a color</h1>
+	<p>Demonstrating SCORM modules.</p>
+
+	<suica fullwindow>
+	</suica>
+	
+	<script>
+		var hue = random(0,360),
+			min = 30,
+			max = 120;
+		circle( [0,0,0], 20, hsl(hue,100,50) );
+		
+		for( var i=0; i<6; i++ )
+		{
+			var dHue = Math.round(random(min,max)*random([-1,1])),
+				x = 21*Math.cos(radians(60*i)),
+				y = 21*Math.sin(radians(60*i));
+			console.log(dHue );
+			circle( [x,y,-1], 20, hsl( hue+dHue, 100, 50 ) );
+		//	obj.color = hsl( , 100, 50 );
+		}
+/*		console.log('BEFORE DUMP');
+		scorm.dump();
+
+		console.log( 'student id',scorm.studentId );
+		console.log( 'student name',scorm.studentName );
+
+		console.log( 'data old',scorm.data );
+		scorm.data = scorm.data ? parseInt(scorm.data)+1 : 1;
+		console.log( 'data new',scorm.data );
+		
+		console.log( 'score old',scorm.score );
+		scorm.score = random(0,100);
+		console.log( 'score new',scorm.score );
+
+		console.log('AFTER DUMP');
+		scorm.dump();
+		*/
+	</script>
+	
+</body>
+</html>

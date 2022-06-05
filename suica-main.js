@@ -6,7 +6,7 @@
 
 
 // control flags
-const DEBUG_CALLS = !false;
+const DEBUG_CALLS = false;
 const DEBUG_EVENTS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
@@ -1224,7 +1224,7 @@ window.rgb = function( r, g, b )
 
 window.hsl = function( h, s, l )
 {
-	return new THREE.Color( ).setHSL( h/360, s/100, l/100 );
+	return new THREE.Color( ).setHSL( (1+(h/360)%1)%1, s/100, l/100 );
 }
 
 
