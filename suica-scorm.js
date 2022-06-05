@@ -16,7 +16,7 @@ class Scorm
 	
 	findAPI( win )
 	{
-		if( (win == null) || (typeof(win) == "undefined") )
+		if( win == null )
 			return null;
 		
 		var attempts = 0;
