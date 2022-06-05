@@ -102,7 +102,7 @@ class Scorm
 	}
 	set score( value )
 	{
-		return this.setValue( 'cmi.core.score.raw', value );
+		this.setValue( 'cmi.core.score.raw', value );
 	}
 	// Scorm.score
 
