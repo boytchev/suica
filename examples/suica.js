@@ -4864,7 +4864,7 @@ class Scorm
 	
 	findAPI( win )
 	{
-		if( (win == null) || (typeof(win) == "undefined") )
+		if( win == null )
 			return null;
 		
 		var attempts = 0;
@@ -4950,7 +4950,7 @@ class Scorm
 	}
 	set score( value )
 	{
-		return this.setValue( 'cmi.core.score.raw', value );
+		this.setValue( 'cmi.core.score.raw', value );
 	}
 	// Scorm.score
 
