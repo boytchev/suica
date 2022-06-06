@@ -839,7 +839,7 @@ When Suica is used in a SCORM module, it can retrieve data about the student (e.
 
 [<kbd><img src="../examples/snapshots/scorm.jpg" width="300"></kbd>](../examples/scorm.html)
 
-More information about Suica SCORM modules will be avaiable in [The collection of Suica SCORM modules](https://boytchev.github.io/scorm/).
+More information about Suica SCORM modules will be available in [The collection of Suica SCORM modules](https://boytchev.github.io/scorm/).
 
 #### scorm
 ```js
@@ -861,11 +861,11 @@ Suica always defines `scorm`, but if `scorm.api` is empty, then the SCORM functi
 JS:
 if( scorm.api )
 {
-	// Suica is running in SCORM module
+   // Suica is running in SCORM module
 }
 else
 {
-	// Suica is not running in SCORM module
+   // Suica is NOT running in SCORM module
 }
 ```
 
