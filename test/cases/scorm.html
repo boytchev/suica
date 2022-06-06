@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica ontime="spin">
+		<square id="panel_1" y="12" size="80,10" color="1,1,1">
+		<square id="panel_2" y="0" size="80,10" color="0.9,0.9,0.9">
+		<square id="panel_3" y="-12" size="80,10" color="0.8,0.8,0.8">
+		
+		<clone src="panel_1" color="0.8,0.6,0.6" wireframe>
+		<clone src="panel_2" color="0.7,0.5,0.5" wireframe>
+		<clone src="panel_3" color="0.6,0.4,0.4" wireframe>
+		
+		<group id="obj">
+			<cube size="60,1,15" color="lightsalmon">
+			<cube size="15,60,1"  color="dimgray">
+			<cube size="1,15,60" color="white">
+		</group>
+	</suica>
+	
+	<script>
+		result = scorm.api ? 'SCORM API 1.2 is found and initialized' : 'SCORM API 1.2 is not found';
+		
+		panel_1.image = drawing( 1024, 128, 'linen' );
+		panel_1.image.fillText( 10, 80, 'API:', 'black', 'bold 48px Arial' );
+		panel_1.image.fillText( 10, 14, result, 'black', '48px Arial' );
+			
+		result = scorm.studentId ? 'Available, but hidden because of GDPR' : 'Not available';
+
+		panel_2.image = drawing( 1024, 128, 'linen' );
+		panel_2.image.fillText( 10, 80, 'Student Id:', 'black', 'bold 48px Arial' );
+		panel_2.image.fillText( 10, 14, result, 'black', '48px Arial' );
+			
+		result = scorm.studentName ? 'Available, but hidden because of GDPR' : 'Not available';
+
+		panel_3.image = drawing( 1024, 128, 'linen' );
+		panel_3.image.fillText( 10, 80, 'Student Name:', 'black', 'bold 48px Arial' );
+		panel_3.image.fillText( 10, 14, result, 'black', '48px Arial' );
+		
+		function spin( t )
+		{
+			obj.spin = [50*t, 47*t, 43*t];
+		}
+	</script>
+	
+</body>
+</html>
