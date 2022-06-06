@@ -152,6 +152,8 @@ Click on an image to run the example.
 [<kbd><img src="../examples/snapshots/spline-function.jpg" width="300"></kbd>](../examples/spline-function.html)
 [<kbd><img src="../examples/snapshots/spline-html.jpg" width="300"></kbd>](../examples/spline-html.html)
 
+[<kbd><img src="../examples/snapshots/scorm.jpg" width="300"></kbd>](../examples/scorm.html)
+
 
 
 

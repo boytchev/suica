@@ -14,7 +14,7 @@ description: The core of Suica &ndash; from point to sphere
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
 	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex), [`model`](#model), [`construct`](#construct)</small>
-	- <small>[Invisibles](#invisibles): [`spline points`](#spline-points), [`spline function`](#spline-function)</small>
+	- <small>[Invisibles](#invisibles): [`spline`](#spline), [`scorm`](#scorm)</small>
 
 
 
@@ -716,8 +716,9 @@ The next example carves 10 grooves on a cube. When the grooves are 20, the const
 
 # Invisibles
 
-Invisibles are abstract constructions used to calculated object shape, position or motion. In Suica they are implemented as JavaScript functions.
+Invisibles are abstract constructions used to calculated object shape, position and motion, or to support communication with other tools.
 
+## Spline
 
 #### spline points
 ```html
@@ -826,6 +827,101 @@ HTML:
 	
 [<kbd><img src="../examples/snapshots/spline-function.jpg" width="300"></kbd>](../examples/spline-function.html)
 [<kbd><img src="../examples/snapshots/spline-html.jpg" width="300"></kbd>](../examples/spline-html.html)
+
+
+
+
+## SCORM
+
+**SCORM** stands for [Shareable Content Object Reference Model](https://en.wikipedia.org/wiki/Sharable_Content_Object_Reference_Model). This is a set of standards that define the structure of educational content that can be used in various [learning management systems](https://en.wikipedia.org/wiki/Learning_management_system) (LMS). SCORM modules are provided as ZIP files that contain lessons, quizzes, images and other teaching materials. 
+
+When Suica is used in a SCORM module, it can retrieve data about the student (e.g. id and name) and also set data (e.g. score). The following example runs Suica outside LSM, so SCORM data is not available.
+
+[<kbd><img src="../examples/snapshots/scorm.jpg" width="300"></kbd>](../examples/scorm.html)
+
+More information about Suica SCORM modules will be avaiable in [The collection of Suica SCORM modules](https://boytchev.github.io/scorm/).
+
+#### scorm
+```js
+JS:
+scorm
+```
+Variable. Implements sharable content objects. Suica uses `scorm` to manage communication with a LMS via SCORM.
+
+#### scorm.api
+```js
+JS:
+scorm.api
+```
+Property. Interface to SCORM Run-time API. This property defines methods for run-time access to SCORM functions. The functions are listed in [SCORM 1.2 API Signature](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2) and they are `LMSInitialize`, `LMSFinish`, `LMSGetValue`, `LMSSetValue`, `LMSCommit`, `LMSGetLastError` and `LMSGetErrorString`. Details about these functions are available in [Overview of the SCORM Run-Time environment](https://scorm.com/scorm-explained/technical-scorm/run-time/). 
+
+Suica always defines `scorm`, but if `scorm.api` is empty, then the SCORM functionality is not available.
+
+```js
+JS:
+if( scorm.api )
+{
+	// Suica is running in SCORM module
+}
+else
+{
+	// Suica is not running in SCORM module
+}
+```
+
+#### scorm.getValue
+```js
+JS:
+scorm.getValue( 𝘯𝘢𝘮𝘦 );
+```
+Function. Retrieves the value of SCORM property `name`. If such property does not exist the return value is an empty string. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2).
+
+The following example retrieves the student id, which is stored in SCORM property `cmi.core.student_id`.
+
+```js
+JS:
+var studentId = scorm.getValue( 'cmi.core.student_id' );
+```
+
+
+#### scorm.setValue
+```js
+JS:
+scorm.setValue( 𝘯𝘢𝘮𝘦, 𝘷𝘢𝘭𝘶𝘦 );
+```
+Function. Sets the `value` of SCORM property `name`. Some properties, like student's name, are read-only and their values cannot be modified.
+
+The following example sets the student's score in the LMS. The score is stored in SCORM property `cmi.core.score.raw`.
+
+```js
+JS:
+scorm.setValue( 'cmi.core.score.raw', 30 );
+```
+
+
+#### scorm.studentId
+```js
+JS:
+scorm.studentId
+```
+Property. This is the read-only SCORM property `cmi.core.student_id`. It gets the student's id. It is equivalent to `scorm.getValue( 'cmi.core.student_id' )`.
+
+
+#### scorm.studentName
+```js
+JS:
+scorm.studentName
+```
+Property. This is the read-only SCORM property `cmi.core.student_name`. It getsthe student's name. It is equivalent to `scorm.getValue( 'cmi.core.student_name' )`.
+
+
+#### scorm.score
+```js
+JS:
+scorm.score
+```
+Property. This is SCORM property `cmi.core.score.raw`. It gets or sets the student's score. It is equivalent to `scorm.getValue( 'cmi.core.score.raw' )` or `scorm.setValue( 'cmi.core.score.raw',... )`.
+
 
 
 
