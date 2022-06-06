@@ -18,7 +18,7 @@ if( TEST_MODE )
 else
 	console.log(`(\\/)
 ( ..)		Suica 2.-1
-c(”)(”)		(220525)
+c(”)(”)		(220606)
 `);
 
 
@@ -4883,6 +4883,29 @@ class Scorm
 		return win.API;
 	} // Scorm.findAPI
 		
+	
+	derandomize( seedValue = '~' )
+	{
+		// set random seed depending on the student name and student id
+		// hash is https://en.wikipedia.org/wiki/Jenkins_hash_function
+		
+		var str = this.studentId + seedValue + this.studentName,
+			hash = 0;
+		
+		for( var i=0; i<str.length; i++ )
+		{
+			hash += str.charCodeAt( i );
+			hash += hash << 10;
+			hash ^= hash >> 6;
+		}
+		hash += hash << 3;
+		hash ^= hash >> 11;
+		hash += hash << 15;
+		hash = hash & hash;
+
+		THREE.Math.seededRandom( hash ); // fixed seed, so random number will be the same
+	} // Scorm.derandomize
+	
 	
 	/*
 	dump( )

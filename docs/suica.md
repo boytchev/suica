@@ -640,6 +640,9 @@ a = random( 5, 10 ); // from 5 to 10
 a = random( [1, 2, 3, 4] ); // from the list
 ```
 
+To generate a fixed user-dependent sequence of pseudo-random  values use [`scorm.derandomize`](objects.md#scormdenormalize).
+
+
 
 
 

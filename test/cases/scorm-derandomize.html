@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica></suica>
+	
+	<script>
+		demo( 100, 0 );
+
+		for( var y=-25; y<=25; y+=10 )
+		{
+			if( y>0 ) scorm.derandomize();
+			
+			for( var x=-50; x<=50; x+=10 )
+				cube( [x,y], 9, random(['linen','peachpuff','lightsalmon','white','gray','black']) );
+		}
+	</script>
+	
+</body>
+</html>

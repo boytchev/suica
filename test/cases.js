@@ -91,6 +91,7 @@ var cases = [
 'qa-attribute-modification', 
 'qa-custom-center', 
 'qa-property-modification', 
+'scorm-derandomize', 
 'scorm', 
 'sizes-orientation-xyz', 
 'sizes-orientation-xzy', 

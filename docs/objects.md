@@ -923,6 +923,19 @@ scorm.score
 Property. This is SCORM property `cmi.core.score.raw`. It gets or sets the student's score. It is equivalent to `scorm.getValue( 'cmi.core.score.raw' )` or `scorm.setValue( 'cmi.core.score.raw',... )`.
 
 
+#### scorm.derandomize
+```js
+JS:
+scorm.derandomize( 𝘴𝘦𝘦𝘥𝘝𝘢𝘭𝘶𝘦 )
+```
+Functions. Resets the generator of pseudo-random numbers in Suica. This function uses [`scorm.studentId`](#scormstudentid), [`scorm.studentName`](#scormstudentname) and `seedValue` to reset or derandomize the [`random`](suica.md#random) function. After derandomization, the generator produces the same sequence of pseudo-random values.
+
+Function `scorm.derandomize` is used to generate individual persistent sequence of pseudo-random values for each student.
+
+The next example demonstrates the derandomization effect. The lower three rows of cubes are randomly colored at every execution. The upper three rows, although randomly coloured, will have the same colors every time.
+
+[<kbd><img src="../examples/snapshots/scorm-derandomize.jpg" width="300"></kbd>](../examples/scorm-derandomize.html)
+
 
 
 <small>{{site.time | date: "%B, %Y"}}</small>
