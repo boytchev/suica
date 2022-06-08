@@ -164,7 +164,7 @@ class Drawing
 	arc( x=0, y=0, r=Drawing.ARC_RADIUS, from = Drawing.ARC_FROM, to = Drawing.ARC_TO, cw = Drawing.ARC_CW )
 	{
 		this.managePath();
-		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90), !cw );
+		this.context.arc( x, this.canvas.height-y, r, THREE.MathUtils.degToRad(from-90), THREE.MathUtils.degToRad(to-90), !cw );
 	} // Drawing.arc
 	
 	

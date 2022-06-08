@@ -35,11 +35,6 @@
 				return new GLTFMaterialsClearcoatExtension( writer );
 
 			} );
-			this.register( function ( writer ) {
-
-				return new GLTFMaterialsIridescenceExtension( writer );
-
-			} );
 
 		}
 
@@ -190,7 +185,23 @@
 
 	function stringToArrayBuffer( text ) {
 
-		return new TextEncoder().encode( text ).buffer;
+		if ( window.TextEncoder !== undefined ) {
+
+			return new TextEncoder().encode( text ).buffer;
+
+		}
+
+		const array = new Uint8Array( new ArrayBuffer( text.length ) );
+
+		for ( let i = 0, il = text.length; i < il; i ++ ) {
+
+			const value = text.charCodeAt( i ); // Replacing multi-byte character with space(0x20).
+
+			array[ i ] = value > 0xFF ? 0x20 : value;
+
+		}
+
+		return array.buffer;
 
 	}
 	/**
@@ -301,60 +312,9 @@
 	}
 
 	let cachedCanvas = null;
-
-	function getCanvas() {
-
-		if ( cachedCanvas ) {
-
-			return cachedCanvas;
-
-		}
-
-		if ( typeof document === 'undefined' && typeof OffscreenCanvas !== 'undefined' ) {
-
-			cachedCanvas = new OffscreenCanvas( 1, 1 );
-
-		} else {
-
-			cachedCanvas = document.createElement( 'canvas' );
-
-		}
-
-		return cachedCanvas;
-
-	}
-
-	function getToBlobPromise( canvas, mimeType ) {
-
-		if ( canvas.toBlob !== undefined ) {
-
-			return new Promise( resolve => canvas.toBlob( resolve, mimeType ) );
-
-		}
-
-		let quality; // Blink's implementation of convertToBlob seems to default to a quality level of 100%
-		// Use the Blink default quality levels of toBlob instead so that file sizes are comparable.
-
-		if ( mimeType === 'image/jpeg' ) {
-
-			quality = 0.92;
-
-		} else if ( mimeType === 'image/webp' ) {
-
-			quality = 0.8;
-
-		}
-
-		return canvas.convertToBlob( {
-			type: mimeType,
-			quality: quality
-		} );
-
-	}
 	/**
  * Writer
  */
-
 
 	class GLTFWriter {
 
@@ -409,6 +369,7 @@
 				trs: false,
 				onlyVisible: true,
 				truncateDrawRange: true,
+				embedImages: true,
 				maxTextureSize: Infinity,
 				animations: [],
 				includeCustomExtensions: false
@@ -441,7 +402,7 @@
 			if ( options.binary === true ) {
 
 				// https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#glb-file-format-specification
-				const reader = new FileReader();
+				const reader = new window.FileReader();
 				reader.readAsArrayBuffer( blob );
 
 				reader.onloadend = function () {
@@ -466,7 +427,7 @@
 					const glbBlob = new Blob( [ header, jsonChunkPrefix, jsonChunk, binaryChunkPrefix, binaryChunk ], {
 						type: 'application/octet-stream'
 					} );
-					const glbReader = new FileReader();
+					const glbReader = new window.FileReader();
 					glbReader.readAsArrayBuffer( glbBlob );
 
 					glbReader.onloadend = function () {
@@ -481,7 +442,7 @@
 
 				if ( json.buffers && json.buffers.length > 0 ) {
 
-					const reader = new FileReader();
+					const reader = new window.FileReader();
 					reader.readAsDataURL( blob );
 
 					reader.onloadend = function () {
@@ -544,25 +505,17 @@
 
 		}
 		/**
-   * Returns ids for buffer attributes.
+   * Assign and return a temporal unique id for an object
+   * especially which doesn't have .uuid
    * @param  {Object} object
    * @return {Integer}
    */
 
 
-		getUID( attribute, isRelativeCopy = false ) {
+		getUID( object ) {
 
-			if ( this.uids.has( attribute ) === false ) {
-
-				const uids = new Map();
-				uids.set( true, this.uid ++ );
-				uids.set( false, this.uid ++ );
-				this.uids.set( attribute, uids );
-
-			}
-
-			const uids = this.uids.get( attribute );
-			return uids.get( isRelativeCopy );
+			if ( ! this.uids.has( object ) ) this.uids.set( object, this.uid ++ );
+			return this.uids.get( object );
 
 		}
 		/**
@@ -681,7 +634,7 @@
 			const roughness = roughnessMap?.image;
 			const width = Math.max( metalness?.width || 0, roughness?.width || 0 );
 			const height = Math.max( metalness?.height || 0, roughness?.height || 0 );
-			const canvas = getCanvas();
+			const canvas = document.createElement( 'canvas' );
 			canvas.width = width;
 			canvas.height = height;
 			const context = canvas.getContext( '2d' );
@@ -857,7 +810,7 @@
 			if ( ! json.bufferViews ) json.bufferViews = [];
 			return new Promise( function ( resolve ) {
 
-				const reader = new FileReader();
+				const reader = new window.FileReader();
 				reader.readAsArrayBuffer( blob );
 
 				reader.onloadend = function () {
@@ -986,75 +939,80 @@
 			const imageDef = {
 				mimeType: mimeType
 			};
-			const canvas = getCanvas();
-			canvas.width = Math.min( image.width, options.maxTextureSize );
-			canvas.height = Math.min( image.height, options.maxTextureSize );
-			const ctx = canvas.getContext( '2d' );
 
-			if ( flipY === true ) {
+			if ( options.embedImages ) {
 
-				ctx.translate( 0, canvas.height );
-				ctx.scale( 1, - 1 );
+				const canvas = cachedCanvas = cachedCanvas || document.createElement( 'canvas' );
+				canvas.width = Math.min( image.width, options.maxTextureSize );
+				canvas.height = Math.min( image.height, options.maxTextureSize );
+				const ctx = canvas.getContext( '2d' );
 
-			}
+				if ( flipY === true ) {
 
-			if ( image.data !== undefined ) {
-
-				// THREE.DataTexture
-				if ( format !== THREE.RGBAFormat ) {
-
-					console.error( 'GLTFExporter: Only THREE.RGBAFormat is supported.' );
+					ctx.translate( 0, canvas.height );
+					ctx.scale( 1, - 1 );
 
 				}
 
-				if ( image.width > options.maxTextureSize || image.height > options.maxTextureSize ) {
+				if ( typeof HTMLImageElement !== 'undefined' && image instanceof HTMLImageElement || typeof HTMLCanvasElement !== 'undefined' && image instanceof HTMLCanvasElement || typeof OffscreenCanvas !== 'undefined' && image instanceof OffscreenCanvas || typeof ImageBitmap !== 'undefined' && image instanceof ImageBitmap ) {
 
-					console.warn( 'GLTFExporter: Image size is bigger than maxTextureSize', image );
-
-				}
-
-				const data = new Uint8ClampedArray( image.height * image.width * 4 );
-
-				for ( let i = 0; i < data.length; i += 4 ) {
-
-					data[ i + 0 ] = image.data[ i + 0 ];
-					data[ i + 1 ] = image.data[ i + 1 ];
-					data[ i + 2 ] = image.data[ i + 2 ];
-					data[ i + 3 ] = image.data[ i + 3 ];
-
-				}
-
-				ctx.putImageData( new ImageData( data, image.width, image.height ), 0, 0 );
-
-			} else {
-
-				ctx.drawImage( image, 0, 0, canvas.width, canvas.height );
-
-			}
-
-			if ( options.binary === true ) {
-
-				pending.push( getToBlobPromise( canvas, mimeType ).then( blob => writer.processBufferViewImage( blob ) ).then( bufferViewIndex => {
-
-					imageDef.bufferView = bufferViewIndex;
-
-				} ) );
-
-			} else {
-
-				if ( canvas.toDataURL !== undefined ) {
-
-					imageDef.uri = canvas.toDataURL( mimeType );
+					ctx.drawImage( image, 0, 0, canvas.width, canvas.height );
 
 				} else {
 
-					pending.push( getToBlobPromise( canvas, mimeType ).then( blob => new FileReader().readAsDataURL( blob ) ).then( dataURL => {
+					if ( format !== THREE.RGBAFormat ) {
 
-						imageDef.uri = dataURL;
+						console.error( 'GLTFExporter: Only THREE.RGBAFormat is supported.' );
+
+					}
+
+					if ( image.width > options.maxTextureSize || image.height > options.maxTextureSize ) {
+
+						console.warn( 'GLTFExporter: Image size is bigger than maxTextureSize', image );
+
+					}
+
+					const data = new Uint8ClampedArray( image.height * image.width * 4 );
+
+					for ( let i = 0; i < data.length; i += 4 ) {
+
+						data[ i + 0 ] = image.data[ i + 0 ];
+						data[ i + 1 ] = image.data[ i + 1 ];
+						data[ i + 2 ] = image.data[ i + 2 ];
+						data[ i + 3 ] = image.data[ i + 3 ];
+
+					}
+
+					ctx.putImageData( new ImageData( data, image.width, image.height ), 0, 0 );
+
+				}
+
+				if ( options.binary === true ) {
+
+					pending.push( new Promise( function ( resolve ) {
+
+						canvas.toBlob( function ( blob ) {
+
+							writer.processBufferViewImage( blob ).then( function ( bufferViewIndex ) {
+
+								imageDef.bufferView = bufferViewIndex;
+								resolve();
+
+							} );
+
+						}, mimeType );
 
 					} ) );
 
+				} else {
+
+					imageDef.uri = canvas.toDataURL( mimeType );
+
 				}
+
+			} else {
+
+				imageDef.uri = image.src;
 
 			}
 
@@ -1469,9 +1427,9 @@
 
 						const baseAttribute = geometry.attributes[ attributeName ];
 
-						if ( cache.attributes.has( this.getUID( attribute, true ) ) ) {
+						if ( cache.attributes.has( this.getUID( attribute ) ) ) {
 
-							target[ gltfAttributeName ] = cache.attributes.get( this.getUID( attribute, true ) );
+							target[ gltfAttributeName ] = cache.attributes.get( this.getUID( attribute ) );
 							continue;
 
 						} // Clones attribute not to override
@@ -1490,7 +1448,7 @@
 						}
 
 						target[ gltfAttributeName ] = this.processAccessor( relativeAttribute, geometry );
-						cache.attributes.set( this.getUID( baseAttribute, true ), target[ gltfAttributeName ] );
+						cache.attributes.set( this.getUID( baseAttribute ), target[ gltfAttributeName ] );
 
 					}
 
@@ -2214,61 +2172,6 @@
 				};
 				writer.applyTextureTransform( clearcoatNormalMapDef, material.clearcoatNormalMap );
 				extensionDef.clearcoatNormalTexture = clearcoatNormalMapDef;
-
-			}
-
-			materialDef.extensions = materialDef.extensions || {};
-			materialDef.extensions[ this.name ] = extensionDef;
-			extensionsUsed[ this.name ] = true;
-
-		}
-
-	}
-	/**
- * Iridescence Materials Extension
- *
- * Specification: https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_materials_iridescence
- */
-
-
-	class GLTFMaterialsIridescenceExtension {
-
-		constructor( writer ) {
-
-			this.writer = writer;
-			this.name = 'KHR_materials_iridescence';
-
-		}
-
-		writeMaterial( material, materialDef ) {
-
-			if ( ! material.isMeshPhysicalMaterial ) return;
-			const writer = this.writer;
-			const extensionsUsed = writer.extensionsUsed;
-			const extensionDef = {};
-			extensionDef.iridescenceFactor = material.iridescence;
-
-			if ( material.iridescenceMap ) {
-
-				const iridescenceMapDef = {
-					index: writer.processTexture( material.iridescenceMap )
-				};
-				writer.applyTextureTransform( iridescenceMapDef, material.iridescenceMap );
-				extensionDef.iridescenceTexture = iridescenceMapDef;
-
-			}
-
-			extensionDef.iridescenceIor = material.iridescenceIOR;
-			extensionDef.iridescenceThicknessMinimum = material.iridescenceThicknessRange[ 0 ];
-			extensionDef.iridescenceThicknessMaximum = material.iridescenceThicknessRange[ 1 ];
-
-			if ( material.iridescenceThicknessMap ) {
-
-				const iridescenceThicknessMapDef = {
-					index: writer.processTexture( material.iridescenceThicknessMap )
-				};
-				writer.applyTextureTransform( iridescenceThicknessMapDef, material.iridescenceThicknessMap );
-				extensionDef.iridescenceThicknessTexture = iridescenceThicknessMapDef;
 
 			}
 

@@ -73,15 +73,24 @@
 
 				if ( geometry !== undefined ) {
 
-					const attribute = geometry.attributes.position;
+					if ( geometry.isGeometry ) {
 
-					if ( attribute !== undefined ) {
+						console.error( 'THREE.ConvexHull no longer supports Geometry. Use THREE.BufferGeometry instead.' );
+						return;
 
-						for ( let i = 0, l = attribute.count; i < l; i ++ ) {
+					} else if ( geometry.isBufferGeometry ) {
 
-							const point = new THREE.Vector3();
-							point.fromBufferAttribute( attribute, i ).applyMatrix4( node.matrixWorld );
-							points.push( point );
+						const attribute = geometry.attributes.position;
+
+						if ( attribute !== undefined ) {
+
+							for ( let i = 0, l = attribute.count; i < l; i ++ ) {
+
+								const point = new THREE.Vector3();
+								point.fromBufferAttribute( attribute, i ).applyMatrix4( node.matrixWorld );
+								points.push( point );
+
+							}
 
 						}
 

@@ -197,14 +197,13 @@ class Suica
 		
 		if( TEST_MODE )
 		{
-			THREE.Math.seededRandom(1); // fixed seed, so random number will be the same
+			THREE.MathUtils.seededRandom(1); // fixed seed, so random number will be the same
 		}
 		else
 		{
 			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
-			THREE.Math.seededRandom( Math.round(Number.MAX_SAFE_INTEGER*Math.random()));
+			THREE.MathUtils.seededRandom( Math.round(Number.MAX_SAFE_INTEGER*Math.random()) );
 		}
-
 		
 		
 		// register local methods that have stereotypical code
@@ -1232,11 +1231,11 @@ window.random = function( a=0, b=1 )
 {
 	if( Array.isArray(a) )
 	{
-		var index = Math.floor( a.length*THREE.Math.seededRandom() );
+		var index = Math.floor( a.length*THREE.MathUtils.seededRandom() );
 		return a[ index ];
 	}
 	
-	return a+(b-a)*THREE.Math.seededRandom();
+	return a+(b-a)*THREE.MathUtils.seededRandom();
 }
 
 

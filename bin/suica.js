@@ -198,14 +198,13 @@ class Suica
 		
 		if( TEST_MODE )
 		{
-			THREE.Math.seededRandom(1); // fixed seed, so random number will be the same
+			THREE.MathUtils.seededRandom(1); // fixed seed, so random number will be the same
 		}
 		else
 		{
 			this.canvas.addEventListener( 'contextmenu', Suica.onContextMenu );
-			THREE.Math.seededRandom( Math.round(Number.MAX_SAFE_INTEGER*Math.random()));
+			THREE.MathUtils.seededRandom( Math.round(Number.MAX_SAFE_INTEGER*Math.random()) );
 		}
-
 		
 		
 		// register local methods that have stereotypical code
@@ -1233,11 +1232,11 @@ window.random = function( a=0, b=1 )
 {
 	if( Array.isArray(a) )
 	{
-		var index = Math.floor( a.length*THREE.Math.seededRandom() );
+		var index = Math.floor( a.length*THREE.MathUtils.seededRandom() );
 		return a[ index ];
 	}
 	
-	return a+(b-a)*THREE.Math.seededRandom();
+	return a+(b-a)*THREE.MathUtils.seededRandom();
 }
 
 
@@ -2499,7 +2498,7 @@ class Drawing
 	arc( x=0, y=0, r=Drawing.ARC_RADIUS, from = Drawing.ARC_FROM, to = Drawing.ARC_TO, cw = Drawing.ARC_CW )
 	{
 		this.managePath();
-		this.context.arc( x, this.canvas.height-y, r, THREE.Math.degToRad(from-90), THREE.Math.degToRad(to-90), !cw );
+		this.context.arc( x, this.canvas.height-y, r, THREE.MathUtils.degToRad(from-90), THREE.MathUtils.degToRad(to-90), !cw );
 	} // Drawing.arc
 	
 	
@@ -4903,7 +4902,7 @@ class Scorm
 		hash += hash << 15;
 		hash = hash & hash;
 
-		THREE.Math.seededRandom( hash ); // fixed seed, so random number will be the same
+		THREE.MathUtils.seededRandom( hash ); // fixed seed, so random number will be the same
 	} // Scorm.derandomize
 	
 	

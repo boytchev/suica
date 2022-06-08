@@ -55,7 +55,7 @@ class Scorm
 		hash += hash << 15;
 		hash = hash & hash;
 
-		THREE.Math.seededRandom( hash ); // fixed seed, so random number will be the same
+		THREE.MathUtils.seededRandom( hash ); // fixed seed, so random number will be the same
 	} // Scorm.derandomize
 	
 	
