@@ -42,7 +42,7 @@ In Suica, the file `three.min.js` is extended and it contains:
 	- `GLTFLoader.js`
 	- `GLTFExporter.js`
 - Modified and minified versions of [Three.js](https://github.com/mrdoob/three.js/) files:
-	- `AnaglyphEffect.js` &ndash; color matrices are set to color identities
+	- examples\js\effects\**AnaglyphEffect.js** &ndash; color matrices are set to color identities
 	- `VRButton.js` &ndash; converted to non-module
 - Modified and minified versions of [CSG.js](https://github.com/looeee/threejs-csg) files:
 	- `BSPNode.js` &ndash; converted to non-module
