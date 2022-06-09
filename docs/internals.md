@@ -36,11 +36,13 @@ In Suica, the file `three.min.js` is extended and it contains:
 - The original [Three.js](https://github.com/mrdoob/three.js/) file:
 	- <small>build/</small><b>three.min.js</b>
 - Minified version of original [Three.js](https://github.com/mrdoob/three.js/) files:
-	- <small>examples/js/math/</small><b>ConvexHull.js</b>
-	- <small>examples/js/geometries/</small><b>ConvexGeometry.js</b>
 	- <small>examples/js/effects/</small><b>StereoEffect.js</b>
-	- <small>examples/js/loaders/</small><b>GLTFLoader.js</b>
 	- <small>examples/js/exporters/</small><b>GLTFExporter.js</b>
+	- <small>examples/js/geometries/</small><b>ConvexGeometry.js</b>
+	- <small>examples/js/geometries/</small><b>TextGeometry.js</b>
+	- <small>examples/js/loaders/</small><b>GLTFLoader.js</b>
+	- <small>examples/js/loaders/</small><b>FontLoader.js</b>
+	- <small>examples/js/math/</small><b>ConvexHull.js</b>
 - Modified and minified versions of [Three.js](https://github.com/mrdoob/three.js/) files:
 	- <small>examples/js/effects/</small><b>AnaglyphEffect.js</b> &ndash; color matrices are set to color identities
 	- <small>examples/jsm/webxr/</small><b>VRButton.js</b> &ndash; converted to non-module

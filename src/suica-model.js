@@ -25,7 +25,7 @@ class Model extends Mesh
 		
 		this.src = src;
 		this.center = Suica.parseCenter( center );
-		this.size = Suica.parseSize( size, Tube.SIZE );
+		this.size = Suica.parseSize( size, Model.SIZE );
 		
 		this.waitingList = [];
 		

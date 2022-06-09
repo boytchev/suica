@@ -7,7 +7,7 @@
 
 
 // control flags
-const DEBUG_CALLS = false;
+const DEBUG_CALLS = !false;
 const DEBUG_EVENTS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
@@ -208,13 +208,13 @@ class Suica
 		
 		
 		// register local methods that have stereotypical code
-		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct] )
+		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct, Text3D] )
 		{
 			Suica.registerClass( this, classObject );
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -4570,7 +4570,7 @@ class Model extends Mesh
 		
 		this.src = src;
 		this.center = Suica.parseCenter( center );
-		this.size = Suica.parseSize( size, Tube.SIZE );
+		this.size = Suica.parseSize( size, Model.SIZE );
 		
 		this.waitingList = [];
 		
@@ -4982,4 +4982,113 @@ class Scorm
 
 
 window.scorm = new Scorm();
+﻿//
+// Suica 2.0 Text3D
+// CC-3.0-SA-NC
+//
+//
+//===================================================
+
+
+class Text3D extends Mesh
+{
+	static SIZE = 1;
+	static COLOR = 'dimgray';
+	
+	static fontLoader = new THREE.FontLoader();
+	static fontsCache = {};
+	
+	constructor( suica, text, fontName, center, size, color )
+	{
+		suica.parser?.parseTags();
+		suica.debugCall( 'text3d', text, fontName, center, size, color );
+
+		// create empty object, it will be set when the font is loaded
+		super( suica, 
+			new THREE.Mesh( ),
+			null, // no wireframe
+		);
+
+		this.fontName = fontName; // must be before text
+		this.text = text;
+		this.center = Suica.parseCenter( center );
+		this.size = Suica.parseSize( size, Text3D.SIZE );
+		this.color = Suica.parseColor( color, Text3D.COLOR);
+		
+		this.waitingList = [];
+		
+	} // Text3D.constructor
+
+	
+	
+	get text( )
+	{
+		return this._text;
+	} // Text3D.text
+	
+	
+	set text( text )
+	{
+		// to do
+		this._text = text;
+	} // Text3D.text(...)
+	
+	
+	get fontName( )
+	{
+		return this._fontName;
+	} // Text3D.fontName
+	
+	
+	set fontName( fontName )
+	{
+		var that = this;
+		
+		this._fontName = fontName;
+		if( Text3D.fontsCache[fontName]?.isFont )
+		{
+			// font exists
+			// to do
+			console.log('font',fontName,'is cached');
+			this.fontLoaded( Text3D.fontsCache[fontName] );
+		}
+		else
+		{
+			console.log('loading font',fontName);
+			Text3D.fontLoader.load( fontName, function ( font )
+				{
+					console.log('loading font',fontName,'done');
+					Text3D.fontsCache[fontName] = font;
+					that.fontLoaded( font );
+				} );
+		}
+	} // Text3D.fontName(...)
+	
+	
+	fontLoaded( font )
+	{
+		console.log('font is available',font);
+		this.solidMesh.geometry.dispose();
+		this.solidMesh.geometry = new THREE.TextGeometry( this.text, {
+			font: font,
+			size: 10,
+			height: 5,
+			curveSegments: 12,
+			bevelEnabled: true,
+			bevelThickness: 1,
+			bevelSize: 1,
+			bevelOffset: 0,
+			bevelSegments: 5
+		} );
+	} // Text3D.fontLoaded
+
+
+	get clone( )
+	{
+		// to do		
+	} // Text3D.clone
+
+	
+	
+} // class Text3D
 } // LoadSuica 

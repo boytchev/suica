@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Text3D - dynamic</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Text3D - dynamic</h1>
+	<p>Modifying text using the same font.</p>
+
+	<suica ontime="spin">
+	</suica>
+
+	<script>
+		a = text3d( 'A', 'fonts/droid/droid_sans_regular.typeface.json', [-39,-20,0], [25,40,20] );
+		
+		function spin( t )
+		{
+			a.text = 1000+Math.round(t/(100*Math.PI/180*2));
+			a.spinV = 100*t - 50*Math.sin(100*t*Math.PI/180);
+		}
+	</script>
+</body>
+</html>
