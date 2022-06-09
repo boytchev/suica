@@ -29,7 +29,7 @@ class Text3D extends Mesh
 		this._text = '';
 		this._font = undefined;
 		
-		this.fontName = fontName; // must be before text
+		this.font = fontName; // must be before text
 		this.text = text;
 		this.center = Suica.parseCenter( center );
 		this.size = Suica.parseSize( size, Text3D.SIZE );
@@ -57,16 +57,18 @@ class Text3D extends Mesh
 	} // Text3D.text(...)
 	
 	
-	get fontName( )
+	get font( )
 	{
 		return this._fontName;
 	} // Text3D.fontName
 	
 	
-	set fontName( fontName )
+	set font( fontName )
 	{
 		var that = this;
 		
+		if( this._fontName == fontName ) return;
+
 		this._fontName = fontName;
 		this._font = undefined;
 		
@@ -136,7 +138,13 @@ class Text3D extends Mesh
 
 	get clone( )
 	{
-		// to do		
+		var object = new Text3D( this.suica, this.text, this.font, this.center, this.size, this.color );
+		
+		object.spin = this.spin;
+		object.image = this.image;
+		Suica.cloneEvents( object, this );
+		
+		return object;
 	} // Text3D.clone
 
 	

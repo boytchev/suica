@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Text3D - clone</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Text3D Mandala</h1>
+	<p>Building a mandala by cloning 3D letters.</p>
+
+	<suica ontime="spin">
+	
+		<demo distance="120" speed="0" altitude="0">
+		
+		<group id="mandala" spinV="-90" spinH="90">
+		
+			<group id="a">
+				<text3d text="T" font="../fonts/TypeSETit/Great Vibes_Regular.json" size="20,20,2" spinV="90" z="-1" x="0.5" color="linen">
+				<text3d text="T" font="../fonts/TypeSETit/Great Vibes_Regular.json" size="20,20,0.3" spinV="90" z="-1" x="0.5" color="black">
+			</group>
+			
+			<clone src="a" spinH="45">
+			<clone src="a" spinH="90">
+			<clone src="a" spinH="135">
+			<clone src="a" spinH="180">
+			<clone src="a" spinH="225">
+			<clone src="a" spinH="270">
+			<clone src="a" spinH="315">
+			
+			<group id="b">
+				<text3d text="T" font="../fonts/TypeSETit/Great Vibes_Regular.json" size="20,20,2" spinV="-90" y="-2" color="linen">
+				<text3d text="T" font="../fonts/TypeSETit/Great Vibes_Regular.json" size="20,20,0.3" spinV="-90" y="0" color="black">
+			</group>
+			
+			<clone src="b" spinH="45">
+			<clone src="b" spinH="90">
+			<clone src="b" spinH="135">
+			<clone src="b" spinH="180">
+			<clone src="b" spinH="225">
+			<clone src="b" spinH="270">
+			<clone src="b" spinH="315">
+			
+		</mandala>
+	</suica>
+	
+	<script>
+		
+		function spin( t )
+		{
+			mandala.spinT = 50*t;
+			mandala.spinV = 100*t;
+		}
+	</script>
+</body>
+</html>

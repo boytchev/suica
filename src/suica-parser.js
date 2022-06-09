@@ -570,6 +570,26 @@ class HTMLParser
 	} // HTMLParser.parseTagMODEL
 
 
+	// <text3d id="..." text="..." font="..." center="..." size="..." color="...">
+	parseTagTEXT3D( suica, elem )
+	{
+		var p = suica.text3d(
+			elem.getAttribute('text'),
+			elem.getAttribute('font'),
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color'),
+		);
+		
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+
+		elem.suicaObject = p;
+		
+		return p;
+		
+	} // HTMLParser.parseTagTEXT3D
+
+
 	// <construct id="..." src="..." center="..." size="..." color="...">
 	parseTagCONSTRUCT( suica, elem )
 	{
