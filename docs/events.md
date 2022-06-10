@@ -2,7 +2,7 @@
 title: Suica Events
 description: Things that help making interactive programs
 ---
-##### [User guide](user-guide.md) &middot; [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; **Events**
+##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; **Events**
 
 **Suica events** are actions that happen 'outside' a Suica program and it is impossible to predict when they will happen. A typical example of an event is when users click on Suica objects.
 
@@ -280,7 +280,3 @@ Command. Turns on proactive mode. Normal mouse motion events only occur when the
 [<kbd><img src="../examples/snapshots/events-proactive.jpg" width="300"></kbd>](../examples/events-proactive.html)
 
 Proactive mode is resource consuming. For every frame all objects in Suica are tested against the mouse position. When a proactive event occurs Suica executes the assigned event handler and passes the latest mouse `event` structure as a parameter to the handler.
-
-
-
-<small>{{site.time | date: "%B, %Y"}}</small>

@@ -2,7 +2,6 @@
 title: Suica Examples
 description: All examples, just the examples, only the examples
 ---
-##### [User guide](user-guide.md)
 
 Browsers have a standard way of reaction on non-standard web pages (e.g. missing
 closing tags, unregistered custom tags, etc). This is heavily used in all Suica
@@ -248,7 +247,3 @@ Click on an image to run the example.
 ## [Proactive events](#proactive-events)
 
 [<kbd><img src="../examples/snapshots/events-proactive.jpg" width="300"></kbd>](../examples/events-proactive.html)
-
-
-
-<small>{{site.time | date: "%B, %Y"}}</small>

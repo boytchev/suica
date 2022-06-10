@@ -2,8 +2,6 @@
 title: Suica Internals
 description: Additional internal information for developers and software masochists
 ---
-##### [User guide](user-guide.md)
-
 
 # Table of contents
 
@@ -52,8 +50,3 @@ In Suica, the file `three.min.js` is extended and it contains:
 	- <small>src/CSG/components/</small><b>CSGCuttingPlane.js</b> &ndash; converted to non-module
 	- <small>src/CSG/components/</small><b>CSGPolygon.js</b> &ndash; converted to non-module
 	- <small>src/CSG/components/</small><b>CSGVertex.js</b> &ndash; converted to non-module
-
-
-
-
-<small>{{site.time | date: "%B, %Y"}}</small>

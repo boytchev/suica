@@ -2,7 +2,7 @@
 title: Suica Objects
 description: The core of Suica &ndash; from point to sphere
 ---
-##### [User guide](user-guide.md) &middot; [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
+##### [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
 **Suica objects** are the core functionality of Suica. They are the elements that are used to construct 3D scenes. These objects are designed to provide a foundation for a diverse mobile computer graphics visualizations.
 
@@ -978,7 +978,3 @@ Function `scorm.derandomize` is used to generate individual persistent sequence 
 The next example demonstrates the derandomization effect. The lower three rows of cubes are randomly colored at every execution. The upper three rows, although randomly coloured, will have the same colors every time.
 
 [<kbd><img src="../examples/snapshots/scorm-derandomize.jpg" width="300"></kbd>](../examples/scorm-derandomize.html)
-
-
-
-<small>{{site.time | date: "%B, %Y"}}</small>

@@ -2,7 +2,7 @@
 title: Suica Drawings
 description: Drawings that could be applied onto objects
 ---
-##### [User guide](user-guide.md) &middot; [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; **Drawings** &middot; [Events](events.md)
+##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; **Drawings** &middot; [Events](events.md)
 
 **Suica drawings** are 2D images generated directly in Suica, instead of being loaded from JPEG or PNG files. Usually drawings are applied onto 2D and 3D objects as [textures](https://en.wikipedia.org/wiki/Texture_mapping). Suica drawings are based on a simplified subset of [Canvas2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D) commands. 
 
@@ -509,7 +509,3 @@ clear( 'crimson' );
 The following example demonstrates the use of `clear` to reset the drawing canvas to a background color or to transparent background.
 
 [<kbd><img src="../examples/snapshots/drawing-clear.jpg" width="300"></kbd>](../examples/drawing-clear.html)
-
-
-
-<small>{{site.time | date: "%B, %Y"}}</small>

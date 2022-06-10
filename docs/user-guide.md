@@ -13,7 +13,3 @@ description: A short guide through Suica features
 
 - [EXAMPLES](examples.md)<br>A collection of all Suica examples
 - [INTERNALS](internals.md)<br>Additional internal information for developers
-
-
-
-<small>{{site.time | date: "%B, %Y"}}</small>
