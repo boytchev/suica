@@ -3,25 +3,14 @@ title: Suica Examples
 description: All examples, just the examples, only the examples
 ---
 
-Browsers have a standard way of reaction on non-standard web pages (e.g. missing
-closing tags, unregistered custom tags, etc). This is heavily used in all Suica
-examples. Tools that validate HTML pages may complain about Suica HTML code.
-
-Click on an image to run the example.
-
-# Table of contents
-- [Suica](#suica)
-- [Objects](#objects)
-- [Properties](#properties)
-- [Drawings](#drawings)
-- [Events](#events)
+##### [Suica tag](#suica) &middot; [Objects](#objects) &middot; [Properties](#properties) &middot; [Drawings](#drawings) &middot; 
+[Events](#events)
 
 
 
 
 
-
-# [Suica](suica.md)
+# [Suica tag](suica.md)
 
 ## [Drawing canvas](suica.md#drawing-canvas)
 

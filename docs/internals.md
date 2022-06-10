@@ -23,6 +23,8 @@ Because timings cannot be set absolutely, some test cases may not produce the ex
 
 To test only part of the test cases, a string template is given as a parameter to the tester. The following code [`test.html?convex`](../test/test.html?convex) will test all test cases with the substring *convex* in their names.
 
+Browsers have a standard way of reaction on non-standard web pages (e.g. missing closing tags, unregistered custom tags, etc). This is heavily used in all Suica
+examples. Tools that validate HTML pages may complain about Suica HTML code.
 
 
 # Using Three.js

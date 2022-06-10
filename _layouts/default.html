@@ -21,6 +21,8 @@
       {% if site.github.is_project_page %}
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
         <a href="{{ site.github.url }}/docs/user-guide.html" class="btn">The User guide</a>
+      {% endif %}
+      {% if page.title != "Suica Examples" %}
         <a href="{{ site.github.url }}/docs/examples.html" class="btn">All examples</a>
       {% endif %}
       {% if page.title == "Suica Internals" %}
