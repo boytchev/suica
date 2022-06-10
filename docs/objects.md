@@ -13,7 +13,7 @@ description: The core of Suica &ndash; from point to sphere
 - [Objects](#objects)
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
-	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex), [`model`](#model), [`construct`](#construct)</small>
+	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex), [`model`](#model), [`construct`](#construct), [`text3d`](#text3d)</small>
 	- <small>[Invisibles](#invisibles): [`spline`](#spline), [`scorm`](#scorm)</small>
 
 
@@ -633,7 +633,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = model( 𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ] );
 ```
-Object. Loads an external model. The `src` parameter is a file name of a model in [GLTF or GLB format](https://en.wikipedia.org/wiki/GlTF). GLTF is a text format, GLB is a binary format. Similar to external [images](properties.md#image), models can be loaded only from HTTP adresses. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<model>` tag.
+Object. Loads an external model. The `src` parameter is a file name of a model in [GLTF or GLB format](https://en.wikipedia.org/wiki/GlTF). GLTF is a text format, GLB is a binary format. Similar to external [images](properties.md#image), models can be loaded only from HTTP addresses. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<model>` tag.
 
 When a model is loaded, its structure is not made of Suica objects. The `size` of a model is the scale factor, which is multiplied with the actual size of the model.
 
@@ -709,6 +709,49 @@ Suica CSG uses experimental [CSG library](https://github.com/looeee/threejs-csg)
 The next example carves 10 grooves on a cube. When the grooves are 20, the construction breaks.
 
 [<kbd><img src="../examples/snapshots/construct-grooves.jpg" width="300"></kbd>](../examples/construct-grooves.html)
+
+
+
+#### text3d
+```html
+HTML:
+<text3d id="𝑜𝑏𝑗𝑒𝑐𝑡" text="𝘵𝘦𝘹𝘵" font="𝘧𝘰𝘯𝘵𝘕𝘢𝘮𝘦" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝘤𝘰𝘭𝘰𝘳">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = text3d( 𝘵𝘦𝘹𝘵, 𝘧𝘰𝘯𝘵𝘕𝘢𝘮𝘦, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝘤𝘰𝘭𝘰𝘳 );
+```
+Object. Creates 3D text. The text is set in `text` parameter and the font name &ndash; in `font`. The font must be a file in [JSON format](https://en.wikipedia.org/wiki/JSON) with shapes of individual font characters. Similar to external [images](properties.md#image), fonts can be loaded only from HTTP addresses. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<text3d>` tag.
+
+The `width` of a 3D text is a scale factor, so the actual full width depends on the characters in `text`.
+
+
+```html
+HTML:
+<text3d text="example" font="arial.json" size="20,20,2">
+```
+```js
+JS:
+text3d( 'example', 'arial.json', [0,0,0], [20,20,2] );
+```
+
+[<kbd><img src="../examples/snapshots/text3d.jpg" width="300"></kbd>](../examples/text3d.html)
+[<kbd><img src="../examples/snapshots/text3d-mandala.jpg" width="300"></kbd>](../examples/text3d-mandala.html)
+
+Updating the `text` property discards the current 3D text shape and regenerates a new 3D text shape. Updating the `font` property loads a new JSON file and then discards and regenerates the 3D text shape. Suica caches fonts, thus using the same font file in several `text3d` objects will load it only once. There are only two fonts available in Suica site:
+
+- Droid Sans Regular<br><small>[`https://boytchev.github.io/suica/fonts/droid/droid_sans_regular.typeface.json`](https://boytchev.github.io/suica/fonts/droid/droid_sans_regular.typeface.json)</small>
+- Great Vibes Regular<br><small>[`https://boytchev.github.io/suica/fonts/TypeSETit/Great%20Vibes_Regular.json`](https://boytchev.github.io/suica/fonts/TypeSETit/Great%20Vibes_Regular.json)</small>
+
+JSON files with other fonts or with other characters (e.g. Cyrillic or Kanji) can be created with [Facetype.js](https://gero3.github.io/facetype.js/).
+
+[<kbd><img src="../examples/snapshots/text3d-dynamic.jpg" width="300"></kbd>](../examples/text3d-dynamic.html)
+[<kbd><img src="../examples/snapshots/text3d-dynamic-font.jpg" width="300"></kbd>](../examples/text3d-dynamic-font.html)
+
+
+
+
+
 
 
 
