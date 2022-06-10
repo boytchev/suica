@@ -20,7 +20,11 @@
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
       {% if site.github.is_project_page %}
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
-        <a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
+        <a href="{{ site.github.url }}/docs/user-guide.html" class="btn">The User guide</a>
+        <a href="{{ site.github.url }}/docs/examples.html" class="btn">All examples</a>
+      {% endif %}
+      {% if page.title == "Suica Internals" %}
+        <a href="{{ site.github.url }}/test/test.html" class="btn">Test Suica</a>
       {% endif %}
       {% if site.show_downloads %}
         <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>

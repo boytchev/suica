@@ -27,7 +27,3 @@ Suica is licensed under **GPL-3.0**.
 
 
 To learn more about Suica, visit [The User Guide](docs/user-guide.md) or see [The Examples](docs/examples.md).
-
-
-
-<small>{{site.time | date: "%B, %Y"}}</small>
