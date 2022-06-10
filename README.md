@@ -23,7 +23,4 @@ Suica is used in several undergraduate courses in the
 [Sofia University](https://www.uni-sofia.bg/index.php/eng).
 
 
-Suica is licensed under **GPL-3.0**.
-
-
-To learn more about Suica, visit [The User Guide](docs/user-guide.md) or see [The Examples](docs/examples.md).
+Suica is licensed under **[{{ site.github.license.name }}]({{ site.github.license.url }})**.

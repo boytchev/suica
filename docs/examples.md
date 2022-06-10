@@ -3,8 +3,7 @@ title: Suica Examples
 description: All examples, just the examples, only the examples
 ---
 
-##### [Suica tag](#suica) &middot; [Objects](#objects) &middot; [Properties](#properties) &middot; [Drawings](#drawings) &middot; 
-[Events](#events)
+##### [Suica tag](#suica) &middot; [Objects](#objects) &middot; [Properties](#properties) &middot; [Drawings](#drawings) &middot; [Events](#events)
 
 
 
