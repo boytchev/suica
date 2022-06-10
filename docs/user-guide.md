@@ -11,5 +11,4 @@ description: A short guide through Suica features
 - <big>[CHAPTER 4: **Drawings**](drawings.md)</big><br>Drawings that could be applied onto objects
 - <big>[CHAPTER 5: **Events**](events.md)</big><br>Things that help making interactive programs
 
-- [EXAMPLES](examples.md)<br>A collection of all Suica examples
 - [INTERNALS](internals.md)<br>Additional internal information for developers
