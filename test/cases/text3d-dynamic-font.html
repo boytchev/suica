@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<text3d id="a" font="../../fonts/droid/droid_sans_regular.typeface.json" center="-39,-10,0" size="25,25,2">
+	</suica>
+
+	<script>
+		var letV = 'aeiouy'.split(''),
+			letC = 'bcdfghjklmnpqrstvwxz'.toUpperCase().split(''),	
+			flag = true;
+		
+		setInterval( function()
+			{
+				flag = !flag;
+				
+				a.text = random(letC) + random(letV) + Math.round(random(-99,99));
+				a.font = flag
+					? '../../fonts/droid/droid_sans_regular.typeface.json'
+					: '../../fonts/TypeSETit/Great Vibes_Regular.json';
+				a.color = random( ['peachpuff','lightsalmon','linen','gray'] );
+			}, 500 );
+	</script>
+</body>
+</html>

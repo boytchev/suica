@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="spin">
+	</suica>
+
+	<script>
+		a = group(
+			text3d( 'Suica 2.0', '../../fonts/droid/droid_sans_regular.typeface.json', [-42,-10,0], [15,15,1], 'black' ),
+			text3d( 'Suica 2.0', '../../fonts/droid/droid_sans_regular.typeface.json', [-42,-10,-10], [15,15,10], 'linen' )
+		);
+		
+		function spin( t )
+		{
+			a.spinH = 45*Math.sin( 2*t );
+			a.spinV = 30*Math.cos( 2*t );
+		}
+	</script>
+</body>
+</html>

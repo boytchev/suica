@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="spin">
+	</suica>
+
+	<script>
+		a = text3d( 'A', '../../fonts/droid/droid_sans_regular.typeface.json', [-39,-15,0], [25,30,20] );
+		
+		function spin( t )
+		{
+			a.text = Math.round(100*t)%10000;
+		}
+	</script>
+</body>
+</html>
