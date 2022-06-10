@@ -20,7 +20,7 @@
 	<suica fullwindow>
 		<lookat from="100,0,100">
 		<group id="floor">
-			<cube color="white" size="100,2,100" image="https://boytchev.github.io/suica/textures/tile.png" images="13,13">
+			<cube color="white" size="100,2,100" image="https://boytchev.github.io/suica/assets/textures/tile.png" images="13,13">
 			<cube color="black" y="-0.02" size="105,2,105">
 		</group>
 	</suica>
@@ -33,7 +33,7 @@
 			var angle = 2*Math.PI * i/7;
 			var ball = cube([30*Math.cos(angle),0,30*Math.sin(angle)],10,colors[i]);
 			ball.spin = [0,0,0];
-			ball.image = "https://boytchev.github.io/suica/textures/tile.png";
+			ball.image = "https://boytchev.github.io/suica/assets/textures/tile.png";
 			ball.flips = 0;
 			balls.push( ball );
 		}

@@ -392,12 +392,12 @@ Property. Decorates object surface with an image. Images can be stamped onto Sui
 
 ```html
 HTML:
-<cube id="a" image="https://boytchev.github.io/suica/textures/flower.jpg">
+<cube id="a" image="https://boytchev.github.io/suica/assets/textures/flower.jpg">
 ```
 ```js
 JS:
-a.image = 'https://boytchev.github.io/suica/textures/flower.jpg';
-a.image = image( 'https://boytchev.github.io/suica/textures/flower.jpg' );
+a.image = 'https://boytchev.github.io/suica/assets/textures/flower.jpg';
+a.image = image( 'https://boytchev.github.io/suica/assets/textures/flower.jpg' );
 ```
 
 [<kbd><img src="../examples/snapshots/image-file.jpg" width="300"></kbd>](../examples/image-file.html)
@@ -426,25 +426,25 @@ Due to a security mechanism in browsers &ndash; [Same-origin policy](https://dev
 - CORS is disabled in the browser configuration (not recommended)
 - an old SOP-less and CORS-less browser is used (not recommended)
 
-Suica provides a limited set of images that can be used for textures. They can be accessed from URL `https://boytchev.github.io/suica/textures/` e.g. `https://boytchev.github.io/suica/textures/flower.jpg`.
+Suica provides a limited set of images that can be used for textures. They can be accessed from URL `https://boytchev.github.io/suica/assets/textures/` e.g. `https://boytchev.github.io/suica/assets/textures/flower.jpg`.
 
 <kbd>
-	<img width="128" src="../textures/flower.jpg">
+	<img width="128" src="../assets/textures/flower.jpg">
 	<br>
 	flower.jpg
 </kbd>
 <kbd>
-	<img width="128" src="../textures/blobs.jpg">
+	<img width="128" src="../assets/textures/blobs.jpg">
 	<br>
 	blobs.jpg
 </kbd>
 <kbd>
-	<img width="128" src="../textures/tile.png">
+	<img width="128" src="../assets/textures/tile.png">
 	<br>
 	tile.png
 </kbd>
 <kbd>
-	<img width="128" src="../textures/grid.png">
+	<img width="128" src="../assets/textures/grid.png">
 	<br>
 	grid.png
 </kbd>

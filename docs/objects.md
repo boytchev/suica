@@ -740,8 +740,8 @@ text3d( 'example', 'arial.json', [0,0,0], [20,20,2] );
 
 Updating the `text` property discards the current 3D text shape and regenerates a new 3D text shape. Updating the `font` property loads a new JSON file and then discards and regenerates the 3D text shape. Suica caches fonts, thus using the same font file in several `text3d` objects will load it only once. There are only two fonts available in Suica site:
 
-- Droid Sans Regular<br><small>[`https://boytchev.github.io/suica/fonts/droid/droid_sans_regular.typeface.json`](https://boytchev.github.io/suica/fonts/droid/droid_sans_regular.typeface.json)</small>
-- Great Vibes Regular<br><small>[`https://boytchev.github.io/suica/fonts/TypeSETit/Great%20Vibes_Regular.json`](https://boytchev.github.io/suica/fonts/TypeSETit/Great%20Vibes_Regular.json)</small>
+- Droid Sans Regular<br><small>[`https://boytchev.github.io/suica/assets/fonts/droid/droid_sans_regular.typeface.json`](https://boytchev.github.io/suica/assets/fonts/droid/droid_sans_regular.typeface.json)</small>
+- Great Vibes Regular<br><small>[`https://boytchev.github.io/suica/assets/fonts/TypeSETit/Great%20Vibes_Regular.json`](https://boytchev.github.io/suica/assets/fonts/TypeSETit/Great%20Vibes_Regular.json)</small>
 
 JSON files with other fonts or with other characters (e.g. Cyrillic or Kanji) can be created with [Facetype.js](https://gero3.github.io/facetype.js/).
 
