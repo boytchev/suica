@@ -25,5 +25,6 @@ document.write( '<script src="src/suica-model.js"></script>' );
 document.write( '<script src="src/suica-construct.js"></script>' );
 document.write( '<script src="src/suica-scorm.js"></script>' );
 document.write( '<script src="src/suica-text3d.js"></script>' );
+document.write( '<script src="src/suica-capture.js"></script>' );
 
 document.write( '<script src="src/suica-main.js"></script>' );

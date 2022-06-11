@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>GIF video capture</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>GIF video capture</h1>
+	<p>Capturing a GIF video of Suica animation.</p>
+
+	<suica>
+		<group id="floor">
+			<cube color="1.2,1.3,1.4" size="110,2,110" image="https://boytchev.github.io/suica/assets/textures/tile.png" images="11,11">
+			<cube color="black" y="-0.02" size="115,2,115">
+		</group>
+	</suica>
+	
+	<script>
+
+		//capture( '', 10, 10, 'gif', 10 );
+
+		theImage = image("https://boytchev.github.io/suica/assets/textures/tile.png");
+
+		var colors = ['peachpuff','linen','black','lightgray','lightsalmon','white','dimgray'];
+		var balls = [];
+		for( var i=0; i<10; i++ )
+		{
+			var ball = pyramid( 6,
+				[10*Math.round(random(-4,4)),0,10*Math.round(random(-4,4))],
+				20,
+				random(colors)
+			);
+			ball.spin = [0,0,0];
+			ball.image = theImage;
+			ball.images = [6,1];
+			ball.flips = 0;
+			balls.push( ball );
+		}
+
+		var vib = 2,
+			lastT = 0;
+
+		suica.ontime = loop;
+
+		function loop( t, dT )
+		{
+			for( var i in balls )
+			{
+				var ball = balls[i];
+				
+				var newT = (1+0.3*Math.sin(i))*t+150*i;
+				var oldT = (1+0.3*Math.sin(i))*lastT+150*i;
+				
+				ball.y = -5 + 60*Math.abs(Math.sin(newT));
+				if( Math.sign(Math.sin(newT)) != Math.sign(Math.sin(oldT)) )
+				{
+					vib = 2;
+					ball.spin[0] = random([0,90,180,270]);
+					ball.flips = random([0,4,8]);
+				}
+					
+				ball.spin = [ball.spin[0],ball.flips * newT * 90/Math.PI];
+			}
+			
+			floor.y = -10+vib*Math.sin( 30*t );
+			vib = THREE.MathUtils.clamp(vib*(1-3*dT),-2,2);
+			
+			lastT = t;
+			
+			floor.spin = [0,2*vib*Math.sin( 10*t )];
+			
+			var angle = t/6 + Math.sin(t/4);
+			lookAt( [150*Math.cos(angle), 30+30*Math.sin(angle*1.5), 150*Math.sin(angle)] );
+		}
+	</script>
+</body>
+</html>

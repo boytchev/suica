@@ -150,6 +150,8 @@ class Suica
 		
 		this.suicaTag = suicaTag;
 		this.isProactive = false;
+		
+		this.capturer = null;
 
 		// set Suica orientation data
 		this.orientation = Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase() || Suica.DEFAULT_ORIENTATION];
@@ -207,13 +209,13 @@ class Suica
 		
 		
 		// register local methods that have stereotypical code
-		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct, Text3D] )
+		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct, Text3D, Capture] )
 		{
 			Suica.registerClass( this, classObject );
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d', 'capture'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -537,10 +539,13 @@ class Suica
 			
 			that.render( );
 
+			if( that.capturer ) that.capturer.capture( );
+			
 			that.lastTime = time;
 			
 		} // Suica.createRenderer.loop
-		
+
+console.log('SET ANIMATION LOOP');		
 		this.renderer.setAnimationLoop( loop );
 
 	} // Suica.createRenderer
