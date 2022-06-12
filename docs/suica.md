@@ -684,9 +684,7 @@ HTML:
 [<kbd><img src="../examples/snapshots/capture-webm.jpg" width="300"></kbd>](../examples/capture-webm.html)
 [<kbd><img src="../examples/snapshots/capture-gif.jpg" width="300"></kbd>](../examples/capture-gif.html)
 
-The videos created by these two examples are:
-../examples/capture-webm.webm
-../examples/capture-gif.gif
+The videos created by these two examples are: [webm](../examples/capture-webm.webm) and [gif](../examples/capture-gif.gif).
 
 А small status line is shown in the top-left corner of the browser window when a video capturing starts. It shows the file format, the number of captured frames and the elapsed time. The rendering time during capturing is accommodated to the speed of capturing, i.e. if the video frame is large and capturing is slow, the animation is slowed down. The status line is removed when the capturing is done, and the browser initiates downloading of the captured video file. Depending on the browser settings the file might be automatically downloaded in a predefined download folder, or a pop-up window will ask the user to select download folder.
 
