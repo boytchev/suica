@@ -44,6 +44,13 @@ description: All examples, just the examples, only the examples
 [<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="300"></kbd>](../examples/camera-anaglyph.html)
 [<kbd><img src="../examples/snapshots/camera-vr.jpg" width="300"></kbd>](../examples/camera-vr.html)
 
+
+## [Video capturing](suica.md#video-capturing)
+
+[<kbd><img src="../examples/snapshots/capture-webm.jpg" width="300"></kbd>](../examples/capture-webm.html)
+[<kbd><img src="../examples/snapshots/capture-gif.jpg" width="300"></kbd>](../examples/capture-gif.html)
+
+
 ## [Questions and answers](suica.md#questions-and-answers)
 
 [<kbd><img src="../examples/snapshots/qa-property-modification.jpg" width="300"></kbd>](../examples/qa-property-modification.html)

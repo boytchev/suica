@@ -20,7 +20,7 @@ description: The main tag of Suica and its properties
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
-	- <small>[Video recording](#video-recording): [`capture`](#capture)</small>
+	- <small>[Video capturing](#video-capturing): [`capture`](#capture)</small>
 - [Questions and answers](#questions-and-answers)
 
 
@@ -652,7 +652,7 @@ To generate a fixed user-dependent sequence of pseudo-random  values use [`scorm
 
 
 
-## Video recording
+## Video capturing
 
 Suica provided internal mechanism for recording Suica animations into [WebM files](https://en.wikipedia.org/wiki/WebM) or [animated GIFs](https://en.wikipedia.org/wiki/GIF#Animated_GIF). Using JavaScript for video recording has its inherent limitations, so such recording is not appropriate for capturing large video files (the meaning *large* depends on the available system resources).
 
