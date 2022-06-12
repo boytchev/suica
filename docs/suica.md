@@ -654,7 +654,7 @@ To generate a fixed user-dependent sequence of pseudo-random  values use [`scorm
 
 ## Video capturing
 
-Suica provided internal mechanism for recording Suica animations into [WebM files](https://en.wikipedia.org/wiki/WebM) or [animated GIFs](https://en.wikipedia.org/wiki/GIF#Animated_GIF). Using JavaScript for video recording has its inherent limitations, so such recording is not appropriate for capturing large video files (the meaning *large* depends on the available system resources).
+Suica provided internal mechanism for recording Suica animations into [WebM files](https://en.wikipedia.org/wiki/WebM) or [animated GIFs](https://en.wikipedia.org/wiki/GIF#Animated_GIF). The actual capturing is done by [CCapture.js](https://github.com/spite/ccapture.js). Using JavaScript for video recording has its inherent limitations, so such recording is not appropriate for capturing large video files (the meaning *large* depends on the available system resources).
 
 #### capture
 ```js
