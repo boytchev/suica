@@ -52,3 +52,5 @@ In Suica, the file `three.min.js` is extended and it contains:
 	- <small>src/CSG/components/</small><b>CSGCuttingPlane.js</b> &ndash; converted to non-module
 	- <small>src/CSG/components/</small><b>CSGPolygon.js</b> &ndash; converted to non-module
 	- <small>src/CSG/components/</small><b>CSGVertex.js</b> &ndash; converted to non-module
+- Modified and minified version of [CCapture.js](https://github.com/spite/ccapture.js) files:
+	- <small>build/</small><b>CCapture.all.min.js</b> &ndash; contains `src/gif.worker.js`; renamed to `CCapture.all.worker.min.js`

@@ -20,6 +20,7 @@ description: The main tag of Suica and its properties
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
 	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
+	- <small>[Video recording](#video-recording): [`capture`](#capture)</small>
 - [Questions and answers](#questions-and-answers)
 
 
@@ -641,6 +642,53 @@ a = random( [1, 2, 3, 4] ); // from the list
 ```
 
 To generate a fixed user-dependent sequence of pseudo-random  values use [`scorm.derandomize`](objects.md#scormdenormalize).
+
+
+
+
+
+
+
+
+
+
+## Video recording
+
+Suica provided internal mechanism for recording Suica animations into [WebM files](https://en.wikipedia.org/wiki/WebM) or [animated GIFs](https://en.wikipedia.org/wiki/GIF#Animated_GIF). Using JavaScript for video recording has its inherent limitations, so such recording is not appropriate for capturing large video files (the meaning *large* depends on the available system resources).
+
+#### capture
+```js
+JS:
+capture( 𝘴𝘳𝘤, 𝘵𝘪𝘮𝘦, 𝘧𝘱𝘴, 𝘧𝘰𝘳𝘮𝘢𝘵, 𝘴𝘬𝘪𝘱𝘍𝘳𝘢𝘮𝘦𝘴 );
+```
+```html
+HTML:
+<capture src="𝘴𝘳𝘤" time="𝘵𝘪𝘮𝘦" fps="𝘧𝘱𝘴" format="𝘧𝘰𝘳𝘮𝘢𝘵" skipFrames="𝘴𝘬𝘪𝘱𝘍𝘳𝘢𝘮𝘦𝘴">
+```
+Function. Initiates video capturing. Parameter `src` provides the name of the video file. If `src` is an empty string `''` the name is automatically generated from the name of the HTML file that runs the code. The desired duration of the video is `time` seconds at `fps` frames per seconds. By default, they are set to 10 seconds and 30 fps. When `format` is `webm` then `capture` creates a WebM video file; if it is `gif` &ndash; an animated GIF. Parameter `𝘴𝘬𝘪𝘱𝘍𝘳𝘢𝘮𝘦𝘴` defines the number of video frames to skip before starting capturing. This is used when the scene is not ready at the time of initiating video capture.
+
+```js
+JS:
+capture( );
+capture( 'myfile', 10, 30 );
+capture( 'anigif', 10, 30, 'gif' );
+```
+```html
+HTML:
+<capture>
+<capture src="myfile" time="10" fps="30">
+<capture src="anigif" format="gif">
+```
+
+
+[<kbd><img src="../examples/snapshots/capture-webm.jpg" width="300"></kbd>](../examples/capture-webm.html)
+[<kbd><img src="../examples/snapshots/capture-gif.jpg" width="300"></kbd>](../examples/capture-gif.html)
+
+The videos created by these two examples are:
+../examples/capture-webm.webm
+../examples/capture-gif.gif
+
+А small status line is shown in the top-left corner of the browser window when a video capturing starts. It shows the file format, the number of captured frames and the elapsed time. The rendering time during capturing is accommodated to the speed of capturing, i.e. if the video frame is large and capturing is slow, the animation is slowed down. The status line is removed when the capturing is done, and the browser initiates downloading of the captured video file. Depending on the browser settings the file might be automatically downloaded in a predefined download folder, or a pop-up window will ask the user to select download folder.
 
 
 

@@ -2128,6 +2128,26 @@ class HTMLParser
 	} // HTMLParser.parseTagTEXT3D
 
 
+	// <capture src="..." time="..." fps="..." format="..." skipFrames="...">
+	parseTagCAPTURE( suica, elem )
+	{
+		var p = suica.capture(
+			elem.getAttribute('src'),
+			elem.getAttribute('time'),
+			elem.getAttribute('fps'),
+			elem.getAttribute('format'),
+			elem.getAttribute('skipFrames'),
+		);
+		
+		// capture is not an object:
+		//suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		//elem.suicaObject = p;
+		
+		return p;
+		
+	} // HTMLParser.parseTagCAPTURE
+
+
 	// <construct id="..." src="..." center="..." size="..." color="...">
 	parseTagCONSTRUCT( suica, elem )
 	{
