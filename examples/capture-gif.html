@@ -23,26 +23,25 @@
 
 	<suica>
 		<group id="floor">
-			<cube color="1.2,1.3,1.4" size="110,2,110" image="https://boytchev.github.io/suica/assets/textures/tile.png" images="11,11">
+			<cube color="linen" size="110,2,110" image="https://boytchev.github.io/suica/assets/textures/tile.png" images="11,11">
 			<cube color="black" y="-0.02" size="115,2,115">
 		</group>
 	</suica>
 	
 	<script>
 
-		//capture( '', 10, 10, 'gif', 10 );
+		capture( '', 10, 10, 'gif' );
 
 		theImage = image("https://boytchev.github.io/suica/assets/textures/tile.png");
 
-		var colors = ['peachpuff','linen','black','lightgray','lightsalmon','white','dimgray'];
+		var colors = ['peachpuff','linen','black','white','gray','lightsalmon','lightgray','dimgray'],
+			x = [40,0,-40,-40,-40,0,40,40],
+			z = [40,40,40,0,-40,-40,-40,0];
+			
 		var balls = [];
-		for( var i=0; i<10; i++ )
+		for( var i=0; i<8; i++ )
 		{
-			var ball = pyramid( 6,
-				[10*Math.round(random(-4,4)),0,10*Math.round(random(-4,4))],
-				20,
-				random(colors)
-			);
+			var ball = pyramid( 6, [x[i],0,z[i]], 20, colors[i] );
 			ball.spin = [0,0,0];
 			ball.image = theImage;
 			ball.images = [6,1];
@@ -64,11 +63,11 @@
 				var newT = (1+0.3*Math.sin(i))*t+150*i;
 				var oldT = (1+0.3*Math.sin(i))*lastT+150*i;
 				
-				ball.y = -5 + 60*Math.abs(Math.sin(newT));
+				ball.y = -10 + 60*Math.abs(Math.sin(newT));
 				if( Math.sign(Math.sin(newT)) != Math.sign(Math.sin(oldT)) )
 				{
 					vib = 2;
-					ball.spin[0] = random([0,90,180,270]);
+					ball.spin[0] = random([0,60,120,180,240,300]);
 					ball.flips = random([0,4,8]);
 				}
 					

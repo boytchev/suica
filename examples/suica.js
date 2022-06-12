@@ -5184,8 +5184,6 @@ class Capture
 		fps = Suica.parseNumber( fps, Capture.FPS );
 		skipFrames = Suica.parseNumber( skipFrames, Capture.SKIPFRAMES );
 		
-		var currentFileName
-		
 		this.options = {
 				format: format || Capture.FORMAT,
 				display: true,

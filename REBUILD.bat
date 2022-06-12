@@ -20,7 +20,7 @@ misc\jsmin\jsmin <misc\threejs\GLTFLoader.js >misc\threejs\GLTFLoader.min.js
 misc\jsmin\jsmin <misc\threejs\FontLoader.js >misc\threejs\FontLoader.min.js
 misc\jsmin\jsmin <misc\threejs\TextGeometry.js >misc\threejs\TextGeometry.min.js
 
-copy /b misc\threejs\three.min.js + misc\threejs\ConvexHull.min.js + misc\threejs\ConvexGeometry.min.js + misc\threejs\AnaglyphEffect.min.js + misc\threejs\StereoEffect.min.js + misc\threejs\VRButton.min.js + misc\threejs\GLTFExporter.min.js + misc\threejs\GLTFLoader.min.js + misc\threejs\FontLoader.min.js + misc\threejs\TextGeometry.min.js + misc\csg\BSPNode.min.js + misc\csg\CSGCuttingPlane.min.js + misc\csg\CSGPolygon.min.js + misc\csg\CSGVertex.min.js + misc\csg\CSG.min.js +misc\CCapture\CCapture.all.min.js bin\three.min.js
+copy /b misc\threejs\three.min.js + misc\threejs\ConvexHull.min.js + misc\threejs\ConvexGeometry.min.js + misc\threejs\AnaglyphEffect.min.js + misc\threejs\StereoEffect.min.js + misc\threejs\VRButton.min.js + misc\threejs\GLTFExporter.min.js + misc\threejs\GLTFLoader.min.js + misc\threejs\FontLoader.min.js + misc\threejs\TextGeometry.min.js + misc\csg\BSPNode.min.js + misc\csg\CSGCuttingPlane.min.js + misc\csg\CSGPolygon.min.js + misc\csg\CSGVertex.min.js + misc\csg\CSG.min.js +misc\CCapture\CCapture.all.worker.min.js bin\three.min.js
 
 rem Create suica.js prefix
 rem IMPORTANT: Between "echo" and "document: there are invisible
