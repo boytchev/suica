@@ -709,7 +709,7 @@ if(that.ontime)
 that.ontime=window[that.ontime];that.ontime(time,time-that.lastTime);}
 if(that.isProactive)
 Suica.onMouseMoveUpdate();that.render();if(that.capturer)that.capturer.capture();that.lastTime=time;}
-console.log('SET ANIMATION LOOP');this.renderer.setAnimationLoop(loop);}
+this.renderer.setAnimationLoop(loop);}
 vr()
 {this.parser?.parseTags();this.debugCall('vr');var button=this.suicaTag.appendChild(VRButton.createButton(this.renderer));button.style.background='rgba(0, 0, 0, 0.5)';this.renderer.xr.enabled=true;this.camera.position.set(0,0,0);}
 fullScreen()
