@@ -1,26 +1,31 @@
 
+REM PREPARE CSG --------------------------------------------
+
+cd misc\csg
+copy /b BSPNode.js+CSGCuttingPlane.js+CSGPolygon.js+CSGVertex.js+CSG.js __all__
+..\jsmin\jsmin <__all__ >__min__
 
 
-rem Minify CSG.js and its files
-misc\jsmin\jsmin <misc\csg\BSPNode.js >misc\csg\BSPNode.min.js
-misc\jsmin\jsmin <misc\csg\CSG.js >misc\csg\CSG.min.js
-misc\jsmin\jsmin <misc\csg\CSGCuttingPlane.js >misc\csg\CSGCuttingPlane.min.js
-misc\jsmin\jsmin <misc\csg\CSGPolygon.js >misc\csg\CSGPolygon.min.js
-misc\jsmin\jsmin <misc\csg\CSGVertex.js >misc\csg\CSGVertex.min.js
+REM PREPARE THREE ------------------------------------------
+
+cd ..\threejs
+copy /b three.min.js+ConvexHull.js+ConvexGeometry.js+AnaglyphEffect.js+StereoEffect.js+VRButton.js+GLTFExporter.js+GLTFLoader.js+FontLoader.js+TextGeometry.js __all__
+..\jsmin\jsmin <__all__ >__min__
 
 
-rem Minify Three.js and its libraries
-misc\jsmin\jsmin <misc\threejs\ConvexHull.js >misc\threejs\ConvexHull.min.js
-misc\jsmin\jsmin <misc\threejs\ConvexGeometry.js >misc\threejs\ConvexGeometry.min.js
-misc\jsmin\jsmin <misc\threejs\AnaglyphEffect.js >misc\threejs\AnaglyphEffect.min.js
-misc\jsmin\jsmin <misc\threejs\StereoEffect.js >misc\threejs\StereoEffect.min.js
-misc\jsmin\jsmin <misc\threejs\VRButton.js >misc\threejs\VRButton.min.js
-misc\jsmin\jsmin <misc\threejs\GLTFExporter.js >misc\threejs\GLTFExporter.min.js
-misc\jsmin\jsmin <misc\threejs\GLTFLoader.js >misc\threejs\GLTFLoader.min.js
-misc\jsmin\jsmin <misc\threejs\FontLoader.js >misc\threejs\FontLoader.min.js
-misc\jsmin\jsmin <misc\threejs\TextGeometry.js >misc\threejs\TextGeometry.min.js
+REM PREPARE CCAPTURE ---------------------------------------
 
-copy /b misc\threejs\three.min.js + misc\threejs\ConvexHull.min.js + misc\threejs\ConvexGeometry.min.js + misc\threejs\AnaglyphEffect.min.js + misc\threejs\StereoEffect.min.js + misc\threejs\VRButton.min.js + misc\threejs\GLTFExporter.min.js + misc\threejs\GLTFLoader.min.js + misc\threejs\FontLoader.min.js + misc\threejs\TextGeometry.min.js + misc\csg\BSPNode.min.js + misc\csg\CSGCuttingPlane.min.js + misc\csg\CSGPolygon.min.js + misc\csg\CSGVertex.min.js + misc\csg\CSG.min.js +misc\CCapture\CCapture.all.worker.min.js bin\three.min.js
+cd ..\CCapture
+copy /b CCapture.all.worker.min.js __all__
+..\jsmin\jsmin <__all__ >__min__
+
+
+
+cd ..\..
+
+
+
+copy /b misc\threejs\__min__+ misc\csg\__min__ + misc\CCapture\__min__ bin\three.min.js
 
 rem Create suica.js prefix
 rem IMPORTANT: Between "echo" and "document: there are invisible
@@ -51,3 +56,6 @@ copy bin\three.min.js test\cases
 
 copy bin\suica.js examples
 
+del misc\csg\__???__
+del misc\threejs\__???__
+del misc\CCapture\__???__
