@@ -30,7 +30,6 @@ nav_exclude: true
 ```html
 HTML:
 <script src="suica.js"></script>
-<script src="suica.min.js"></script>
 ```
 
 ```html

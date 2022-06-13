@@ -39,9 +39,7 @@ Suica is a JavaScript library for creating 3D scenes that work or various platfo
 
 ## Drawing canvas
 
-Suica creates 3D images and animations in a web page. Suica is distributed as `suica.js` or `suica.min.js` file and is loaded via the `<script>` tag. Once loaded, it scans for HTML tags `<suica>` and uses them as drawing canvases. Suica does not use JS modules in order to allow easier local development in educational environments.
-
-[**Three.js**](https://threejs.org/) provides the graphical backbone of Suica. It is loaded automatically by Suica, so `three.min.js` file must be present alongside `suica.js` or `suica.min.js`.
+Suica creates 3D images and animations in a web page. Suica is distributed as `suica.js` and is loaded via the `<script>` tag. Once loaded, it scans for HTML tags `<suica>` and uses them as drawing canvases. Suica does not use JS modules in order to allow easier local development in educational environments.
 
 The general structure of a web page that uses Suica needs a few tags. The tag `<script>` with attribute `src` pointing to the Suica library loads and activates Suica. The drawing canvas is defined with `<suica>` tag inside `<body>`. The part of the scene that is created in HTML is inside this `<suica>` tag. The part of the scene that is created with JavaScript commands is inside a separate `<script>` tag.
 

@@ -29,13 +29,11 @@ examples. Tools that validate HTML pages may complain about Suica HTML code.
 
 # Using Three.js
 
-This version of Suica is based on Three.js. Programs that use Suica should include either `suica.js` or `suica.min.js`. Suica automatically loads `three.min.js`, it must be in the same folder.
-
-In Suica, the file `three.min.js` is extended and it contains:
+This version of Suica is based on Three.js. Programs that use Suica should include `suica.js`. Apart from Suica itself, `suica.js` contains:
 
 - The original [Three.js](https://github.com/mrdoob/three.js/) file:
 	- <small>build/</small><b>three.min.js</b>
-- Minified version of original [Three.js](https://github.com/mrdoob/three.js/) files:
+- Minified versions of original [Three.js](https://github.com/mrdoob/three.js/) files:
 	- <small>examples/js/effects/</small><b>StereoEffect.js</b>
 	- <small>examples/js/exporters/</small><b>GLTFExporter.js</b>
 	- <small>examples/js/geometries/</small><b>ConvexGeometry.js</b>
