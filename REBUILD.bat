@@ -20,12 +20,18 @@ copy /b CCapture.all.worker.min.js __all__
 ..\jsmin\jsmin <__all__ >__min__
 
 
+REM PREPARE SUICA ---------------------------------------
 
-cd ..\..
+cd ..\..\src
+copy /b suica-main.js+suica-vr.js+suica-parser.js+suica-drawing.js+suica-mesh.js+suica-point.js+suica-line.js+suica-square.js+suica-cube.js+suica-circle.js+suica-sphere.js+suica-cylinder.js+suica-cone.js+suica-group.js+suica-tube.js+suica-convex.js+suica-model.js+suica-construct.js+suica-scorm.js+suica-text3d.js+suica-capture.js __all__
 
 
 
-copy /b misc\threejs\__min__+ misc\csg\__min__ + misc\CCapture\__min__ bin\three.min.js
+cd ..
+
+
+
+rem copy /b misc\threejs\__min__+ misc\csg\__min__ + misc\CCapture\__min__ bin\three.min.js
 
 rem Create suica.js prefix
 rem IMPORTANT: Between "echo" and "document: there are invisible
@@ -38,24 +44,22 @@ rem		4. Plugins|Convert| HEX to ASCI
 rem		5. the text EF BB BF collapses into invisible characters
 rem alternative: the same chars are between these quotes:    "﻿"
 
-echo ﻿ document.write( '^<script src^="three.min.js" onload^="LoadSuica();"^>^</script^>' );﻿function LoadSuica(){ > bin\suica.js
+rem echo ﻿ document.write( '^<script src^="three.min.js" onload^="LoadSuica();"^>^</script^>' );﻿function LoadSuica(){ > bin\suica.js
 
-rem Copy Suica files one by one
-copy /b bin\suica.js + src\suica-main.js + src\suica-vr.js + src\suica-parser.js + src\suica-drawing.js + src\suica-mesh.js + src\suica-point.js + src\suica-line.js + src\suica-square.js + src\suica-cube.js + src\suica-circle.js + src\suica-sphere.js + src\suica-cylinder.js + src\suica-cone.js + src\suica-group.js + src\suica-tube.js + src\suica-convex.js + src\suica-model.js + src\suica-construct.js + src\suica-scorm.js + src\suica-text3d.js + src\suica-capture.js bin\suica.js
+copy /b misc\threejs\__min__+ misc\csg\__min__ + misc\CCapture\__min__ + src\__all__ bin\__all__
+echo ﻿ // Suica 2.0 >bin\suica.js
+misc\jsmin\jsmin <bin\__all__ >>bin\suica.js
+
 
 
 rem Create suica.js postfix
-echo } // LoadSuica >> bin\suica.js
+rem echo } // LoadSuica >> bin\suica.js
 
-misc\jsmin\jsmin <bin\suica.js >bin\suica.min.js "Suica 2.0"
-
-copy bin\three.min.js .
-copy bin\three.min.js examples
-copy bin\three.min.js test
-copy bin\three.min.js test\cases
 
 copy bin\suica.js examples
 
 del misc\csg\__???__
-del misc\threejs\__???__
+del misc\threejs\__all__
 del misc\CCapture\__???__
+del src\__???__
+del bin\__???__

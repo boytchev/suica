@@ -7,7 +7,8 @@
 
 var SUICA_TEST_MODE = 1;
 
-document.write('<script src="../../bin/suica.js"></script>');
+document.write('<script src="../../bin/suica.js"></script> ');
+
 
 const CASES_DIR = 'cases/';
 const IMAGES_DIR = 'snapshots/';
@@ -18,6 +19,7 @@ const COLOR_DIFF = 0.05;
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var timeout = -1;
+var startTime = Date.now();
 
 var resultReady, targetReady, canvas, testName;
 
@@ -63,7 +65,7 @@ function startTests()
 	}
 
 	
-	document.getElementById( 'progress' ).max = cases.length-1;
+	document.getElementById( 'progress' ).max = cases.length;
 
 	// install listeners for messages from test cases and images load
 
@@ -110,6 +112,15 @@ function startNextTest( )
 	clearTimeout( timeout );
 
 	document.getElementById( 'progress' ).value++;
+	
+	var elapsedTime = (Date.now()-startTime)/1000,
+		testNo = document.getElementById( 'progress' ).value,
+		testAll = document.getElementById( 'progress' ).max,
+		remainingTime =  elapsedTime/testNo*(testAll-testNo),
+		min = Math.floor(remainingTime/60),
+		sec = Math.round(remainingTime-60*min);
+	
+	document.getElementById( 'timer' ).innerHTML = `Testing ${testNo}/${testAll} (${min}:${sec<10?'0'+sec:sec})`;
 
 	// more tests?
 	if( cases.length )
@@ -143,6 +154,8 @@ function startNextTest( )
 		document.getElementById( 'sandbox' ).style.display = 'none';
 		document.getElementById( 'result-image' ).style.display = 'none';
 		document.getElementById( 'target-image' ).style.display = 'none';
+		document.getElementById( 'timer' ).style.display = 'none';
+		document.getElementById( 'progress' ).style.display = 'none';
 		log( `end` );
 	}
 }
@@ -230,7 +243,7 @@ function compareImages( )
 	//var match = Math.round(100-100*pnts/totals);
 	var match = Math.round( 100 - 100*pnts/totals );
 	//	log( `match ${match}%;` );
-	console.log( `::>match ${match}%;` );
+	console.log( `::> match ${match}%;` );
 	//log( `match ${match}%; difference in ${pnts} pixels` );
 	//var match = Math.max( 100-100*totalDiff, 0 );
 	logAppend( ` &ndash; match ${match}%;` );
@@ -282,7 +295,7 @@ function compareImages( )
 
 function sendSnapshot( )
 {
-	if( typeof suica === 'undefined' ) return;
+	if( !suica ) return;
 	
 	const DELAY = 0.9;
 	

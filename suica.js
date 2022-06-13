@@ -4,7 +4,7 @@
 //
 //===================================================
 
-document.write( '<script src="three.min.js"></script>' );
+document.write( '<script src="misc/threejs/__min__"></script>' );
 
 document.write( '<script src="src/suica-vr.js"></script>' );
 document.write( '<script src="src/suica-parser.js"></script>' );

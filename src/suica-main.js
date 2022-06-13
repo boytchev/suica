@@ -6,7 +6,7 @@
 
 
 // control flags
-const DEBUG_CALLS = !false;
+const DEBUG_CALLS = false;
 const DEBUG_EVENTS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
@@ -16,8 +16,8 @@ if( TEST_MODE )
 	console.log('::> suica');
 else
 	console.log(`(\\/)
-( ..)		Suica 2.-1
-c(”)(”)		(220606)
+( ..)		Suica 2.0
+c(”)(”)		(220613)
 `);
 
 
@@ -545,7 +545,6 @@ class Suica
 			
 		} // Suica.createRenderer.loop
 
-console.log('SET ANIMATION LOOP');		
 		this.renderer.setAnimationLoop( loop );
 
 	} // Suica.createRenderer
