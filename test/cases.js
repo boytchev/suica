@@ -10,6 +10,8 @@ var cases = [
 'camera-stereo-cross-eyed', 
 'camera-stereo-wall-eyed', 
 'camera-vr', 
+'capture-gif', 
+'capture-webm', 
 'circle-ellipse', 
 'circle', 
 'clone-tag', 
