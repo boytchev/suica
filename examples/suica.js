@@ -1102,13 +1102,17 @@ arc(x=0,y=0,r=Drawing.ARC_RADIUS,from=Drawing.ARC_FROM,to=Drawing.ARC_TO,cw=Draw
 {this.managePath();this.context.arc(x,this.canvas.height-y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
 fillText(x=0,y=0,text='',color=Drawing.FILL_COLOR,font=Drawing.FONT)
 {if(this.texture)this.texture.needsUpdate=true;this.context.fillStyle=color;this.context.font=font;this.context.fillText(text,x,this.canvas.height-y);}
+cssColor(color)
+{if(color instanceof THREE.Color)
+return color.getStyle();else
+return color;}
 stroke(color=Drawing.STROKE_COLOR,width=Drawing.STROKE_WIDTH,closed=Drawing.STROKE_CLOSED)
-{if(this.texture)this.texture.needsUpdate=true;if(closed)this.context.closePath();this.context.strokeStyle=color;this.context.lineWidth=width;this.context.stroke();this.needsNewPath=true;}
+{if(this.texture)this.texture.needsUpdate=true;if(closed)this.context.closePath();this.context.strokeStyle=this.cssColor(color);this.context.lineWidth=width;this.context.stroke();this.needsNewPath=true;}
 fill(color=Drawing.FILL_COLOR)
-{if(this.texture)this.texture.needsUpdate=true;this.context.fillStyle=color;this.context.fill();this.needsNewPath=true;}
+{if(this.texture)this.texture.needsUpdate=true;this.context.fillStyle=this.cssColor(color);this.context.fill();this.needsNewPath=true;}
 clear(color)
 {if(this.texture)this.texture.needsUpdate=true;if(color)
-{this.context.fillStyle=color;this.context.fillRect(-1,-1,this.canvas.width+2,this.canvas.height+2);}
+{this.context.fillStyle=this.cssColor(color);this.context.fillRect(-1,-1,this.canvas.width+2,this.canvas.height+2);}
 else
 {this.context.clearRect(-1,-1,this.canvas.width+2,this.canvas.height+2);}
 this.needsNewPath=true;}

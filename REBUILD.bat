@@ -62,7 +62,7 @@ copy bin\suica.js examples
 REM Clean up all __ files
 
 del misc\csg\__???__
-del misc\threejs\__???__
+del misc\threejs\__all__
 del misc\CCapture\__???__
 del src\__???__
 del __???__

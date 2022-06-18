@@ -79,7 +79,7 @@ point( [25,0,15] );
 #### allObjects
 ```js
 JS:
-𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦 = 𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦( ... );
+𝘢𝘳𝘳𝘢𝘺 = allObjects();
 ```
 Function. Get a list of all graphical objects in a Suica canvas. The result of
 the function is an array of these objects.

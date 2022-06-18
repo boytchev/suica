@@ -181,14 +181,21 @@ class Drawing
 	
 	
 	
-
+	cssColor( color )
+	{
+		if( color instanceof THREE.Color )
+			return color.getStyle();
+		else
+			return color;
+	}
+	
 	stroke( color = Drawing.STROKE_COLOR, width = Drawing.STROKE_WIDTH, closed = Drawing.STROKE_CLOSED )
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 		
 		if( closed ) this.context.closePath();
 		
-		this.context.strokeStyle = color;
+		this.context.strokeStyle = this.cssColor( color );
 		this.context.lineWidth = width;
 		this.context.stroke( );
 
@@ -202,7 +209,7 @@ class Drawing
 	{
 		if( this.texture ) this.texture.needsUpdate = true;
 		
-		this.context.fillStyle = color;
+		this.context.fillStyle = this.cssColor( color );
 		this.context.fill( );
 
 		this.needsNewPath = true;
@@ -216,7 +223,7 @@ class Drawing
 
 		if( color )
 		{
-			this.context.fillStyle = color;
+			this.context.fillStyle = this.cssColor( color );
 			this.context.fillRect( -1, -1, this.canvas.width+2, this.canvas.height+2 );
 		}
 		else
