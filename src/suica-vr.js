@@ -21,6 +21,8 @@ function createFSButton( suica )
 	
 	var button = document.createElement( 'button' );
 
+	button.id = 'suica-fullscreen-button';
+	
 	button.style.display = '';
 
 	button.style.cursor = 'pointer';
