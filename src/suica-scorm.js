@@ -115,7 +115,14 @@ class Scorm
 			
 	get studentName( )
 	{
-		return this.getValue( 'cmi.core.student_name' );
+		var name = this.getValue( 'cmi.core.student_name' ).split( ', ' );
+		
+		if( name.length == 2 )
+		{
+			name.unshift( name.pop() );
+		}
+		
+		return name.join( ' ' );
 	} // Scorm.studentName
 
 
@@ -126,9 +133,7 @@ class Scorm
 	set score( value )
 	{
 		this.setValue( 'cmi.core.score.raw', value );
-	}
-	// Scorm.score
-
+	} // Scorm.score
 
 			
 } // class Scorm

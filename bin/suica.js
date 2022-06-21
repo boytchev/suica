@@ -1545,7 +1545,9 @@ return value;}
 get studentId()
 {return this.getValue('cmi.core.student_id');}
 get studentName()
-{return this.getValue('cmi.core.student_name');}
+{var name=this.getValue('cmi.core.student_name').split(', ');if(name.length==2)
+{name.unshift(name.pop());}
+return name.join(' ');}
 get score()
 {return this.getValue('cmi.core.score.raw');}
 set score(value)
