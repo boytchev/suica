@@ -638,7 +638,7 @@ static globalHoverObject;static globalHoverEvent;flipNormal(geometry)
 {var nor=geometry.getAttribute('normal').array;for(var i=0;i<nor.length;i++)
 nor[i]=-nor[i];}
 return geometry;}
-static OXYZ={COLOR:'black',SIZE:30};static DEMO={DISTANCE:100,ALTITUDE:30,SPEED:1};static BACKGROUND='whitesmoke';static ANAGLYPH={DISTANCE:5};static STEREO={DISTANCE:1};static PERSPECTIVE={NEAR:1,FAR:1000,FOV:40};static ORTHOGRAPHIC={NEAR:0,FAR:1000};static DEFAULT_ORIENTATION='XYZ';static SPLINE={POINTS:[[0,0,0],[0,1,0]],CLOSED:false,INTERPOLANT:true};constructor(suicaTag)
+static OXYZ={COLOR:'black',SIZE:30};static DEMO={DISTANCE:100,ALTITUDE:30,SPEED:1};static BACKGROUND='whitesmoke';static ANAGLYPH={DISTANCE:5};static STEREO={DISTANCE:1};static PERSPECTIVE={NEAR:1,FAR:1000,FOV:40};static ORTHOGRAPHIC={NEAR:0,FAR:1000};static DEFAULT_ORIENTATION='XYZ';static SPLINE={POINTS:[[0,0,0],[0,1,0]],CLOSED:false,INTERPOLANT:true};static SPLANE={POINTS:[[[-3,0,-3],[-1,0,-3],[+1,0,-3],[+3,0,-3]],[[-3,0,-1],[-1,3,-1],[+1,3,-1],[+3,0,-1]],[[-3,0,+1],[-1,3,+1],[+1,3,+1],[+3,0,+1]],[[-3,0,+3],[-1,0,+3],[+1,0,+3],[+3,0,+3]]],CLOSED:[false,false],INTERPOLANT:[true,true]};constructor(suicaTag)
 {this._={solidGeometry:{},frameGeometry:{},};suicaTag.style.display='inline-block';suicaTag.style.boxSizing='border-box';if(!getComputedStyle(suicaTag).width&&!suicaTag.hasAttribute('width'))
 suicaTag.style.width=TEST_MODE?'400px':'500px';if(!getComputedStyle(suicaTag).height&&!suicaTag.hasAttribute('height'))
 suicaTag.style.height=TEST_MODE?'400px':'300px';if(!suicaTag.style.position)suicaTag.style.position='relative';this.id=suicaTag.getAttribute('id')||`suica${Suica.allSuicas.length}`
@@ -646,9 +646,9 @@ if(DEBUG_CALLS)console.log(`Suica :: ${this.id}`);this.suicaTag=suicaTag;this.is
 {THREE.MathUtils.seededRandom(1);}
 else
 {this.canvas.addEventListener('contextmenu',Suica.onContextMenu);THREE.MathUtils.seededRandom(Math.round(Number.MAX_SAFE_INTEGER*Math.random()));}
-for(var classObject of[Point,Line,Square,Cube,Polygon,Sphere,Group,Tube,Prism,Cylinder,Cone,Pyramid,Circle,Convex,Model,Construct,Text3D,Capture])
+for(var classObject of[Point,Line,Square,Cube,Polygon,Sphere,Group,Tube,Surface,Prism,Cylinder,Cone,Pyramid,Circle,Convex,Model,Construct,Text3D,Capture])
 {Suica.registerClass(this,classObject);}
-for(var methodName of['cube','square','sphere','point','line','group','cylinder','prism','cone','pyramid','circle','polygon','tube','lookAt','fullScreen','fullWindow','proactive','anaglyph','stereo','perspective','orthographic','lookAt','background','oxyz','demo','allObjects','convex','model','construct','text3d','capture'])
+for(var methodName of['cube','square','sphere','point','line','group','cylinder','prism','cone','pyramid','circle','polygon','tube','surface','lookAt','fullScreen','fullWindow','proactive','anaglyph','stereo','perspective','orthographic','lookAt','background','oxyz','demo','allObjects','convex','model','construct','text3d','capture'])
 {Suica.register(this,methodName);}
 this.model.save=function(...params)
 {this.parser?.parseTags();return Model.save(...params);}
@@ -897,6 +897,29 @@ function bSpline(p0,p1,p2,p3)
 {var B0=(1-3*t+3*t2-t3)/6,B1=(4-6*t2+3*t3)/6,B2=(1+3*t+3*t2-3*t3)/6,B3=(t3)/6;return p0*B0+p1*B1+p2*B2+p3*B3;}
 var splineFunction=interpolant?catmullRom:bSpline;var point=[splineFunction(p0[0],p1[0],p2[0],p3[0]),splineFunction(p0[1],p1[1],p2[1],p3[1]),splineFunction(p0[2],p1[2],p2[2],p3[2])];if(typeof p0[3]!=='undefined')
 point.push(splineFunction(p0[3],p1[3],p2[3],p3[3]));return point;}}
+window.splane=function(points=Suica.SPLANE.POINTS,closed,interpolant)
+{if(points instanceof Function)
+{return function(u,v)
+{return points(u,v,interpolant);}}
+if(typeof closed==='undefined')
+closed=Suica.SPLANE.CLOSED;else
+if(!Array.isArray(closed))
+closed=[closed,false];var uClosed=!!closed[0],vClosed=!!closed[1];if(typeof interpolant==='undefined')
+interpolant=Suica.SPLANE.INTERPOLANT;else
+if(!Array.isArray(interpolant))
+interpolant=[interpolant,false];var uInterpolant=!!interpolant[0],vInterpolant=!!interpolant[1];if(!points.length)points=Suica.SPLANE.POINTS;const NU=points[0].length;const NV=points.length;console.log('uClosed',uClosed);console.log('vClosed',vClosed);return function(u,v)
+{var B=[t=>(1-3*t+3*t*t-t*t*t)/6,t=>(4-6*t*t+3*t*t*t)/6,t=>(1+3*t+3*t*t-3*t*t*t)/6,t=>(t*t*t)/6,];var uu,vv;if(uClosed||uInterpolant)
+uu=(NU+1)*u-2;else
+uu=(NU-3)*u;if(vClosed||vInterpolant)
+vv=(NV+1)*v-2;else
+vv=(NV-3)*v;var uPoint=Math.floor(uu),vPoint=Math.floor(vv);u=uu-uPoint;v=vv-vPoint;var x=0,y=0,z=0;for(var iv=0;iv<4;iv++)
+for(var iu=0;iu<4;iu++)
+{var uIdx,vIdx;if(uClosed)
+uIdx=(uPoint+iu+NU)%NU;else
+uIdx=THREE.MathUtils.clamp(uPoint+iu,0,NU-1);if(vClosed)
+vIdx=(vPoint+iv+NV)%NV;else
+vIdx=THREE.MathUtils.clamp(vPoint+iv,0,NV-1);var p=points[vIdx][uIdx];x+=B[iu](u)*B[iv](v)*p[0];y+=B[iu](u)*B[iv](v)*p[1];z+=B[iu](u)*B[iv](v)*p[2];}
+var point=[x,y,z];return point;}}
 new MutationObserver(function(mutations)
 {for(var parentElem of mutations)
 {for(var childElem of parentElem.addedNodes)
@@ -1455,6 +1478,33 @@ set curve(curve)
 {this._curve=curve;this.threejs.geometry.update(new SuicaCurve(curve));}
 get clone()
 {var object=new Tube(this.suica,this.center,this.curve,this.radius,this.size,this.color);object.spin=this.spin;object.image=this.image;Suica.cloneEvents(object,this);return object;}}
+﻿
+class Surface extends Mesh
+{static POINTS=[]
+static COUNT=[20,20];static COLOR='lightsalmon';static SIZE=1;constructor(suica,center,plane,count,size,color)
+{suica.parser?.parseTags();suica.debugCall('surface',center,plane?.name||plane,count,size,color);var uSegments,vSegments;count=Suica.parseSize(count,Surface.COUNT);if(Array.isArray(count))
+{uSegments=Suica.parseSize(count[0],Surface.COUNT[0]);vSegments=Suica.parseSize(count[1],Surface.COUNT[1]);}
+else
+{uSegments=count;vSegments=Surface.COUNT[1];}
+var geometry=new THREE.PlaneGeometry(1,1,uSegments,vSegments);super(suica,new THREE.Mesh(geometry,Mesh.solidMaterial.clone()),null,);this._plane=plane;this.center=Suica.parseCenter(center);this.size=Suica.parseSize(size,Tube.SIZE);this.color=Suica.parseColor(color,Tube.COLOR);this._count=count;this.uSegments=uSegments;this.vSegments=vSegments;this.updateGeometry();}
+get count()
+{return this._count;}
+set count(count)
+{count=Suica.parseSize(count);if(Array.isArray(count))
+{this.uSegments=Suica.parseSize(count[0],Surface.COUNT[0]);this.vSegments=Suica.parseSize(count[1],Surface.COUNT[1]);}
+else
+{this.uSegments=count;this.vSegments=Surface.COUNT[1];}
+this._count=count;this.threejs.geometry.dispose();this.threejs.geometry=new THREE.PlaneGeometry(1,1,this.uSegments,this.vSegments);this.updateGeometry();}
+get plane()
+{return this._curve;}
+set plane(plane)
+{this._plane=plane;this.updateGeometry();}
+get clone()
+{var object=new Tube(this.suica,this.center,this.curve,this.radius,this.size,this.color);object.spin=this.spin;object.image=this.image;Suica.cloneEvents(object,this);return object;}
+updateGeometry()
+{const EPS=0.00001;var pos=this.threejs.geometry.getAttribute('position'),nor=this.threejs.geometry.getAttribute('normal'),tu=new THREE.Vector3,tv=new THREE.Vector3;for(var i=0;i<pos.count;i++)
+{var u=(i%(this.uSegments+1))/(this.uSegments);var v=(Math.floor(i/(this.uSegments+1)))/(this.vSegments);var p=this._plane(u,v);var t=this._plane(u+EPS,v);tu.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);t=this._plane(u,v+EPS);tv.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);tu.cross(tv).normalize();pos.setXYZ(i,p[0],p[1],p[2]);nor.setXYZ(i,-tu.x,-tu.y,-tu.z);}
+pos.needsUpdate=true;nor.needsUpdate=true;}}
 ﻿
 class Convex extends Mesh
 {static POINTS=[[1,1,1],[1,1,-1],[1,-1,1],[1,-1,-1],[-1,1,1],[-1,1,-1],[-1,-1,1],[-1,-1,-1]];static SIZE=[1,1,1];static COLOR='lightsalmon';constructor(suica,points,size,color)

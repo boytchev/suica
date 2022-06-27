@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Splane</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Splane</h1>
+	<p>Defining a smooth splane surface from an array of points.</p>
+
+	<suica>
+		<demo distance="70" altitude="0">
+	</suica>
+
+	<script>
+		square( [0,0,0], 18, 'crimson' );
+		its.wireframe = true;
+		its.spinV = 90;
+		
+		
+		//surf = splane( [] );
+		
+		p = [
+			[[-9,0,-9], [-3,0,-9], [+3,0,-9], [+9,0,-9]],
+			[[-9,0,-3], [-3,9,-3], [+3,9,-3], [+9,0,-3]],
+			[[-9,0,+3], [-3,9,+3], [+3,9,+3], [+9,0,+3]],
+			[[-9,0,+9], [-3,0,+9], [+3,0,+9], [+9,0,+9]]
+		];
+		surface( [0,0,0], splane( p ), [120,40], 1, 'linen' );
+		
+		p = [
+			[[-3,0,-9], [+3,0,-9], [+9,0,-9], [15,0,-9] ],
+			[[-3,9,-3], [+3,9,-3], [+9,0,-3], [15,3,-3]],
+			[[-3,9,+3], [+3,9,+3], [+9,0,+3], [15,3,+3]],
+			[[-3,0,+9], [+3,0,+9], [+9,0,+9], [15,0,+9]]
+		];
+		//surface( [0,0,0], splane( p ), [120,40] );
+		
+		
+		p = [ [], [], [], [], [] ];
+		
+		for( var i=0; i<=350; i+=15 )
+		{
+			var a = radians(i);
+			
+			p[0].push( [5*Math.cos(a), -10, 5*Math.sin(a)] );
+			p[1].push( [10*Math.cos(a), random(-5,5), 10*Math.sin(a)] );
+			p[2].push( [15*Math.cos(a), random(-5,5), 15*Math.sin(a)] );
+			p[3].push( [20*Math.cos(a), random(-5,5), 20*Math.sin(a)] );
+			p[4].push( [25*Math.cos(a), -10, 25*Math.sin(a)] );
+		}
+		surface( [0,0,0], splane( p ), [120,40] );
+		its.spinV = 90;
+		
+/*		sphere( [5,0,0], 2, 'black' );
+		sphere( [25,0,0], 2, 'black' );
+*/		
+
+	</script>
+</body>
+</html>

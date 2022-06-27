@@ -20,6 +20,7 @@ document.write( '<script src="src/suica-cylinder.js"></script>' );
 document.write( '<script src="src/suica-cone.js"></script>' );
 document.write( '<script src="src/suica-group.js"></script>' );
 document.write( '<script src="src/suica-tube.js"></script>' );
+document.write( '<script src="src/suica-surface.js"></script>' );
 document.write( '<script src="src/suica-convex.js"></script>' );
 document.write( '<script src="src/suica-model.js"></script>' );
 document.write( '<script src="src/suica-construct.js"></script>' );

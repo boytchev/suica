@@ -125,6 +125,12 @@ class Suica
 	static ORTHOGRAPHIC = { NEAR: 0, FAR: 1000 };
 	static DEFAULT_ORIENTATION = 'XYZ';
 	static SPLINE = { POINTS:[[0,0,0],[0,1,0]], CLOSED:false, INTERPOLANT:true };	
+	static SPLANE = { POINTS:[
+		[[-3,0,-3], [-1,0,-3], [+1,0,-3], [+3,0,-3]],
+		[[-3,0,-1], [-1,3,-1], [+1,3,-1], [+3,0,-1]],
+		[[-3,0,+1], [-1,3,+1], [+1,3,+1], [+3,0,+1]],
+		[[-3,0,+3], [-1,0,+3], [+1,0,+3], [+3,0,+3]]
+	], CLOSED:[false,false], INTERPOLANT:[true,true] };	
 	
 	constructor( suicaTag )
 	{
@@ -209,13 +215,13 @@ class Suica
 		
 		
 		// register local methods that have stereotypical code
-		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct, Text3D, Capture] )
+		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Surface, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct, Text3D, Capture] )
 		{
 			Suica.registerClass( this, classObject );
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d', 'capture'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'surface','lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d', 'capture'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -1389,6 +1395,118 @@ window.spline = function( points=Suica.SPLINE.POINTS, closed, interpolant )
 		
 		return point;
 	} // spline.getPoint
+	
+} // spline
+
+
+window.splane = function( points=Suica.SPLANE.POINTS, closed, interpolant )
+{
+	if( points instanceof Function )
+	{
+		return function( u, v )
+		{
+			return points( u, v, interpolant );
+		}
+	}
+
+	// if points is a string - array of points "x,y,z;x,y,z;..."
+	// if( typeof points === 'string' )
+	// {
+		// if( points.indexOf(',') >= 0 )
+			// points = Suica.evaluate( '[['+points.replaceAll(';','],[')+']]' );
+		// else
+			// return function( u, v )
+			// {
+				// return window[points]( u, v, interpolant );
+			// }
+	// }
+	
+	if( typeof closed === 'undefined' )
+		closed = Suica.SPLANE.CLOSED;
+	else
+	if( !Array.isArray(closed) )
+		closed = [closed, false];
+
+	var uClosed = !!closed[0], // closed in U direction
+		vClosed = !!closed[1]; // closed in V direction
+
+	if( typeof interpolant === 'undefined' )
+		interpolant = Suica.SPLANE.INTERPOLANT;
+	else
+	if( !Array.isArray(interpolant) )
+		interpolant = [interpolant, false];
+
+	var uInterpolant = !!interpolant[0], // interpolant in U direction
+		vInterpolant = !!interpolant[1]; // interpolant in V direction
+	
+	if( !points.length ) points = Suica.SPLANE.POINTS;
+
+	const NU = points[0].length;
+	const NV = points.length;
+
+console.log('uClosed',uClosed);
+console.log('vClosed',vClosed);
+	
+// t      0                 1
+//	o--o--|--|--|--|--|--|--|--o--o
+//	      0  1  2  3       N-1
+//
+	return function( u, v )
+	{
+		var B = [
+			t => (1-3*t+3*t*t-t*t*t)/6,	
+			t => (4-6*t*t+3*t*t*t)/6,
+			t => (1+3*t+3*t*t-3*t*t*t)/6,
+			t => (t*t*t)/6,
+		];
+
+		var uu, vv;
+		
+		if( uClosed || uInterpolant )
+			uu = (NU+1)*u-2;	// a-la-bezier & closed
+		else
+			uu = (NU-3)*u; // transitional
+		
+		if( vClosed || vInterpolant)
+			vv = (NV+1)*v-2;	// a-la-bezier & closed
+		else
+			vv = (NV-3)*v;		// transitional
+
+		var uPoint = Math.floor( uu ),
+			vPoint = Math.floor( vv );
+			
+		u = uu-uPoint;
+		v = vv-vPoint;
+		
+		var x = 0,
+			y = 0,
+			z = 0;
+			
+		for( var iv=0; iv<4; iv++ )
+		for( var iu=0; iu<4; iu++ )
+		{
+			var uIdx, vIdx;
+			
+			if( uClosed )
+				uIdx = (uPoint+iu+NU)%NU;
+			else
+				uIdx = THREE.MathUtils.clamp( uPoint+iu, 0, NU-1 );
+				
+			if( vClosed )
+				vIdx = (vPoint+iv+NV)%NV;
+			else
+				vIdx = THREE.MathUtils.clamp( vPoint+iv, 0, NV-1 );
+			
+			var p = points[vIdx][uIdx];
+			x += B[iu](u)*B[iv](v)*p[0];
+			y += B[iu](u)*B[iv](v)*p[1];
+			z += B[iu](u)*B[iv](v)*p[2];
+		}
+
+		var point = [x,y,z];
+
+		return point;
+	} // splane.getPoint
 	
 } // spline
 
