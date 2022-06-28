@@ -115,7 +115,7 @@ class Drawing
 		
 		if( trueName && elem.hasAttribute(trueName) )
 		{
-			var array = elem.getAttribute(trueName).split( ',' );
+			let array = elem.getAttribute(trueName).split( ',' );
 			for( var i=0; i<array.length; i++ )
 				array[i] = TRUTH.indexOf(array[i].trim()) > -1;
 			return array;
@@ -123,7 +123,7 @@ class Drawing
 
 		if( falseName && elem.hasAttribute(falseName) )
 		{
-			var array = elem.getAttribute(falseName).split( ',' );
+			let array = elem.getAttribute(falseName).split( ',' );
 			for( var i=0; i<array.length; i++ )
 				array[i] = TRUTH.indexOf(array[i].trim()) == -1;
 			return array;
