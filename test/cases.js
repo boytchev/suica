@@ -114,6 +114,7 @@ var cases = [
 'spin', 
 'splane-closed', 
 'splane-html', 
+'splane-interpolating', 
 'splane-open', 
 'splane-surface', 
 'splane', 

@@ -936,6 +936,21 @@ HTML:
 
 [<kbd><img src="../examples/snapshots/splane-closed.jpg" width="300"></kbd>](../examples/splane-closed.html)
 
+The parameter `interpolating` defines the style of the surface in both directions. If anb element is `true`, the splane goes from end-to-end in this direction (i.e. it is interpolating). If it is `false`, the splane is generated only on the central part (i.e. it approximating).
+
+<img src="images/splane-interpolating.png">
+
+When a spline is defined in HTML, `interpolating` can be set either by `interpolating` attribute, or by `apploximating` attribute, similar to how attributes *closed* and *open* are used.
+
+Approximation is used to stitch splane together. Two splanes can be stitched if they are approximating across the stitching zone and there are three rows (or columns) of common points. The following image demonstrates stitching along the *u*-direction.
+
+<img src="images/splane-stitching.png">
+
+Approximation and interpolation can be controlled independently on each direction. If a spline is approximating in both directions, only the central portion of the surface is generated. The next examples shows *u*-, *v*- and *uv*- approximating surfaces on top of *uv*-interpolating surface.
+
+[<kbd><img src="../examples/snapshots/splane-interpolating.jpg" width="300"></kbd>](../examples/splane-interpolating.html)
+
+
 ## SCORM
 
 **SCORM** stands for [Shareable Content Object Reference Model](https://en.wikipedia.org/wiki/Sharable_Content_Object_Reference_Model). This is a set of standards that define the structure of educational content that can be used in various [learning management systems](https://en.wikipedia.org/wiki/Learning_management_system) (LMS). SCORM modules are provided as ZIP files that contain lessons, quizzes, images and other teaching materials. 

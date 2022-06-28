@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		square( [0,-10,0], 70, 'black' );
+		its.wireframe = true;
+		its.spinV = 90;
+				
+		var points = [
+			[[-35,-10,-35], [-10, 0,-35], [10,  0,-35], [35,-10,-35]],
+			[[-35,  0,-10], [-10,20,-10], [10, 20,-10], [35,  0,-10]],
+			[[-35,  0, 10], [-10,20, 10], [10, 20, 10], [35,  0, 10]],
+			[[-35,-10, 35], [-10, 0, 35], [10,  0, 35], [35,-10, 35]]
+		];
+		
+		surface( [0,0,0], splane(points,false,[true,true]), 40, 1, 'linen' );
+		surface( [0,1,0], splane(points,false,[false,true]), 40, 1, 'peachpuff' );
+		surface( [0,2,0], splane(points,false,[true,false]), 40, 1, 'lightsalmon' );
+		surface( [0,3,0], splane(points,false,[false,false]), 40, 1, 'dimgray' );
+	</script>
+</body>
+</html>
