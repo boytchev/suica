@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Closed splane</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Closed splane</h1>
+	<p>Closing a splane surface in one of the directions.</p>
+
+	<suica>
+		<demo>
+		<splane id="p0" src="
+			-10,20,-10; -5,0,-10; 0,10,-10; 5,0,-10; 20,5,-10 |
+			-10,10,-5;  -5,0,-5;  0,10,-5;  5,0,-5;  10,10,-5 |
+			-10,20,5;   -5,0,5;   0,-10,5;  5,0,5;   10,10,5  |
+			-10,10,10;  -5,0,10;  0,10,10;  5,0,10;  20,5,10
+		" closed="false,false">
+		
+		<splane id="p1" src="
+			-10,20,-10; -5,0,-10; 0,10,-10; 5,0,-10; 20,5,-10 |
+			-10,10,-5;  -5,0,-5;  0,10,-5;  5,0,-5;  10,10,-5 |
+			-10,20,5;   -5,0,5;   0,-10,5;  5,0,5;   10,10,5  |
+			-10,10,10;  -5,0,10;  0,10,10;  5,0,10;  20,5,10
+		" closed="true,false">
+	</suica>
+
+	<script>
+		surface( [0, -5, -25], p0, 40, 2 );
+		its.image = "../assets/textures/tile.png";
+		its.images = 6;
+		
+		surface( [0, -5, 25], p1, 80, 2, 'linen' );
+		its.image = "../assets/textures/tile.png";
+		its.images = 6;
+	</script>
+</body>
+</html>

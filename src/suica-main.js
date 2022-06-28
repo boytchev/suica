@@ -17,7 +17,7 @@ if( TEST_MODE )
 else
 	console.log(`(\\/)
 ( ..)		Suica 2.0
-c(”)(”)		(220613)
+c(”)(”)		(220628)
 `);
 
 
@@ -1405,21 +1405,21 @@ window.splane = function( points=Suica.SPLANE.POINTS, closed, interpolant )
 	{
 		return function( u, v )
 		{
-			return points( u, v, interpolant );
+			return points( u, v, closed, interpolant );
 		}
 	}
 
-	// if points is a string - array of points "x,y,z;x,y,z;..."
-	// if( typeof points === 'string' )
-	// {
-		// if( points.indexOf(',') >= 0 )
-			// points = Suica.evaluate( '[['+points.replaceAll(';','],[')+']]' );
-		// else
-			// return function( u, v )
-			// {
-				// return window[points]( u, v, interpolant );
-			// }
-	// }
+	// if points is a string - matrix of points "x,y,z;..| x,y,z;..."
+	if( typeof points === 'string' )
+	{
+		if( points.indexOf(',') >= 0 )
+			points = Suica.evaluate( '[[['+points.replaceAll(';','],[').replaceAll('|',']],[[')+']]]' );
+		else
+			return function( u, v )
+			{
+				return window[points]( u, v, interpolant );
+			}
+	}
 	
 	if( typeof closed === 'undefined' )
 		closed = Suica.SPLANE.CLOSED;
@@ -1444,13 +1444,6 @@ window.splane = function( points=Suica.SPLANE.POINTS, closed, interpolant )
 	const NU = points[0].length;
 	const NV = points.length;
 
-console.log('uClosed',uClosed);
-console.log('vClosed',vClosed);
-	
-// t      0                 1
-//	o--o--|--|--|--|--|--|--|--o--o
-//	      0  1  2  3       N-1
-//
 	return function( u, v )
 	{
 		var B = [
@@ -1460,27 +1453,23 @@ console.log('vClosed',vClosed);
 			t => (t*t*t)/6,
 		];
 
-		var uu, vv;
-		
 		if( uClosed || uInterpolant )
-			uu = (NU+1)*u-2;	// a-la-bezier & closed
+			u = (NU+1)*u-2;	// a-la-bezier & closed
 		else
-			uu = (NU-3)*u; // transitional
+			u = (NU-3)*u; // transitional
 		
 		if( vClosed || vInterpolant)
-			vv = (NV+1)*v-2;	// a-la-bezier & closed
+			v = (NV+1)*v-2;	// a-la-bezier & closed
 		else
-			vv = (NV-3)*v;		// transitional
+			v = (NV-3)*v;		// transitional
 
-		var uPoint = Math.floor( uu ),
-			vPoint = Math.floor( vv );
+		var uPoint = Math.floor( u ),
+			vPoint = Math.floor( v );
 			
-		u = uu-uPoint;
-		v = vv-vPoint;
+		u = u-uPoint;
+		v = v-vPoint;
 		
-		var x = 0,
-			y = 0,
-			z = 0;
+		var point = [0,0,0];
 			
 		for( var iv=0; iv<4; iv++ )
 		for( var iu=0; iu<4; iu++ )
@@ -1497,13 +1486,12 @@ console.log('vClosed',vClosed);
 			else
 				vIdx = THREE.MathUtils.clamp( vPoint+iv, 0, NV-1 );
 			
-			var p = points[vIdx][uIdx];
-			x += B[iu](u)*B[iv](v)*p[0];
-			y += B[iu](u)*B[iv](v)*p[1];
-			z += B[iu](u)*B[iv](v)*p[2];
+			var weight = B[iu](u) * B[iv](v);
+			
+			point[0] += weight * points[vIdx][uIdx][0];
+			point[1] += weight * points[vIdx][uIdx][1];
+			point[2] += weight * points[vIdx][uIdx][2];
 		}
-
-		var point = [x,y,z];
 
 		return point;
 	} // splane.getPoint

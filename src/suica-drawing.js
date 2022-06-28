@@ -100,10 +100,34 @@ class Drawing
 		const TRUTH = [null,'','true','yes','TRUE','True','YES','Yes','1'];
 		
 		if( trueName && elem.hasAttribute(trueName) )
-			return TRUTH.indexOf(elem.getAttribute(trueName)) > -1;
+			return TRUTH.indexOf(elem.getAttribute(trueName).trim()) > -1;
 
 		if( falseName && elem.hasAttribute(falseName) )
-			return TRUTH.indexOf(elem.getAttribute(falseName)) == -1;
+			return TRUTH.indexOf(elem.getAttribute(falseName).trim()) == -1;
+		
+		return defaultValue;
+	}
+	
+	// parse exclusive boolean values trueName; or its opposite falseName
+	static parseBoolArray( elem, trueName, falseName, defaultValue )
+	{
+		const TRUTH = [null,'','true','yes','TRUE','True','YES','Yes','1'];
+		
+		if( trueName && elem.hasAttribute(trueName) )
+		{
+			var array = elem.getAttribute(trueName).split( ',' );
+			for( var i=0; i<array.length; i++ )
+				array[i] = TRUTH.indexOf(array[i].trim()) > -1;
+			return array;
+		}
+
+		if( falseName && elem.hasAttribute(falseName) )
+		{
+			var array = elem.getAttribute(falseName).split( ',' );
+			for( var i=0; i<array.length; i++ )
+				array[i] = TRUTH.indexOf(array[i].trim()) == -1;
+			return array;
+		}
 		
 		return defaultValue;
 	}

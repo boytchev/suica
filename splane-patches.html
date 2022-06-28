@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Splane patches</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Splane patches</h1>
+	<p>Stitching splane patches into a single surface.</p>
+
+	<suica>
+		<demo distance="70" altitude="30" speed="0.5">
+	</suica>
+
+	<script>
+		p = [ [], [], [], [] ];
+		
+		for( var i=0; i<=350; i+=15 )
+		{
+			var a = radians(i);
+			
+			p[0].push( [10*Math.cos(a), random(0,1), 10*Math.sin(a)] );
+			p[1].push( [15*Math.cos(a), random(-5,5), 15*Math.sin(a)] );
+			p[2].push( [20*Math.cos(a), random(-5,10), 20*Math.sin(a)] );
+			p[3].push( [25*Math.cos(a), random(0,1), 25*Math.sin(a)] );
+		}
+		surface( [25,0,0], splane( p, [true,false] ), [200,40] );
+
+		for( i=0; i<=23; i++ )
+		for( j=-2; j<=2; j++ )
+		{
+			var s = [ [], [], [], [] ];
+			for( di=0; di<4; di++ )
+			for( dj=0; dj<4; dj++ )
+				s[dj].push( p[ THREE.MathUtils.clamp(j+dj,0,3)][ (i+di+24)%24 ] );
+
+			var sp = splane( s, [false,false], [false,false] );
+			surface( [-25,0,0], sp, [10,10], 1, random(['linen','peachpuff','lightsalmon','gray','white','black']) );
+		}
+//		its.spinV = 90;
+
+	</script>
+</body>
+</html>

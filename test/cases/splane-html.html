@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<splane id="p" src="
+			-35,0,-35;  -10,10,-35; 10,5,-35;  35,0,-35   |
+			-35,10,-10; -10,10,-10; 10,5,-10;  35,-20,-10 |
+			-35,5,10;   -10,5,10;   10,5,10;   35,-20,10  |
+			-35,0,35;   -10,-20,35; 10,-20,35; 35,0,35
+		">
+	</suica>
+
+	<script>
+		square( [0,0,0], 70, 'black' );
+		its.wireframe = true;
+		its.spinV = 90;
+			
+		const n = 51;
+		
+		for( var i=1; i<n-1; i++ )
+		for( var j=1; j<n-1; j++ )
+			if( i%5==1 || j%5==1 )
+				point( p(i/n,j/n), 2, random(['linen','peachpuff','lightsalmon','gray','white','black']) );
+	</script>
+</body>
+</html>

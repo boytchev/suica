@@ -14,7 +14,7 @@ description: The core of Suica &ndash; from point to sphere
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
 	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`convex`](#convex), [`model`](#model), [`construct`](#construct), [`text3d`](#text3d)</small>
-	- <small>[Invisibles](#invisibles): [`spline`](#spline), [`scorm`](#scorm)</small>
+	- <small>[Invisibles](#invisibles): [`spline`](#spline), [`splane`](#splane), [`scorm`](#scorm)</small>
 
 
 
@@ -873,6 +873,68 @@ HTML:
 
 
 
+
+## Splane
+
+#### splane points
+```html
+HTML:
+<spline src="𝑥,𝑦,𝑧;..." 𝑐𝑙𝑜𝑠𝑒𝑑="..." 𝑜𝑝𝑒𝑛="..." 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔="..." 𝑎𝑝𝑝𝑟𝑜𝑥𝑖𝑚𝑎𝑡𝑖𝑛𝑔="...">
+```
+```js
+JS:
+splane( [[[𝑥,𝑦,𝑧],...],...], 𝑐𝑙𝑜𝑠𝑒𝑑, 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔 );
+```
+Function. Implements spline surfaces by defining a function that for generating smoothly varying 3D coordinates. The first parameter of `splane` is a matrix of  points. The result is a function *f(u,v)* where *u* &isin; [0,1] and *v* &isin; [0,1]. The result of *f(u,v)* is a point on the surface where (*u,v*)=(0,0) corresponds to one corner of the surface and (*u,v*)=(1,1) corresponds to the opposite corner.
+
+<img src="images/splane.png">
+
+Suica implements cubic splines and the minimal matrix of points is 4&times;4. In HTML a matrix is a string, rows are separated by `|`, points are separated by `;` and coordinates are separated by `,`. In JavaScript a matrix is defined as array of rows, each row is an array of points and a point is an array of 3 coordinates. 
+
+```html
+HTML:
+" x₀₀,y₀₀,z₀₀; x₁₀,y₁₀,z₁₀; ... |
+  x₀₁,y₀₁,z₀₁; x₁₁,y₁₁,z₁₁; ... |
+  ...
+"
+```
+```js
+JS:
+[
+  [[x₀₀,y₀₀,z₀₀], [x₁₀,y₁₀,z₁₀], ...],
+  [[x₀₁,y₀₁,z₀₁], [x₁₁,y₁₁,z₁₁], ...],
+  ...
+]
+```
+
+<img src="images/splane-matrix.png">
+
+The matrix of points define the oveall shape of the surface and its wrinkles. If the matrix is larger than 4&times;4 it is split into overlapping 4&times;4 submatrices and each of them defines a patch of the surface.
+
+[<kbd><img src="../examples/snapshots/splane-surface.jpg" width="300"></kbd>](../examples/splane-surface.html)
+
+
+The splane object creates function *f(u,v)* that can be used to get the coordinates of a point on the splane surface.
+
+[<kbd><img src="../examples/snapshots/splane.jpg" width="300"></kbd>](../examples/splane.html)
+[<kbd><img src="../examples/snapshots/splane-html.jpg" width="300"></kbd>](../examples/splane-html.html)
+
+Splanes have two additional parameters &ndash; `closed` and `interpolating`. They are both array of two elements: the first one is for *u*-direction, the second one &ndash; for *v*-direction.
+
+If an element of `closed` is `true` the splane surface is closed in that direction, i.e. the last point is connected back to the first point. If an element of `closed` is `false`, then the surface is not closed. By default `closed` is `false,false`. When a spline is defined in HTML, `close` can be set either by `close` attribute, or by the opposite alternative `open` attribute. If the value of `close` is omitted, or if it is `yes`, `true` or `1`, the spline is closed. If the value of `open` is omitted, or if it is `yes`, `true` or `1`, the spline is open.
+
+```js
+JS:
+s = splane( [...], [true,false] );
+```
+```html
+HTML:
+<splane id="s" src="..." closed>
+<splane id="s" src="..." closed="true,false">
+<splane id="s" src="..." open="false,true">
+```
+
+[<kbd><img src="../examples/snapshots/splane-closed.jpg" width="300"></kbd>](../examples/splane-closed.html)
 
 ## SCORM
 

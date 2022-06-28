@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+				
+		p = [
+			[[-35,0,-35], [-10,-9,-15], [10, 9,-35], [35,0,-35]],
+			[[-35,20,-10], [-10,9,-10], [10,18,-10], [35,0,-10]],
+			[[-35,20, 10], [-10,9, 10], [10,18, 10], [35,0, 10]],
+			[[-35,0, 35], [-10,-9, 15], [10, 9, 35], [35,0, 35]]
+		];
+
+		s = splane(p);
+		
+		surface( [0,0,0], s );
+		
+		for( var i=0; i<4; i++ )
+		for( var j=0; j<4; j++ )
+		{
+			sphere( p[j][i], 2, 'black' );
+			if( j<3 ) line( p[j][i], p[j+1][i], 'black' );
+			if( i<3 ) line( p[j][i], p[j][i+1], 'black' );
+		}
+	</script>
+</body>
+</html>

@@ -151,6 +151,11 @@ description: All examples, just the examples, only the examples
 [<kbd><img src="../examples/snapshots/spline-function.jpg" width="300"></kbd>](../examples/spline-function.html)
 [<kbd><img src="../examples/snapshots/spline-html.jpg" width="300"></kbd>](../examples/spline-html.html)
 
+[<kbd><img src="../examples/snapshots/splane-surface.jpg" width="300"></kbd>](../examples/splane-surface.html)
+[<kbd><img src="../examples/snapshots/splane.jpg" width="300"></kbd>](../examples/splane.html)
+[<kbd><img src="../examples/snapshots/splane-html.jpg" width="300"></kbd>](../examples/splane-html.html)
+[<kbd><img src="../examples/snapshots/splane-closed.jpg" width="300"></kbd>](../examples/splane-closed.html)
+
 [<kbd><img src="../examples/snapshots/scorm.jpg" width="300"></kbd>](../examples/scorm.html)
 
 

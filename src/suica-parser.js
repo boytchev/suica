@@ -646,6 +646,24 @@ class HTMLParser
 	} // HTMLParser.parseTagSPLINE
 
 
+	// <splane src="x,y,z; x,y,z; | ..." interpolating="...,..." approximating="...,..." open="...,..." closed="...,...">
+	// <spline src="func_name" interpolating="...,..." approximating="...,..." open="...,..." closed="...,...">
+	parseTagSPLANE( suica, elem )
+	{
+		var src = elem.getAttribute('src') || Suica.SPLANE.POINTS,
+			closed = Drawing.parseBoolArray( elem, 'closed', 'open', Suica.SPLANE.CLOSED ),
+			interpolating = Drawing.parseBoolArray( elem, 'interpolating', 'approximating', Suica.SPLANE.INTERPOLANT );
+
+		var p = splane( src, closed, interpolating );
+		
+		suica.parserReadonly.parseAttributes( elem, p, {} );
+
+		//elem.suicaObject = p; <-- now, splane is not an object
+		
+		return p;
+	} // HTMLParser.parseTagSPLANE
+
+
 	
 	// <group id="..." center="..." color="..." size="..." spin="...">
 	parseTagGROUP( suica, elem )

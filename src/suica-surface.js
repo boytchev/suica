@@ -10,7 +10,7 @@
 class Surface extends Mesh
 {
 	static POINTS = []
-	static COUNT = [20,20];
+	static COUNT = [40,40];
 	static COLOR = 'lightsalmon';
 	static SIZE = 1;
 
@@ -40,7 +40,7 @@ class Surface extends Mesh
 			null, // no wireframe
 		);
 		
-		this._plane = plane;
+		this._plane = splane(plane);
 		this.center = Suica.parseCenter( center );
 		this.size = Suica.parseSize( size, Tube.SIZE );
 		this.color = Suica.parseColor( color, Tube.COLOR);
@@ -112,6 +112,7 @@ class Surface extends Mesh
 		
 		var pos = this.threejs.geometry.getAttribute( 'position' ),
 			nor = this.threejs.geometry.getAttribute( 'normal' ),
+			uv = this.threejs.geometry.getAttribute( 'uv' ),
 			tu = new THREE.Vector3,
 			tv = new THREE.Vector3;
 
@@ -131,9 +132,11 @@ class Surface extends Mesh
 			tu.cross( tv ).normalize( );
 			pos.setXYZ( i, p[0],p[1],p[2] );
 			nor.setXYZ( i, -tu.x,-tu.y,-tu.z );
+			uv.setXY( i, u, v );
 		}
 		pos.needsUpdate = true;
 		nor.needsUpdate = true;
+		uv.needsUpdate = true;
 	}
 	
 	

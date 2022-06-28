@@ -630,7 +630,7 @@ const DEBUG_CALLS=false;const DEBUG_EVENTS=false;const TEST_MODE=typeof SUICA_TE
 console.log('::> suica');else
 console.log(`(\\/)
 ( ..)  Suica 2.0
-c(”)(”)  (220613)
+c(”)(”)  (220628)
 `);var suica=null;class Suica
 {static allSuicas=[];static CIRCLECOUNT=50;static OX=new THREE.Vector3(1,0,0);static OY=new THREE.Vector3(0,1,0);static OZ=new THREE.Vector3(0,0,1);static ORIENTATIONS={YXZ:{SCALE:new THREE.Vector3(1,-1,1),LOOKAT:{FROM:[0,0,100],TO:[0,0,0],UP:[1,0,0]},RIGHT:Suica.OY,UP:Suica.OX,FORWARD:Suica.OZ,},ZYX:{SCALE:new THREE.Vector3(1,1,-1),LOOKAT:{FROM:[100,0,0],TO:[0,0,0],UP:[0,1,0]},RIGHT:Suica.OZ,UP:Suica.OY,FORWARD:Suica.OX,},XZY:{SCALE:new THREE.Vector3(-1,1,1),LOOKAT:{FROM:[0,100,0],TO:[0,0,0],UP:[0,0,1]},RIGHT:Suica.OX,UP:Suica.OZ,FORWARD:Suica.OY,},ZXY:{SCALE:new THREE.Vector3(1,1,1),LOOKAT:{FROM:[0,100,0],TO:[0,0,0],UP:[1,0,0]},RIGHT:Suica.OZ,UP:Suica.OX,FORWARD:Suica.OY,},XYZ:{SCALE:new THREE.Vector3(1,1,1),LOOKAT:{FROM:[0,0,100],TO:[0,0,0],UP:[0,1,0]},RIGHT:Suica.OX,UP:Suica.OY,FORWARD:Suica.OZ,},YZX:{SCALE:new THREE.Vector3(1,1,1),LOOKAT:{FROM:[100,0,0],TO:[0,0,0],UP:[0,0,1]},RIGHT:Suica.OY,UP:Suica.OZ,FORWARD:Suica.OX,},}
 static globalHoverObject;static globalHoverEvent;flipNormal(geometry)
@@ -900,26 +900,31 @@ point.push(splineFunction(p0[3],p1[3],p2[3],p3[3]));return point;}}
 window.splane=function(points=Suica.SPLANE.POINTS,closed,interpolant)
 {if(points instanceof Function)
 {return function(u,v)
-{return points(u,v,interpolant);}}
+{return points(u,v,closed,interpolant);}}
+if(typeof points==='string')
+{if(points.indexOf(',')>=0)
+points=Suica.evaluate('[[['+points.replaceAll(';','],[').replaceAll('|',']],[[')+']]]');else
+return function(u,v)
+{return window[points](u,v,interpolant);}}
 if(typeof closed==='undefined')
 closed=Suica.SPLANE.CLOSED;else
 if(!Array.isArray(closed))
 closed=[closed,false];var uClosed=!!closed[0],vClosed=!!closed[1];if(typeof interpolant==='undefined')
 interpolant=Suica.SPLANE.INTERPOLANT;else
 if(!Array.isArray(interpolant))
-interpolant=[interpolant,false];var uInterpolant=!!interpolant[0],vInterpolant=!!interpolant[1];if(!points.length)points=Suica.SPLANE.POINTS;const NU=points[0].length;const NV=points.length;console.log('uClosed',uClosed);console.log('vClosed',vClosed);return function(u,v)
-{var B=[t=>(1-3*t+3*t*t-t*t*t)/6,t=>(4-6*t*t+3*t*t*t)/6,t=>(1+3*t+3*t*t-3*t*t*t)/6,t=>(t*t*t)/6,];var uu,vv;if(uClosed||uInterpolant)
-uu=(NU+1)*u-2;else
-uu=(NU-3)*u;if(vClosed||vInterpolant)
-vv=(NV+1)*v-2;else
-vv=(NV-3)*v;var uPoint=Math.floor(uu),vPoint=Math.floor(vv);u=uu-uPoint;v=vv-vPoint;var x=0,y=0,z=0;for(var iv=0;iv<4;iv++)
+interpolant=[interpolant,false];var uInterpolant=!!interpolant[0],vInterpolant=!!interpolant[1];if(!points.length)points=Suica.SPLANE.POINTS;const NU=points[0].length;const NV=points.length;return function(u,v)
+{var B=[t=>(1-3*t+3*t*t-t*t*t)/6,t=>(4-6*t*t+3*t*t*t)/6,t=>(1+3*t+3*t*t-3*t*t*t)/6,t=>(t*t*t)/6,];if(uClosed||uInterpolant)
+u=(NU+1)*u-2;else
+u=(NU-3)*u;if(vClosed||vInterpolant)
+v=(NV+1)*v-2;else
+v=(NV-3)*v;var uPoint=Math.floor(u),vPoint=Math.floor(v);u=u-uPoint;v=v-vPoint;var point=[0,0,0];for(var iv=0;iv<4;iv++)
 for(var iu=0;iu<4;iu++)
 {var uIdx,vIdx;if(uClosed)
 uIdx=(uPoint+iu+NU)%NU;else
 uIdx=THREE.MathUtils.clamp(uPoint+iu,0,NU-1);if(vClosed)
 vIdx=(vPoint+iv+NV)%NV;else
-vIdx=THREE.MathUtils.clamp(vPoint+iv,0,NV-1);var p=points[vIdx][uIdx];x+=B[iu](u)*B[iv](v)*p[0];y+=B[iu](u)*B[iv](v)*p[1];z+=B[iu](u)*B[iv](v)*p[2];}
-var point=[x,y,z];return point;}}
+vIdx=THREE.MathUtils.clamp(vPoint+iv,0,NV-1);var weight=B[iu](u)*B[iv](v);point[0]+=weight*points[vIdx][uIdx][0];point[1]+=weight*points[vIdx][uIdx][1];point[2]+=weight*points[vIdx][uIdx][2];}
+return point;}}
 new MutationObserver(function(mutations)
 {for(var parentElem of mutations)
 {for(var childElem of parentElem.addedNodes)
@@ -1055,6 +1060,8 @@ parseTagCONSTRUCT(suica,elem)
 {var p=suica.construct(elem.getAttribute('src'),elem.getAttribute('size'),elem.getAttribute('color'));suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true,center:true});elem.suicaObject=p;return p;}
 parseTagSPLINE(suica,elem)
 {var src=elem.getAttribute('src')||Suica.SPLINE.POINTS,closed=Drawing.parseBool(elem,'closed','open',Suica.SPLINE.CLOSED),interpolating=Drawing.parseBool(elem,'interpolating','approximating',Suica.SPLINE.INTERPOLANT);var p=spline(src,closed,interpolating);suica.parserReadonly.parseAttributes(elem,p,{});return p;}
+parseTagSPLANE(suica,elem)
+{var src=elem.getAttribute('src')||Suica.SPLANE.POINTS,closed=Drawing.parseBoolArray(elem,'closed','open',Suica.SPLANE.CLOSED),interpolating=Drawing.parseBoolArray(elem,'interpolating','approximating',Suica.SPLANE.INTERPOLANT);var p=splane(src,closed,interpolating);suica.parserReadonly.parseAttributes(elem,p,{});return p;}
 parseTagGROUP(suica,elem)
 {var p=suica.group();if(elem.hasAttribute('center'))p.center=elem.getAttribute('center');if(elem.hasAttribute('size'))p.size=elem.getAttribute('size');if(elem.hasAttribute('spin'))p.spin=elem.getAttribute('spin');suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true});elem.suicaObject=p;return p;}
 parseTagCONVEX(suica,elem)
@@ -1108,8 +1115,16 @@ xy[0]=Drawing.parseN(elem,xName,0);if(elem.hasAttribute(yName))
 xy[1]=Drawing.parseN(elem,yName,0);return xy;}
 static parseBool(elem,trueName,falseName,defaultValue)
 {const TRUTH=[null,'','true','yes','TRUE','True','YES','Yes','1'];if(trueName&&elem.hasAttribute(trueName))
-return TRUTH.indexOf(elem.getAttribute(trueName))>-1;if(falseName&&elem.hasAttribute(falseName))
-return TRUTH.indexOf(elem.getAttribute(falseName))==-1;return defaultValue;}
+return TRUTH.indexOf(elem.getAttribute(trueName).trim())>-1;if(falseName&&elem.hasAttribute(falseName))
+return TRUTH.indexOf(elem.getAttribute(falseName).trim())==-1;return defaultValue;}
+static parseBoolArray(elem,trueName,falseName,defaultValue)
+{const TRUTH=[null,'','true','yes','TRUE','True','YES','Yes','1'];if(trueName&&elem.hasAttribute(trueName))
+{var array=elem.getAttribute(trueName).split(',');for(var i=0;i<array.length;i++)
+array[i]=TRUTH.indexOf(array[i].trim())>-1;return array;}
+if(falseName&&elem.hasAttribute(falseName))
+{var array=elem.getAttribute(falseName).split(',');for(var i=0;i<array.length;i++)
+array[i]=TRUTH.indexOf(array[i].trim())==-1;return array;}
+return defaultValue;}
 managePath()
 {if(this.needsNewPath)
 {this.context.beginPath();this.needsNewPath=false;}}
@@ -1481,12 +1496,12 @@ get clone()
 ﻿
 class Surface extends Mesh
 {static POINTS=[]
-static COUNT=[20,20];static COLOR='lightsalmon';static SIZE=1;constructor(suica,center,plane,count,size,color)
+static COUNT=[40,40];static COLOR='lightsalmon';static SIZE=1;constructor(suica,center,plane,count,size,color)
 {suica.parser?.parseTags();suica.debugCall('surface',center,plane?.name||plane,count,size,color);var uSegments,vSegments;count=Suica.parseSize(count,Surface.COUNT);if(Array.isArray(count))
 {uSegments=Suica.parseSize(count[0],Surface.COUNT[0]);vSegments=Suica.parseSize(count[1],Surface.COUNT[1]);}
 else
 {uSegments=count;vSegments=Surface.COUNT[1];}
-var geometry=new THREE.PlaneGeometry(1,1,uSegments,vSegments);super(suica,new THREE.Mesh(geometry,Mesh.solidMaterial.clone()),null,);this._plane=plane;this.center=Suica.parseCenter(center);this.size=Suica.parseSize(size,Tube.SIZE);this.color=Suica.parseColor(color,Tube.COLOR);this._count=count;this.uSegments=uSegments;this.vSegments=vSegments;this.updateGeometry();}
+var geometry=new THREE.PlaneGeometry(1,1,uSegments,vSegments);super(suica,new THREE.Mesh(geometry,Mesh.solidMaterial.clone()),null,);this._plane=splane(plane);this.center=Suica.parseCenter(center);this.size=Suica.parseSize(size,Tube.SIZE);this.color=Suica.parseColor(color,Tube.COLOR);this._count=count;this.uSegments=uSegments;this.vSegments=vSegments;this.updateGeometry();}
 get count()
 {return this._count;}
 set count(count)
@@ -1502,9 +1517,9 @@ set plane(plane)
 get clone()
 {var object=new Tube(this.suica,this.center,this.curve,this.radius,this.size,this.color);object.spin=this.spin;object.image=this.image;Suica.cloneEvents(object,this);return object;}
 updateGeometry()
-{const EPS=0.00001;var pos=this.threejs.geometry.getAttribute('position'),nor=this.threejs.geometry.getAttribute('normal'),tu=new THREE.Vector3,tv=new THREE.Vector3;for(var i=0;i<pos.count;i++)
-{var u=(i%(this.uSegments+1))/(this.uSegments);var v=(Math.floor(i/(this.uSegments+1)))/(this.vSegments);var p=this._plane(u,v);var t=this._plane(u+EPS,v);tu.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);t=this._plane(u,v+EPS);tv.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);tu.cross(tv).normalize();pos.setXYZ(i,p[0],p[1],p[2]);nor.setXYZ(i,-tu.x,-tu.y,-tu.z);}
-pos.needsUpdate=true;nor.needsUpdate=true;}}
+{const EPS=0.00001;var pos=this.threejs.geometry.getAttribute('position'),nor=this.threejs.geometry.getAttribute('normal'),uv=this.threejs.geometry.getAttribute('uv'),tu=new THREE.Vector3,tv=new THREE.Vector3;for(var i=0;i<pos.count;i++)
+{var u=(i%(this.uSegments+1))/(this.uSegments);var v=(Math.floor(i/(this.uSegments+1)))/(this.vSegments);var p=this._plane(u,v);var t=this._plane(u+EPS,v);tu.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);t=this._plane(u,v+EPS);tv.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);tu.cross(tv).normalize();pos.setXYZ(i,p[0],p[1],p[2]);nor.setXYZ(i,-tu.x,-tu.y,-tu.z);uv.setXY(i,u,v);}
+pos.needsUpdate=true;nor.needsUpdate=true;uv.needsUpdate=true;}}
 ﻿
 class Convex extends Mesh
 {static POINTS=[[1,1,1],[1,1,-1],[1,-1,1],[1,-1,-1],[-1,1,1],[-1,1,-1],[-1,-1,1],[-1,-1,-1]];static SIZE=[1,1,1];static COLOR='lightsalmon';constructor(suica,points,size,color)
