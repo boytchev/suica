@@ -78,13 +78,13 @@ class Surface extends Mesh
 	}
 	
 	
-	get plane( )
+	get curve( )
 	{
-		return this._curve;
+		return this._plane;
 	}
 	
 
-	set plane( plane )
+	set curve( plane )
 	{
 		this._plane = plane;
 
@@ -94,7 +94,7 @@ class Surface extends Mesh
 	
 	get clone( )
 	{
-		var object = new Tube( this.suica, this.center, this.curve, this.radius, this.size, this.color );
+		var object = new Surface( this.suica, this.center, this._plane, this.count, this.size, this.color );
 		
 		object.spin = this.spin;
 		object.image = this.image;
@@ -103,7 +103,7 @@ class Surface extends Mesh
 			
 		return object;
 		
-	} // Tube.clone
+	} // Surface.clone
 	
 	
 	updateGeometry( )

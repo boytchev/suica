@@ -592,17 +592,30 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = surface( [𝑥,𝑦,𝑧], 𝑠𝑝𝑙𝑎𝑛𝑒, [𝑢-𝑐𝑜𝑢𝑛𝑡,𝑣-𝑐𝑜𝑢𝑛𝑡], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a thin curved surface. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), `splane`, `count`, [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<surface>` tag.
+Object. Represents a thin curved surface. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), `curve`, `count`, [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<surface>` tag.
 
 Parameter `splain` is a [`splane`](suica.md#splane) function but can also be a matrix of points or user-defined function *f(u,v)* on which splane is automatically constructed:
 
 ```html
 HTML:
-<surface splane="knot" count="300">
+<surface splane="
+   -35,0,-35; -10,-20,-35; 10, 20,-35; 35,0,-35 |
+   -35,0,-10; -10, 20,-10; 10,-20,-10; 35,0,-10 |
+   -35,0, 10; -10, 20, 10; 10,-20, 10; 35,0, 10 |
+   -35,0, 35; -10,-20, 35; 10, 20, 35; 35,0, 35 ">
 ```
 ```js
 JS:
-tube( [0,0,0], [[50,0,0], [-50,0,0]], 5, 2 );
+surface( [0,-10,0],
+   [
+      [[-35,0,-35], [-5,0,-35], [5,0,-35], [35,0,-35]],
+      [[-35,0,-5], [-5,50,-5], [5,50,-5], [35,0,-5]],
+      [[-35,0, 5], [-5,50, 5], [5,50, 5], [35,0, 5]],
+      [[-35,0, 35], [-5,0, 35], [5,0, 35], [35,0, 35]]
+   ] );
+```
+
+[<kbd><img src="../examples/snapshots/surface.jpg" width="300"></kbd>](../examples/surface.html)
 
 
 #### convex

@@ -1050,6 +1050,8 @@ parseTagPYRAMID(suica,elem)
 {var p=suica.pyramid(elem.getAttribute('count'),elem.getAttribute('center'),elem.getAttribute('size'),elem.getAttribute('color'));suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,wireframe:true,spin:true});elem.suicaObject=p;return p;}
 parseTagTUBE(suica,elem)
 {var p=suica.tube(elem.getAttribute('center'),elem.getAttribute('curve'),elem.getAttribute('radius'),elem.getAttribute('count'),elem.getAttribute('size'),elem.getAttribute('color'));suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true});elem.suicaObject=p;return p;}
+parseTagSURFACE(suica,elem)
+{var p=suica.surface(elem.getAttribute('center'),elem.getAttribute('curve'),elem.getAttribute('count'),elem.getAttribute('size'),elem.getAttribute('color'));suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true});elem.suicaObject=p;return p;}
 parseTagMODEL(suica,elem)
 {var p=suica.model(elem.getAttribute('src'),elem.getAttribute('center'),elem.getAttribute('size'));suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true});elem.suicaObject=p;return p;}
 parseTagTEXT3D(suica,elem)
@@ -1119,10 +1121,10 @@ return TRUTH.indexOf(elem.getAttribute(trueName).trim())>-1;if(falseName&&elem.h
 return TRUTH.indexOf(elem.getAttribute(falseName).trim())==-1;return defaultValue;}
 static parseBoolArray(elem,trueName,falseName,defaultValue)
 {const TRUTH=[null,'','true','yes','TRUE','True','YES','Yes','1'];if(trueName&&elem.hasAttribute(trueName))
-{var array=elem.getAttribute(trueName).split(',');for(var i=0;i<array.length;i++)
+{let array=elem.getAttribute(trueName).split(',');for(var i=0;i<array.length;i++)
 array[i]=TRUTH.indexOf(array[i].trim())>-1;return array;}
 if(falseName&&elem.hasAttribute(falseName))
-{var array=elem.getAttribute(falseName).split(',');for(var i=0;i<array.length;i++)
+{let array=elem.getAttribute(falseName).split(',');for(var i=0;i<array.length;i++)
 array[i]=TRUTH.indexOf(array[i].trim())==-1;return array;}
 return defaultValue;}
 managePath()
@@ -1259,7 +1261,7 @@ get wireframe()
 {return this.isWireframe;}
 set wireframe(wireframe)
 {if(!this.frameMesh)
-throw'error: wireframe property not available';this.isWireframe=wireframe;var oldMesh=this.threejs,newMesh=(wireframe===true)||(['','true','yes','1'].indexOf(String(wireframe).toLowerCase())>=0)?this.frameMesh:this.solidMesh;newMesh.position.copy(oldMesh.position);newMesh.scale.copy(oldMesh.scale);newMesh.material.color.copy(oldMesh.material.color);if(oldMesh.material.map)
+throw'error: wireframe property not available';this.isWireframe=wireframe;var oldMesh=this.threejs,newMesh=(wireframe===true)||(['','true','yes','1'].indexOf(String(wireframe).toLowerCase())>=0)?this.frameMesh:this.solidMesh;newMesh.position.copy(oldMesh.position);newMesh.scale.copy(oldMesh.scale);newMesh.rotation.copy(oldMesh.rotation);newMesh.material.color.copy(oldMesh.material.color);if(oldMesh.material.map)
 {newMesh.material.map=oldMesh.material.map;newMesh.material.transparent=oldMesh.material.transparent;newMesh.material.needsUpdate=true;}
 this.threejs=newMesh;this.threejs.suicaObject=this;this.suica.scene.remove(oldMesh);this.suica.scene.add(newMesh);}
 style(properties)
@@ -1510,12 +1512,12 @@ set count(count)
 else
 {this.uSegments=count;this.vSegments=Surface.COUNT[1];}
 this._count=count;this.threejs.geometry.dispose();this.threejs.geometry=new THREE.PlaneGeometry(1,1,this.uSegments,this.vSegments);this.updateGeometry();}
-get plane()
-{return this._curve;}
-set plane(plane)
+get curve()
+{return this._plane;}
+set curve(plane)
 {this._plane=plane;this.updateGeometry();}
 get clone()
-{var object=new Tube(this.suica,this.center,this.curve,this.radius,this.size,this.color);object.spin=this.spin;object.image=this.image;Suica.cloneEvents(object,this);return object;}
+{var object=new Surface(this.suica,this.center,this._plane,this.count,this.size,this.color);object.spin=this.spin;object.image=this.image;Suica.cloneEvents(object,this);return object;}
 updateGeometry()
 {const EPS=0.00001;var pos=this.threejs.geometry.getAttribute('position'),nor=this.threejs.geometry.getAttribute('normal'),uv=this.threejs.geometry.getAttribute('uv'),tu=new THREE.Vector3,tv=new THREE.Vector3;for(var i=0;i<pos.count;i++)
 {var u=(i%(this.uSegments+1))/(this.uSegments);var v=(Math.floor(i/(this.uSegments+1)))/(this.vSegments);var p=this._plane(u,v);var t=this._plane(u+EPS,v);tu.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);t=this._plane(u,v+EPS);tv.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);tu.cross(tv).normalize();pos.setXYZ(i,p[0],p[1],p[2]);nor.setXYZ(i,-tu.x,-tu.y,-tu.z);uv.setXY(i,u,v);}

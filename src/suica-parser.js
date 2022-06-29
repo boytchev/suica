@@ -552,12 +552,12 @@ class HTMLParser
 	} // HTMLParser.parseTagTUBE
 
 
-	// <surface id="..." center="..." splane="..." count="..." color="..." size="...">
+	// <surface id="..." center="..." curve="..." count="..." color="..." size="...">
 	parseTagSURFACE( suica, elem )
 	{
 		var p = suica.surface(
 			elem.getAttribute('center'),
-			elem.getAttribute('splane'),
+			elem.getAttribute('curve'),
 			elem.getAttribute('count'),
 			elem.getAttribute('size'),
 			elem.getAttribute('color')
