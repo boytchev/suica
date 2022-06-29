@@ -552,6 +552,26 @@ class HTMLParser
 	} // HTMLParser.parseTagTUBE
 
 
+	// <surface id="..." center="..." splane="..." count="..." color="..." size="...">
+	parseTagSURFACE( suica, elem )
+	{
+		var p = suica.surface(
+			elem.getAttribute('center'),
+			elem.getAttribute('splane'),
+			elem.getAttribute('count'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
+		);
+		
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+
+		elem.suicaObject = p;
+		
+		return p;
+		
+	} // HTMLParser.parseTagSURFACE
+
+
 	// <model id="..." src="..." center="..." size="...">
 	parseTagMODEL( suica, elem )
 	{

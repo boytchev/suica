@@ -21,7 +21,7 @@
 	<h1>Splane patches</h1>
 	<p>Stitching splane patches into a single surface.</p>
 
-	<suica>
+	<suica fullwindow>
 		<demo distance="70" altitude="30" speed="0.5">
 	</suica>
 
@@ -51,6 +51,9 @@
 			surface( [-25,0,0], sp, [10,10], 1, random(['linen','peachpuff','lightsalmon','gray','white','black']) );
 		}
 //		its.spinV = 90;
+
+		capture( 'splane-patches.mp4', 60, 30, 'webm', 30 );
+
 
 	</script>
 </body>

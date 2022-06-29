@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Surface</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Surface</h1>
+	<p>Defining a smooth surface based on a splane.</p>
+
+	<suica>
+		<demo>
+		<square id="a" size="70" color="black" wireframe spinV="90">
+		<surface src="
+			-35,0,-35; -10,-20,-35; 10, 20,-35; 35,0,-35 |
+			-35,0,-10; -10, 20,-10; 10,-20,-10; 35,0,-10 |
+			-35,0, 10; -10, 20, 10; 10,-20, 10; 35,0, 10 |
+			-35,0, 35; -10,-20, 35; 10, 20, 35; 35,0, 35 ">
+	</suica>
+	
+	<script>
+		console.log(a);
+	</script>
+</body>
+</html>

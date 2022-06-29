@@ -446,6 +446,7 @@ class Mesh
 		// copy properties
 		newMesh.position.copy( oldMesh.position );
 		newMesh.scale.copy( oldMesh.scale );
+		newMesh.rotation.copy( oldMesh.rotation );
 		newMesh.material.color.copy( oldMesh.material.color );
 		
 		if( oldMesh.material.map )
@@ -487,7 +488,7 @@ class Mesh
 			//case Suica.ORIENTATIONS.ZXY:
 			case Suica.ORIENTATIONS.ZYX: flip = -1; break;
 		};
-		
+	
 		this.threejs.rotation.set( 0, 0, 0 );
 		if( Array.isArray(spin) )
 		{
