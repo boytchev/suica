@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="modify">
+		<demo>
+		<surface id="s">
+	</suica>
+	
+	<script>
+		function modify( time )
+		{
+			var points = [ [], [], [], [], [] ];
+			for( var i=-2; i<=2; i++ )
+				for( var j=-2; j<=2; j++ )
+					points[j+2][i+2] = [
+						20*i + 10*Math.cos(time-j),
+						35*Math.sin(4*time+i+2*Math.sin(1.2*time+j))/(1+Math.abs(i)+Math.abs(j)),
+						20*j + 10*Math.cos(1.6*time+i)
+					];
+			s.curve = points;
+		}
+	</script>
+</body>
+</html>

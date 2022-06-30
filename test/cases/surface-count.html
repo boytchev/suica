@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<surface center="20,0,20" size="5" count="40">
+		<surface center="-20,0,20" size="5" count="40,7">
+		<surface center="20,0,-20" size="5" count="7,40">
+		<surface center="-20,0,-20" size="5" count="7">
+	</suica>
+	
+	<script>
+		for( var obj of allObjects() )
+			obj.threejs.material.wireframe = true;
+	</script>
+</body>
+</html>

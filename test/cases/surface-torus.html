@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="spin">
+		<demo distance="50">
+	</suica>
+
+	<script>
+		p = [ [], [], [], [], [] ];
+		
+		for( var i=0; i<=350; i+=15 )
+		{
+			var a = radians(i);
+			
+			p[0].push( [5*Math.cos(a), -10, 5*Math.sin(a)] );
+			p[1].push( [10*Math.cos(a), random(-5,5), 10*Math.sin(a)] );
+			p[2].push( [15*Math.cos(a), random(-5,5), 15*Math.sin(a)] );
+			p[3].push( [20*Math.cos(a), random(-5,5), 20*Math.sin(a)] );
+			p[4].push( [25*Math.cos(a), -10, 25*Math.sin(a)] );
+		}
+		surface( [0,5,0], splane( p, [true, true] ), [120,40] );
+		
+		function spin( time )
+		{
+			its.spinV = 60*Math.sin(2*time);
+		}
+		
+	</script>
+</body>
+</html>
