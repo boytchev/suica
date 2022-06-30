@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Surface count</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Surface count</h1>
+	<p>Splitting a surface into tiles.</p>
+
+	<suica>
+		<demo>
+		<surface center="20,0,20" size="5" count="40">
+		<surface center="-20,0,20" size="5" count="40,7">
+		<surface center="20,0,-20" size="5" count="7,40">
+		<surface center="-20,0,-20" size="5" count="7">
+	</suica>
+	
+	<script>
+		for( var obj of allObjects() )
+			obj.threejs.material.wireframe = true;
+	</script>
+</body>
+</html>

@@ -898,7 +898,7 @@ function bSpline(p0,p1,p2,p3)
 var splineFunction=interpolant?catmullRom:bSpline;var point=[splineFunction(p0[0],p1[0],p2[0],p3[0]),splineFunction(p0[1],p1[1],p2[1],p3[1]),splineFunction(p0[2],p1[2],p2[2],p3[2])];if(typeof p0[3]!=='undefined')
 point.push(splineFunction(p0[3],p1[3],p2[3],p3[3]));return point;}}
 window.splane=function(points=Suica.SPLANE.POINTS,closed,interpolant)
-{if(points instanceof Function)
+{if(points==null)points=Suica.SPLANE.POINTS;if(points instanceof Function)
 {return function(u,v)
 {return points(u,v,closed,interpolant);}}
 if(typeof points==='string')
@@ -1502,7 +1502,7 @@ static COUNT=[40,40];static COLOR='lightsalmon';static SIZE=1;constructor(suica,
 {suica.parser?.parseTags();suica.debugCall('surface',center,plane?.name||plane,count,size,color);var uSegments,vSegments;count=Suica.parseSize(count,Surface.COUNT);if(Array.isArray(count))
 {uSegments=Suica.parseSize(count[0],Surface.COUNT[0]);vSegments=Suica.parseSize(count[1],Surface.COUNT[1]);}
 else
-{uSegments=count;vSegments=Surface.COUNT[1];}
+{uSegments=count;vSegments=count;}
 var geometry=new THREE.PlaneGeometry(1,1,uSegments,vSegments);super(suica,new THREE.Mesh(geometry,Mesh.solidMaterial.clone()),null,);this._plane=splane(plane);this.center=Suica.parseCenter(center);this.size=Suica.parseSize(size,Tube.SIZE);this.color=Suica.parseColor(color,Tube.COLOR);this._count=count;this.uSegments=uSegments;this.vSegments=vSegments;this.updateGeometry();}
 get count()
 {return this._count;}
@@ -1515,12 +1515,12 @@ this._count=count;this.threejs.geometry.dispose();this.threejs.geometry=new THRE
 get curve()
 {return this._plane;}
 set curve(plane)
-{this._plane=plane;this.updateGeometry();}
+{this._plane=splane(plane);this.updateGeometry();}
 get clone()
 {var object=new Surface(this.suica,this.center,this._plane,this.count,this.size,this.color);object.spin=this.spin;object.image=this.image;Suica.cloneEvents(object,this);return object;}
 updateGeometry()
 {const EPS=0.00001;var pos=this.threejs.geometry.getAttribute('position'),nor=this.threejs.geometry.getAttribute('normal'),uv=this.threejs.geometry.getAttribute('uv'),tu=new THREE.Vector3,tv=new THREE.Vector3;for(var i=0;i<pos.count;i++)
-{var u=(i%(this.uSegments+1))/(this.uSegments);var v=(Math.floor(i/(this.uSegments+1)))/(this.vSegments);var p=this._plane(u,v);var t=this._plane(u+EPS,v);tu.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);t=this._plane(u,v+EPS);tv.set(t[0]-p[0],t[1]-p[1],t[2]-p[2]);tu.cross(tv).normalize();pos.setXYZ(i,p[0],p[1],p[2]);nor.setXYZ(i,-tu.x,-tu.y,-tu.z);uv.setXY(i,u,v);}
+{var u=(i%(this.uSegments+1))/(this.uSegments);var v=(Math.floor(i/(this.uSegments+1)))/(this.vSegments);var p=this._plane(u,v);var t1=this._plane(u+EPS,v);var t2=this._plane(u-EPS,v);tu.set(t1[0]-t2[0],t1[1]-t2[1],t1[2]-t2[2]);t1=this._plane(u,v+EPS);t2=this._plane(u,v-EPS);tv.set(t1[0]-t2[0],t1[1]-t2[1],t1[2]-t2[2]);tu.cross(tv).normalize();pos.setXYZ(i,p[0],p[1],p[2]);nor.setXYZ(i,-tu.x,-tu.y,-tu.z);uv.setXY(i,u,v);}
 pos.needsUpdate=true;nor.needsUpdate=true;uv.needsUpdate=true;}}
 ﻿
 class Convex extends Mesh

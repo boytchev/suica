@@ -30,7 +30,7 @@ class Surface extends Mesh
 		else
 		{
 			uSegments = count;
-			vSegments = Surface.COUNT[1];
+			vSegments = count;
 		}
 
 		var geometry = new THREE.PlaneGeometry( 1, 1, uSegments, vSegments );
@@ -86,7 +86,7 @@ class Surface extends Mesh
 
 	set curve( plane )
 	{
-		this._plane = plane;
+		this._plane = splane(plane);
 
 		this.updateGeometry();
 	}
@@ -123,11 +123,13 @@ class Surface extends Mesh
 			
 			var p = this._plane( u, v );
 			
-			var t = this._plane( u+EPS, v );
-			tu.set( t[0]-p[0], t[1]-p[1], t[2]-p[2] );
+			var t1 = this._plane( u+EPS, v );
+			var t2 = this._plane( u-EPS, v );
+			tu.set( t1[0]-t2[0], t1[1]-t2[1], t1[2]-t2[2] );
 			
-			t = this._plane( u, v+EPS );
-			tv.set( t[0]-p[0], t[1]-p[1], t[2]-p[2] );
+			t1 = this._plane( u, v+EPS );
+			t2 = this._plane( u, v-EPS );
+			tv.set( t1[0]-t2[0], t1[1]-t2[1], t1[2]-t2[2] );
 
 			tu.cross( tv ).normalize( );
 			pos.setXYZ( i, p[0],p[1],p[2] );

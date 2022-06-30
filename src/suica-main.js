@@ -1401,6 +1401,8 @@ window.spline = function( points=Suica.SPLINE.POINTS, closed, interpolant )
 
 window.splane = function( points=Suica.SPLANE.POINTS, closed, interpolant )
 {
+	if( points==null ) points = Suica.SPLANE.POINTS;
+	
 	if( points instanceof Function )
 	{
 		return function( u, v )

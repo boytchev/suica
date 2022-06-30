@@ -116,6 +116,12 @@ description: All examples, just the examples, only the examples
 [<kbd><img src="../examples/snapshots/tube-dynamic-spline-radius.jpg" width="300"></kbd>](../examples/tube-dynamic-spline-radius.html)
 [<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="300"></kbd>](../examples/tube-dynamic.html)
 
+[<kbd><img src="../examples/snapshots/surface.jpg" width="300"></kbd>](../examples/surface.html)
+[<kbd><img src="../examples/snapshots/surface-count.jpg" width="300"></kbd>](../examples/surface-count.html)
+[<kbd><img src="../examples/snapshots/surface-dynamic.jpg" width="300"></kbd>](../examples/surface-dynamic.html)
+[<kbd><img src="../examples/snapshots/surface-patches.jpg" width="300"></kbd>](../examples/surface-patches.html)
+[<kbd><img src="../examples/snapshots/surface-torus.jpg" width="300"></kbd>](../examples/surface-torus.html)
+
 
 [<kbd><img src="../examples/snapshots/convex.jpg" width="300"></kbd>](../examples/convex.html)
 [<kbd><img src="../examples/snapshots/convex-truncated-block.jpg" width="300"></kbd>](../examples/convex-truncated-block.html)

@@ -585,20 +585,20 @@ suica.ontime = function( t )
 #### surface
 ```html
 HTML:
-<surface id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" splain="𝑠𝑝𝑙𝑎𝑛𝑒" count="𝑢-𝑐𝑜𝑢𝑛𝑡,𝑣-𝑐𝑜𝑢𝑛𝑡"
+<surface id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" curve="𝑐𝑢𝑟𝑣𝑒" count="𝑢-𝑐𝑜𝑢𝑛𝑡,𝑣-𝑐𝑜𝑢𝑛𝑡"
       size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = surface( [𝑥,𝑦,𝑧], 𝑠𝑝𝑙𝑎𝑛𝑒, [𝑢-𝑐𝑜𝑢𝑛𝑡,𝑣-𝑐𝑜𝑢𝑛𝑡], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+𝑜𝑏𝑗𝑒𝑐𝑡 = surface( [𝑥,𝑦,𝑧], 𝑐𝑢𝑟𝑣𝑒, [𝑢-𝑐𝑜𝑢𝑛𝑡,𝑣-𝑐𝑜𝑢𝑛𝑡], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
 Object. Represents a thin curved surface. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), `curve`, `count`, [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<surface>` tag.
 
-Parameter `splain` is a [`splane`](suica.md#splane) function but can also be a matrix of points or user-defined function *f(u,v)* on which splane is automatically constructed:
+Parameter `curve` is defines a curved surface and is a [`splane`](suica.md#splane) function but can also be a matrix of points or user-defined function *f(u,v)* on which splane is automatically constructed:
 
 ```html
 HTML:
-<surface splane="
+<surface curve="
    -35,0,-35; -10,-20,-35; 10, 20,-35; 35,0,-35 |
    -35,0,-10; -10, 20,-10; 10,-20,-10; 35,0,-10 |
    -35,0, 10; -10, 20, 10; 10,-20, 10; 35,0, 10 |
@@ -616,6 +616,30 @@ surface( [0,-10,0],
 ```
 
 [<kbd><img src="../examples/snapshots/surface.jpg" width="300"></kbd>](../examples/surface.html)
+
+Parameter `count` defines the granularity of the surface. It is either a number for the number of segments along both directions or an array of two numbers for *u=*segments and *v-*segments. Higher number of segments results in a smoother surface, but it takes more memory space and processing time. By default, the surface is `count` is 40.
+
+[<kbd><img src="../examples/snapshots/surface-count.jpg" width="300"></kbd>](../examples/surface-count.html)
+
+Surfaces support dynamic change of their curve. This is performance intensive operation, as it recalculates all vertices of the surface. Recalculation is done whenever the properties `curve` is changed.
+
+```js
+JS:
+s = surface( [0,0,0], points, 1 );
+		
+suica.ontime = function( t )
+{
+   s.points = [...];
+}
+```
+
+[<kbd><img src="../examples/snapshots/surface-dynamic.jpg" width="300"></kbd>](../examples/surface-dynamic.html)
+
+A surface reuses properties of approximating splanes &ndash; like stitching surfaces together or defininf surfaces that are closed in *u-* or *v-*direction.
+
+[<kbd><img src="../examples/snapshots/surface-patches.jpg" width="300"></kbd>](../examples/surface-patches.html)
+[<kbd><img src="../examples/snapshots/surface-torus.jpg" width="300"></kbd>](../examples/surface-torus.html)
+
 
 
 #### convex
