@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo speed="0.5">
+		
+		<cube id="a">
+	</suica>
+	
+	<script>
+		a.threejs.geometry = new THREE.IcosahedronGeometry( 1, 1 );
+		a.threejs.material = new THREE.MeshStandardMaterial( {metalness:0.4, roughness:0.5, flatShading:true} );
+		
+		var pos = a.threejs.geometry.getAttribute( 'position' );
+
+		for( var i=0; i<pos.count; i++ )
+		{
+			sphere( [30*pos.getX(i),30*pos.getY(i),30*pos.getZ(i)], 3, random(['linen','peachpuff','lightsalmon','gray','white','black']) );
+		}
+	</script>
+</body>
+</html>

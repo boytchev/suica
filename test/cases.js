@@ -145,6 +145,8 @@ var cases = [
 'text3d-dynamic', 
 'text3d-mandala', 
 'text3d', 
+'threejs-geometry', 
+'threejs-material', 
 'tube-dynamic-radius', 
 'tube-dynamic-spline-radius', 
 'tube-dynamic', 
