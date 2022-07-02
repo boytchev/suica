@@ -19,6 +19,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Color](#color): [`color`](#color)</small>
 	- <small>[Texture](#texture): [`image`](#image), [`images`](#images)</small>
 	- <small>[Wire-frame](#wire-frame): [`wireframe`](#wireframe-1)</small>
+- [Three.js properties](#threejs-properties): <small>[`threejs`](#threejs)</small>
 
 
 
@@ -512,3 +513,39 @@ JS:
 a = cube( [0,0,0], 30);
 a.wireframe = true;
 ```
+
+
+
+
+
+
+# Three.js properties
+
+Suica is based on Three.js and Three.js functionality is available alongside Suica. Every visible Suica object has a property `threejs` that is the Three.js object created by Suica.
+
+#### threejs
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.threejs
+```
+Property. Provides access to underlying Three.js object and its properties. This access allows the direct modification or setting of materials and geometries using Three.js objects.
+
+```js
+JS:
+a.threejs.geometry = new THREE.IcosahedronGeometry(1);
+a.threejs.material.color = 'linen';
+a.threejs.material = new THREE.MeshPhongMaterial({color:'linen',shininess:100});
+```
+
+[<kbd><img src="../examples/snapshots/threejs-geometry.jpg" width="300"></kbd>](../examples/threejs-geometry.html)
+[<kbd><img src="../examples/snapshots/threejs-material.jpg" width="300"></kbd>](../examples/threejs-material.html)
+
+When materials and properties are set via `threejs`, they may interfere with Suica properties.
+
+| Three.js property | Interfering Suica properties |
+|---|---|
+| `threejs.position` | [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z) |
+| `threejs.rotation` | [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint) |
+| `threejs.scale` | [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth) |
+| `threejs.material.color` | [`color`](#color) |
+| `threejs.material.map` | [`image`](#image), [`images`](#images) |
