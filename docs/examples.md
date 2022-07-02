@@ -172,6 +172,9 @@ description: All examples, just the examples, only the examples
 
 # [Properties](properties.md)
 
+## Setting properties(properties.md#setting-properties)
+[<kbd><img src="../examples/snapshots/its.jpg" width="300"></kbd>](../examples/its.html)
+
 ## [Multiple properties](properties.md#multiple-properties)
 
 [<kbd><img src="../examples/snapshots/style.jpg" width="300"></kbd>](../examples/style.html)
@@ -191,6 +194,9 @@ description: All examples, just the examples, only the examples
 [<kbd><img src="../examples/snapshots/image-datauri.jpg" width="300"></kbd>](../examples/image-datauri.html)
 [<kbd><img src="../examples/snapshots/images.jpg" width="300"></kbd>](../examples/images.html)
 
+## [Three.js properties](properties.md#threejs-properties)
+[<kbd><img src="../examples/snapshots/threejs-geometry.jpg" width="300"></kbd>](../examples/threejs-geometry.html)
+[<kbd><img src="../examples/snapshots/threejs-material.jpg" width="300"></kbd>](../examples/threejs-material.html)
 
 
 
