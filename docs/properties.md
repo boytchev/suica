@@ -449,6 +449,11 @@ Suica provides a limited set of images that can be used for textures. They can b
 	<br>
 	grid.png
 </kbd>
+<kbd>
+	<img width="128" src="../assets/textures/plate_normal.jpg">
+	<br>
+	plate_normal.jpg
+</kbd>
 
 
 
