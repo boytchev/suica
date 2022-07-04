@@ -13,7 +13,7 @@ description: All examples, just the examples, only the examples
 
 ## [Drawing canvas](suica.md#drawing-canvas)
 
-[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="400"></kbd>](../examples/minimal-example.html)
+[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="4300"></kbd>](../examples/minimal-example.html)
 [<kbd><img src="../examples/snapshots/tag-suica.jpg" width="300"></kbd>](../examples/tag-suica.html)
 [<kbd><img src="../examples/snapshots/background.jpg" width="300"></kbd>](../examples/background.html)
 [<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](../examples/suica-orientation.html)
