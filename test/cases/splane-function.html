@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="50" speed="0.5">
+	</suica>
+	
+	<script>
+		function nSine( u, v, n, k )
+		{
+			var x = 55*(u-0.5),
+				z = 55*(v-0.5);
+				
+			var yu = Math.pow(0.5+0.5*Math.sin(9*Math.PI*u),n),
+				yv = Math.pow(0.5+0.5*Math.sin(9*Math.PI*v),n),
+				y = k*Math.pow(yu+yv,1/n);
+			
+			return [x,y,z];
+		}
+		
+		surface( [-30,0, 30], splane(nSine,0.2,0.3), [210,210], 1, 'lightsalmon' ); 
+		surface( [ 30,0,-30], splane(nSine,1,5),     [210,210], 1, 'peachpuff' ); 
+		surface( [-30,0,-30], splane(nSine,15,7),    [210,210], 1, 'linen' ); 
+		surface( [ 30,0, 30], splane(nSine,500,9),   [210,210], 1, 'dimgray' ); 
+
+	</script>
+</body>
+</html>

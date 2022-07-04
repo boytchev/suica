@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<square y="-10" size="70" color="black" wireframe spinV="90">
+		<!--surface curve="bell"-->
+	</suica>
+	
+	<script>
+		function bell( u, v )
+		{
+			var x = 70*(u-0.5),
+				y = 0,
+				z = 70*(v-0.5);
+			
+			u = Math.PI*(u-0.5);
+			v = Math.PI*(v-0.5);
+			
+			y += 20*Math.pow(Math.cos(u)*Math.cos(v),1);
+			y += 20*Math.pow(Math.cos(10.5*u)*Math.cos(10.5*v),10);
+			
+			y = y * (0.1+Math.cos(u)*Math.cos(v));
+			
+			return [x,y,z];
+		}
+		
+		surface( [0,-10,0], bell, [210,210], 1, 'white' ); 
+		
+		its.image = drawing( 200, 200, 'linen' );
+		for( var i=0; i<11; i++ )
+		for( var j=0; j<11; j++ )
+		{
+			var x = 100+19*(i-5);
+			var y = 100+19*(j-5);
+			arc(x,y,2);
+			stroke('lightsalmon',3);
+			fill('black');
+		}
+		
+	</script>
+</body>
+</html>
