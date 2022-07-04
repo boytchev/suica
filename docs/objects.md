@@ -640,7 +640,7 @@ A surface reuses properties of approximating splanes &ndash; like stitching surf
 [<kbd><img src="../examples/snapshots/surface-patches.jpg" width="300"></kbd>](../examples/surface-patches.html)
 [<kbd><img src="../examples/snapshots/surface-torus.jpg" width="300"></kbd>](../examples/surface-torus.html)
 
-When the `curve` parameter of `surface` is a function, its first two parameters *u,v* have values in the range [0,1]. The result of the function is an array with the coordinates of a 3D point. It is possible to use two additional parameters to the function, but in this case it must be wrapped in a [`splane`][#splane].
+When the `curve` parameter of `surface` is a function, its first two parameters *u,v* have values in the range [0,1]. The result of the function is an array with the coordinates of a 3D point. It is possible to use two additional parameters to the function, but in this case it must be wrapped in a [`splane`][#splane-function].
 
 ```js
 JS:
@@ -1025,6 +1025,42 @@ Approximation is used to stitch splane together. Two splanes can be stitched if 
 Approximation and interpolation can be controlled independently on each direction. If a spline is approximating in both directions, only the central portion of the surface is generated. The next examples shows *u*-, *v*- and *uv*- approximating surfaces on top of *uv*-interpolating surface.
 
 [<kbd><img src="../examples/snapshots/splane-interpolating.jpg" width="300"></kbd>](../examples/splane-interpolating.html)
+
+
+
+
+#### splane function
+```html
+HTML:
+<splane src="𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒">
+```
+```js
+JS:
+splane( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2 );
+// where:
+function 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒 (𝑢, 𝑣, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2) {...}
+```
+Instead of a matrix of points, `splane` can also accept a function. This function should have 2, 3 or 4 parameters. The first two parameters are compusory and they are `u` &isin; [0,1] and `v` &isin; [0,1]. The other two parameters are optional and they are function-specific. The result of this function must be an array of 3 values, corresponding to a point on the surface defined by this function.
+
+```js
+JS:
+function nSine( u, v, k )
+{
+	return [
+		55*(u-0.5), //x
+		k*(Math.sin(10*u)+Math.sin(10*v)), //y
+		55*(v-0.5) //z
+	];
+}
+
+surface( [0,0,0], splane(nSine,5), [210,210], 1, 'lightsalmon' ); 
+```
+	
+[<kbd><img src="../examples/snapshots/splane-function.jpg" width="300"></kbd>](../examples/splane-function.html)
+
+
+
+
 
 
 ## SCORM

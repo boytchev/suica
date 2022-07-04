@@ -164,6 +164,7 @@ description: All examples, just the examples, only the examples
 [<kbd><img src="../examples/snapshots/splane-html.jpg" width="300"></kbd>](../examples/splane-html.html)
 [<kbd><img src="../examples/snapshots/splane-closed.jpg" width="300"></kbd>](../examples/splane-closed.html)
 [<kbd><img src="../examples/snapshots/splane-interpolating.jpg" width="300"></kbd>](../examples/splane-interpolating.html)
+[<kbd><img src="../examples/snapshots/splane-function.jpg" width="300"></kbd>](../examples/splane-function.html)
 
 [<kbd><img src="../examples/snapshots/scorm.jpg" width="300"></kbd>](../examples/scorm.html)
 
