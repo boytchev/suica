@@ -104,6 +104,7 @@ class HTMLParser
 	parseTagCANVAS( suica, elem ) {}
 	parseTagDIV( suica, elem ) {}
 	parseTagSPAN( suica, elem ) {}
+	parseTagIMG( suica, elem ) {}
 	
 	// <oxyz size="..." color="...">
 	parseTagOXYZ( suica, elem )
@@ -124,6 +125,36 @@ class HTMLParser
 			elem.getAttribute('speed'),
 		);
 	} // HTMLParser.parseTagDEMO
+	
+	
+	// <orbit id="..." distance="..." altitude="..." speed="...">
+	parseTagORBIT( suica, elem )
+	{
+		var p = suica.orbit(
+			elem.getAttribute('distance'),
+			elem.getAttribute('altitude'),
+			elem.getAttribute('speed'),
+		);
+
+		// list of properties: https://threejs.org/docs/#examples/en/controls/OrbitControls
+		var numericProperties = [ 'autoRotateSpeed', 'dampingFactor', 'keyPanSpeed', 'maxAzimuthAngle', 'maxDistance', 'maxPolarAngle', 'maxZoom', 'minAzimuthAngle', 'minDistance', 'minPolarAngle', 'minZoom', 'panSpeed', 'rotateSpeed', 'zoomSpeed' ];
+		
+		var name;
+		
+		for( name of numericProperties )
+			if( elem.hasAttribute(name) ) p[name] = Number(elem.getAttribute(name));
+
+		var booleanProperties = [ 'autoRotate', 'enabled', 'enableDamping', 'enablePan', 'enableRotate', 'enableZoom', 'screenSpacePanning' ];
+		
+		for( name of booleanProperties )
+			if( elem.hasAttribute(name) ) p[name] = Drawing.parseBool( elem, name, null, true ); 
+
+		suica.parserReadonly.parseAttributes( elem, p );
+
+		elem.suicaObject = p;
+		
+		return p;
+	} // HTMLParser.parseTagORBIT
 	
 	
 	// <vr>
@@ -196,7 +227,7 @@ class HTMLParser
 	} // HTMLParser.parseTagORTHOGRAPHIC
 	
 	
-	// <lookAt id="..." from="..." to="..." up="...">
+	// <lookAt from="..." to="..." up="...">
 	parseTagLOOKAT( suica, elem )
 	{
 		suica.lookAt(

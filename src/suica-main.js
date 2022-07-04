@@ -17,7 +17,7 @@ if( TEST_MODE )
 else
 	console.log(`(\\/)
 ( ..)		Suica 2.0
-c(”)(”)		(220628)
+c(”)(”)		(220704)
 `);
 
 
@@ -118,6 +118,7 @@ class Suica
 	// default values for Suica commands
 	static OXYZ = { COLOR: 'black', SIZE: 30 };
 	static DEMO = { DISTANCE: 100, ALTITUDE: 30, SPEED: 1 };
+	static ORBIT = { DISTANCE: 100, ALTITUDE: 30, SPEED: 0 };
 	static BACKGROUND = 'whitesmoke';
 	static ANAGLYPH = { DISTANCE: 5 };
 	static STEREO = { DISTANCE: 1 };
@@ -182,6 +183,7 @@ class Suica
 		
 		// automatic rotation
 		this.demoViewPoint = null;
+		this.controls = null;
 
 		// object selection and events
 		this.raycaster = new THREE.Raycaster();
@@ -221,7 +223,7 @@ class Suica
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'surface','lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d', 'capture'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'surface','lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d', 'capture', 'orbit'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -410,6 +412,12 @@ class Suica
 		this.lastTime = 0;
 		
 		
+		function adjustOrbitControls( )
+		{
+			that.controls.update( );
+			that.light.position.copy( that.camera.position );
+		}
+		
 		function adjustDemoViewPoint( time )
 		{
 			time *= that.demoViewPoint.speed;
@@ -522,6 +530,11 @@ class Suica
 			
 			//time=Math.PI/2;
 			
+			if( that.controls && that.controls.enabled )
+			{
+				adjustOrbitControls( );
+			}
+			else
 			if( that.demoViewPoint )
 			{
 				adjustDemoViewPoint( time );
@@ -711,6 +724,29 @@ class Suica
 			speed    : Suica.parseNumber( speed, Suica.DEMO.SPEED ),
 		};
 	} // Suica.demo
+
+	
+	
+	orbit( distance, altitude, speed )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'orbit', ...arguments );
+		
+		this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
+		this.camera.position.set(
+			0, 
+			Suica.parseNumber( altitude, Suica.ORBIT.ALTITUDE ),
+			Suica.parseNumber( distance, Suica.ORBIT.DISTANCE )
+		);
+		this.controls.update( );
+
+		this.controls.autoRotateSpeed =	-4*Suica.parseNumber( speed, Suica.ORBIT.SPEED );
+		this.controls.autoRotate = this.controls.autoRotateSpeed!=0;
+		
+		this.controls.enablePan = false;
+		
+		return this.controls;
+	} // Suica.orbit
 
 	
 	

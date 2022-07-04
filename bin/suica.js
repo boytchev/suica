@@ -568,7 +568,70 @@ const path=new THREE.ShapePath();let x,y,cpx,cpy,cpx1,cpy1,cpx2,cpy2;if(glyph.o)
 return{offsetX:glyph.ha*scale,path:path};}
 THREE.Font=Font;THREE.FontLoader=FontLoader;})();(function(){class TextGeometry extends THREE.ExtrudeGeometry{constructor(text,parameters={}){const font=parameters.font;if(font===undefined){super();}else{const shapes=font.generateShapes(text,parameters.size);parameters.depth=parameters.height!==undefined?parameters.height:50;if(parameters.bevelThickness===undefined)parameters.bevelThickness=10;if(parameters.bevelSize===undefined)parameters.bevelSize=8;if(parameters.bevelEnabled===undefined)parameters.bevelEnabled=false;super(shapes,parameters);}
 this.type='TextGeometry';}}
-THREE.TextGeometry=TextGeometry;})();class BSPNode{constructor(polygons){this.plane=null;this.front=null;this.back=null;this.polygons=[];if(polygons)this.build(polygons);}
+THREE.TextGeometry=TextGeometry;})();(function(){const _changeEvent={type:'change'};const _startEvent={type:'start'};const _endEvent={type:'end'};class OrbitControls extends THREE.EventDispatcher{constructor(object,domElement){super();if(domElement===undefined)console.warn('THREE.OrbitControls: The second parameter "domElement" is now mandatory.');if(domElement===document)console.error('THREE.OrbitControls: "document" should not be used as the target "domElement". Please use "renderer.domElement" instead.');this.object=object;this.domElement=domElement;this.domElement.style.touchAction='none';this.enabled=true;this.target=new THREE.Vector3();this.minDistance=0;this.maxDistance=Infinity;this.minZoom=0;this.maxZoom=Infinity;this.minPolarAngle=0;this.maxPolarAngle=Math.PI;this.minAzimuthAngle=-Infinity;this.maxAzimuthAngle=Infinity;this.enableDamping=false;this.dampingFactor=0.05;this.enableZoom=true;this.zoomSpeed=1.0;this.enableRotate=true;this.rotateSpeed=1.0;this.enablePan=true;this.panSpeed=1.0;this.screenSpacePanning=true;this.keyPanSpeed=7.0;this.autoRotate=false;this.autoRotateSpeed=2.0;this.keys={LEFT:'ArrowLeft',UP:'ArrowUp',RIGHT:'ArrowRight',BOTTOM:'ArrowDown'};this.mouseButtons={LEFT:THREE.MOUSE.ROTATE,MIDDLE:THREE.MOUSE.DOLLY,RIGHT:THREE.MOUSE.PAN};this.touches={ONE:THREE.TOUCH.ROTATE,TWO:THREE.TOUCH.DOLLY_PAN};this.target0=this.target.clone();this.position0=this.object.position.clone();this.zoom0=this.object.zoom;this._domElementKeyEvents=null;this.getPolarAngle=function(){return spherical.phi;};this.getAzimuthalAngle=function(){return spherical.theta;};this.getDistance=function(){return this.object.position.distanceTo(this.target);};this.listenToKeyEvents=function(domElement){domElement.addEventListener('keydown',onKeyDown);this._domElementKeyEvents=domElement;};this.saveState=function(){scope.target0.copy(scope.target);scope.position0.copy(scope.object.position);scope.zoom0=scope.object.zoom;};this.reset=function(){scope.target.copy(scope.target0);scope.object.position.copy(scope.position0);scope.object.zoom=scope.zoom0;scope.object.updateProjectionMatrix();scope.dispatchEvent(_changeEvent);scope.update();state=STATE.NONE;};this.update=function(){const offset=new THREE.Vector3();const quat=new THREE.Quaternion().setFromUnitVectors(object.up,new THREE.Vector3(0,1,0));const quatInverse=quat.clone().invert();const lastPosition=new THREE.Vector3();const lastQuaternion=new THREE.Quaternion();const twoPI=2*Math.PI;return function update(){const position=scope.object.position;offset.copy(position).sub(scope.target);offset.applyQuaternion(quat);spherical.setFromVector3(offset);if(scope.autoRotate&&state===STATE.NONE){rotateLeft(getAutoRotationAngle());}
+if(scope.enableDamping){spherical.theta+=sphericalDelta.theta*scope.dampingFactor;spherical.phi+=sphericalDelta.phi*scope.dampingFactor;}else{spherical.theta+=sphericalDelta.theta;spherical.phi+=sphericalDelta.phi;}
+let min=scope.minAzimuthAngle;let max=scope.maxAzimuthAngle;if(isFinite(min)&&isFinite(max)){if(min<-Math.PI)min+=twoPI;else if(min>Math.PI)min-=twoPI;if(max<-Math.PI)max+=twoPI;else if(max>Math.PI)max-=twoPI;if(min<=max){spherical.theta=Math.max(min,Math.min(max,spherical.theta));}else{spherical.theta=spherical.theta>(min+max)/2?Math.max(min,spherical.theta):Math.min(max,spherical.theta);}}
+spherical.phi=Math.max(scope.minPolarAngle,Math.min(scope.maxPolarAngle,spherical.phi));spherical.makeSafe();spherical.radius*=scale;spherical.radius=Math.max(scope.minDistance,Math.min(scope.maxDistance,spherical.radius));if(scope.enableDamping===true){scope.target.addScaledVector(panOffset,scope.dampingFactor);}else{scope.target.add(panOffset);}
+offset.setFromSpherical(spherical);offset.applyQuaternion(quatInverse);position.copy(scope.target).add(offset);scope.object.lookAt(scope.target);if(scope.enableDamping===true){sphericalDelta.theta*=1-scope.dampingFactor;sphericalDelta.phi*=1-scope.dampingFactor;panOffset.multiplyScalar(1-scope.dampingFactor);}else{sphericalDelta.set(0,0,0);panOffset.set(0,0,0);}
+scale=1;if(zoomChanged||lastPosition.distanceToSquared(scope.object.position)>EPS||8*(1-lastQuaternion.dot(scope.object.quaternion))>EPS){scope.dispatchEvent(_changeEvent);lastPosition.copy(scope.object.position);lastQuaternion.copy(scope.object.quaternion);zoomChanged=false;return true;}
+return false;};}();this.dispose=function(){scope.domElement.removeEventListener('contextmenu',onContextMenu);scope.domElement.removeEventListener('pointerdown',onPointerDown);scope.domElement.removeEventListener('pointercancel',onPointerCancel);scope.domElement.removeEventListener('wheel',onMouseWheel);scope.domElement.removeEventListener('pointermove',onPointerMove);scope.domElement.removeEventListener('pointerup',onPointerUp);if(scope._domElementKeyEvents!==null){scope._domElementKeyEvents.removeEventListener('keydown',onKeyDown);}};const scope=this;const STATE={NONE:-1,ROTATE:0,DOLLY:1,PAN:2,TOUCH_ROTATE:3,TOUCH_PAN:4,TOUCH_DOLLY_PAN:5,TOUCH_DOLLY_ROTATE:6};let state=STATE.NONE;const EPS=0.000001;const spherical=new THREE.Spherical();const sphericalDelta=new THREE.Spherical();let scale=1;const panOffset=new THREE.Vector3();let zoomChanged=false;const rotateStart=new THREE.Vector2();const rotateEnd=new THREE.Vector2();const rotateDelta=new THREE.Vector2();const panStart=new THREE.Vector2();const panEnd=new THREE.Vector2();const panDelta=new THREE.Vector2();const dollyStart=new THREE.Vector2();const dollyEnd=new THREE.Vector2();const dollyDelta=new THREE.Vector2();const pointers=[];const pointerPositions={};function getAutoRotationAngle(){return 2*Math.PI/60/60*scope.autoRotateSpeed;}
+function getZoomScale(){return Math.pow(0.95,scope.zoomSpeed);}
+function rotateLeft(angle){sphericalDelta.theta-=angle;}
+function rotateUp(angle){sphericalDelta.phi-=angle;}
+const panLeft=function(){const v=new THREE.Vector3();return function panLeft(distance,objectMatrix){v.setFromMatrixColumn(objectMatrix,0);v.multiplyScalar(-distance);panOffset.add(v);};}();const panUp=function(){const v=new THREE.Vector3();return function panUp(distance,objectMatrix){if(scope.screenSpacePanning===true){v.setFromMatrixColumn(objectMatrix,1);}else{v.setFromMatrixColumn(objectMatrix,0);v.crossVectors(scope.object.up,v);}
+v.multiplyScalar(distance);panOffset.add(v);};}();const pan=function(){const offset=new THREE.Vector3();return function pan(deltaX,deltaY){const element=scope.domElement;if(scope.object.isPerspectiveCamera){const position=scope.object.position;offset.copy(position).sub(scope.target);let targetDistance=offset.length();targetDistance*=Math.tan(scope.object.fov/2*Math.PI/180.0);panLeft(2*deltaX*targetDistance/element.clientHeight,scope.object.matrix);panUp(2*deltaY*targetDistance/element.clientHeight,scope.object.matrix);}else if(scope.object.isOrthographicCamera){panLeft(deltaX*(scope.object.right-scope.object.left)/scope.object.zoom/element.clientWidth,scope.object.matrix);panUp(deltaY*(scope.object.top-scope.object.bottom)/scope.object.zoom/element.clientHeight,scope.object.matrix);}else{console.warn('WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.');scope.enablePan=false;}};}();function dollyOut(dollyScale){if(scope.object.isPerspectiveCamera){scale/=dollyScale;}else if(scope.object.isOrthographicCamera){scope.object.zoom=Math.max(scope.minZoom,Math.min(scope.maxZoom,scope.object.zoom*dollyScale));scope.object.updateProjectionMatrix();zoomChanged=true;}else{console.warn('WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.');scope.enableZoom=false;}}
+function dollyIn(dollyScale){if(scope.object.isPerspectiveCamera){scale*=dollyScale;}else if(scope.object.isOrthographicCamera){scope.object.zoom=Math.max(scope.minZoom,Math.min(scope.maxZoom,scope.object.zoom/dollyScale));scope.object.updateProjectionMatrix();zoomChanged=true;}else{console.warn('WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.');scope.enableZoom=false;}}
+function handleMouseDownRotate(event){rotateStart.set(event.clientX,event.clientY);}
+function handleMouseDownDolly(event){dollyStart.set(event.clientX,event.clientY);}
+function handleMouseDownPan(event){panStart.set(event.clientX,event.clientY);}
+function handleMouseMoveRotate(event){rotateEnd.set(event.clientX,event.clientY);rotateDelta.subVectors(rotateEnd,rotateStart).multiplyScalar(scope.rotateSpeed);const element=scope.domElement;rotateLeft(2*Math.PI*rotateDelta.x/element.clientHeight);rotateUp(2*Math.PI*rotateDelta.y/element.clientHeight);rotateStart.copy(rotateEnd);scope.update();}
+function handleMouseMoveDolly(event){dollyEnd.set(event.clientX,event.clientY);dollyDelta.subVectors(dollyEnd,dollyStart);if(dollyDelta.y>0){dollyOut(getZoomScale());}else if(dollyDelta.y<0){dollyIn(getZoomScale());}
+dollyStart.copy(dollyEnd);scope.update();}
+function handleMouseMovePan(event){panEnd.set(event.clientX,event.clientY);panDelta.subVectors(panEnd,panStart).multiplyScalar(scope.panSpeed);pan(panDelta.x,panDelta.y);panStart.copy(panEnd);scope.update();}
+function handleMouseWheel(event){if(event.deltaY<0){dollyIn(getZoomScale());}else if(event.deltaY>0){dollyOut(getZoomScale());}
+scope.update();}
+function handleKeyDown(event){let needsUpdate=false;switch(event.code){case scope.keys.UP:pan(0,scope.keyPanSpeed);needsUpdate=true;break;case scope.keys.BOTTOM:pan(0,-scope.keyPanSpeed);needsUpdate=true;break;case scope.keys.LEFT:pan(scope.keyPanSpeed,0);needsUpdate=true;break;case scope.keys.RIGHT:pan(-scope.keyPanSpeed,0);needsUpdate=true;break;}
+if(needsUpdate){event.preventDefault();scope.update();}}
+function handleTouchStartRotate(){if(pointers.length===1){rotateStart.set(pointers[0].pageX,pointers[0].pageY);}else{const x=0.5*(pointers[0].pageX+pointers[1].pageX);const y=0.5*(pointers[0].pageY+pointers[1].pageY);rotateStart.set(x,y);}}
+function handleTouchStartPan(){if(pointers.length===1){panStart.set(pointers[0].pageX,pointers[0].pageY);}else{const x=0.5*(pointers[0].pageX+pointers[1].pageX);const y=0.5*(pointers[0].pageY+pointers[1].pageY);panStart.set(x,y);}}
+function handleTouchStartDolly(){const dx=pointers[0].pageX-pointers[1].pageX;const dy=pointers[0].pageY-pointers[1].pageY;const distance=Math.sqrt(dx*dx+dy*dy);dollyStart.set(0,distance);}
+function handleTouchStartDollyPan(){if(scope.enableZoom)handleTouchStartDolly();if(scope.enablePan)handleTouchStartPan();}
+function handleTouchStartDollyRotate(){if(scope.enableZoom)handleTouchStartDolly();if(scope.enableRotate)handleTouchStartRotate();}
+function handleTouchMoveRotate(event){if(pointers.length==1){rotateEnd.set(event.pageX,event.pageY);}else{const position=getSecondPointerPosition(event);const x=0.5*(event.pageX+position.x);const y=0.5*(event.pageY+position.y);rotateEnd.set(x,y);}
+rotateDelta.subVectors(rotateEnd,rotateStart).multiplyScalar(scope.rotateSpeed);const element=scope.domElement;rotateLeft(2*Math.PI*rotateDelta.x/element.clientHeight);rotateUp(2*Math.PI*rotateDelta.y/element.clientHeight);rotateStart.copy(rotateEnd);}
+function handleTouchMovePan(event){if(pointers.length===1){panEnd.set(event.pageX,event.pageY);}else{const position=getSecondPointerPosition(event);const x=0.5*(event.pageX+position.x);const y=0.5*(event.pageY+position.y);panEnd.set(x,y);}
+panDelta.subVectors(panEnd,panStart).multiplyScalar(scope.panSpeed);pan(panDelta.x,panDelta.y);panStart.copy(panEnd);}
+function handleTouchMoveDolly(event){const position=getSecondPointerPosition(event);const dx=event.pageX-position.x;const dy=event.pageY-position.y;const distance=Math.sqrt(dx*dx+dy*dy);dollyEnd.set(0,distance);dollyDelta.set(0,Math.pow(dollyEnd.y/dollyStart.y,scope.zoomSpeed));dollyOut(dollyDelta.y);dollyStart.copy(dollyEnd);}
+function handleTouchMoveDollyPan(event){if(scope.enableZoom)handleTouchMoveDolly(event);if(scope.enablePan)handleTouchMovePan(event);}
+function handleTouchMoveDollyRotate(event){if(scope.enableZoom)handleTouchMoveDolly(event);if(scope.enableRotate)handleTouchMoveRotate(event);}
+function onPointerDown(event){if(scope.enabled===false)return;if(pointers.length===0){scope.domElement.setPointerCapture(event.pointerId);scope.domElement.addEventListener('pointermove',onPointerMove);scope.domElement.addEventListener('pointerup',onPointerUp);}
+addPointer(event);if(event.pointerType==='touch'){onTouchStart(event);}else{onMouseDown(event);}}
+function onPointerMove(event){if(scope.enabled===false)return;if(event.pointerType==='touch'){onTouchMove(event);}else{onMouseMove(event);}}
+function onPointerUp(event){removePointer(event);if(pointers.length===0){scope.domElement.releasePointerCapture(event.pointerId);scope.domElement.removeEventListener('pointermove',onPointerMove);scope.domElement.removeEventListener('pointerup',onPointerUp);}
+scope.dispatchEvent(_endEvent);state=STATE.NONE;}
+function onPointerCancel(event){removePointer(event);}
+function onMouseDown(event){let mouseAction;switch(event.button){case 0:mouseAction=scope.mouseButtons.LEFT;break;case 1:mouseAction=scope.mouseButtons.MIDDLE;break;case 2:mouseAction=scope.mouseButtons.RIGHT;break;default:mouseAction=-1;}
+switch(mouseAction){case THREE.MOUSE.DOLLY:if(scope.enableZoom===false)return;handleMouseDownDolly(event);state=STATE.DOLLY;break;case THREE.MOUSE.ROTATE:if(event.ctrlKey||event.metaKey||event.shiftKey){if(scope.enablePan===false)return;handleMouseDownPan(event);state=STATE.PAN;}else{if(scope.enableRotate===false)return;handleMouseDownRotate(event);state=STATE.ROTATE;}
+break;case THREE.MOUSE.PAN:if(event.ctrlKey||event.metaKey||event.shiftKey){if(scope.enableRotate===false)return;handleMouseDownRotate(event);state=STATE.ROTATE;}else{if(scope.enablePan===false)return;handleMouseDownPan(event);state=STATE.PAN;}
+break;default:state=STATE.NONE;}
+if(state!==STATE.NONE){scope.dispatchEvent(_startEvent);}}
+function onMouseMove(event){if(scope.enabled===false)return;switch(state){case STATE.ROTATE:if(scope.enableRotate===false)return;handleMouseMoveRotate(event);break;case STATE.DOLLY:if(scope.enableZoom===false)return;handleMouseMoveDolly(event);break;case STATE.PAN:if(scope.enablePan===false)return;handleMouseMovePan(event);break;}}
+function onMouseWheel(event){if(scope.enabled===false||scope.enableZoom===false||state!==STATE.NONE)return;event.preventDefault();scope.dispatchEvent(_startEvent);handleMouseWheel(event);scope.dispatchEvent(_endEvent);}
+function onKeyDown(event){if(scope.enabled===false||scope.enablePan===false)return;handleKeyDown(event);}
+function onTouchStart(event){trackPointer(event);switch(pointers.length){case 1:switch(scope.touches.ONE){case THREE.TOUCH.ROTATE:if(scope.enableRotate===false)return;handleTouchStartRotate();state=STATE.TOUCH_ROTATE;break;case THREE.TOUCH.PAN:if(scope.enablePan===false)return;handleTouchStartPan();state=STATE.TOUCH_PAN;break;default:state=STATE.NONE;}
+break;case 2:switch(scope.touches.TWO){case THREE.TOUCH.DOLLY_PAN:if(scope.enableZoom===false&&scope.enablePan===false)return;handleTouchStartDollyPan();state=STATE.TOUCH_DOLLY_PAN;break;case THREE.TOUCH.DOLLY_ROTATE:if(scope.enableZoom===false&&scope.enableRotate===false)return;handleTouchStartDollyRotate();state=STATE.TOUCH_DOLLY_ROTATE;break;default:state=STATE.NONE;}
+break;default:state=STATE.NONE;}
+if(state!==STATE.NONE){scope.dispatchEvent(_startEvent);}}
+function onTouchMove(event){trackPointer(event);switch(state){case STATE.TOUCH_ROTATE:if(scope.enableRotate===false)return;handleTouchMoveRotate(event);scope.update();break;case STATE.TOUCH_PAN:if(scope.enablePan===false)return;handleTouchMovePan(event);scope.update();break;case STATE.TOUCH_DOLLY_PAN:if(scope.enableZoom===false&&scope.enablePan===false)return;handleTouchMoveDollyPan(event);scope.update();break;case STATE.TOUCH_DOLLY_ROTATE:if(scope.enableZoom===false&&scope.enableRotate===false)return;handleTouchMoveDollyRotate(event);scope.update();break;default:state=STATE.NONE;}}
+function onContextMenu(event){if(scope.enabled===false)return;event.preventDefault();}
+function addPointer(event){pointers.push(event);}
+function removePointer(event){delete pointerPositions[event.pointerId];for(let i=0;i<pointers.length;i++){if(pointers[i].pointerId==event.pointerId){pointers.splice(i,1);return;}}}
+function trackPointer(event){let position=pointerPositions[event.pointerId];if(position===undefined){position=new THREE.Vector2();pointerPositions[event.pointerId]=position;}
+position.set(event.pageX,event.pageY);}
+function getSecondPointerPosition(event){const pointer=event.pointerId===pointers[0].pointerId?pointers[1]:pointers[0];return pointerPositions[pointer.pointerId];}
+scope.domElement.addEventListener('contextmenu',onContextMenu);scope.domElement.addEventListener('pointerdown',onPointerDown);scope.domElement.addEventListener('pointercancel',onPointerCancel);scope.domElement.addEventListener('wheel',onMouseWheel,{passive:false});this.update();}}
+class MapControls extends OrbitControls{constructor(object,domElement){super(object,domElement);this.screenSpacePanning=false;this.mouseButtons.LEFT=THREE.MOUSE.PAN;this.mouseButtons.RIGHT=THREE.MOUSE.ROTATE;this.touches.ONE=THREE.TOUCH.PAN;this.touches.TWO=THREE.TOUCH.DOLLY_ROTATE;}}
+THREE.MapControls=MapControls;THREE.OrbitControls=OrbitControls;})();class BSPNode{constructor(polygons){this.plane=null;this.front=null;this.back=null;this.polygons=[];if(polygons)this.build(polygons);}
 clone(){const node=new BSPNode();node.plane=this.plane&&this.plane.clone();node.front=this.front&&this.front.clone();node.back=this.back&&this.back.clone();node.polygons=this.polygons.map(function(p){return p.clone();});return node;}
 invert(){for(let i=0;i<this.polygons.length;i++){this.polygons[i].negate();}
 this.plane.negate();if(this.front)this.front.invert();if(this.back)this.back.invert();const temp=this.front;this.front=this.back;this.back=temp;}
@@ -638,17 +701,17 @@ static globalHoverObject;static globalHoverEvent;flipNormal(geometry)
 {var nor=geometry.getAttribute('normal').array;for(var i=0;i<nor.length;i++)
 nor[i]=-nor[i];}
 return geometry;}
-static OXYZ={COLOR:'black',SIZE:30};static DEMO={DISTANCE:100,ALTITUDE:30,SPEED:1};static BACKGROUND='whitesmoke';static ANAGLYPH={DISTANCE:5};static STEREO={DISTANCE:1};static PERSPECTIVE={NEAR:1,FAR:1000,FOV:40};static ORTHOGRAPHIC={NEAR:0,FAR:1000};static DEFAULT_ORIENTATION='XYZ';static SPLINE={POINTS:[[0,0,0],[0,1,0]],CLOSED:false,INTERPOLANT:true};static SPLANE={POINTS:[[[-3,0,-3],[-1,0,-3],[+1,0,-3],[+3,0,-3]],[[-3,0,-1],[-1,3,-1],[+1,3,-1],[+3,0,-1]],[[-3,0,+1],[-1,3,+1],[+1,3,+1],[+3,0,+1]],[[-3,0,+3],[-1,0,+3],[+1,0,+3],[+3,0,+3]]],CLOSED:[false,false],INTERPOLANT:[true,true]};constructor(suicaTag)
+static OXYZ={COLOR:'black',SIZE:30};static DEMO={DISTANCE:100,ALTITUDE:30,SPEED:1};static ORBIT={DISTANCE:100,ALTITUDE:30,SPEED:0};static BACKGROUND='whitesmoke';static ANAGLYPH={DISTANCE:5};static STEREO={DISTANCE:1};static PERSPECTIVE={NEAR:1,FAR:1000,FOV:40};static ORTHOGRAPHIC={NEAR:0,FAR:1000};static DEFAULT_ORIENTATION='XYZ';static SPLINE={POINTS:[[0,0,0],[0,1,0]],CLOSED:false,INTERPOLANT:true};static SPLANE={POINTS:[[[-3,0,-3],[-1,0,-3],[+1,0,-3],[+3,0,-3]],[[-3,0,-1],[-1,3,-1],[+1,3,-1],[+3,0,-1]],[[-3,0,+1],[-1,3,+1],[+1,3,+1],[+3,0,+1]],[[-3,0,+3],[-1,0,+3],[+1,0,+3],[+3,0,+3]]],CLOSED:[false,false],INTERPOLANT:[true,true]};constructor(suicaTag)
 {this._={solidGeometry:{},frameGeometry:{},};suicaTag.style.display='inline-block';suicaTag.style.boxSizing='border-box';if(!getComputedStyle(suicaTag).width&&!suicaTag.hasAttribute('width'))
 suicaTag.style.width=TEST_MODE?'400px':'500px';if(!getComputedStyle(suicaTag).height&&!suicaTag.hasAttribute('height'))
 suicaTag.style.height=TEST_MODE?'400px':'300px';if(!suicaTag.style.position)suicaTag.style.position='relative';this.id=suicaTag.getAttribute('id')||`suica${Suica.allSuicas.length}`
-if(DEBUG_CALLS)console.log(`Suica :: ${this.id}`);this.suicaTag=suicaTag;this.isProactive=false;this.capturer=null;this.orientation=Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase()||Suica.DEFAULT_ORIENTATION];this.orientation.MATRIX=new THREE.Matrix4().makeBasis(this.orientation.RIGHT,this.orientation.UP,this.orientation.FORWARD);this.orientation.FLIP_NORMAL=this.orientation.SCALE.x<0||this.orientation.SCALE.y<0||this.orientation.SCALE.z<0;this.viewPoint={from:this.orientation.LOOKAT.FROM,to:this.orientation.LOOKAT.TO,up:this.orientation.LOOKAT.UP,};this.createCanvas();this.createRenderer();this.parser=new HTMLParser(this);this.parser.parseEvents(suicaTag,this.canvas,this);this.demoViewPoint=null;this.raycaster=new THREE.Raycaster();this.raycastPointer=new THREE.Vector2();window.suica=this;Suica.allSuicas.push(this);window[this.id]=this;this.canvas.addEventListener('mousemove',Suica.onMouseMove);this.canvas.addEventListener('mousedown',Suica.onMouseDown);this.canvas.addEventListener('mouseup',Suica.onMouseUp);this.canvas.addEventListener('click',Suica.onClick);if(TEST_MODE)
+if(DEBUG_CALLS)console.log(`Suica :: ${this.id}`);this.suicaTag=suicaTag;this.isProactive=false;this.capturer=null;this.orientation=Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase()||Suica.DEFAULT_ORIENTATION];this.orientation.MATRIX=new THREE.Matrix4().makeBasis(this.orientation.RIGHT,this.orientation.UP,this.orientation.FORWARD);this.orientation.FLIP_NORMAL=this.orientation.SCALE.x<0||this.orientation.SCALE.y<0||this.orientation.SCALE.z<0;this.viewPoint={from:this.orientation.LOOKAT.FROM,to:this.orientation.LOOKAT.TO,up:this.orientation.LOOKAT.UP,};this.createCanvas();this.createRenderer();this.parser=new HTMLParser(this);this.parser.parseEvents(suicaTag,this.canvas,this);this.demoViewPoint=null;this.controls=null;this.raycaster=new THREE.Raycaster();this.raycastPointer=new THREE.Vector2();window.suica=this;Suica.allSuicas.push(this);window[this.id]=this;this.canvas.addEventListener('mousemove',Suica.onMouseMove);this.canvas.addEventListener('mousedown',Suica.onMouseDown);this.canvas.addEventListener('mouseup',Suica.onMouseUp);this.canvas.addEventListener('click',Suica.onClick);if(TEST_MODE)
 {THREE.MathUtils.seededRandom(1);}
 else
 {this.canvas.addEventListener('contextmenu',Suica.onContextMenu);THREE.MathUtils.seededRandom(Math.round(Number.MAX_SAFE_INTEGER*Math.random()));}
 for(var classObject of[Point,Line,Square,Cube,Polygon,Sphere,Group,Tube,Surface,Prism,Cylinder,Cone,Pyramid,Circle,Convex,Model,Construct,Text3D,Capture])
 {Suica.registerClass(this,classObject);}
-for(var methodName of['cube','square','sphere','point','line','group','cylinder','prism','cone','pyramid','circle','polygon','tube','surface','lookAt','fullScreen','fullWindow','proactive','anaglyph','stereo','perspective','orthographic','lookAt','background','oxyz','demo','allObjects','convex','model','construct','text3d','capture'])
+for(var methodName of['cube','square','sphere','point','line','group','cylinder','prism','cone','pyramid','circle','polygon','tube','surface','lookAt','fullScreen','fullWindow','proactive','anaglyph','stereo','perspective','orthographic','lookAt','background','oxyz','demo','allObjects','convex','model','construct','text3d','capture','orbit'])
 {Suica.register(this,methodName);}
 this.model.save=function(...params)
 {this.parser?.parseTags();return Model.save(...params);}
@@ -686,7 +749,9 @@ createRenderer()
 this.scene.background=Suica.parseColor(color);this.vrCamera=new THREE.Group();this.perspective();for(var attribute of this.suicaTag.getAttributeNames())
 {var value=this.suicaTag.getAttribute(attribute);switch(attribute.toUpperCase())
 {case'PERSPECTIVE':this.perspective(...Suica.evaluate('['+value+']'));break;case'ORTHOGRAPHIC':this.orthographic(...Suica.evaluate('['+value+']'));break;case'ANAGLYPH':this.anaglyph(...Suica.evaluate('['+value+']'));break;case'STEREO':this.stereo(...Suica.evaluate('['+value+']'));break;case'VR':this.vr();break;case'FULLSCREEN':this.fullScreen();break;case'FULLWINDOW':this.fullWindow();break;case'PROACTIVE':this.proactive();break;}}
-this.light=new THREE.PointLight('white',0.5);this.light.position.set(1000,1500,3000);this.scene.add(this.light);this.scene.add(new THREE.AmbientLight('white',0.5));var that=this;this.lastTime=0;function adjustDemoViewPoint(time)
+this.light=new THREE.PointLight('white',0.5);this.light.position.set(1000,1500,3000);this.scene.add(this.light);this.scene.add(new THREE.AmbientLight('white',0.5));var that=this;this.lastTime=0;function adjustOrbitControls()
+{that.controls.update();that.light.position.copy(that.camera.position);}
+function adjustDemoViewPoint(time)
 {time*=that.demoViewPoint.speed;var x=that.demoViewPoint.distance*Math.cos(time),y=that.demoViewPoint.altitude,z=that.demoViewPoint.distance*Math.sin(time);that.camera.up.copy(that.orientation.UP);switch(that.orientation)
 {case Suica.ORIENTATIONS.XYZ:that.camera.position.set(x,y,-z);that.light.position.set(2*x,2*y,-2*z);break;case Suica.ORIENTATIONS.XZY:that.camera.position.set(-x,-z,y);that.light.position.set(2*x,-2*z,2*y);break;case Suica.ORIENTATIONS.YXZ:that.camera.position.set(y,-x,-z);that.light.position.set(2*y,2*x,-2*z);break;case Suica.ORIENTATIONS.YZX:that.camera.position.set(-z,x,y);that.light.position.set(-2*z,2*x,2*y);break;case Suica.ORIENTATIONS.ZXY:that.camera.position.set(y,-z,x);that.light.position.set(2*y,-2*z,2*x);break;case Suica.ORIENTATIONS.ZYX:that.camera.position.set(-z,y,-x);that.light.position.set(-2*z,2*y,2*x);break;default:console.error('error: Unknown orientation in <suica>');};that.camera.lookAt(that.scene.position);that.camera.updateMatrixWorld();}
 function adjustViewPoint()
@@ -700,6 +765,9 @@ that.light?.position.set(...that.viewPoint.from);}
 function loop(time)
 {time/=1000;if(TEST_MODE)
 {time=Math.floor(5*time)/5;}
+if(that.controls&&that.controls.enabled)
+{adjustOrbitControls();}
+else
 if(that.demoViewPoint)
 {adjustDemoViewPoint(time);}
 else
@@ -736,6 +804,8 @@ oxyz(size,color)
 axes.setColors(color,color,color);this.scene.add(axes);}
 demo(distance,altitude,speed)
 {this.parser?.parseTags();this.debugCall('demo',...arguments);this.demoViewPoint={distance:Suica.parseNumber(distance,Suica.DEMO.DISTANCE),altitude:Suica.parseNumber(altitude,Suica.DEMO.ALTITUDE),speed:Suica.parseNumber(speed,Suica.DEMO.SPEED),};}
+orbit(distance,altitude,speed)
+{this.parser?.parseTags();this.debugCall('orbit',...arguments);this.controls=new THREE.OrbitControls(this.camera,this.renderer.domElement);this.camera.position.set(0,Suica.parseNumber(altitude,Suica.ORBIT.ALTITUDE),Suica.parseNumber(distance,Suica.ORBIT.DISTANCE));this.controls.update();this.controls.autoRotateSpeed=-4*Suica.parseNumber(speed,Suica.ORBIT.SPEED);this.controls.autoRotate=this.controls.autoRotateSpeed!=0;this.controls.enablePan=false;return this.controls;}
 static precheck()
 {if(!(window.suica instanceof Suica))
 throw'error: No Suica instance is active';}
@@ -904,8 +974,8 @@ window.splane=function(points=Suica.SPLANE.POINTS,closed,interpolant)
 if(typeof points==='string')
 {if(points.indexOf(',')>=0)
 points=Suica.evaluate('[[['+points.replaceAll(';','],[').replaceAll('|',']],[[')+']]]');else
-return function(u,v)
-{return window[points](u,v,interpolant);}}
+{return function(u,v)
+{console.log(points);console.log(window[points]);return window[points](u,v,closed,interpolant);}}}
 if(typeof closed==='undefined')
 closed=Suica.SPLANE.CLOSED;else
 if(!Array.isArray(closed))
@@ -976,10 +1046,15 @@ parseTagBUTTON(suica,elem){}
 parseTagCANVAS(suica,elem){}
 parseTagDIV(suica,elem){}
 parseTagSPAN(suica,elem){}
+parseTagIMG(suica,elem){}
 parseTagOXYZ(suica,elem)
 {suica.oxyz(elem.getAttribute('size'),elem.getAttribute('color'));}
 parseTagDEMO(suica,elem)
 {suica.demo(elem.getAttribute('distance'),elem.getAttribute('altitude'),elem.getAttribute('speed'),);}
+parseTagORBIT(suica,elem)
+{var p=suica.orbit(elem.getAttribute('distance'),elem.getAttribute('altitude'),elem.getAttribute('speed'),);var numericProperties=['autoRotateSpeed','dampingFactor','keyPanSpeed','maxAzimuthAngle','maxDistance','maxPolarAngle','maxZoom','minAzimuthAngle','minDistance','minPolarAngle','minZoom','panSpeed','rotateSpeed','zoomSpeed'];var name;for(name of numericProperties)
+if(elem.hasAttribute(name))p[name]=Number(elem.getAttribute(name));var booleanProperties=['autoRotate','enabled','enableDamping','enablePan','enableRotate','enableZoom','screenSpacePanning'];for(name of booleanProperties)
+if(elem.hasAttribute(name))p[name]=Drawing.parseBool(elem,name,null,true);suica.parserReadonly.parseAttributes(elem,p);elem.suicaObject=p;return p;}
 parseTagVR(suica,elem)
 {suica.vr();}
 parseTagFULLSCREEN(suica,elem)

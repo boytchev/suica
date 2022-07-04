@@ -13,7 +13,7 @@ description: All examples, just the examples, only the examples
 
 ## [Drawing canvas](suica.md#drawing-canvas)
 
-[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="4300"></kbd>](../examples/minimal-example.html)
+[<kbd><img src="../examples/snapshots/minimal-example.jpg" width="300"></kbd>](../examples/minimal-example.html)
 [<kbd><img src="../examples/snapshots/tag-suica.jpg" width="300"></kbd>](../examples/tag-suica.html)
 [<kbd><img src="../examples/snapshots/background.jpg" width="300"></kbd>](../examples/background.html)
 [<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="300"></kbd>](../examples/suica-orientation.html)
@@ -22,6 +22,7 @@ description: All examples, just the examples, only the examples
 
 [<kbd><img src="../examples/snapshots/oxyz.jpg" width="300"></kbd>](../examples/oxyz.html)
 [<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](../examples/demo.html)
+[<kbd><img src="../examples/snapshots/orbit.jpg" width="300"></kbd>](../examples/orbit.html)
 [<kbd><img src="../examples/snapshots/lookat.jpg" width="300"></kbd>](../examples/lookat.html)
 [<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="300"></kbd>](../examples/lookat-demo.html)
 [<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](../examples/lookat-navigation.html)
@@ -230,7 +231,7 @@ description: All examples, just the examples, only the examples
 	
 ## [Advanced techniques](drawings.md#advanced-techniques)
 
-[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="400"></kbd>](../examples/drawing-custom-point.html)
+[<kbd><img src="../examples/snapshots/drawing-custom-point.jpg" width="300"></kbd>](../examples/drawing-custom-point.html)
 [<kbd><img src="../examples/snapshots/drawing-dotted-lines.jpg" width="300"></kbd>](../examples/drawing-dotted-lines.html)
 [<kbd><img src="../examples/snapshots/dynamic-drawing.jpg" width="300"></kbd>](../examples/dynamic-drawing.html)
 [<kbd><img src="../examples/snapshots/drawing-clear.jpg" width="300"></kbd>](../examples/drawing-clear.html)

@@ -12,7 +12,7 @@ cd ..\..
 REM Prepare THREE.JS files ---------------------------------
 
 cd misc\threejs
-copy /b three.min.js+ConvexHull.js+ConvexGeometry.js+AnaglyphEffect.js+StereoEffect.js+VRButton.js+GLTFExporter.js+GLTFLoader.js+FontLoader.js+TextGeometry.js __all__
+copy /b three.min.js+ConvexHull.js+ConvexGeometry.js+AnaglyphEffect.js+StereoEffect.js+VRButton.js+GLTFExporter.js+GLTFLoader.js+FontLoader.js+TextGeometry.js+OrbitControls.js __all__
 ..\jsmin\jsmin <__all__ >__min__
 cd ..\..
 
