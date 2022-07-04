@@ -640,6 +640,22 @@ A surface reuses properties of approximating splanes &ndash; like stitching surf
 [<kbd><img src="../examples/snapshots/surface-patches.jpg" width="300"></kbd>](../examples/surface-patches.html)
 [<kbd><img src="../examples/snapshots/surface-torus.jpg" width="300"></kbd>](../examples/surface-torus.html)
 
+When the `curve` parameter of `surface` is a function, its first two parameters *u,v* have values in the range [0,1]. The result of the function is an array with the coordinates of a 3D point. It is possible to use two additional parameters to the function, but in this case it must be wrapped in a [`splane`][#splane].
+
+```js
+JS:
+function bell( u, v )
+{
+   return [70*u-35,3*Math.sin(20*u*v),70*v-35];
+}
+		
+surface( [0,0,0], bell, 100 );
+```
+
+[<kbd><img src="../examples/snapshots/surface-parametric.jpg" width="300"></kbd>](../examples/surface-parametric.html)
+[<kbd><img src="../examples/snapshots/surface-texture.jpg" width="300"></kbd>](../examples/surface-texture.html)
+
+
 
 
 #### convex

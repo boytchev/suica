@@ -121,6 +121,8 @@ description: All examples, just the examples, only the examples
 [<kbd><img src="../examples/snapshots/surface-dynamic.jpg" width="300"></kbd>](../examples/surface-dynamic.html)
 [<kbd><img src="../examples/snapshots/surface-patches.jpg" width="300"></kbd>](../examples/surface-patches.html)
 [<kbd><img src="../examples/snapshots/surface-torus.jpg" width="300"></kbd>](../examples/surface-torus.html)
+[<kbd><img src="../examples/snapshots/surface-parametric.jpg" width="300"></kbd>](../examples/surface-parametric.html)
+[<kbd><img src="../examples/snapshots/surface-texture.jpg" width="300"></kbd>](../examples/surface-texture.html)
 
 
 [<kbd><img src="../examples/snapshots/convex.jpg" width="300"></kbd>](../examples/convex.html)

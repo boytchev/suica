@@ -1417,10 +1417,14 @@ window.splane = function( points=Suica.SPLANE.POINTS, closed, interpolant )
 		if( points.indexOf(',') >= 0 )
 			points = Suica.evaluate( '[[['+points.replaceAll(';','],[').replaceAll('|',']],[[')+']]]' );
 		else
+		{
 			return function( u, v )
 			{
-				return window[points]( u, v, interpolant );
+			console.log(points);
+			console.log(window[points]);
+				return window[points]( u, v, closed, interpolant );
 			}
+		}
 	}
 	
 	if( typeof closed === 'undefined' )
