@@ -14,7 +14,7 @@ description: The main tag of Suica and its properties
 	- <small>[Creating scenes](#creating-scenes)</small>
 	- <small>[Creating animations](#creating-animations)</small>
 - [Viewing 3D](#viewing-3d)
-    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`lookAt`](#lookat)</small>
+    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`orbit`](#orbit), [`lookAt`](#lookat)</small>
 	- <small>[Projections](#projections): [`perspective`](#perspective), [`orthographic`](#orthographic)</small>
 	- <small>[Canvases](#canvses): [`fullScreen`](#fullscreen), [`fullWindow`](#fullwindow)</small>
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
@@ -333,6 +333,50 @@ demo( 100, 30 );
 ```
 
 [<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](../examples/demo.html)
+
+
+
+
+#### orbit
+```html
+HTML:
+<orbit id="𝑜𝑏𝑗𝑒𝑐𝑡" distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" altitude="𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒" speed="𝘴𝘱𝘦𝘦𝘥" ...>
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = orbit( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒, 𝘴𝘱𝘦𝘦𝘥 );
+```
+Command and object. Turns on *orbit mode* &ndash; interactive rotation of the scene. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the coordinate system and altitude. By default, `distance` is 100 and `altitude` is 30. Parameter `speed` sets the rotation speed. The default speed is 1 radian per second (i.e. approximately 6.3 seconds for full revolution). These parameters are not properties of `orbit`, i.e. when they are not existing in the object.
+
+```html
+HTML:
+<orbit distance="100" altitude="30">
+```
+```js
+JS:
+orbit( 100, 30 );
+```
+
+| Interactivity | Mouse | Keys | Touch |
+|---|---|---|---|
+| orbiting | left button | | one-finger move |
+| zooming | middle button or mousewheel | | two-finger spread or squish |
+| panning | right button or left button + ctrl/alt/shiftKey | arrow keys | two-finger move |
+
+[<kbd><img src="../examples/snapshots/orbit.jpg" width="300"></kbd>](../examples/orbit.html)
+
+Although `orbit` is a command, it can be used as an object. In this case the object is not a Suica object, but an instance of Three.js's [`OrbitControls`](https://threejs.org/docs/#examples/en/controls/OrbitControls). When defined in HTML some of the properties are available as attributes (**zooming**: `enableZoom`, `maxDistance`, `minDistance`, `maxZoom`, `minZoom`, `zoomSpeed`; **orbiting**: `autoRotate`, `autoRotateSpeed`, `enableRotate`, `rotateSpeed`, `maxAzimuthAngle`, `minAzimuthAngle`, `maxPolarAngle`, `minPolarAngle`; **panning**: `enablePan`, `panSpeed`, `keyPanSpeed`, `screenSpacePanning`; **general**: `enabled`, `enableDamping`, `dampingFactor`). Modification of properties can be done only in JavaScript.
+
+```html
+HTML:
+<orbit distance="100" maxDistance="300" minDistance="10">
+```
+```js
+JS:
+a = orbit( 100 );
+a.maxDistance = 300;
+a.minDistance = 10;
+```
 
 
 
