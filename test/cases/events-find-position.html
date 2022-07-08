@@ -7,11 +7,11 @@
 </head>
 
 <body>
-	<suica orthographic onmousemove="onMouseMove" ontime="onTime">
+	<suica orthographic onpointermove="onPointerMove" ontime="onTime">
 	</suica>
 	
 	<script>
-		setTimeout( ()=>simulateMouseEvent('mousemove',100,300), 100 );
+		setTimeout( ()=>simulatePointerEvent('pointermove',100,300), 100 );
 
 		var n = 40,
 			circles = [],
@@ -21,7 +21,7 @@
 		for( var i=0; i<n; i++ )
 			circles.push( circle( [0,0,-i], 10+5*i, random(colors) ) );
 		
-		function onMouseMove( event )
+		function onPointerMove( event )
 		{
 			pos = findPosition( event );
 		}

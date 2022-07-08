@@ -21,7 +21,7 @@
 	<h1>Find event position</h1>
 	<p>Finding the position of a Suica event (hover the mouse).</p>
 
-	<suica orthographic onmousemove="onMouseMove" ontime="onTime">
+	<suica orthographic onpointermove="onPointerMove" ontime="onTime">
 	</suica>
 	
 	<script>
@@ -33,7 +33,7 @@
 		for( var i=0; i<n; i++ )
 			circles.push( circle( [0,0,-i], 10+5*i, random(colors) ) );
 		
-		function onMouseMove( event )
+		function onPointerMove( event )
 		{
 			pos = findPosition( event );
 		}

@@ -21,7 +21,7 @@
 	<h1>Suica canvas enter/leave</h1>
 	<p>Reacting when the mouse enters or leaves the Suica canvas.</p>
 
-	<suica onMouseEnter="onMouseEnter" onMouseLeave="onMouseLeave">
+	<suica onPointerEnter="onPointerEnter" onPointerLeave="onPointerLeave">
 		<demo distance="200">
 		
 		<sphere size="20" color="white">
@@ -34,12 +34,12 @@
 	<script>
 		const COLORS = ['peachpuff','gray','lightsalmon','black','lightgray','dimgray'];
 		
-		function onMouseEnter( event )
+		function onPointerEnter( event )
 		{
 			demo( 100, 0 );
 		}
 		
-		function onMouseLeave( event )
+		function onPointerLeave( event )
 		{
 			demo( 200, 0 );
 		}

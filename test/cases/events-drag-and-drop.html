@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<suica orthographic onmousedown="pick" onmousemove="drag" onmouseup="drop">
+	<suica orthographic onpointerdown="pick" onpointermove="drag" onpointerup="drop">
 		<sphere center="-60,-60,-800" size="100" color="peachpuff">
 		<sphere center="+60,+60,-800" size="100" color="lightsalmon">
 		<sphere center="-60,+60,-800" size="100" color="lightgray">
@@ -15,9 +15,9 @@
 	</suica>
 	
 	<script>
-		setTimeout( ()=>simulateMouseEvent('mousedown',250,250), 100 );
-		setTimeout( ()=>simulateMouseEvent('mousemove',200,200), 200 );
-		setTimeout( ()=>simulateMouseEvent('mouseup',200,200), 300 );
+		setTimeout( ()=>simulatePointerEvent('mousedown',250,250), 100 );
+		setTimeout( ()=>simulatePointerEvent('mousemove',200,200), 200 );
+		setTimeout( ()=>simulatePointerEvent('mouseup',200,200), 300 );
 
 		var activeObject, oldX, oldY;
 		

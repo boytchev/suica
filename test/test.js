@@ -325,13 +325,13 @@ function sendSnapshot( )
 
 
 
-	function simulateMouseEvent( eventName, x, y, button=0 )
+	function simulatePointerEvent( eventName, x, y, button=0 )
 	{
 		// x,y -- mouse coordinates relative to the Suica canvas element
 		
 		var rect = suica.canvas.getBoundingClientRect();
 
-		var oEvent = new MouseEvent( eventName,
+		var oEvent = new PointerEvent( eventName,
 			{
 				screenX: window.screenX + rect.x + x,
 				screenY: window.screenY + rect.y + y,

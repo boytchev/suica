@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Suica mouse enter</title>
+	<title>Proactive events</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -23,21 +23,21 @@
 
 	<suica proactive>
 		<demo>
-		<cube x="+30" size="20" color="peachpuff" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
-		<cube x="-30" size="20" color="lightsalmon" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
-		<cube z="+30" size="20" color="linen" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
-		<cube z="-30" size="20" color="gray" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube x="+30" size="20" color="peachpuff" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
+		<cube x="-30" size="20" color="lightsalmon" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
+		<cube z="+30" size="20" color="linen" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
+		<cube z="-30" size="20" color="gray" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
 	</suica>
 	
 	<script>
 
-		function onMouseEnter( event )
+		function onPointerEnter( event )
 		{
 			this.oldColor = this.color;
 			this.color = 'black';
 		}
 		
-		function onMouseLeave( )
+		function onPointerLeave( )
 		{
 			this.color = this.oldColor;
 		}

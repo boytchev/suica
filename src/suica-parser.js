@@ -333,21 +333,23 @@ class HTMLParser
 			}
 		}
 		
-		parseEvent( 'onmousemove',	'onmousemove' );
-		parseEvent( 'onmouseleave',	'onmouseleave' );
-		parseEvent( 'onmouseenter', 'onmouseenter' );
-		parseEvent( 'onmousedown',	'onmousedown' );
-		parseEvent( 'onmouseup',	'onmouseup' );
-		parseEvent( 'onclick',		'onclick' );
-		//parseEvent( 'ondblclick',	'ondblclick' );
+		// onevent names
+		parseEvent( 'onpointermove',	'onpointermove' );
+		parseEvent( 'onpointerleave',	'onpointerleave' );
+		parseEvent( 'onpointerenter',	'onpointerenter' );
+		parseEvent( 'onpointerdown',	'onpointerdown' );
+		parseEvent( 'onpointerup',		'onpointerup' );
+		parseEvent( 'onclick',			'onclick' );
+		//parseEvent( 'ondblclick',		'ondblclick' );
 
-		parseEvent( 'onmousemove',	'mousemove' );
-		parseEvent( 'onmouseleave',	'mouseleave' );
-		parseEvent( 'onmouseenter', 'mouseenter' );
-		parseEvent( 'onmousedown',	'mousedown' );
-		parseEvent( 'onmouseup',	'mouseup' );
-		parseEvent( 'onclick',		'click' );
-		//parseEvent( 'ondblclick',	'dblclick' );
+		// event names
+		parseEvent( 'onpointermove',	'pointermove' );
+		parseEvent( 'onpointerleave',	'pointerleave' );
+		parseEvent( 'onpointerenter',	'pointerenter' );
+		parseEvent( 'onpointerdown',	'pointerdown' );
+		parseEvent( 'onpointerup',		'pointerup' );
+		parseEvent( 'onclick',			'click' );
+//		//parseEvent( 'ondblclick',		'dblclick' );
 		
 		if( suica )
 		{

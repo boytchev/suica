@@ -7,7 +7,7 @@
 
 // control flags
 const DEBUG_CALLS = false;
-const DEBUG_EVENTS = false;
+const DEBUG_EVENTS = !false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
 
@@ -199,9 +199,9 @@ class Suica
 //		this.scene.add( this.debugObject );
 		
 		// interactivity manager
-		this.canvas.addEventListener( 'mousemove', Suica.onMouseMove );
-		this.canvas.addEventListener( 'mousedown', Suica.onMouseDown );
-		this.canvas.addEventListener( 'mouseup', Suica.onMouseUp );
+		this.canvas.addEventListener( 'pointermove', Suica.onPointerMove );
+		this.canvas.addEventListener( 'pointerdown', Suica.onPointerDown );
+		this.canvas.addEventListener( 'pointerup', Suica.onPointerUp );
 		this.canvas.addEventListener( 'click', Suica.onClick );
 		//this.canvas.addEventListener( 'dblclick', Suica.onDblClick );
 		
@@ -554,7 +554,7 @@ class Suica
 			}
 			
 			if( that.isProactive /*&& (that.demoViewPoint || that.onTimeHandler)*/ )
-				Suica.onMouseMoveUpdate( );
+				Suica.onPointerMoveUpdate( );
 			
 			that.render( );
 
@@ -982,7 +982,7 @@ class Suica
 		var rect = canvas.getBoundingClientRect(),
 			pixelX = Math.floor( domEvent.clientX - rect.left ),
 			pixelY = Math.floor( domEvent.clientY - rect.top );
-	
+
 		// get relative pixel position (ie. [-1,+1])
 		this.raycastPointer.x =  2*pixelX/canvas.clientWidth - 1;
 		this.raycastPointer.y = -2*pixelY/canvas.clientHeight + 1;
@@ -1008,7 +1008,7 @@ class Suica
 	findObjects( domEvent, onlyInteractive = false )
 	{
 		var scanObjects = [];
-		
+
 		if( onlyInteractive )
 		{
 			for( let object of this.scene.children )
@@ -1016,11 +1016,11 @@ class Suica
 				let suicaObject = object.suicaObject;
 				if( !suicaObject ) continue;
 				
-				if( suicaObject.onmousemove ||
-					suicaObject.onmousedown ||
-					suicaObject.onmouseup ||
-					suicaObject.onmouseenter ||
-					suicaObject.onmouseleave ||
+				if( suicaObject.onpointermove ||
+					suicaObject.onpointerdown ||
+					suicaObject.onpointerup ||
+					suicaObject.onpointerenter ||
+					suicaObject.onpointerleave ||
 					suicaObject.onclick )
 					scanObjects.push( object );
 			}
@@ -1123,7 +1123,7 @@ class Suica
 	}
 
 	
-	static onMouseMove( event )
+	static onPointerMove( event )
 	{
 		Suica.globalHoverEvent = event;
 		
@@ -1133,24 +1133,24 @@ class Suica
 		{
 			if( object == Suica.hoverObject )
 			{
-				Suica.eventCall( object, 'onmousemove', event );
+				Suica.eventCall( object, 'onpointermove', event );
 			}
 			else
 			{
-				Suica.eventCall( Suica.hoverObject, 'onmouseleave', event );		
+				Suica.eventCall( Suica.hoverObject, 'onpointerleave', event );		
 				Suica.hoverObject = object;
-				Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
+				Suica.eventCall( Suica.hoverObject, 'onpointerenter', event );
 			}
 		}
 		else
 		{
 			Suica.hoverObject = object;
-			Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
+			Suica.eventCall( Suica.hoverObject, 'onpointerenter', event );
 		}
-	} // Suica.onMouseMove
+	} // Suica.onPointerMove
 	
 	
-	static onMouseMoveUpdate( )
+	static onPointerMoveUpdate( )
 	{
 		// this method updates mouseenter/leave cause by change in viewpoint
 		
@@ -1163,38 +1163,38 @@ class Suica
 		{
 			if( object != Suica.hoverObject )
 			{
-				Suica.eventCall( Suica.hoverObject, 'onmouseleave', event );		
+				Suica.eventCall( Suica.hoverObject, 'onpointerleave', event );		
 				Suica.hoverObject = object;
-				Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
+				Suica.eventCall( Suica.hoverObject, 'onpointerenter', event );
 			}
 		}
 		else
 		{
 			Suica.hoverObject = object;
-			Suica.eventCall( Suica.hoverObject, 'onmouseenter', event );
+			Suica.eventCall( Suica.hoverObject, 'onpointerenter', event );
 		}
-	} // Suica.onMouseMoveUpdate
+	} // Suica.onPointerMoveUpdate
 	
 	
-	static onMouseDown( event )
+	static onPointerDown( event )
 	{
 		var object = findObject( event, true );
 		if( object )
 		{
-			Suica.eventCall( object, 'onmousedown', event );
+			Suica.eventCall( object, 'onpointerdown', event );
 		}
 		event.preventDefault() ;
-	} // Suica.onMouseDown
+	} // Suica.onPointerDown
 	
 	
-	static onMouseUp( event )
+	static onPointerUp( event )
 	{
 		var object = findObject( event, true );
 		if( object )
 		{
-			Suica.eventCall( object, 'onmouseup', event );
+			Suica.eventCall( object, 'onpointerup', event );
 		}
-	} // Suica.onMouseUp
+	} // Suica.onPointerUp
 	
 	
 	static onClick( event )
@@ -1213,12 +1213,12 @@ class Suica
 	
 	static cloneEvents( target, source )
 	{
-		target.onmouseenter = source.onmouseenter;
-		target.onmousemove = source.onmousemove;
-		target.onmouseleave = source.onmouseleave;
-		target.onmousedown = source.onmousedown;
+		target.onpointerenter = source.onpointerenter;
+		target.onpointermove = source.onpointermove;
+		target.onpointerleave = source.onpointerleave;
+		target.onpointerdown = source.onpointerdown;
 		target.onclick = source.onclick;
-		target.onmouseup = source.onmouseup;
+		target.onpointerup = source.onpointerup;
 	}
 	
 	// static onDblClick( event )

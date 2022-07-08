@@ -46,12 +46,12 @@ function createFSButton( suica )
 
 	button.textContent = requestFullscreen ? 'ENTER FULLSCREEN' : 'FULLSCREEN NOT SUPPORTED';
 
-	button.onmouseenter = function( )
+	button.onpointerenter = function( )
 	{
 		button.style.opacity = '1.0';
 	};
 
-	button.onmouseleave = function( )
+	button.onpointerleave = function( )
 	{
 		button.style.opacity = '0.5';
 	};

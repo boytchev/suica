@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<suica onMouseEnter="onMouseEnter" onMouseLeave="onMouseLeave">
+	<suica onPointerEnter="onPointerEnter" onPointerLeave="onPointerLeave">
 		<demo distance="200">
 		
 		<sphere size="20" color="white">
@@ -18,17 +18,17 @@
 	</suica>
 	
 	<script>
-		setTimeout( ()=>simulateMouseEvent('mouseleave',200,200), 100 );
-		setTimeout( ()=>simulateMouseEvent('mouseenter',200,200), 200 );
+		setTimeout( ()=>simulatePointerEvent('pointerleave',200,200), 100 );
+		setTimeout( ()=>simulatePointerEvent('pointerenter',200,200), 200 );
 
 		const COLORS = ['peachpuff','gray','lightsalmon','black','lightgray','dimgray'];
 		
-		function onMouseEnter( event )
+		function onPointerEnter( event )
 		{
 			demo( 100, 0 );
 		}
 		
-		function onMouseLeave( event )
+		function onPointerLeave( event )
 		{
 			demo( 200, 0 );
 		}

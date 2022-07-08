@@ -9,22 +9,22 @@
 <body>
 	<suica proactive>
 		<demo>
-		<cube x="+30" size="20" color="peachpuff" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
-		<cube x="-30" size="20" color="lightsalmon" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
-		<cube z="+30" size="20" color="linen" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
-		<cube z="-30" size="20" color="gray" onmouseenter="onMouseEnter" onmouseleave="onMouseLeave">
+		<cube x="+30" size="20" color="peachpuff" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
+		<cube x="-30" size="20" color="lightsalmon" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
+		<cube z="+30" size="20" color="linen" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
+		<cube z="-30" size="20" color="gray" onpointerenter="onPointerEnter" onpointerleave="onPointerLeave">
 	</suica>
 	
 	<script>
-		setTimeout( ()=>simulateMouseEvent('mousemove',350,200), 100 );
+		setTimeout( ()=>simulatePointerEvent('pointermove',350,200), 100 );
 		
-		function onMouseEnter( event )
+		function onPointerEnter( event )
 		{
 			this.oldColor = this.color;
 			this.color = 'black';
 		}
 		
-		function onMouseLeave( )
+		function onPointerLeave( )
 		{
 			this.color = this.oldColor;
 		}
