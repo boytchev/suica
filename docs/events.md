@@ -4,17 +4,17 @@ description: Things that help making interactive programs
 ---
 ##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; **Events**
 
-**Suica events** are actions that happen 'outside' a Suica program and it is impossible to predict when they will happen. A typical example of an event is when users click on Suica objects.
+**Suica events** are actions that happen 'outside' a Suica program and it is impossible to predict when they will happen. A typical example of an event is when users click, tap or touch Suica objects.
 
 
 # Table of contents
 - [Introduction](#introduction)
-	- <small>[Motion events](#motion-events): `onМouseEnter`, `onМouseMove`, `onМouseLeave`</small>
-	- <small>[Click events](#click-events): `onMouseDown`, `onMouseUp`, `onClick`</small>
+	- <small>[Motion events](#motion-events): `onPointerEnter`, `onPointerMove`, `onPointerLeave`</small>
+	- <small>[Click events](#click-events): `onPointerDown`, `onPointerUp`, `onClick`</small>
 	- <small>[Time events](#time-events): `onTime`</small>
 - [Working with events](#working-with-events)
 	- <small>[Event listeners](#event-listeners): [`addEventListener`](#addeventlistener), [`removeEventListener`](#removeeventlistener)</small>
-	- <small>[Mouse event handlers](#mouse-event-handlers): [`findPosition`](#findposition), [`findObject`](#findobject), [`findObjects`](#findobjects)</small>
+	- <small>[Pointer event handlers](#pointer-event-handlers): [`findPosition`](#findposition), [`findObject`](#findobject), [`findObjects`](#findobjects)</small>
 	- <small>[Time event handlers](#time-event-handlers)</small>
 	- <small>[Proactive events](#proactive-events): [`proactive`](#proactive)</small>
 
@@ -29,13 +29,13 @@ Suica supports a simplified model of events. It is similar to the traditional we
 
 ## Motion events
 
-Motion events are `onМouseEnter`, `onМouseMove` and `onМouseLeave`. They occur when the mouse enters, moves over or leaves Suica canvas or Suica object.
+Motion events are `onPointerEnter`, `onPointerMove` and `onPointerLeave`. They occur when the pointer (mouse, stilus or finger) enters, moves over or leaves Suica canvas or Suica object.
 
 <img src="images/events-motion.png">
 
 ## Click events
 
-Click events are `onMouseDown`, `onMouseUp` and `onClick`. They occur when a mouse button is pressed, released or clicked over Suica canvas or Suica object.
+Click events are `onPointerDown`, `onPointerUp` and `onClick`. They occur when a pointer or its button is pressed, released or clicked over Suica canvas or Suica object.
 
 <img src="images/events-click.png">
 
@@ -56,7 +56,7 @@ Events that are not listened to, are ignored.
 
 ## Event listeners
 
-In Suica event listeners can be set for Suica canvas and for individual Suica objects. For example, a canvas `onClick` event occurs when the user clicks anywhere in the canvas, while an object `onClick` event occurs when the user clicks on the image of the object. Similarly, a canvas `onMouseEnter` occurs when the mouse cursor enters the canvas, while an object `onMouseEnter` occurs when the cursors enters the boundary of the object's image.
+In Suica event listeners can be set for Suica canvas and for individual Suica objects. For example, a canvas `onClick` event occurs when the user clicks anywhere in the canvas, while an object `onClick` event occurs when the user clicks on the image of the object. Similarly, a canvas `onPointerEnter` occurs when the pointer enters the canvas, while an object `onPointerEnter` occurs when the pointer enters the boundary of the object's image.
 
 In HTML event listeners are set as attributes.
 
@@ -65,7 +65,7 @@ HTML:
 <𝑜𝑏𝑗𝑒𝑐𝑡 𝑒𝑣𝑒𝑛𝑡𝑁𝑎𝑚𝑒="𝑒𝑣𝑒𝑛𝑡𝐻𝑎𝑛𝑑𝑙𝑒𝑟">
 ```
 
-The name of the attribute is the name of the event, which is case-insensitive and it can be with or without `on-` prefix. The value of the attribute is the name of the event handler function. The following code snippets install listeners of mouse click events to the whole Suica canvas and to a cube.
+The name of the attribute is the name of the event, which is case-insensitive and it can be with or without `on-` prefix. The value of the attribute is the name of the event handler function. The following code snippets install listeners of pointer click events to the whole Suica canvas and to a cube.
 
 ```html
 HTML:
@@ -81,12 +81,12 @@ In JavaScript event listeners are set by `addEventListener` and removed by `remo
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.addEventListener( 𝑒𝑣𝑒𝑛𝑡𝑁𝑎𝑚𝑒, 𝑒𝑣𝑒𝑛𝑡𝐻𝑎𝑛𝑑𝑙𝑒𝑟 );
 ```
-Function. Adds an event listener to specific `eventName` that triggers an `eventHandler` function. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `mouseMove` and `onMouseMove` are considered the same event. Only one event handler per event per object can be set, i.e. setting another event handler will replace the previous one. Suica's `addEventListener` mimics to some extent the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) which is used to set event listeners for HTML elements in a web page.
+Function. Adds an event listener to specific `eventName` that triggers an `eventHandler` function. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `pointerMove` and `onPointerMove` are considered the same event. Only one event handler per event per object can be set, i.e. setting another event handler will replace the previous one. Suica's `addEventListener` mimics to some extent the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) which is used to set event listeners for HTML elements in a web page.
 
 ```js
 JS:
-suica.addEventListener( 'mouseMove', eventHandler );
-obj.addEventListener( 'onMouseMove', eventHandler );
+suica.addEventListener( 'pointerMove', eventHandler );
+obj.addEventListener( 'onPointerMove', eventHandler );
 ```
 
 [<kbd><img src="../examples/snapshots/events-event-listener.jpg" width="300"></kbd>](../examples/events-event-listener.html)
@@ -105,14 +105,14 @@ obj.onclick = eventHandler;
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡.removeEventListener( 𝑒𝑣𝑒𝑛𝑡𝑁𝑎𝑚𝑒 );
 ```
-Function. Removes an event listener of specific `eventName`. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `mouseMove` and `onMouseMove` are considered the same event. `removeEventListener`
+Function. Removes an event listener of specific `eventName`. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `pointerMove` and `onPointerMove` are considered the same event. `removeEventListener`
 mimics to some extent the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s
 [removeEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener) which is used to remove event listeners for HTML elements in a web page. 
 
 ```js
 JS:
-suica.removeEventListener( 'mouseMove' );
-obj.removeEventListener( 'onMouseMove' );
+suica.removeEventListener( 'pointerMove' );
+obj.removeEventListener( 'onPointerMove' );
 ```
 
 [<kbd><img src="../examples/snapshots/events-one-time-listener.jpg" width="300"></kbd>](../examples/events-one-time-listener.html)
@@ -127,11 +127,11 @@ obj.onclick = null;
 
 
 
-## Mouse event handlers
+## Pointer event handlers
 
 In Suica event handlers are defined only in JavaScript and they are functions that are activated from listeners when a specific event occurs. Often the name of the event handler is the same as the name of the corresponding event, although this is not enforced. These functions have optional, but predefined parameters.
 
-All mouse-related events, these are `onМouseEnter`, `onМouseMove`, `onМouseLeave`, `onMouseDown`, `onMouseUp` and `onClick`, provide parameter `event` to their handlers.
+All pointer-related events, these are `onPointerEnter`, `onPointerMove`, `onPointerLeave`, `onPointerDown`, `onPointerUp` and `onClick`, provide parameter `event` to their handlers.
 
 ```js
 JS:
@@ -141,11 +141,11 @@ function 𝑒𝑣𝑒𝑛𝑡𝐻𝑎𝑛𝑑𝑙𝑒𝑟( 𝑒𝑣𝑒𝑛𝑡 
 }
 ```
 
-The actual name of the parameter is user-defined, but traditionally *'event'* is used. The following snippet illustrates the definition of a event handler for `onMouseEnter` event. Note that both the function name and the parameter name are user-defined.
+The actual name of the parameter is user-defined, but traditionally *'event'* is used. The following snippet illustrates the definition of a event handler for `onPointerEnter` event. Note that both the function name and the parameter name are user-defined.
 
 ```js
 JS:
-function onMouseEnter( event )
+function onPointerEnter( event )
 {
 	...
 }
@@ -153,11 +153,11 @@ function onMouseEnter( event )
 
 [<kbd><img src="../examples/snapshots/events-suica-enter.jpg" width="300"></kbd>](../examples/events-suica-enter.html)
 
-The `event` parameter describes the event and its structure is the same as DOM's [MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent). The parameter contains data about event time and place, mouse buttons, pressed keys, etc. These data can be used to implement drag-and-drop operations. Each event handler is run from within the object that reacted to the event. The system variable `this` in the event handler points to this object. This is used to identify the object when several objects share the same event handler.
+The `event` parameter describes the event and its structure is the same as DOM's [PointerEvent](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent). The parameter contains data about event time and place, mouse buttons, pressed keys, stilus tilt, finger pressure etc. These data can be used to implement drag-and-drop operations. Each event handler is run from within the object that reacted to the event. The system variable `this` in the event handler points to this object. This is used to identify the object when several objects share the same event handler.
 
 ```js
 JS:
-function onMouseMove( event )
+function onPointerMove( event )
 {
    if( event.ctrlKey )
    {
@@ -171,7 +171,7 @@ function onMouseMove( event )
 [<kbd><img src="../examples/snapshots/events-point-and-spin.jpg" width="300"></kbd>](../examples/events-point-and-spin.html)
 
 
-Additional Suica-specific data for mouse events is extracted from `event` by 
+Additional Suica-specific data for pointer events is extracted from `event` by 
 `findPosition`, `findObject` and `findObjects`.
 
 
@@ -180,11 +180,11 @@ Additional Suica-specific data for mouse events is extracted from `event` by
 JS:
 𝑝𝑜𝑠 = findPosition( 𝑒𝑣𝑒𝑛𝑡 );
 ```
-Function. Finds the position of a mouse event. The position is measured in pixels and is relative to the center of the Suica canvas. The function requires the `event` parameter of the event handler. The result is an array [`x`,`y`] of the position. `findPosition` is typically used with events of the Suica canvas.
+Function. Finds the position of a pointer event. The position is measured in pixels and is relative to the center of the Suica canvas. The function requires the `event` parameter of the event handler. The result is an array [`x`,`y`] of the position. `findPosition` is typically used with events of the Suica canvas.
 
 ```js
 JS:
-function onMouseMove( event )
+function onPointerMove( event )
 {
 	var pos = findPosition( event );
 }
@@ -205,11 +205,11 @@ changed with [demo](suica.md#demo) or [lookAt](suica.md#lookat).
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.findObject( 𝑒𝑣𝑒𝑛𝑡 );
 ```
-Function. Finds the Suica object where a mouse event occurred. The function requires the `event` parameter of the event handler. The result is the closest to the viewer Suica object that is at the position of the event, or `null` if no such object exists. `findObject` is typically used with events of the Suica canvas.
+Function. Finds the Suica object where a pointer event occurred. The function requires the `event` parameter of the event handler. The result is the closest to the viewer Suica object that is at the position of the event, or `null` if no such object exists. `findObject` is typically used with events of the Suica canvas.
 
 ```js
 JS:
-function onMouseMove( event )
+function onPointerMove( event )
 {
 	var object = findObject( event );
 }
@@ -224,12 +224,11 @@ function onMouseMove( event )
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝑠 = 𝑠𝑢𝑖𝑐𝑎.findObjects( 𝑒𝑣𝑒𝑛𝑡 );
 ```
-Function. Finds all Suica objects where a mouse event occured. The function requires the `event` parameter of the event handler. The result is a sorted list (from nearest to farthest with respect to the viewer) of all Suica objects that are at the position of the event, or an empty list `[]` if no such objects exist. `findObjects` is typically used
-with events of the Suica canvas.
+Function. Finds all Suica objects where a pointer event occured. The function requires the `event` parameter of the event handler. The result is a sorted list (from nearest to farthest with respect to the viewer) of all Suica objects that are at the position of the event, or an empty list `[]` if no such objects exist. `findObjects` is typically used with events of the Suica canvas.
 
 ```js
 JS:
-function onMouseMove( event )
+function onPointerMove( event )
 {
 	var object = findObjects( event );
 }
@@ -263,7 +262,7 @@ function onTime( t, dT )
 
 ## Proactive events
 
-Suica supports proactive mode for mouse motion events `onМouseEnter`, `onМouseMove` and `onМouseLeave`. This mode can be turned on with HTML attribute, HTML tag or JavaScript command.
+Suica supports proactive mode for pointer motion events `onPointerEnter`, `onPointerMove` and `onPointerLeave`. This mode can be turned on with HTML attribute, HTML tag or JavaScript command.
 
 #### proactive
 ```html
@@ -275,8 +274,8 @@ HTML:
 JS:
 proactive( );
 ```
-Command. Turns on proactive mode. Normal mouse motion events only occur when the mouse is moved into, over or out of an object. In proactive mode these events are triggered even when the mouse is stationary, but an object moves into, under or out of the mouse.
+Command. Turns on proactive mode. Normal pointer motion events only occur when the pointer is moved into, over or out of an object. In proactive mode these events are triggered even when the pointer is stationary, but an object moves into, under or out of the pointer.
 
 [<kbd><img src="../examples/snapshots/events-proactive.jpg" width="300"></kbd>](../examples/events-proactive.html)
 
-Proactive mode is resource consuming. For every frame all objects in Suica are tested against the mouse position. When a proactive event occurs Suica executes the assigned event handler and passes the latest mouse `event` structure as a parameter to the handler.
+Proactive mode is resource consuming. For every frame all objects in Suica are tested against the pointer position. When a proactive event occurs Suica executes the assigned event handler and passes the latest pointer `event` structure as a parameter to the handler.
