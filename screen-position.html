@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Screen position</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Screen position</h1>
+	<p>Getting the screen position of a Suica object.</p>
+
+	<suica ontime="onTime">
+		<oxyz>
+		<demo>
+		<point id="x" x="30">
+		<sphere id="y" y="30" size="5">
+		<point id="z" z="30">
+		<div id="label-x" style="background: yellow; border: solid red 1px; padding: 0.5em; position: absolute;"><b>Custom label</b><br><small>styled in CSS</small></div>
+		<div id="label-y" style="position: absolute; font-size: 1.5em; font-weight: bold; text-shadow: 0.1em 0.1em 0.2em black;"></div>
+		<div id="label-z" style="width: 1em; height: 1em; border: dotted black 1px; border-radius: 1em; text-align: center; padding: 0.25em; position: absolute;">Y</div>
+	</suica>
+
+	<script>
+		var pos;
+		
+		function onTime( t )
+		{
+			pos = x.screenPosition();
+			element('label-x').style.left = pos[0]+'px';
+			element('label-x').style.top = pos[1]+'px';
+
+			y.y = 20*Math.sin( 2*t );
+			pos = y.screenPosition( );
+			element('label-y').style.left = pos[0]+'px';
+			element('label-y').style.top = pos[1]+'px';
+			element('label-y').innerHTML = t.toFixed(2);
+			
+			pos = z.screenPosition();
+			element('label-z').style.left = pos[0]+'px';
+			element('label-z').style.top = pos[1]+'px';
+		}
+	</script>
+</body>
+</html>

@@ -1047,6 +1047,8 @@ parseTagCANVAS(suica,elem){}
 parseTagDIV(suica,elem){}
 parseTagSPAN(suica,elem){}
 parseTagIMG(suica,elem){}
+parseTagBR(suica,elem){}
+parseTagSMALL(suica,elem){}
 parseTagOXYZ(suica,elem)
 {suica.oxyz(elem.getAttribute('size'),elem.getAttribute('color'));}
 parseTagDEMO(suica,elem)
@@ -1368,7 +1370,9 @@ addEventListener(type,listener,aux)
 type='on'+type;this[type.toLowerCase()]=listener;}
 removeEventListener(type,listener,aux)
 {if(listener)console.warn('Suica objects do not support second parameter of removeEventListener');if(aux)console.warn('Suica objects do not support third parameter of removeEventListener');if(!type.startsWith('on'))
-type='on'+type;this[type.toLowerCase()]=null;}}
+type='on'+type;this[type.toLowerCase()]=null;}
+screenPosition(relativeOffset=[0,0,0],absoluteOffset=[0,0,0])
+{relativeOffset=Suica.parseCenter(relativeOffset);absoluteOffset=Suica.parseCenter(absoluteOffset);this.threejs.updateWorldMatrix(true,true);var target=new THREE.Vector3(...relativeOffset),pos=this.threejs.localToWorld(target);pos.x+=absoluteOffset[0];pos.y+=absoluteOffset[1];pos.z+=absoluteOffset[2];pos.project(this.suica.camera);var x=(1+pos.x)/2*this.suica.canvas.clientWidth,y=(1-pos.y)/2*this.suica.canvas.clientHeight;return[Math.round(100*x)/100,Math.round(100*y)/100];}}
 Mesh.createMaterials();﻿
 class Point extends Mesh
 {static COLOR='black';static SIZE=7;static solidGeometry;constructor(suica,center,size,color)

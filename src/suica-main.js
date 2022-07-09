@@ -1070,6 +1070,7 @@ class Suica
 		return null;
 	}
 	
+	
 	addEventListener( type, listener, aux )
 	{
 		if( aux ) console.warn( 'Suica canvas does not support third parameter of addEventListener');

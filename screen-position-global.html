@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Screen position &ndash; global coordinates</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<style>
+		.label {
+			width: 1em;
+			height: 1em;
+			background: rgba( 255, 255, 255, 0.3 );
+			border: dotted black 1px;
+			border-radius: 1em;
+			text-align: center;
+			padding: 0.25em;
+			position: absolute;
+		}
+	</style>
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Screen position &ndash; global coordinates</h1>
+	<p>Getting the screen position from object local and global coordinates.</p>
+
+	<suica ontime="onTime">
+		<demo>
+		<pyramid id="p" count="4" width="40" height="40" y="-10">
+		<div id="a" class="label">A</div>
+		<div id="b" class="label">B</div>
+		<div id="c" class="label">C</div>
+		<div id="d" class="label">D</div>
+		<div id="e" class="label">E</div>
+		<div id="e1" class="label">E'</div>
+		<div id="e2" class="label">E"</div>
+	</suica>
+
+	<script>
+		function setPos( label, offset, offsetY=[0,0,0] )
+		{
+			var elem = element( label );
+			
+			var pos = p.screenPosition( offset, offsetY );
+			elem.style.left = (pos[0]-elem.clientWidth/2)+'px';
+			elem.style.top = (pos[1]-elem.clientHeight/2)+'px';
+		}
+		
+		function onTime( t )
+		{
+			p.spinH = 180*Math.sin(0.4*t);
+			p.spinV = 90*Math.cos(0.7**t);
+			p.spinT = 180*Math.sin(0.2*t);
+			
+			setPos( 'a', [0.5,0,0] );
+			setPos( 'b', [0,0,0.5] );
+			setPos( 'c', [-0.5,0,0] );
+			setPos( 'd', [0,0,-0.5] );
+			setPos( 'e', [0,1,0] );
+			setPos( 'e1', [0,1,0], [0,7,0] );
+			setPos( 'e2', [0,1,0], [0,14,0] );
+		}
+	</script>
+</body>
+</html>

@@ -105,6 +105,8 @@ class HTMLParser
 	parseTagDIV( suica, elem ) {}
 	parseTagSPAN( suica, elem ) {}
 	parseTagIMG( suica, elem ) {}
+	parseTagBR( suica, elem ) {}
+	parseTagSMALL( suica, elem ) {}
 	
 	// <oxyz size="..." color="...">
 	parseTagOXYZ( suica, elem )
