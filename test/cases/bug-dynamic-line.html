@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="onTime">
+		<cube id="a" size="4">
+		<cube id="b" size="4">
+	</suica>
+
+	<script>
+		var c = line();
+		
+		function onTime( t )
+		{
+			a.x = 20+10*Math.sin( 2.2*t );
+			a.y = 20*Math.sin( 1.2*t );
+			a.z = 20*Math.cos( 2.2*t );
+
+			b.x = -20+10*Math.cos( 2.2*t );
+			b.y = 20*Math.cos( 1.9*t );
+			b.z = 20*Math.sin( 1.2*t );
+
+			c.from = a.center;
+			c.to = b.center;
+		}
+	</script>
+</body>
+</html>

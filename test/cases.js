@@ -2,6 +2,7 @@
 var cases = [ 
 'allobjects', 
 'background', 
+'bug-dynamic-line', 
 'camera-anaglyph', 
 'camera-fullscreen', 
 'camera-fullwindow', 

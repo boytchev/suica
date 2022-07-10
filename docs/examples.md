@@ -186,6 +186,8 @@ description: All examples, just the examples, only the examples
 ## [Geometrical properties](properties.md#geometrical-properties)
 
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](../examples/object-as-position.html)
+[<kbd><img src="../examples/snapshots/object-position.jpg" width="300"></kbd>](../examples/object-position.html)
+[<kbd><img src="../examples/snapshots/object-position-closest.jpg" width="300"></kbd>](../examples/object-position-closest.html)
 [<kbd><img src="../examples/snapshots/screen-position.jpg" width="300"></kbd>](../examples/screen-position.html)
 [<kbd><img src="../examples/snapshots/screen-position-local.jpg" width="300"></kbd>](../examples/screen-position-local.html)
 [<kbd><img src="../examples/snapshots/screen-position-global.jpg" width="300"></kbd>](../examples/screen-position-global.html)

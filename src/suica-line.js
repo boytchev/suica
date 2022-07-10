@@ -52,8 +52,9 @@ class Line extends Mesh
 
 		center = Suica.parseCenter( center );
 		
-		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 0, ...center );
-		this.threejs.geometry.needsUpdate = true;
+		var pos = this.threejs.geometry.getAttribute( 'position' );
+		pos.setXYZ( 0, ...center );
+		pos.needsUpdate = true;
 	}
 
 
@@ -86,8 +87,9 @@ class Line extends Mesh
 
 		to = Suica.parseCenter( to );
 		
-		this.threejs.geometry.getAttribute( 'position' ).setXYZ( 1, ...to );
-		this.threejs.geometry.needsUpdate = true;
+		var pos = this.threejs.geometry.getAttribute( 'position' );
+		pos.setXYZ( 1, ...to );
+		pos.needsUpdate = true;
 	}
 
 

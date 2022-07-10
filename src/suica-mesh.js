@@ -576,10 +576,9 @@ class Mesh
 	}
 	
 
-	screenPosition( localOffset=[0,0,0], globalOffset=[0,0,0] )
+	objectPosition( localOffset=[0,0,0] )
 	{
 		localOffset = Suica.parseCenter( localOffset );
-		globalOffset = Suica.parseCenter( globalOffset );
 
 		switch( this.suica.orientation )
 		{
@@ -621,6 +620,16 @@ class Mesh
 		var target = new THREE.Vector3( ...localOffset ),
 			pos = this.threejs.localToWorld( target );
 			
+		return [ pos.x, pos.y, pos.z ];
+	}
+	
+
+	screenPosition( localOffset=[0,0,0], globalOffset=[0,0,0] )
+	{
+		var pos = new THREE.Vector3( ...this.objectPosition( localOffset ) );
+		
+		globalOffset = Suica.parseCenter( globalOffset );
+
 		pos.x += globalOffset[0];
 		pos.y += globalOffset[1];
 		pos.z += globalOffset[2];

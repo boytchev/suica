@@ -1371,10 +1371,12 @@ type='on'+type;this[type.toLowerCase()]=listener;}
 removeEventListener(type,listener,aux)
 {if(listener)console.warn('Suica objects do not support second parameter of removeEventListener');if(aux)console.warn('Suica objects do not support third parameter of removeEventListener');if(!type.startsWith('on'))
 type='on'+type;this[type.toLowerCase()]=null;}
-screenPosition(localOffset=[0,0,0],globalOffset=[0,0,0])
-{localOffset=Suica.parseCenter(localOffset);globalOffset=Suica.parseCenter(globalOffset);switch(this.suica.orientation)
+objectPosition(localOffset=[0,0,0])
+{localOffset=Suica.parseCenter(localOffset);switch(this.suica.orientation)
 {case Suica.ORIENTATIONS.YXZ:localOffset[0]/=this.threejs.scale.y;localOffset[1]/=this.threejs.scale.x;localOffset[2]/=this.threejs.scale.z;break;case Suica.ORIENTATIONS.ZYX:localOffset[0]/=this.threejs.scale.z;localOffset[1]/=this.threejs.scale.y;localOffset[2]/=this.threejs.scale.x;break;case Suica.ORIENTATIONS.XZY:localOffset[0]/=this.threejs.scale.x;localOffset[1]/=this.threejs.scale.z;localOffset[2]/=this.threejs.scale.y;break;case Suica.ORIENTATIONS.ZXY:localOffset[0]/=this.threejs.scale.z;localOffset[1]/=this.threejs.scale.x;localOffset[2]/=this.threejs.scale.y;break;case Suica.ORIENTATIONS.XYZ:localOffset[0]/=this.threejs.scale.x;localOffset[1]/=this.threejs.scale.y;localOffset[2]/=this.threejs.scale.z;break;case Suica.ORIENTATIONS.YZX:localOffset[0]/=this.threejs.scale.y;localOffset[1]/=this.threejs.scale.z;localOffset[2]/=this.threejs.scale.x;break;default:throw'error: unknown orientation';}
-this.threejs.updateWorldMatrix(true,true);var target=new THREE.Vector3(...localOffset),pos=this.threejs.localToWorld(target);pos.x+=globalOffset[0];pos.y+=globalOffset[1];pos.z+=globalOffset[2];pos.project(this.suica.camera);var x=(1+pos.x)/2*this.suica.canvas.clientWidth,y=(1-pos.y)/2*this.suica.canvas.clientHeight,z=pos.z;return[Math.round(100*x)/100,Math.round(100*y)/100,Math.round(1000*z)/1000];}}
+this.threejs.updateWorldMatrix(true,true);var target=new THREE.Vector3(...localOffset),pos=this.threejs.localToWorld(target);return[pos.x,pos.y,pos.z];}
+screenPosition(localOffset=[0,0,0],globalOffset=[0,0,0])
+{var pos=new THREE.Vector3(...this.objectPosition(localOffset));globalOffset=Suica.parseCenter(globalOffset);pos.x+=globalOffset[0];pos.y+=globalOffset[1];pos.z+=globalOffset[2];pos.project(this.suica.camera);var x=(1+pos.x)/2*this.suica.canvas.clientWidth,y=(1-pos.y)/2*this.suica.canvas.clientHeight,z=pos.z;return[Math.round(100*x)/100,Math.round(100*y)/100,Math.round(1000*z)/1000];}}
 Mesh.createMaterials();﻿
 class Point extends Mesh
 {static COLOR='black';static SIZE=7;static solidGeometry;constructor(suica,center,size,color)
@@ -1398,7 +1400,7 @@ super(suica,new THREE.LineSegments(Line.solidGeometry.clone(),Mesh.lineMaterial.
 get center()
 {this.suica.parser?.parseTags();var pos=this.threejs.geometry.getAttribute('position');return[pos.getX(0),pos.getY(0),pos.getZ(0)];}
 set center(center)
-{this.suica.parser?.parseTags();center=Suica.parseCenter(center);this.threejs.geometry.getAttribute('position').setXYZ(0,...center);this.threejs.geometry.needsUpdate=true;}
+{this.suica.parser?.parseTags();center=Suica.parseCenter(center);var pos=this.threejs.geometry.getAttribute('position');pos.setXYZ(0,...center);pos.needsUpdate=true;}
 get from()
 {return this.center;}
 set from(from)
@@ -1406,7 +1408,7 @@ set from(from)
 get to()
 {this.suica.parser?.parseTags();var pos=this.threejs.geometry.getAttribute('position');return[pos.getX(1),pos.getY(1),pos.getZ(1)];}
 set to(to)
-{this.suica.parser?.parseTags();to=Suica.parseCenter(to);this.threejs.geometry.getAttribute('position').setXYZ(1,...to);this.threejs.geometry.needsUpdate=true;}
+{this.suica.parser?.parseTags();to=Suica.parseCenter(to);var pos=this.threejs.geometry.getAttribute('position');pos.setXYZ(1,...to);pos.needsUpdate=true;}
 get clone()
 {var object=new Line(this.suica,this.from,this.to,this.color);object.image=this.image;Suica.cloneEvents(object,this);return object;}}
 ﻿

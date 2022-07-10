@@ -12,7 +12,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Setting properties](#setting-properties): [`its`](#its)</small>
 	- <small>[Multiple properties](#multiple-properties): [`style`](#style)</small>
 - [Geometrical properties](#geometrical-properties)
-	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z), [`screenPosition`](#screenposition)</small>
+	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z), [`objectPosition`](#objectposition), [`screenPosition`](#screenposition)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint)</small>
 - [Material properties](#material-properties)
@@ -181,6 +181,22 @@ p.y = 10;
 p.z = 15;
 ```
 
+#### objectPosition
+```js
+JS:
+𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.objectPosition( 𝑙𝑜𝑐𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡 );
+```
+Function. Calculates global coordinates. This function takes a 3D point relative to an object's coordinate system is returns their global coordinates. This can be used to get the position of an object that is rotated in space.
+
+The returned value of `objectPosition` is an array [`x`,`y`,`z`] of coordinates of 3D point. By default, the 3D point used by `objectPosition` is the `center` of the object. However, this point could be modified by the optional parameter `localOffset`. If `localOffset` is provided, it is added to the 3D coordinates. The local offset uses the orientation of the object.
+
+
+[<kbd><img src="../examples/snapshots/object-position.jpg" width="300"></kbd>](../examples/object-position.html)
+[<kbd><img src="../examples/snapshots/object-position-closest.jpg" width="300"></kbd>](../examples/object-position-closest.html)
+
+
+
+
 #### screenPosition
 ```js
 JS:
@@ -188,11 +204,11 @@ JS:
 ```
 Function. Calculates screen coordinates. This function takes a 3D point in Suica 3D space and calculates its 2D screen coordinates relative to the Suica drawing canvas. This can be used to position HTML elements over specific graphical coordinates and objects.
 
-The result of the method is an array of [`x`,`y`,`z`]. The first two elements [`x`,`y`] are coordinates of a pixel relative to the top-left corner of the Suica canvas. The third element `z` denotes the distance to the screen and is not measured in pixels.
+The returned value of `screenPosition` is an array of [`x`,`y`,`z`]. The first two elements [`x`,`y`] are coordinates of a pixel relative to the top-left corner of the Suica canvas. The third element `z` denotes the distance to the screen and is not measured in pixels.
 
 [<kbd><img src="../examples/snapshots/screen-position.jpg" width="300"></kbd>](../examples/screen-position.html)
 
-By default the 3D point used by `screenPosition` is the `center` of the object. However, this point could be modified by the optional parameters `localOffset` and `globalOffset`. If `localOffset` is provided, it is added to the 3D coordinates. The local offset uses the orientation of the object Then, if `globalOffset` is provided, it modifies the 3D point position. The global offset uses the Suica coordinate system and is not dependent on object's orientation. Finally the 3D point coordinates are transformed to screen coordinates.
+By default, the 3D point used by `screenPosition` is the `center` of the object. However, this point could be modified by the optional parameters `localOffset` and `globalOffset`. If `localOffset` is provided, it is added to the 3D coordinates. The local offset uses the orientation of the object. This is equivalent to using [`objectPosition`](#objectposition). Then, if `globalOffset` is provided, it modifies the 3D point position. The global offset uses the Suica coordinate system and is not dependent on object's orientation. Finally, the 3D point coordinates are transformed to screen coordinates.
 
 <img src="images/screen-position.png">
  
