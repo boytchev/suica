@@ -47,6 +47,7 @@
 	</suica>
 
 	<script>
+		// function to center an element on given position
 		function setPos( label, offset, offsetY=[0,0,0] )
 		{
 			var elem = element( label );
@@ -62,13 +63,13 @@
 			p.spinV = 90*Math.cos(0.7**t);
 			p.spinT = 180*Math.sin(0.2*t);
 			
-			setPos( 'a', [0.5,0,0] );
-			setPos( 'b', [0,0,0.5] );
-			setPos( 'c', [-0.5,0,0] );
-			setPos( 'd', [0,0,-0.5] );
-			setPos( 'e', [0,1,0] );
-			setPos( 'e1', [0,1,0], [0,7,0] );
-			setPos( 'e2', [0,1,0], [0,14,0] );
+			setPos( 'a', [20,0,0] );
+			setPos( 'b', [0,0,20] );
+			setPos( 'c', [-20,0,0] );
+			setPos( 'd', [0,0,-20] );
+			setPos( 'e', [0,40,0] );
+			setPos( 'e1', [0,40,0], [0,7,0] );
+			setPos( 'e2', [0,40,0], [0,14,0] );
 		}
 	</script>
 </body>

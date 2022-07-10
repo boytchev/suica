@@ -576,29 +576,65 @@ class Mesh
 	}
 	
 
-	screenPosition( relativeOffset=[0,0,0], absoluteOffset=[0,0,0] )
+	screenPosition( localOffset=[0,0,0], globalOffset=[0,0,0] )
 	{
-		relativeOffset = Suica.parseCenter( relativeOffset );
-		absoluteOffset = Suica.parseCenter( absoluteOffset );
+		localOffset = Suica.parseCenter( localOffset );
+		globalOffset = Suica.parseCenter( globalOffset );
 
+		switch( this.suica.orientation )
+		{
+			case Suica.ORIENTATIONS.YXZ:
+					localOffset[0] /= this.threejs.scale.y;
+					localOffset[1] /= this.threejs.scale.x;
+					localOffset[2] /= this.threejs.scale.z;
+					break;
+			case Suica.ORIENTATIONS.ZYX:
+					localOffset[0] /= this.threejs.scale.z;
+					localOffset[1] /= this.threejs.scale.y;
+					localOffset[2] /= this.threejs.scale.x;
+					break;
+			case Suica.ORIENTATIONS.XZY:
+					localOffset[0] /= this.threejs.scale.x;
+					localOffset[1] /= this.threejs.scale.z;
+					localOffset[2] /= this.threejs.scale.y;
+					break;
+			case Suica.ORIENTATIONS.ZXY:
+					localOffset[0] /= this.threejs.scale.z;
+					localOffset[1] /= this.threejs.scale.x;
+					localOffset[2] /= this.threejs.scale.y;
+					break;
+			case Suica.ORIENTATIONS.XYZ:
+					localOffset[0] /= this.threejs.scale.x;
+					localOffset[1] /= this.threejs.scale.y;
+					localOffset[2] /= this.threejs.scale.z;
+					break;
+			case Suica.ORIENTATIONS.YZX:
+					localOffset[0] /= this.threejs.scale.y;
+					localOffset[1] /= this.threejs.scale.z;
+					localOffset[2] /= this.threejs.scale.x;
+					break;
+			default: throw 'error: unknown orientation';
+		}
+		
 		this.threejs.updateWorldMatrix( true, true );
 		
-		var target = new THREE.Vector3( ...relativeOffset ),
+		var target = new THREE.Vector3( ...localOffset ),
 			pos = this.threejs.localToWorld( target );
 			
-		pos.x += absoluteOffset[0];
-		pos.y += absoluteOffset[1];
-		pos.z += absoluteOffset[2];
+		pos.x += globalOffset[0];
+		pos.y += globalOffset[1];
+		pos.z += globalOffset[2];
 
 		// get pos in relative screen coordinates [-1,-1]x[1,1]
 		pos.project( this.suica.camera );
 
 		// scale to pixels
 		var x = (1+pos.x)/2 * this.suica.canvas.clientWidth,
-			y = (1-pos.y)/2 * this.suica.canvas.clientHeight;
+			y = (1-pos.y)/2 * this.suica.canvas.clientHeight,
+			z = pos.z;
 		
 		
-		return [ Math.round(100*x)/100, Math.round(100*y)/100 ];
+		return [ Math.round(100*x)/100, Math.round(100*y)/100, Math.round(1000*z)/1000 ];
 	}
 	
 

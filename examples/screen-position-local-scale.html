@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Screen position &ndash; global coordinates</title>
+	<title>Screen position &ndash; local scale</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -31,27 +31,29 @@
 
 <body>
 
-	<h1>Screen position &ndash; global coordinates</h1>
-	<p>Getting the screen position from object local and global coordinates.</p>
+	<h1>Screen position &ndash; local scale</h1>
+	<p>Demonstrating that screen position ignores local object scale.</p>
 
 	<suica ontime="onTime">
 		<demo>
-		<pyramid id="p" count="4" width="40" height="40" y="-10">
+		<cube id="p" count="4" size="60,40,10">
 		<div id="a" class="label">A</div>
 		<div id="b" class="label">B</div>
 		<div id="c" class="label">C</div>
 		<div id="d" class="label">D</div>
 		<div id="e" class="label">E</div>
-		<div id="e1" class="label">E'</div>
-		<div id="e2" class="label">E"</div>
+		<div id="f" class="label">F</div>
+		<div id="g" class="label">G</div>
+		<div id="h" class="label">H</div>
 	</suica>
 
 	<script>
-		function setPos( label, offset, offsetY=[0,0,0] )
+		// function to center an element on given position
+		function setPos( label, offset )
 		{
 			var elem = element( label );
 			
-			var pos = p.screenPosition( offset, offsetY );
+			var pos = p.screenPosition( offset );
 			elem.style.left = (pos[0]-elem.clientWidth/2)+'px';
 			elem.style.top = (pos[1]-elem.clientHeight/2)+'px';
 		}
@@ -62,13 +64,15 @@
 			p.spinV = 90*Math.cos(0.7**t);
 			p.spinT = 180*Math.sin(0.2*t);
 			
-			setPos( 'a', [0.5,0,0] );
-			setPos( 'b', [0,0,0.5] );
-			setPos( 'c', [-0.5,0,0] );
-			setPos( 'd', [0,0,-0.5] );
-			setPos( 'e', [0,1,0] );
-			setPos( 'e1', [0,1,0], [0,7,0] );
-			setPos( 'e2', [0,1,0], [0,14,0] );
+			setPos( 'a', [30,-20,5] );
+			setPos( 'b', [30,-20,-5] );
+			setPos( 'c', [-30,-20,-5] );
+			setPos( 'd', [-30,-20,5] );
+
+			setPos( 'e', [30,20,5] );
+			setPos( 'f', [30,20,-5] );
+			setPos( 'g', [-30,20,-5] );
+			setPos( 'h', [-30,20,5] );
 		}
 	</script>
 </body>

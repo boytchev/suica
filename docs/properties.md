@@ -12,7 +12,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Setting properties](#setting-properties): [`its`](#its)</small>
 	- <small>[Multiple properties](#multiple-properties): [`style`](#style)</small>
 - [Geometrical properties](#geometrical-properties)
-	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z)</small>
+	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z), [`screenPosition`](#screenposition)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint)</small>
 - [Material properties](#material-properties)
@@ -180,6 +180,22 @@ p.x = 25;
 p.y = 10;
 p.z = 15;
 ```
+
+#### screenPosition
+```js
+JS:
+𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.screenPosition( 𝑙𝑜𝑐𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡, 𝑔𝑙𝑜𝑏𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡 );
+```
+Function. Calculates screen coordinates. This function takes a 3D point in Suica 3D space and calculates its 2D screen coordinates relative to the Suica drawing canvas. This can be used to position HTML elements where the graphical objects are.
+
+The result of the method is an array of [`x`,`y`] coordinates of a pixel relative to the top-left corner of the Suica canvas. This pixel is exactly where the 3D coordinates of the object `center` are.
+
+[<kbd><img src="../examples/snapshots/screen-position.jpg" width="300"></kbd>](../examples/screen-position.html)
+
+The 3D coordinates can be modified prior to calculation of screen coordinates. This modification is set by the optional parameters `localOffset` and `globalOffset`. If `localOffset` is provided, it is added to the 3D coordinates. The local offset uses the orientation and the size of the object. If `globalOffset` is provided, it is added to the 3D coordinates. The global offset uses the Suica coordinate system and is not dependent on object's orientation and size.
+ 
+[<kbd><img src="../examples/snapshots/screen-position-local.jpg" width="300"></kbd>](../examples/screen-position-local.html)
+[<kbd><img src="../examples/snapshots/screen-position-global.jpg" width="300"></kbd>](../examples/screen-position-global.html)
 
 
 
