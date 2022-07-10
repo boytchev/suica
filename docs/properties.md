@@ -186,16 +186,23 @@ p.z = 15;
 JS:
 𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.screenPosition( 𝑙𝑜𝑐𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡, 𝑔𝑙𝑜𝑏𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡 );
 ```
-Function. Calculates screen coordinates. This function takes a 3D point in Suica 3D space and calculates its 2D screen coordinates relative to the Suica drawing canvas. This can be used to position HTML elements where the graphical objects are.
+Function. Calculates screen coordinates. This function takes a 3D point in Suica 3D space and calculates its 2D screen coordinates relative to the Suica drawing canvas. This can be used to position HTML elements over specific graphical coordinates and objects.
 
-The result of the method is an array of [`x`,`y`] coordinates of a pixel relative to the top-left corner of the Suica canvas. This pixel is exactly where the 3D coordinates of the object `center` are.
+The result of the method is an array of [`x`,`y`,`z`]. The first two elements [`x`,`y`] are coordinates of a pixel relative to the top-left corner of the Suica canvas. The third element `z` denotes the distance to the screen and is not measured in pixels.
 
 [<kbd><img src="../examples/snapshots/screen-position.jpg" width="300"></kbd>](../examples/screen-position.html)
 
-The 3D coordinates can be modified prior to calculation of screen coordinates. This modification is set by the optional parameters `localOffset` and `globalOffset`. If `localOffset` is provided, it is added to the 3D coordinates. The local offset uses the orientation and the size of the object. If `globalOffset` is provided, it is added to the 3D coordinates. The global offset uses the Suica coordinate system and is not dependent on object's orientation and size.
+By default the 3D point used by `screenPosition` is the `center` of the object. However, this point could be modified by the optional parameters `localOffset` and `globalOffset`. If `localOffset` is provided, it is added to the 3D coordinates. The local offset uses the orientation of the object Then, if `globalOffset` is provided, it modifies the 3D point position. The global offset uses the Suica coordinate system and is not dependent on object's orientation. Finally the 3D point coordinates are transformed to screen coordinates.
+
+<img src="images/screen-position.png">
  
 [<kbd><img src="../examples/snapshots/screen-position-local.jpg" width="300"></kbd>](../examples/screen-position-local.html)
 [<kbd><img src="../examples/snapshots/screen-position-global.jpg" width="300"></kbd>](../examples/screen-position-global.html)
+ 
+The following two examples demonstrate additional features of `screenPosition`. The first example adds HTML elements on the vertices of a Suica object, but the elements themselves do not consider the depth (i.e. the distance from the viewer). The second example uses the third element of `screenPosition` to modify the size of the HTML elements.
+
+[<kbd><img src="../examples/snapshots/screen-position-no-depth.jpg" width="300"></kbd>](../examples/screen-position-no-depth.html)
+[<kbd><img src="../examples/snapshots/screen-position-depth.jpg" width="300"></kbd>](../examples/screen-position-depth.html)
 
 
 

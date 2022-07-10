@@ -186,6 +186,11 @@ description: All examples, just the examples, only the examples
 ## [Geometrical properties](properties.md#geometrical-properties)
 
 [<kbd><img src="../examples/snapshots/object-as-position.jpg" width="300"></kbd>](../examples/object-as-position.html)
+[<kbd><img src="../examples/snapshots/screen-position.jpg" width="300"></kbd>](../examples/screen-position.html)
+[<kbd><img src="../examples/snapshots/screen-position-local.jpg" width="300"></kbd>](../examples/screen-position-local.html)
+[<kbd><img src="../examples/snapshots/screen-position-global.jpg" width="300"></kbd>](../examples/screen-position-global.html)
+[<kbd><img src="../examples/snapshots/screen-position-no-depth.jpg" width="300"></kbd>](../examples/screen-position-no-depth.html)
+[<kbd><img src="../examples/snapshots/screen-position-depth.jpg" width="300"></kbd>](../examples/screen-position-depth.html)
 [<kbd><img src="../examples/snapshots/sizes.jpg" width="300"></kbd>](../examples/sizes.html)
 [<kbd><img src="../examples/snapshots/sizes-orientation.jpg" width="300"></kbd>](../examples/sizes-orientation.html)
 [<kbd><img src="../examples/snapshots/spin.jpg" width="300"></kbd>](../examples/spin.html)

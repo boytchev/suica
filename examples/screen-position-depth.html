@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Screen position &ndash; local scale</title>
+	<title>Screen position &ndash; depth</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -31,8 +31,8 @@
 
 <body>
 
-	<h1>Screen position &ndash; local scale</h1>
-	<p>Demonstrating that screen position ignores local object scale.</p>
+	<h1>Screen position &ndash; depth</h1>
+	<p>Scaling HTML elements based on depth.</p>
 
 	<suica ontime="onTime">
 		<demo>
@@ -48,12 +48,13 @@
 	</suica>
 
 	<script>
-		// function to center an element on given position
+		// function to resize and center an element on given position
 		function setPos( label, offset )
 		{
 			var elem = element( label );
 			
 			var pos = p.screenPosition( offset );
+			elem.style.fontSize = (1.5 - 100*(pos[2]-0.98) )+'em';
 			elem.style.left = (pos[0]-elem.clientWidth/2)+'px';
 			elem.style.top = (pos[1]-elem.clientHeight/2)+'px';
 		}
