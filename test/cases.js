@@ -83,6 +83,8 @@ var cases = [
 'object-as-position', 
 'object-html', 
 'object-js', 
+'object-position-closest', 
+'object-position', 
 'oxyz-html', 
 'oxyz-js', 
 'point-cloud', 

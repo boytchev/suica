@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="onTime">
+		<demo>
+		<cube id="a" size="40" wireframe color="black">
+		<group id="b">
+			<cube size="20" color="peachpuff">
+			<cube size="20" wireframe color="black">
+		</group>
+	</suica>
+
+	<script>
+		var lines = [];
+		for( var i=0; i<8; i++ ) lines.push( line() );
+		
+		function onTime( t )
+		{
+			a.spinH = 10*Math.sin( 0.8*t );
+			a.spinV = 10*Math.sin( 1.1*t );
+			a.spinT = 10*Math.cos( 0.7*t );
+
+			b.spinH = 30*Math.cos( 2.7*t );
+			b.spinV = 30*Math.cos( 2.9*t );
+			b.spinT = 30*Math.sin( 2.2*t );
+						
+			var i = 0;
+			
+			for( x=-1; x<=1; x+=2 )
+			for( y=-1; y<=1; y+=2 )
+			for( z=-1; z<=1; z+=2 )
+			{
+				lines[i].from = a.objectPosition( [20*x,20*y,20*z] );
+				lines[i].to   = b.objectPosition( [10*x,10*y,10*z] );
+				i++;
+			}
+		}
+	</script>
+</body>
+</html>
