@@ -346,7 +346,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = orbit( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒, 𝘴𝘱𝘦𝘦𝘥 );
 ```
-Command and object. Turns on *orbit mode* &ndash; interactive rotation of the scene. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the coordinate system and altitude. By default, `distance` is 100 and `altitude` is 30. Parameter `speed` sets the rotation speed. The default speed is 1 radian per second (i.e. approximately 6.3 seconds for full revolution). These parameters are not properties of `orbit`, i.e. when they are not existing in the object.
+Command and object. Turns on *orbit mode* &ndash; interactive rotation of the scene around the second axis of the [`orientation`](#orientation). The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the coordinate system and altitude. By default, `distance` is 100 and `altitude` is 30. Parameter `speed` sets the rotation speed. The default speed is 1 radian per second (i.e. approximately 6.3 seconds for full revolution). These parameters are not properties of `orbit`, i.e. they do not exist in the object.
 
 ```html
 HTML:
@@ -364,6 +364,7 @@ orbit( 100, 30 );
 | panning | right button or left button + ctrl/alt/shiftKey | arrow keys | two-finger move |
 
 [<kbd><img src="../examples/snapshots/orbit.jpg" width="300"></kbd>](../examples/orbit.html)
+[<kbd><img src="../examples/snapshots/orbit-orientation.jpg" width="300"></kbd>](../examples/orbit-orientation.html)
 
 Although `orbit` is a command, it can be used as an object. In this case the object is not a Suica object, but an instance of Three.js's [`OrbitControls`](https://threejs.org/docs/#examples/en/controls/OrbitControls). When defined in HTML some of the properties are available as attributes (**zooming**: `enableZoom`, `maxDistance`, `minDistance`, `maxZoom`, `minZoom`, `zoomSpeed`; **orbiting**: `autoRotate`, `autoRotateSpeed`, `enableRotate`, `rotateSpeed`, `maxAzimuthAngle`, `minAzimuthAngle`, `maxPolarAngle`, `minPolarAngle`; **panning**: `enablePan`, `panSpeed`, `keyPanSpeed`, `screenSpacePanning`; **general**: `enabled`, `enableDamping`, `dampingFactor`). Modification of properties can be done only in JavaScript.
 

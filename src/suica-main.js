@@ -7,7 +7,7 @@
 
 // control flags
 const DEBUG_CALLS = false;
-const DEBUG_EVENTS = !false;
+const DEBUG_EVENTS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
 
@@ -414,8 +414,10 @@ class Suica
 		
 		function adjustOrbitControls( )
 		{
+			that.camera.up.copy( that.orientation.UP );
 			that.controls.update( );
 			that.light.position.copy( that.camera.position );
+			that.light.position.multiply( that.orientation.SCALE );
 		}
 		
 		function adjustDemoViewPoint( time )
@@ -734,19 +736,23 @@ class Suica
 		this.parser?.parseTags();
 		this.debugCall( 'orbit', ...arguments );
 		
+		this.camera.up.copy( this.orientation.UP );
+		this.camera.position.set( ...this.orientation.LOOKAT.FROM );
+		
 		this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
-		this.camera.position.set(
-			0, 
-			Suica.parseNumber( altitude, Suica.ORBIT.ALTITUDE ),
-			Suica.parseNumber( distance, Suica.ORBIT.DISTANCE )
-		);
-		this.controls.update( );
+		// this.camera.position.set(
+			// 0, 
+			// Suica.parseNumber( altitude, Suica.ORBIT.ALTITUDE ),
+			// Suica.parseNumber( distance, Suica.ORBIT.DISTANCE )
+		// );
 
 		this.controls.autoRotateSpeed =	-4*Suica.parseNumber( speed, Suica.ORBIT.SPEED );
 		this.controls.autoRotate = this.controls.autoRotateSpeed!=0;
 		
 		this.controls.enablePan = false;
 		
+//		this.controls.update( );
+
 		return this.controls;
 	} // Suica.orbit
 
@@ -1551,14 +1557,17 @@ window.splane = function( points=Suica.SPLANE.POINTS, closed, interpolant )
 //
 // idea from https://github.com/jspenguin2017/Snippets/blob/master/onbeforescriptexecute.html
 new MutationObserver( function( mutations )
-	{
+	{		
 		for( var parentElem of mutations )
 		{
 			for( var childElem of parentElem.addedNodes) 
 			{
 				if( childElem?.tagName=='SCRIPT' )
+				{
+					console.log('MutationObserver <script>');
 					for( var suica of Suica.allSuicas )
 						suica.parser?.parseTags();
+				}
 				if( childElem?.tagName=='SUICA' )
 					new Suica( childElem );
 			}
@@ -1575,6 +1584,7 @@ new MutationObserver( function( mutations )
 
 window.addEventListener( 'load', function()
 	{
+		console.log('onLoad');
 		for( var suica of Suica.allSuicas )
 			suica.parser?.parseTags();
 	}

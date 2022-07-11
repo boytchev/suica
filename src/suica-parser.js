@@ -49,6 +49,7 @@ class HTMLParser
 			var newObject = null;
 
 			//console.log('tagName=',tagName);
+//console.log('tagName=',tagName);
 			
 			var parseMethod = this['parseTag'+tagName];
 			if( parseMethod )

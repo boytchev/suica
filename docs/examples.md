@@ -23,6 +23,7 @@ description: All examples, just the examples, only the examples
 [<kbd><img src="../examples/snapshots/oxyz.jpg" width="300"></kbd>](../examples/oxyz.html)
 [<kbd><img src="../examples/snapshots/demo.jpg" width="300"></kbd>](../examples/demo.html)
 [<kbd><img src="../examples/snapshots/orbit.jpg" width="300"></kbd>](../examples/orbit.html)
+[<kbd><img src="../examples/snapshots/orbit-orientation.jpg" width="300"></kbd>](../examples/orbit-orientation.html)
 [<kbd><img src="../examples/snapshots/lookat.jpg" width="300"></kbd>](../examples/lookat.html)
 [<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="300"></kbd>](../examples/lookat-demo.html)
 [<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="300"></kbd>](../examples/lookat-navigation.html)
