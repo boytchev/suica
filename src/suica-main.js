@@ -422,36 +422,38 @@ class Suica
 		{
 			time *= that.demoViewPoint.speed;
 			
-			var x = that.demoViewPoint.distance*Math.cos(time),
-				y = that.demoViewPoint.altitude,
-				z = that.demoViewPoint.distance*Math.sin(time);
+			var cos = -that.demoViewPoint.distance*Math.cos(time),
+				up = that.demoViewPoint.altitude,
+				sin = -that.demoViewPoint.distance*Math.sin(time);
 		
+			// rotation is cos->sin, while up is upward
 			that.camera.up.copy( that.orientation.UP );
 			switch( that.orientation )
 			{
-				case Suica.ORIENTATIONS.XYZ:
-						that.camera.position.set( x, y, -z );
-						that.light.position.set( 2*x, 2*y, -2*z );
-						break;
-				case Suica.ORIENTATIONS.XZY:
-						that.camera.position.set( -x, -z, y );
-						that.light.position.set( /**/2*x, -2*z, 2*y );
-						break;
 				case Suica.ORIENTATIONS.YXZ:
-						that.camera.position.set( y, -x, -z );
-						that.light.position.set( 2*y, /**/2*x, -2*z );
-						break;
-				case Suica.ORIENTATIONS.YZX:
-						that.camera.position.set( -z, x, y );
-						that.light.position.set( -2*z, 2*x, 2*y );
-						break;
-				case Suica.ORIENTATIONS.ZXY:
-						that.camera.position.set( y, -z, x );
-						that.light.position.set( 2*y, -2*z, 2*x );
+						that.camera.position.set( up, cos, sin );
+						that.light.position.set( 2*up, -2*cos, 2*sin );
 						break;
 				case Suica.ORIENTATIONS.ZYX:
-						that.camera.position.set( -z, y, -x );
-						that.light.position.set( -2*z, 2*y, /**/2*x );
+						that.camera.position.set( sin, up, cos );
+						that.light.position.set( 2*sin, 2*up, -2*cos );
+						break;
+				case Suica.ORIENTATIONS.XZY:
+						that.camera.position.set( cos, sin, up );
+						that.light.position.set( -2*cos, 2*sin, 2*up );
+						break;
+
+				case Suica.ORIENTATIONS.ZXY:
+						that.camera.position.set( up, sin, -cos );
+						that.light.position.set( 2*up, 2*sin, -2*cos );
+						break;
+				case Suica.ORIENTATIONS.XYZ:
+						that.camera.position.set( -cos, up, sin );
+						that.light.position.set( -2*cos, 2*up, 2*sin );
+						break;
+				case Suica.ORIENTATIONS.YZX:
+						that.camera.position.set( sin, -cos, up );
+						that.light.position.set( 2*sin, -2*cos, 2*up );
 						break;
 				default: console.error( 'error: Unknown orientation in <suica>' );
 			};

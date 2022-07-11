@@ -330,13 +330,13 @@ class Mesh
 					break;
 
 			case Suica.ORIENTATIONS.ZXY:
-					this.threejs.scale.set( height, depth, width );
+					this.threejs.scale.set( height, depth, width ); // order is OK, 11.07.2022
 					break;
 			case Suica.ORIENTATIONS.XYZ:
 					this.threejs.scale.set( width, height, depth );
 					break;
 			case Suica.ORIENTATIONS.YZX:
-					this.threejs.scale.set( depth, width, height );
+					this.threejs.scale.set( depth, width, height ); // order is OK, 11.07.2022
 					break;
 			default: throw 'error: unknown orientation';
 		}
