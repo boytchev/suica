@@ -91,12 +91,8 @@ tag: home userguidecheatsheet github
 
 [<kbd><img src="../examples/snapshots/clone.jpg" width="275"></kbd>](../examples/clone.html)
 [<kbd><img src="../examples/snapshots/clone-tag.jpg" width="275"></kbd>](../examples/clone-tag.html)
-
-
 [<kbd><img src="../examples/snapshots/group.jpg" width="275"></kbd>](../examples/group.html)
 [<kbd><img src="../examples/snapshots/group-tag.jpg" width="275"></kbd>](../examples/group-tag.html)
-
-
 [<kbd><img src="../examples/snapshots/tube.jpg" width="275"></kbd>](../examples/tube.html)
 [<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="275"></kbd>](../examples/tube-lathe.html)
 [<kbd><img src="../examples/snapshots/tube-html.jpg" width="275"></kbd>](../examples/tube-html.html)
@@ -107,7 +103,6 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/tube-dynamic-radius.jpg" width="275"></kbd>](../examples/tube-dynamic-radius.html)
 [<kbd><img src="../examples/snapshots/tube-dynamic-spline-radius.jpg" width="275"></kbd>](../examples/tube-dynamic-spline-radius.html)
 [<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="275"></kbd>](../examples/tube-dynamic.html)
-
 [<kbd><img src="../examples/snapshots/surface.jpg" width="275"></kbd>](../examples/surface.html)
 [<kbd><img src="../examples/snapshots/surface-count.jpg" width="275"></kbd>](../examples/surface-count.html)
 [<kbd><img src="../examples/snapshots/surface-dynamic.jpg" width="275"></kbd>](../examples/surface-dynamic.html)
@@ -115,26 +110,20 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/surface-torus.jpg" width="275"></kbd>](../examples/surface-torus.html)
 [<kbd><img src="../examples/snapshots/surface-parametric.jpg" width="275"></kbd>](../examples/surface-parametric.html)
 [<kbd><img src="../examples/snapshots/surface-texture.jpg" width="275"></kbd>](../examples/surface-texture.html)
-
-
 [<kbd><img src="../examples/snapshots/convex.jpg" width="275"></kbd>](../examples/convex.html)
 [<kbd><img src="../examples/snapshots/convex-truncated-block.jpg" width="275"></kbd>](../examples/convex-truncated-block.html)
 [<kbd><img src="../examples/snapshots/convex-platonic-solids.jpg" width="275"></kbd>](../examples/convex-platonic-solids.html)
 [<kbd><img src="../examples/snapshots/convex-brick-wall.jpg" width="275"></kbd>](../examples/convex-brick-wall.html)
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="275"></kbd>](../examples/convex-dynamic.html)
 [<kbd><img src="../examples/snapshots/convex-vertices.jpg" width="275"></kbd>](../examples/convex-vertices.html)
-
-
 [<kbd><img src="../examples/snapshots/model.jpg" width="275"></kbd>](../examples/model.html)
 [<kbd><img src="../examples/snapshots/model-race.jpg" width="275"></kbd>](../examples/model-race.html)
 [<kbd><img src="../examples/snapshots/model-save.jpg" width="275"></kbd>](../examples/model-save.html)
-
 [<kbd><img src="../examples/snapshots/construct-union.jpg" width="275"></kbd>](../examples/construct-union.html)
 [<kbd><img src="../examples/snapshots/construct-intersect.jpg" width="275"></kbd>](../examples/construct-intersect.html)
 [<kbd><img src="../examples/snapshots/construct-subtract.jpg" width="275"></kbd>](../examples/construct-subtract.html)
 [<kbd><img src="../examples/snapshots/construct-expression.jpg" width="275"></kbd>](../examples/construct-expression.html)
 [<kbd><img src="../examples/snapshots/construct-grooves.jpg" width="275"></kbd>](../examples/construct-grooves.html)
-
 [<kbd><img src="../examples/snapshots/text3d.jpg" width="275"></kbd>](../examples/text3d.html)
 [<kbd><img src="../examples/snapshots/text3d-mandala.jpg" width="275"></kbd>](../examples/text3d-mandala.html)
 [<kbd><img src="../examples/snapshots/text3d-dynamic.jpg" width="275"></kbd>](../examples/text3d-dynamic.html)
@@ -150,14 +139,12 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/spline-approximating.jpg" width="275"></kbd>](../examples/spline-approximating.html)
 [<kbd><img src="../examples/snapshots/spline-function.jpg" width="275"></kbd>](../examples/spline-function.html)
 [<kbd><img src="../examples/snapshots/spline-html.jpg" width="275"></kbd>](../examples/spline-html.html)
-
 [<kbd><img src="../examples/snapshots/splane-surface.jpg" width="275"></kbd>](../examples/splane-surface.html)
 [<kbd><img src="../examples/snapshots/splane.jpg" width="275"></kbd>](../examples/splane.html)
 [<kbd><img src="../examples/snapshots/splane-html.jpg" width="275"></kbd>](../examples/splane-html.html)
 [<kbd><img src="../examples/snapshots/splane-closed.jpg" width="275"></kbd>](../examples/splane-closed.html)
 [<kbd><img src="../examples/snapshots/splane-interpolating.jpg" width="275"></kbd>](../examples/splane-interpolating.html)
 [<kbd><img src="../examples/snapshots/splane-function.jpg" width="275"></kbd>](../examples/splane-function.html)
-
 [<kbd><img src="../examples/snapshots/scorm.jpg" width="275"></kbd>](../examples/scorm.html)
 
 
@@ -165,7 +152,7 @@ tag: home userguidecheatsheet github
 
 
 
-## Setting properties(properties.md#setting-properties)
+## [Setting properties](properties.md#setting-properties)
 [<kbd><img src="../examples/snapshots/its.jpg" width="275"></kbd>](../examples/its.html)
 
 ## [Multiple properties](properties.md#multiple-properties)
