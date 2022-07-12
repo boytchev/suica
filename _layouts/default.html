@@ -25,16 +25,34 @@
 		<a href="{{ site.github.url }}/docs/cheat-sheet.pdf" class="btn">Cheat sheet</a>
 		<a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a>
 		<a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
-	  {% else %}
-		<a href="{{ site.github.url }}" class="btn">Home</a>
 	  {% endif %}
 
+	  {% if page.tag contains "userguide" %}
+			<a href="{{ site.github.url }}" class="btn">Home</a>
+
+			{% unless page.tag == "userguide" %}
+				<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
+			{% endif %}
+
+			{% unless page.tag contains "objects" %}
+				<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
+			{% endif %}
+
+			{% unless page.tag contains "properties" %}
+				<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
+			{% endif %}
+
+			{% unless page.tag contains "drawings" %}
+				<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
+			{% endif %}
+
+			{% unless page.tag contains "events" %}
+				<a href="{{ site.github.url }}/docs/events.html" class="btn">Events</a>
+			{% endif %}
+	  {% endif %}
+	  
 		
 <!--
-	  {% if page.title != "Suica" %}
-		<a href="{{ site.github.url }}" class="btn">Home</a>
-	  {% endif %}
-		
 	  {% if page.tag != "userguide" %}
 		<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
 	  {% endif %}
@@ -45,21 +63,6 @@
 	  {% endif %}
 	  
 	  
-	  {% if unless page.tag contains "objects" %}
-		<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
-	  {% endif %}
-
-	  {% if unless page.tag contains "properties" %}
-		<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
-	  {% endif %}
-
-	  {% if unless page.tag contains "drawings" %}
-		<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
-	  {% endif %}
-
-	  {% if unless page.tag contains "events" %}
-		<a href="{{ site.github.url }}/docs/events.html" class="btn">Events</a>
-	  {% endif %}
 	  
 	  
 	  {% if page.title == "Suica" %}
