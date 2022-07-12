@@ -1,7 +1,7 @@
 ---
 title: Suica Object Properties
 description: The common properties of Suica objects
-tag: properties
+tag: userguide properties
 ---
 ##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; **Properties** &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
