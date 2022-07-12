@@ -281,7 +281,7 @@ JS:
 𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
 ```
 
-Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape boundary. The line is [quadratic curve](https://mathworld.wolfram.com/QuadraticCurve.html) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
+Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape boundary. The line is [quadratic curve](https://www.w3schools.com/tags/canvas_quadraticcurveto.asp) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
 
 <img src="images/curveto.png">
 
