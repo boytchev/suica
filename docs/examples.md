@@ -6,9 +6,9 @@ tag: home userguidecheatsheet github
 
 ## [Drawing canvas](suica.md#drawing-canvas)
 
-[<kbd><img src="../examples/snapshots/tag-suica.jpg" width="200"></kbd>](../examples/tag-suica.html)
-[<kbd><img src="../examples/snapshots/background.jpg" width="200"></kbd>](../examples/background.html)
-[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="200"></kbd>](../examples/suica-orientation.html)
+[<kbd><img src="../examples/snapshots/tag-suica.jpg" width="250"></kbd>](../examples/tag-suica.html)
+[<kbd><img src="../examples/snapshots/background.jpg" width="250"></kbd>](../examples/background.html)
+[<kbd><img src="../examples/snapshots/suica-orientation.jpg" width="250"></kbd>](../examples/suica-orientation.html)
 
 ## [View point](suica.md#view-point)
 
