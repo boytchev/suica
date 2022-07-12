@@ -34,19 +34,19 @@
 	  {% endif %}
 	  
 	  
-	  {% if page.tag contains "objects" %}
+	  {% if unless page.tag contains "objects" %}
 		<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
 	  {% endif %}
 
-	  {% if page.tag contains "properties" %}
+	  {% if unless page.tag contains "properties" %}
 		<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
 	  {% endif %}
 
-	  {% if page.tag contains "drawings" %}
+	  {% if unless page.tag contains "drawings" %}
 		<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
 	  {% endif %}
 
-	  {% if page.tag contains "events" %}
+	  {% if unless page.tag contains "events" %}
 		<a href="{{ site.github.url }}/docs/events.html" class="btn">Events</a>
 	  {% endif %}
 	  

@@ -3,7 +3,7 @@ title: Suica Objects
 description: The core of Suica &ndash; from point to sphere
 tag: userguide objects
 ---
-##### [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
+##### [Suica](user-guide.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
 **Suica objects** are the core functionality of Suica. They are the elements that are used to construct 3D scenes. These objects are designed to provide a foundation for a diverse mobile computer graphics visualizations.
 
@@ -504,7 +504,7 @@ Tubes can also model [solids of revolution](https://en.wikipedia.org/wiki/Solid_
 
 <img src="images/tube.png">
 
-Parameter `curve` is a [`spline`](suica.md#spline) function but can also be an array of points or user-defined function *f(u)* on which spline is automatically constructed:
+Parameter `curve` is a [`spline`](user-guide.md#spline) function but can also be an array of points or user-defined function *f(u)* on which spline is automatically constructed:
 
 ```html
 HTML:
@@ -595,7 +595,7 @@ JS:
 ```
 Object. Represents a thin curved surface. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), `curve`, `count`, [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<surface>` tag.
 
-Parameter `curve` is defines a curved surface and is a [`splane`](suica.md#splane) function but can also be a matrix of points or user-defined function *f(u,v)* on which splane is automatically constructed:
+Parameter `curve` is defines a curved surface and is a [`splane`](user-guide.md#splane) function but can also be a matrix of points or user-defined function *f(u,v)* on which splane is automatically constructed:
 
 ```html
 HTML:
@@ -1161,7 +1161,7 @@ Property. This is SCORM property `cmi.core.score.raw`. It gets or sets the stude
 JS:
 scorm.derandomize( 𝘴𝘦𝘦𝘥𝘝𝘢𝘭𝘶𝘦 )
 ```
-Functions. Resets the generator of pseudo-random numbers in Suica. This function uses [`scorm.studentId`](#scormstudentid), [`scorm.studentName`](#scormstudentname) and `seedValue` to reset or derandomize the [`random`](suica.md#random) function. After derandomization, the generator produces the same sequence of pseudo-random values.
+Functions. Resets the generator of pseudo-random numbers in Suica. This function uses [`scorm.studentId`](#scormstudentid), [`scorm.studentName`](#scormstudentname) and `seedValue` to reset or derandomize the [`random`](user-guide.md#random) function. After derandomization, the generator produces the same sequence of pseudo-random values.
 
 Function `scorm.derandomize` is used to generate individual persistent sequence of pseudo-random values for each student.
 

@@ -3,7 +3,7 @@ title: Suica Events
 description: Things that help making interactive programs
 tag: userguide events
 ---
-##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; **Events**
+##### [Suica](user-guide.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; **Events**
 
 **Suica events** are actions that happen 'outside' a Suica program and it is impossible to predict when they will happen. A typical example of an event is when users click, tap or touch Suica objects.
 
@@ -195,7 +195,7 @@ function onPointerMove( event )
 
 The returned position coincides with the Suica coordinate system when
 [orthographic camera](#orthographic-camera) is used and the view point is not
-changed with [demo](suica.md#demo) or [lookAt](suica.md#lookat).
+changed with [demo](user-guide.md#demo) or [lookAt](user-guide.md#lookat).
 
 <img src="images/event-coordinate-system.png">
 
