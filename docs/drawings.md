@@ -1,7 +1,7 @@
 ---
 title: Suica Drawings
 description: Drawings that could be applied onto objects
-tag: userguide suica objects properties events
+tag: userguide suica objects properties drawings events
 ---
 
 &nbsp;

@@ -1,7 +1,7 @@
 ---
 title: Suica Objects
 description: The core of Suica &ndash; from point to sphere
-tag: userguide suica properties drawings events
+tag: userguide suica objects properties drawings events
 ---
 
 &nbsp;

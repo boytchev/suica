@@ -1,7 +1,7 @@
 ---
 title: Suica Events
 description: Things that help making interactive programs
-tag: userguide suica objects properties drawings
+tag: userguide suica objects properties drawings events
 ---
 
 &nbsp;

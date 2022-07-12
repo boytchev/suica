@@ -1,7 +1,7 @@
 ---
 title: Suica Object Properties
 description: The common properties of Suica objects
-tag: userguide suica objects drawings events
+tag: userguide suica objects properties drawings events
 ---
 
 &nbsp;
