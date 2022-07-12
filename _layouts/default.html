@@ -25,7 +25,9 @@
 			<a href="{{ site.github.url }}/docs/cheat-sheet.pdf" class="btn">Cheat sheet</a>
 			<a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a>
 			<a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
-		{% else %}
+		{% endif %}
+
+		{% if page.tag contains "userguide" %}
 			<a href="{{ site.github.url }}" class="btn">Home</a>
 		{% endif %}
 
