@@ -1,7 +1,7 @@
 ---
 title: Suica User Guide
 description: A short guide through Suica features
-tag: userguide
+tag: userguide suica objects properties drawings events
 ---
 ##### **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 

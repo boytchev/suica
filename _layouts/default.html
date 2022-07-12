@@ -29,12 +29,16 @@
 			<a href="{{ site.github.url }}" class="btn">Home</a>
 		{% endif %}
 
+		{% if page.tag contains "cheatsheet" %}
+			<a href="{{ site.github.url }}/docs/cheat-sheet.pdf" class="btn">Cheat sheet</a>
+		{% endif %}
+
 		{% if page.tag contains "userguide" %}
 			<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
 		{% endif %}
 
 		{% if page.tag contains "suica" %}
-			<a href="{{ site.github.url }}/docs/objects.html" class="btn">Suica</a>
+			<a href="{{ site.github.url }}/docs/objects.html" class="btn">&lt;Suica&gt;</a>
 		{% endif %}
 
 		{% if page.tag contains "objects" %}

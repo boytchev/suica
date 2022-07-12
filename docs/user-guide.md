@@ -1,7 +1,7 @@
 ---
 title: Suica User Guide
 description: A short guide through Suica features
-tag: userguide
+tag: suica objects properties drawings events
 ---
 
 &nbsp;
