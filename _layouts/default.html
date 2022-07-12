@@ -27,29 +27,32 @@
 		<a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
 	  {% endif %}
 
-	  {% if page.tag contains "userguide" %}
+	  {% if page.tag == "userguide" %}
 			<a href="{{ site.github.url }}" class="btn">Home</a>
-
-			{% unless page.tag == "userguide" %}
-				<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
-			{% endif %}
-
-			{% unless page.tag contains "objects" %}
-				<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
-			{% endif %}
-
-			{% unless page.tag contains "properties" %}
-				<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
-			{% endif %}
-
-			{% unless page.tag contains "drawings" %}
-				<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
-			{% endif %}
-
-			{% unless page.tag contains "events" %}
-				<a href="{{ site.github.url }}/docs/events.html" class="btn">Events</a>
-			{% endif %}
+			<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
+			<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
+			<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
 	  {% endif %}
+
+		{% unless page.tag == "userguide" %}
+			<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
+		{% endif %}
+
+		{% unless page.tag contains "objects" %}
+			<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
+		{% endif %}
+
+		{% unless page.tag contains "properties" %}
+			<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
+		{% endif %}
+
+		{% unless page.tag contains "drawings" %}
+			<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
+		{% endif %}
+
+		{% unless page.tag contains "events" %}
+			<a href="{{ site.github.url }}/docs/events.html" class="btn">Events</a>
+		{% endif %}
 	  
 		
 <!--
