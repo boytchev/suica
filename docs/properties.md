@@ -4,6 +4,9 @@ description: The common properties of Suica objects
 tag: userguide suica objects drawings events
 ---
 
+&nbsp;
+
+
 By design Suica attempts to use the same properties for all objects as much as it is reasonable. This document describes the properties that are common to many objects. 
 
 # Table of contents

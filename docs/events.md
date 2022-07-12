@@ -4,6 +4,9 @@ description: Things that help making interactive programs
 tag: userguide suica objects properties drawings
 ---
 
+&nbsp;
+
+
 **Suica events** are actions that happen 'outside' a Suica program and it is impossible to predict when they will happen. A typical example of an event is when users click, tap or touch Suica objects.
 
 
