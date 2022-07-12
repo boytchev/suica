@@ -63,6 +63,14 @@
 			<a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a>
 		{% endif %}
 	  
+		{% if page.tag contains "github" %}
+			<a href="{{ site.github.url }}/test/test.html" class="btn">Test</a>
+		{% endif %}	  
+		
+		{% if page.tag contains "github" %}
+			<a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
+		{% endif %}
+	  
 		
 <!--
 	  {% if page.tag != "userguide" %}
