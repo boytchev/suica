@@ -1,5 +1,5 @@
 ---
-title: &lt;Suica&gt;
+title: &lt;suica&gt;
 description: The main tag of Suica
 tag: userguide suica objects properties drawings events
 ---
