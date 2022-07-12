@@ -20,37 +20,36 @@
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
 	  
   
-	  {% if page.title == "Suica" %}
-		<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
-		<a href="{{ site.github.url }}/docs/cheat-sheet.pdf" class="btn">Cheat sheet</a>
-		<a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a>
-		<a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
-	  {% endif %}
-
-	  {% if page.tag == "userguide" %}
+		{% if page.title == "Suica" %}
+			<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
+			<a href="{{ site.github.url }}/docs/cheat-sheet.pdf" class="btn">Cheat sheet</a>
+			<a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a>
+			<a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
+		{% else %}
 			<a href="{{ site.github.url }}" class="btn">Home</a>
-			<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
-			<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
-			<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
-	  {% endif %}
+		{% endif %}
 
-		{% unless page.tag == "userguide" %}
+		{% if page.tag contains "userguide" %}
 			<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
 		{% endif %}
 
-		{% unless page.tag contains "objects" %}
+		{% if page.tag contains "suica" %}
+			<a href="{{ site.github.url }}/docs/objects.html" class="btn">Suica</a>
+		{% endif %}
+
+		{% if page.tag contains "objects" %}
 			<a href="{{ site.github.url }}/docs/objects.html" class="btn">Objects</a>
 		{% endif %}
 
-		{% unless page.tag contains "properties" %}
+		{% if page.tag contains "properties" %}
 			<a href="{{ site.github.url }}/docs/properties.html" class="btn">Properties</a>
 		{% endif %}
 
-		{% unless page.tag contains "drawings" %}
+		{% if page.tag contains "drawings" %}
 			<a href="{{ site.github.url }}/docs/drawings.html" class="btn">Drawings</a>
 		{% endif %}
 
-		{% unless page.tag contains "events" %}
+		{% if page.tag contains "events" %}
 			<a href="{{ site.github.url }}/docs/events.html" class="btn">Events</a>
 		{% endif %}
 	  
