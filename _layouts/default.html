@@ -30,7 +30,7 @@
       {% if page.title != "Suica Examples" %}
         <a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a>
       {% endif %}
-      {% if site.github.is_project_page %}
+      {% if page.title != "Suica" %}
         <a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
       {% endif %}
       {% if page.title == "Suica Internals" %}
