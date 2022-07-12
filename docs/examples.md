@@ -1,16 +1,8 @@
 ---
 title: Suica Examples
 description: All examples, just the examples, only the examples
-tag: userguide examples
+tag: home userguidecheatsheet github
 ---
-
-##### [Suica tag](#suica) &middot; [Objects](#objects) &middot; [Properties](#properties) &middot; [Drawings](#drawings) &middot; [Events](#events)
-
-
-
-
-
-# [Suica tag](suica.md)
 
 ## [Drawing canvas](suica.md#drawing-canvas)
 
@@ -64,8 +56,6 @@ tag: userguide examples
 
 
 
-
-# [Objects](objects.md)
 
 ## [Creating an object](objects.md#creating-an-object)
 
@@ -175,8 +165,6 @@ tag: userguide examples
 
 
 
-# [Properties](properties.md)
-
 ## Setting properties(properties.md#setting-properties)
 [<kbd><img src="../examples/snapshots/its.jpg" width="300"></kbd>](../examples/its.html)
 
@@ -214,8 +202,6 @@ tag: userguide examples
 
 
 
-# [Drawings](drawings.md)
-
 ## [Starting a drawing](drawings.md#starting-a-drawing)
 
 [<kbd><img src="../examples/snapshots/drawing-html.jpg" width="300"></kbd>](../examples/drawing-html.html)
@@ -248,8 +234,6 @@ tag: userguide examples
 
 
 
-
-# [Events](events.md)
 
 ## [Event listeners](#event-listeners)
 
