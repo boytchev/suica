@@ -20,7 +20,7 @@
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
 	  
   
-	  {% if page.tag != "home" %}
+	  {% if page.title != "Suica" %}
 		<a href="{{ site.github.url }}" class="btn">Home</a>
 	  {% endif %}
 		
@@ -28,22 +28,18 @@
 		<a href="{{ site.github.url }}/docs/user-guide.html" class="btn">User guide</a>
 	  {% endif %}
 		
-		
-	  <!-- {% if site.github.is_project_page %} -->
-		<!-- <a href="{{ site.github.url }}/docs/cheat-sheet.pdf" class="btn">Cheat sheet</a> -->
-	  <!-- {% endif %} -->
-	  
-	  <!-- {% if page.title != "Suica Examples" %} -->
-		<!-- <a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a> -->
-	  <!-- {% endif %} -->
+	  {% if page.title == "Suica" or page.tag == "userguide" %}
+		<a href="{{ site.github.url }}/docs/cheat-sheet.pdf" class="btn">Cheat sheet</a>
+		<a href="{{ site.github.url }}/docs/examples.html" class="btn">Examples</a>
+	  {% endif %}
 	  
 	  {% if page.tag == "home" %}
 		<a href="{{ site.github.repository_url }}" class="btn">GitHub</a>
 	  {% endif %}
 	  
-	  <!-- {% if page.title == "Suica Internals" %} -->
-		<!-- <a href="{{ site.github.url }}/test/test.html" class="btn">Test</a> -->
-	  <!-- {% endif %} -->
+	  {% if page.tag == "internals" %}
+		<a href="{{ site.github.url }}/test/test.html" class="btn">Test</a>
+	  {% endif %}
 
 <!--
 !	  {% if page.title != "Suica" %}

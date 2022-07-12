@@ -1,6 +1,7 @@
 ---
 title: Suica Objects
 description: The core of Suica &ndash; from point to sphere
+tag: objects
 ---
 ##### [Suica](suica.md) &middot; **Objects** &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 

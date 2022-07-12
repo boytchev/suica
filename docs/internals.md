@@ -1,6 +1,7 @@
 ---
 title: Suica Internals
 description: Additional internal information for developers and software masochists
+tag: internals
 ---
 
 # Table of contents

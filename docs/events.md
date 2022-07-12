@@ -1,6 +1,7 @@
 ---
 title: Suica Events
 description: Things that help making interactive programs
+tag: top
 ---
 ##### [Suica](suica.md) &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; **Events**
 
