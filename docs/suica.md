@@ -1,9 +1,8 @@
 ---
-title: Suica User Guide
-description: A short guide through Suica features
+title: &lt;Suica&gt;
+description: The main tag of Suica
 tag: userguide suica objects properties drawings events
 ---
-##### **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
 **Suica is a JavaScript library** that provides a minimal, dual, optional and uniform approach to mobile 3D graphics. 
 
