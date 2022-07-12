@@ -1,7 +1,9 @@
 ---
 title: Suica Tag
 description: The main tag of Suica and its properties
-tag: home
+
+home: true
+
 ---
 ##### **Suica** &middot; [Objects](objects.md) &middot; [Properties](properties.md) &middot; [Drawings](drawings.md) &middot; [Events](events.md)
 
