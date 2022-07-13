@@ -276,7 +276,7 @@ lineTo( 30, 10 );
 ```html
 HTML:
 <curveTo m="𝑚𝑥,𝑚𝑦" point="𝑥,𝑦">
-<curveTo mx="𝑚𝑥" mt="𝑚𝑦" x="𝑥" y="𝑦">
+<curveTo mx="𝑚𝑥" my="𝑚𝑦" x="𝑥" y="𝑦">
 ```
 ```js
 JS:
