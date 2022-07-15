@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<!-- Car models provided by www.kenney.nl -->
+	<!-- https://www.kenney.nl/assets/car-kit -->
+	<!-- License: Public Domain / CC0 -->
+	
+	<suica>
+		<demo>
+		<model id="truck" src="../../assets/models/cars/garbageTruck.glb" size="20" y="-10" onload="createCloud">
+		<group id="clone"></group>
+	</suica>
+
+	<script>
+		function createCloud( )
+		{
+			for( var pnt of truck.vertices )
+			{
+				clone.add( point( pnt, 1.5, 'black' ) );
+			}
+			truck.x = -20;
+			clone.x = 20;
+		}
+		
+	</script>
+</body>
+</html>

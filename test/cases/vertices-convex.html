@@ -18,12 +18,13 @@
 		}
 			
 		var c = convex( points );
-		c.size = 0;
 		
 		for( var pnt of c.vertices ) if( pnt[2]==0 )
 		{
 			sphere( pnt, 3, 'black' );
 		}
+
+		c.size = 0;
 	</script>
 </body>
 </html>

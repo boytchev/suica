@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<sphere id="s" spinV="45" x="-20">
+	</suica>
+
+	<script>
+		for( var pnt of s.vertices )
+		{
+			pnt[0] += 40;
+			point( pnt, 1, 'black' );
+		}
+	</script>
+</body>
+</html>
