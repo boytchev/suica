@@ -181,6 +181,10 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/images.jpg" width="275"></kbd>](../examples/images.html)
 
 ## [Three.js properties](properties.md#threejs-properties)
+[<kbd><img src="../examples/snapshots/vertices.jpg" width="275"></kbd>](../examples/vertices.html)
+[<kbd><img src="../examples/snapshots/vertices-convex.jpg" width="275"></kbd>](../examples/vertices-convex.html)
+[<kbd><img src="../examples/snapshots/vertices-group.jpg" width="275"></kbd>](../examples/vertices-group.html)
+[<kbd><img src="../examples/snapshots/vertices-model.jpg" width="275"></kbd>](../examples/vertices-model.html)
 [<kbd><img src="../examples/snapshots/threejs-geometry.jpg" width="275"></kbd>](../examples/threejs-geometry.html)
 [<kbd><img src="../examples/snapshots/threejs-material.jpg" width="275"></kbd>](../examples/threejs-material.html)
 
@@ -238,6 +242,10 @@ tag: home userguidecheatsheet github
 ## [Time event handlers](#time-event-handlers)
 
 [<kbd><img src="../examples/snapshots/events-ontime.jpg" width="275"></kbd>](../examples/events-ontime.html)
+
+## [Load event handlers](#load-event-handlers)
+
+[<kbd><img src="../examples/snapshots/events-onload.jpg" width="275"></kbd>](../examples/events-onload.html)
 
 ## [Proactive events](#proactive-events)
 
