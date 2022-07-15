@@ -646,6 +646,40 @@ class Mesh
 		return [ Math.round(100*x)/100, Math.round(100*y)/100, Math.round(1000*z)/1000 ];
 	}
 	
+	
+	get vertices( )
+	{
+		var vertices = [],
+			v = new THREE.Vector3();
+
+		function processMesh( mesh )
+		{
+			// collect vertices in the mesh
+			if( mesh.geometry )
+			{
+				var pos = mesh.geometry.getAttribute( 'position' );
+				if( pos )
+				{
+					for( var i=0; i<pos.count; i++ )
+					{
+						v.set( pos.getX(i), pos.getY(i), pos.getZ(i) );
+						v = mesh.localToWorld( v );
+						vertices.push( [v.x, v.y, v.z] );
+					}
+				}
+			}
+			
+			// scan submeshes
+			for( var submesh of mesh.children )
+				processMesh( submesh );
+		}
+		
+		this.threejs.updateWorldMatrix( true, true );
+		
+		processMesh( this.threejs );
+		
+		return vertices;
+	} // Mesh.vertices
 
 } // class Mesh
 

@@ -1220,6 +1220,13 @@ class Suica
 	} // Suica.onClick
 	
 	
+	static onLoad( object )
+	{
+		Suica.eventCall( object, 'onload', object );
+		
+	} // Suica.onLoad
+	
+	
 	static cloneEvents( target, source )
 	{
 		target.onpointerenter = source.onpointerenter;
@@ -1228,6 +1235,7 @@ class Suica
 		target.onpointerdown = source.onpointerdown;
 		target.onclick = source.onclick;
 		target.onpointerup = source.onpointerup;
+		target.onload = source.onload;
 	}
 	
 	// static onDblClick( event )
@@ -1564,7 +1572,7 @@ new MutationObserver( function( mutations )
 			{
 				if( childElem?.tagName=='SCRIPT' )
 				{
-					console.log('MutationObserver <script>');
+//					console.log('MutationObserver <script>');
 					for( var suica of Suica.allSuicas )
 						suica.parser?.parseTags();
 				}
@@ -1584,7 +1592,7 @@ new MutationObserver( function( mutations )
 
 window.addEventListener( 'load', function()
 	{
-		console.log('onLoad');
+//		console.log('onLoad');
 		for( var suica of Suica.allSuicas )
 			suica.parser?.parseTags();
 	}

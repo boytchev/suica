@@ -87,7 +87,9 @@ class Model extends Mesh
 			replaceObject( object );
 			that.ready = true;
 			
-			// check whether othe objects are waiting for the same model
+			Suica.onLoad( that );
+			
+			// check whether the objects are waiting for the same model
 			for( var waiting of that.waitingList )
 			{
 				waiting.threejs.add( object.clone() );

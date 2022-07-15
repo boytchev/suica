@@ -107,16 +107,4 @@ class Convex extends Mesh
 	} // Convex.src = ...
 	
 	
-	get vertices( )
-	{
-		var vertices = [],
-			pos = this.threejs.geometry.getAttribute( 'position' );
-		
-		for( var i=0; i<pos.count; i++ )
-			vertices.push( [pos.getX(i), pos.getY(i), pos.getZ(i)] );
-		
-		return vertices;
-	} // Convex.vertices
-	
-	
 } // class Convex

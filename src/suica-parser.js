@@ -343,6 +343,7 @@ class HTMLParser
 		parseEvent( 'onpointerdown',	'onpointerdown' );
 		parseEvent( 'onpointerup',		'onpointerup' );
 		parseEvent( 'onclick',			'onclick' );
+		parseEvent( 'onload',			'onload' );
 		//parseEvent( 'ondblclick',		'ondblclick' );
 
 		// event names
@@ -352,6 +353,7 @@ class HTMLParser
 		parseEvent( 'onpointerdown',	'pointerdown' );
 		parseEvent( 'onpointerup',		'pointerup' );
 		parseEvent( 'onclick',			'click' );
+		parseEvent( 'onload',			'load' );
 //		//parseEvent( 'ondblclick',		'dblclick' );
 		
 		if( suica )

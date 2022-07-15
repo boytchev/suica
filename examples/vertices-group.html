@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Vertices of a group</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Vertices of a group</h1>
+	<p>Extracting the vertices of a group object.</p>
+
+	<script>
+		Φ = (1+Math.sqrt(5))/2;
+	</script>
+	
+	<suica onTime="onTime">
+		<group id="pawn" color="linen">
+			<convex y="25" size="4" src="1,1,1; 1,1,-1; 1,-1,1; 1,-1,-1; -1,1,1; -1,1,-1; -1,-1,1; -1,-1,-1; 0,1/Φ,Φ; 0,1/Φ,-Φ; 0,-1/Φ,Φ; 0,-1/Φ,-Φ; 1/Φ,Φ,0; 1/Φ,-Φ,0; -1/Φ,Φ,0; -1/Φ,-Φ,0; Φ,0,1/Φ; -Φ,0,1/Φ; Φ,0,-1/Φ; -Φ,0,-1/Φ">
+			<convex y="-25" size="4" src="1,1,1; 1,1,-1; 1,-1,1; 1,-1,-1; -1,1,1; -1,1,-1; -1,-1,1; -1,-1,-1; 0,1/Φ,Φ; 0,1/Φ,-Φ; 0,-1/Φ,Φ; 0,-1/Φ,-Φ; 1/Φ,Φ,0; 1/Φ,-Φ,0; -1/Φ,Φ,0; -1/Φ,-Φ,0; Φ,0,1/Φ; -Φ,0,1/Φ; Φ,0,-1/Φ; -Φ,0,-1/Φ">
+			<pyramid count="8" y="2" size="12,25">
+			<pyramid count="8" y="-2" size="12,25" spinV="180">
+			<prism count="16" y="-2" size="20,4">
+		</group>
+		
+		<group id="clone"></group>
+	</suica>
+
+	<script>
+		for( var pnt of pawn.vertices )
+		{
+			clone.add( point( pnt, 5, random(['black','lightsalmon','white']) ) );
+		}
+
+		
+		function onTime( t )
+		{
+			pawn.spinH = 50*t;
+			pawn.spinV = 80*t;
+			pawn.spinT = 180*t;
+
+			clone.spinH = 50*t;
+			clone.spinV = 80*t;
+			clone.spinT = 180*t;
+		}
+		
+	</script>
+</body>
+</html>

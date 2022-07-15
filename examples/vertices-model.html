@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Vertices of a model</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Vertices of a model</h1>
+	<p>Extracting the vertices of a 3D model.</p>
+
+	<!-- Car models provided by www.kenney.nl -->
+	<!-- https://www.kenney.nl/assets/car-kit -->
+	<!-- License: Public Domain / CC0 -->
+	
+	<suica>
+		<demo>
+		<model id="truck" src="../assets/models/cars/garbageTruck.glb" size="20" y="-10" onload="createCloud">
+		<group id="clone"></group>
+	</suica>
+
+	<script>
+		function createCloud( )
+		{
+			for( var pnt of truck.vertices )
+			{
+				clone.add( point( pnt, 1.5, 'black' ) );
+			}
+			truck.x = -20;
+			clone.x = 20;
+		}
+		
+	</script>
+</body>
+</html>

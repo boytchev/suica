@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Convex</title>
+	<title>Vertices</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,25 +18,18 @@
 
 <body>
 
-	<h1>Convex vertices</h1>
-	<p>Extracting the verticesof a convex shape.</p>
+	<h1>Vertices</h1>
+	<p>Extracting the vertices of a Suica 3D object.</p>
 
 	<suica>
+		<sphere id="s" spinV="45" x="-20">
 	</suica>
 
 	<script>
-		points = [ [0,0,10], [0,0,-10] ];
-		for( var i=0; i<20; i++ )
+		for( var pnt of s.vertices )
 		{
-			points.push( sphere( [random(-30,30), random(-30,30), 0], 2.5, 'linen' ) );
-		}
-			
-		var c = convex( points );
-		c.size = 0;
-		
-		for( var pnt of c.vertices ) if( pnt[2]==0 )
-		{
-			sphere( pnt, 3, 'black' );
+			pnt[0] += 40;
+			point( pnt, 1, 'black' );
 		}
 	</script>
 </body>

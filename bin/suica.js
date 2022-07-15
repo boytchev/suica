@@ -910,8 +910,10 @@ static onClick(event)
 {var object=findObject(event,true);if(object)
 {Suica.eventCall(object,'onclick',event);}
 Suica.eventCall(window.suica,'onclick',event);}
+static onLoad(object)
+{Suica.eventCall(object,'onload',object);}
 static cloneEvents(target,source)
-{target.onpointerenter=source.onpointerenter;target.onpointermove=source.onpointermove;target.onpointerleave=source.onpointerleave;target.onpointerdown=source.onpointerdown;target.onclick=source.onclick;target.onpointerup=source.onpointerup;}
+{target.onpointerenter=source.onpointerenter;target.onpointermove=source.onpointermove;target.onpointerleave=source.onpointerleave;target.onpointerdown=source.onpointerdown;target.onclick=source.onclick;target.onpointerup=source.onpointerup;target.onload=source.onload;}
 static onContextMenu(event)
 {event.preventDefault();}}
 window.style=function(object,properties)
@@ -999,13 +1001,13 @@ new MutationObserver(function(mutations)
 {for(var parentElem of mutations)
 {for(var childElem of parentElem.addedNodes)
 {if(childElem?.tagName=='SCRIPT')
-{console.log('MutationObserver <script>');for(var suica of Suica.allSuicas)
+{for(var suica of Suica.allSuicas)
 suica.parser?.parseTags();}
 if(childElem?.tagName=='SUICA')
 new Suica(childElem);}
 if(parentElem.type=='attributes'&&parentElem.target.suicaObject)
 {var name=parentElem.attributeName,value=parentElem.target.getAttribute(parentElem.attributeName);parentElem.target.suicaObject[name]=value;}}}).observe(document,{childList:true,subtree:true,attributes:true});window.addEventListener('load',function()
-{console.log('onLoad');for(var suica of Suica.allSuicas)
+{for(var suica of Suica.allSuicas)
 suica.parser?.parseTags();});function createFSButton(suica)
 {var inFullScreen=false;var button=document.createElement('button');button.id='suica-fullscreen-button';button.style.display='';button.style.cursor='pointer';button.style.left='calc(50% - 90px)';button.style.width='180px';button.style.position='absolute';button.style.bottom='20px';button.style.padding='12px 6px';button.style.border='1px solid #fff';button.style.borderRadius='4px';button.style.background='rgba(0,0,0,0.5)';button.style.color='#fff';button.style.font='normal 13px';button.style.textAlign='center';button.style.opacity='0.5';button.style.outline='none';button.style.zIndex='999';var requestFullscreen=suica.suicaTag.requestFullscreen||suica.suicaTag.webkitRequestFullscreen||suica.suicaTag.msRequestFullscreen;button.textContent=requestFullscreen?'ENTER FULLSCREEN':'FULLSCREEN NOT SUPPORTED';button.onpointerenter=function()
 {button.style.opacity='1.0';};button.onpointerleave=function()
@@ -1102,7 +1104,7 @@ parseEvents(tag,object,suica=null)
 {object[actualName]=tag.getAttribute(name);if(!object[actualName])
 {object[actualName]=function(event)
 {object[actualName]=window[tag.getAttribute(name)];object[actualName](event);}}}}
-parseEvent('onpointermove','onpointermove');parseEvent('onpointerleave','onpointerleave');parseEvent('onpointerenter','onpointerenter');parseEvent('onpointerdown','onpointerdown');parseEvent('onpointerup','onpointerup');parseEvent('onclick','onclick');parseEvent('onpointermove','pointermove');parseEvent('onpointerleave','pointerleave');parseEvent('onpointerenter','pointerenter');parseEvent('onpointerdown','pointerdown');parseEvent('onpointerup','pointerup');parseEvent('onclick','click');if(suica)
+parseEvent('onpointermove','onpointermove');parseEvent('onpointerleave','onpointerleave');parseEvent('onpointerenter','onpointerenter');parseEvent('onpointerdown','onpointerdown');parseEvent('onpointerup','onpointerup');parseEvent('onclick','onclick');parseEvent('onload','onload');parseEvent('onpointermove','pointermove');parseEvent('onpointerleave','pointerleave');parseEvent('onpointerenter','pointerenter');parseEvent('onpointerdown','pointerdown');parseEvent('onpointerup','pointerup');parseEvent('onclick','click');parseEvent('onload','load');if(suica)
 {object=suica;parseEvent('ontime','ontime');parseEvent('ontime','time');}}
 parseTagPOINT(suica,elem)
 {var p=suica.point(elem.getAttribute('center'),elem.getAttribute('size'),elem.getAttribute('color'));suica.parserReadonly.parseAttributes(elem,p);elem.suicaObject=p;return p;}
@@ -1377,7 +1379,16 @@ objectPosition(localOffset=[0,0,0])
 {case Suica.ORIENTATIONS.YXZ:localOffset[0]/=this.threejs.scale.y;localOffset[1]/=this.threejs.scale.x;localOffset[2]/=this.threejs.scale.z;break;case Suica.ORIENTATIONS.ZYX:localOffset[0]/=this.threejs.scale.z;localOffset[1]/=this.threejs.scale.y;localOffset[2]/=this.threejs.scale.x;break;case Suica.ORIENTATIONS.XZY:localOffset[0]/=this.threejs.scale.x;localOffset[1]/=this.threejs.scale.z;localOffset[2]/=this.threejs.scale.y;break;case Suica.ORIENTATIONS.ZXY:localOffset[0]/=this.threejs.scale.z;localOffset[1]/=this.threejs.scale.x;localOffset[2]/=this.threejs.scale.y;break;case Suica.ORIENTATIONS.XYZ:localOffset[0]/=this.threejs.scale.x;localOffset[1]/=this.threejs.scale.y;localOffset[2]/=this.threejs.scale.z;break;case Suica.ORIENTATIONS.YZX:localOffset[0]/=this.threejs.scale.y;localOffset[1]/=this.threejs.scale.z;localOffset[2]/=this.threejs.scale.x;break;default:throw'error: unknown orientation';}
 this.threejs.updateWorldMatrix(true,true);var target=new THREE.Vector3(...localOffset),pos=this.threejs.localToWorld(target);return[pos.x,pos.y,pos.z];}
 screenPosition(localOffset=[0,0,0],globalOffset=[0,0,0])
-{var pos=new THREE.Vector3(...this.objectPosition(localOffset));globalOffset=Suica.parseCenter(globalOffset);pos.x+=globalOffset[0];pos.y+=globalOffset[1];pos.z+=globalOffset[2];pos.project(this.suica.camera);var x=(1+pos.x)/2*this.suica.canvas.clientWidth,y=(1-pos.y)/2*this.suica.canvas.clientHeight,z=pos.z;return[Math.round(100*x)/100,Math.round(100*y)/100,Math.round(1000*z)/1000];}}
+{var pos=new THREE.Vector3(...this.objectPosition(localOffset));globalOffset=Suica.parseCenter(globalOffset);pos.x+=globalOffset[0];pos.y+=globalOffset[1];pos.z+=globalOffset[2];pos.project(this.suica.camera);var x=(1+pos.x)/2*this.suica.canvas.clientWidth,y=(1-pos.y)/2*this.suica.canvas.clientHeight,z=pos.z;return[Math.round(100*x)/100,Math.round(100*y)/100,Math.round(1000*z)/1000];}
+get vertices()
+{var vertices=[],v=new THREE.Vector3();function processMesh(mesh)
+{if(mesh.geometry)
+{var pos=mesh.geometry.getAttribute('position');if(pos)
+{for(var i=0;i<pos.count;i++)
+{v.set(pos.getX(i),pos.getY(i),pos.getZ(i));v=mesh.localToWorld(v);vertices.push([v.x,v.y,v.z]);}}}
+for(var submesh of mesh.children)
+processMesh(submesh);}
+this.threejs.updateWorldMatrix(true,true);processMesh(this.threejs);return vertices;}}
 Mesh.createMaterials();﻿
 class Point extends Mesh
 {static COLOR='black';static SIZE=7;static solidGeometry;constructor(suica,center,size,color)
@@ -1622,10 +1633,7 @@ geometry.setAttribute('uv',new THREE.BufferAttribute(new Float32Array(uvs),2));r
 get clone()
 {var object=new Convex(this.suica,this._points,this.size,this.color);object.spin=this.spin;object.image=this.image;Suica.cloneEvents(object,this);return object;}
 set src(points)
-{this._points=points;this.threejs.geometry.dispose();this.threejs.geometry=Convex.generateGeometry(points);}
-get vertices()
-{var vertices=[],pos=this.threejs.geometry.getAttribute('position');for(var i=0;i<pos.count;i++)
-vertices.push([pos.getX(i),pos.getY(i),pos.getZ(i)]);return vertices;}}
+{this._points=points;this.threejs.geometry.dispose();this.threejs.geometry=Convex.generateGeometry(points);}}
 ﻿
 class Model extends Mesh
 {static SIZE=1;constructor(suica,src,center,size)
@@ -1638,7 +1646,7 @@ set src(src)
 function objectLoadedGLTF(object)
 {object=object.scene;object.traverse(noMetal);function noMetal(child)
 {if(child.isMesh)child.material.metalness=0;if(child.children.lenhth)child.traverse(noMetal);}
-replaceObject(object);that.ready=true;for(var waiting of that.waitingList)
+replaceObject(object);that.ready=true;Suica.onLoad(that);for(var waiting of that.waitingList)
 {waiting.threejs.add(object.clone());}
 that.waitingList=[];}
 function replaceObject(object)

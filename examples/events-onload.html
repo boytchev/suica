@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Events - onLodel</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<style>
+		.label {
+			width: 1em;
+			height: 1em;
+			background: rgba( 255, 255, 255, 0.3 );
+			border: dotted black 1px;
+			border-radius: 1em;
+			text-align: center;
+			padding: 0.25em;
+			position: absolute;
+		}
+	</style>
+
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Events - onLoad</h1>
+	<p>Calculating bounding box only after a model is loaded.</p>
+
+	<!-- Car models provided by www.kenney.nl -->
+	<!-- https://www.kenney.nl/assets/car-kit -->
+	<!-- License: Public Domain / CC0 -->
+
+	<suica>
+		<demo speed="0.3">
+		<model src="../assets/models/cars/ambulance.glb" size="10" onload="boundingBox">
+		<model src="../assets/models/cars/suvLuxury.glb" size="10" onload="boundingBox">
+		<model src="../assets/models/cars/garbageTruck.glb" size="10" onload="boundingBox">
+		<model src="../assets/models/cars/race.glb" size="10" onload="boundingBox">
+		<model src="../assets/models/cars/tractor.glb" size="10" onload="boundingBox">
+	</suica>
+
+	<script>
+		var angle = 36;
+		for( var obj of allObjects() )
+		{
+			angle += 360/5;
+			
+			obj.x = 35*Math.cos( radians(angle) );
+			obj.z = 35*Math.sin( radians(angle) );
+			
+			obj.spinH = -angle;
+			obj.spinV = random( -90, 90 );
+		}
+		
+		function boundingBox( object )
+		{
+			var min = [Infinity,Infinity,Infinity],
+				max = [-Infinity,-Infinity,-Infinity],
+				center = [0,0,0],
+				size = [0,0,0];
+				
+			for( var i=0; i<3; i++ )
+			{
+				for( var v of object.vertices )
+				{
+					min[i] = Math.min( min[i], v[i] );
+					max[i] = Math.max( max[i], v[i] );
+				}
+				
+				center[i] = min[i]/2 + max[i]/2;
+				size[i] = max[i]-min[i];
+			}
+			
+			cube( center, size, 'black' );
+			its.wireframe = true;
+		}
+	</script>
+</body>
+</html>
