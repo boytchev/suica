@@ -576,7 +576,7 @@ Suica is based on Three.js and Three.js functionality is available alongside Sui
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.vertices
 ```
-Property. Provides access to object vertices. This property is read-only. It contains an array of all vertices of an object converted into global 3D coordinates. The native local coordinates of the object can be accessed via [`threejs.geometry`](#threejs). If the object is a group or a model, `vertices` collects vertices of all nested objects. If the object is a model, its vertices are not immediately available &ndash; they are availabe after the [`onLoad`](events.md#onload) event.
+Property. Provides access to object vertices. This property is read-only. It contains an array of all vertices of an object converted into global 3D coordinates. The native local coordinates of the object can be accessed via [`threejs.geometry`](#threejs). If the object is a group or a model, `vertices` collects vertices of all nested objects. If the object is a model, its vertices are not immediately available &ndash; they are availabe after the [`onLoad`](events.md#load-event-handlers) event.
 
 [<kbd><img src="../examples/snapshots/vertices.jpg" width="300"></kbd>](../examples/vertices.html)
 [<kbd><img src="../examples/snapshots/vertices-convex.jpg" width="300"></kbd>](../examples/vertices-convex.html)

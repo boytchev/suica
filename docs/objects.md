@@ -729,6 +729,10 @@ model( 'tractor.glb', 10 );
 [<kbd><img src="../examples/snapshots/model-race.jpg" width="300"></kbd>](../examples/model-race.html)
 
 
+Loading a model is asynchronous. The creation of a model builds an empty placeholder that will accept the model, once it is completely loaded. This delay depends on the size of the model, the network speed and the server response time. When a model is loaded it triggers an [`onLoad`](events.md#load-events) event.
+
+
+
 #### model.save
 ```js
 JS:

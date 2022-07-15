@@ -15,10 +15,12 @@ tag: userguide suica objects properties drawings events
 	- <small>[Motion events](#motion-events): `onPointerEnter`, `onPointerMove`, `onPointerLeave`</small>
 	- <small>[Click events](#click-events): `onPointerDown`, `onPointerUp`, `onClick`</small>
 	- <small>[Time events](#time-events): `onTime`</small>
+	- <small>[Load events](#load-events): `onLoad`</small>
 - [Working with events](#working-with-events)
 	- <small>[Event listeners](#event-listeners): [`addEventListener`](#addeventlistener), [`removeEventListener`](#removeeventlistener)</small>
 	- <small>[Pointer event handlers](#pointer-event-handlers): [`findPosition`](#findposition), [`findObject`](#findobject), [`findObjects`](#findobjects)</small>
 	- <small>[Time event handlers](#time-event-handlers)</small>
+	- <small>[Load event handlers](#load-event-handlers)</small>
 	- <small>[Proactive events](#proactive-events): [`proactive`](#proactive)</small>
 
 
@@ -42,9 +44,13 @@ Click events are `onPointerDown`, `onPointerUp` and `onClick`. They occur when a
 
 <img src="images/events-click.png">
 
-## Time event
+## Time events
 
 Time event is `onTime`. It occurs when the browser is ready for a new frame.
+
+## Load events
+
+Load event is `onLoad`. It occurs when a [`model`](objects.md#model) is loaded and its data are available.
 
 
 # Working with events
@@ -258,6 +264,28 @@ function onTime( t, dT )
 ```
 
 [<kbd><img src="../examples/snapshots/events-ontime.jpg" width="300"></kbd>](../examples/events-ontime.html)
+
+
+
+
+
+
+## Load event handlers
+
+The load event `onLoad` occurs when a 3D [`model`](objects.md#model) is loaded. The load event provides parameter `object` that is the object being loaded. This parameter is used when a load event handler is shared across several models.
+
+
+```js
+JS:
+function onLoad( object )
+{
+	...
+}
+```
+
+This example calculates the bounding boxes of 3D models. This uses the [`vertices`](properties.md#vertices) property that is available only when a model is completely loaded.
+
+[<kbd><img src="../examples/snapshots/events-onload.jpg" width="300"></kbd>](../examples/events-onload.html)
 
 
 
