@@ -115,7 +115,6 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/convex-platonic-solids.jpg" width="275"></kbd>](../examples/convex-platonic-solids.html)
 [<kbd><img src="../examples/snapshots/convex-brick-wall.jpg" width="275"></kbd>](../examples/convex-brick-wall.html)
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="275"></kbd>](../examples/convex-dynamic.html)
-[<kbd><img src="../examples/snapshots/convex-vertices.jpg" width="275"></kbd>](../examples/convex-vertices.html)
 [<kbd><img src="../examples/snapshots/model.jpg" width="275"></kbd>](../examples/model.html)
 [<kbd><img src="../examples/snapshots/model-race.jpg" width="275"></kbd>](../examples/model-race.html)
 [<kbd><img src="../examples/snapshots/model-save.jpg" width="275"></kbd>](../examples/model-save.html)

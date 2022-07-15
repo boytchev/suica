@@ -22,7 +22,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Color](#color): [`color`](#color)</small>
 	- <small>[Texture](#texture): [`image`](#image), [`images`](#images)</small>
 	- <small>[Wire-frame](#wire-frame): [`wireframe`](#wireframe-1)</small>
-- [Three.js properties](#threejs-properties): <small>[`threejs`](#threejs)</small>
+- [Three.js properties](#threejs-properties): <small>[`vertices`](#vertices) [`threejs`](#threejs)</small>
 
 
 
@@ -569,6 +569,20 @@ a.wireframe = true;
 # Three.js properties
 
 Suica is based on Three.js and Three.js functionality is available alongside Suica. Every visible Suica object has a property `threejs` that is the Three.js object created by Suica.
+
+
+#### vertices
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.vertices
+```
+Property. Provides access to object vertices. This property is read-only. It contains an array of all vertices of an object converted into global 3D coordinates. The native local coordinates of the object can be accessed via [`threejs.geometry`](#threejs). If the object is a group or a model, `vertices` collects vertices of all nested objects. If the object is a model, its vertices are not immediately available &ndash; they are availabe after the [`onLoad`](events.md#onload) event.
+
+[<kbd><img src="../examples/snapshots/vertices.jpg" width="300"></kbd>](../examples/vertices.html)
+[<kbd><img src="../examples/snapshots/vertices-convex.jpg" width="300"></kbd>](../examples/vertices-convex.html)
+[<kbd><img src="../examples/snapshots/vertices-group.jpg" width="300"></kbd>](../examples/vertices-group.html)
+[<kbd><img src="../examples/snapshots/vertices-model.jpg" width="300"></kbd>](../examples/vertices-model.html)
+
 
 #### threejs
 ```js
