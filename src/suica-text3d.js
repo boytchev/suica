@@ -81,6 +81,7 @@ class Text3D extends Mesh
 				//console.log('cached font',fontName);
 				this._font = Text3D.fontsCache[fontName];
 				this.regenerateGeometry( );
+				Suica.onLoad( this );
 			}
 			else
 			{
@@ -101,6 +102,8 @@ class Text3D extends Mesh
 					that._font = font;
 					that.regenerateGeometry( );
 			
+					Suica.onLoad( that );
+					
 					// a geometry is loaded, scan all objects waiting for this font
 					//console.log('waiting list',Text3D.waitingList);
 					for( var i in Text3D.waitingList )
@@ -111,6 +114,7 @@ class Text3D extends Mesh
 							obj._font = Text3D.fontsCache[obj._fontName];
 							obj.regenerateGeometry();
 							delete Text3D.waitingList[i];
+							Suica.onLoad( obj );
 						}
 					}
 					Text3D.waitingList = Text3D.waitingList.filter( value=>value );

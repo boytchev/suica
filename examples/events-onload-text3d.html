@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Events - text3d onLoad</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Events - text3d onLoad</h1>
+	<p>Centering 3D text after its font is loaded.</p>
+
+	<suica>
+		<demo altitude="0">
+		<text3d id="a" text="centered" font="../assets/fonts/droid/droid_sans_regular.typeface.json" center="0,-15,-5" size="20,30,10" onload="centerText" color="peachpuff">
+	</suica>
+
+	<script>
+		function centerText( object )
+		{
+			var min = Infinity,
+				max = -Infinity;
+				
+			for( var v of object.vertices )
+			{
+				min = Math.min( min, v[0] );
+				max = Math.max( max, v[0] );
+			}
+				
+			object.x = -(min + max)/2;
+		}
+	</script>
+</body>
+</html>

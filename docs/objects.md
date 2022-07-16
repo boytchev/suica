@@ -830,6 +830,7 @@ JSON files with other fonts or with other characters (e.g. Cyrillic or Kanji) ca
 [<kbd><img src="../examples/snapshots/text3d-dynamic.jpg" width="300"></kbd>](../examples/text3d-dynamic.html)
 [<kbd><img src="../examples/snapshots/text3d-dynamic-font.jpg" width="300"></kbd>](../examples/text3d-dynamic-font.html)
 
+Loading a JSON font file is asynchronous. The creation of 3D text builds an empty placeholder that will accept the font, once it is completely loaded. This delay depends on the size of the font file, the network speed and the server response time. When a font for `text3d` is loaded it triggers an [`onLoad`](events.md#load-events) event.
 
 
 

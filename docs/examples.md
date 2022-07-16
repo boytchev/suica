@@ -245,7 +245,8 @@ tag: home userguidecheatsheet github
 
 ## [Load event handlers](#load-event-handlers)
 
-[<kbd><img src="../examples/snapshots/events-onload.jpg" width="275"></kbd>](../examples/events-onload.html)
+[<kbd><img src="../examples/snapshots/events-onload-model.jpg" width="275"></kbd>](../examples/events-onload-model.html)
+[<kbd><img src="../examples/snapshots/events-onload-text3d.jpg" width="275"></kbd>](../examples/events-onload-text3d.html)
 
 ## [Proactive events](#proactive-events)
 

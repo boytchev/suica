@@ -50,7 +50,7 @@ Time event is `onTime`. It occurs when the browser is ready for a new frame.
 
 ## Load events
 
-Load event is `onLoad`. It occurs when a [`model`](objects.md#model) is loaded and its data are available.
+Load event is `onLoad`. It occurs when a data resource is loaded.
 
 
 # Working with events
@@ -272,7 +272,7 @@ function onTime( t, dT )
 
 ## Load event handlers
 
-The load event `onLoad` occurs when a 3D [`model`](objects.md#model) is loaded. The load event provides parameter `object` that is the object being loaded. This parameter is used when a load event handler is shared across several models.
+The load event `onLoad` occurs when a 3D [`model`](objects.md#model) or the font of a [`text3d`](objects.md#text3d) is loaded. The load event provides parameter `object` that is the object being loaded. This parameter is used when a load event handler is shared across several objects.
 
 
 ```js
@@ -283,9 +283,10 @@ function onLoad( object )
 }
 ```
 
-This example calculates the bounding boxes of 3D models. This uses the [`vertices`](properties.md#vertices) property that is available only when a model is completely loaded.
+The first example calculates the bounding boxes of 3D models. This uses the [`vertices`](properties.md#vertices) property that is available only when a model is completely loaded. The second example centers the 3D text after its font is loaded.
 
-[<kbd><img src="../examples/snapshots/events-onload.jpg" width="300"></kbd>](../examples/events-onload.html)
+[<kbd><img src="../examples/snapshots/events-onload-model.jpg" width="300"></kbd>](../examples/events-onload-model.html)
+[<kbd><img src="../examples/snapshots/events-onload-text3d.jpg" width="300"></kbd>](../examples/events-onload-text3d.html)
 
 
 

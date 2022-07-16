@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica>
+		<demo altitude="0">
+		<text3d id="a" text="centered" font="../../assets/fonts/droid/droid_sans_regular.typeface.json" center="0,-15,-5" size="20,30,10" onload="centerText" color="peachpuff">
+	</suica>
+
+	<script>
+		function centerText( object )
+		{
+			var min = Infinity,
+				max = -Infinity;
+				
+			for( var v of object.vertices )
+			{
+				min = Math.min( min, v[0] );
+				max = Math.max( max, v[0] );
+			}
+				
+			object.x = -(min + max)/2;
+		}
+	</script>
+</body>
+</html>
