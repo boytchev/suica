@@ -7,7 +7,7 @@
 
 // control flags
 const DEBUG_CALLS = false;
-const DEBUG_EVENTS = !false;
+const DEBUG_EVENTS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
 
