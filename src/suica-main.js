@@ -737,14 +737,36 @@ class Suica
 		this.debugCall( 'orbit', ...arguments );
 		
 		this.camera.up.copy( this.orientation.UP );
-		this.camera.position.set( ...this.orientation.LOOKAT.FROM );
+		//this.camera.position.set( ...this.orientation.LOOKAT.FROM );
+		
+		var d = Suica.parseNumber( distance, Suica.ORBIT.DISTANCE ),
+			a = Suica.parseNumber( altitude, Suica.ORBIT.ALTITUDE );
+			
+		switch( this.orientation )
+		{
+			case Suica.ORIENTATIONS.YXZ:
+					this.camera.position.set( a, 0, d );
+					break;
+			case Suica.ORIENTATIONS.ZYX:
+					this.camera.position.set( d, a, 0 );
+					break;
+			case Suica.ORIENTATIONS.XZY:
+					this.camera.position.set( 0, d, a );
+					break;
+
+			case Suica.ORIENTATIONS.ZXY:
+					this.camera.position.set( a, d, 0 );
+					break;
+			case Suica.ORIENTATIONS.XYZ:
+					this.camera.position.set( 0, a, d );
+					break;
+			case Suica.ORIENTATIONS.YZX:
+					this.camera.position.set( d, 0, a );
+					break;
+			default: throw 'error: unknown orientation';
+		}
 		
 		this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
-		// this.camera.position.set(
-			// 0, 
-			// Suica.parseNumber( altitude, Suica.ORBIT.ALTITUDE ),
-			// Suica.parseNumber( distance, Suica.ORBIT.DISTANCE )
-		// );
 
 		this.controls.autoRotateSpeed =	-4*Suica.parseNumber( speed, Suica.ORBIT.SPEED );
 		this.controls.autoRotate = this.controls.autoRotateSpeed!=0;
