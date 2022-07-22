@@ -20,7 +20,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint)</small>
 - [Material properties](#material-properties)
 	- <small>[Color](#color): [`color`](#color)</small>
-	- <small>[Visibility](#visibility): [`visible`](#visible) [`hidden`](#hidden)</small>
+	- <small>[Visibility](#visibility): [`visible`](#visible), [`hidden`](#hidden)</small>
 	- <small>[Texture](#texture): [`image`](#image), [`images`](#images)</small>
 	- <small>[Wire-frame](#wire-frame): [`wireframe`](#wireframe-1)</small>
 - [Three.js properties](#threejs-properties): <small>[`vertices`](#vertices) [`threejs`](#threejs)</small>
@@ -418,7 +418,7 @@ Setting the `color` of a [group](#group) sets it to all its objects.
 
 ## Visibility
 
-The visibility of a Suica object indicates whether the object is drawn. Two antagonistic properties control visibility &ndash; [`visible`](#visible) and [`hidden`](hidden).
+The visibility of a Suica object indicates whether the object is drawn. Two antagonistic properties control visibility &ndash; [`visible`](#visible) and [`hidden`](#hidden).
 
 #### visible
 ```html
