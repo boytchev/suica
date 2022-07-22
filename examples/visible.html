@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Visible</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Visible</h1>
+	<p>Showing and hiding objects.</p>
+
+	<suica>
+		<demo>
+		<cylinder y="-20" height="40" visible="no">
+		<group id="a" hidden> <cube size="20,6,6" x="24"> </group>
+	</suica>
+	
+	<script>
+		for( var y=-15; y<=15; y+=10 )
+		for( var s=15*(y%2); s<360; s+=30 )
+			a.clone.style( {y:y, spin:s, color:random(['black', 'linen', 'gray', 'peachpuff', 'white', 'dimgray', 'lightsalmon', 'lightgray'])} );
+		
+		setInterval( toggle, 1000 );
+		
+		function toggle( )
+		{
+			for( var obj of allObjects() )
+				obj.visible = random( [true, false] );
+		}
+	</script>
+</body>
+</html>

@@ -271,6 +271,7 @@ class Tube extends Mesh
 		
 		object.spin = this.spin;
 		object.image = this.image;
+		object.visible = this.visible;
 
 		Suica.cloneEvents( object, this );
 			

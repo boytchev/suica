@@ -72,6 +72,8 @@ class Group extends Mesh
 		object.center = this.center;
 		object.size = this.size;
 		object.spin = this.spin;
+		object.visible = this.visible;
+
 		Suica.cloneEvents( object, this );
 
 		return object;

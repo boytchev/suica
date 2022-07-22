@@ -296,6 +296,12 @@ class HTMLParser
 		{
 			if( elem.hasAttribute('wireframe') ) object.wireframe = ['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase()) >= 0;
 		}
+		
+		if( parseOptions.visible )
+		{
+			if( elem.hasAttribute('visible') ) object.visible = ['','true','yes','1'].indexOf(elem.getAttribute('visible').toLowerCase()) >= 0;
+			if( elem.hasAttribute('hidden') ) object.visible = ['','true','yes','1'].indexOf(elem.getAttribute('hidden').toLowerCase()) < 0;
+		}
 
 
 		
@@ -374,7 +380,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p );
+		suica.parserReadonly.parseAttributes( elem, p, {visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -392,7 +398,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 
-		suica.parserReadonly.parseAttributes( elem, p );
+		suica.parserReadonly.parseAttributes( elem, p, {visible: true} );
 
 		var id = elem.getAttribute('id');
 		if( id ) window[id] = p;
@@ -413,7 +419,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -431,7 +437,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -449,7 +455,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -468,7 +474,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, wireframe:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -486,7 +492,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -504,7 +510,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -523,7 +529,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -541,7 +547,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -560,7 +566,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, wireframe:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -581,7 +587,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -601,7 +607,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -619,7 +625,7 @@ class HTMLParser
 			elem.getAttribute('size')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -639,7 +645,7 @@ class HTMLParser
 			elem.getAttribute('color'),
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -677,7 +683,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, center:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, center:true, visible: true} );
 
 		elem.suicaObject = p;
 		
@@ -732,7 +738,7 @@ class HTMLParser
 		if( elem.hasAttribute('size') ) p.size = elem.getAttribute('size');
 		if( elem.hasAttribute('spin') ) p.spin = elem.getAttribute('spin');
 
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		elem.suicaObject = p;		
 		
@@ -753,7 +759,7 @@ class HTMLParser
 			elem.getAttribute('color')
 		);
 		
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
 		//elem.suicaObject = p; <-- now, spline is not an object
 		
@@ -779,7 +785,7 @@ class HTMLParser
 		if( elem.hasAttribute('spin') ) p.spin = elem.getAttribute('spin');
 		if( elem.hasAttribute('color') ) p.color = elem.getAttribute('color');
 
-		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, wireframe:true} );
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, wireframe:true, visible: true} );
 
 		elem.suicaObject = p;		
 		

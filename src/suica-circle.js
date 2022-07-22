@@ -105,6 +105,8 @@ class Polygon extends Mesh
 		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
+		object.visible = this.visible;
+		
 		Suica.cloneEvents( object, this );
 		
 		return object;

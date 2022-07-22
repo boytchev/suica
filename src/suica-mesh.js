@@ -448,6 +448,7 @@ class Mesh
 		newMesh.scale.copy( oldMesh.scale );
 		newMesh.rotation.copy( oldMesh.rotation );
 		newMesh.material.color.copy( oldMesh.material.color );
+		newMesh.visible = oldMesh.visible;
 		
 		if( oldMesh.material.map )
 		{
@@ -553,6 +554,28 @@ class Mesh
 	}
 	
 
+	get visible( )
+	{
+		return this.threejs.visible;
+	}
+	
+	set visible( visible )
+	{
+		this.threejs.visible = visible;
+	}
+	
+
+	get hidden( )
+	{
+		return !this.threejs.visible;
+	}
+	
+	set hidden( hidden )
+	{
+		this.threejs.visible = !hidden;
+	}
+	
+	
 	addEventListener( type, listener, aux )
 	{
 		if( aux ) console.warn( 'Suica objects do not support third parameter of addEventListener');
