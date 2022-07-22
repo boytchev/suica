@@ -20,6 +20,8 @@ var cases = [
 'colors', 
 'cone-conoid', 
 'cone', 
+'construct-clone-n', 
+'construct-clone', 
 'construct-expression', 
 'construct-grooves', 
 'construct-intersect', 

@@ -788,9 +788,10 @@ Suica CSG uses experimental [CSG library](https://github.com/looeee/threejs-csg)
 - CSG operations are not fast. Round objects, like spheres, are processed very slow. A general advice is to build offline the object once, save it as GLB file with [`model.save`](#model-save) and then use [`model`](#model) to load it online.
 - CSG operation are not bug-free. In some situations the resulting object might be with wrong or missing faces. In other situations the construction process may break with an error. In such cases the only possibility is to try and use simpler shapes or to perform the operations in a dedicated modelling software.
 
-The next example carves 10 grooves on a cube. When the grooves are 20, the construction breaks.
+The next example carves 10 grooves on a cube. When the grooves are 20, the construction breaks. Although CSG are slow, cloning a construct is fast, because it does not perform again the same CSG operations, but just clones the resulting shape.
 
 [<kbd><img src="../examples/snapshots/construct-grooves.jpg" width="300"></kbd>](../examples/construct-grooves.html)
+[<kbd><img src="../examples/snapshots/construct-clone.jpg" width="300"></kbd>](../examples/construct-clone.html)
 
 
 

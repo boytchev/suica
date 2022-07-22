@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo distance="250">
+		
+		<cube id="box" color="linen" hidden>
+		<sphere id="ball" size="40" color="dimgray" hidden>
+		<construct id="a" src="box-ball" x="-25" color="lightsalmon" visible>
+
+	</suica>
+	
+	<script>
+		for( var x=-60; x<=60; x+=30 )
+		for( var y=-60; y<=60; y+=30 )
+		for( var z=-60; z<=60; z+=30 )
+		{
+			a.clone;
+			its.center = [x,y,z];
+			its.color = random(['black', 'linen', 'gray', 'peachpuff', 'white', 'dimgray', 'lightsalmon', 'lightgray']);
+		}
+	</script>
+</body>
+</html>

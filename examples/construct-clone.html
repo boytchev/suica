@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Construct - grooves</title>
+	<title>Construct - clone</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,38 +18,27 @@
 
 <body>
 
-	<h1>Construct - grooves</h1>
-	<p>Making grooves with object subtraction.</p>
+	<h1>Construct - clone</h1>
+	<p>Cloing constructs is faster that building constructs.</p>
 
-	<suica ontime="spin">
+	<suica>
+		<demo distance="250">
+		
+		<cube id="box" color="linen" hidden>
+		<sphere id="ball" size="40" color="dimgray" hidden>
+		<construct id="a" src="box-ball" x="-25" color="lightsalmon" visible>
+
 	</suica>
 	
 	<script>
-		var d = cube( [0,0,0], 48, 'linen' );
-		var a = cube( [0,0,0], 50 );
-		its.threejs.visible = false;
-		var b = [];
-		
-		var expr = 'a';
-
-		for( var i=0; i<10; i++ )
+		for( var x=-60; x<=60; x+=30 )
+		for( var y=-60; y<=60; y+=30 )
+		for( var z=-60; z<=60; z+=30 )
 		{
-			b.push( cube( [0,random(-10,10),0], [100,100,3] ) );
-			its.spin = [random(0,360),random(0,180),0];
-			its.threejs.visible = false;
-			expr += `-b[${i}]`;
-		}
-
-
-		var c = construct( expr );
-
-		var g = group( c, d );
-		
-		function spin( t )
-		{
-			g.spin = [40*t, 30*t, 20*t];
+			a.clone;
+			its.center = [x,y,z];
+			its.color = random(['black', 'linen', 'gray', 'peachpuff', 'white', 'dimgray', 'lightsalmon', 'lightgray']);
 		}
 	</script>
-	
 </body>
 </html>
