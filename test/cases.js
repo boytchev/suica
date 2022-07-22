@@ -69,6 +69,7 @@ var cases = [
 'events-suica-enter', 
 'group-tag', 
 'group', 
+'hidden', 
 'image-datauri', 
 'image-file', 
 'images', 
@@ -175,4 +176,5 @@ var cases = [
 'vertices-group', 
 'vertices-model', 
 'vertices', 
+'visible', 
 ]; 
