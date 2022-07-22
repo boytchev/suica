@@ -18,13 +18,8 @@
 		for( var s=15*(y%2); s<360; s+=30 )
 			a.clone.style( {y:y, spin:s, color:random(['black', 'linen', 'gray', 'peachpuff', 'white', 'dimgray', 'lightsalmon', 'lightgray'])} );
 		
-		setInterval( toggle, 100 );
-		
-		function toggle( )
-		{
-			for( var obj of allObjects() )
-				obj.hidden = random( [true, false] );
-		}
+		for( var obj of allObjects() )
+			obj.hidden = random( [true, false] );
 	</script>
 </body>
 </html>

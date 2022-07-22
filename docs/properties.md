@@ -20,6 +20,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint)</small>
 - [Material properties](#material-properties)
 	- <small>[Color](#color): [`color`](#color)</small>
+	- <small>[Visibility](#visibility): [`visible`](#visible) [`hidden`](#hidden)</small>
 	- <small>[Texture](#texture): [`image`](#image), [`images`](#images)</small>
 	- <small>[Wire-frame](#wire-frame): [`wireframe`](#wireframe-1)</small>
 - [Three.js properties](#threejs-properties): <small>[`vertices`](#vertices) [`threejs`](#threejs)</small>
@@ -412,6 +413,61 @@ The following table elaborates how colors are set in HTML, CSS and JavaScript va
 | JS<br>code | <small>"crimson"</small> | <small>0xDC143C</small> | <small>[0.86,&nbsp;0.08,&nbsp;0.24]</small> | <small>rgb(&nbsp;220,&nbsp;20,&nbsp;60)</small> | <small>hsl(&nbsp;348,&nbsp;91,&nbsp;86&nbsp;)</small> |
 
 Setting the `color` of a [group](#group) sets it to all its objects.
+
+
+
+## Visibility
+
+The visibility of a Suica object indicates whether the object is drawn. Two antagonistic properties control visibility &ndash; [`visible`](#visible) and [`hidden`](hidden).
+
+#### visible
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 visible>
+<𝑜𝑏𝑗𝑒𝑐𝑡 visible="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.visible = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
+```
+
+Property. Defines whether to draw an object. By default, objects in Suica are visible. Values *yes* and *1* are considered `true`, values *no* and *0* are considered `false`. In HTML the value of `visible` can be omitted and this assumes it is `true`. Note, that an object with `visible` set to `true` is not necessarily visible in the drawing canvas. A visible object might still be invisible if it is outside the drawing canvas, behind the viewer or hidden behind (or in) another larger object.
+
+```html
+HTML:
+<cube size="30" visible>
+<cube size="30" visible="true">
+```
+```js
+JS:
+a = cube( [0,0,0], 30);
+a.visible = true;
+```
+[<kbd><img src="../examples/snapshots/visible.jpg" width="300"></kbd>](../examples/visible.html)
+
+#### hidden
+```html
+HTML:
+<𝑜𝑏𝑗𝑒𝑐𝑡 hidden>
+<𝑜𝑏𝑗𝑒𝑐𝑡 hidden="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.hidden = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
+```
+
+Property. Defines whether to omit drawing an object. By default, objects in Suica are not hidden. Values *yes* and *1* are considered `true`, values *no* and *0* are considered `false`. In HTML the value of `hidden` can be omitted and this assumes it is `true`. Note, that an object with `hidden` set to `false` is not necessarily visible in the drawing canvas. A visible object might still be invisible if it is outside the drawing canvas, behind the viewer or hidden behind (or in) another larger object.
+
+```html
+HTML:
+<cube size="30" hidden>
+<cube size="30" hidden="true">
+```
+```js
+JS:
+a = cube( [0,0,0], 30);
+a.hidden = true;
+```
 
 
 

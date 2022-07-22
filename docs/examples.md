@@ -176,6 +176,7 @@ tag: home userguidecheatsheet github
 
 ## [Material properties](properties.md#material-properties)
 
+[<kbd><img src="../examples/snapshots/visible.jpg" width="275"></kbd>](../examples/visible.html)
 [<kbd><img src="../examples/snapshots/image-file.jpg" width="275"></kbd>](../examples/image-file.html)
 [<kbd><img src="../examples/snapshots/image-datauri.jpg" width="275"></kbd>](../examples/image-datauri.html)
 [<kbd><img src="../examples/snapshots/images.jpg" width="275"></kbd>](../examples/images.html)
