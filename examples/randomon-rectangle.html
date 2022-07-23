@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>RandomOn for rectangle</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>RandomOn for rectangle</h1>
+	<p>Picking a random point on a rectangle.</p>
+
+	<suica>
+		<demo>
+		<square id="a" x="-35" size="20,50" color="black" wireframe spin="-45,45,-45">
+		<square id="b" x="35" size="20,50" color="black" wireframe spin="45,45,45">
+	</suica>
+	
+	<script>
+		var colors = ['black', 'linen', 'gray', 'peachpuff', 'white', 'dimgray', 'lightsalmon', 'lightgray'];
+		
+		var p, q, color;
+		for( var i=0; i<100; i++ )
+		{
+			p = randomOn( a );
+			q = randomOn( b );
+			color = random( colors );
+			
+			point( p, 4, color );
+			point( q, 4, color );
+			line( p, q, color );
+		}
+	</script>
+</body>
+</html>

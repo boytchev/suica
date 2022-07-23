@@ -83,4 +83,57 @@ class Cube extends Mesh
 		
 	} // Cube.clone
 
+
+	get randomIn( )
+	{
+		var x = random( -1/2, 1/2 ) * this.width,
+			y = random( -1/2, 1/2 ) * this.height,
+			z = random( -1/2, 1/2 ) * this.depth;
+			
+		return this.objectPosition( [x,y,z] );
+	} // Cube.randomIn
+
+
+	get randomOn( )
+	{
+		var wh = this.width*this.height,
+			wd = this.width*this.depth,
+			hd = this.height*this.depth;
+	
+		switch( this.suica.orientation )
+		{
+			case Suica.ORIENTATIONS.ZYX:
+			case Suica.ORIENTATIONS.XYZ: break;
+			case Suica.ORIENTATIONS.YZX:
+			case Suica.ORIENTATIONS.XZY: [wh,wd] = [wd,wh]; break;
+			case Suica.ORIENTATIONS.ZXY:
+			case Suica.ORIENTATIONS.YXZ: [hd,wd] = [wd,hd]; break;
+		}
+		
+		var rnd = random( 0, wh+wd+hd );
+
+		var x, y, z;
+		
+		if( rnd <= wh )
+		{
+			x = random( -1/2, 1/2 ) * this.width;
+			y = random( -1/2, 1/2 ) * this.height;
+			z = random([-1/2, 1/2]) * this.depth;
+		}
+		else if( rnd <= wh+wd )
+		{
+			x = random( -1/2, 1/2 ) * this.width;
+			y = random([-1/2, 1/2]) * this.height;
+			z = random( -1/2, 1/2 ) * this.depth;
+		}
+		else
+		{
+			x = random([-1/2, 1/2]) * this.width;
+			y = random( -1/2, 1/2 ) * this.height;
+			z = random( -1/2, 1/2 ) * this.depth;
+		}
+			
+		return this.objectPosition( [x,y,z] );
+	} // Cube.randomOn
+	
 } // class Cube

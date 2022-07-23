@@ -643,7 +643,9 @@ class Mesh
 		var target = new THREE.Vector3( ...localOffset ),
 			pos = this.threejs.localToWorld( target );
 			
-		return [ pos.x, pos.y, pos.z ];
+		var scale = this.suica.orientation.SCALE;
+		
+		return [ pos.x*scale.x, pos.y*scale.y, pos.z*scale.z ];
 	}
 	
 

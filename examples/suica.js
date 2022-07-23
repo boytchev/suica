@@ -930,6 +930,10 @@ window.random=function(a=0,b=1)
 {if(Array.isArray(a))
 {var index=Math.floor(a.length*THREE.MathUtils.seededRandom());return a[index];}
 return a+(b-a)*THREE.MathUtils.seededRandom();}
+window.randomIn=function(object)
+{return object.randomIn;}
+window.randomOn=function(object)
+{return object.randomOn;}
 window.radians=function(degrees)
 {return degrees*Math.PI/180;}
 window.degrees=function(radians)
@@ -1389,7 +1393,7 @@ type='on'+type;this[type.toLowerCase()]=null;}
 objectPosition(localOffset=[0,0,0])
 {localOffset=Suica.parseCenter(localOffset);switch(this.suica.orientation)
 {case Suica.ORIENTATIONS.YXZ:localOffset[0]/=this.threejs.scale.y;localOffset[1]/=this.threejs.scale.x;localOffset[2]/=this.threejs.scale.z;break;case Suica.ORIENTATIONS.ZYX:localOffset[0]/=this.threejs.scale.z;localOffset[1]/=this.threejs.scale.y;localOffset[2]/=this.threejs.scale.x;break;case Suica.ORIENTATIONS.XZY:localOffset[0]/=this.threejs.scale.x;localOffset[1]/=this.threejs.scale.z;localOffset[2]/=this.threejs.scale.y;break;case Suica.ORIENTATIONS.ZXY:localOffset[0]/=this.threejs.scale.z;localOffset[1]/=this.threejs.scale.x;localOffset[2]/=this.threejs.scale.y;break;case Suica.ORIENTATIONS.XYZ:localOffset[0]/=this.threejs.scale.x;localOffset[1]/=this.threejs.scale.y;localOffset[2]/=this.threejs.scale.z;break;case Suica.ORIENTATIONS.YZX:localOffset[0]/=this.threejs.scale.y;localOffset[1]/=this.threejs.scale.z;localOffset[2]/=this.threejs.scale.x;break;default:throw'error: unknown orientation';}
-this.threejs.updateWorldMatrix(true,true);var target=new THREE.Vector3(...localOffset),pos=this.threejs.localToWorld(target);return[pos.x,pos.y,pos.z];}
+this.threejs.updateWorldMatrix(true,true);var target=new THREE.Vector3(...localOffset),pos=this.threejs.localToWorld(target);var scale=this.suica.orientation.SCALE;return[pos.x*scale.x,pos.y*scale.y,pos.z*scale.z];}
 screenPosition(localOffset=[0,0,0],globalOffset=[0,0,0])
 {var pos=new THREE.Vector3(...this.objectPosition(localOffset));globalOffset=Suica.parseCenter(globalOffset);pos.x+=globalOffset[0];pos.y+=globalOffset[1];pos.z+=globalOffset[2];pos.project(this.suica.camera);var x=(1+pos.x)/2*this.suica.canvas.clientWidth,y=(1-pos.y)/2*this.suica.canvas.clientHeight,z=pos.z;return[Math.round(100*x)/100,Math.round(100*y)/100,Math.round(1000*z)/1000];}
 get vertices()
@@ -1440,13 +1444,37 @@ class Square extends Mesh
 {static COLOR='lightsalmon';static FRAMECOLOR='black';static SIZE=30;constructor(suica,center,size,color)
 {suica.parser?.parseTags();suica.debugCall('square',center,size,color);suica._.solidGeometry.square=suica.flipNormal(new THREE.PlaneGeometry(1,1).applyMatrix4(suica.orientation.MATRIX));;suica._.frameGeometry.square=new THREE.BufferGeometry();suica._.frameGeometry.square.setAttribute('position',new THREE.BufferAttribute(new Float32Array([-0.5,-0.5,0,+0.5,-0.5,0,+0.5,-0.5,0,+0.5,+0.5,0,+0.5,+0.5,0,-0.5,+0.5,0,-0.5,+0.5,0,-0.5,-0.5,0,]),3));suica._.frameGeometry.square.setAttribute('uv',new THREE.BufferAttribute(new Float32Array([0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,]),2));suica._.frameGeometry.square.applyMatrix4(suica.orientation.MATRIX);super(suica,new THREE.Mesh(suica._.solidGeometry.square,Mesh.solidMaterial.clone()),new THREE.LineSegments(suica._.frameGeometry.square,Mesh.lineMaterial.clone()),);this.center=Suica.parseCenter(center);this.size=Suica.parseSize(size,Square.SIZE);this.color=Suica.parseColor(color,Square.COLOR);}
 get clone()
-{var object=new Square(this.suica,this.center,this.size,this.color);object.spin=this.spin;object.wireframe=this.wireframe;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}}
+{var object=new Square(this.suica,this.center,this.size,this.color);object.spin=this.spin;object.wireframe=this.wireframe;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}
+get randomIn()
+{var x=random(-1/2,1/2)*this.width,y=random(-1/2,1/2)*this.height,z=random(-1/2,1/2)*this.depth;switch(this.suica.orientation)
+{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:return this.objectPosition([x,y,0]);case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:return this.objectPosition([0,y,z]);case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:return this.objectPosition([x,0,z]);}}
+get randomOn()
+{var w=this.width,h=this.height;var lim;switch(this.suica.orientation)
+{case Suica.ORIENTATIONS.YXZ:lim=w;break;case Suica.ORIENTATIONS.XYZ:lim=h;break;case Suica.ORIENTATIONS.ZYX:lim=h;break;case Suica.ORIENTATIONS.YZX:lim=w;break;case Suica.ORIENTATIONS.XZY:lim=h;h=w;break;case Suica.ORIENTATIONS.ZXY:lim=w;h=w;break;}
+var rnd=random(0,w+h),x,y;if(rnd<lim)
+{x=random([-1/2,1/2])*w;y=random(-1/2,1/2)*h;}
+else
+{x=random(-1/2,1/2)*w;y=random([-1/2,1/2])*h;}
+switch(this.suica.orientation)
+{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:return this.objectPosition([x,y,0]);case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:return this.objectPosition([0,y,x]);case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:return this.objectPosition([x,0,y]);}}}
 ﻿
 class Cube extends Mesh
 {static COLOR='lightsalmon';static FRAMECOLOR='black';static SIZE=30;constructor(suica,center,size,color)
 {suica.parser?.parseTags();suica.debugCall('cube',center,size,color);suica._.solidGeometry.cube=suica.flipNormal(new THREE.BoxGeometry(1,1,1).applyMatrix4(suica.orientation.MATRIX));suica._.frameGeometry.cube=new THREE.BufferGeometry();suica._.frameGeometry.cube.setAttribute('position',new THREE.BufferAttribute(new Float32Array([-0.5,-0.5,-0.5,+0.5,-0.5,-0.5,+0.5,-0.5,-0.5,+0.5,+0.5,-0.5,+0.5,+0.5,-0.5,-0.5,+0.5,-0.5,-0.5,+0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,+0.5,+0.5,-0.5,+0.5,+0.5,-0.5,+0.5,+0.5,+0.5,+0.5,+0.5,+0.5,+0.5,-0.5,+0.5,+0.5,-0.5,+0.5,+0.5,-0.5,-0.5,+0.5,-0.5,-0.5,-0.5,-0.5,-0.5,+0.5,+0.5,-0.5,-0.5,+0.5,-0.5,+0.5,+0.5,+0.5,-0.5,+0.5,+0.5,+0.5,-0.5,+0.5,-0.5,-0.5,+0.5,+0.5,]),3));suica._.frameGeometry.cube.setAttribute('uv',new THREE.BufferAttribute(new Float32Array([0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,]),2));suica._.frameGeometry.cube=suica._.frameGeometry.cube.applyMatrix4(suica.orientation.MATRIX);super(suica,new THREE.Mesh(suica._.solidGeometry.cube,Mesh.solidMaterial.clone()),new THREE.LineSegments(suica._.frameGeometry.cube,Mesh.lineMaterial.clone()),);this.center=Suica.parseCenter(center);this.size=Suica.parseSize(size,Cube.SIZE);this.color=Suica.parseColor(color,Cube.COLOR);}
 get clone()
-{var object=new Cube(this.suica,this.center,this.size,this.color);object.spin=this.spin;object.wireframe=this.wireframe;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}}
+{var object=new Cube(this.suica,this.center,this.size,this.color);object.spin=this.spin;object.wireframe=this.wireframe;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}
+get randomIn()
+{var x=random(-1/2,1/2)*this.width,y=random(-1/2,1/2)*this.height,z=random(-1/2,1/2)*this.depth;return this.objectPosition([x,y,z]);}
+get randomOn()
+{var wh=this.width*this.height,wd=this.width*this.depth,hd=this.height*this.depth;switch(this.suica.orientation)
+{case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.XYZ:break;case Suica.ORIENTATIONS.YZX:case Suica.ORIENTATIONS.XZY:[wh,wd]=[wd,wh];break;case Suica.ORIENTATIONS.ZXY:case Suica.ORIENTATIONS.YXZ:[hd,wd]=[wd,hd];break;}
+var rnd=random(0,wh+wd+hd);var x,y,z;if(rnd<=wh)
+{x=random(-1/2,1/2)*this.width;y=random(-1/2,1/2)*this.height;z=random([-1/2,1/2])*this.depth;}
+else if(rnd<=wh+wd)
+{x=random(-1/2,1/2)*this.width;y=random([-1/2,1/2])*this.height;z=random(-1/2,1/2)*this.depth;}
+else
+{x=random([-1/2,1/2])*this.width;y=random(-1/2,1/2)*this.height;z=random(-1/2,1/2)*this.depth;}
+return this.objectPosition([x,y,z]);}}
 ﻿
 class Polygon extends Mesh
 {static COLOR='lightsalmon';static FRAMECOLOR='black';static SIZE=30;static COUNT=3;constructor(suica,count,center,size,color)

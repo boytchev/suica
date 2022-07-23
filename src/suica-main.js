@@ -1324,6 +1324,17 @@ window.random = function( a=0, b=1 )
 }
 
 
+window.randomIn = function( object )
+{
+	return object.randomIn;
+}
+
+window.randomOn = function( object )
+{
+	return object.randomOn;
+}
+
+
 window.radians = function( degrees )
 {
 	return degrees * Math.PI/180;
