@@ -15,7 +15,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Setting properties](#setting-properties): [`its`](#its)</small>
 	- <small>[Multiple properties](#multiple-properties): [`style`](#style)</small>
 - [Geometrical properties](#geometrical-properties)
-	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z), [`objectPosition`](#objectposition), [`screenPosition`](#screenposition)</small>
+	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z), [`randomIn`](#randomin), [`randomOn`](#randomon), [`objectPosition`](#objectposition), [`screenPosition`](#screenposition)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
 	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint)</small>
 - [Material properties](#material-properties)
@@ -184,6 +184,34 @@ p.x = 25;
 p.y = 10;
 p.z = 15;
 ```
+
+#### randomIn
+```js
+JS:
+𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.randomIn;
+```
+Property. Generates a random position inside an object. Every time this property is accessed, it generates a random position inside the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomIn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
+
+This property is available on in [`square`](objects.md#square) and [`cube`](objects.md#cube) objects.
+
+[<kbd><img src="../examples/snapshots/randomin-rectangle.jpg" width="300"></kbd>](../examples/randomin-rectangle.html)
+[<kbd><img src="../examples/snapshots/randomin-cuboid.jpg" width="300"></kbd>](../examples/randomin-cuboid.html)
+
+
+#### randomOn
+```js
+JS:
+𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.randomOn;
+```
+Property. Generates a random position on an object. Every time this property is accessed, it generates a random position on the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomOn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
+
+This property is available on in [`square`](objects.md#square) and [`cube`](objects.md#cube) objects.
+
+[<kbd><img src="../examples/snapshots/randomon-rectangle.jpg" width="300"></kbd>](../examples/randomon-rectangle.html)
+[<kbd><img src="../examples/snapshots/randomon-cuboid.jpg" width="300"></kbd>](../examples/randomon-cuboid.html)
+
+
+
 
 #### objectPosition
 ```js

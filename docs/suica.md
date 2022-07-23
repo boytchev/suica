@@ -22,7 +22,8 @@ tag: userguide suica objects properties drawings events
 	- <small>[Canvases](#canvses): [`fullScreen`](#fullscreen), [`fullWindow`](#fullwindow)</small>
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
-	- <small>[General functions](#functions): [`radians`](#radians), [`degrees`](#degrees), [`random`](#random)</small>
+	- <small>[General functions](#general-functions): [`radians`](#radians), [`degrees`](#degrees)</small>
+	- <small>[Random functions](#random-functions): [`random`](#random), [`randomIn`](#randomin), [`randomOn`](#randomon)</small>
 	- <small>[Video capturing](#video-capturing): [`capture`](#capture)</small>
 - [Questions and answers](#questions-and-answers)
 
@@ -671,6 +672,7 @@ JS:
 deg = degrees( 3.14159 );
 ```
 
+## Random functions
 
 #### random
 ```js
@@ -688,6 +690,34 @@ a = random( [1, 2, 3, 4] ); // from the list
 ```
 
 To generate a fixed user-dependent sequence of pseudo-random  values use [`scorm.derandomize`](objects.md#scormdenormalize).
+
+
+#### randomIn
+```js
+JS:
+randomIn( 𝑜𝑏𝑗𝑒𝑐𝑡 );
+```
+
+Function. Generates a random point inside an obeject. This function calls the [`randomIn`](properties.md#randomin) method of the object.
+
+```js
+JS:
+point( randomIn(box) );
+```
+
+
+#### randomOn
+```js
+JS:
+randomOn( 𝑜𝑏𝑗𝑒𝑐𝑡 );
+```
+
+Function. Generates a random point on the boundary of an obeject. This function calls the [`randomOn`](properties.md#randomon) method of the object.
+
+```js
+JS:
+point( randomOn(box) );
+```
 
 
 
