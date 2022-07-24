@@ -144,7 +144,7 @@ HTML:
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = line( [𝑥,𝑦,𝑧], [𝑥,𝑦,𝑧], 𝑐𝑜𝑙𝑜𝑟 );
 ```
-Object. Represents a straight segment. Its properties are `from` (or [`center`](properties.md#center)), `to`, [`color`](properties.md#color), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default, a line is drawn as a solid line, but it can be changed with custom [drawing](#drawings.md). In HTML all properties can be included in the `<line>` tag.
+Object. Represents a straight segment. Its properties are `from` (or [`center`](properties.md#center)), `to`, [`color`](properties.md#color), [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default, a line is drawn as a solid line, but it can be changed with custom [drawing](#drawings.md). In HTML all properties can be included in the `<line>` tag.
 
 ```html
 HTML:

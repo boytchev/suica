@@ -107,5 +107,24 @@ class Line extends Mesh
 		
 	} // Line.clone
 	
+	
+	get randomIn( )
+	{
+		var from = this.from,
+			to = this.to,
+			k = random( 0, 1 );
+
+		return this.objectPosition( [
+			from[0]*(1-k)+k*to[0],
+			from[1]*(1-k)+k*to[1],
+			from[2]*(1-k)+k*to[2],
+		] );
+		
+	} // Line.randomIn
+	get randomOn( )
+	{
+		return this.randomIn;
+	}
+	
 } // class Line
 

@@ -1438,7 +1438,11 @@ get to()
 set to(to)
 {this.suica.parser?.parseTags();to=Suica.parseCenter(to);var pos=this.threejs.geometry.getAttribute('position');pos.setXYZ(1,...to);pos.needsUpdate=true;}
 get clone()
-{var object=new Line(this.suica,this.from,this.to,this.color);object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}}
+{var object=new Line(this.suica,this.from,this.to,this.color);object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}
+get randomIn()
+{var from=this.from,to=this.to,k=random(0,1);return this.objectPosition([from[0]*(1-k)+k*to[0],from[1]*(1-k)+k*to[1],from[2]*(1-k)+k*to[2],]);}
+get randomOn()
+{return this.randomIn;}}
 ﻿
 class Square extends Mesh
 {static COLOR='lightsalmon';static FRAMECOLOR='black';static SIZE=30;constructor(suica,center,size,color)

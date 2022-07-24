@@ -107,6 +107,7 @@ var cases = [
 'qa-attribute-modification', 
 'qa-custom-center', 
 'qa-property-modification', 
+'randominon-line', 
 'randominon-orientation-xyz', 
 'randominon-orientation-xzy', 
 'randominon-orientation-yxz', 

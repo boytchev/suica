@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>RandomIn/RandomOn for line</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>RandomIn/RandomOn for line</h1>
+	<p>Picking a random point on a line.</p>
+
+	<suica>
+		<demo>
+		<group spin="45,45,45">
+			<line id="a" from="-50,0,0" to="50,0,0">
+			<line id="b" from="0,-50,0" to="0,50,0">
+			<line id="c" from="0,0,-50" to="0,0,50">
+		</group>
+	</suica>
+	
+	<script>
+		var colors = ['black', 'linen', 'gray', 'peachpuff', 'white', 'dimgray', 'lightsalmon', 'lightgray'];
+		
+		for( var i=0; i<30; i++ )
+		{
+			point( randomIn(a), 6, random(colors) );
+			point( randomIn(b), 6, random(colors) );
+			point( randomOn(c), 6, random(colors) );
+		}
+	</script>
+</body>
+</html>
