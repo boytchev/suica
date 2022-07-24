@@ -192,7 +192,7 @@ JS:
 ```
 Property. Generates a random position inside an object. Every time this property is accessed, it generates a random position inside the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomIn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
-This property is available in [`line`](objects.mg#line), [`square`](objects.md#square) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomOn`.
+This property is available in [`line`](objects.md#line), [`square`](objects.md#square) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomOn`.
 
 [<kbd><img src="../examples/snapshots/randominon-line.jpg" width="300"></kbd>](../examples/randominon-line.html)
 [<kbd><img src="../examples/snapshots/randomin-rectangle.jpg" width="300"></kbd>](../examples/randomin-rectangle.html)
@@ -206,7 +206,7 @@ JS:
 ```
 Property. Generates a random position on an object. Every time this property is accessed, it generates a random position on the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomOn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
-This property is available in [`line`](objects.mg#line), [`square`](objects.md#square) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomIn`.
+This property is available in [`line`](objects.md#line), [`square`](objects.md#square) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomIn`.
 
 [<kbd><img src="../examples/snapshots/randomon-rectangle.jpg" width="300"></kbd>](../examples/randomon-rectangle.html)
 [<kbd><img src="../examples/snapshots/randomon-cuboid.jpg" width="300"></kbd>](../examples/randomon-cuboid.html)
