@@ -16,7 +16,7 @@ class Square extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'square', center, size, color );
 		
-		suica._.solidGeometry.square = suica.flipNormal( new THREE.PlaneGeometry( 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) );; // array of geometries for different number of sides
+		suica._.solidGeometry.square = suica.flipNormal( new THREE.PlaneGeometry( 1, 1 ).applyMatrix4( suica.orientation.MATRIX ) ); // array of geometries for different number of sides
 		suica._.frameGeometry.square = new THREE.BufferGeometry(); // array of geometries for different number of sides
 		suica._.frameGeometry.square.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
 			-0.5,-0.5,0, +0.5,-0.5,0, 
@@ -79,54 +79,41 @@ class Square extends Mesh
 			case Suica.ORIENTATIONS.ZXY: return this.objectPosition( [x,0,z] );
 		}
 		
-	} // Cube.randomIn
+	} // Square.randomIn
 
 
 	get randomOn( )
 	{
-		var w = this.width,
-			h = this.height;
-
-		var lim;
+		var n,m;
+		var s = this.threejs.scale;
 		switch( this.suica.orientation )
-		{	
-			case Suica.ORIENTATIONS.YXZ: lim = w; break;
-			case Suica.ORIENTATIONS.XYZ: lim = h; break;
-			case Suica.ORIENTATIONS.ZYX: lim = h; break;
-			case Suica.ORIENTATIONS.YZX: lim = w; break;
-			case Suica.ORIENTATIONS.XZY: lim = h; h = w; break;
-			case Suica.ORIENTATIONS.ZXY: lim = w; h = w; break;
-		}
-
-		var rnd = random( 0, w+h),
-			x,y;
-		
-		if( rnd < lim )
 		{
-			x = random([-1/2, 1/2]) * w;
-			y = random( -1/2, 1/2 ) * h;
-		}
-		else
-		{
-			x = random( -1/2, 1/2 ) * w;
-			y = random([-1/2, 1/2]) * h;
-		}
-		
-		switch( this.suica.orientation )
-		{		
 			case Suica.ORIENTATIONS.YXZ:
-			case Suica.ORIENTATIONS.XYZ:
-				return this.objectPosition( [x,y,0] );
-			
+			case Suica.ORIENTATIONS.XYZ: [n,m] = [s.x,s.y]; break;
 			case Suica.ORIENTATIONS.ZYX:
-			case Suica.ORIENTATIONS.YZX:
-				return this.objectPosition( [0,y,x] );
-
+			case Suica.ORIENTATIONS.YZX: [n,m] = [s.y,s.z]; break;
 			case Suica.ORIENTATIONS.XZY:
-			case Suica.ORIENTATIONS.ZXY:
-				return this.objectPosition( [x,0,y] );
+			case Suica.ORIENTATIONS.ZXY: [n,m] = [s.x,s.z]; break;
 		}
-	} // Cube.randomOn
+
+		var a = random( -1/2, 1/2 ),
+			b = random([-1/2, 1/2]);
+		if( random(0,n+m)<m ) [a,b] = [b,a];
+		
+		var x, y, z;
+		switch( this.suica.orientation )
+		{
+			case Suica.ORIENTATIONS.YXZ:
+			case Suica.ORIENTATIONS.XYZ: [x,y,z] = [a,b,0]; break;
+			case Suica.ORIENTATIONS.ZYX:
+			case Suica.ORIENTATIONS.YZX: [x,y,z] = [0,a,b]; break;
+			case Suica.ORIENTATIONS.XZY:
+			case Suica.ORIENTATIONS.ZXY: [x,y,z] = [a,0,b]; break;
+		}
+
+		return this.objectPosition( [x*this.width, y*this.height, z*this.depth] );
+
+	} // Square.randomOn
 
 } // class Square
 

@@ -89,51 +89,50 @@ class Cube extends Mesh
 		var x = random( -1/2, 1/2 ) * this.width,
 			y = random( -1/2, 1/2 ) * this.height,
 			z = random( -1/2, 1/2 ) * this.depth;
-			
+
 		return this.objectPosition( [x,y,z] );
 	} // Cube.randomIn
 
 
 	get randomOn( )
 	{
-		var wh = this.width*this.height,
-			wd = this.width*this.depth,
-			hd = this.height*this.depth;
-	
+		var n,m,k;
+		var s = this.threejs.scale;
 		switch( this.suica.orientation )
 		{
+			case Suica.ORIENTATIONS.YXZ:
+			case Suica.ORIENTATIONS.XYZ: [n,m,k] = [s.x,s.y,s.z]; break;
 			case Suica.ORIENTATIONS.ZYX:
-			case Suica.ORIENTATIONS.XYZ: break;
-			case Suica.ORIENTATIONS.YZX:
-			case Suica.ORIENTATIONS.XZY: [wh,wd] = [wd,wh]; break;
-			case Suica.ORIENTATIONS.ZXY:
-			case Suica.ORIENTATIONS.YXZ: [hd,wd] = [wd,hd]; break;
+			case Suica.ORIENTATIONS.YZX: [n,m,k] = [s.y,s.z,s.x]; break;
+			case Suica.ORIENTATIONS.XZY:
+			case Suica.ORIENTATIONS.ZXY: [n,m,k] = [s.x,s.z,s.y]; break;
 		}
 		
-		var rnd = random( 0, wh+wd+hd );
+		var nm = n*m,
+			mk = m*k,
+			nk = n*k;
+			
+		var a = random([-1/2, 1/2]),
+			b = random( -1/2, 1/2 ),
+			c = random( -1/2, 1/2 );
+		var rnd = random( 0, nm+mk+nk );
+		if( rnd < nk ) [a,b] = [b,a]
+		else
+		if( rnd < nk+nm ) [a,c] = [c,a]
 
 		var x, y, z;
-		
-		if( rnd <= wh )
+		switch( this.suica.orientation )
 		{
-			x = random( -1/2, 1/2 ) * this.width;
-			y = random( -1/2, 1/2 ) * this.height;
-			z = random([-1/2, 1/2]) * this.depth;
-		}
-		else if( rnd <= wh+wd )
-		{
-			x = random( -1/2, 1/2 ) * this.width;
-			y = random([-1/2, 1/2]) * this.height;
-			z = random( -1/2, 1/2 ) * this.depth;
-		}
-		else
-		{
-			x = random([-1/2, 1/2]) * this.width;
-			y = random( -1/2, 1/2 ) * this.height;
-			z = random( -1/2, 1/2 ) * this.depth;
-		}
+			case Suica.ORIENTATIONS.YXZ:
+			case Suica.ORIENTATIONS.XYZ: [x,y,z] = [a,b,c]; break;
+			case Suica.ORIENTATIONS.ZYX:
+			case Suica.ORIENTATIONS.YZX: [x,y,z] = [c,a,b]; break;
+			case Suica.ORIENTATIONS.XZY:
+			case Suica.ORIENTATIONS.ZXY: [x,y,z] = [a,c,b]; break;
+		}		
 			
-		return this.objectPosition( [x,y,z] );
+		return this.objectPosition( [x*this.width, y*this.height, z*this.depth] );
+
 	} // Cube.randomOn
 	
 } // class Cube
