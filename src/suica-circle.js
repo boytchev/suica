@@ -124,4 +124,84 @@ class Circle extends Polygon
 	{
 		super( suica, Suica.CIRCLECOUNT, center, size, color );
 	}
+	
+	get randomIn( )
+	{
+		for( var i=0; i<50; i++ )
+		{
+			var ux = random( -1/2, 1/2 ),
+				uy = random( -1/2, 1/2 ),
+				uz = random( -1/2, 1/2 );
+				
+			var x = ux * this.width,
+				y = uy * this.height,
+				z = uz * this.depth;
+				
+			switch( this.suica.orientation )
+			{
+				case Suica.ORIENTATIONS.YXZ:
+				case Suica.ORIENTATIONS.XYZ:
+					if( ux*ux+uy*uy>1/4 ) continue;
+					return this.objectPosition( [x,y,0] );
+				
+				case Suica.ORIENTATIONS.ZYX:
+				case Suica.ORIENTATIONS.YZX:
+					if( uz*uz+uy*uy>1/4 ) continue;
+					return this.objectPosition( [0,y,z] );
+				
+				case Suica.ORIENTATIONS.XZY:
+				case Suica.ORIENTATIONS.ZXY:
+					if( uz*uz+ux*ux>1/4 ) continue;
+					return this.objectPosition( [x,0,z] );
+			}
+		}
+		
+		return this.objectPosition( [0,0,0] );
+	} // Circle.randomIn
+	
+	
+	get randomOn( )
+	{
+		for( var i=0; i<20; i++ )
+		{
+			var ux = random( -1/2, 1/2 ),
+				uy = random( -1/2, 1/2 ),
+				uz = random( -1/2, 1/2 ),
+				ud;
+				
+			var x = ux * this.width,
+				y = uy * this.height,
+				z = uz * this.depth;
+				
+			switch( this.suica.orientation )
+			{
+				case Suica.ORIENTATIONS.YXZ:
+				case Suica.ORIENTATIONS.XYZ:
+					ud = ux*ux+uy*uy;
+					z = 0;
+					break;
+				
+				case Suica.ORIENTATIONS.ZYX:
+				case Suica.ORIENTATIONS.YZX:
+					ud = uz*uz+uy*uy;
+					x = 0;
+					break;
+				
+				case Suica.ORIENTATIONS.XZY:
+				case Suica.ORIENTATIONS.ZXY:
+					ud = uz*uz+ux*ux;
+					y = 0;
+					break;
+			}
+			
+			if( ud>1/4 ) continue;
+			if( ud<1/5 ) continue;
+			ud = Math.sqrt(ud)/(1/2);
+			console.log(i);
+			return this.objectPosition( [x/ud,y/ud,z/ud] );
+		}
+		console.log(i,'!!!');
+		return this.objectPosition( [0,0,0] );
+	} // Circle.randomOn
+	
 } // class Circle

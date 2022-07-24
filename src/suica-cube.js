@@ -96,43 +96,26 @@ class Cube extends Mesh
 
 	get randomOn( )
 	{
-		var n,m,k;
-		var s = this.threejs.scale;
-		switch( this.suica.orientation )
-		{
-			case Suica.ORIENTATIONS.YXZ:
-			case Suica.ORIENTATIONS.XYZ: [n,m,k] = [s.x,s.y,s.z]; break;
-			case Suica.ORIENTATIONS.ZYX:
-			case Suica.ORIENTATIONS.YZX: [n,m,k] = [s.y,s.z,s.x]; break;
-			case Suica.ORIENTATIONS.XZY:
-			case Suica.ORIENTATIONS.ZXY: [n,m,k] = [s.x,s.z,s.y]; break;
-		}
-		
-		var nm = n*m,
-			mk = m*k,
-			nk = n*k;
+		var w = this.width,
+			h = this.height,
+			d = this.depth;
 			
-		var a = random([-1/2, 1/2]),
-			b = random( -1/2, 1/2 ),
-			c = random( -1/2, 1/2 );
-		var rnd = random( 0, nm+mk+nk );
-		if( rnd < nk ) [a,b] = [b,a]
+		var rnd = random( 0, w*h + w*d + h*d );
+			
+		var x = random( -1/2, 1/2 ),
+			y = random( -1/2, 1/2 ),
+			z = random( -1/2, 1/2 ),
+			t = random([-1/2, 1/2]);
+
+		if( rnd < w*h )
+			z = t;
+		else if( rnd < w*h + w*d )
+			y = t;
 		else
-		if( rnd < nk+nm ) [a,c] = [c,a]
-
-		var x, y, z;
-		switch( this.suica.orientation )
-		{
-			case Suica.ORIENTATIONS.YXZ:
-			case Suica.ORIENTATIONS.XYZ: [x,y,z] = [a,b,c]; break;
-			case Suica.ORIENTATIONS.ZYX:
-			case Suica.ORIENTATIONS.YZX: [x,y,z] = [c,a,b]; break;
-			case Suica.ORIENTATIONS.XZY:
-			case Suica.ORIENTATIONS.ZXY: [x,y,z] = [a,c,b]; break;
-		}		
-			
-		return this.objectPosition( [x*this.width, y*this.height, z*this.depth] );
-
+			x = t;
+		
+		var v = new THREE.Vector3( x, y, z ).applyMatrix4( this.suica.orientation.MATRIX );
+		return this.objectPosition( [v.x*w, v.y*h, v.z*d]  );
 	} // Cube.randomOn
 	
 } // class Cube

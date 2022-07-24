@@ -63,56 +63,33 @@ class Square extends Mesh
 
 	get randomIn( )
 	{
-		var x = random( -1/2, 1/2 ) * this.width,
-			y = random( -1/2, 1/2 ) * this.height,
-			z = random( -1/2, 1/2 ) * this.depth;
-			
-		switch( this.suica.orientation )
-		{
-			case Suica.ORIENTATIONS.YXZ:
-			case Suica.ORIENTATIONS.XYZ: return this.objectPosition( [x,y,0] );
-			
-			case Suica.ORIENTATIONS.ZYX:
-			case Suica.ORIENTATIONS.YZX: return this.objectPosition( [0,y,z] );
-			
-			case Suica.ORIENTATIONS.XZY:
-			case Suica.ORIENTATIONS.ZXY: return this.objectPosition( [x,0,z] );
-		}
+		var x = random( -1/2, 1/2 ),
+			y = random( -1/2, 1/2 );
 		
+		var v = new THREE.Vector3( x, y, 0 ).applyMatrix4( this.suica.orientation.MATRIX );
+		return this.objectPosition( [v.x*this.width, v.y*this.height, v.z*this.depth]  );
 	} // Square.randomIn
 
 
 	get randomOn( )
 	{
-		var n,m;
-		var s = this.threejs.scale;
-		switch( this.suica.orientation )
+		var x, y;
+			
+		var rnd = random( 0, this.width+this.height );
+			
+		if( rnd<this.width )
 		{
-			case Suica.ORIENTATIONS.YXZ:
-			case Suica.ORIENTATIONS.XYZ: [n,m] = [s.x,s.y]; break;
-			case Suica.ORIENTATIONS.ZYX:
-			case Suica.ORIENTATIONS.YZX: [n,m] = [s.y,s.z]; break;
-			case Suica.ORIENTATIONS.XZY:
-			case Suica.ORIENTATIONS.ZXY: [n,m] = [s.x,s.z]; break;
+			x = random( -1/2, 1/2 );
+			y = random([-1/2, 1/2]);
 		}
-
-		var a = random( -1/2, 1/2 ),
-			b = random([-1/2, 1/2]);
-		if( random(0,n+m)<m ) [a,b] = [b,a];
+		else
+		{
+			x = random([-1/2, 1/2]);
+			y = random( -1/2, 1/2 );
+		}
 		
-		var x, y, z;
-		switch( this.suica.orientation )
-		{
-			case Suica.ORIENTATIONS.YXZ:
-			case Suica.ORIENTATIONS.XYZ: [x,y,z] = [a,b,0]; break;
-			case Suica.ORIENTATIONS.ZYX:
-			case Suica.ORIENTATIONS.YZX: [x,y,z] = [0,a,b]; break;
-			case Suica.ORIENTATIONS.XZY:
-			case Suica.ORIENTATIONS.ZXY: [x,y,z] = [a,0,b]; break;
-		}
-
-		return this.objectPosition( [x*this.width, y*this.height, z*this.depth] );
-
+		var v = new THREE.Vector3( x, y, 0 ).applyMatrix4( this.suica.orientation.MATRIX );
+		return this.objectPosition( [v.x*this.width, v.y*this.height, v.z*this.depth]  );
 	} // Square.randomOn
 
 } // class Square

@@ -1450,14 +1450,13 @@ class Square extends Mesh
 get clone()
 {var object=new Square(this.suica,this.center,this.size,this.color);object.spin=this.spin;object.wireframe=this.wireframe;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}
 get randomIn()
-{var x=random(-1/2,1/2)*this.width,y=random(-1/2,1/2)*this.height,z=random(-1/2,1/2)*this.depth;switch(this.suica.orientation)
-{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:return this.objectPosition([x,y,0]);case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:return this.objectPosition([0,y,z]);case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:return this.objectPosition([x,0,z]);}}
+{var x=random(-1/2,1/2),y=random(-1/2,1/2);var v=new THREE.Vector3(x,y,0).applyMatrix4(this.suica.orientation.MATRIX);return this.objectPosition([v.x*this.width,v.y*this.height,v.z*this.depth]);}
 get randomOn()
-{var n,m;var s=this.threejs.scale;switch(this.suica.orientation)
-{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:[n,m]=[s.x,s.y];break;case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:[n,m]=[s.y,s.z];break;case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:[n,m]=[s.x,s.z];break;}
-var a=random(-1/2,1/2),b=random([-1/2,1/2]);if(random(0,n+m)<m)[a,b]=[b,a];var x,y,z;switch(this.suica.orientation)
-{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:[x,y,z]=[a,b,0];break;case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:[x,y,z]=[0,a,b];break;case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:[x,y,z]=[a,0,b];break;}
-return this.objectPosition([x*this.width,y*this.height,z*this.depth]);}}
+{var x,y;var rnd=random(0,this.width+this.height);if(rnd<this.width)
+{x=random(-1/2,1/2);y=random([-1/2,1/2]);}
+else
+{x=random([-1/2,1/2]);y=random(-1/2,1/2);}
+var v=new THREE.Vector3(x,y,0).applyMatrix4(this.suica.orientation.MATRIX);return this.objectPosition([v.x*this.width,v.y*this.height,v.z*this.depth]);}}
 ﻿
 class Cube extends Mesh
 {static COLOR='lightsalmon';static FRAMECOLOR='black';static SIZE=30;constructor(suica,center,size,color)
@@ -1467,14 +1466,10 @@ get clone()
 get randomIn()
 {var x=random(-1/2,1/2)*this.width,y=random(-1/2,1/2)*this.height,z=random(-1/2,1/2)*this.depth;return this.objectPosition([x,y,z]);}
 get randomOn()
-{var n,m,k;var s=this.threejs.scale;switch(this.suica.orientation)
-{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:[n,m,k]=[s.x,s.y,s.z];break;case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:[n,m,k]=[s.y,s.z,s.x];break;case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:[n,m,k]=[s.x,s.z,s.y];break;}
-var nm=n*m,mk=m*k,nk=n*k;var a=random([-1/2,1/2]),b=random(-1/2,1/2),c=random(-1/2,1/2);var rnd=random(0,nm+mk+nk);if(rnd<nk)[a,b]=[b,a]
-else
-if(rnd<nk+nm)[a,c]=[c,a]
-var x,y,z;switch(this.suica.orientation)
-{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:[x,y,z]=[a,b,c];break;case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:[x,y,z]=[c,a,b];break;case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:[x,y,z]=[a,c,b];break;}
-return this.objectPosition([x*this.width,y*this.height,z*this.depth]);}}
+{var w=this.width,h=this.height,d=this.depth;var rnd=random(0,w*h+w*d+h*d);var x=random(-1/2,1/2),y=random(-1/2,1/2),z=random(-1/2,1/2),t=random([-1/2,1/2]);if(rnd<w*h)
+z=t;else if(rnd<w*h+w*d)
+y=t;else
+x=t;var v=new THREE.Vector3(x,y,z).applyMatrix4(this.suica.orientation.MATRIX);return this.objectPosition([v.x*w,v.y*h,v.z*d]);}}
 ﻿
 class Polygon extends Mesh
 {static COLOR='lightsalmon';static FRAMECOLOR='black';static SIZE=30;static COUNT=3;constructor(suica,count,center,size,color)
@@ -1500,7 +1495,18 @@ get clone()
 {var object=new Polygon(this.suica,this.n,this.center,this.size,this.color);object.spin=this.spin;object.wireframe=this.wireframe;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}}
 class Circle extends Polygon
 {constructor(suica,center,size,color)
-{super(suica,Suica.CIRCLECOUNT,center,size,color);}}
+{super(suica,Suica.CIRCLECOUNT,center,size,color);}
+get randomIn()
+{for(var i=0;i<50;i++)
+{var ux=random(-1/2,1/2),uy=random(-1/2,1/2),uz=random(-1/2,1/2);var x=ux*this.width,y=uy*this.height,z=uz*this.depth;switch(this.suica.orientation)
+{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:if(ux*ux+uy*uy>1/4)continue;return this.objectPosition([x,y,0]);case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:if(uz*uz+uy*uy>1/4)continue;return this.objectPosition([0,y,z]);case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:if(uz*uz+ux*ux>1/4)continue;return this.objectPosition([x,0,z]);}}
+return this.objectPosition([0,0,0]);}
+get randomOn()
+{for(var i=0;i<20;i++)
+{var ux=random(-1/2,1/2),uy=random(-1/2,1/2),uz=random(-1/2,1/2),ud;var x=ux*this.width,y=uy*this.height,z=uz*this.depth;switch(this.suica.orientation)
+{case Suica.ORIENTATIONS.YXZ:case Suica.ORIENTATIONS.XYZ:ud=ux*ux+uy*uy;z=0;break;case Suica.ORIENTATIONS.ZYX:case Suica.ORIENTATIONS.YZX:ud=uz*uz+uy*uy;x=0;break;case Suica.ORIENTATIONS.XZY:case Suica.ORIENTATIONS.ZXY:ud=uz*uz+ux*ux;y=0;break;}
+if(ud>1/4)continue;if(ud<1/5)continue;ud=Math.sqrt(ud)/(1/2);console.log(i);return this.objectPosition([x/ud,y/ud,z/ud]);}
+console.log(i,'!!!');return this.objectPosition([0,0,0]);}}
 Sphere=class Sphere extends Mesh
 {static COLOR='lightsalmon';static SIZE=30;static COUNT=50;constructor(suica,center,size,color)
 {suica.parser?.parseTags();suica.debugCall('sphere',center,size,color);suica._.solidGeometry.sphere=null;if(!suica._.solidGeometry.sphere)
