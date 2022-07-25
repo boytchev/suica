@@ -127,81 +127,78 @@ class Circle extends Polygon
 	
 	get randomIn( )
 	{
-		for( var i=0; i<50; i++ )
-		{
-			var ux = random( -1/2, 1/2 ),
-				uy = random( -1/2, 1/2 ),
-				uz = random( -1/2, 1/2 );
-				
-			var x = ux * this.width,
-				y = uy * this.height,
-				z = uz * this.depth;
-				
-			switch( this.suica.orientation )
-			{
-				case Suica.ORIENTATIONS.YXZ:
-				case Suica.ORIENTATIONS.XYZ:
-					if( ux*ux+uy*uy>1/4 ) continue;
-					return this.objectPosition( [x,y,0] );
-				
-				case Suica.ORIENTATIONS.ZYX:
-				case Suica.ORIENTATIONS.YZX:
-					if( uz*uz+uy*uy>1/4 ) continue;
-					return this.objectPosition( [0,y,z] );
-				
-				case Suica.ORIENTATIONS.XZY:
-				case Suica.ORIENTATIONS.ZXY:
-					if( uz*uz+ux*ux>1/4 ) continue;
-					return this.objectPosition( [x,0,z] );
-			}
-		}
+		// idea:
+		// https://www.quora.com/Is-it-possible-to-generate-random-points-within-a-given-rotated-ellipse-without-using-rejection-sampling
+		var r = Math.sqrt( random(0,1) ) / 2,
+			a = random( 0, 2*Math.PI ),
+			x = r * Math.cos(a),
+			y = r * Math.sin(a);
+			
+		var v = new THREE.Vector3( x, y, 0 ).applyMatrix4( this.suica.orientation.MATRIX );
+		return this.objectPosition( [v.x*this.width, v.y*this.height, v.z*this.depth]  );
 		
-		return this.objectPosition( [0,0,0] );
 	} // Circle.randomIn
 	
 	
 	get randomOn( )
 	{
-		for( var i=0; i<20; i++ )
-		{
-			var ux = random( -1/2, 1/2 ),
-				uy = random( -1/2, 1/2 ),
-				uz = random( -1/2, 1/2 ),
-				ud;
-				
-			var x = ux * this.width,
-				y = uy * this.height,
-				z = uz * this.depth;
-				
-			switch( this.suica.orientation )
-			{
-				case Suica.ORIENTATIONS.YXZ:
-				case Suica.ORIENTATIONS.XYZ:
-					ud = ux*ux+uy*uy;
-					z = 0;
-					break;
-				
-				case Suica.ORIENTATIONS.ZYX:
-				case Suica.ORIENTATIONS.YZX:
-					ud = uz*uz+uy*uy;
-					x = 0;
-					break;
-				
-				case Suica.ORIENTATIONS.XZY:
-				case Suica.ORIENTATIONS.ZXY:
-					ud = uz*uz+ux*ux;
-					y = 0;
-					break;
-			}
+		var w = this.width,
+			h = this.height;
 			
-			if( ud>1/4 ) continue;
-			if( ud<1/5 ) continue;
-			ud = Math.sqrt(ud)/(1/2);
-			console.log(i);
-			return this.objectPosition( [x/ud,y/ud,z/ud] );
+		// check whether it is true circle
+		if( w == h )
+		{
+			var a = random( 0, 2*Math.PI );
+			
+			var v = new THREE.Vector3( Math.cos(a)/3, Math.sin(a)/3, 0 ).applyMatrix4( this.suica.orientation.MATRIX );
+			return this.objectPosition( [v.x*this.width, v.y*this.height, v.z*this.depth]  );
 		}
-		console.log(i,'!!!');
-		return this.objectPosition( [0,0,0] );
+			
+		// 2D point on ellipse
+		function elps( alpha )
+		{
+			return [ w*Math.cos(alpha), h*Math.sin(alpha) ];
+		}
+		
+		// distance between two 2D points
+		function dist( a, b )
+		{
+			return Math.sqrt( (a[0]-b[0])**2 + (a[1]-b[1])**2 );
+		}
+		
+		// create array for angles between 0 and 90 degrees with given step
+		// for each angle calculate (approx) the arc length from angle 0
+		var sum = 0,
+			step = (Math.PI/2) / 10,
+			accum = [0];
+		for( var i=0; i<=Math.PI/2; i+=step )
+		{
+			sum += dist( elps(i), elps(i+step) );
+			accum.push( sum );
+		}
+
+		// pick a random number from 0 to the length of the arc up to 90 degrees
+		var rnd = random( 0, accum[accum.length-2] ),
+			idx = accum.findIndex( x => x>rnd );
+			
+		// the random distance is between accum[idx-1] and accum[idx]
+		// approximate the index and then calculate the angle
+		idx += (rnd-accum[idx-1]) / (accum[idx]-accum[idx-1]) - 1;
+		idx *= step;
+		
+		// (x,y) point in one quadrant
+		var x = Math.cos(idx)/2,
+			y = Math.sin(idx)/2;
+		switch( random([0,1,2,3]) )
+		{
+			case 1: [x,y] = [-x,y]; break;	// flip horizontally
+			case 2: [x,y] = [x,-y]; break;	// flip vertically
+			case 3: [x,y] = [-x,-y]; break;	// flip horz & vert
+		}
+			
+		var v = new THREE.Vector3( x, y, 0 ).applyMatrix4( this.suica.orientation.MATRIX );
+		return this.objectPosition( [v.x*this.width, v.y*this.height, v.z*this.depth]  );
+			
 	} // Circle.randomOn
 	
 } // class Circle

@@ -192,10 +192,11 @@ JS:
 ```
 Property. Generates a random position inside an object. Every time this property is accessed, it generates a random position inside the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomIn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
-This property is available in [`line`](objects.md#line), [`square`](objects.md#square) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomOn`.
+This property is available in [`line`](objects.md#line), [`square`](objects.md#square), [`circle`](objects.md#circle) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomOn`. Squares, circles and cube can be scaled into rectangles, ellipses and cuboids.
 
 [<kbd><img src="../examples/snapshots/randominon-line.jpg" width="300"></kbd>](../examples/randominon-line.html)
 [<kbd><img src="../examples/snapshots/randomin-rectangle.jpg" width="300"></kbd>](../examples/randomin-rectangle.html)
+[<kbd><img src="../examples/snapshots/randomin-ellipse.jpg" width="300"></kbd>](../examples/randomin-ellipse.html)
 [<kbd><img src="../examples/snapshots/randomin-cuboid.jpg" width="300"></kbd>](../examples/randomin-cuboid.html)
 
 
@@ -206,9 +207,10 @@ JS:
 ```
 Property. Generates a random position on an object. Every time this property is accessed, it generates a random position on the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomOn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
-This property is available in [`line`](objects.md#line), [`square`](objects.md#square) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomIn`.
+This property is available in [`line`](objects.md#line), [`square`](objects.md#square), [`circle`](objects.md#circle) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomIn`. Squares, circles and cube can be scaled into rectangles, ellipses and cuboids.
 
 [<kbd><img src="../examples/snapshots/randomon-rectangle.jpg" width="300"></kbd>](../examples/randomon-rectangle.html)
+[<kbd><img src="../examples/snapshots/randomon-ellipse.jpg" width="300"></kbd>](../examples/randomon-ellipse.html)
 [<kbd><img src="../examples/snapshots/randomon-cuboid.jpg" width="300"></kbd>](../examples/randomon-cuboid.html)
 
 
