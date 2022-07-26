@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>RandomOn for spheroid</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>RandomOn for spheroid</h1>
+	<p>Picking a random point on a spheroid.</p>
+
+	<suica>
+		<demo>
+		<group x="-25" spin="45,45,45">
+			<sphere id="a" size="50,20,30" hidden>
+			<circle size="50,20" color="black" wireframe>
+			<circle size="50,30" color="black" wireframe spinV="90">
+			<circle size="30,20" color="black" wireframe spinH="90">
+		</group>
+		
+		<group x="25" spin="-45,135,45">
+			<sphere id="b" size="50,20,30" hidden>
+			<circle size="50,20" color="black" wireframe>
+			<circle size="50,30" color="black" wireframe spinV="90">
+			<circle size="30,20" color="black" wireframe spinH="90">
+		</group>
+	</suica>
+	
+	<script>
+		var colors = ['black', 'linen', 'gray', 'peachpuff', 'white', 'dimgray', 'lightsalmon', 'lightgray'];
+		
+		for( var i=0; i<1000; i++ )
+			point( randomOn(a), 4, random(colors) );
+		for( var i=0; i<1000; i++ )
+			point( b.randomOn, 4, random(colors) );
+	</script>
+</body>
+</html>

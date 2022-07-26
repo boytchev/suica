@@ -189,29 +189,32 @@ p.z = 15;
 ```js
 JS:
 𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.randomIn;
+𝑝𝑜𝑠 = randomIn( 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦 );
 ```
 Property. Generates a random position inside an object. Every time this property is accessed, it generates a random position inside the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomIn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
-This property is available in [`line`](objects.md#line), [`square`](objects.md#square), [`circle`](objects.md#circle) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomOn`. Squares, circles and cube can be scaled into rectangles, ellipses and cuboids.
+This property is available in [`line`](objects.md#line), [`square`](objects.md#square), [`circle`](objects.md#circle), [`cube`](objects.md#cube) and [`sphere`](objects.md#sphere) objects. For `line` it is quivalent to `randomOn`. Squares, circles, cubes and spheres can be scaled into rectangles, ellipses, cuboids and spheroids.
 
 [<kbd><img src="../examples/snapshots/randominon-line.jpg" width="300"></kbd>](../examples/randominon-line.html)
 [<kbd><img src="../examples/snapshots/randomin-rectangle.jpg" width="300"></kbd>](../examples/randomin-rectangle.html)
-[<kbd><img src="../examples/snapshots/randomin-ellipse.jpg" width="300"></kbd>](../examples/randomin-ellipse.html)
 [<kbd><img src="../examples/snapshots/randomin-cuboid.jpg" width="300"></kbd>](../examples/randomin-cuboid.html)
+[<kbd><img src="../examples/snapshots/randomin-spheroid.jpg" width="300"></kbd>](../examples/randomin-spheroid.html)
 
 
 #### randomOn
 ```js
 JS:
 𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.randomOn;
+𝑝𝑜𝑠 = randomOn( 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦 );
 ```
-Property. Generates a random position on an object. Every time this property is accessed, it generates a random position on the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomOn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
+Property. Generates a random position on an object. Every time this property is accessed, it generates a random position on the bondary of an object. The distribution of generated positions is uniform (and almost uniform for spheroids). The position, size, and orientation of the object is considered. The returned value of `randomOn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
-This property is available in [`line`](objects.md#line), [`square`](objects.md#square), [`circle`](objects.md#circle) and [`cube`](objects.md#cube) objects. For `line` it is quivalent to `randomIn`. Squares, circles and cube can be scaled into rectangles, ellipses and cuboids.
+This property is available in [`line`](objects.md#line), [`square`](objects.md#square), [`circle`](objects.md#circle), [`cube`](objects.md#cube) and [`sphere`](objects.md#sphere) objects. For `line` it is quivalent to `randomIn`. Squares, circles, cubes and spheres can be scaled into rectangles, ellipses, cuboids and spheroids
 
 [<kbd><img src="../examples/snapshots/randomon-rectangle.jpg" width="300"></kbd>](../examples/randomon-rectangle.html)
 [<kbd><img src="../examples/snapshots/randomon-ellipse.jpg" width="300"></kbd>](../examples/randomon-ellipse.html)
 [<kbd><img src="../examples/snapshots/randomon-cuboid.jpg" width="300"></kbd>](../examples/randomon-cuboid.html)
+[<kbd><img src="../examples/snapshots/randomon-spheroid.jpg" width="300"></kbd>](../examples/randomon-spheroid.html)
 
 
 
