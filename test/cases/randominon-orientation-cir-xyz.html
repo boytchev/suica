@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica orientation="xyz">
+		<oxyz>
+		<demo>
+		<sphere id="a" x="-15" color="linen" size="20,40,10" spin="70,50,-30">
+		<sphere id="b" x="15" color="linen" size="20,40,10" spin="70,50,-30">
+		<circle id="c" z="-25" color="black" size="6,60" wireframe spin="70,50,-30">
+		<circle id="d" z="25" color="black" size="6,60" wireframe spin="70,50,-30">
+		<point id="x5" x="32" size="12" color="white">
+		<point id="y5" y="32" size="12" color="white">
+		<point id="z5" z="32" size="12" color="white">
+	</suica>
+
+	<script>
+		var ix = drawing( 15 );
+			fillText( 0, 0, 'X', 'tomato', '20px Arial' );
+		
+		var iy = drawing( 15 );
+			fillText( 0, 0, 'Y', 'tomato', '20px Arial' );
+		
+		var iz = drawing( 15 );
+			fillText( 0, 0, 'Z', 'tomato', '20px Arial' );
+		
+		x5.image = ix;
+		y5.image = iy;
+		z5.image = iz;
+		
+		for( var i=0; i<1400; i++ )
+			point( a.randomIn, 3, 'black' );
+		for( var i=0; i<1400; i++ )
+			point( b.randomOn, 3, 'black' );
+		for( var i=0; i<400; i++ )
+			point( c.randomIn, 3, 'lightsalmon' );
+		for( var i=0; i<100; i++ )
+			point( d.randomOn, 3, 'lightsalmon' );
+	</script>
+	
+</body>
+</html>
