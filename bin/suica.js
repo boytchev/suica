@@ -1520,7 +1520,7 @@ get clone()
 get randomIn()
 {var r=Math.pow(random(0,1),1/3);var v=new THREE.Vector3().randomDirection().multiplyScalar(r/2).applyMatrix4(this.suica.orientation.MATRIX);return this.objectPosition([v.x*this.width,v.y*this.height,v.z*this.depth]);}
 get randomOn()
-{var r=1;var v=new THREE.Vector3().randomDirection().multiplyScalar(r/2).applyMatrix4(this.suica.orientation.MATRIX);return this.objectPosition([v.x*this.width,v.y*this.height,v.z*this.depth]);var a=(this.width/2),b=(this.height/2),c=(this.depth/2);var x=random(0,a**2),y=random(0,b**2),z=random(0,c**2),d=Math.sqrt(x**2/a**2+y**2/b**2+z**2/c**2);x*=random([-1,1]);y*=random([-1,1]);z*=random([-1,1]);var v=new THREE.Vector3(x/a/d/2,y/b/d/2,z/c/d/2).applyMatrix4(this.suica.orientation.MATRIX);return this.objectPosition([v.x*this.width,v.y*this.height,v.z*this.depth]);}}
+{var v=new THREE.Vector3().randomDirection().multiplyScalar(1/2).applyMatrix4(this.suica.orientation.MATRIX);return this.objectPosition([v.x*this.width,v.y*this.height,v.z*this.depth]);}}
 ﻿
 class Prism extends Mesh
 {static COLOR='lightsalmon';static SIZE=30;static COUNT=6;constructor(suica,count,center,size,color,flatShading=true)
