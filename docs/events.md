@@ -212,9 +212,9 @@ changed with [demo](user-guide.md#demo) or [lookAt](user-guide.md#lookat).
 #### findObject
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.findObject( 𝑒𝑣𝑒𝑛𝑡 );
+𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.findObject( 𝑒𝑣𝑒𝑛𝑡, 𝑖𝑛𝑡𝑒𝑟𝑎𝑐𝑡𝑖𝑣𝑒 );
 ```
-Function. Finds the Suica object where a pointer event occurred. The function requires the `event` parameter of the event handler. The result is the closest to the viewer Suica object that is at the position of the event, or `null` if no such object exists. `findObject` is typically used with events of the Suica canvas.
+Function. Finds the Suica object where a pointer event occurred. The function requires the `event` parameter of the event handler. The result is the closest to the viewer Suica object that is at the position of the event, or `null` if no such object exists. `findObject` is typically used with events of the Suica canvas. If `interactive` is `true` then only objects with event handlers for [motion](#motion-events) and [click](#click-events) events are scanned. By default `interactive` is `false`.
 
 ```js
 JS:
@@ -231,9 +231,10 @@ function onPointerMove( event )
 #### findObjects
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝑠 = 𝑠𝑢𝑖𝑐𝑎.findObjects( 𝑒𝑣𝑒𝑛𝑡 );
+𝑜𝑏𝑗𝑒𝑐𝑡𝑠 = 𝑠𝑢𝑖𝑐𝑎.findObjects( 𝑒𝑣𝑒𝑛𝑡, 𝑖𝑛𝑡𝑒𝑟𝑎𝑐𝑡𝑖𝑣𝑒 );
 ```
-Function. Finds all Suica objects where a pointer event occured. The function requires the `event` parameter of the event handler. The result is a sorted list (from nearest to farthest with respect to the viewer) of all Suica objects that are at the position of the event, or an empty list `[]` if no such objects exist. `findObjects` is typically used with events of the Suica canvas.
+Function. Finds all Suica objects where a pointer event occured. The function requires the `event` parameter of the event handler. The result is a sorted list (from nearest to farthest with respect to the viewer) of all Suica objects that are at the position of the event, or an empty list `[]` if no such objects exist. `findObjects` is typically used with events of the Suica canvas. If `interactive` is `true` then only objects with event handlers for [motion](#motion-events) and [click](#click-events) events are scanned. By default `interactive` is `false`.
+
 
 ```js
 JS:
