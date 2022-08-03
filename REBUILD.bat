@@ -32,7 +32,7 @@ cd ..\..
 REM Preare SUICA.JS files-----------------------------------
 
 cd src
-copy /b suica-main.js+suica-vr.js+suica-parser.js+suica-drawing.js+suica-mesh.js+suica-point.js+suica-line.js+suica-square.js+suica-cube.js+suica-circle.js+suica-sphere.js+suica-cylinder.js+suica-cone.js+suica-group.js+suica-tube.js+suica-surface.js+suica-convex.js+suica-model.js+suica-construct.js+suica-scorm.js+suica-text3d.js+suica-capture.js __all__
+copy /b suica-main.js+suica-vr.js+suica-parser.js+suica-drawing.js+suica-shape.js+suica-mesh.js+suica-point.js+suica-line.js+suica-square.js+suica-cube.js+suica-circle.js+suica-sphere.js+suica-cylinder.js+suica-cone.js+suica-group.js+suica-tube.js+suica-surface.js+suica-convex.js+suica-model.js+suica-construct.js+suica-scorm.js+suica-text3d.js+suica-capture.js __all__
 cd ..
 
 

@@ -19,6 +19,7 @@ class HTMLParser
 
 		this.openGroups = [];
 		this.openDrawings = [];
+		this.openShapes = [];
 		
 	} // HTMLParser.constructor
 
@@ -77,6 +78,13 @@ class HTMLParser
 				this.openDrawings.push( newObject );
 			}
 
+			// if this tag is <shape> then mark the shape as open
+			// new commands will be automatically added to the latest open shape
+			if( tagName == 'SHAPE' )
+			{
+				this.openShapes.push( newObject );
+			}
+
 			// recurse into subtags
 			this.parseTagsInElement( this.suica, tagElement );
 
@@ -96,6 +104,12 @@ class HTMLParser
 			if( tagName == 'DRAWING' )
 			{
 				this.openDrawings.pop( );
+			}
+
+			// is this tag is </shape> then close the shape
+			if( tagName == 'SHAPE' )
+			{
+				this.openShapes.pop( );
 			}
 
 		}
@@ -832,6 +846,22 @@ class HTMLParser
 		return p;
 		
 	} // HTMLParser.parseTagDRAWING
+
+
+	
+	// <drawing id="..." count="...">
+	parseTagSHAPE( suica, elem )
+	{
+		var p = shape( elem.getAttribute('count') );
+
+		var id = elem.getAttribute('id');
+		if( id ) window[id] = p;
+
+		elem.suicaObject = p;		
+		
+		return p;
+		
+	} // HTMLParser.parseTagSHAPE
 
 
 	

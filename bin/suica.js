@@ -1033,7 +1033,7 @@ class StereoEffect extends THREE.StereoEffect
 ﻿
 class HTMLParser
 {constructor(suica)
-{this.suica=suica;this.openGroups=[];this.openDrawings=[];}
+{this.suica=suica;this.openGroups=[];this.openDrawings=[];this.openShapes=[];}
 parseTags()
 {this.suica.debugCall('parseTags');this.suica.parser=null;this.suica.parserReadonly=this;this.parseTagsInElement(this.suica,this.suica.suicaTag);this.suica.render();}
 parseTagsInElement(that,elem)
@@ -1046,11 +1046,15 @@ console.error(`error: unknown tag <${tagName}> in <${that.tagName}>`);if(tagName
 {this.openGroups.push(newObject);}
 if(tagName=='DRAWING')
 {this.openDrawings.push(newObject);}
+if(tagName=='SHAPE')
+{this.openShapes.push(newObject);}
 this.parseTagsInElement(this.suica,tagElement);if(tagName=='GROUP')
 {var group=this.openGroups.pop();if(tagElement.hasAttribute('color'))
 {group.color=tagElement.getAttribute('color');}}
 if(tagName=='DRAWING')
-{this.openDrawings.pop();}}}
+{this.openDrawings.pop();}
+if(tagName=='SHAPE')
+{this.openShapes.pop();}}}
 parseTagBUTTON(suica,elem){}
 parseTagCANVAS(suica,elem){}
 parseTagDIV(suica,elem){}
@@ -1170,6 +1174,8 @@ if(size.length==2)
 else
 {width=height=size;}}
 var p=drawing(width,height,color);var id=elem.getAttribute('id');if(id)window[id]=p;elem.suicaObject=p;return p;}
+parseTagSHAPE(suica,elem)
+{var p=shape(elem.getAttribute('count'));var id=elem.getAttribute('id');if(id)window[id]=p;elem.suicaObject=p;return p;}
 parseTagMOVETO(suica,elem)
 {moveTo(...Drawing.parseXY(elem,'point','x','y'));}
 parseTagLINETO(suica,elem)
@@ -1188,7 +1194,7 @@ parseTagCLEAR(suica,elem)
 {var color=elem.getAttribute('color')||elem.getAttribute('background');clear(color);}}
 class Drawing
 {static SIZE=32;static COLOR=null;static ARC_RADIUS=10;static ARC_FROM=0;static ARC_TO=360;static ARC_CW=true;static FILL_COLOR='gray';static STROKE_COLOR='black';static STROKE_WIDTH=1;static STROKE_CLOSED=false;static FONT='20px Arial';static current;constructor(width=Drawing.SIZE,height=width,color=Drawing.COLOR,newCanvas=true)
-{if(newCanvas)
+{if(width===null)return this;if(newCanvas)
 {this.canvas=document.createElement('canvas');this.canvas.width=width;this.canvas.height=height;this.texture=null;this.context=this.canvas.getContext('2d');this.context.clearRect(0,0,width,height);if(color)
 {this.context.fillStyle=color;this.context.fillRect(0,0,width,height);}
 this.needsNewPath=true;}
@@ -1218,24 +1224,16 @@ return defaultValue;}
 managePath()
 {if(this.needsNewPath)
 {this.context.beginPath();this.needsNewPath=false;}}
-_moveTo(x,y)
-{this.context.moveTo(x,y);}
-_lineTo(x,y)
-{this.context.lineTo(x,y);}
-_quadraticCurveTo(x1,y1,x2,y2)
-{this.context.quadraticCurveTo(x1,y1,x2,y2);}
-_arc(x,y,r,a1,a2,cw)
-{this.context.arc(x,y,r,a1,a2,cw);}
 moveTo(x=0,y=0,...morePoints)
-{this.managePath();this._moveTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this._lineTo(x,this.canvas.height-y);}}
+{this.managePath();this.context.moveTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this.context.lineTo(x,this.canvas.height-y);}}
 lineTo(x=0,y=0,...morePoints)
-{this.managePath();this._lineTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this._lineTo(x,this.canvas.height-y);}}
+{this.managePath();this.context.lineTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this.context.lineTo(x,this.canvas.height-y);}}
 curveTo(mx=0,my=0,x=0,y=0)
-{this.managePath();this._quadraticCurveTo(mx,this.canvas.height-my,x,this.canvas.height-y);}
+{this.managePath();this.context.quadraticCurveTo(mx,this.canvas.height-my,x,this.canvas.height-y);}
 arc(x=0,y=0,r=Drawing.ARC_RADIUS,from=Drawing.ARC_FROM,to=Drawing.ARC_TO,cw=Drawing.ARC_CW)
-{this.managePath();this._arc(x,this.canvas.height-y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
+{this.managePath();this.context.arc(x,this.canvas.height-y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
 fillText(x=0,y=0,text='',color=Drawing.FILL_COLOR,font=Drawing.FONT)
 {if(this.texture)this.texture.needsUpdate=true;this.context.fillStyle=color;this.context.font=font;this.context.fillText(text,x,this.canvas.height-y);}
 cssColor(color)
@@ -1265,6 +1263,41 @@ window.drawing=function(...params)
 {Drawing.current=new Drawing(...params);return Drawing.current;}
 window.image=function(url=null)
 {var texture=new THREE.TextureLoader().load(url);texture.wrapS=THREE.RepeatWrapping;texture.wrapT=THREE.RepeatWrapping;texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearMipmapLinearFilter;texture.anisotropy=window.suica.renderer.capabilities.getMaxAnisotropy();return texture;}
+class Shape extends Drawing
+{static COUNT=10;static current;constructor(count)
+{super(null);suica.parser?.parseTags();suica.debugCall('shape',count);this.count=Suica.parseNumber(count,Shape.COUNT);this.shape=new THREE.Shape();for(var methodName of['moveTo','lineTo','curveTo','arc'])
+{Shape.register(methodName);}}
+static register(methodName)
+{window[methodName]=function(...params)
+{Shape.precheck();Shape.current[methodName](...params);}}
+moveTo(x=0,y=0,...morePoints)
+{this.shape.moveTo(x,y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this.shape.lineTo(x,y);}}
+lineTo(x=0,y=0,...morePoints)
+{this.shape.lineTo(x,y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this.shape.lineTo(x,y);}}
+curveTo(mx=0,my=0,x=0,y=0)
+{console.log(`this.shape.quadraticCurveTo( ${mx}, ${my}, ${x}, ${y} );`);this.shape.quadraticCurveTo(mx,my,x,y);}
+arc(x=0,y=0,r=Drawing.ARC_RADIUS,from=Drawing.ARC_FROM,to=Drawing.ARC_TO,cw=Drawing.ARC_CW)
+{this.shape.arc(x,y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
+fillText()
+{throw'fillText() is supported only in drawings, not in shapes';}
+stroke()
+{throw'stroke() is supported only in drawings, not in shapes';}
+fill()
+{throw'fill() is supported only in drawings, not in shapes';}
+clear()
+{throw'clear() is supported only in drawings, not in shapes';}
+get clone()
+{var newShape=shape();newShape.shape=this.shape.clone();return newShape;}
+static precheck()
+{if(!(Shape.current instanceof Shape))
+throw'error: No Shape instance is active';}
+get vertices()
+{var vertices=[];for(var point of this.shape.extractPoints(this.count).shape)
+vertices.push([point.x,point.y,0]);return vertices;}}
+window.shape=function(...params)
+{Shape.current=new Shape(...params);return Shape.current;}
 ﻿
 class Mesh
 {static id=0;constructor(suica,solidMesh,frameMesh)

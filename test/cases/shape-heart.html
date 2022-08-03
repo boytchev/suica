@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica>
+		<demo distance="200">
+	</suica>
+	
+	<script>
+		var heart = shape( );
+
+		moveTo( 0, -56 );
+			curveTo( 56, 0, 56, 32 );
+			curveTo( 56, 56, 32, 56 );
+			curveTo( 0, 56, 0, 32 );
+			curveTo( 0, 56, -32, 56 );
+			curveTo( -56, 56, -56, 32 );
+			curveTo( -56, 0, 0, -56 );
+
+		var colors = ['linen', 'peachpuff', 'lightsalmon', 'gray', 'black', 'white'];
+		
+		for( var v of heart.vertices )
+		{
+			cylinder( v, [5,50,5], random( colors ) );
+			its.spinV = 90;
+		}
+		
+	</script>
+	
+</body>
+</html>

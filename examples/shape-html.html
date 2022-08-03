@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Shape in HTML</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Shape in HTML</h1>
+	<p>Connecting points from two HTML shapes.</p>
+
+	<suica>
+		<demo>
+		
+		<shape id="s1" count="30">
+			<arc radius="10" y="10" ccw>
+		</shape>
+		
+		<shape id="s2" count="20">
+			<moveTo x="0" y="-30">
+			<curveTo x="-30" y="30" mx="-15" my="0">
+			<curveTo x="30" y="30" mx="0" my="30">
+			<curveTo x="0" y="-30" mx="15" my="0">
+		</shape>
+	</suica>
+	
+	<script>
+		var v1 = s1.vertices,
+			v2 = s2.vertices;
+
+		for( var i in v1 )
+		{
+			point( v1[i], 2 );
+			point( v2[i], 6 );
+			line( v1[i], v2[i] );
+		}
+		
+	</script>
+	
+</body>
+</html>

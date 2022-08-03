@@ -9,6 +9,7 @@ document.write( '<script src="misc/threejs/__min__"></script>' );
 document.write( '<script src="src/suica-vr.js"></script>' );
 document.write( '<script src="src/suica-parser.js"></script>' );
 document.write( '<script src="src/suica-drawing.js"></script>' );
+document.write( '<script src="src/suica-shape.js"></script>' );
 document.write( '<script src="src/suica-mesh.js"></script>' );
 document.write( '<script src="src/suica-point.js"></script>' );
 document.write( '<script src="src/suica-line.js"></script>' );
