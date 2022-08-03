@@ -1218,16 +1218,24 @@ return defaultValue;}
 managePath()
 {if(this.needsNewPath)
 {this.context.beginPath();this.needsNewPath=false;}}
+_moveTo(x,y)
+{this.context.moveTo(x,y);}
+_lineTo(x,y)
+{this.context.lineTo(x,y);}
+_quadraticCurveTo(x1,y1,x2,y2)
+{this.context.quadraticCurveTo(x1,y1,x2,y2);}
+_arc(x,y,r,a1,a2,cw)
+{this.context.arc(x,y,r,a1,a2,cw);}
 moveTo(x=0,y=0,...morePoints)
-{this.managePath();this.context.moveTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this.context.lineTo(x,this.canvas.height-y);}}
+{this.managePath();this._moveTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this._lineTo(x,this.canvas.height-y);}}
 lineTo(x=0,y=0,...morePoints)
-{this.managePath();this.context.lineTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this.context.lineTo(x,this.canvas.height-y);}}
+{this.managePath();this._lineTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this._lineTo(x,this.canvas.height-y);}}
 curveTo(mx=0,my=0,x=0,y=0)
-{this.managePath();this.context.quadraticCurveTo(mx,this.canvas.height-my,x,this.canvas.height-y);}
+{this.managePath();this._quadraticCurveTo(mx,this.canvas.height-my,x,this.canvas.height-y);}
 arc(x=0,y=0,r=Drawing.ARC_RADIUS,from=Drawing.ARC_FROM,to=Drawing.ARC_TO,cw=Drawing.ARC_CW)
-{this.managePath();this.context.arc(x,this.canvas.height-y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
+{this.managePath();this._arc(x,this.canvas.height-y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
 fillText(x=0,y=0,text='',color=Drawing.FILL_COLOR,font=Drawing.FONT)
 {if(this.texture)this.texture.needsUpdate=true;this.context.fillStyle=color;this.context.font=font;this.context.fillText(text,x,this.canvas.height-y);}
 cssColor(color)
