@@ -1033,7 +1033,7 @@ class StereoEffect extends THREE.StereoEffect
 ﻿
 class HTMLParser
 {constructor(suica)
-{this.suica=suica;this.openGroups=[];this.openDrawings=[];this.openShapes=[];}
+{this.suica=suica;this.openGroups=[];this.openDrawingOrShape=false;}
 parseTags()
 {this.suica.debugCall('parseTags');this.suica.parser=null;this.suica.parserReadonly=this;this.parseTagsInElement(this.suica,this.suica.suicaTag);this.suica.render();}
 parseTagsInElement(that,elem)
@@ -1044,17 +1044,13 @@ this.openGroups[this.openGroups.length-1].add(newObject);}
 else
 console.error(`error: unknown tag <${tagName}> in <${that.tagName}>`);if(tagName=='GROUP')
 {this.openGroups.push(newObject);}
-if(tagName=='DRAWING')
-{this.openDrawings.push(newObject);}
-if(tagName=='SHAPE')
-{this.openShapes.push(newObject);}
+if(tagName=='DRAWING'||tagName=='SHAPE')
+{if(this.openDrawingOrShape)throw'Cannot start a drawing inside another drawing or shape';this.openDrawingOrShape=true;}
 this.parseTagsInElement(this.suica,tagElement);if(tagName=='GROUP')
 {var group=this.openGroups.pop();if(tagElement.hasAttribute('color'))
 {group.color=tagElement.getAttribute('color');}}
-if(tagName=='DRAWING')
-{this.openDrawings.pop();}
-if(tagName=='SHAPE')
-{this.openShapes.pop();}}}
+if(tagName=='DRAWING'||tagName=='SHAPE')
+{this.openDrawingOrShape=false;}}}
 parseTagBUTTON(suica,elem){}
 parseTagCANVAS(suica,elem){}
 parseTagDIV(suica,elem){}
@@ -1224,16 +1220,24 @@ return defaultValue;}
 managePath()
 {if(this.needsNewPath)
 {this.context.beginPath();this.needsNewPath=false;}}
+_moveTo(x,y)
+{this.context.moveTo(x,this.canvas.height-y);}
+_lineTo(x,y)
+{this.context.lineTo(x,this.canvas.height-y);}
+_quadraticCurveTo(mx,my,x,y)
+{this.context.quadraticCurveTo(mx,this.canvas.height-my,x,this.canvas.height-y);}
+_arc(x,y,r,from,to,cw)
+{this.context.arc(x,this.canvas.height-y,r,from,to,cw);}
 moveTo(x=0,y=0,...morePoints)
-{this.managePath();this.context.moveTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this.context.lineTo(x,this.canvas.height-y);}}
+{this.managePath();this._moveTo(x,y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this._lineTo(x,y);}}
 lineTo(x=0,y=0,...morePoints)
-{this.managePath();this.context.lineTo(x,this.canvas.height-y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this.context.lineTo(x,this.canvas.height-y);}}
+{this.managePath();this._lineTo(x,y);for(var i=0;i<morePoints.length;i+=2)
+{x=morePoints[i]||0;y=morePoints[i+1]||0;this._lineTo(x,y);}}
 curveTo(mx=0,my=0,x=0,y=0)
-{this.managePath();this.context.quadraticCurveTo(mx,this.canvas.height-my,x,this.canvas.height-y);}
+{this.managePath();this._quadraticCurveTo(mx,my,x,y);}
 arc(x=0,y=0,r=Drawing.ARC_RADIUS,from=Drawing.ARC_FROM,to=Drawing.ARC_TO,cw=Drawing.ARC_CW)
-{this.managePath();this.context.arc(x,this.canvas.height-y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
+{this.managePath();this._arc(x,y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
 fillText(x=0,y=0,text='',color=Drawing.FILL_COLOR,font=Drawing.FONT)
 {if(this.texture)this.texture.needsUpdate=true;this.context.fillStyle=color;this.context.font=font;this.context.fillText(text,x,this.canvas.height-y);}
 cssColor(color)
@@ -1270,16 +1274,16 @@ class Shape extends Drawing
 static register(methodName)
 {window[methodName]=function(...params)
 {Shape.precheck();Shape.current[methodName](...params);}}
-moveTo(x=0,y=0,...morePoints)
-{this.shape.moveTo(x,y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this.shape.lineTo(x,y);}}
-lineTo(x=0,y=0,...morePoints)
-{this.shape.lineTo(x,y);for(var i=0;i<morePoints.length;i+=2)
-{x=morePoints[i]||0;y=morePoints[i+1]||0;this.shape.lineTo(x,y);}}
-curveTo(mx=0,my=0,x=0,y=0)
-{console.log(`this.shape.quadraticCurveTo( ${mx}, ${my}, ${x}, ${y} );`);this.shape.quadraticCurveTo(mx,my,x,y);}
-arc(x=0,y=0,r=Drawing.ARC_RADIUS,from=Drawing.ARC_FROM,to=Drawing.ARC_TO,cw=Drawing.ARC_CW)
-{this.shape.arc(x,y,r,THREE.MathUtils.degToRad(from-90),THREE.MathUtils.degToRad(to-90),!cw);}
+managePath()
+{}
+_moveTo(x,y)
+{this.shape.moveTo(x,y);}
+_lineTo(x,y)
+{this.shape.lineTo(x,y);}
+_quadraticCurveTo(mx,my,x,y)
+{this.shape.quadraticCurveTo(mx,my,x,y);}
+_arc(x,y,r,from,to,cw)
+{this.shape.arc(x,y,r,from,to,cw);}
 fillText()
 {throw'fillText() is supported only in drawings, not in shapes';}
 stroke()

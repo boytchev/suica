@@ -43,48 +43,37 @@ class Shape extends Drawing
 
 
 
-	moveTo( x=0, y=0, ...morePoints )
+	managePath( )
+	{
+	}
+
+	
+	
+	_moveTo( x, y )
 	{
 		this.shape.moveTo( x, y );
+	}
 
-		for( var i=0; i<morePoints.length; i+=2 )
-		{
-			x = morePoints[i] || 0;
-			y = morePoints[i+1] || 0;
-			this.shape.lineTo( x, y );
-		}
-	} // Shape.moveTo
 	
 	
-	
-	
-	lineTo( x=0, y=0, ...morePoints )
+	_lineTo( x, y )
 	{
 		this.shape.lineTo( x, y );
-		
-		for( var i=0; i<morePoints.length; i+=2 )
-		{
-			x = morePoints[i] || 0;
-			y = morePoints[i+1] || 0;
-			this.shape.lineTo( x, y );
-		}
-	} // Shape.lineTo
+	}
 	
 	
 	
-	
-	curveTo( mx=0, my=0, x=0, y=0 )
+	_quadraticCurveTo( mx, my, x, y )
 	{
-		console.log(`this.shape.quadraticCurveTo( ${mx}, ${my}, ${x}, ${y} );`);
 		this.shape.quadraticCurveTo( mx, my, x, y );
-	} // Shape.curveTo
+	}
 	
 	
 	
 
-	arc( x=0, y=0, r=Drawing.ARC_RADIUS, from = Drawing.ARC_FROM, to = Drawing.ARC_TO, cw = Drawing.ARC_CW )
+	_arc( x, y, r, from, to, cw )
 	{
-		this.shape.arc( x, y, r, THREE.MathUtils.degToRad(from-90), THREE.MathUtils.degToRad(to-90), !cw );
+		this.shape.arc( x, y, r, from, to, cw );
 	} // Shape.arc
 
 

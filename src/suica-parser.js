@@ -18,8 +18,7 @@ class HTMLParser
 		this.suica = suica;
 
 		this.openGroups = [];
-		this.openDrawings = [];
-		this.openShapes = [];
+		this.openDrawingOrShape = false;
 		
 	} // HTMLParser.constructor
 
@@ -73,16 +72,11 @@ class HTMLParser
 
 			// if this tag is <drawing> then mark the drawing as open
 			// new drawing commands will be automatically added to the latest open drawing
-			if( tagName == 'DRAWING' )
+			if( tagName == 'DRAWING' || tagName == 'SHAPE' )
 			{
-				this.openDrawings.push( newObject );
-			}
-
-			// if this tag is <shape> then mark the shape as open
-			// new commands will be automatically added to the latest open shape
-			if( tagName == 'SHAPE' )
-			{
-				this.openShapes.push( newObject );
+				if( this.openDrawingOrShape ) throw 'Cannot start a drawing inside another drawing or shape';
+				
+				this.openDrawingOrShape = true;
 			}
 
 			// recurse into subtags
@@ -101,15 +95,9 @@ class HTMLParser
 			}
 
 			// is this tag is </drawing> then close the drawing
-			if( tagName == 'DRAWING' )
+			if( tagName == 'DRAWING' || tagName == 'SHAPE' )
 			{
-				this.openDrawings.pop( );
-			}
-
-			// is this tag is </shape> then close the shape
-			if( tagName == 'SHAPE' )
-			{
-				this.openShapes.pop( );
+				this.openDrawingOrShape = false;
 			}
 
 		}

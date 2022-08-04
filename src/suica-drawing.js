@@ -146,17 +146,41 @@ class Drawing
 	} // Drawing.managePath
 
 
+	_moveTo( x, y )
+	{
+		this.context.moveTo( x, this.canvas.height-y );
+	}
+	
+	
+	_lineTo( x, y )
+	{
+		this.context.lineTo( x, this.canvas.height-y );
+	}
+	
+	
+	_quadraticCurveTo( mx, my, x, y )
+	{
+		this.context.quadraticCurveTo( mx, this.canvas.height-my, x, this.canvas.height-y );
+	}
+
+
+	_arc( x, y, r, from, to, cw )
+	{
+		this.context.arc( x, this.canvas.height-y, r, from, to, cw );
+	} // Shape.arc
+
+
 
 	moveTo( x=0, y=0, ...morePoints )
 	{
 		this.managePath();
-		this.context.moveTo( x, this.canvas.height-y );
+		this._moveTo( x, y );
 
 		for( var i=0; i<morePoints.length; i+=2 )
 		{
 			x = morePoints[i] || 0;
 			y = morePoints[i+1] || 0;
-			this.context.lineTo( x, this.canvas.height-y );
+			this._lineTo( x, y );
 		}
 	} // Drawing.moveTo
 	
@@ -166,13 +190,13 @@ class Drawing
 	lineTo( x=0, y=0, ...morePoints )
 	{
 		this.managePath();
-		this.context.lineTo( x, this.canvas.height-y );
+		this._lineTo( x, y );
 		
 		for( var i=0; i<morePoints.length; i+=2 )
 		{
 			x = morePoints[i] || 0;
 			y = morePoints[i+1] || 0;
-			this.context.lineTo( x, this.canvas.height-y );
+			this._lineTo( x, y );
 		}
 	} // Drawing.lineTo
 	
@@ -182,7 +206,7 @@ class Drawing
 	curveTo( mx=0, my=0, x=0, y=0 )
 	{
 		this.managePath();
-		this.context.quadraticCurveTo( mx, this.canvas.height-my, x, this.canvas.height-y );
+		this._quadraticCurveTo( mx, my, x, y );
 	} // Drawing.curveTo
 	
 	
@@ -191,7 +215,7 @@ class Drawing
 	arc( x=0, y=0, r=Drawing.ARC_RADIUS, from = Drawing.ARC_FROM, to = Drawing.ARC_TO, cw = Drawing.ARC_CW )
 	{
 		this.managePath();
-		this.context.arc( x, this.canvas.height-y, r, THREE.MathUtils.degToRad(from-90), THREE.MathUtils.degToRad(to-90), !cw );
+		this._arc( x, y, r, THREE.MathUtils.degToRad(from-90), THREE.MathUtils.degToRad(to-90), !cw );
 	} // Drawing.arc
 	
 	
