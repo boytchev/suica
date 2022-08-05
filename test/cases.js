@@ -122,6 +122,7 @@ var cases = [
 'randominon-orientation-zyx', 
 'scorm-derandomize', 
 'scorm', 
+'shape-and-drawing', 
 'shape-heart', 
 'shape-html', 
 'sizes-orientation-xyz', 
