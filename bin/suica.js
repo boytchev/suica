@@ -1033,7 +1033,7 @@ class StereoEffect extends THREE.StereoEffect
 ﻿
 class HTMLParser
 {constructor(suica)
-{this.suica=suica;this.openGroups=[];this.openDrawingOrShape=false;}
+{this.suica=suica;this.openGroups=[];this.openDrawing=false;}
 parseTags()
 {this.suica.debugCall('parseTags');this.suica.parser=null;this.suica.parserReadonly=this;this.parseTagsInElement(this.suica,this.suica.suicaTag);this.suica.render();}
 parseTagsInElement(that,elem)
@@ -1045,12 +1045,12 @@ else
 console.error(`error: unknown tag <${tagName}> in <${that.tagName}>`);if(tagName=='GROUP')
 {this.openGroups.push(newObject);}
 if(tagName=='DRAWING'||tagName=='SHAPE')
-{if(this.openDrawingOrShape)throw'Cannot start a drawing inside another drawing or shape';this.openDrawingOrShape=true;}
+{if(this.openDrawing)throw'Cannot start a drawing/shape inside another drawing/shape';this.openDrawing=true;}
 this.parseTagsInElement(this.suica,tagElement);if(tagName=='GROUP')
 {var group=this.openGroups.pop();if(tagElement.hasAttribute('color'))
 {group.color=tagElement.getAttribute('color');}}
 if(tagName=='DRAWING'||tagName=='SHAPE')
-{this.openDrawingOrShape=false;}}}
+{this.openDrawing=false;}}}
 parseTagBUTTON(suica,elem){}
 parseTagCANVAS(suica,elem){}
 parseTagDIV(suica,elem){}
@@ -1190,7 +1190,7 @@ parseTagCLEAR(suica,elem)
 {var color=elem.getAttribute('color')||elem.getAttribute('background');clear(color);}}
 class Drawing
 {static SIZE=32;static COLOR=null;static ARC_RADIUS=10;static ARC_FROM=0;static ARC_TO=360;static ARC_CW=true;static FILL_COLOR='gray';static STROKE_COLOR='black';static STROKE_WIDTH=1;static STROKE_CLOSED=false;static FONT='20px Arial';static current;constructor(width=Drawing.SIZE,height=width,color=Drawing.COLOR,newCanvas=true)
-{if(width===null)return this;if(newCanvas)
+{if(width!==null&&newCanvas)
 {this.canvas=document.createElement('canvas');this.canvas.width=width;this.canvas.height=height;this.texture=null;this.context=this.canvas.getContext('2d');this.context.clearRect(0,0,width,height);if(color)
 {this.context.fillStyle=color;this.context.fillRect(0,0,width,height);}
 this.needsNewPath=true;}
@@ -1261,19 +1261,15 @@ return this.texture;}
 get clone()
 {var newDrawing=drawing(this.canvas.width,this.canvas.height,'white',false);newDrawing.canvas=this.canvas;newDrawing.context=this.context;newDrawing.texture=this.texture;return newDrawing;}
 static precheck()
-{if(!(Drawing.current instanceof Drawing))
-throw'error: No Drawing instance is active';}}
+{if(!(Drawing.current instanceof Drawing)&&!(Drawing.current instanceof Shape))
+throw'error: No drawing or shape instance is active';}}
 window.drawing=function(...params)
 {Drawing.current=new Drawing(...params);return Drawing.current;}
 window.image=function(url=null)
 {var texture=new THREE.TextureLoader().load(url);texture.wrapS=THREE.RepeatWrapping;texture.wrapT=THREE.RepeatWrapping;texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearMipmapLinearFilter;texture.anisotropy=window.suica.renderer.capabilities.getMaxAnisotropy();return texture;}
 class Shape extends Drawing
 {static COUNT=10;static current;constructor(count)
-{super(null);suica.parser?.parseTags();suica.debugCall('shape',count);this.count=Suica.parseNumber(count,Shape.COUNT);this.shape=new THREE.Shape();for(var methodName of['moveTo','lineTo','curveTo','arc'])
-{Shape.register(methodName);}}
-static register(methodName)
-{window[methodName]=function(...params)
-{Shape.precheck();Shape.current[methodName](...params);}}
+{super(null);suica.parser?.parseTags();suica.debugCall('shape',count);this.count=Suica.parseNumber(count,Shape.COUNT);this.shape=new THREE.Shape();}
 managePath()
 {}
 _moveTo(x,y)
@@ -1294,14 +1290,11 @@ clear()
 {throw'clear() is supported only in drawings, not in shapes';}
 get clone()
 {var newShape=shape();newShape.shape=this.shape.clone();return newShape;}
-static precheck()
-{if(!(Shape.current instanceof Shape))
-throw'error: No Shape instance is active';}
 get vertices()
 {var vertices=[];for(var point of this.shape.extractPoints(this.count).shape)
 vertices.push([point.x,point.y,0]);return vertices;}}
 window.shape=function(...params)
-{Shape.current=new Shape(...params);return Shape.current;}
+{Drawing.current=new Shape(...params);return Drawing.current;}
 ﻿
 class Mesh
 {static id=0;constructor(suica,solidMesh,frameMesh)

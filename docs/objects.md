@@ -17,7 +17,7 @@ tag: userguide suica objects properties drawings events
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
 	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`surface`](#surface), [`convex`](#convex), [`model`](#model), [`construct`](#construct), [`text3d`](#text3d)</small>
-	- <small>[Invisibles](#invisibles): [`spline`](#spline), [`splane`](#splane), [`scorm`](#scorm)</small>
+	- <small>[Invisibles](#invisibles): [`spline`](#spline), [`splane`](#splane), [`shape`](#shape), [`scorm`](#scorm)</small>
 
 
 
@@ -1069,6 +1069,135 @@ surface( [0,0,0], splane(nSine,5), [210,210], 1, 'lightsalmon' );
 
 
 
+
+
+
+## Shape
+
+Shapes are invisible objects &ndash; virtual lines that define 2D shapes. A shape is defined with the same shape-defining commands as [drawings](drawings.md#defining-shapes): `moveTo`, `lineTo`, `curveTo` and `arc`. Shapes age used for two cases:
+
+- defining a shape and extracting points along its boundary via [`vertices`](properties.md#vertices)
+- defining a shape that is extruded into a 3D object
+
+
+#### shape
+```html
+HTML:
+<shape 𝑐𝑜𝑢𝑛𝑡="...">
+```
+```js
+JS:
+shape( 𝑐𝑜𝑢𝑛𝑡 );
+```
+Object. Create a shape defined like . The parameter `count` is the number of segments into which all curves and arcs in the shape are decomposed.
+
+
+#### moveTo
+```html
+HTML:
+<moveTo point="𝑥,𝑦,...">
+<moveTo x="𝑥" y="𝑦">
+```
+```js
+JS:
+moveTo( 𝑥, 𝑦, ... );
+```
+
+Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment and then uses the rest values for building line segments with `lineTo`. See Drawings [`moveTo`](drawings.md#moveto) for more details.
+
+```html
+HTML:
+<moveTo point="10,0,10,5,5,5,25,10">
+```
+```js
+JS:
+moveTo( 10, 0, 10, 5, 5, 5, 25, 10 );
+```
+
+
+#### lineTo
+```html
+HTML:
+<lineTo point="𝑥,𝑦,...">
+<lineTo x="𝑥" y="𝑦">
+```
+```js
+JS:
+lineTo( 𝑥, 𝑦, ... );
+```
+
+Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. Then it adds line segments for the rest of the parameters. See Drawings [`lineTo`](drawings.md#lineto) for more details.
+
+```html
+HTML:
+<lineTo point="10,0,10,5,5,5,25,10">
+```
+```js
+JS:
+lineTo( 10, 0, 10, 5, 5, 5, 25, 10 );
+```
+
+The `count` property does not apply to line segment, so `vertex` will return only the starting and ending points of a segment. To generate intermediate points a segment can be defined as a curve.
+
+[<kbd><img src="../examples/snapshots/shape-html.jpg" width="300"></kbd>](../examples/shape-html.html)
+
+
+
+#### curveTo
+```html
+HTML:
+<curveTo m="𝑚𝑥,𝑚𝑦" point="𝑥,𝑦">
+<curveTo mx="𝑚𝑥" my="𝑚𝑦" x="𝑥" y="𝑦">
+```
+```js
+JS:
+𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
+```
+
+Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape. See Drawings [`curveTo`](drawings.md#curveto) for more details.
+
+```html
+HTML:
+<curveTo m="10,0" point="20,15">
+<curveTo mx="10" my="0" x="20" y="15">
+```
+```js
+JS:
+curveTo( 10, 0, 20, 15 );
+```
+
+The following example defines a heart shape made of several curves.
+
+[<kbd><img src="../examples/snapshots/shape-heart.jpg" width="300"></kbd>](../examples/shape-heart.html)
+
+
+
+
+#### arc
+```html
+HTML:
+<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟">
+<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟" from="𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒" to="𝑡𝑜𝐴𝑛𝑔𝑙𝑒" cw="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+```
+```js
+JS:
+arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠 );
+arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒, 𝑡𝑜𝐴𝑛𝑔𝑙𝑒, 𝑐𝑤 );
+```
+
+Command. Adds a circular arc to the shape. This command creates an arc of a circle with point (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees, clockwise if `cw` is `true`. See Drawings [`arc`](drawings.md#arc) for more details.
+
+
+```html
+HTML:
+<arc point="10,0" radius="5">
+<arc x="10" y="0" radius="5" from="0" to="180" ccw>
+```
+```js
+JS:
+arc( 10, 0, 5);
+arc( 10, 0, 5, 0, 180, false);
+```
 
 
 ## SCORM

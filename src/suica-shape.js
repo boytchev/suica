@@ -23,23 +23,23 @@ class Shape extends Drawing
 		this.shape = new THREE.Shape( );
 		
 		// register some local methods as public global functions
-		for( var methodName of ['moveTo', 'lineTo', 'curveTo', 'arc'] )
-		{
-			Shape.register( methodName );
-		}
+		// for( var methodName of ['moveTo', 'lineTo', 'curveTo', 'arc'] )
+		// {
+			// Shape.register( methodName );
+		// }
 
 	} // Shape.constructor
 
 
 
-	static register( methodName )
-	{
-		window[methodName] = function ( ...params )
-		{
-			Shape.precheck();
-			Shape.current[methodName]( ...params );
-		}
-	}
+	// static register( methodName )
+	// {
+		// window[methodName] = function ( ...params )
+		// {
+			// Shape.precheck();
+			// Shape.current[methodName]( ...params );
+		// }
+	// }
 
 
 
@@ -114,11 +114,11 @@ class Shape extends Drawing
 	}
 	
 	
-	static precheck()
-	{
-		if( !(Shape.current instanceof Shape) )
-			throw 'error: No Shape instance is active';		
-	} // Shape.precheck
+	// static precheck()
+	// {
+		// if( !(Shape.current instanceof Shape) )
+			// throw 'error: No Shape instance is active';		
+	// } // Shape.precheck
 
 
 
@@ -138,8 +138,8 @@ class Shape extends Drawing
 
 window.shape = function ( ...params )
 {
-	Shape.current = new Shape( ...params );
-	return Shape.current;
+	Drawing.current = new Shape( ...params );
+	return Drawing.current;
 }
 
 

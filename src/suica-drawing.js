@@ -34,10 +34,9 @@ class Drawing
 
 	constructor( width=Drawing.SIZE, height=width, color=Drawing.COLOR, newCanvas=true )
 	{
-		// if the width is null, then this is construction of a shape, not a drawing
-		if( width === null ) return this;
+		// if width===null, then this is construction of a shape, not a drawing
 		
-		if( newCanvas )
+		if( width !== null && newCanvas )
 		{
 			this.canvas = document.createElement( 'canvas' );
 			this.canvas.width = width;
@@ -318,8 +317,8 @@ class Drawing
 	
 	static precheck()
 	{
-		if( !(Drawing.current instanceof Drawing) )
-			throw 'error: No Drawing instance is active';		
+		if( !(Drawing.current instanceof Drawing) && !(Drawing.current instanceof Shape) )
+			throw 'error: No drawing or shape instance is active';		
 	} // Drawing.precheck
 
 } // class Drawing
