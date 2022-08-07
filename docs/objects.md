@@ -1076,8 +1076,8 @@ surface( [0,0,0], splane(nSine,5), [210,210], 1, 'lightsalmon' );
 
 Shapes are invisible objects &ndash; virtual lines that define 2D shapes. A shape is defined with the same shape-defining commands as [drawings](drawings.md#defining-shapes): `moveTo`, `lineTo`, `curveTo` and `arc`. Shapes age used for two cases:
 
-- defining a shape and extracting points along its boundary via [`vertices`](properties.md#vertices)
-- defining a shape that is extruded into a 3D object
+- to extract points along its boundary via [`vertices`](properties.md#vertices)
+- to extrude into a 3D object
 
 
 #### shape
@@ -1166,9 +1166,10 @@ JS:
 curveTo( 10, 0, 20, 15 );
 ```
 
-The following example defines a heart shape made of several curves.
+The first example below defines a heart shape made of several curves. The other example build a shape for cube texture and another shape with the same form for positions of the cubes.
 
 [<kbd><img src="../examples/snapshots/shape-heart.jpg" width="300"></kbd>](../examples/shape-heart.html)
+[<kbd><img src="../examples/snapshots/shape-and-drawing.jpg" width="300"></kbd>](../examples/shape-and-drawing.html)
 
 
 
@@ -1198,6 +1199,13 @@ JS:
 arc( 10, 0, 5);
 arc( 10, 0, 5, 0, 180, false);
 ```
+
+When `vertices` is used on arc fragments they are split not into `count` but into 2&times;`count` segments. The next example uses `arc` to define 14 points uniformly spread on a circle.
+ 
+[<kbd><img src="../examples/snapshots/shape-arc.jpg" width="300"></kbd>](../examples/shape-arc.html)
+
+
+
 
 
 ## SCORM

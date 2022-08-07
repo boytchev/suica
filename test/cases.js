@@ -123,6 +123,7 @@ var cases = [
 'scorm-derandomize', 
 'scorm', 
 'shape-and-drawing', 
+'shape-arc', 
 'shape-heart', 
 'shape-html', 
 'sizes-orientation-xyz', 

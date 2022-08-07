@@ -145,6 +145,10 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/splane-closed.jpg" width="275"></kbd>](../examples/splane-closed.html)
 [<kbd><img src="../examples/snapshots/splane-interpolating.jpg" width="275"></kbd>](../examples/splane-interpolating.html)
 [<kbd><img src="../examples/snapshots/splane-function.jpg" width="275"></kbd>](../examples/splane-function.html)
+[<kbd><img src="../examples/snapshots/shape-html.jpg" width="275"></kbd>](../examples/shape-html.html)
+[<kbd><img src="../examples/snapshots/shape-heart.jpg" width="275"></kbd>](../examples/shape-heart.html)
+[<kbd><img src="../examples/snapshots/shape-and-drawing.jpg" width="275"></kbd>](../examples/shape-and-drawing.html)
+[<kbd><img src="../examples/snapshots/shape-arc.jpg" width="275"></kbd>](../examples/shape-arc.html)
 [<kbd><img src="../examples/snapshots/scorm.jpg" width="275"></kbd>](../examples/scorm.html)
 
 
