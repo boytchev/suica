@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Extrude size</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Extrude size</h1>
+	<p>Defining the size of extruded objects.</p>
+
+	<suica>
+		<demo speed="0.2" altitude="20">
+	</suica>
+	
+	<script>
+		var houseShape = shape( );
+			moveTo( 0, 8, 4, 4, 3, 4, 3, 0, -3, 0, -3, 4, -4, 4 );
+
+		village = circle( [0,0,0], 150, 'black' );
+			its.spinV = 90;
+			its.wireframe = true;
+			
+		house = extrude( houseShape );
+		
+		for( var i=0; i<100; i++ )
+		{
+			house.clone;
+			its.center = randomIn( village );
+			its.y = 3;
+			its.width = random( 0.3, 1 );
+			its.depth = random( 1, 20 );
+			its.height = random( 0.3, 1.5 );
+			its.spin = random( 0, 360 );
+			its.color = random( ['linen', 'peachpuff', 'lightsalmon', 'white', 'gray', 'dimgray', 'black'
+			] );
+		}
+	</script>
+	
+</body>
+</html>

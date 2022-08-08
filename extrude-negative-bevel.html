@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Extrude &ndash; negative bevel</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Extrude &ndash; negative bevel</h1>
+	<p>Comparing positive and negative bevel of extruded object.</p>
+
+	<suica>
+		<demo>
+	</suica>
+	
+	<script>
+		var s = shape( );
+			moveTo( -10, -10, 10, -10, 10, 10, -10, 10 );
+
+		extrude( s, [20,0,-10], [1, 1, 20] );
+			its.radius = 5;
+			its.offset = 5;
+
+		extrude( s, [-20,0,-10], [1, 1, 20] );
+			its.radius = -5;
+			its.offset = 5;
+			
+	</script>
+	
+</body>
+</html>

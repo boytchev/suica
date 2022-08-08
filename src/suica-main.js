@@ -217,13 +217,13 @@ class Suica
 		
 		
 		// register local methods that have stereotypical code
-		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Surface, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Model, Construct, Text3D, Capture] )
+		for( var classObject of [Point, Line, Square, Cube, Polygon, Sphere, Group, Tube, Surface, Prism, Cylinder, Cone, Pyramid, Circle, Convex, Extrude, Model, Construct, Text3D, Capture] )
 		{
 			Suica.registerClass( this, classObject );
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'surface','lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'model', 'construct', 'text3d', 'capture', 'orbit'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'surface','lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'extrude', 'model', 'construct', 'text3d', 'capture', 'orbit'] )
 		{
 			Suica.register( this, methodName );
 		}

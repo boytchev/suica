@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Extrude</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Extrude</h1>
+	<p>Building 3D object as extrusion of 2D shape.</p>
+
+	<suica>
+		<demo>
+		<shape id="houseShape">
+			<moveTo points="0, 20, -20, 0, -18, 0, -18, -20, 18, -20, 18, 0, 20, 0, 0, 20">
+		</shape>
+	</suica>
+	
+	<script>
+		extrude( houseShape );		
+	</script>
+	
+</body>
+</html>
