@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Extrude with multiple holes</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Extrude with multiple holes</h1>
+	<p>Defining holes in an extruded objects.</p>
+
+	<suica>
+		<demo altitude="0">
+	</suica>
+	
+	<script>
+		var diskShape = shape( );
+			arc( 0, 0, 40 );
+
+		var bigHole = shape( );
+			arc( 0, 0, 20 );
+
+		var holes = [];
+		for( var i=0; i<12; i++ )
+		{
+			var a = i/12*Math.PI*2;
+				
+			var s = shape( );
+				arc( 30*Math.cos(a), 30*Math.sin(a), 7 );
+				
+			holes.push( s );
+		}
+		
+		extrude( [diskShape, bigHole, ...holes], [0,0,-5], 1, 'gray' );
+			its.count = [10, 60];
+			its.depth = 2;
+			its.radius = 1;
+			
+	</script>
+	
+</body>
+</html>
