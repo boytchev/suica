@@ -16,7 +16,7 @@ tag: userguide suica objects properties drawings events
 - [Objects](#objects)
 	- <small>[Flat objects](#flat-objects): [`point`](#point), [`line`](#line), [`square`](#square), [`circle`](#circle), [`polygon`](#polygon)</small>
 	- <small>[Spatial objects](#spatial-objects): [`cube`](#cube), [`sphere`](#sphere), [`cylinder`](#cylinder), [`prism`](#prism), [`cone`](#cone), [`pyramid`](#pyramid)</small>
-	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`surface`](#surface), [`convex`](#convex), [`model`](#model), [`construct`](#construct), [`text3d`](#text3d)</small>
+	- <small>[Advanced objects](#advanced-objects): [`clone`](#clone), [`group`](#group), [`tube`](#tube), [`extrude`](#extrude), [`surface`](#surface), [`convex`](#convex), [`model`](#model), [`construct`](#construct), [`text3d`](#text3d)</small>
 	- <small>[Invisibles](#invisibles): [`spline`](#spline), [`splane`](#splane), [`shape`](#shape), [`scorm`](#scorm)</small>
 
 
@@ -584,6 +584,78 @@ suica.ontime = function( t )
 [<kbd><img src="../examples/snapshots/tube-dynamic.jpg" width="300"></kbd>](../examples/tube-dynamic.html)
 
 
+
+#### extrude
+```html
+HTML:
+<extrude id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝑠ℎ𝑎𝑝𝑒,ℎ𝑜𝑙𝑒,..." center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = extrude( 𝑠ℎ𝑎𝑝𝑒, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+𝑜𝑏𝑗𝑒𝑐𝑡 = extrude( [𝑠ℎ𝑎𝑝𝑒,ℎ𝑜𝑙𝑒,...], [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+```
+Object. Represents a 3D object extruded from a 2D shape. Its properties are `shape`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), `radius`, `offset`, `count`, [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<extrude>` tag.
+
+<img src="images/extrude.png">
+
+Parameter `src` is a [`shape`](#shape). The extrusion is performed along the third axis. The `size` parameter acts as scaling factor. The default extrusion has length 1, but the `depth` component of `size` can scale it to any other length. For example, `depth`=10 makes the extrusion 10 units.
+
+```html
+HTML:
+<extrude src="myShape">
+```
+```js
+JS:
+extrude( myShape );
+```
+
+[<kbd><img src="../examples/snapshots/extrude.jpg" width="300"></kbd>](../examples/extrude.html)
+[<kbd><img src="../examples/snapshots/extrude-size.jpg" width="300"></kbd>](../examples/extrude-size.html)
+
+The `src` parameter can contain several shapes. In this case the first shape is the main shape, and all the rest shapes are holes in the main shape. When an extruded object is defined in HTML, the names of the shapes are comma separated. In JavaScript the shapes are provided as an array. The hole should not intersect with each other as well as with the border of the main shape. Due to the internal implementation of extrusions, some configurations of hole might produce broken results.
+
+[<kbd><img src="../examples/snapshots/extrude-holes.jpg" width="300"></kbd>](../examples/extrude-holes.html)
+[<kbd><img src="../examples/snapshots/extrude-holes-multi.jpg" width="300"></kbd>](../examples/extrude-holes-multi.html)
+[<kbd><img src="../examples/snapshots/extrude-html-house.jpg" width="300"></kbd>](../examples/extrude-html-house.html)
+
+In addition to extrusion `extrude` may add bevels. The size of the bevel is defined by `radius` parameter. Note that the radius of the bevel takes into account the scale of the object at the time of setting the radius. If the scale is changed afterwards, the bevel might become unproportional. In this case the bevel radius might be reassigned in order to recalculate its actual size. If `radius` is 0, then there is no bevel. Positive `radius` makes convex bevels, while negative `radius` makes concave bevels. 
+
+<img src="images/extrude-bevel.png">
+
+```html
+HTML:
+<extrude src="myShape" radius="5">
+```
+```js
+JS:
+extrude( myShape );
+its.radius = 5;
+```
+
+[<kbd><img src="../examples/snapshots/extrude-radius.jpg" width="300"></kbd>](../examples/extrude-radius.html)
+[<kbd><img src="../examples/snapshots/extrude-negative-bevel.jpg" width="300"></kbd>](../examples/extrude-negative-bevel.html)
+[<kbd><img src="../examples/snapshots/extrude-column.jpg" width="300"></kbd>](../examples/extrude-column.html)
+
+Bevels can be used to make rounded objects. However, positive bevels expand the object depending on the value of `radius`. This can be compensated with the `offset` parameter. It determines the offset of the bevel in respect to the unbevelled object. Positive offsets move the surface outwards (i.t. the object expands even more), while negative offsets move the surface inwards
+
+[<kbd><img src="../examples/snapshots/extrude-offset.jpg" width="300"></kbd>](../examples/extrude-offset.html)
+[<kbd><img src="../examples/snapshots/extrude-round-corners.jpg" width="300"></kbd>](../examples/extrude-round-corners.html)
+
+The `count` parameter of `extrude` can be one value or an array of two values. The the first value is the number of segment that make the bevel. Higher number makes smoother (more round) bevels. The second value determines the number of segments in the curves of the shape and its holes.
+
+```html
+HTML:
+<extrude src="myShape1" count="5">
+<extrude src="myShape2" count="5,10">
+```
+```js
+JS:
+extrude( myShape1 );
+its.count = 5;
+extrude( myShape2 );
+its.count = [5, 10];
+```
 
 #### surface
 ```html
