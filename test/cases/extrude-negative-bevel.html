@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica>
+		<demo>
+	</suica>
+	
+	<script>
+		var s = shape( );
+			moveTo( -10, -10, 10, -10, 10, 10, -10, 10 );
+
+		extrude( s, [20,0,-10], [1, 1, 20] );
+			its.radius = 5;
+			its.offset = 5;
+
+		extrude( s, [-20,0,-10], [1, 1, 20] );
+			its.radius = -5;
+			its.offset = 5;
+			
+	</script>
+	
+</body>
+</html>

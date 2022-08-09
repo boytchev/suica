@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica>
+		<demo altitude="0">
+	</suica>
+	
+	<script>
+		var top = cube( [0,21,0], [80, 1, 80] );
+		var bot = cube( [0,-22,0], [80, 1, 80] );
+		
+		var s = shape( );
+			arc( 0, 0, 20 );
+			
+		extrude( s, [0,0,0], [1,1,10] );
+			its.y = 5;
+			its.spinV = 90;
+			its.radius = -15;
+			its.count = [20, 6];
+			
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica>
+		<demo>
+	</suica>
+	
+	<script>
+		var s = shape( );
+			moveTo( -20, -20, 10, -20 );
+			curveTo( 20, -20, 20, -10 );
+			lineTo( 20, 20, -10, 20 );
+			curveTo( -20, 20, -20, 10 );
+			lineTo( -20, -20 );
+
+		extrude( s );
+		
+		extrude( s, [0,0,-10], [1,1,9], 'peachpuff' );
+		extrude( s, [0,0,-12], [1,1,1], 'dimgray' );
+			
+	</script>
+	
+</body>
+</html>

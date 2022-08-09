@@ -763,10 +763,35 @@ class HTMLParser
 		
 		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
 
-		//elem.suicaObject = p; <-- now, spline is not an object
+		elem.suicaObject = p;
 		
 		return p;
 	} // HTMLParser.parseTagCONVEX
+	
+	
+	// <extrude src="shape, shape, ..." center size color radius offset count="..., ...">
+	parseTagEXTRUDE( suica, elem )
+	{
+		var src = elem.getAttribute('src');
+			src = Suica.evaluate( '['+src+']' );
+
+		var p = extrude(
+			src,
+			elem.getAttribute('center'),
+			elem.getAttribute('size'),
+			elem.getAttribute('color')
+		);
+		
+		p.radius = Drawing.parseN( elem, 'radius', Extrude.RADIUS );
+		p.offset = Drawing.parseN( elem, 'offset', Extrude.OFFSET );
+		p.count = Suica.parseSize( elem.getAttribute('count'), [Extrude.COUNT, Extrude.SHAPECOUNT] );
+
+		suica.parserReadonly.parseAttributes( elem, p, {widthHeight:true, depth:true, spin:true, visible: true} );
+
+		elem.suicaObject = p;
+		
+		return p;
+	} // HTMLParser.parseTagEXTRUDE
 
 
 	

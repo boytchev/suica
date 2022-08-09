@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+
+	<suica>
+		<demo altitude="0">
+	</suica>
+	
+	<script>
+		var curvedShape = shape( );
+			moveTo( -40, -20, 30, -20 );
+			curveTo( 40, -20, 40, -10 );
+			lineTo( 40, 20, -30, 20 );
+			curveTo( -40, 20, -40, 10 );
+			lineTo( -40, -20 );
+
+		var squareHole = shape( );
+			moveTo( -30, -10, -10, -10, -10, 10, -30, 10 );
+
+		var circleHole = shape( 3 );
+			arc( 20, 0, 10 );
+		
+		extrude( [curvedShape, squareHole, circleHole], [0,0,-5] );
+			its.count = [1, 30];
+			its.depth = 10;
+			
+	</script>
+	
+</body>
+</html>

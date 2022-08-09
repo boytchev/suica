@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Extrude a house</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Extrude a house</h1>
+	<p>Building a house frame as a set of extruded objects.</p>
+
+	<suica>
+		<demo>
+		<shape id="houseShape">
+			<moveTo point="0, 20, -20, 0, -18, 0, -18, -20, 18, -20, 18, 0, 20, 0, 0, 20">
+		</shape>
+		
+		<shape id="doorShape">
+			<moveTo point="7, -19, 15, -19, 15, -5, 7, -5">
+		</shape>
+		<shape id="window0Shape">
+			<moveTo point="-1+7, -10, 5+7, -10, 5+7, 0, -1+7, 0">
+		</shape>
+		<shape id="window1Shape">
+			<moveTo point="-1, -10, 5, -10, 5, 0, -1, 0">
+		</shape>
+		<shape id="window2Shape">
+			<moveTo point="-1-7, -10, 5-7, -10, 5-7, 0, -1-7, 0">
+		</shape>
+		<shape id="window3Shape">
+			<moveTo point="-1-14, -10, 5-14, -10, 5-14, 0, -1-14, 0">
+		</shape>
+		<shape id="atticShape">
+			<arc point="0, 10" radius="3">
+		</shape>
+
+		<shape id="roofTopShape">
+			<moveTo point="0+2, 20-2, 0, 20, 0-2, 20-2">
+		</shape>
+		<shape id="roof1Shape">
+			<moveTo point="20-2, 2, 20, 0, 20-2, 0">
+		</shape>
+		<shape id="roof2Shape">
+			<moveTo point="-20+2, 2, -20, 0, -20+2, 0">
+		</shape>
+		<shape id="floorShape">
+			<moveTo point="-18, -18, -18, -20, 18, -20, 18, -18, 17, -18, 17, -19, -17, -19, -17, -18">
+		</shape>
+		
+		<extrude src="houseShape, doorShape, atticShape, window1Shape, window2Shape, window3Shape" z="15">
+		<extrude src="houseShape, atticShape, window0Shape, window1Shape, window2Shape, window3Shape" z="-15">
+		<extrude src="roofTopShape" z="-14.5" depth="30" color="linen">
+		<extrude src="roof1Shape" z="-14.5" depth="30" color="linen">
+		<extrude src="roof2Shape" z="-14.5" depth="30" color="linen">
+		<extrude src="floorShape" z="-14.5" depth="30" color="linen">
+	</suica>
+	
+</body>
+</html>

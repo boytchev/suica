@@ -709,9 +709,9 @@ if(DEBUG_CALLS)console.log(`Suica :: ${this.id}`);this.suicaTag=suicaTag;this.is
 {THREE.MathUtils.seededRandom(1);}
 else
 {this.canvas.addEventListener('contextmenu',Suica.onContextMenu);THREE.MathUtils.seededRandom(Math.round(Number.MAX_SAFE_INTEGER*Math.random()));}
-for(var classObject of[Point,Line,Square,Cube,Polygon,Sphere,Group,Tube,Surface,Prism,Cylinder,Cone,Pyramid,Circle,Convex,Model,Construct,Text3D,Capture])
+for(var classObject of[Point,Line,Square,Cube,Polygon,Sphere,Group,Tube,Surface,Prism,Cylinder,Cone,Pyramid,Circle,Convex,Extrude,Model,Construct,Text3D,Capture])
 {Suica.registerClass(this,classObject);}
-for(var methodName of['cube','square','sphere','point','line','group','cylinder','prism','cone','pyramid','circle','polygon','tube','surface','lookAt','fullScreen','fullWindow','proactive','anaglyph','stereo','perspective','orthographic','lookAt','background','oxyz','demo','allObjects','convex','model','construct','text3d','capture','orbit'])
+for(var methodName of['cube','square','sphere','point','line','group','cylinder','prism','cone','pyramid','circle','polygon','tube','surface','lookAt','fullScreen','fullWindow','proactive','anaglyph','stereo','perspective','orthographic','lookAt','background','oxyz','demo','allObjects','convex','extrude','model','construct','text3d','capture','orbit'])
 {Suica.register(this,methodName);}
 this.model.save=function(...params)
 {this.parser?.parseTags();return Model.save(...params);}
@@ -1155,7 +1155,9 @@ parseTagSPLANE(suica,elem)
 parseTagGROUP(suica,elem)
 {var p=suica.group();if(elem.hasAttribute('center'))p.center=elem.getAttribute('center');if(elem.hasAttribute('size'))p.size=elem.getAttribute('size');if(elem.hasAttribute('spin'))p.spin=elem.getAttribute('spin');suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true,visible:true});elem.suicaObject=p;return p;}
 parseTagCONVEX(suica,elem)
-{var points=elem.getAttribute('src');points=Suica.evaluate('[['+points.replaceAll(';','],[')+']]');var p=convex(points,elem.getAttribute('size'),elem.getAttribute('color'));suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true,visible:true});return p;}
+{var points=elem.getAttribute('src');points=Suica.evaluate('[['+points.replaceAll(';','],[')+']]');var p=convex(points,elem.getAttribute('size'),elem.getAttribute('color'));suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true,visible:true});elem.suicaObject=p;return p;}
+parseTagEXTRUDE(suica,elem)
+{var src=elem.getAttribute('src');src=Suica.evaluate('['+src+']');var p=extrude(src,elem.getAttribute('center'),elem.getAttribute('size'),elem.getAttribute('color'));p.radius=Drawing.parseN(elem,'radius',Extrude.RADIUS);p.offset=Drawing.parseN(elem,'offset',Extrude.OFFSET);p.count=Suica.parseSize(elem.getAttribute('count'),[Extrude.COUNT,Extrude.SHAPECOUNT]);suica.parserReadonly.parseAttributes(elem,p,{widthHeight:true,depth:true,spin:true,visible:true});elem.suicaObject=p;return p;}
 parseTagCLONE(suica,elem)
 {var sourceId=elem.getAttribute('src');if(!window[sourceId])
 {console.error(`error: unknown object name '${sourceId}' in attribute 'src' of tag <clone>`);return;}
@@ -1725,6 +1727,36 @@ get clone()
 {var object=new Convex(this.suica,this._points,this.size,this.color);object.spin=this.spin;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}
 set src(points)
 {this._points=points;this.threejs.geometry.dispose();this.threejs.geometry=Convex.generateGeometry(points);}}
+﻿
+class Extrude extends Mesh
+{static SIZE=[1,1,1];static COLOR='lightsalmon';static RADIUS=0;static OFFSET=0;static COUNT=10;static SHAPECOUNT=10;constructor(suica,shapes,center,size,color)
+{suica.parser?.parseTags();suica.debugCall('extrude',shapes,center,size,color);var shape;var settings={steps:1,depth:1,curveSegments:Extrude.SHAPECOUNT,bevelEnabled:true,bevelThickness:Extrude.RADIUS,bevelSize:Extrude.RADIUS,bevelOffset:Extrude.OFFSET,bevelSegments:Extrude.COUNT};if(shapes instanceof THREE.Shape)
+{shape=shapes;settings=shapes.settings;}
+else
+if(shapes instanceof Array)
+{shape=shapes[0].shape.clone();shape.holes=[];for(var i=1;i<shapes.length;i++)
+shape.holes.push(shapes[i].shape.clone());}
+else
+{shape=shapes.shape.clone();shape.holes=[];}
+var geometry=new THREE.ExtrudeGeometry(shape,settings);super(suica,new THREE.Mesh(geometry,Mesh.solidMaterial.clone()),null,);this.shape=shape;this.settings=settings;this.center=Suica.parseCenter(center);this.size=Suica.parseSize(size,Extrude.SIZE);this.color=Suica.parseColor(color,Extrude.COLOR);}
+get radius()
+{return this.settings.bevelThickness;}
+set radius(radius)
+{this.settings.bevelThickness=Math.abs(radius/this.depth);this.settings.bevelSize=radius/this.width;this.solidMesh.geometry.dispose();this.solidMesh.geometry=new THREE.ExtrudeGeometry(this.shape,this.settings);}
+get offset()
+{return this.settings.bevelOffset;}
+set offset(offset)
+{this.settings.bevelOffset=offset;this.solidMesh.geometry.dispose();this.solidMesh.geometry=new THREE.ExtrudeGeometry(this.shape,this.settings);}
+get count()
+{return[this.settings.bevelSegments,this.settings.curveSegments];}
+set count(count)
+{if(count instanceof Array)
+{this.settings.bevelSegments=count[0];this.settings.curveSegments=count[1]||count[0];}
+else
+{this.settings.bevelSegments=count;}
+this.solidMesh.geometry.dispose();this.solidMesh.geometry=new THREE.ExtrudeGeometry(this.shape,this.settings);}
+get clone()
+{this.shape.settings={...this.settings};var object=new Extrude(this.suica,this.shape,this.center,this.size,this.color);object.spin=this.spin;object.image=this.image;object.visible=this.visible;Suica.cloneEvents(object,this);return object;}}
 ﻿
 class Model extends Mesh
 {static SIZE=1;constructor(suica,src,center,size)
