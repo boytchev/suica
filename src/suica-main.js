@@ -16,8 +16,8 @@ if( TEST_MODE )
 	console.log('::> suica');
 else
 	console.log(`(\\/)
-( ..)		Suica 2.0
-c(”)(”)		 (2207)
+( ..)
+c(”)(”)		 Suica 2.0
 `);
 
 
@@ -1037,8 +1037,19 @@ class Suica
 
 	findObjects( domEvent, onlyInteractive = false )
 	{
-		var scanObjects = [];
+		var scanObjects = [],
+			autoObjects = true;
 
+		// if onlyInteractive is an array, then elements are the scan objects
+		
+		if( onlyInteractive instanceof Array)
+		{
+			autoObjects = false; // list of scan objects are not automatically generated
+			for( let object of onlyInteractive )
+				scanObjects.push( object.threejs );
+			onlyInteractive = false;
+		}
+		else
 		if( onlyInteractive )
 		{
 			for( let object of this.scene.children )
@@ -1074,10 +1085,17 @@ class Suica
 		{
 			let suicaObject = null;
 			
-			// get the topmost Suica object
-			for( let object=intersection.object; object; object=object.parent )
+			if( autoObjects )
 			{
-				suicaObject = object.suicaObject || suicaObject;
+				// get the topmost Suica object
+				for( let object=intersection.object; object; object=object.parent )
+				{
+					suicaObject = object.suicaObject || suicaObject;
+				}
+			}
+			else
+			{
+				suicaObject = intersection.object.suicaObject;
 			}
 			
 			// if the object has Suica object that is not found,

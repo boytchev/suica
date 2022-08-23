@@ -692,8 +692,8 @@ complement(){this.polygons.map((p)=>{p.negate();});return this;}}"use strict";fu
 const DEBUG_CALLS=false;const DEBUG_EVENTS=false;const TEST_MODE=typeof SUICA_TEST_MODE!=='undefined';if(TEST_MODE)
 console.log('::> suica');else
 console.log(`(\\/)
-( ..)  Suica 2.0
-c(”)(”)   (2207)
+( ..)
+c(”)(”)   Suica 2.0
 `);var suica=null;class Suica
 {static allSuicas=[];static CIRCLECOUNT=50;static OX=new THREE.Vector3(1,0,0);static OY=new THREE.Vector3(0,1,0);static OZ=new THREE.Vector3(0,0,1);static ORIENTATIONS={YXZ:{SCALE:new THREE.Vector3(1,-1,1),LOOKAT:{FROM:[0,0,100],TO:[0,0,0],UP:[1,0,0]},RIGHT:Suica.OY,UP:Suica.OX,FORWARD:Suica.OZ,},ZYX:{SCALE:new THREE.Vector3(1,1,-1),LOOKAT:{FROM:[100,0,0],TO:[0,0,0],UP:[0,1,0]},RIGHT:Suica.OZ,UP:Suica.OY,FORWARD:Suica.OX,},XZY:{SCALE:new THREE.Vector3(-1,1,1),LOOKAT:{FROM:[0,100,0],TO:[0,0,0],UP:[0,0,1]},RIGHT:Suica.OX,UP:Suica.OZ,FORWARD:Suica.OY,},ZXY:{SCALE:new THREE.Vector3(1,1,1),LOOKAT:{FROM:[0,100,0],TO:[0,0,0],UP:[1,0,0]},RIGHT:Suica.OZ,UP:Suica.OX,FORWARD:Suica.OY,},XYZ:{SCALE:new THREE.Vector3(1,1,1),LOOKAT:{FROM:[0,0,100],TO:[0,0,0],UP:[0,1,0]},RIGHT:Suica.OX,UP:Suica.OY,FORWARD:Suica.OZ,},YZX:{SCALE:new THREE.Vector3(1,1,1),LOOKAT:{FROM:[100,0,0],TO:[0,0,0],UP:[0,0,1]},RIGHT:Suica.OY,UP:Suica.OZ,FORWARD:Suica.OX,},}
 static globalHoverObject;static globalHoverEvent;flipNormal(geometry)
@@ -858,15 +858,22 @@ allObjects()
 foundObjects.push(threejsObject.suicaObject);}
 return foundObjects;}
 findObjects(domEvent,onlyInteractive=false)
-{var scanObjects=[];if(onlyInteractive)
+{var scanObjects=[],autoObjects=true;if(onlyInteractive instanceof Array)
+{autoObjects=false;for(let object of onlyInteractive)
+scanObjects.push(object.threejs);onlyInteractive=false;}
+else
+if(onlyInteractive)
 {for(let object of this.scene.children)
 {let suicaObject=object.suicaObject;if(!suicaObject)continue;if(suicaObject.onpointermove||suicaObject.onpointerdown||suicaObject.onpointerup||suicaObject.onpointerenter||suicaObject.onpointerleave||suicaObject.onclick)
 scanObjects.push(object);}}
 else
 {scanObjects=this.scene.children;}
 findPosition(domEvent);this.raycaster.setFromCamera(this.raycastPointer,this.camera);var intersects=this.raycaster.intersectObjects(scanObjects,true);var foundObjects=[];for(var intersection of intersects)
-{let suicaObject=null;for(let object=intersection.object;object;object=object.parent)
-{suicaObject=object.suicaObject||suicaObject;}
+{let suicaObject=null;if(autoObjects)
+{for(let object=intersection.object;object;object=object.parent)
+{suicaObject=object.suicaObject||suicaObject;}}
+else
+{suicaObject=intersection.object.suicaObject;}
 if(foundObjects.indexOf(suicaObject)<0)
 foundObjects.push(suicaObject);}
 return foundObjects;}
