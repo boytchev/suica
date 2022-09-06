@@ -227,6 +227,7 @@ function onPointerMove( event )
 
 [<kbd><img src="../examples/snapshots/events-find-object.jpg" width="300"></kbd>](../examples/events-find-object.html)
 
+If an object is found its [`intersectData`](properties.md#intersectdata) property is also set.
 
 
 #### findObjects
@@ -248,6 +249,7 @@ function onPointerMove( event )
 
 [<kbd><img src="../examples/snapshots/events-find-objects.jpg" width="300"></kbd>](../examples/events-find-objects.html)
 
+If objects are found their [`intersectData`](properties.md#intersectdata) properties are also set.
 
 
 
