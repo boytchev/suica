@@ -707,5 +707,5 @@ When materials and properties are set via `threejs`, they may interfere with Sui
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.intersectData
 ```
-Property. Provides access to underlying Three.js intersect data. The value of `intersectData` is set only if an object is selected by [`findObject`](events.md#findobject] or [`findObjects`](events.md#findobjects]. It contains the data passed from Three.js as a result of raycasting intersection, like `point` (coordinates of the intersection point) and `distance` (dstance to the intersection point. For more details of other elements of `intersectData` see [Raycaster.intersectObject](https://threejs.org/docs/#api/en/core/Raycaster.intersectObject).
+Property. Provides access to underlying Three.js intersect data. The value of `intersectData` is set only if an object is selected by [`findObject`](events.md#findobject) or [`findObjects`](events.md#findobjects). It contains the data passed from Three.js as a result of raycasting intersection, like `point` (coordinates of the intersection point) and `distance` (dstance to the intersection point. For more details of other elements of `intersectData` see [Raycaster.intersectObject](https://threejs.org/docs/#api/en/core/Raycaster.intersectObject).
 
