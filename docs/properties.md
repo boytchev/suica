@@ -23,7 +23,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 	- <small>[Visibility](#visibility): [`visible`](#visible), [`hidden`](#hidden)</small>
 	- <small>[Texture](#texture): [`image`](#image), [`images`](#images)</small>
 	- <small>[Wire-frame](#wire-frame): [`wireframe`](#wireframe-1)</small>
-- [Three.js properties](#threejs-properties): <small>[`vertices`](#vertices) [`threejs`](#threejs)</small>
+- [Three.js properties](#threejs-properties): <small>[`vertices`](#vertices) [`threejs`](#threejs) [`intersectData`](#intersectdata)</small>
 
 
 
@@ -700,3 +700,12 @@ When materials and properties are set via `threejs`, they may interfere with Sui
 | `threejs.scale` | [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth) |
 | `threejs.material.color` | [`color`](#color) |
 | `threejs.material.map` | [`image`](#image), [`images`](#images) |
+
+
+#### intersectData
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.intersectData
+```
+Property. Provides access to underlying Three.js intersect data. The value of `intersectData` is set only if an object is selected by `findObject` or `findObjects`. It contains the data passed from Three.js as a result of raycasting intersection, like `point` (coordinates of the intersection point) and `distance` (dstance to the intersection point. For more details of other elements of `intersectData` see [Raycaster.intersectObject](https://threejs.org/docs/#api/en/core/Raycaster.intersectObject).
+

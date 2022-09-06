@@ -1101,7 +1101,10 @@ class Suica
 			// if the object has Suica object that is not found,
 			// add it to the list of found objects
 			if( foundObjects.indexOf( suicaObject ) < 0 )
+			{
+				suicaObject.intersectData = intersection;
 				foundObjects.push( suicaObject );
+			}
 		}
 		
 		return foundObjects;

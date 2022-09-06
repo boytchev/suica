@@ -875,7 +875,7 @@ findPosition(domEvent);this.raycaster.setFromCamera(this.raycastPointer,this.cam
 else
 {suicaObject=intersection.object.suicaObject;}
 if(foundObjects.indexOf(suicaObject)<0)
-foundObjects.push(suicaObject);}
+{suicaObject.intersectData=intersection;foundObjects.push(suicaObject);}}
 return foundObjects;}
 findObject(domEvent,onlyInteractive=false)
 {var objects=this.findObjects(domEvent,onlyInteractive);if(objects.length)
