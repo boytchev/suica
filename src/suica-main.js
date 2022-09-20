@@ -1095,7 +1095,12 @@ class Suica
 			}
 			else
 			{
-				suicaObject = intersection.object.suicaObject;
+				// get the closest parent with a Suica object attached
+				for( let object=intersection.object; object; object=object.parent )
+				{
+					suicaObject = object.suicaObject;
+					if( suicaObject ) break;
+				}
 			}
 			
 			// if the object has Suica object that is not found,

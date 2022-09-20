@@ -873,7 +873,8 @@ findPosition(domEvent);this.raycaster.setFromCamera(this.raycastPointer,this.cam
 {for(let object=intersection.object;object;object=object.parent)
 {suicaObject=object.suicaObject||suicaObject;}}
 else
-{suicaObject=intersection.object.suicaObject;}
+{for(let object=intersection.object;object;object=object.parent)
+{suicaObject=object.suicaObject;if(suicaObject)break;}}
 if(foundObjects.indexOf(suicaObject)<0)
 {suicaObject.intersectData=intersection;foundObjects.push(suicaObject);}}
 return foundObjects;}
