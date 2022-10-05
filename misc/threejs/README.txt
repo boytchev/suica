@@ -1,20 +1,21 @@
-These files are from Three.js r135. The following files are modified:
+Updating Three.js (current release r145):
 
 
-examples\js\effects\AnaglyphEffect.js:
-Lines 8-9 are replaced by 11-12. The color matrices are set to anaglyph identities.
+1. Modify REBUILD.bat
+	- set the THREE variable path
+	- remove the EXIT command
 
-examples\js\geometries\ConvexGeometry.js
+2. Run REBUILD.bat
 
-examples\js\math\ConvexHull.js
+3. Modify AnaglyphEffect.js
+	- Lines 8-9 are replaced by color identities:
+	  this.colorMatrixLeft = new THREE.Matrix3().fromArray( [1,0,0,0,0,0,0,0,0] );
+	  this.colorMatrixRight = new THREE.Matrix3().fromArray( [0,0,0,0,1,0,0,0,1] );
 
-examples\js\exporters\GLTFExporter.js
+4. Modify VRButton.js
+	- Converted from module to non-module - comment line 201
 
-examples\js\loaders\GLTFLoader.js
+5. Run REBUILD.bat from root
 
-examples\js\effects\StereoEffect.js
+6. Run RETEST.bat from root
 
-build\three.min.js
-
-examples\jsm\webxr\VRButton.js:
-Converted from module to non-module. Line 207 is commented.
