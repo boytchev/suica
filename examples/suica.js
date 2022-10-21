@@ -700,11 +700,12 @@ static globalHoverObject;static globalHoverEvent;flipNormal(geometry)
 nor[i]=-nor[i];}
 return geometry;}
 static OXYZ={COLOR:'black',SIZE:30};static DEMO={DISTANCE:100,ALTITUDE:30,SPEED:1};static ORBIT={DISTANCE:100,ALTITUDE:30,SPEED:0};static BACKGROUND='whitesmoke';static ANAGLYPH={DISTANCE:5};static STEREO={DISTANCE:1};static PERSPECTIVE={NEAR:1,FAR:1000,FOV:40};static ORTHOGRAPHIC={NEAR:0,FAR:1000};static DEFAULT_ORIENTATION='XYZ';static SPLINE={POINTS:[[0,0,0],[0,1,0]],CLOSED:false,INTERPOLANT:true};static SPLANE={POINTS:[[[-3,0,-3],[-1,0,-3],[+1,0,-3],[+3,0,-3]],[[-3,0,-1],[-1,3,-1],[+1,3,-1],[+3,0,-1]],[[-3,0,+1],[-1,3,+1],[+1,3,+1],[+3,0,+1]],[[-3,0,+3],[-1,0,+3],[+1,0,+3],[+3,0,+3]]],CLOSED:[false,false],INTERPOLANT:[true,true]};constructor(suicaTag)
-{this._={solidGeometry:{},frameGeometry:{},};if(!suicaTag.style.display)suicaTag.style.display='inline-block';suicaTag.style.boxSizing='border-box';if(!suicaTag.style.width)
+{this._={solidGeometry:{},frameGeometry:{},};if(getComputedStyle(suicaTag).display=='inline')
+suicaTag.style.display='inline-block';suicaTag.style.boxSizing='border-box';if(getComputedStyle(suicaTag).width=='auto')
 {if(suicaTag.hasAttribute('width'))
 suicaTag.style.width=suicaTag.getAttribute('width')+'px';else
 suicaTag.style.width=TEST_MODE?'400px':'500px';}
-if(!suicaTag.style.height)
+if(getComputedStyle(suicaTag).height=='auto')
 {if(suicaTag.hasAttribute('height'))
 suicaTag.style.height=suicaTag.getAttribute('height')+'px';else
 suicaTag.style.height=TEST_MODE?'400px':'300px';}

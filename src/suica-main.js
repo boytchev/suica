@@ -142,10 +142,12 @@ class Suica
 		};
 		
 		// fix styling of <suica>
-		if( !suicaTag.style.display ) suicaTag.style.display = 'inline-block';
+		if( getComputedStyle(suicaTag).display == 'inline' )
+			suicaTag.style.display = 'inline-block';
+		
 		suicaTag.style.boxSizing = 'border-box';
 
-		if( !suicaTag.style.width )
+		if( getComputedStyle(suicaTag).width == 'auto' )
 		{
 			if( suicaTag.hasAttribute('width') )
 				suicaTag.style.width = suicaTag.getAttribute('width')+'px';
@@ -153,7 +155,7 @@ class Suica
 				suicaTag.style.width = TEST_MODE?'400px':'500px';
 		}
 
-		if( !suicaTag.style.height )
+		if( getComputedStyle(suicaTag).height == 'auto' )
 		{
 			if( suicaTag.hasAttribute('height') )
 				suicaTag.style.height = suicaTag.getAttribute('height')+'px';
