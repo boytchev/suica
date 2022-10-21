@@ -700,9 +700,15 @@ static globalHoverObject;static globalHoverEvent;flipNormal(geometry)
 nor[i]=-nor[i];}
 return geometry;}
 static OXYZ={COLOR:'black',SIZE:30};static DEMO={DISTANCE:100,ALTITUDE:30,SPEED:1};static ORBIT={DISTANCE:100,ALTITUDE:30,SPEED:0};static BACKGROUND='whitesmoke';static ANAGLYPH={DISTANCE:5};static STEREO={DISTANCE:1};static PERSPECTIVE={NEAR:1,FAR:1000,FOV:40};static ORTHOGRAPHIC={NEAR:0,FAR:1000};static DEFAULT_ORIENTATION='XYZ';static SPLINE={POINTS:[[0,0,0],[0,1,0]],CLOSED:false,INTERPOLANT:true};static SPLANE={POINTS:[[[-3,0,-3],[-1,0,-3],[+1,0,-3],[+3,0,-3]],[[-3,0,-1],[-1,3,-1],[+1,3,-1],[+3,0,-1]],[[-3,0,+1],[-1,3,+1],[+1,3,+1],[+3,0,+1]],[[-3,0,+3],[-1,0,+3],[+1,0,+3],[+3,0,+3]]],CLOSED:[false,false],INTERPOLANT:[true,true]};constructor(suicaTag)
-{this._={solidGeometry:{},frameGeometry:{},};suicaTag.style.display='inline-block';suicaTag.style.boxSizing='border-box';if(!getComputedStyle(suicaTag).width&&!suicaTag.hasAttribute('width'))
-suicaTag.style.width=TEST_MODE?'400px':'500px';if(!getComputedStyle(suicaTag).height&&!suicaTag.hasAttribute('height'))
-suicaTag.style.height=TEST_MODE?'400px':'300px';if(!suicaTag.style.position)suicaTag.style.position='relative';this.id=suicaTag.getAttribute('id')||`suica${Suica.allSuicas.length}`
+{this._={solidGeometry:{},frameGeometry:{},};if(!suicaTag.style.display)suicaTag.style.display='inline-block';suicaTag.style.boxSizing='border-box';if(!suicaTag.style.width)
+{if(suicaTag.hasAttribute('width'))
+suicaTag.style.width=suicaTag.getAttribute('width')+'px';else
+suicaTag.style.width=TEST_MODE?'400px':'500px';}
+if(!suicaTag.style.height)
+{if(suicaTag.hasAttribute('height'))
+suicaTag.style.height=suicaTag.getAttribute('height')+'px';else
+suicaTag.style.height=TEST_MODE?'400px':'300px';}
+if(!suicaTag.style.position)suicaTag.style.position='relative';this.id=suicaTag.getAttribute('id')||`suica${Suica.allSuicas.length}`
 if(DEBUG_CALLS)console.log(`Suica :: ${this.id}`);this.suicaTag=suicaTag;this.isProactive=false;this.capturer=null;this.orientation=Suica.ORIENTATIONS[suicaTag.getAttribute('ORIENTATION')?.toUpperCase()||Suica.DEFAULT_ORIENTATION];this.orientation.MATRIX=new THREE.Matrix4().makeBasis(this.orientation.RIGHT,this.orientation.UP,this.orientation.FORWARD);this.orientation.FLIP_NORMAL=this.orientation.SCALE.x<0||this.orientation.SCALE.y<0||this.orientation.SCALE.z<0;this.viewPoint={from:this.orientation.LOOKAT.FROM,to:this.orientation.LOOKAT.TO,up:this.orientation.LOOKAT.UP,};this.createCanvas();this.createRenderer();this.parser=new HTMLParser(this);this.parser.parseEvents(suicaTag,this.canvas,this);this.demoViewPoint=null;this.controls=null;this.raycaster=new THREE.Raycaster();this.raycastPointer=new THREE.Vector2();window.suica=this;Suica.allSuicas.push(this);window[this.id]=this;this.canvas.addEventListener('pointermove',Suica.onPointerMove);this.canvas.addEventListener('pointerdown',Suica.onPointerDown);this.canvas.addEventListener('pointerup',Suica.onPointerUp);this.canvas.addEventListener('click',Suica.onClick);if(TEST_MODE)
 {THREE.MathUtils.seededRandom(1);}
 else

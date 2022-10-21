@@ -169,6 +169,7 @@ var cases = [
 'square-rectangle', 
 'square', 
 'style', 
+'suica-centered', 
 'suica-orientation-xyz', 
 'suica-orientation-xzy', 
 'suica-orientation-yxz', 

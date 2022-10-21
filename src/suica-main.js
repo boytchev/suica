@@ -142,13 +142,25 @@ class Suica
 		};
 		
 		// fix styling of <suica>
-		suicaTag.style.display = 'inline-block';
+		if( !suicaTag.style.display ) suicaTag.style.display = 'inline-block';
 		suicaTag.style.boxSizing = 'border-box';
-		if( !getComputedStyle(suicaTag).width && !suicaTag.hasAttribute('width') )
-			suicaTag.style.width = TEST_MODE?'400px':'500px';
-		if( !getComputedStyle(suicaTag).height && !suicaTag.hasAttribute('height') )
-			suicaTag.style.height = TEST_MODE?'400px':'300px';
-		
+
+		if( !suicaTag.style.width )
+		{
+			if( suicaTag.hasAttribute('width') )
+				suicaTag.style.width = suicaTag.getAttribute('width')+'px';
+			else
+				suicaTag.style.width = TEST_MODE?'400px':'500px';
+		}
+
+		if( !suicaTag.style.height )
+		{
+			if( suicaTag.hasAttribute('height') )
+				suicaTag.style.height = suicaTag.getAttribute('height')+'px';
+			else
+				suicaTag.style.height = TEST_MODE?'400px':'300px';
+		}
+
 		if( !suicaTag.style.position ) suicaTag.style.position = 'relative';
 		
 		// get or invent id
@@ -285,6 +297,7 @@ class Suica
 								width: 100%;
 								height: 100%;
 								box-sizing: border-box;`;
+		
 		this.canvas.suicaObject = this;
 		this.suicaTag.appendChild( this.canvas );
 		
