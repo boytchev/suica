@@ -1146,7 +1146,7 @@ surface( [0,0,0], splane(nSine,5), [210,210], 1, 'lightsalmon' );
 
 ## Shape
 
-Shapes are invisible objects &ndash; virtual lines that define 2D shapes. A shape is defined with the same shape-defining commands as [drawings](drawings.md#defining-shapes): `moveTo`, `lineTo`, `curveTo` and `arc`. Shapes age used for two cases:
+Shapes are invisible objects &ndash; virtual lines that define 2D shapes. A shape is defined with the same shape-defining commands as [drawings](drawings.md#defining-shapes): `moveTo`, `lineTo`, `curveTo` and `arc`. Shapes are used for two cases:
 
 - to extract points along its boundary via [`vertices`](properties.md#vertices)
 - to extrude into a 3D object
