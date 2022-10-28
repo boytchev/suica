@@ -6,10 +6,12 @@
 @ECHO Note that files AnaglyphEffect.js and VRButton.js are changed
 @ECHO If you execute REBUILD the changes will be reverted
 @ECHO.
+
 @PAUSE
+
 @EXIT
 
-@set THREE=D:\Install\Three.js\three.js-master-r145\three.js-master
+@set THREE=D:\Install\Three.js\three.js-master-r146\three.js-master
 
 @copy %THREE%\build\three.min.js .
 @copy %THREE%\examples\js\controls\OrbitControls.js .
