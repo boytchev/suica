@@ -17,7 +17,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 - [Geometrical properties](#geometrical-properties)
 	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z), [`randomIn`](#randomin), [`randomOn`](#randomon), [`objectPosition`](#objectposition), [`screenPosition`](#screenposition)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
-	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint)</small>
+	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint-spins), [`spinV`](#spinh-spinv-spint-spins), [`spinT`](#spinh-spinv-spint-spins), [`spinS`](#spinh-spinv-spint-spins)</small>
 - [Material properties](#material-properties)
 	- <small>[Color](#color): [`color`](#color)</small>
 	- <small>[Visibility](#visibility): [`visible`](#visible), [`hidden`](#hidden)</small>
@@ -339,9 +339,9 @@ The orientation of objects in Suica refers to their rotation. Like positions in 
 
 There is a significant difference between handling positions and orientations. The order of rotations is important as different order will produce different final orientation. Suica adopts one specific order, which is close to how people would describe the individual rotations.
 
-The property for orientation is `spin`. Individual rotations are in properties `spinH`, `spinV` and `spinT`.
+The property for orientation is `spin`. Individual rotations are in properties `spinH`, `spinV`, `spinT` and `spinS`.
 
-Angle `spinH` (*H* from *horizontal*) defines horizontal rotation around the global vertical axis. Angle `spinV` (*V* from *vertical*) define vertical rotation away from the vertical axis. Angle `spinT` (*T* from *torsion*) defines rotation of the object around it own vertical axis.
+Angle `spinH` (*H* from *horizontal*) defines horizontal rotation around the global vertical axis. Angle `spinV` (*V* from *vertical*) define vertical rotation away from the vertical axis. Angle `spinT` (*T* from *torsion*) defines rotation of the object around it own vertical axis. Angle `spinS` (*S* from *spin*) defines rotation of the object around it own forward axis.
 
 <img src="images/spin.png">
 
@@ -350,14 +350,14 @@ Angle `spinH` (*H* from *horizontal*) defines horizontal rotation around the glo
 ```html
 HTML:
 <𝑜𝑏𝑗𝑒𝑐𝑡 spin="𝘴𝘱𝘪𝘯𝘏">
-<𝑜𝑏𝑗𝑒𝑐𝑡 spin="𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛">
+<𝑜𝑏𝑗𝑒𝑐𝑡 spin="𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛,𝑠𝑝𝑖𝑛𝑆">
 ```
 ```js
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spin = 𝘴𝘱𝘪𝘯𝘏;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spin = [𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛];
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spin = [𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛,𝑠𝑝𝑖𝑛𝑆];
 ```
-Property. Defines the rotation of an object in respect to its own axes. The value of `spin` is either an angle or an array of up to three angles [`spinH`, `spinV`, `spinT`]. All angles are measured in degrees.
+Property. Defines the rotation of an object in respect to its own axes. The value of `spin` is either an angle or an array of up to four angles [`spinH`, `spinV`, `spinT`, `spinS`]. All angles are measured in degrees.
 
 ```html
 HTML:
@@ -370,28 +370,29 @@ a.spin = [45,90,180];
 ```
 
 
-The spin is independent on the orientation of [the coordinate system](#coordinate-system). However, due to the default orientation of flat and non-flat objects, orientation along coordinate system axes differ. For example, if a square has a spin [&alpha;, &beta;, &gamma;], a pyramid on that square should have spin [&alpha;, &beta;+90, &gamma;].
+The spin is independent on the orientation of [the coordinate system](#coordinate-system). However, due to the default orientation of flat and non-flat objects, orientation along coordinate system axes differ. For example, if a square has a spin [&alpha;, &beta;, &gamma;, 0], a pyramid on that square should have spin [&alpha;, &beta;+90, &gamma;, 0].
 
 [<kbd><img src="../examples/snapshots/spin.jpg" width="300"></kbd>](../examples/spin.html)
 [<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="300"></kbd>](../examples/spin-orientation.html)
 
 
-#### spinH, spinV, spinT
+#### spinH, spinV, spinT, spinS
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 spinH="𝘴𝘱𝘪𝘯𝘏" spinV="𝘴𝘱𝘪𝘯𝘝" spinT="𝘴𝘱𝘪𝘯𝘛">
+<𝑜𝑏𝑗𝑒𝑐𝑡 spinH="𝘴𝘱𝘪𝘯𝘏" spinV="𝘴𝘱𝘪𝘯𝘝" spinT="𝘴𝘱𝘪𝘯𝘛" spinS="𝑠𝑝𝑖𝑛𝑆">
 ```
 ```js
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinH = 𝘴𝘱𝘪𝘯𝘏;
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinV = 𝘴𝘱𝘪𝘯𝘝;
 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinT = 𝘴𝘱𝘪𝘯𝘛;
+𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinS = 𝘴𝘱𝘪𝘯S;
 ```
 Properties. The individual rotation angles of an object. These properties provide an alternative access to object `spin`. The order of application of rotation is fixed and does not depend on the order of setting individual angles.
 
 ```html
 HTML:
-<cube spinH="45" spinV="90" spinT="180">
+<cube spinH="45" spinV="90" spinT="180" spinS="30">
 ```
 ```js
 JS:
@@ -399,6 +400,7 @@ a = cube( );
 a.spinH = 45;
 a.spinV = 90;
 a.spinT = 180;
+a.spinS = 30;
 ```
 
 [<kbd><img src="../examples/snapshots/spin-angles.jpg" width="300"></kbd>](../examples/spin-angles.html)
@@ -696,7 +698,7 @@ When materials and properties are set via `threejs`, they may interfere with Sui
 | Three.js property | Interfering Suica properties |
 |---|---|
 | `threejs.position` | [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z) |
-| `threejs.rotation` | [`spin`](#spin), [`spinH`](#spinh-spinv-spint), [`spinV`](#spinh-spinv-spint), [`spinT`](#spinh-spinv-spint) |
+| `threejs.rotation` | [`spin`](#spin), [`spinH`](#spinh-spinv-spint-spins), [`spinV`](#spinh-spinv-spint-spins), [`spinT`](#spinh-spinv-spint-spins), [`spinS`](#spinh-spinv-spint-spins) |
 | `threejs.scale` | [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth) |
 | `threejs.material.color` | [`color`](#color) |
 | `threejs.material.map` | [`image`](#image), [`images`](#images) |

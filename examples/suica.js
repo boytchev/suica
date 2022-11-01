@@ -1123,7 +1123,7 @@ if(parseOptions.widthHeight)
 if(parseOptions.depth)
 {if(elem.hasAttribute('depth'))object.depth=Number(elem.getAttribute('depth'));}
 if(parseOptions.spin)
-{if(elem.hasAttribute('spin'))object.spin=elem.getAttribute('spin');if(elem.hasAttribute('spinH'))object.spinH=elem.getAttribute('spinH');if(elem.hasAttribute('spinV'))object.spinV=elem.getAttribute('spinV');if(elem.hasAttribute('spinT'))object.spinT=elem.getAttribute('spinT');}
+{if(elem.hasAttribute('spin'))object.spin=elem.getAttribute('spin');if(elem.hasAttribute('spinH'))object.spinH=elem.getAttribute('spinH');if(elem.hasAttribute('spinV'))object.spinV=elem.getAttribute('spinV');if(elem.hasAttribute('spinT'))object.spinT=elem.getAttribute('spinT');if(elem.hasAttribute('spinS'))object.spinS=elem.getAttribute('spinS');}
 if(parseOptions.wireframe)
 {if(elem.hasAttribute('wireframe'))object.wireframe=['','true','yes','1'].indexOf(elem.getAttribute('wireframe').toLowerCase())>=0;}
 if(parseOptions.visible)
@@ -1325,7 +1325,7 @@ window.shape=function(...params)
 ﻿
 class Mesh
 {static id=0;constructor(suica,solidMesh,frameMesh)
-{this.id='Object'+(++Mesh.id);this.suica=suica;this.solidMesh=solidMesh;this.frameMesh=frameMesh;this.threejs=solidMesh;this.threejs.suicaObject=this;this.isWireframe=false;this.meshSize=[null,null,null];this.meshSpin=[0,0,0];this.meshImages=1;suica.scene.add(solidMesh);window.its=this;}
+{this.id='Object'+(++Mesh.id);this.suica=suica;this.solidMesh=solidMesh;this.frameMesh=frameMesh;this.threejs=solidMesh;this.threejs.suicaObject=this;this.isWireframe=false;this.meshSize=[null,null,null];this.meshSpin=[0,0,0,0];this.meshImages=1;suica.scene.add(solidMesh);window.its=this;}
 static createMaterials()
 {var CANVAS_SIZE=128;var canvas=document.createElement('canvas');canvas.width=CANVAS_SIZE;canvas.height=CANVAS_SIZE;var context=canvas.getContext('2d');context.fillStyle='white';var gradient=context.createRadialGradient(CANVAS_SIZE/2,CANVAS_SIZE/2,CANVAS_SIZE/2-5,CANVAS_SIZE/2,CANVAS_SIZE/2,CANVAS_SIZE/2);gradient.addColorStop(0,'white');gradient.addColorStop(1,'rgba(0,0,0,0)');context.fillStyle=gradient;context.beginPath();context.arc(CANVAS_SIZE/2,CANVAS_SIZE/2,CANVAS_SIZE/2-2,0,2*Math.PI);context.fill();Mesh.pointMaterial=new THREE.PointsMaterial({color:'white',size:5,sizeAttenuation:true,map:new THREE.CanvasTexture(canvas),transparent:true,alphaTest:0.1,});Mesh.solidMaterial=new THREE.MeshStandardMaterial({color:'cornflowerblue',side:THREE.DoubleSide,});Mesh.flatMaterial=new THREE.MeshStandardMaterial({color:'cornflowerblue',side:THREE.DoubleSide,flatShading:true,});CANVAS_SIZE=4;var canvas2=document.createElement('canvas');canvas2.width=CANVAS_SIZE;canvas2.height=1;var context2=canvas2.getContext('2d');context2.fillStyle='white';context2.fillRect(0,0,canvas2.width,canvas2.height);Mesh.lineMaterial=new THREE.MeshBasicMaterial({color:'black',transparent:true,map:new THREE.CanvasTexture(canvas2),});Mesh.lineMaterial.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',`#ifdef USE_MAP
      vec4 texelColor = texture2D( map, vUv );
@@ -1422,7 +1422,7 @@ style(properties)
 updateOrientation()
 {var spin=this.meshSpin;if(!spin)return;var flip=1;switch(this.suica.orientation)
 {case Suica.ORIENTATIONS.XZY:flip=-1;break;case Suica.ORIENTATIONS.YXZ:flip=-1;break;case Suica.ORIENTATIONS.ZYX:flip=-1;break;};this.threejs.rotation.set(0,0,0);if(Array.isArray(spin))
-{if(spin[0])this.threejs.rotateOnAxis(this.suica.orientation.UP,radians(flip*spin[0]));if(spin[1])this.threejs.rotateOnAxis(this.suica.orientation.RIGHT,radians(flip*spin[1]));if(spin[2])this.threejs.rotateOnAxis(this.suica.orientation.UP,radians(flip*spin[2]));}
+{if(spin[0])this.threejs.rotateOnAxis(this.suica.orientation.UP,radians(flip*spin[0]));if(spin[1])this.threejs.rotateOnAxis(this.suica.orientation.RIGHT,radians(flip*spin[1]));if(spin[2])this.threejs.rotateOnAxis(this.suica.orientation.UP,radians(flip*spin[2]));if(spin[3])this.threejs.rotateOnAxis(this.suica.orientation.FORWARD,radians(flip*spin[3]));}
 else
 {this.threejs.rotateOnAxis(this.suica.orientation.UP,radians(flip*spin));}}
 get spin()
@@ -1441,6 +1441,10 @@ get spinT()
 {return this.meshSpin[2];}
 set spinT(spin)
 {this.meshSpin[2]=Number(spin);this.updateOrientation();}
+get spinS()
+{return this.meshSpin[3];}
+set spinS(spin)
+{this.meshSpin[3]=Number(spin);this.updateOrientation();}
 get visible()
 {return this.threejs.visible;}
 set visible(visible)

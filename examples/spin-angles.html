@@ -19,12 +19,12 @@
 <body>
 
 	<h1>Spin angles</h1>
-	<p>Demonstrating <code>spinH</code>, <code>spinV</code> and <code>spinT</code>.</p>
+	<p>Demonstrating <code>spinH</code>, <code>spinV</code> and <code>spinS</code>.</p>
 
 	<suica onTime="onTime">
 		<cube x="-32" size="20" color="peachpuff">
 		<cube x="0" size="20" color="gray">
-		<cube x="32" size="20" color="lightsalmon" spinV="90">
+		<cube x="32" size="20" color="lightsalmon">
 	</suica>
 
 	<script>
@@ -34,7 +34,7 @@
 		{
 			pyramids[0].spinH = 100*t;
 			pyramids[1].spinV = 100*t;
-			pyramids[2].spinT = 100*t;
+			pyramids[2].spinS = 100*t;
 		}
 	</script>
 </body>

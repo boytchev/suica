@@ -34,7 +34,7 @@ class Mesh
 		
 		// [width, height, depth]
 		this.meshSize = [null, null, null];
-		this.meshSpin = [0, 0, 0];
+		this.meshSpin = [0, 0, 0, 0];
 		this.meshImages = 1;
 
 		suica.scene.add( solidMesh );
@@ -496,6 +496,7 @@ class Mesh
 			if( spin[0] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[0]) );
 			if( spin[1] ) this.threejs.rotateOnAxis( this.suica.orientation.RIGHT, radians(flip*spin[1]) );
 			if( spin[2] ) this.threejs.rotateOnAxis( this.suica.orientation.UP, radians(flip*spin[2]) );
+			if( spin[3] ) this.threejs.rotateOnAxis( this.suica.orientation.FORWARD, radians(flip*spin[3]) );
 		}
 		else
 		{
@@ -550,6 +551,18 @@ class Mesh
 	set spinT( spin )
 	{
 		this.meshSpin[2] = Number( spin );
+		this.updateOrientation();
+	}
+	
+
+	get spinS( )
+	{
+		return this.meshSpin[3];
+	}
+
+	set spinS( spin )
+	{
+		this.meshSpin[3] = Number( spin );
 		this.updateOrientation();
 	}
 	
