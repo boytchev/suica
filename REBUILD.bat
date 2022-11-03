@@ -51,9 +51,26 @@ REM		5. the text EF BB BF collapses into invisible
 REM			characters alternative: the same chars are
 REM			between these quotes:    "﻿"
 
+echo ﻿// Suica 2.0 >bin\suica.js
+
+REM Get Suica build number, build time and build date
+
+for /f "tokens=1-3 delims=/-" %%a in ('date /t') do (set SUICA_DATE=%%a-%%b-%%c)
+for /f "tokens=1-2 delims=/:" %%a in ('time /t') do (set SUICA_TIME=%%a:%%b)
+(set /P SUICA_BUILD=<BUILD.NUMBER)2>nul || set SUICA_BUILD=0
+set /A SUICA_BUILD+=1
+echo:%SUICA_BUILD%>BUILD.NUMBER
+
+REM Create JavaScript variables for Suica version and date
+
+echo SUICA_VERSION = '2.0.%SUICA_BUILD%'; >>bin\suica.js
+echo SUICA_DATE = '%SUICA_DATE%%SUICA_TIME%'; >>bin\suica.js
+
+REM Minify Suica code and append it to suica.js
+
 copy /b misc\threejs\__min__+misc\csg\__min__+misc\CCapture\__min__+src\__all__ __all__
-echo ﻿ // Suica 2.0 >bin\suica.js
 misc\jsmin\jsmin <__all__ >>bin\suica.js
+
 copy bin\suica.js examples
 
 
