@@ -22,6 +22,7 @@ tag: userguide suica objects properties drawings events
 	- <small>[Canvases](#canvses): [`fullScreen`](#fullscreen), [`fullWindow`](#fullwindow)</small>
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
+	- <small>[Constants](#constants): [`SUICA_VERSION`](#suica_version), [`SUICA_DATE`](#suica_date)</small>
 	- <small>[General functions](#general-functions): [`radians`](#radians), [`degrees`](#degrees)</small>
 	- <small>[Random functions](#random-functions): [`random`](#random), [`randomIn`](#randomin), [`randomOn`](#randomon)</small>
 	- <small>[Video capturing](#video-capturing): [`capture`](#capture)</small>
@@ -638,6 +639,31 @@ vr( );
 
 
 
+
+
+
+
+
+
+
+## Constants
+
+#### SUICA_VERSION
+```js
+JS:
+SUICA_VERSION
+```
+Constant. A string formatted as *major.minor.build*, e.g. `2.0.5`:
+- *major* is the major Suica version (currently it is 2),
+- *minor* is the minor Suica version (currently it is 0),
+- *build* is the build number, it is incremented whenever a new `suica.js` is generated.
+
+#### SUICA_DATE
+```js
+JS:
+SUICA_DATE
+```
+Constant. A string with the date and time of generating `suica.js`, e.g. `03-Nov-22 21:16`.
 
 
 
