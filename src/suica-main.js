@@ -1,6 +1,6 @@
 ﻿//
 // Suica 2.0
-// CC-3.0-SA-NC
+// CC-3.0-BY-SA-NC
 //
 //===================================================
 
@@ -17,7 +17,7 @@ if( TEST_MODE )
 else
 	console.log(`(\\/)
 ( ..)
-c(”)(”)		 Suica 2.0
+c(”)(”)		 Suica ${SUICA_VERSION}
 `);
 
 
