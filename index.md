@@ -6,7 +6,7 @@ tag:
 <br>
 ...as simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 
-
+<table><tr><td>
 ```html
 <!DOCTYPE html>
 
@@ -17,13 +17,14 @@ tag:
     <cube>
 </suica>
 ```
-
+</td><td>
 <script src="https://boytchev.github.io/suica/bin/suica.js"></script>
 
 <suica>
     <demo>
     <cube>
 </suica>
+</td></tr></table>
 
 [**Suica.js**](https://github.com/boytchev/suica) is a library for easy
 programming of mobile 3D graphics in JavaScript. Suica 2.0, which is currently
