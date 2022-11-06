@@ -18,7 +18,7 @@ tag:
 </suica>
 ```
 
-<script src="suica.js"></script>
+<script src="https://boytchev.github.io/suica/bin/suica.js"></script>
 
 <suica>
     <demo>
