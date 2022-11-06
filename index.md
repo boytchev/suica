@@ -6,11 +6,7 @@ tag:
 <br>
 ...as simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 
-<script src="https://boytchev.github.io/suica/bin/suica.js"></script>
-<suica width="200" height="150" style="float:right;">
-    <demo>
-    <cube>
-</suica>
+<iframe src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
 
 ```html
 <!DOCTYPE html>
