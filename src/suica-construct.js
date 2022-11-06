@@ -17,6 +17,16 @@ class Construct extends Mesh
 		suica.parser?.parseTags();
 		suica.debugCall( 'construct', expression, size, color );
 
+		// expression can be:
+		//		string				-> references global variables
+		// 		{src:string, ...}	-> object with expression in src, references object's variables
+		var scope = {};
+		if( expression.src )
+		{
+			scope = expression;
+			expression = expression.src;
+		}
+		
 		var p = new THREE.Mesh();
 		
 		if( expression )
@@ -96,7 +106,13 @@ class Construct extends Mesh
 						stack.push( csg.subtract([p,q]).toMesh() );
 						break;
 					default:
-						stack.push( Suica.evaluate(token).threejs );
+					{
+						var object = scope[token] || Suica.evaluate(token);
+						if( object.threejs )
+							stack.push( object.threejs );
+						else
+							throw `Error: cannot retrieve a 3D value from ${token}`;
+					}
 				}
 			
 			p = stack.pop();

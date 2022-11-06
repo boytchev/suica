@@ -6,6 +6,12 @@
 
 document.write( '<script src="misc/threejs/__min__"></script>' );
 
+document.write( '<script src="misc/csg/BSPNode.js"></script>' );
+document.write( '<script src="misc/csg/CSG.js"></script>' );
+document.write( '<script src="misc/csg/CSGCuttingPlane.js"></script>' );
+document.write( '<script src="misc/csg/CSGPolygon.js"></script>' );
+document.write( '<script src="misc/csg/CSGVertex.js"></script>' );
+
 document.write( '<script src="src/suica-vr.js"></script>' );
 document.write( '<script src="src/suica-parser.js"></script>' );
 document.write( '<script src="src/suica-drawing.js"></script>' );

@@ -25,6 +25,7 @@ var cases = [
 'construct-expression', 
 'construct-grooves', 
 'construct-intersect', 
+'construct-local-expression', 
 'construct-subtract', 
 'construct-union', 
 'convex-brick-wall', 

@@ -825,6 +825,7 @@ HTML:
 ```js
 JS:
 𝑜𝑏𝑗𝑒𝑐𝑡 = construct( 𝘦𝘹𝘱𝘳𝘦𝘴𝘴𝘪𝘰𝘯, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+𝑜𝑏𝑗𝑒𝑐𝑡 = construct( {src:𝘦𝘹𝘱𝘳𝘦𝘴𝘴𝘪𝘰𝘯, ...}, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
 ```
 Object. Constructs an object with [Constructive Solid Geometry (CSG)](https://en.wikipedia.org/wiki/Constructive_solid_geometry) operations. The `src` parameter is a CSG expression. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<construct>` tag. The `size` of a model is the scale factor, which is multiplied with the actual size of the model.
 
@@ -854,7 +855,7 @@ construct( 'box-ball' );
 [<kbd><img src="../examples/snapshots/construct-union.jpg" width="300"></kbd>](../examples/construct-union.html)
 [<kbd><img src="../examples/snapshots/construct-subtract.jpg" width="300"></kbd>](../examples/construct-subtract.html)
 [<kbd><img src="../examples/snapshots/construct-intersect.jpg" width="300"></kbd>](../examples/construct-intersect.html)
-[<kbd><img src="../examples/snapshots/construct-expression.jpg" width="300"></kbd>](../examples/construct-subtract.html)
+[<kbd><img src="../examples/snapshots/construct-expression.jpg" width="300"></kbd>](../examples/construct-local-expression.html)
 
 Suica CSG uses experimental [CSG library](https://github.com/looeee/threejs-csg) and have some limitations:
 - CSG operations are not fast. Round objects, like spheres, are processed very slow. A general advice is to build offline the object once, save it as GLB file with [`model.save`](#model-save) and then use [`model`](#model) to load it online.
@@ -865,6 +866,14 @@ The next example carves 10 grooves on a cube. When the grooves are 20, the const
 [<kbd><img src="../examples/snapshots/construct-grooves.jpg" width="300"></kbd>](../examples/construct-grooves.html)
 [<kbd><img src="../examples/snapshots/construct-clone.jpg" width="300"></kbd>](../examples/construct-clone.html)
 
+Due to the nature of JavaScript object names in the *expression* must be global objects. If local objects are used, then the expression and the local objects are provided as the first parmeter of `construct`. In the following code the expression `a-b-c` uses the global object `a` and the local objects `b` and `c`:
+
+```js
+JS:
+construct( {b:objb, c:objc, src:'a-b-c'} );
+```
+
+[<kbd><img src="../examples/snapshots/construct-local-expression.jpg" width="300"></kbd>](../examples/construct-local-expression.html)
 
 
 #### text3d

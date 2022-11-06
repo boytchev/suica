@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+	</suica>
+	
+	<script>
+		var a = sphere( [0,0,0], 60, 'lightgray' );
+			a.visible = false;
+		
+		function jointFrame( )
+		{
+			var b = cube( [0,0,0], [100,40,10], 'dimgray' );
+				b.visible = false;
+				
+			var c = cube( [0,0,0], [40,10,100], 'dimgray' );
+				c.visible = false;
+
+			construct( {b:b, c:c, src:'a-b-c'} );
+		}
+		
+		jointFrame( );
+	</script>
+</body>
+</html>

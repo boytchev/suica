@@ -134,6 +134,7 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/construct-expression.jpg" width="275"></kbd>](../examples/construct-expression.html)
 [<kbd><img src="../examples/snapshots/construct-grooves.jpg" width="275"></kbd>](../examples/construct-grooves.html)
 [<kbd><img src="../examples/snapshots/construct-clone.jpg" width="275"></kbd>](../examples/construct-clone.html)
+[<kbd><img src="../examples/snapshots/construct-local-expression.jpg" width="275"></kbd>](../examples/construct-local-expression.html)
 [<kbd><img src="../examples/snapshots/text3d.jpg" width="275"></kbd>](../examples/text3d.html)
 [<kbd><img src="../examples/snapshots/text3d-mandala.jpg" width="275"></kbd>](../examples/text3d-mandala.html)
 [<kbd><img src="../examples/snapshots/text3d-dynamic.jpg" width="275"></kbd>](../examples/text3d-dynamic.html)

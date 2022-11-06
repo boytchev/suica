@@ -9,6 +9,8 @@
 const DEBUG_CALLS = false;
 const DEBUG_EVENTS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
+if( typeof SUICA_VERSION == 'undefined' )
+	SUICA_VERSION = '2.0.local';
 
 
 // show suica version
