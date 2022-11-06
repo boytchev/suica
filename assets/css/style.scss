@@ -38,11 +38,17 @@ h2.project-tagline {
 	color: white;
 }
 
+h1.project-name {
+	margin-bottom: 0 !important;
+	padding-bottom: 0 !important;
+	border: none !important;
+}
+
 h2.project-tagline {
 	margin-top: 0 !important;
 	padding-top: 0 !important;
-	margin-top: 0 !important;
-	padding-top: 0.5em !important;
+	margin-bottom: 0 !important;
+	padding-bottom: 0.5em !important;
 }
 
 /* breadcrumbs */
@@ -56,6 +62,7 @@ h5 {
 
 // buttons
 .btn {
-	padding: 0.1em 1em;
+	border-radius: 0.1em;
+	padding: 0.2em 1em;
 	margin: 0.5em;
 }
