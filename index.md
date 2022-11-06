@@ -1,5 +1,10 @@
-&nbsp;
-As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
+---
+title: Suica
+description: Mobile 3D made simple ...
+tag: home userguidecheatsheet github
+---
+<br>
+...as simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 
 
 ```html
