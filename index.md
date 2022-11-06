@@ -6,13 +6,6 @@ tag:
 <br>
 ...as simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 
-<table>
-<tr>
-<td> Code </td> <td> Result </td>
-</tr>
-<tr>
-<td>
-
 ```html
 <!DOCTYPE html>
 
@@ -23,6 +16,22 @@ tag:
     <cube>
 </suica>
 ```
+
+<table>
+<tr>
+<td> Code </td> <td> Result </td>
+</tr>
+<tr>
+<td>
+
+`<!DOCTYPE html>`<br>
+<br>
+`<script src="suica.js"></script>`<br>
+<br>
+`<suica>`<br>
+`    <demo>`<br>
+`    <cube>`<br>
+`</suica>`<br>
 
 </td>
 <td>
