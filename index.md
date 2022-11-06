@@ -6,7 +6,7 @@ tag:
 <br>
 ...as simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 
-<iframe src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
+<iframe width="600" height="400" style="border:none; float:left;" src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
 
 ```html
 <!DOCTYPE html>
