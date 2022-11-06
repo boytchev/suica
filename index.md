@@ -17,31 +17,7 @@ tag:
 </suica>
 ```
 
-<table>
-<tr>
-<td> Code </td> <td> Result </td>
-</tr>
-<tr>
-<td>
-
-`<!DOCTYPE html>`<br>
-<br>
-`<script src="suica.js"></script>`<br>
-<br>
-`<suica>`<br>
-`    <demo>`<br>
-`    <cube>`<br>
-`</suica>`<br>
-
-</td>
-<td>
-
-<iframe width="620" height="420" style="transform: scale(0.75); border:none;" src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
-
-</td>
-</tr>
-</table>
-
+<iframe width="620" height="420" style="transform: scale(0.75); border:none; position: absolute; top: -10em; left: 20em;" src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
 
 [**Suica.js**](https://github.com/boytchev/suica) is a library for easy
 programming of mobile 3D graphics in JavaScript. Suica 2.0, which is currently
