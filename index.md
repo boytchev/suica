@@ -11,6 +11,7 @@ tag:
 <td> Code </td> <td> Result </td>
 </tr>
 <tr>
+<td>
 
 ```html
 <!DOCTYPE html>
