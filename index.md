@@ -18,6 +18,12 @@ tag:
 </suica>
 ```
 
+<script src="suica.js"></script>
+
+<suica>
+    <demo>
+    <cube>
+</suica>
 
 [**Suica.js**](https://github.com/boytchev/suica) is a library for easy
 programming of mobile 3D graphics in JavaScript. Suica 2.0, which is currently
