@@ -6,7 +6,11 @@ tag:
 <br>
 ...as simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 
-<iframe width="600" height="400" style="transform: scale(0.5); border:none; float:left;" src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
+<table>
+<tr>
+<td> Code </td> <td> Result </td>
+</tr>
+<tr>
 
 ```html
 <!DOCTYPE html>
@@ -19,7 +23,15 @@ tag:
 </suica>
 ```
 
-<div style="float:clear;">&nbsp;</div>
+</td>
+<td>
+
+<iframe width="620" height="420" style="transform: scale(0.75); border:none;" src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
+
+</td>
+</tr>
+</table>
+
 
 [**Suica.js**](https://github.com/boytchev/suica) is a library for easy
 programming of mobile 3D graphics in JavaScript. Suica 2.0, which is currently
