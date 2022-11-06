@@ -1,12 +1,12 @@
 ---
 title: Suica
-description: Mobile 3D made simple ...
+description: 
 tag:
 ---
-<br>
-...as simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
 
-<iframe width="620" height="420" style="transform: scale(0.75); border:none; float: left;" src="https://boytchev.github.io/suica/examples/minimal-example.html" title="Suica minimal example - A rotating cube"></iframe>
+<br>
+Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io/suica/examples/minimal-example.html):
+
 
 ```html
 <!DOCTYPE html>
