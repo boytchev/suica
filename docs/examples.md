@@ -39,6 +39,9 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/camera-anaglyph.jpg" width="275"></kbd>](../examples/camera-anaglyph.html)
 [<kbd><img src="../examples/snapshots/camera-vr.jpg" width="275"></kbd>](../examples/camera-vr.html)
 
+## [Functions](suica.md#lerp)
+[<kbd><img src="../examples/snapshots/lerp.jpg" width="275"></kbd>](../examples/lerp.html)
+
 
 ## [Video capturing](suica.md#video-capturing)
 

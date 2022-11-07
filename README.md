@@ -14,4 +14,4 @@ Mobile 3D made simple. As simple, as this [live demo](https://boytchev.github.io
 </suica>
 ```
 
-Go to [**boytchev.github.io/suica/**](https://boytchev.github.io/suica/index.html) for more details.
+Go to [**boytchev.github.io/suica**](https://boytchev.github.io/suica/index.html) for more details.

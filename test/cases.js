@@ -86,6 +86,7 @@ var cases = [
 'image-file', 
 'images', 
 'its', 
+'lerp', 
 'line', 
 'lookat-demo', 
 'lookat-navigation-vr', 

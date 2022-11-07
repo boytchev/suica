@@ -23,7 +23,7 @@ tag: userguide suica objects properties drawings events
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
 - [Additional commands](#additional-commands)
 	- <small>[Constants](#constants): [`SUICA_VERSION`](#suica_version), [`SUICA_DATE`](#suica_date)</small>
-	- <small>[General functions](#general-functions): [`radians`](#radians), [`degrees`](#degrees)</small>
+	- <small>[General functions](#general-functions): [`radians`](#radians), [`degrees`](#degrees), [`lerp`](#degrees)</small>
 	- <small>[Random functions](#random-functions): [`random`](#random), [`randomIn`](#randomin), [`randomOn`](#randomon)</small>
 	- <small>[Video capturing](#video-capturing): [`capture`](#capture)</small>
 - [Questions and answers](#questions-and-answers)
@@ -697,6 +697,27 @@ Function. Converts radians into degrees.
 JS:
 deg = degrees( 3.14159 );
 ```
+
+
+#### lerp
+```js
+JS:
+lerp( 𝑓𝑖𝑟𝑠𝑡, 𝑠𝑒𝑐𝑜𝑛𝑑, 𝑘 );
+```
+Function. Calculates lineter interpolation between two positions `first` position
+or object and `second` position or object. The coefficient of interpolation is `k`.
+When `k` is 0, the first position is returned, when `k` is 1, the second position
+is returned. When `k` is between 0 and 1 an intermediate position is returned.
+
+
+```js
+JS:
+mid = lerp( sphereA, sphereB, 0.5 );
+```
+
+[<kbd><img src="../examples/snapshots/lerp.jpg" width="300"></kbd>](../examples/lerp.html)
+
+
 
 ## Random functions
 

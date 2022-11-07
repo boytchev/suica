@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica ontime="onTime">
+		<cube id="a" x="-30" size="20" color="dimgray">
+		<cube id="b" x="30" size="20" color="dimgray">
+
+		<sphere id="c"  size="25">
+	</suica>
+	
+	<script>
+		function onTime( t )
+		{
+			var k = 0.5+0.5*Math.sin( 2*t );
+			c.center = lerp( a, b, k );
+		}
+	</script>
+</body>
+</html>

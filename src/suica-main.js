@@ -1390,6 +1390,24 @@ window.degrees = function( radians )
 	return radians * 180/Math.PI;
 }
 
+window.lerp = function( a, b, k )
+{
+	if( a instanceof Mesh )
+		a = a.center;
+
+	if( b instanceof Mesh )
+		b = b.center;
+	
+	return [ a[0]*(1-k)+k*b[0], a[1]*(1-k)+k*b[1], a[2]*(1-k)+k*b[2] ];
+}
+
+window.clamp = function( x, a, b )
+{
+	if( x < a ) return a;
+	if( x > b ) return b;
+	return x;
+}
+
 window.clone = function( object )
 {
 	if( object.clone )
