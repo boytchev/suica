@@ -21,6 +21,8 @@ const COLOR_DIFF = 0.05;
 var timeout = -1;
 var startTime = Date.now();
 
+var sumMatch = 0;
+
 var resultReady, targetReady, canvas, testName;
 
 
@@ -111,6 +113,8 @@ function startNextTest( )
 {
 	clearTimeout( timeout );
 
+	var oldTestNo = document.getElementById( 'progress' ).value;
+	
 	document.getElementById( 'progress' ).value++;
 	
 	var elapsedTime = (Date.now()-startTime)/1000,
@@ -120,7 +124,21 @@ function startNextTest( )
 		min = Math.floor(remainingTime/60),
 		sec = Math.round(remainingTime-60*min);
 	
-	document.getElementById( 'timer' ).innerHTML = `Testing ${testNo}/${testAll} (${min}:${sec<10?'0'+sec:sec})`;
+	var currentReport;
+	
+	if( oldTestNo == testAll )
+	{
+		// end of tests
+		currentReport = `Tested ${testAll} &ndash; ${(sumMatch/testAll).toFixed(1)}%`;
+	}
+	else
+	{
+		// going on tests
+		currentReport = `Testing ${testNo}/${testAll} (${min}:${sec<10?'0'+sec:sec})`;
+		if( oldTestNo > 0 )
+			currentReport += ` &ndash; ${(sumMatch/oldTestNo).toFixed(1)}%`;
+	}
+	document.getElementById( 'timer' ).innerHTML = currentReport;
 
 	// more tests?
 	if( cases.length )
@@ -154,7 +172,7 @@ function startNextTest( )
 		document.getElementById( 'sandbox' ).style.display = 'none';
 		document.getElementById( 'result-image' ).style.display = 'none';
 		document.getElementById( 'target-image' ).style.display = 'none';
-		document.getElementById( 'timer' ).style.display = 'none';
+		//document.getElementById( 'timer' ).style.display = 'none';
 		document.getElementById( 'progress' ).style.display = 'none';
 		log( `end` );
 	}
@@ -242,6 +260,9 @@ function compareImages( )
 	
 	//var match = Math.round(100-100*pnts/totals);
 	var match = Math.round( 100 - 100*pnts/totals );
+	
+	sumMatch += 100 - 100*pnts/totals;
+	
 	//	log( `match ${match}%;` );
 	console.log( `::> match ${match}%;` );
 	//log( `match ${match}%; difference in ${pnts} pixels` );
@@ -284,9 +305,10 @@ function compareImages( )
 		// var resultContext = resultCanvas.getContext( '2d' );
 		// resultContext.drawImage( document.getElementById('target-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
 		// document.getElementById( 'log' ).appendChild( resultCanvas );
+
+		log('<br>');
 	}
 	
-	log('<br>');
 
 	setTimeout( startNextTest, 100 );
 }
