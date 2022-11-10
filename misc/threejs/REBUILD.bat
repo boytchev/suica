@@ -15,6 +15,7 @@
 
 @copy %THREE%\build\three.min.js .
 @copy %THREE%\examples\js\controls\OrbitControls.js .
+@copy %THREE%\examples\js\controls\TrackballControls.js .
 @copy %THREE%\examples\js\effects\AnaglyphEffect.js .
 @copy %THREE%\examples\js\effects\StereoEffect.js .
 @copy %THREE%\examples\js\geometries\ConvexGeometry.js .
