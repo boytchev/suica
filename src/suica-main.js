@@ -121,6 +121,7 @@ class Suica
 	static OXYZ = { COLOR: 'black', SIZE: 30 };
 	static DEMO = { DISTANCE: 100, ALTITUDE: 30, SPEED: 1 };
 	static ORBIT = { DISTANCE: 100, ALTITUDE: 30, SPEED: 0 };
+	static TRACKBALL = { DISTANCE: 100, ALTITUDE: 30 };
 	static BACKGROUND = 'whitesmoke';
 	static ANAGLYPH = { DISTANCE: 5 };
 	static STEREO = { DISTANCE: 1 };
@@ -239,7 +240,7 @@ class Suica
 		}
 		
 		// register some local methods as public global functions
-		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'surface','lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'extrude', 'model', 'construct', 'text3d', 'capture', 'orbit'] )
+		for( var methodName of ['cube', 'square', 'sphere', 'point', 'line', 'group', 'cylinder', 'prism', 'cone', 'pyramid', 'circle', 'polygon', 'tube', 'surface','lookAt', 'fullScreen', 'fullWindow', 'proactive', 'anaglyph', 'stereo', 'perspective', 'orthographic', 'lookAt', 'background', 'oxyz', 'demo', 'allObjects', 'convex', 'extrude', 'model', 'construct', 'text3d', 'capture', 'orbit', 'trackball'] )
 		{
 			Suica.register( this, methodName );
 		}
@@ -314,6 +315,11 @@ class Suica
 		var w = this.suicaTag.clientWidth,
 			h = this.suicaTag.clientHeight;
 			
+		if( this.controls instanceof THREE.TrackballControls )
+		{
+			this.controls.handleResize( );
+		}
+
 		if( this.camera instanceof THREE.PerspectiveCamera )
 		{
 			this.camera.aspect = w/h;
@@ -437,6 +443,13 @@ class Suica
 			that.light.position.multiply( that.orientation.SCALE );
 		}
 		
+		function adjustTrackballControls( )
+		{
+			that.controls.update( );
+			that.light.position.copy( that.camera.position );
+			that.light.position.multiply( that.orientation.SCALE );
+		}
+		
 		function adjustDemoViewPoint( time )
 		{
 			time *= that.demoViewPoint.speed;
@@ -551,9 +564,13 @@ class Suica
 			
 			//time=Math.PI/2;
 			
-			if( that.controls && that.controls.enabled )
+			if( that.controls.enabled )
 			{
-				adjustOrbitControls( );
+				if( that.controls instanceof THREE.OrbitControls )
+					adjustOrbitControls( );
+				else
+				if( that.controls instanceof THREE.TrackballControls )
+					adjustTrackballControls( );
 			}
 			else
 			if( that.demoViewPoint )
@@ -794,6 +811,53 @@ class Suica
 
 		return this.controls;
 	} // Suica.orbit
+
+	
+	
+	trackball( distance, altitude )
+	{
+		this.parser?.parseTags();
+		this.debugCall( 'trackball', ...arguments );
+		
+		this.camera.up.copy( this.orientation.UP );
+		//this.camera.position.set( ...this.orientation.LOOKAT.FROM );
+		
+		var d = Suica.parseNumber( distance, Suica.TRACKBALL.DISTANCE ),
+			a = Suica.parseNumber( altitude, Suica.TRACKBALL.ALTITUDE );
+			
+		switch( this.orientation )
+		{
+			case Suica.ORIENTATIONS.YXZ:
+					this.camera.position.set( a, 0, d );
+					break;
+			case Suica.ORIENTATIONS.ZYX:
+					this.camera.position.set( d, a, 0 );
+					break;
+			case Suica.ORIENTATIONS.XZY:
+					this.camera.position.set( 0, d, a );
+					break;
+
+			case Suica.ORIENTATIONS.ZXY:
+					this.camera.position.set( a, d, 0 );
+					break;
+			case Suica.ORIENTATIONS.XYZ:
+					this.camera.position.set( 0, a, d );
+					break;
+			case Suica.ORIENTATIONS.YZX:
+					this.camera.position.set( d, 0, a );
+					break;
+			default: throw 'error: unknown orientation';
+		}
+		
+		this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
+
+		this.controls.noPan = true;
+		this.controls.staticMoving = true;
+		
+//		this.controls.update( );
+
+		return this.controls;
+	} // Suica.trackball
 
 	
 	

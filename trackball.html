@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Orbit</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+	<h1>Trackball</h1>
+	<p>Trackball mode &ndash; manual rotation of the 3D scene.</p>
+	
+	<suica>
+		<trackball noPan="false">
+		<sphere size="80,4,4" color="black">
+		<sphere size="4,80,4" color="black">
+		<sphere size="4,4,80" color="black">
+	</suica>
+	
+	<script>
+		var colors = [ 'lightsalmon','linen','peachpuff','white','black','gray','dimgray'];
+		
+		for( var i=0; i<360; i+=5 )
+		{
+			cube( [35*Math.cos(radians(i)),0,35*Math.sin(radians(i))], 2, random(colors) );
+			its.spinH = -i;
+
+			cube( [its.x,its.z,its.y], 2, random(colors) );
+			its.spinH = 90;
+			its.spinV = -i;
+
+			cube( [its.z,its.x,its.y], 2, random(colors) );
+			its.spinH = 0;
+			its.spinV = i;
+		}
+	</script>
+</body>
+</html>

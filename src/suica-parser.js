@@ -162,6 +162,35 @@ class HTMLParser
 	} // HTMLParser.parseTagORBIT
 	
 	
+	// <trackball id="..." distance="..." altitude="...">
+	parseTagTRACKBALL( suica, elem )
+	{
+		var p = suica.trackball(
+			elem.getAttribute('distance'),
+			elem.getAttribute('altitude'),
+		);
+
+		// list of properties: https://threejs.org/docs/#examples/en/controls/TrackballControls
+		var numericProperties = [ 'dynamicDampingFactor', 'maxDistance', 'minDistance', 'panSpeed', 'rotateSpeed', 'zoomSpeed'  ];
+		
+		var name;
+		
+		for( name of numericProperties )
+			if( elem.hasAttribute(name) ) p[name] = Number(elem.getAttribute(name));
+
+		var booleanProperties = [ 'enabled', 'noPan', 'noRotate', 'noZoom', 'staticMoving' ];
+		
+		for( name of booleanProperties )
+			if( elem.hasAttribute(name) ) p[name] = Drawing.parseBool( elem, name, null, true ); 
+
+		suica.parserReadonly.parseAttributes( elem, p );
+
+		elem.suicaObject = p;
+		
+		return p;
+	} // HTMLParser.parseTagTRACKBALL
+	
+	
 	// <vr>
 	parseTagVR( suica, elem )
 	{

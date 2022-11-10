@@ -1,4 +1,4 @@
-Updating Three.js (current release r145):
+Updating Three.js (current release r146):
 
 
 1. Modify REBUILD.bat
