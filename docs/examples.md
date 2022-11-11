@@ -17,6 +17,7 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/demo.jpg" width="275"></kbd>](../examples/demo.html)
 [<kbd><img src="../examples/snapshots/orbit.jpg" width="275"></kbd>](../examples/orbit.html)
 [<kbd><img src="../examples/snapshots/orbit-orientation.jpg" width="275"></kbd>](../examples/orbit-orientation.html)
+[<kbd><img src="../examples/snapshots/trackball.jpg" width="275"></kbd>](../examples/trackball.html)
 [<kbd><img src="../examples/snapshots/lookat.jpg" width="275"></kbd>](../examples/lookat.html)
 [<kbd><img src="../examples/snapshots/lookat-demo.jpg" width="275"></kbd>](../examples/lookat-demo.html)
 [<kbd><img src="../examples/snapshots/lookat-navigation.jpg" width="275"></kbd>](../examples/lookat-navigation.html)

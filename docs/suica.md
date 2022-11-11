@@ -17,7 +17,7 @@ tag: userguide suica objects properties drawings events
 	- <small>[Creating scenes](#creating-scenes)</small>
 	- <small>[Creating animations](#creating-animations)</small>
 - [Viewing 3D](#viewing-3d)
-    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`orbit`](#orbit), [`lookAt`](#lookat)</small>
+    - <small>[View point](#view-point): [`oxyz`](#oxyz), [`demo`](#demo), [`orbit`](#orbit), [`trackball`](#trackball), [`lookAt`](#lookat)</small>
 	- <small>[Projections](#projections): [`perspective`](#perspective), [`orthographic`](#orthographic)</small>
 	- <small>[Canvases](#canvses): [`fullScreen`](#fullscreen), [`fullWindow`](#fullwindow)</small>
 	- <small>[Cameras](#cameras): [`stereo`](#stereo), [`anaglyph`](#anaglyph), [`vr`](#vr)</small>
@@ -380,6 +380,51 @@ HTML:
 ```js
 JS:
 a = orbit( 100 );
+a.maxDistance = 300;
+a.minDistance = 10;
+```
+
+
+
+
+#### trackball
+```html
+HTML:
+<trackball id="𝑜𝑏𝑗𝑒𝑐𝑡" distance="𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒" altitude="𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒" ...>
+```
+```js
+JS:
+𝑜𝑏𝑗𝑒𝑐𝑡 = trackball( 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒, 𝑎𝑙𝑡𝑖𝑡𝑢𝑑𝑒 );
+```
+Command and object. Turns on *trackball mode* &ndash; interactive rotation of the scene unrestricted by the axes. The parameters `distance` and `altitude` define the viewpoint position as distance from the origin of the coordinate system and altitude. By default, `distance` is 100 and `altitude` is 30. These parameters are not properties of `trackball`, i.e. they do not exist in the object.
+
+```html
+HTML:
+<trackball distance="100" altitude="30">
+```
+```js
+JS:
+trackball( 100, 30 );
+```
+
+| Interactivity | Mouse | Keys | Touch |
+|---|---|---|---|
+| orbiting | left button | | one-finger move |
+| zooming | middle button or mousewheel | | two-finger spread or squish |
+| panning | right button or left button + ctrl/alt/shiftKey | arrow keys | two-finger move |
+
+[<kbd><img src="../examples/snapshots/trackball.jpg" width="300"></kbd>](../examples/trackball.html)
+
+Although `trackball` is a command, it can be used as an object. In this case the object is not a Suica object, but an instance of Three.js's [`TrackballControls`](https://threejs.org/docs/#examples/en/controls/TrackballControls). When defined in HTML some of the properties are available as attributes (**zooming**: `maxDistance`, `minDistance`, `zoomSpeed`, `noZoom`; **rotating**: `rotateSpeed`, `noRotate`; **panning**: `panSpeed`, `noPan`, **general**: `enabled`, `dynamicDampingFactor`, `staticMoving`). Modification of properties can be done only in JavaScript.
+
+
+```html
+HTML:
+<trackball distance="100" maxDistance="300" minDistance="10">
+```
+```js
+JS:
+a = trackball( 100 );
 a.maxDistance = 300;
 a.minDistance = 10;
 ```
