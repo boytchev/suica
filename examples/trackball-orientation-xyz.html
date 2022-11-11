@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica orientation="xyz">
+		<oxyz>
+		<trackball altitude="20">
+		<cube size="10" color="peachpuff">
+		<point id="x" x="32" size="12" color="white">
+		<point id="y" y="32" size="12" color="white">
+		<point id="z" z="32" size="12" color="white">
+		<div>XYZ</div>
+	</suica>
+
+	<script>
+
+		var ix = drawing( 15 );
+			fillText( 0, 0, 'X', 'tomato', '20px Arial' );
+		
+		var iy = drawing( 15 );
+			fillText( 0, 0, 'Y', 'tomato', '20px Arial' );
+		
+		var iz = drawing( 15 );
+			fillText( 0, 0, 'Z', 'tomato', '20px Arial' );
+		
+		x.image = ix;
+		y.image = iy;
+		z.image = iz;
+		
+	</script>
+</body>
+</html>

@@ -564,13 +564,14 @@ class Suica
 			
 			//time=Math.PI/2;
 			
-			if( that.controls.enabled )
+			if( that.controls instanceof THREE.OrbitControls && that.controls.enabled )
 			{
-				if( that.controls instanceof THREE.OrbitControls )
-					adjustOrbitControls( );
-				else
-				if( that.controls instanceof THREE.TrackballControls )
-					adjustTrackballControls( );
+				adjustOrbitControls( );
+			}
+			else
+			if( that.controls instanceof THREE.TrackballControls && that.controls.enabled )
+			{
+				adjustTrackballControls( );
 			}
 			else
 			if( that.demoViewPoint )
