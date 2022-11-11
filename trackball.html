@@ -22,17 +22,15 @@
 	
 	<suica>
 		<trackball noPan="false">
-		<sphere size="80,4,4" color="black">
-		<sphere size="4,80,4" color="black">
-		<sphere size="4,4,80" color="black">
+		<sphere size="50" color="linen">
 	</suica>
 	
 	<script>
 		var colors = [ 'lightsalmon','linen','peachpuff','white','black','gray','dimgray'];
 		
-		for( var i=0; i<360; i+=5 )
+		for( var i=0; i<360; i+=12 )
 		{
-			cube( [35*Math.cos(radians(i)),0,35*Math.sin(radians(i))], 2, random(colors) );
+			cube( [30*Math.cos(radians(i)),0,30*Math.sin(radians(i))], [5,1,5], random(colors) );
 			its.spinH = -i;
 
 			cube( [its.x,its.z,its.y], 2, random(colors) );

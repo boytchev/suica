@@ -448,6 +448,7 @@ class Suica
 			that.controls.update( );
 			that.light.position.copy( that.camera.position );
 			that.light.position.multiply( that.orientation.SCALE );
+			that.camera.updateMatrixWorld();
 		}
 		
 		function adjustDemoViewPoint( time )
@@ -502,7 +503,6 @@ class Suica
 
 		function adjustViewPoint( )
 		{
-			
 			var up = [ ...that.viewPoint.up ],
 				from = [ ...that.viewPoint.from ],
 				to = [ ...that.viewPoint.to ];
@@ -852,7 +852,8 @@ class Suica
 		this.controls = new THREE.TrackballControls( this.camera, this.renderer.domElement );
 
 		this.controls.noPan = true;
-		this.controls.staticMoving = true;
+		this.controls.zoomSpeed = 1.5;
+		this.controls.staticMoving = false;
 		
 //		this.controls.update( );
 
