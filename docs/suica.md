@@ -407,11 +407,11 @@ JS:
 trackball( 100, 30 );
 ```
 
-| Interactivity | Mouse | Keys | Touch |
+| Interactivity | Mouse | Touch |
 |---|---|---|---|
-| orbiting | left button | | one-finger move |
-| zooming | middle button or mousewheel | | two-finger spread or squish |
-| panning | right button or left button + ctrl/alt/shiftKey | arrow keys | two-finger move |
+| rotating | left button | one-finger move |
+| zooming | middle button or mousewheel | two-finger spread or squish |
+| panning | right button | two-finger move |
 
 [<kbd><img src="../examples/snapshots/trackball.jpg" width="300"></kbd>](../examples/trackball.html)
 
