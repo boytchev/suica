@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Clamp</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Clamp</h1>
+	<p>Clamping a value to a range.</p>
+
+	<suica>
+		<demo altitude="0">
+	</suica>
+
+	<script>
+		function roundedSquare( u, n )
+		{
+			u = 2*Math.PI*u;
+			
+			var x = clamp( 6*Math.cos( u ), -n, n )
+				y = 6*Math.sin( u );
+			
+			return [x, y, 0 ];
+		}
+		
+		tube( [0,0,0], spline(roundedSquare, 4), 0.3, [100,6], 5, 'peachpuff' );
+		tube( [0,0,0], spline(roundedSquare, 5), 0.2, [100,6], 5, 'lightsalmon' );
+		tube( [0,0,0], spline(roundedSquare, 10), 0.13, [100,6], 5, 'dimgray' );
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo altitude="0">
+	</suica>
+
+	<script>
+		function roundedSquare( u, n )
+		{
+			u = 2*Math.PI*u;
+			
+			var x = clamp( 6*Math.cos( u ), -n, n )
+				y = 6*Math.sin( u );
+			
+			return [x, y, 0 ];
+		}
+		
+		tube( [0,0,0], spline(roundedSquare, 4), 0.3, [100,6], 5, 'peachpuff' );
+		tube( [0,0,0], spline(roundedSquare, 5), 0.2, [100,6], 5, 'lightsalmon' );
+		tube( [0,0,0], spline(roundedSquare, 10), 0.13, [100,6], 5, 'dimgray' );
+
+	</script>
+</body>
+</html>

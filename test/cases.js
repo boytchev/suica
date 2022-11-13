@@ -15,6 +15,7 @@ var cases = [
 'capture-webm', 
 'circle-ellipse', 
 'circle', 
+'clamp', 
 'clone-tag', 
 'clone', 
 'colors', 
