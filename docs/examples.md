@@ -167,6 +167,7 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/shape-and-drawing.jpg" width="275"></kbd>](../examples/shape-and-drawing.html)
 [<kbd><img src="../examples/snapshots/shape-arc.jpg" width="275"></kbd>](../examples/shape-arc.html)
 [<kbd><img src="../examples/snapshots/scorm.jpg" width="275"></kbd>](../examples/scorm.html)
+[<kbd><img src="../examples/snapshots/scorm-tag.jpg" width="275"></kbd>](../examples/scorm-tag.html)
 
 
 

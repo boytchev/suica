@@ -992,5 +992,25 @@ class HTMLParser
 	} // HTMLParser.parseTagCLEAR
 
 	
+	// <scorm name="...">
+	parseTagSCORM( suica, elem )
+	{
+		HTMLParser.parseTagSCORM( elem );
+	}
+	static parseTagSCORM( elem )
+	{
+		var name = elem.innerHTML,
+			value = '';
+		
+		if( scorm.api )
+		{
+			value = scorm[name] || scorm.getValue( name );
+		}
+		
+		elem.innerHTML = value;
+	} // HTMLParser.parseTagSCORM
+
 } // HTMLParser
 
+
+	

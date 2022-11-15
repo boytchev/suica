@@ -1739,6 +1739,8 @@ new MutationObserver( function( mutations )
 				}
 				if( childElem?.tagName=='SUICA' )
 					new Suica( childElem );
+				if( childElem?.tagName=='SCORM' )
+					HTMLParser.parseTagSCORM( childElem );
 			}
 			
 			if( parentElem.type == 'attributes' && parentElem.target.suicaObject )

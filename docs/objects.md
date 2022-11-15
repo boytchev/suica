@@ -1293,9 +1293,12 @@ When `vertices` is used on arc fragments they are split not into `count` but int
 
 **SCORM** stands for [Shareable Content Object Reference Model](https://en.wikipedia.org/wiki/Sharable_Content_Object_Reference_Model). This is a set of standards that define the structure of educational content that can be used in various [learning management systems](https://en.wikipedia.org/wiki/Learning_management_system) (LMS). SCORM modules are provided as ZIP files that contain lessons, quizzes, images and other teaching materials. 
 
-When Suica is used in a SCORM module, it can retrieve data about the student (e.g. id and name) and also set data (e.g. score). The following example runs Suica outside LSM, so SCORM data is not available.
+When Suica is used in a SCORM module, it can retrieve data about the student (e.g. id and name) and also set data (e.g. score). The following examples run Suica outside LSM, so SCORM data is not available.
 
 [<kbd><img src="../examples/snapshots/scorm.jpg" width="300"></kbd>](../examples/scorm.html)
+[<kbd><img src="../examples/snapshots/scorm-tag.jpg" width="300"></kbd>](../examples/scorm-tag.html)
+
+Generally, Suica supports SCORM through JavaScript. However, a minimal readonly functionality is available in HTML.
 
 More information about Suica SCORM modules will be available in [The collection of Suica SCORM modules](https://boytchev.github.io/scorm/).
 
@@ -1393,3 +1396,21 @@ Function `scorm.derandomize` is used to generate individual persistent sequence 
 The next example demonstrates the derandomization effect. The lower three rows of cubes are randomly colored at every execution. The upper three rows, although randomly coloured, will have the same colors every time.
 
 [<kbd><img src="../examples/snapshots/scorm-derandomize.jpg" width="300"></kbd>](../examples/scorm-derandomize.html)
+
+
+#### &lt;scorm&gt;
+```html
+HTML:
+<scorm>𝘯𝘢𝘮𝘦</scorm>;
+```
+Tag. Retrieves the value of SCORM property `name` and replaces the content of the `&lt;scorm&gt;` tag. If such property does not exist the content is cleared. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2). Adittionaly, `name` could be `studentId`, `studentName` or `score`.
+
+The following example retrieves the student id, which is stored in SCORM property `cmi.core.student_id`.
+
+```html
+HTML:
+<scorm>studentId</scorm>
+<scorm>cmi.core.student_id</scorm>
+```
+
+
