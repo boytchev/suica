@@ -1403,7 +1403,7 @@ The next example demonstrates the derandomization effect. The lower three rows o
 HTML:
 <scorm>𝘯𝘢𝘮𝘦</scorm>
 ```
-Tag. Retrieves the value of SCORM property `name` and replaces the content of the `&lt;scorm&gt;` tag. If such property does not exist the content is cleared. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2). Adittionaly, `name` could be `studentId`, `studentName` or `score`.
+Tag. Retrieves the value of SCORM property `name` and replaces the content of the `<scorm>` tag. If such property does not exist the content is cleared. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2). Adittionaly, `name` could be `studentId`, `studentName` or `score`.
 
 The following example retrieves the student id, which is stored in SCORM property `cmi.core.student_id`.
 
