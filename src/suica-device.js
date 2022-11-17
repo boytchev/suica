@@ -8,22 +8,26 @@
 class Device
 {
 	static _delta; // screen orientation
+	static _debug;
 	
 	constructor( )
 	{
 		if( screen.orientation )
 		{
+Device._debug = 'de1';
 			Device._delta = screen.orientation.angle;
 			screen.orientation.onchange = this.onOrientationChange;
 		}
 		else
 		if( window.orientation )
 		{
+Device._debug = 'de2';
 			Device._delta = window.orientation.angle;
 			window.orientation.onchange = this.onOrientationChange;
 		}
 		else
 		{
+Device._debug = 'de3';
 			document.addEventListener( 'orientationchange', this.onOrientationChange );
 		}
 		
@@ -34,6 +38,7 @@ class Device
 	onOrientationChange( event )
 	{
 		var angle;
+		element('info').innerHTML = event;
 		
 		if( event.target.screen )
 			angle = event.target.screen.orientation.angle;

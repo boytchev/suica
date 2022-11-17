@@ -35,13 +35,18 @@
 	<p>Retrieving mobile device orientation.</p>
 	
 	<suica ontime="tick">
-		<div>delta=<span id="delta">undefined</span></div>
+		<div>time=<span id="time">undefined</span><hr>delta=<span id="delta">undefined</span><hr>
+		<span id="info">undefined</span><hr>
+		<span id="debug">undefined</span></div>
 	</suica>
 	
 	<script>
 		function tick( t )
 		{
-			element('delta').innerHTML = device.delta;
+			element('debug').innerHTML = Device._debug;
+			element('time').innerHTML = t.toFixed(1);
+			if( typeof device != 'undefined' )
+				element('delta').innerHTML = device.delta;
 		}
 	</script>
 	
