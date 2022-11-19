@@ -60,7 +60,6 @@ Device._debug = 'de3';
 
 	onDeviceOrientation( event )
 	{
-		var angle;
 		element('info').innerHTML = event.type;
 		
 		Device._spin[0] = event.alpha;
