@@ -82,7 +82,7 @@ Device._debug = 'de3';
 		if( (event.alpha == null) || (event.beta == null) || (event.gamma == null) )
 			window.removeEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute );
 		else
-			window.removeEventListener( 'deviceorientation', Device.onDeviceOrientation;
+			window.removeEventListener( 'deviceorientation', Device.onDeviceOrientation );
 	} // Device.onDeviceOrientationAbsolute
 	
 
