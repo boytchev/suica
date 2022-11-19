@@ -34,16 +34,16 @@ Device._debug = 'de2';
 		else
 		{
 Device._debug = 'de3';
-			document.addEventListener( 'orientationchange', this.onOrientationChange );
+			document.addEventListener( 'orientationchange', Device.onOrientationChange, true );
 		}
 		
-		window.addEventListener( 'deviceorientation', this.onDeviceOrientation );
-		window.addEventListener( 'deviceorientationabsolute', this.onDeviceOrientation );
+		window.addEventListener( 'deviceorientation', Device.onDeviceOrientation, true );
+		window.addEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute, true );
 	} // Device.constructor
 	
 	
 	
-	onOrientationChange( event )
+	static onOrientationChange( event )
 	{
 		var angle;
 		element('info').innerHTML = event;
@@ -58,7 +58,7 @@ Device._debug = 'de3';
 	
 
 
-	onDeviceOrientation( event )
+	static onDeviceOrientation( event )
 	{
 		const Q = 1000;
 		
@@ -71,6 +71,19 @@ Device._debug = 'de3';
 		Device._spin[2] = Math.round( Q*event.gamma )/Q;
 		Device._absolute = event.absolute;
 	} // Device.onDeviceOrientation
+	
+
+
+	static onDeviceOrientationAbsolute( event )
+	{
+		Device.onDeviceOrientation( event );
+
+		// if no data is provided, unhook the absolute handler, otherwise unhool the relative handler
+		if( (event.alpha == null) || (event.beta == null) || (event.gamma == null)
+			window.removeEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute );
+		else
+			window.removeEventListener( 'deviceorientation', Device.onDeviceOrientation;
+	} // Device.onDeviceOrientationAbsolute
 	
 
 
