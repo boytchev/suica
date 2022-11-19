@@ -79,7 +79,7 @@ Device._debug = 'de3';
 		Device.onDeviceOrientation( event );
 
 		// if no data is provided, unhook the absolute handler, otherwise unhool the relative handler
-		if( (event.alpha == null) || (event.beta == null) || (event.gamma == null)
+		if( (event.alpha == null) || (event.beta == null) || (event.gamma == null) )
 			window.removeEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute );
 		else
 			window.removeEventListener( 'deviceorientation', Device.onDeviceOrientation;
