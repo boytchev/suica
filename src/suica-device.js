@@ -117,6 +117,24 @@ class Device
 	{
 		return Device.absoluteOrientation;
 	} // Device.absoluteOrientation
+	
+	
+	get relativeAcceleration( )
+	{
+		return Device.relativeAcceleration;
+	} // Device.relativeAcceleration
+	
+	
+	get relativeVelocity( )
+	{
+		return Device.relativeVelocity;
+	} // Device.relativeVelocity
+	
+	
+	get relativePosition( )
+	{
+		return Device.relativePosition;
+	} // Device.relativePosition
 
 } // class Device
 
