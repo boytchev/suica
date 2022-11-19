@@ -38,34 +38,28 @@
 		<div>
 			time=<span id="time">undefined</span>
 			<hr>
-			alpha=<span id="alpha">undefined</span>
+			ori=<span id="ori">undefined</span>
 			<br>
-			beta=<span id="beta">undefined</span>
+			acc=<span id="acc">undefined</span>
 			<br>
-			gamma=<span id="gamma">undefined</span>
+			vel=<span id="vel">undefined</span>
 			<br>
-			delta=<span id="delta">undefined</span>
-			<br>
-			absolute=<span id="absolute">undefined</span>
+			pos=<span id="pos">undefined</span>
 			<hr>
 			<span id="info">undefined</span>
-			<hr>
-			<span id="debug">undefined</span>
 		</div>
 	</suica>
 	
 	<script>
 		function tick( t )
 		{
-			element('debug').innerHTML = Device._debug;
 			element('time').innerHTML = t.toFixed(1);
 			if( typeof device != 'undefined' )
 			{
-				element('alpha').innerHTML = device.alpha;
-				element('beta').innerHTML = device.beta;
-				element('gamma').innerHTML = device.gamma;
-				element('delta').innerHTML = device.delta;
-				element('absolute').innerHTML = device.absolute;
+				element('ori').innerHTML = device.relativeOrientation.alpha+', '+device.relativeOrientation.beta+', '+device.relativeOrientation.gamma;
+				element('acc').innerHTML = device.relativeAcceleration.x+' '+device.relativeAcceleration.y+' '+device.relativeAcceleration.z;
+				element('vel').innerHTML = device.relativeVelocity.x+' '+device.relativeVelocity.y+' '+device.relativeVelocity.z;
+				element('pos').innerHTML = device.relativePosition.x+' '+device.relativePosition.y+' '+device.relativePosition.z;
 			}
 		}
 	</script>

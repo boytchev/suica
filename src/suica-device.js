@@ -7,147 +7,117 @@
 
 class Device
 {
-	// device and screen orientation
-	// 		spin[0] = device orientation alpha
-	// 		spin[1] = device orientation beta
-	// 		spin[2] = device orientation gamma
-	// 		spin[3] = screen orientation alpha
-	static _spin = [0,0,0,0];
-	static _absolute = false;
-	
-	static enableDeviceOrientationAbsolute = true;
-	static enableDeviceOrientationRelative = true;
-	
-	static _debug;
+	static screenOrientation = 1;
+	static relativeOrientation = {alpha:0, beta:0, gamma:0, absolute:0};
+	static absoluteOrientation = {alpha:0, beta:0, gamma:0, absolute:0};
+
+	static relativeAcceleration = {x:0, y:0, z:0};
+	static relativeVelovity = {x:0, y:0, z:0};
+	static relativePOsition = {x:0, y:0, z:0};
 	
 	constructor( )
 	{
 		if( screen.orientation )
 		{
-Device._debug = 'de1';
-			Device._spin[3] = screen.orientation.angle;
-			screen.orientation.onchange = this.onOrientationChange;
+			Device.screenOrientation = screen.orientation.angle;
+			screen.orientation.onchange = Device.onOrientationChange;
 		}
 		else
 		if( window.orientation )
 		{
-Device._debug = 'de2';
-			Device._spin[3] = window.orientation.angle;
-			window.orientation.onchange = this.onOrientationChange;
+			Device.screenOrientation = window.orientation.angle;
+			window.orientation.onchange = Device.onOrientationChange;
 		}
 		else
 		{
-Device._debug = 'de3';
 			document.addEventListener( 'orientationchange', Device.onOrientationChange, true );
 		}
 		
 		window.addEventListener( 'deviceorientation', Device.onDeviceOrientationRelative, true );
 		window.addEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute, true );
+		window.addEventListener( 'devicemotion', Device.onDeviceMotion, true );
 	} // Device.constructor
 	
 	
 	
 	static onOrientationChange( event )
-	{
-		var angle;
-		element('info').innerHTML = event;
-		
+	{	
 		if( event.target.screen )
-			angle = event.target.screen.orientation.angle;
+			Device.screenOrientation = event.target.screen.orientation.angle;
 		else
-			angle = event.target.angle;
-
-		Device._spin[3] = angle;
+			Device.screenOrientation = event.target.angle;
 	} // Device.onOrientationChange
-	
-
-
-	static handleOrientation( event )
-	{
-		const Q = 100;
-		
-		element('info').innerHTML = event.type;
-		
-		console.log(event.type,event.alpha,event.beta,event.gamma);
-		
-		Device._spin[0] = Math.round( Q*event.alpha )/Q;
-		Device._spin[1] = Math.round( Q*event.beta )/Q;
-		Device._spin[2] = Math.round( Q*event.gamma )/Q;
-		Device._absolute = event.absolute;
-	} // Device.handleOrientation
 	
 
 
 	static onDeviceOrientationRelative( event )
 	{
-		if( Device.enableDeviceOrientationRelative )
-		{
-			Device.handleOrientation( event );
-		}
+		const Q = 100;
+		
+		Device.relativeOrientation.alpha = Math.round( Q*event.alpha )/Q;
+		Device.relativeOrientation.beta = Math.round( Q*event.beta )/Q;
+		Device.relativeOrientation.gamma = Math.round( Q*event.gamma )/Q;
+		Device.relativeOrientation.absolute = event.absolute;
 	} // Device.onDeviceOrientationRelative
 	
 
 
 	static onDeviceOrientationAbsolute( event )
 	{
-		if( Device.enableDeviceOrientationAbsolute )
-		{
-			Device.handleOrientation( event );
-			
-			// if no data is provided, unhook the absolute handler, otherwise unhool the relative handler
-			if( (event.alpha == null) || (event.beta == null) || (event.gamma == null) )
-			{
-				// absolute orientation is not good, disable it
-				Device.enableDeviceOrientationAbsolute = false;
-				window.removeEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute, true );
-			}
-			else
-			{
-				// absolute orientation is good, disable relative
-				Device.enableDeviceOrientationRelative = false;
-				window.removeEventListener( 'deviceorientation', Device.onDeviceOrientationRelative, true );
-			}
-		}
+		const Q = 100;
+		
+		Device.absoluteOrientation.alpha = Math.round( Q*event.alpha )/Q;
+		Device.absoluteOrientation.beta = Math.round( Q*event.beta )/Q;
+		Device.absoluteOrientation.gamma = Math.round( Q*event.gamma )/Q;
+		Device.absoluteOrientation.absolute = event.absolute;
 	} // Device.onDeviceOrientationAbsolute
 	
 
 
-	get spin( )
+	static onDeviceMotion( event )
 	{
-		return Device._spin;
-	} // Device.spin
+		var dT = event.interval/1000;
+		
+		var a = Device.relativeAcceleration,
+			v = Device.relativeVelocity,
+			p = Device.relativePosition;
+			
+		a.x = event.acceleration.x;
+		a.y = event.acceleration.y;
+		a.z = event.acceleration.z;
+		a.dT = dT;
+
+		v.x += dT * a.x;
+		v.y += dT * a.y;
+		v.z += dT * a.z;
+		v.dT = dT;
+
+		p.x += dT * v.x;
+		p.y += dT * v.y;
+		p.z += dT * v.z;
+		p.dT = dT;
+
+	} // Device.onDeviceMotion
 	
-	
-	get alpha( )
+
+
+	get screenOrientation( )
 	{
-		return Device._spin[0];
-	} // Device.alpha
+		return Device.screenOrientation;
+	} // Device.screenOrientation
 	
 	
-	get beta( )
+	get relativeOrientation( )
 	{
-		return Device._spin[1];
-	} // Device.beta
+		return Device.relativeOrientation;
+	} // Device.relativeOrientation
 	
 	
-	get gamma( )
+	get absoluteOrientation( )
 	{
-		return Device._spin[2];
-	} // Device.gamma
-	
-	
-	get delta( )
-	{
-		return Device._spin[3];
-	} // Device.delta
-	
-	
-	get absolute( )
-	{
-		return Device._absolute;
-	} // Device.delta
-	
-	
+		return Device.absoluteOrientation;
+	} // Device.absoluteOrientation
+
 } // class Device
 
 
