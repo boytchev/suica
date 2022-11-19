@@ -60,8 +60,8 @@ class HTMLParser
 				if( this.openGroups.length )
 					this.openGroups[ this.openGroups.length-1 ].add( newObject );
 			}
-			else
-				console.error( `error: unknown tag <${tagName}> in <${that.tagName}>` );
+			// else
+				// console.error( `error: unknown tag <${tagName}> in <${that.tagName}>` );
 
 			// if this tag is <group> then mark the gorup as open
 			// new objects will be automatically added to the latest open group
@@ -103,13 +103,13 @@ class HTMLParser
 		}
 	} // HTMLParser.parseTagsInElement
 		
-	parseTagBUTTON( suica, elem ) {}
-	parseTagCANVAS( suica, elem ) {}
-	parseTagDIV( suica, elem ) {}
-	parseTagSPAN( suica, elem ) {}
-	parseTagIMG( suica, elem ) {}
-	parseTagBR( suica, elem ) {}
-	parseTagSMALL( suica, elem ) {}
+	// parseTagBUTTON( suica, elem ) {}
+	// parseTagCANVAS( suica, elem ) {}
+	// parseTagDIV( suica, elem ) {}
+	// parseTagSPAN( suica, elem ) {}
+	// parseTagIMG( suica, elem ) {}
+	// parseTagBR( suica, elem ) {}
+	// parseTagSMALL( suica, elem ) {}
 	
 	// <oxyz size="..." color="...">
 	parseTagOXYZ( suica, elem )
