@@ -60,11 +60,15 @@ Device._debug = 'de3';
 
 	onDeviceOrientation( event )
 	{
+		const Q = 1000;
+		
 		element('info').innerHTML = event.type;
 		
-		Device._spin[0] = event.alpha;
-		Device._spin[1] = event.beta;
-		Device._spin[2] = event.gamma;
+		console.log(event.timestamp,event.type);
+		
+		Device._spin[0] = Math.round( Q*event.alpha )/Q;
+		Device._spin[1] = Math.round( Q*event.beta )/Q;
+		Device._spin[2] = Math.round( Q*event.gamma )/Q;
 		Device._absolute = event.absolute;
 	} // Device.onDeviceOrientation
 	
