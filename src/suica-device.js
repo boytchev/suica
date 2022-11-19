@@ -12,8 +12,8 @@ class Device
 	static absoluteOrientation = {alpha:0, beta:0, gamma:0, absolute:0};
 
 	static relativeAcceleration = {x:0, y:0, z:0};
-	static relativeVelovity = {x:0, y:0, z:0};
-	static relativePOsition = {x:0, y:0, z:0};
+	static relativeVelocity = {x:0, y:0, z:0};
+	static relativePosition = {x:0, y:0, z:0};
 	
 	constructor( )
 	{
