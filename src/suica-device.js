@@ -14,6 +14,10 @@ class Device
 	// 		spin[3] = screen orientation alpha
 	static _spin = [0,0,0,0];
 	static _absolute = false;
+	
+	static enableDeviceOrientationAbsolute = true;
+	static enableDeviceOrientationRelative = true;
+	
 	static _debug;
 	
 	constructor( )
@@ -37,7 +41,7 @@ Device._debug = 'de3';
 			document.addEventListener( 'orientationchange', Device.onOrientationChange, true );
 		}
 		
-		window.addEventListener( 'deviceorientation', Device.onDeviceOrientation, true );
+		window.addEventListener( 'deviceorientation', Device.onDeviceOrientationRelative, true );
 		window.addEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute, true );
 	} // Device.constructor
 	
@@ -58,9 +62,9 @@ Device._debug = 'de3';
 	
 
 
-	static onDeviceOrientation( event )
+	static handleOrientation( event )
 	{
-		const Q = 1000;
+		const Q = 100;
 		
 		element('info').innerHTML = event.type;
 		
@@ -70,21 +74,40 @@ Device._debug = 'de3';
 		Device._spin[1] = Math.round( Q*event.beta )/Q;
 		Device._spin[2] = Math.round( Q*event.gamma )/Q;
 		Device._absolute = event.absolute;
-	} // Device.onDeviceOrientation
+	} // Device.handleOrientation
+	
+
+
+	static onDeviceOrientationRelative( event )
+	{
+		if( Device.enableDeviceOrientationRelative )
+		{
+			Device.handleOrientation( event );
+		}
+	} // Device.onDeviceOrientationRelative
 	
 
 
 	static onDeviceOrientationAbsolute( event )
 	{
-		Device.onDeviceOrientation( event );
-
-Device._debug = 'de44';
-
-		// if no data is provided, unhook the absolute handler, otherwise unhool the relative handler
-		if( (event.alpha == null) || (event.beta == null) || (event.gamma == null) )
-			window.removeEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute, true );
-		else
-			window.removeEventListener( 'deviceorientation', Device.onDeviceOrientation, true );
+		if( Device.enableDeviceOrientationAbsolute )
+		{
+			Device.handleOrientation( event );
+			
+			// if no data is provided, unhook the absolute handler, otherwise unhool the relative handler
+			if( (event.alpha == null) || (event.beta == null) || (event.gamma == null) )
+			{
+				// absolute orientation is not good, disable it
+				Device.enableDeviceOrientationAbsolute = false;
+				window.removeEventListener( 'deviceorientationabsolute', Device.onDeviceOrientationAbsolute, true );
+			}
+			else
+			{
+				// absolute orientation is good, disable relative
+				Device.enableDeviceOrientationRelative = false;
+				window.removeEventListener( 'deviceorientation', Device.onDeviceOrientationRelative, true );
+			}
+		}
 	} // Device.onDeviceOrientationAbsolute
 	
 
