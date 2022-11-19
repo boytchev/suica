@@ -64,7 +64,7 @@ Device._debug = 'de3';
 		
 		element('info').innerHTML = event.type;
 		
-		console.log(event.timestamp,event.type);
+		console.log(event.type,event.alpha,event.beta,event.gamma);
 		
 		Device._spin[0] = Math.round( Q*event.alpha )/Q;
 		Device._spin[1] = Math.round( Q*event.beta )/Q;
@@ -77,6 +77,8 @@ Device._debug = 'de3';
 	static onDeviceOrientationAbsolute( event )
 	{
 		Device.onDeviceOrientation( event );
+
+Device._debug = 'de44';
 
 		// if no data is provided, unhook the absolute handler, otherwise unhool the relative handler
 		if( (event.alpha == null) || (event.beta == null) || (event.gamma == null) )
