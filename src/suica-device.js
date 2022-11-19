@@ -92,9 +92,9 @@ class Device
 		v.z += dT * a.z;
 		v.dT = dT;
 
-		p.x += dT * v.x;
-		p.y += dT * v.y;
-		p.z += dT * v.z;
+		p.x += 0.5 * (dT**2) * a.x;
+		p.y += 0.5 * (dT**2) * a.y;
+		p.z += 0.5 * (dT**2) * v.z;
 		p.dT = dT;
 
 	} // Device.onDeviceMotion
