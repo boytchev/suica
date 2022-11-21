@@ -60,7 +60,7 @@ class Polygon extends Mesh
 	static getSolidGeometry( suica, count )
 	{
 		if( !suica._.solidGeometry.polygon[count] )
-			suica._.solidGeometry.polygon[count] = suica.flipNormal( new THREE.CircleGeometry( 0.5, count, -Math.PI*(1/2-1/count) ).applyMatrix4( suica.orientation.MATRIX ) );
+			suica._.solidGeometry.polygon[count] = suica.flipNormal( new THREE.CircleGeometry( 0.5, count, /*-Math.PI*(1/2-1/count) -- issue #87 Polygon orientation */ ).applyMatrix4( suica.orientation.MATRIX ) );
 		
 		return suica._.solidGeometry.polygon[count];
 	} // Polygon.getSolidGeometry
@@ -77,7 +77,7 @@ class Polygon extends Mesh
 
 			for( var i=0; i<=count; i++ )
 			{
-				var angle = 2*Math.PI * i/count - Math.PI*(1/2-1/count);
+				var angle = 2*Math.PI * i/count /*- Math.PI*(1/2-1/count) -- issue #87 Polygon orientation */;
 				
 				vertices[3*i] = 0.5*Math.cos( angle ); 
 				vertices[3*i+1] = 0.5*Math.sin( angle ); 

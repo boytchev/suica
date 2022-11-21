@@ -82,10 +82,10 @@ class Prism extends Mesh
 
 			for( var i=0; i<count; i++ )
 			{
-				var angle1 = 2*Math.PI * i/count - Math.PI*(1/2-1/count),
+				var angle1 = 2*Math.PI * i/count /*- Math.PI*(1/2-1/count) -- issue #87 Polygon orientation */,
 					sin1 = 0.5*Math.sin( angle1 ),
 					cos1 = 0.5*Math.cos( angle1 );
-				var angle2 = 2*Math.PI * (i+1)/count - Math.PI*(1/2-1/count),
+				var angle2 = 2*Math.PI * (i+1)/count /*- Math.PI*(1/2-1/count) -- issue #87 Polygon orientation */,
 					sin2 = 0.5*Math.sin( angle2 ),
 					cos2 = 0.5*Math.cos( angle2 );
 				

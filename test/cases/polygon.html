@@ -9,17 +9,18 @@
 <body>
 	<suica>
 		<demo>
-		<polygon count="9" x="-45" size="20" color="lightgray">
-		<polygon count="4" x="-25" size="20" color="lightsalmon">
+		<polygon count="9" x="-45" size="20" spinS="-70" color="lightgray">
+		<polygon count="4" x="-25" size="20" spinS="-45" color="lightsalmon">
 		<polygon id="a" color="black">
-		<polygon count="5" x="25" size="20" color="peachpuff">
-		<polygon count="6" x="45" size="20" color="dimgray">
+		<polygon count="5" x="25" size="20" spinS="-54" color="peachpuff">
+		<polygon count="6" x="45" size="20" spinS="-60" color="dimgray">
 	</suica>
 	
 	<script>
 		function randomPolygon()
 		{
 			a.count = Math.round( random(3,12) );
+			a.spinS = -180*(1/2-1/a.count);
 		}
 
 		randomPolygon();
