@@ -156,7 +156,7 @@ The actual name of the parameter is user-defined, but traditionally *'event'* is
 JS:
 function onPointerEnter( event )
 {
-	...
+  ...
 }
 ```
 
@@ -195,7 +195,7 @@ Function. Finds the position of a pointer event. The position is measured in pix
 JS:
 function onPointerMove( event )
 {
-	var pos = findPosition( event );
+  var pos = findPosition( event );
 }
 ```
 
@@ -221,7 +221,7 @@ Function. Finds the Suica object where a pointer event occurred. The function re
 JS:
 function onPointerMove( event )
 {
-	var object = findObject( event );
+  var object = findObject( event );
 }
 ```
 
@@ -243,7 +243,7 @@ Function. Finds all Suica objects where a pointer event occured. The function re
 JS:
 function onPointerMove( event )
 {
-	var object = findObjects( event );
+  var object = findObjects( event );
 }
 ```
 
@@ -264,7 +264,7 @@ The time event `onTime` occurs when the browser is ready for a new frame. The br
 JS:
 function onTime( t, dT )
 {
-	...
+  ...
 }
 ```
 
@@ -284,7 +284,7 @@ The load event `onLoad` occurs when a 3D [`model`](objects.md#model) or the font
 JS:
 function onLoad( object )
 {
-	...
+  ...
 }
 ```
 
