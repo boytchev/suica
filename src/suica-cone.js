@@ -63,7 +63,7 @@ class Pyramid extends Mesh
 	{
 		if( !suica._.solidGeometry.pyramid[count] )
 		{
-			suica._.solidGeometry.pyramid[count] = suica.flipNormal( new THREE.ConeGeometry( 0.5, 1, count, 1, false ).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
+			suica._.solidGeometry.pyramid[count] = suica.flipNormal( new THREE.ConeGeometry( 0.5, 1, count, 1, false ).rotateY(Math.PI/2).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
 		}
 		
 		return suica._.solidGeometry.pyramid[count];

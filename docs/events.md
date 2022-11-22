@@ -71,7 +71,7 @@ In HTML event listeners are set as attributes.
 
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 𝑒𝑣𝑒𝑛𝑡𝑁𝑎𝑚𝑒="𝑒𝑣𝑒𝑛𝑡𝐻𝑎𝑛𝑑𝑙𝑒𝑟">
+<object eventName="eventHandler">
 ```
 
 The name of the attribute is the name of the event, which is case-insensitive and it can be with or without `on-` prefix. The value of the attribute is the name of the event handler function. The following code snippets install listeners of pointer click events to the whole Suica canvas and to a cube.
@@ -88,7 +88,7 @@ In JavaScript event listeners are set by `addEventListener` and removed by `remo
 #### addEventListener
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡.addEventListener( 𝑒𝑣𝑒𝑛𝑡𝑁𝑎𝑚𝑒, 𝑒𝑣𝑒𝑛𝑡𝐻𝑎𝑛𝑑𝑙𝑒𝑟 );
+object.addEventListener( eventName, eventHandler );
 ```
 Function. Adds an event listener to specific `eventName` that triggers an `eventHandler` function. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `pointerMove` and `onPointerMove` are considered the same event. Only one event handler per event per object can be set, i.e. setting another event handler will replace the previous one. Suica's `addEventListener` mimics to some extent the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) which is used to set event listeners for HTML elements in a web page.
 
@@ -112,7 +112,7 @@ obj.onclick = eventHandler;
 #### removeEventListener
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡.removeEventListener( 𝑒𝑣𝑒𝑛𝑡𝑁𝑎𝑚𝑒 );
+object.removeEventListener( eventName );
 ```
 Function. Removes an event listener of specific `eventName`. `eventName` is the case-insensitive name of the event with or without `on-` prefix, thus `pointerMove` and `onPointerMove` are considered the same event. `removeEventListener`
 mimics to some extent the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)'s
@@ -144,7 +144,7 @@ All pointer-related events, these are `onPointerEnter`, `onPointerMove`, `onPoin
 
 ```js
 JS:
-function 𝑒𝑣𝑒𝑛𝑡𝐻𝑎𝑛𝑑𝑙𝑒𝑟( 𝑒𝑣𝑒𝑛𝑡 ) 
+function eventHandler( event ) 
 {
   ...
 }
@@ -187,7 +187,7 @@ Additional Suica-specific data for pointer events is extracted from `event` by
 #### findPosition
 ```js
 JS:
-𝑝𝑜𝑠 = findPosition( 𝑒𝑣𝑒𝑛𝑡 );
+pos = findPosition( event );
 ```
 Function. Finds the position of a pointer event. The position is measured in pixels and is relative to the center of the Suica canvas. The function requires the `event` parameter of the event handler. The result is an array [`x`,`y`] of the position. `findPosition` is typically used with events of the Suica canvas.
 
@@ -212,8 +212,8 @@ changed with [demo](user-guide.md#demo) or [lookAt](user-guide.md#lookat).
 #### findObject
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.findObject( 𝑒𝑣𝑒𝑛𝑡, 𝑖𝑛𝑡𝑒𝑟𝑎𝑐𝑡𝑖𝑣𝑒 );
-𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.findObject( 𝑒𝑣𝑒𝑛𝑡, [𝑜𝑏𝑗𝑒𝑐𝑡, 𝑜𝑏𝑗𝑒𝑐𝑡, ...] );
+object = suica.findObject( event, interactive );
+object = suica.findObject( event, [object, object, ...] );
 ```
 Function. Finds the Suica object where a pointer event occurred. The function requires the `event` parameter of the event handler. The result is the closest to the viewer Suica object that is at the position of the event, or `null` if no such object exists. `findObject` is typically used with events of the Suica canvas. If `interactive` is `true` then only objects with event handlers for [motion](#motion-events) and [click](#click-events) events are scanned. By default `interactive` is `false`. If the value of `interactive` is an array of objects, then only these objects are scanned.
 
@@ -233,8 +233,8 @@ If an object is found its [`intersectData`](properties.md#intersectdata) propert
 #### findObjects
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝑠 = 𝑠𝑢𝑖𝑐𝑎.findObjects( 𝑒𝑣𝑒𝑛𝑡, 𝑖𝑛𝑡𝑒𝑟𝑎𝑐𝑡𝑖𝑣𝑒 );
-𝑜𝑏𝑗𝑒𝑐𝑡𝑠 = 𝑠𝑢𝑖𝑐𝑎.findObjects( 𝑒𝑣𝑒𝑛𝑡, [𝑜𝑏𝑗𝑒𝑐𝑡, 𝑜𝑏𝑗𝑒𝑐𝑡, ...] );
+object = suica.findObjects( event, interactive );
+object = suica.findObjects( event, [object, object, ...] );
 ```
 Function. Finds all Suica objects where a pointer event occured. The function requires the `event` parameter of the event handler. The result is a sorted list (from nearest to farthest with respect to the viewer) of all Suica objects that are at the position of the event, or an empty list `[]` if no such objects exist. `findObjects` is typically used with events of the Suica canvas. If `interactive` is `true` then only objects with event handlers for [motion](#motion-events) and [click](#click-events) events are scanned. By default `interactive` is `false`. If the value of `interactive` is an array of objects, then only these objects are scanned.
 

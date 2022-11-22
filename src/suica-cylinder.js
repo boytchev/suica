@@ -63,7 +63,7 @@ class Prism extends Mesh
 	static getSolidGeometry( suica, count )
 	{
 		if( !suica._.solidGeometry.prism[count] )
-			suica._.solidGeometry.prism[count] = suica.flipNormal( new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
+			suica._.solidGeometry.prism[count] = suica.flipNormal( new THREE.CylinderGeometry( 0.5, 0.5, 1, count, 1, false ).rotateY(Math.PI/2).translate(0,0.5,0).applyMatrix4( suica.orientation.MATRIX ) );
 		
 		return suica._.solidGeometry.prism[count];
 	} // Prism.getSolidGeometry
