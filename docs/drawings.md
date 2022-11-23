@@ -53,11 +53,11 @@ A drawing is created with the `drawing` command and then it is possible to draw 
 #### drawing
 ```html
 HTML:
-<drawing id="𝘯𝘢𝘮𝘦" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+<drawing id="name" size="width,height" color="color">
 ```
 ```js
 JS:
-𝘯𝘢𝘮𝘦 = drawing( 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡, 𝑐𝑜𝑙𝑜𝑟 );
+name = drawing( width, height, color );
 ```
 
 Command. Creates a drawing canvas. Parameters `width` and `height` set the canvas size in pixels. By default it is 32&times;32 pixels. If `height` is omitted, its is the same as `width`. Parameter `color` sets the background color of the canvas. If `color` is omitted, the background is transparent &ndash; i.e. when the drawing is mapped onto an object, the background areas will be transparent.
@@ -176,12 +176,12 @@ Shapes are define with the following commands:
 #### moveTo
 ```html
 HTML:
-<moveTo point="𝑥,𝑦">
-<moveTo x="𝑥" y="𝑦">
+<moveTo point="x,y">
+<moveTo x="x" y="y">
 ```
 ```js
 JS:
-moveTo( 𝑥, 𝑦 );
+moveTo( x, y );
 ```
 
 Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment. This is used to set the starting point of a shape boundary. By default, both *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`.
@@ -222,12 +222,12 @@ lineTo( 20, 0, 15, 10, 30, 10 );
 #### lineTo
 ```html
 HTML:
-<lineTo point="𝑥,𝑦">
-<lineTo x="𝑥" y="𝑦">
+<lineTo point="x,y">
+<lineTo x="x" y="y">
 ```
 ```js
 JS:
-lineTo( 𝑥, 𝑦 );
+lineTo( x, y );
 ```
 
 Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. This is used to define straight segments of the shape. By default, both *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`.
@@ -275,12 +275,12 @@ lineTo( 30, 10 );
 #### curveTo
 ```html
 HTML:
-<curveTo m="𝑚𝑥,𝑚𝑦" point="𝑥,𝑦">
-<curveTo mx="𝑚𝑥" my="𝑚𝑦" x="𝑥" y="𝑦">
+<curveTo m="mx,my" point="x,y">
+<curveTo mx="mx" my="my" x="x" y="y">
 ```
 ```js
 JS:
-𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
+drawing.curveTo( mx, my, x, y );
 ```
 
 Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape boundary. The line is [quadratic curve](https://www.w3schools.com/tags/canvas_quadraticcurveto.asp) and is attracted towards point (`mx`, `my`), which is defined by the first pair of parameters of *curveTo*. By default all coordinates *mx*, *my*, *x* and *y* are 0. In HTML `point` can be split into individual parameters `x` and `y`; and `m` can be split into `mx` and `my`.
@@ -311,13 +311,13 @@ Complex shapes can be constructed by joining individual curves. The shape of a h
 #### arc
 ```html
 HTML:
-<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟">
-<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟" from="𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒" to="𝑡𝑜𝐴𝑛𝑔𝑙𝑒" cw="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<arc point="x,y" radius="number">
+<arc point="x,y" radius="number" from="fromAngle" to="toAngle" cw="true/false">
 ```
 ```js
 JS:
-arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠 );
-arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒, 𝑡𝑜𝐴𝑛𝑔𝑙𝑒, 𝑐𝑤 );
+arc( x, y, radius );
+arc( x, y, radius, fromAngle, toAngle, cw );
 ```
 
 Command. Adds a circular arc to the shape. This command creates an arc of a circle with point (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees, by default 0 and 360. Parameter `cw` sets the direction of the arc &ndash; either clockwise (if `cw` is true, this is by default) or counterclockwise (if `cw` is false). If the angles are omitted, a full circle is generated. 
@@ -359,11 +359,11 @@ The outline of a shape is drawn with `stroke`.
 #### stroke
 ```html
 HTML:
-<stroke color="𝑐𝑜𝑙𝑜𝑟" width="𝑤𝑖𝑑𝑡ℎ" closed="𝘤𝘭𝘰𝘴𝘦𝘥">
+<stroke color="color" width="width" closed="closed">
 ```
 ```js
 JS:
-stroke( 𝑐𝑜𝑙𝑜𝑟, 𝑤𝑖𝑑𝑡ℎ, 𝘤𝘭𝘰𝘴𝘦𝘥 );
+stroke( color, width, closed );
 ```
 
 Command. Draws a line around a shape. The line has given `color` and `width` (in pixels). If the `closed` parameter is *true*, then a line is closed &ndash; its end is connected to its beginning. A `stroke` immediately after another `stroke` or [`fill`](#fill) reuses the same shape.
@@ -392,11 +392,11 @@ Solid shapes are drawn by `fill`.
 #### fill
 ```html
 HTML:
-<fill color="𝑐𝑜𝑙𝑜𝑟">
+<fill color="color">
 ```
 ```js
 JS:
-fill( 𝑐𝑜𝑙𝑜𝑟 );
+fill( color );
 ```
 
 Command. Fills a shape with the given `color`.  A `fill` immediately after another `fill` or [`stroke`](#stroke) reuses the same shape.
@@ -423,12 +423,12 @@ Drawing texts is done with the `fillText` command.
 #### fillText
 ```html
 HTML:
-<fillText point="𝑥,𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
-<fillText x="𝑥" y="𝑦" text="𝑡𝑒𝑥𝑡" color="𝑐𝑜𝑙𝑜𝑟" font="𝑓𝑜𝑛𝑡">
+<fillText point="x,y" text="text" color="color" font="font">
+<fillText x="x" y="y" text="text" color="color" font="font">
 ```
 ```js
 JS:
-𝑑𝑟𝑎𝑤𝑖𝑛𝑔.fillText( 𝑥, 𝑦, 𝑡𝑒𝑥𝑡, 𝑐𝑜𝑙𝑜𝑟, 𝑓𝑜𝑛𝑡 );
+drawing.fillText( x, y, text, color, font );
 ```
 
 Command. Draws a text. The `text` is drawn at given coordinates (`x`,`y`) with
@@ -488,12 +488,12 @@ In some cases, it is easier to redraw the canvas from scratch. One way to clear 
 ```html
 HTML:
 <clear>
-<clear color="𝑐𝑜𝑙𝑜𝑟">
+<clear color="color">
 ```
 ```js
 JS:
 clear( );
-clear( 𝑐𝑜𝑙𝑜𝑟 );
+clear( color );
 ```
 
 Command. Clears a drawing canvas. The canvas is filled with the given `color`. If `color` is omitted, the canvas is completely erased, i.e. cleared to transparent. 
