@@ -222,7 +222,7 @@ This property is available in [`line`](objects.md#line), [`square`](objects.md#s
 #### objectPosition
 ```js
 JS:
-𝑝𝑜𝑠 = object.objectPosition( localOffset );
+pos = object.objectPosition( localOffset );
 ```
 Function. Calculates global coordinates. This function takes a 3D point relative to an object's coordinate system is returns their global coordinates. This can be used to get the position of an object that is rotated in space.
 
@@ -238,7 +238,7 @@ The returned value of `objectPosition` is an array [`x`,`y`,`z`] of coordinates 
 #### screenPosition
 ```js
 JS:
-𝑝𝑜𝑠 = object.screenPosition( localOffset, globalOffset );
+pos = object.screenPosition( localOffset, globalOffset );
 ```
 Function. Calculates screen coordinates. This function takes a 3D point in Suica 3D space and calculates its 2D screen coordinates relative to the Suica drawing canvas. This can be used to position HTML elements over specific graphical coordinates and objects.
 
