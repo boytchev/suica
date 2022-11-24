@@ -58,7 +58,7 @@ Suica defines a system variable `its` that is an alternative way to attach prope
 #### its
 ```js
 JS:
-its.𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦 = 𝑣𝑎𝑙𝑢𝑒;
+its.property = value;
 ```
 Variable. Points to the latest created object. This variable is used to define properties of an object without using its name. This includeс anonymous objects.
 
@@ -73,7 +73,7 @@ its.color = 'white';
 
 Some properties are use so often, that they are included as parameters of the functions that create objects. In this case the names of the properties are not used, but the order of parameters is fixed. Only the trailing parameters can be omitted.
 
-In the next example the value 100 is the `size` of the cube. It is included in the code, because the creation  of a cube is done with function [`cube(𝘤𝘦𝘯𝘵𝘦𝘳,𝑠𝑖𝑧𝑒,𝑐𝑜𝑙𝑜𝑟)`](objects.md#cube).
+In the next example the value 100 is the `size` of the cube. It is included in the code, because the creation of a cube is done with function [`cube(center,size,color)`](objects.md#cube).
 
 ```js
 JS:
@@ -89,8 +89,8 @@ In JavaScript a group of properties can be represented as a JavaScript object. T
 #### Style
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡.style( {𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …} );
-style( 𝑜𝑏𝑗𝑒𝑐𝑡, {𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, 𝑝𝑟𝑜𝑝𝑒𝑟𝑡𝑦:𝑣𝑎𝑙𝑢𝑒, …} );
+object.style( {property:value, property:value, …} );
+style( object, {property:value, property:value, …} );
 ```
 Function. Sets a group of properties of an object. The properties are defined as a set of *name:value* pairs. New, custom user-defined properties are allowed. As `style` returns the same object, styling can be chained.
 
@@ -122,12 +122,12 @@ An exceptional object is the [`line`](#line) &ndash; it has no central point, be
 #### center
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 center="𝘹,𝘺,𝘻">
+<objectName center="x,y,z">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝘹,𝘺,𝘻], ... );
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.center = [𝘹,𝘺,𝘻];
+objectName( ..., [x,y,z], ... );
+object.center = [x,y,z];
 ```
 Property. Defines object position in 3D space. Property `center` is an array of three numbers [`x`, `y`, `z`] for the x, y and z coordinates (in this order). The actual visual position depends on the orientation of the [coordinate system](#coordinate-system). All coordinates are optional. Default values are 0.
 
@@ -163,13 +163,13 @@ line( a, b );
 #### x, y, z
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 x="𝘹" y="𝘺" z="𝘻">
+<objectName x="x" y="y" z="z">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.x = 𝘹;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.y = 𝘺;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.z = 𝘻;
+object.x = x;
+object.y = y;
+object.z = z;
 ```
 Properties. The individual x, y or z coordinates of the object position in 3D space. These properties provide an alternative access to object `center`. They are often use to modify one of the coordinates keeping the other two unchanged.
 
@@ -188,8 +188,8 @@ p.z = 15;
 #### randomIn
 ```js
 JS:
-𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.randomIn;
-𝑝𝑜𝑠 = randomIn( 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦 );
+𝑝𝑜𝑠 = object.randomIn;
+𝑝𝑜𝑠 = randomIn( object );
 ```
 Property. Generates a random position inside an object. Every time this property is accessed, it generates a random position inside the bondary of an object. The distribution of generated positions is uniform. The position, size, and orientation of the object is considered. The returned value of `randomIn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
@@ -204,8 +204,8 @@ This property is available in [`line`](objects.md#line), [`square`](objects.md#s
 #### randomOn
 ```js
 JS:
-𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.randomOn;
-𝑝𝑜𝑠 = randomOn( 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦 );
+𝑝𝑜𝑠 = object.randomOn;
+𝑝𝑜𝑠 = randomOn( object );
 ```
 Property. Generates a random position on an object. Every time this property is accessed, it generates a random position on the bondary of an object. The distribution of generated positions is uniform (and almost uniform for spheroids). The position, size, and orientation of the object is considered. The returned value of `randomOn` is an array [`x`,`y`,`z`] of coordinates of 3D point.
 
@@ -222,7 +222,7 @@ This property is available in [`line`](objects.md#line), [`square`](objects.md#s
 #### objectPosition
 ```js
 JS:
-𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.objectPosition( 𝑙𝑜𝑐𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡 );
+𝑝𝑜𝑠 = object.objectPosition( localOffset );
 ```
 Function. Calculates global coordinates. This function takes a 3D point relative to an object's coordinate system is returns their global coordinates. This can be used to get the position of an object that is rotated in space.
 
@@ -238,7 +238,7 @@ The returned value of `objectPosition` is an array [`x`,`y`,`z`] of coordinates 
 #### screenPosition
 ```js
 JS:
-𝑝𝑜𝑠 = 𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.screenPosition( 𝑙𝑜𝑐𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡, 𝑔𝑙𝑜𝑏𝑎𝑙𝑂𝑓𝑓𝑠𝑒𝑡 );
+𝑝𝑜𝑠 = object.screenPosition( localOffset, globalOffset );
 ```
 Function. Calculates screen coordinates. This function takes a 3D point in Suica 3D space and calculates its 2D screen coordinates relative to the Suica drawing canvas. This can be used to position HTML elements over specific graphical coordinates and objects.
 
@@ -271,14 +271,14 @@ There are several exceptional objects: [`line`](#line) has no size; [`point`](#p
 #### size
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
+<objectName size="width,height,depth">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡( ..., 𝑤𝑖𝑑𝑡ℎ, ... );
-𝑜𝑏𝑗𝑒𝑐𝑡( ..., [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], ... );
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.size = 𝑤𝑖𝑑𝑡ℎ;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.size = [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ];
+objectName( ..., width, ... );
+objectName( ..., [width,height,depth], ... );
+object.size = width;
+object.size = [width,height,depth];
 ```
 Property. The size of a Suica object. Property `size` that defines how big is the objects along its dimensions. If `size` is a single number, then the object is uniformly sized. Generally, `size` is an array of at least one and up to three numbers for object's width, height and depth. Their order does not depend on the orientation of [the coordinate system](#coordinate-system). Thus, height corresponds to the axis that is upwards.
 
@@ -307,13 +307,13 @@ cube( pos, [25,10,15] );
 #### width, height, depth
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 width="𝘸𝘪𝘥𝘵𝘩" height="𝘩𝘦𝘪𝘨𝘩𝘵" depth="𝘥𝘦𝘱𝘵𝘩">
+<objectName width="width" height="height" depth="depth">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.width = 𝘸𝘪𝘥𝘵𝘩;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.height = 𝘩𝘦𝘪𝘨𝘩𝘵;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.depth = 𝘥𝘦𝘱𝘵𝘩;
+object.width = width;
+object.height = height;
+object.depth = depth;
 ```
 Properties. The individual width, height and depth of an object. These properties provide an alternative access to object `size`. 
 
@@ -349,13 +349,13 @@ Angle `spinH` (*H* from *horizontal*) defines horizontal rotation around the glo
 #### spin
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 spin="𝘴𝘱𝘪𝘯𝘏">
-<𝑜𝑏𝑗𝑒𝑐𝑡 spin="𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛,𝑠𝑝𝑖𝑛𝑆">
+<objectName spin="spinH">
+<objectName spin="spinH,spinV,spinT,spinS">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spin = 𝘴𝘱𝘪𝘯𝘏;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spin = [𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛,𝑠𝑝𝑖𝑛𝑆];
+object.spin = spinH;
+object.spin = [spinH,spinV,spinT,spinS];
 ```
 Property. Defines the rotation of an object in respect to its own axes. The value of `spin` is either an angle or an array of up to four angles [`spinH`, `spinV`, `spinT`, `spinS`]. All angles are measured in degrees.
 
@@ -379,14 +379,14 @@ The spin is independent on the orientation of [the coordinate system](#coordinat
 #### spinH, spinV, spinT, spinS
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 spinH="𝘴𝘱𝘪𝘯𝘏" spinV="𝘴𝘱𝘪𝘯𝘝" spinT="𝘴𝘱𝘪𝘯𝘛" spinS="𝑠𝑝𝑖𝑛𝑆">
+<objectName spinH="spinH" spinV="spinV" spinT="spinT" spinS="spinS">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinH = 𝘴𝘱𝘪𝘯𝘏;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinV = 𝘴𝘱𝘪𝘯𝘝;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinT = 𝘴𝘱𝘪𝘯𝘛;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.spinS = 𝘴𝘱𝘪𝘯S;
+object.spinH = spinH;
+object.spinV = spinV;
+object.spinT = spinT;
+object.spinS = spinS;
 ```
 Properties. The individual rotation angles of an object. These properties provide an alternative access to object `spin`. The order of application of rotation is fixed and does not depend on the order of setting individual angles.
 
@@ -419,24 +419,24 @@ The material properties of Suica objects define their visual styling, like color
 #### color
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 color="𝑐𝑜𝑙𝑜𝑟">
+<objectName color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡( ..., 𝑐𝑜𝑙𝑜𝑟, ... );
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.color = 𝑐𝑜𝑙𝑜𝑟;
+objectName( ..., color, ... );
+object.color = color;
 ```
 
 Property. Defines the color of a graphical object. Color in Suica can be expressed in a variety of ways. The [RGB scheme](https://www.w3schools.com/colors/colors_rgb.asp) represents colors as three components *red*, *green* and *blue*, while the [HSL scheme](https://www.w3schools.com/colors/colors_hsl.asp) components are
 *hue*, *saturation* and *lightness*.
 ```js
-'𝑐𝑜𝑙𝑜𝑟𝘕𝑎𝑚𝑒'
-#𝐹𝐹𝐹𝐹𝐹𝐹                     // 000000..FFFFFF
-0x𝐹𝐹𝐹𝐹𝐹𝐹                    // 000000..FFFFFF
-'𝑟𝑒𝑑,𝑔𝑟𝑒𝑒𝑛,𝑏𝑙𝑢𝑒'             // 0..1
-[𝑟𝑒𝑑,𝑔𝑟𝑒𝑒𝑛,𝑏𝑙𝑢𝑒]             // 0..1
-rgb(𝑟𝑒𝑑,𝑔𝑟𝑒𝑒𝑛,𝑏𝑙𝑢𝑒)          // 0..255
-hsl(ℎ𝑢𝑒,𝑠𝑎𝑡𝑢𝑟𝑎𝑡𝑖𝑜𝑛,𝑙𝑖𝑔ℎ𝑡𝑛𝑒𝑠𝑠)  // 0..360, 0..100, 0..100
+'colorName'
+#FFFFFF                     // 000000..FFFFFF
+0xFFFFFF                    // 000000..FFFFFF
+'red,green,blue'             // 0..1
+[red,green,blue]             // 0..1
+rgb(red,green,blue)          // 0..255
+hsl(hue,saturation,lightness)  // 0..360, 0..100, 0..100
 ```
 
 The following table elaborates how colors are set in HTML, CSS and JavaScript values.
@@ -459,12 +459,12 @@ The visibility of a Suica object indicates whether the object is drawn. Two anta
 #### visible
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 visible>
-<𝑜𝑏𝑗𝑒𝑐𝑡 visible="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<objectName visible>
+<objectName visible="true/false">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.visible = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
+object.visible = true/false;
 ```
 
 Property. Defines whether to draw an object. By default, objects in Suica are visible. Values *yes* and *1* are considered `true`, values *no* and *0* are considered `false`. In HTML the value of `visible` can be omitted and this assumes it is `true`. Note, that an object with `visible` set to `true` is not necessarily visible in the drawing canvas. A visible object might still be invisible if it is outside the drawing canvas, behind the viewer or hidden behind (or in) another larger object.
@@ -484,12 +484,12 @@ a.visible = true;
 #### hidden
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 hidden>
-<𝑜𝑏𝑗𝑒𝑐𝑡 hidden="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<objectName hidden>
+<objectName hidden="true/false">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.hidden = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
+object.hidden = true/false;
 ```
 
 Property. Defines whether to omit drawing an object. By default, objects in Suica are not hidden. Values *yes* and *1* are considered `true`, values *no* and *0* are considered `false`. In HTML the value of `hidden` can be omitted and this assumes it is `true`. Note, that an object with `hidden` set to `false` is not necessarily visible in the drawing canvas. A visible object might still be invisible if it is outside the drawing canvas, behind the viewer or hidden behind (or in) another larger object.
@@ -514,14 +514,14 @@ a.hidden = true;
 #### image
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 image="𝑑𝑟𝑎𝑤𝑖𝑛𝑔">
-<𝑜𝑏𝑗𝑒𝑐𝑡 image="𝑢𝑟𝑙">
+<objectName image="drawing">
+<objectName image="url">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = 𝑑𝑟𝑎𝑤𝑖𝑛𝑔;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = 𝑖𝑚𝑎𝑔𝑒;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.image = '𝑢𝑟𝑙';
+object.image = drawing;
+object.image = image;
+object.image = 'url';
 ```
 Property. Decorates object surface with an image. Images can be stamped onto Suica object via the property `image`. The property accepts a drawing or a texture image. For examples of how to use drawings see chapter [Drawings](drawings.md). 
 
@@ -594,13 +594,13 @@ Suica provides a limited set of images that can be used for textures. They can b
 #### images
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 images="𝘤𝘰𝘶𝘯𝘵">
-<𝑜𝑏𝑗𝑒𝑐𝑡 images="𝘤𝘰𝘶𝘯𝘵𝘟,𝘤𝘰𝘶𝘯𝘵𝘠">
+<objectName images="count">
+<objectName images="countX,countY">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.images = 𝘤𝘰𝘶𝘯𝘵;
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.images = [𝘤𝘰𝘶𝘯𝘵𝘟, 𝘤𝘰𝘶𝘯𝘵𝘠];
+object.images = count;
+object.images = [countX, countY];
 ```
 Property. Defines the number of copies of a drawing or image across the surface
 of an object. If the value of *images* is a number, it defines the number of copies in both
@@ -632,12 +632,12 @@ Only objects with edges have wireframe mode &ndash; [`square`](objects.md#square
 #### wireframe
 ```html
 HTML:
-<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe>
-<𝑜𝑏𝑗𝑒𝑐𝑡 wireframe="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<objectName wireframe>
+<objectName wireframe="true/false">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.wireframe = 𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒;
+object.wireframe = true/false;
 ```
 
 Property. Defines whether to visualize an object as wireframe. By default, objects in Suica are drawn with solid surfaces. The property `wireframe` is used to change surface visualization into wireframe mode &ndash; i.e. only edges are drawn. Values *yes* and *1* are considered `true`, values *no* and *0* are considered `false`. In HTML the value of `wireframe` can be omitted and this assumes it is `true`.
@@ -666,7 +666,7 @@ Suica is based on Three.js and Three.js functionality is available alongside Sui
 #### vertices
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.vertices
+object.vertices
 ```
 Property. Provides access to object vertices. This property is read-only. It contains an array of all vertices of an object converted into global 3D coordinates. The native local coordinates of the object can be accessed via [`threejs.geometry`](#threejs). If the object is a group or a model, `vertices` collects vertices of all nested objects. If the object is a model, its vertices are not immediately available &ndash; they are availabe after the [`onLoad`](events.md#load-event-handlers) event.
 
@@ -679,7 +679,7 @@ Property. Provides access to object vertices. This property is read-only. It con
 #### threejs
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.threejs
+object.threejs
 ```
 Property. Provides access to underlying Three.js object and its properties. This access allows the direct modification or setting of materials and geometries using Three.js objects.
 
@@ -707,7 +707,7 @@ When materials and properties are set via `threejs`, they may interfere with Sui
 #### intersectData
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡𝘕𝘢𝘮𝘦.intersectData
+object.intersectData
 ```
 Property. Provides access to underlying Three.js intersect data. The value of `intersectData` is set only if an object is selected by [`findObject`](events.md#findobject) or [`findObjects`](events.md#findobjects). It contains the data passed from Three.js as a result of raycasting intersection, like `point` (coordinates of the intersection point) and `distance` (distance to the intersection point. For more details of other elements of `intersectData` see [Raycaster.intersectObject](https://threejs.org/docs/#api/en/core/Raycaster.intersectObject).
 
