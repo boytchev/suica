@@ -133,7 +133,7 @@ class Mesh
 	{
 		this.suica.parser?.parseTags();
 
-		center = Suica.parseCenter( center );
+		center = [...Suica.parseCenter( center )];
 
 		this.threejs.position.set( ...center );
 	}
@@ -513,7 +513,7 @@ class Mesh
 
 	set spin( spin )
 	{
-		this.meshSpin = Suica.parseSize( spin );
+		this.meshSpin = [...Suica.parseSize( spin )];
 
 		this.updateOrientation();
 	}

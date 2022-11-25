@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		
+		<group id="cosys">
+			<group id="axis">
+				<line from="0,-30,0" to="0,30,0" color="black">
+				<cone y="30" size="1,2" color="black">
+				<cone y="-30" size="1,2" color="black" spinV="180">
+			</group>
+			<clone src="axis" spinV="90">
+			<clone src="axis" spinH="90" spinV="90">
+		</group>
+		
+		<clone id="a" src="cosys" center="20,20,20" size="0.5" spin="45,45,45">
+	</suica>
+</body>
