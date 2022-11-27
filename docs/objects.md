@@ -171,7 +171,7 @@ JS:
 object = suica.square( [x,y,z], [width,height], color );
 ```
 Object. Represents a regular square or a rectangle. Its properties are
-[`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). In HTML all properties can be included in the `<square>` tag.
+[`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint-spins), [`spinV`](properties.md#spinh-spinv-spint-spins), [`spinT`](properties.md#spinh-spinv-spint-spins) and [`spinS`](properties.md#spinh-spinv-spint-spins)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). In HTML all properties can be included in the `<square>` tag.
 
 ```html
 HTML:
