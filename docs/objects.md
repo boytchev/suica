@@ -1134,11 +1134,11 @@ Instead of a matrix of points, `splane` can also accept a function. This functio
 JS:
 function nSine( u, v, k )
 {
-	return [
-		55*(u-0.5), //x
-		k*(Math.sin(10*u)+Math.sin(10*v)), //y
-		55*(v-0.5) //z
-	];
+   return [
+      55*(u-0.5), //x
+      k*(Math.sin(10*u)+Math.sin(10*v)), //y
+      55*(v-0.5) //z
+   ];
 }
 
 surface( [0,0,0], splane(nSine,5), [210,210], 1, 'lightsalmon' ); 
@@ -1199,7 +1199,7 @@ moveTo( 10, 0, 10, 5, 5, 5, 25, 10 );
 ```html
 HTML:
 <lineTo point="x,y,...">
-<lineTo x="𝑥" y="𝑦">
+<lineTo x="x" y="y">
 ```
 ```js
 JS:
