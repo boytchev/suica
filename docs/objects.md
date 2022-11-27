@@ -29,11 +29,11 @@ In Suica object is created via HTML tag or via JavaScript function. Each object 
 
 ```html
 HTML:
-<𝘰𝘣𝘫𝘦𝘤𝘵 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" 𝘱𝘳𝘰𝘱𝘦𝘳𝘵𝘺𝘕𝘢𝘮𝘦="𝘷𝘢𝘭𝘶𝘦" ...>
+<object propertyName="value" propertyName="value" ...>
 ```
 ```js
 JS:
-𝘰𝘣𝘫𝘦𝘤𝘵( 𝘷𝘢𝘭𝘶𝘦, 𝘷𝘢𝘭𝘶𝘦, ...);
+object( value, value, ...);
 ```
 
 The following examples show the same 3D scene created in HTML and in JavaScript.
@@ -50,11 +50,11 @@ Suica keeps track of all created objects. They are created as JavaScript variabl
 #### id
 ```html
 HTML:
-<𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦 id="𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦">
+<objectName id="variableName">
 ```
 ```js
 JS:
-𝘷𝘢𝘳𝘪𝘢𝘣𝘭𝘦𝘕𝘢𝘮𝘦 = 𝘰𝘣𝘫𝘦𝘤𝘵𝘕𝘢𝘮𝘦( ... );
+variableName = objectName( ... );
 ```
 
 In HTML the name of an object is set in the `id` attribute. If the `id` is omitted, the object is created without a name. In JavaScript the name of an object is set by using the JavaScript way of creating variable.
@@ -82,7 +82,7 @@ point( [25,0,15] );
 #### allObjects
 ```js
 JS:
-𝘢𝘳𝘳𝘢𝘺 = allObjects();
+array = allObjects();
 ```
 Function. Get a list of all graphical objects in a Suica canvas. The result of
 the function is an array of these objects.
@@ -113,11 +113,11 @@ Flat objects are all objects that can exist in a plane. These objects have at mo
 ### Point
 ```html
 HTML:
-<point id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑠𝑖𝑧𝑒" color="𝑐𝑜𝑙𝑜𝑟">
+<point id="object" center="x,y,z" size="size" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = point( [𝑥,𝑦,𝑧], 𝑠𝑖𝑧𝑒, 𝑐𝑜𝑙𝑜𝑟 );
+object = point( [x,y,z], size, color );
 ```
 Object. Represents a point. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size), [`color`](properties.md#color), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). By default, a point is drawn as a small circle, but it can be changed with a custom [drawing](#drawings.md). In HTML all properties can be included in the `<point>` tag.
 
@@ -138,11 +138,11 @@ point( [25,0,15], 10, 'crimson' );
 #### line
 ```html
 HTML:
-<line id="𝑜𝑏𝑗𝑒𝑐𝑡" from="𝑥,𝑦,𝑧" to="𝑥,𝑦,𝑧" color="𝑐𝑜𝑙𝑜𝑟">
+<line id="object" from="x,y,z" to="x,y,z" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = line( [𝑥,𝑦,𝑧], [𝑥,𝑦,𝑧], 𝑐𝑜𝑙𝑜𝑟 );
+object = line( [x,y,z], [x,y,z], color );
 ```
 Object. Represents a straight segment. Its properties are `from` (or [`center`](properties.md#center)), `to`, [`color`](properties.md#color), [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). The properties `center` and `from` are synonyms and they set the starting point of the segment, while `to` sets the ending point. By default, a line is drawn as a solid line, but it can be changed with custom [drawing](#drawings.md). In HTML all properties can be included in the `<line>` tag.
 
@@ -164,11 +164,11 @@ point( [25,0,15], [100,-20,35], 'red' );
 #### square
 ```html
 HTML:
-<square id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+<square id="object" center="x,y,z" size="width,height" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑠𝑢𝑖𝑐𝑎.square( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
+object = suica.square( [x,y,z], [width,height], color );
 ```
 Object. Represents a regular square or a rectangle. Its properties are
 [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). In HTML all properties can be included in the `<square>` tag.
@@ -192,11 +192,11 @@ square( [0,0,0], 10, 'crimson' );
 #### circle
 ```html
 HTML:
-<circle id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+<circle id="object" center="x,y,z" size="width,height" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = circle( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
+object = circle( [x,y,z], [width,height], color );
 ```
 Object. Represents a circle or an ellipse. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe),
 [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). In HTML all properties can be included in the `<circle>` tag.
@@ -220,11 +220,11 @@ circle( [0,0,0], 10, 'crimson' );
 #### polygon
 ```html
 HTML:
-<polygon id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡" color="𝑐𝑜𝑙𝑜𝑟">
+<polygon id="object" count="count" center="x,y,z" size="width,height" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = polygon( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡], 𝑐𝑜𝑙𝑜𝑟 );
+object = polygon( count, [x,y,z], [width,height], color );
 ```
 Object. Represents a regular polygon or an elliptical polygon. Its properties are `count`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth) and [`height`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The property `count` defines
 the number of sides of the polygon. The properties `size`, `width` and `height` refer to the polygon circumscribed circle, rather than the polygon itself. In HTML all properties can be included in the `<polygon>` tag.
@@ -253,11 +253,11 @@ The spatial objects represent common 3D geometrical shapes: [`cube`](#cube), [`s
 #### cube
 ```html
 HTML:
-<cube id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<cube id="object" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = cube( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = cube( [x,y,z], [width,height,depth], color );
 ```
 Object. Represents a regular cube or a deformed cube (called *cuboid*). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). In HTML all properties can be included in the `<cube>` tag.
 
@@ -280,11 +280,11 @@ cube( [0,0,0], 10, 'crimson' );
 #### sphere
 ```html
 HTML:
-<sphere id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<sphere id="object" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = sphere( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = sphere( [x,y,z], [width,height,depth], color );
 ```
 Object. Represents a regular sphere or a deformed sphere (spheroid). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images), [`clone`](properties.md#clone), [`randomIn`](properties.md#randomin) and [`randomOn`](properties.md#randomon). In HTML all properties can be included in the `<sphere>` tag. 
 
@@ -307,11 +307,11 @@ sphere( [0,0,0], 10, 'crimson' );
 #### cylinder
 ```html
 HTML:
-<cylinder id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<cylinder id="object" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = cylinder( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = cylinder( [x,y,z], [width,height,depth], color );
 ```
 Object. Represents a regular cylinder or a cylindroid (an elliptical cylinder). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<cylinder>` tag.
 
@@ -334,11 +334,11 @@ cylinder( [0,0,0], 10, 'crimson' );
 #### prism
 ```html
 HTML:
-<prism id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<prism id="object" count="count" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = prism( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = prism( count, [x,y,z], [width,height,depth], color );
 ```
 Object. Represents a regular prism or prismoid (an elliptical prism). Its
 properties are `count`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The property `count` defines the number of sides of the prism. In HTML all properties can be included in the `<prism>` tag.
@@ -361,11 +361,11 @@ prism( 3, [0,0,0], 10, 'crimson' );
 #### cone
 ```html
 HTML:
-<cone id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<cone id="object" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = cone( [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = cone( [x,y,z], [width,height,depth], color );
 ```
 Object. Represents a regular cone or conoid (an elliptical cone). Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<cone>` tag.
 
@@ -388,11 +388,11 @@ cone( [0,0,0], 10, 'crimson' );
 #### pyramid
 ```html
 HTML:
-<pyramid id="𝑜𝑏𝑗𝑒𝑐𝑡" count="𝑐𝑜𝑢𝑛𝑡" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<pyramid id="object" count="count" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = pyramid( 𝑐𝑜𝑢𝑛𝑡, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = pyramid( count, [x,y,z], [width,height,depth], color );
 ```
 Object. Represents a regular pyramid or a pyramoid (an elliptical pyramid). Its properties are `count`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`wireframe`](properties.md#wireframe), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). The property `count` defines the number of sides of the pyramid. In HTML all properties can be included in the `<pyramid>` tag.
 
@@ -420,14 +420,14 @@ The advanced objects are constructed from other objects. They provide either a w
 #### clone
 ```html
 HTML:
-<clone id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝑡𝑒𝑚𝑝𝑙𝑎𝑡𝑒𝑂𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧"
-       size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟" spin="𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛">
+<clone id="object" src="templateObject" center="x,y,z"
+       size="width,height,depth" color="color" spin="spinH,spinV,spinT,spinS">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = 𝑡𝑒𝑚𝑝𝑙𝑎𝑡𝑒𝑂𝑏𝑗𝑒𝑐𝑡.clone;
+object = templateObject.clone;
 ```
-Object and read-only property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color) and [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
+Object and read-only property. Generates a clone of the object. Cloning is used to generate objects from another template object by copying all its properties. In HTML the properties are `src`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color) and [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint-spins), [`spinV`](properties.md#spinh-spinv-spint-spins), [`spinT`](properties.md#spinh-spinv-spint-spins) and [`spinS`](properties.md#spinh-spinv-spint-spins)). The value of `src` is the name of the template object. If not omitted, the other properties override the properties copied from the template object.
 ```html
 HTML:
 <cube id="a" size="15">
@@ -452,18 +452,18 @@ Cloning a [group](#group) also clones all its objects.
 #### group
 ```html
 HTML:
-<group id="𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟" spin="𝘴𝘱𝘪𝘯𝘏,𝘴𝘱𝘪𝘯𝘝,𝘴𝘱𝘪𝘯𝘛">
-   <𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵 ...>
-   <𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵 ...>
+<group id="groupObject" center="x,y,z" size="width,height,depth" color="color" spin="spinH,spinV,spinT">
+   <childObject ...>
+   <childObject ...>
    :
 </group>
 ```
 ```js
 JS:
-𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵 = group( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
-𝘨𝘳𝘰𝘶𝘱𝘖𝘣𝘫𝘦𝘤𝘵.add( 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, 𝘤𝘩𝘪𝘭𝘥𝘖𝘣𝘫𝘦𝘤𝘵, ... );
+groupObject = group( childObject, childObject, ... );
+groupObject.add( childObject, childObject, ... );
 ```
-Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). The child objects are defined as tags within the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
+Object. Represents a collection of objects grouped into a single object. A group can be positioned, scaled, rotated and colored as other objects. In HTML its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint-spins), [`spinT`](properties.md#spinh-spinv-spint-spins) and [`spinS`](properties.md#spinh-spinv-spint-spins)) and [`clone`](properties.md#clone). The child objects are defined as tags within the `<group>` tag. In JavaScript the child objects are provided are parameters or added with the method `add`. 
 
 ```html
 HTML:
@@ -493,12 +493,12 @@ A group is a special object, and some aspects of group management are:
 #### tube
 ```html
 HTML:
-<tube id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" curve="𝑐𝑢𝑟𝑣𝑒" radius="𝑟𝑎𝑑𝑖𝑢𝑠" count="𝑡𝑢𝑏𝑢𝑙𝑎𝑟,𝑟𝑎𝑑𝑖𝑎𝑙"
-      size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<tube id="object" center="x,y,z" curve="curve" radius="radius" count="tubular,radial"
+      size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = tube( [𝑥,𝑦,𝑧], 𝑐𝑢𝑟𝑣𝑒, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝘤𝘰𝘶𝘯𝘵, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = tube( [x,y,z], curve, radius, count, [width,height,depth], color );
 ```
 Object. Represents a tubular object along a straight or a curved line. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), `curve`, `radius`, `count`, [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<tube>` tag.
 
@@ -588,12 +588,12 @@ suica.ontime = function( t )
 #### extrude
 ```html
 HTML:
-<extrude id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝑠ℎ𝑎𝑝𝑒,ℎ𝑜𝑙𝑒,..." center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<extrude id="object" src="shape,hole,..." center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = extrude( 𝑠ℎ𝑎𝑝𝑒, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
-𝑜𝑏𝑗𝑒𝑐𝑡 = extrude( [𝑠ℎ𝑎𝑝𝑒,ℎ𝑜𝑙𝑒,...], [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = extrude( shape, [x,y,z], [width,height,depth], color );
+object = extrude( [shape,hole,...], [x,y,z], [width,height,depth], color );
 ```
 Object. Represents a 3D object extruded from a 2D shape. Its properties are `shape`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), `radius`, `offset`, `count`, [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<extrude>` tag.
 
@@ -660,12 +660,12 @@ its.count = [5, 10];
 #### surface
 ```html
 HTML:
-<surface id="𝑜𝑏𝑗𝑒𝑐𝑡" center="𝑥,𝑦,𝑧" curve="𝑐𝑢𝑟𝑣𝑒" count="𝑢-𝑐𝑜𝑢𝑛𝑡,𝑣-𝑐𝑜𝑢𝑛𝑡"
-      size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<surface id="object" center="x,y,z" curve="curve" count="uCount,vCount"
+      size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = surface( [𝑥,𝑦,𝑧], 𝑐𝑢𝑟𝑣𝑒, [𝑢-𝑐𝑜𝑢𝑛𝑡,𝑣-𝑐𝑜𝑢𝑛𝑡], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = surface( [x,y,z], curve, [uCount,vCount], [width,height,depth], color );
 ```
 Object. Represents a thin curved surface. Its properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), `curve`, `count`, [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<surface>` tag.
 
@@ -736,11 +736,11 @@ surface( [0,0,0], bell, 100 );
 #### convex
 ```html
 HTML:
-<convex id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝑥,𝑦,𝑧; ..." size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<convex id="object" src="x,y,z; ..." size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = convex( [[𝑥,𝑦,𝑧],...], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = convex( [[x,y,z],...], [width,height,depth], color );
 ```
 Object. Constructs a [convex hull](https://en.wikipedia.org/wiki/Convex_hull) or a [convex polyhedron](https://en.wikipedia.org/wiki/Polyhedron) on a set of points. The `src` parameter of `convex` is a set of points in 3D. The shape of the object is the minimal shape that wraps these points. Not all points from `src` are vertices of the convex object. Other properties are `vertices`, [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`color`](properties.md#color), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties except `vertices` can be included in the `<convex>` tag.
 
@@ -769,7 +769,6 @@ In JavaScript the property `center` is not included as a parameter. However, it 
 The `src` property can be reset &ndash; this changes the shape of the object. The algorithm that generates a convex hull over a set of points has a non-linear average complexity of O(n log(n)). The actual time needed for generating a hull depends on the number of points and the complexity of the resulting shape. When a convex shape is constructed, its vertices are stored in the read-only [`vertices`](properties.md#vertices) property.
 
 [<kbd><img src="../examples/snapshots/convex-dynamic.jpg" width="300"></kbd>](../examples/convex-dynamic.html)
----
 
 
 
@@ -777,11 +776,11 @@ The `src` property can be reset &ndash; this changes the shape of the object. Th
 #### model
 ```html
 HTML:
-<model id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ">
+<model id="object" src="fileName" center="x,y,z" size="width,height,depth">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = model( 𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ] );
+object = model( fileName, [x,y,z], [width,height,depth] );
 ```
 Object. Loads an external model. The `src` parameter is a file name of a model in [GLTF or GLB format](http://en.wikipedia.org/wiki/GlTF). GLTF is a text format, GLB is a binary format. Similar to external [images](properties.md#image), models can be loaded only from HTTP addresses. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<model>` tag.
 
@@ -808,7 +807,7 @@ Loading a model is asynchronous. The creation of a model builds an empty placeho
 #### model.save
 ```js
 JS:
-model.save( 𝘧𝘪𝘭𝘦𝘕𝘢𝘮𝘦, [𝑜𝑏𝑗𝑒𝑐𝑡,...] );
+model.save( fileName, [object,...] );
 ```
 Method. Save 3D objects into external GLTF or GLB file. The `fileName` parameter is the desired file name. Its extension must be either `.gltf` or `.glb`. The second parameter is an array of Suica objects so save. If the parameter is omitted, all objects are saved (as if [`allObjects`](#allObjects) is used).
 
@@ -820,12 +819,12 @@ When objects are save to external file they are transformed into a GLFT structur
 #### construct
 ```html
 HTML:
-<construct id="𝑜𝑏𝑗𝑒𝑐𝑡" src="𝘦𝘹𝘱𝘳𝘦𝘴𝘴𝘪𝘰𝘯" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝑐𝑜𝑙𝑜𝑟">
+<construct id="object" src="expression" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = construct( 𝘦𝘹𝘱𝘳𝘦𝘴𝘴𝘪𝘰𝘯, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
-𝑜𝑏𝑗𝑒𝑐𝑡 = construct( {src:𝘦𝘹𝘱𝘳𝘦𝘴𝘴𝘪𝘰𝘯, ...}, [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝑐𝑜𝑙𝑜𝑟 );
+object = construct( expression, [width,height,depth], color );
+object = construct( {src:expression, ...}, [width,height,depth], color );
 ```
 Object. Constructs an object with [Constructive Solid Geometry (CSG)](https://en.wikipedia.org/wiki/Constructive_solid_geometry) operations. The `src` parameter is a CSG expression. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<construct>` tag. The `size` of a model is the scale factor, which is multiplied with the actual size of the model.
 
@@ -879,11 +878,11 @@ construct( {b:objb, c:objc, src:'a-b-c'} );
 #### text3d
 ```html
 HTML:
-<text3d id="𝑜𝑏𝑗𝑒𝑐𝑡" text="𝘵𝘦𝘹𝘵" font="𝘧𝘰𝘯𝘵𝘕𝘢𝘮𝘦" center="𝑥,𝑦,𝑧" size="𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ" color="𝘤𝘰𝘭𝘰𝘳">
+<text3d id="object" text="text" font="fontName" center="x,y,z" size="width,height,depth" color="color">
 ```
 ```js
 JS:
-𝑜𝑏𝑗𝑒𝑐𝑡 = text3d( 𝘵𝘦𝘹𝘵, 𝘧𝘰𝘯𝘵𝘕𝘢𝘮𝘦, [𝑥,𝑦,𝑧], [𝑤𝑖𝑑𝑡ℎ,ℎ𝑒𝑖𝑔ℎ𝑡,𝑑𝑒𝑝𝑡ℎ], 𝘤𝘰𝘭𝘰𝘳 );
+object = text3d( text, fontName, [x,y,z], [width,height,depth], color );
 ```
 Object. Creates 3D text. The text is set in `text` parameter and the font name &ndash; in `font`. The font must be a file in [JSON format](http://en.wikipedia.org/wiki/JSON) with shapes of individual font characters. Similar to external [images](properties.md#image), fonts can be loaded only from HTTP addresses. Other properties are [`center`](properties.md#center) (or [`x`](properties.md#x-y-z), [`y`](properties.md#x-y-z) and [`z`](properties.md#x-y-z)), [`size`](properties.md#size) (or [`width`](properties.md#width-height-depth), [`height`](properties.md#width-height-depth) and [`depth`](properties.md#width-height-depth)), [`spin`](properties.md#spin) (or [`spinH`](properties.md#spinh-spinv-spint), [`spinV`](properties.md#spinh-spinv-spint) and [`spinT`](properties.md#spinh-spinv-spint)), [`image`](properties.md#image), [`images`](properties.md#images) and [`clone`](properties.md#clone). In HTML all properties can be included in the `<text3d>` tag.
 
@@ -931,11 +930,11 @@ Invisibles are abstract constructions used to calculated object shape, position 
 #### spline points
 ```html
 HTML:
-<spline src="𝑥,𝑦,𝑧;..." 𝑐𝑙𝑜𝑠𝑒𝑑="..." 𝑜𝑝𝑒𝑛="..." 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔="..." 𝑎𝑝𝑝𝑟𝑜𝑥𝑖𝑚𝑎𝑡𝑖𝑛𝑔="...">
+<spline src="x,y,z;..." closed="..." open="..." interpolating="..." approximating="...">
 ```
 ```js
 JS:
-spline( [[𝑥,𝑦,𝑧],...], 𝑐𝑙𝑜𝑠𝑒𝑑, 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔 );
+spline( [[x,y,z],...], closed, interpolating );
 ```
 Function. Implements [splines](https://en.wikipedia.org/wiki/Spline_(mathematics)) by defining a function that for generating smoothly varying values. The first parameter of `spline` is an array of points. The result is a function *f(u)* where *u* &isin; [0,1]. The result of *f(u)* is a point along the curve where *u*=0 corresponds to the beginning of the curve, *u*=1 corresponds to the end of the curve and intermediate values of *u* correspond to intermediate points on the curve.
 
@@ -1001,13 +1000,13 @@ HTML:
 #### spline function
 ```html
 HTML:
-<spline src="𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒">
+<spline src="functionName">
 ```
 ```js
 JS:
-spline( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2 );
+spline( functionName, param1, param2 );
 // where:
-function 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒 (𝑢, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2) {...}
+function functionName (u, param1, param2) {...}
 ```
 Instead of an array of points, `spline` can also accept a function, although technically it is not a spline any more. This function should have 1, 2 or 3 parameters. The first parameter is compusory and it `u` &isin; [0,1]. The other two parameters are optional and they are function-specific. The result of this function must be an array of 3 or 4 values, corresponding to a point along the curve defined by this function.
 
@@ -1044,11 +1043,11 @@ HTML:
 #### splane points
 ```html
 HTML:
-<spline src="𝑥,𝑦,𝑧;..." 𝑐𝑙𝑜𝑠𝑒𝑑="..." 𝑜𝑝𝑒𝑛="..." 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔="..." 𝑎𝑝𝑝𝑟𝑜𝑥𝑖𝑚𝑎𝑡𝑖𝑛𝑔="...">
+<spline src="x,y,z;..." closed="..." open="..." interpolating="..." approximating="...">
 ```
 ```js
 JS:
-splane( [[[𝑥,𝑦,𝑧],...],...], 𝑐𝑙𝑜𝑠𝑒𝑑, 𝑖𝑛𝑡𝑒𝑟𝑝𝑜𝑙𝑎𝑡𝑖𝑛𝑔 );
+splane( [[[x,y,z],...],...], closed, interpolating );
 ```
 Function. Implements spline surfaces by defining a function that for generating smoothly varying 3D coordinates. The first parameter of `splane` is a matrix of  points. The result is a function *f(u,v)* where *u* &isin; [0,1] and *v* &isin; [0,1]. The result of *f(u,v)* is a point on the surface where (*u,v*)=(0,0) corresponds to one corner of the surface and (*u,v*)=(1,1) corresponds to the opposite corner.
 
@@ -1058,16 +1057,16 @@ Suica implements cubic splines and the minimal matrix of points is 4&times;4. In
 
 ```html
 HTML:
-" x₀₀,y₀₀,z₀₀; x₁₀,y₁₀,z₁₀; ... |
-  x₀₁,y₀₁,z₀₁; x₁₁,y₁₁,z₁₁; ... |
+" x00,y00,z00; x10,y10,z10; ... |
+  x01,y01,z01; x11,y11,z11; ... |
   ...
 "
 ```
 ```js
 JS:
 [
-  [[x₀₀,y₀₀,z₀₀], [x₁₀,y₁₀,z₁₀], ...],
-  [[x₀₁,y₀₁,z₀₁], [x₁₁,y₁₁,z₁₁], ...],
+  [[x00,y00,z00], [x10,y10,z10], ...],
+  [[x01,y01,z01], [x11,y11,z11], ...],
   ...
 ]
 ```
@@ -1121,13 +1120,13 @@ Approximation and interpolation can be controlled independently on each directio
 #### splane function
 ```html
 HTML:
-<splane src="𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒">
+<splane src="functionName">
 ```
 ```js
 JS:
-splane( 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2 );
+splane( functionName, param1, param2 );
 // where:
-function 𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛𝑁𝑎𝑚𝑒 (𝑢, 𝑣, 𝑝𝑎𝑟𝑎𝑚1, 𝑝𝑎𝑟𝑎𝑚2) {...}
+function functionName (u, v, param1, param2) {...}
 ```
 Instead of a matrix of points, `splane` can also accept a function. This function should have 2, 3 or 4 parameters. The first two parameters are compusory and they are `u` &isin; [0,1] and `v` &isin; [0,1]. The other two parameters are optional and they are function-specific. The result of this function must be an array of 3 values, corresponding to a point on the surface defined by this function.
 
@@ -1164,11 +1163,11 @@ Shapes are invisible objects &ndash; virtual lines that define 2D shapes. A shap
 #### shape
 ```html
 HTML:
-<shape 𝑐𝑜𝑢𝑛𝑡="...">
+<shape count="...">
 ```
 ```js
 JS:
-shape( 𝑐𝑜𝑢𝑛𝑡 );
+shape( count );
 ```
 Object. Create a shape defined like . The parameter `count` is the number of segments into which all curves and arcs in the shape are decomposed.
 
@@ -1176,12 +1175,12 @@ Object. Create a shape defined like . The parameter `count` is the number of seg
 #### moveTo
 ```html
 HTML:
-<moveTo point="𝑥,𝑦,...">
-<moveTo x="𝑥" y="𝑦">
+<moveTo point="x,y,...">
+<moveTo x="x" y="y">
 ```
 ```js
 JS:
-moveTo( 𝑥, 𝑦, ... );
+moveTo( x, y, ... );
 ```
 
 Command. Sets the position of the virtual pen. This command moves the pen from its current location to (`x`,`y`) without generating a shape segment and then uses the rest values for building line segments with `lineTo`. See Drawings [`moveTo`](drawings.md#moveto) for more details.
@@ -1199,12 +1198,12 @@ moveTo( 10, 0, 10, 5, 5, 5, 25, 10 );
 #### lineTo
 ```html
 HTML:
-<lineTo point="𝑥,𝑦,...">
+<lineTo point="x,y,...">
 <lineTo x="𝑥" y="𝑦">
 ```
 ```js
 JS:
-lineTo( 𝑥, 𝑦, ... );
+lineTo( x, y, ... );
 ```
 
 Command. Adds a line segment to the shape. This command moves the pen along a line from its current location to (`x`,`y`) and adds that line to the shape boundary. Then it adds line segments for the rest of the parameters. See Drawings [`lineTo`](drawings.md#lineto) for more details.
@@ -1227,12 +1226,12 @@ The `count` property does not apply to line segment, so `vertex` will return onl
 #### curveTo
 ```html
 HTML:
-<curveTo m="𝑚𝑥,𝑚𝑦" point="𝑥,𝑦">
-<curveTo mx="𝑚𝑥" my="𝑚𝑦" x="𝑥" y="𝑦">
+<curveTo m="mx,my" point="x,y">
+<curveTo mx="mx" my="my" x="x" y="y">
 ```
 ```js
 JS:
-𝑑𝑟𝑎𝑤𝑖𝑛𝑔.curveTo( 𝑚𝑥, 𝑚𝑦, 𝑥, 𝑦 );
+drawing.curveTo( mx, my, x, y );
 ```
 
 Command. Adds a curved segment to the shape. This command moves the pen along a curved line from its current location to (`x`,`y`) and adds that curve to the shape. See Drawings [`curveTo`](drawings.md#curveto) for more details.
@@ -1258,13 +1257,13 @@ The first example below defines a heart shape made of several curves. The other 
 #### arc
 ```html
 HTML:
-<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟">
-<arc point="𝑥,𝑦" radius="𝑛𝑢𝑚𝑏𝑒𝑟" from="𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒" to="𝑡𝑜𝐴𝑛𝑔𝑙𝑒" cw="𝑡𝑟𝑢𝑒/𝑓𝑎𝑙𝑠𝑒">
+<arc point="x,y" radius="number">
+<arc point="x,y" radius="number" from="fromAngle" to="toAngle" cw="true/false">
 ```
 ```js
 JS:
-arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠 );
-arc( 𝑥, 𝑦, 𝑟𝑎𝑑𝑖𝑢𝑠, 𝑓𝑟𝑜𝑚𝐴𝑛𝑔𝑙𝑒, 𝑡𝑜𝐴𝑛𝑔𝑙𝑒, 𝑐𝑤 );
+arc( x, y, radius );
+arc( x, y, radius, fromAngle, toAngle, cw );
 ```
 
 Command. Adds a circular arc to the shape. This command creates an arc of a circle with point (`x`,`y`) and given `radius`. The arc stars from angle `from` and ends at angle `to`, both measured in degrees, clockwise if `cw` is `true`. See Drawings [`arc`](drawings.md#arc) for more details.
@@ -1333,7 +1332,7 @@ else
 #### scorm.getValue
 ```js
 JS:
-scorm.getValue( 𝘯𝘢𝘮𝘦 );
+scorm.getValue( name );
 ```
 Function. Retrieves the value of SCORM property `name`. If such property does not exist the return value is an empty string. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2).
 
@@ -1348,7 +1347,7 @@ var studentId = scorm.getValue( 'cmi.core.student_id' );
 #### scorm.setValue
 ```js
 JS:
-scorm.setValue( 𝘯𝘢𝘮𝘦, 𝘷𝘢𝘭𝘶𝘦 );
+scorm.setValue( name, value );
 ```
 Function. Sets the `value` of SCORM property `name`. Some properties, like student's name, are read-only and their values cannot be modified.
 
@@ -1387,7 +1386,7 @@ Property. This is SCORM property `cmi.core.score.raw`. It gets or sets the stude
 #### scorm.derandomize
 ```js
 JS:
-scorm.derandomize( 𝘴𝘦𝘦𝘥𝘝𝘢𝘭𝘶𝘦 )
+scorm.derandomize( seedValue )
 ```
 Functions. Resets the generator of pseudo-random numbers in Suica. This function uses [`scorm.studentId`](#scormstudentid), [`scorm.studentName`](#scormstudentname) and `seedValue` to reset or derandomize the [`random`](suica.md#random) function. After derandomization, the generator produces the same sequence of pseudo-random values.
 
@@ -1401,7 +1400,7 @@ The next example demonstrates the derandomization effect. The lower three rows o
 #### &lt;scorm&gt;
 ```html
 HTML:
-<scorm>𝘯𝘢𝘮𝘦</scorm>
+<scorm>name</scorm>
 ```
 Tag. Retrieves the value of SCORM property `name` and replaces the content of the `<scorm>` tag. If such property does not exist the content is cleared. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2). Adittionaly, `name` could be `studentId`, `studentName` or `score`.
 
