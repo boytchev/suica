@@ -63,7 +63,12 @@ function startTests()
 
 	if( window.location.search )
 	{
-		cases = cases.filter( (name)=>name.indexOf(window.location.search.substring(1))>=0 );
+		var filterNames = window.location.search;
+	
+		if( filterNames.substring(0,3)=='?S&' ) filterNames = filterNames.substring(3);
+		if( filterNames=='?S' ) filterNames = filterNames.substring(2);
+		if( filterNames.substring(0,1)=='?' ) filterNames = filterNames.substring(1);
+		cases = cases.filter( (name)=>name.indexOf(filterNames)>=0 );
 	}
 
 	
@@ -267,10 +272,16 @@ function compareImages( )
 	console.log( `::> match ${match}%;` );
 	//log( `match ${match}%; difference in ${pnts} pixels` );
 	//var match = Math.max( 100-100*totalDiff, 0 );
-	logAppend( ` &ndash; match ${match}%;` );
+	logAppend( ` &ndash; match ${match}%` );
+	
+	if( match<99 )
+	{
+		logAppend( ` [<a target="_blank" href="test.html?S&${testName}">retest</a> |` );
+		logAppend( ` <a target="_blank" href="cases/${testName}.html">rerun</a>]` );
+	}
 	
 	//if( match<90 || pnts>PIXELS_DIFF )
-	if( match<90 )
+	if( match<90 || window.location.search.indexOf('?S')==0 )
 	{
 		log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
 		var a = document.getElementById('result-image').cloneNode();
