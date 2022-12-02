@@ -11,7 +11,7 @@
 
 @EXIT
 
-@set THREE=D:\Install\Three.js\three.js-master-r146\three.js-master
+@set THREE=D:\Install\Three.js\three.js-master-r147\three.js-master
 
 @copy %THREE%\build\three.min.js .
 @copy %THREE%\examples\js\controls\OrbitControls.js .

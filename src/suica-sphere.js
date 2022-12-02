@@ -9,7 +9,6 @@ Sphere = class Sphere extends Mesh
 {
 	static COLOR = 'lightsalmon';
 	static SIZE = 30;
-	static COUNT = 50;
 	
 	constructor( suica, center, size, color )
 	{
@@ -20,7 +19,8 @@ Sphere = class Sphere extends Mesh
 
 		if( !suica._.solidGeometry.sphere )
 		{
-			suica._.solidGeometry.sphere = suica.flipNormal( new THREE.SphereGeometry( 0.5, Sphere.COUNT, Math.round(Sphere.COUNT/2) ).applyMatrix4( suica.orientation.MATRIX ) );
+			console.log(Suica.CIRCLECOUNT)
+			suica._.solidGeometry.sphere = suica.flipNormal( new THREE.SphereGeometry( 0.5, Suica.CIRCLECOUNT, Math.round(Suica.CIRCLECOUNT/2) ).applyMatrix4( suica.orientation.MATRIX ) );
 		}
 		
 		super( suica, 
