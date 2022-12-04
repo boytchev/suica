@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Toward</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="logo.png"/>
+	<link rel="stylesheet" href="examples.css">
+	
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<h1>Toward</h1>
+	<p>Demonstrating spinning toward a 3D point.</p>
+
+	<!-- The model is provided by www.kenney.nl License: Public Domain / CC0
+			https://www.kenney.nl/assets/space-kit
+	-->
+
+	<suica ontime="loop" fullwindow>
+		<orbit>
+		<sphere id="target" size="5">
+		<group id="template" hidden>
+			<line to="50,0,0" color="red">
+			<line to="0,10,0" color="green">
+			<line to="0,0,10" color="blue">
+			<model id="d" src="../assets/models/spaceships/craft_miner.glb" size="5" spinH="-90" x="10" z="-10" y="-1">
+		</group>
+	</suica>
+
+	<script>
+		var spaceships = [];
+		for( var x=-20; x<=20; x+=40 )
+		for( var y=-20; y<=20; y+=40 )
+		for( var z=-20; z<=20; z+=40 )
+			spaceships.push( template.clone.style({hidden:false, center:[x,y,z]}) );
+		
+		function loop( t, dT )
+		{
+			target.center = [10*Math.sin(3*t+1),10*Math.sin(2*t-6),10*Math.sin(3*t+3)]; 
+			for( var spaceship of spaceships )
+			{
+/*
+				// y-toward
+				spaceship.spinH = degrees( Math.atan2( target.x-spaceship.x, target.z-spaceship.z ) );
+				var dist = Math.sqrt( (target.x-spaceship.x)**2 + (target.z-spaceship.z)**2 );
+				spaceship.spinV = degrees( Math.atan2( dist, target.y-spaceship.y ) );
+*/				
+/*
+				// z-toward
+				spaceship.spinH = degrees( Math.atan2( target.x-spaceship.x, target.z-spaceship.z ) );
+				var dist = Math.sqrt( (target.x-spaceship.x)**2 + (target.z-spaceship.z)**2 );
+				spaceship.spinV = degrees( Math.atan2( dist, target.y-spaceship.y ) )-90;
+*/
+/*
+				// x-toward
+			spaceship.spinH = degrees( Math.atan2( target.x-spaceship.x, target.z-spaceship.z ) )-90;
+			var dist = Math.sqrt( (target.x-spaceship.x)**2 + (target.z-spaceship.z)**2 );
+			spaceship.spinS = degrees( Math.atan2( target.y-spaceship.y, dist ) );
+*/			
+			}
+		}
+	</script>
+</body>
+</html>
