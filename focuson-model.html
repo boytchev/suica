@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Toward</title>
+	<title>focusOn</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,8 +18,8 @@
 
 <body>
 
-	<h1>Toward</h1>
-	<p>Demonstrating spinning toward a 3D point.</p>
+	<h1>focusOn</h1>
+	<p>Spinning a 3D model to focus on a target.</p>
 
 	<!-- The model is provided by www.kenney.nl License: Public Domain / CC0
 			https://www.kenney.nl/assets/space-kit
@@ -27,16 +27,30 @@
 
 	<suica ontime="loop" fullwindow>
 		<orbit>
-		<sphere id="target" size="5">
+		<sphere id="target" size="2" color="black">
+		<drawing id="dashed" size="64,1">
+			<moveTo point="0,0"> <lineTo point="12,0">
+			<moveTo point="16,0"> <lineTo point="28,0">
+			<moveTo point="32,0"> <lineTo point="44,0">
+			<moveTo point="48,0"> <lineTo point="60,0">
+			<stroke color="white">
+		</drawing>
 		<group id="template" hidden>
-			<line to="50,0,0" color="red">
-			<line to="0,10,0" color="green">
-			<line to="0,0,10" color="blue">
+			<line to="50,0,0" color="dimgray" image="dashed" images="20">
 			<model id="d" src="../assets/models/spaceships/craft_miner.glb" size="5" spinH="-90" x="10" z="-10" y="-1">
 		</group>
 	</suica>
 
 	<script>
+		var dashed = drawing( 128, 1 );
+			for( var i=0; i<128; i+=16 )
+			{
+				moveTo( i, 0 );
+				lineTo( i+12, 0 );
+			}
+		stroke( 'white', 1 );
+	
+	
 		var spaceships = [];
 		for( var x=-20; x<=20; x+=40 )
 		for( var y=-20; y<=20; y+=40 )
@@ -51,7 +65,7 @@
 
 			for( var spaceship of spaceships )
 			{
-				spaceship.focusOnX( target, 90 );
+				spaceship.focusOn( target, 500*Math.sin(t), 'x' );
 			}
 		}
 	</script>

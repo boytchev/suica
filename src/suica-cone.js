@@ -145,6 +145,7 @@ class Pyramid extends Mesh
 		object.spin = this.spin;
 		object.wireframe = this.wireframe;
 		object.image = this.image;
+		object.images = this.images;
 		object.visible = this.visible;
 
 		Suica.cloneEvents( object, this );

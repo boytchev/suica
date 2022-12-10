@@ -724,7 +724,7 @@ class Mesh
 	} // Mesh.vertices
 	
 	
-	focusOnX( target, angle )
+	focusOn( target, angle=0, axis=this.suica.orientation.NAME[1] )
 	{
 		target = Suica.parseCenter( target );
 
@@ -741,62 +741,29 @@ class Mesh
 		v.normalize( );	
 		w.normalize( );	
 			
-		var m = new THREE.Matrix4().makeBasis( u, v, w ),
-			e = new THREE.Euler().setFromRotationMatrix( m, 'YZX' );
-			e.x -= radians( angle );
-			e.reorder( 'YXZ' );
-		
-		this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
-	} // Mesh.focusOnX
-
-
-	focusOnY( target, angle )
-	{
-		target = Suica.parseCenter( target );
-
-		var u = new THREE.Vector3(
-					target[0]-this.x,
-					target[1]-this.y,
-					target[2]-this.z ),			
-			v = this.suica.orientation.UP.clone(),
-			w = new THREE.Vector3().crossVectors( u, v );
-			
-		v.crossVectors( w, u );
-		
-		u.normalize( );	
-		v.normalize( );	
-		w.normalize( );	
-			
-		var m = new THREE.Matrix4().makeBasis( w, u, v ),
-			e = new THREE.Euler().setFromRotationMatrix( m, 'ZXY' );
-			e.y -= radians( angle );
-			e.reorder( 'YXZ' );
-
-		this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
-	} // Mesh.focusOnY
+		var m = new THREE.Matrix4(),
+			e = new THREE.Euler();
 	
-	
-	focusOnZ( target, angle )
-	{
-		target = Suica.parseCenter( target );
+		switch( axis )
+		{
+			case 'x':
+			case 'X':	m = m.makeBasis( u, v, w );
+						e = e.setFromRotationMatrix( m, 'YZX' );
+						e.x -= radians( angle );
+						break;
+			case 'y':
+			case 'Y':	m = m.makeBasis( w, u, v );
+						e = e.setFromRotationMatrix( m, 'ZXY' );
+						e.y -= radians( angle );
+						break;
+			case 'z':
+			case 'Z':	m = m.makeBasis( v, w, u );
+						e = e.setFromRotationMatrix( m, 'XYZ' );
+						e.z -= radians( angle );
+						break;
+		}
 
-		var u = new THREE.Vector3(
-					target[0]-this.x,
-					target[1]-this.y,
-					target[2]-this.z ),			
-			v = this.suica.orientation.UP.clone(),
-			w = new THREE.Vector3().crossVectors( u, v );
-			
-		v.crossVectors( w, u );
-		
-		u.normalize( );	
-		v.normalize( );	
-		w.normalize( );	
-			
-		var m = new THREE.Matrix4().makeBasis( v, w, u ),
-			e = new THREE.Euler().setFromRotationMatrix( m, 'XYZ' );
-			e.z -= radians( angle );
-			e.reorder( 'YXZ' );
+		e.reorder( 'YXZ' );
 
 		this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
 	} // Mesh.focusOnZ

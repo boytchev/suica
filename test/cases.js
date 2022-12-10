@@ -5,6 +5,7 @@ var cases = [
 'bug-cloning-group-of-group', 
 'bug-cone-cylinder-alignment', 
 'bug-dynamic-line', 
+'bug-scaled-dashed-lines', 
 'camera-anaglyph', 
 'camera-fullscreen', 
 'camera-fullwindow', 

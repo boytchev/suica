@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<drawing id="dashed" size="16,6">
+			<moveTo point="0,0">
+			<lineTo point="6,0">
+			<moveTo point="10,0">
+			<lineTo point="16,0">
+			<stroke color="white" width="50">
+		</drawing>
+
+		<line id="a" from="-50,25,0" to="50,25,0" color="black" image="dashed" images="1">
+		<line id="b" from="-50,20,0" to="50,20,0" color="black" image="dashed" images="2">
+		<line id="c" from="-50,15,0" to="50,15,0" color="black" image="dashed" images="5">
+		<line id="d" from="-50,10,0" to="50,10,0" color="black" image="dashed" images="10">
+		<line id="e" from="-50,5,0" to="50,5,0" color="black" image="dashed" images="50">
+		
+		<clone y="-30" src="a">
+		<clone y="-30" src="b">
+		<clone y="-30" src="c">
+		<clone y="-30" src="d">
+		<clone y="-30" src="e">
+	</suica>
+</body>
+</html>

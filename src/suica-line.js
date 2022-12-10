@@ -99,6 +99,7 @@ class Line extends Mesh
 		var object = new Line( this.suica, this.from, this.to, this.color );
 		
 		object.image = this.image;
+		object.images = this.images;
 		object.visible = this.visible;
 
 		Suica.cloneEvents( object, this );
