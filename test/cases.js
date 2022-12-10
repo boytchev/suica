@@ -83,6 +83,8 @@ var cases = [
 'extrude-round-corners', 
 'extrude-size', 
 'extrude', 
+'focuson-axis', 
+'focuson', 
 'group-tag', 
 'group', 
 'hidden', 

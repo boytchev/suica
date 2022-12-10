@@ -2,31 +2,16 @@
 <html lang="en">
 
 <head>
-	<title>focusOn axis</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
-	<script src="suica.js"></script>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
 </head>
 
 <body>
-
-	<h1>focusOn axis</h1>
-	<p>Spinning a 3D model to focus axis on a target.</p>
-
 	<!-- The model is provided by www.kenney.nl License: Public Domain / CC0
 			https://www.kenney.nl/assets/space-kit
 	-->
 
 	<suica ontime="loop">
-		<orbit>
 		<sphere id="target" size="2" color="black">
 		<drawing id="dashed" size="16,1">
 			<moveTo point="0,0">
@@ -35,7 +20,7 @@
 		</drawing>
 		<group id="template" hidden>
 			<line to="50,0,0" color="dimgray" image="dashed" images="20">
-			<model id="d" src="../assets/models/spaceships/craft_miner.glb" size="5" spinH="-90" x="10" z="-10" y="-1">
+			<model id="d" src="../../assets/models/spaceships/craft_miner.glb" size="5" spinH="-90" x="10" z="-10" y="-1">
 		</group>
 	</suica>
 
