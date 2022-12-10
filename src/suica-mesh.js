@@ -722,7 +722,86 @@ class Mesh
 		
 		return vertices;
 	} // Mesh.vertices
+	
+	
+	focusOnX( target, angle )
+	{
+		target = Suica.parseCenter( target );
 
+		var u = new THREE.Vector3(
+					target[0]-this.x,
+					target[1]-this.y,
+					target[2]-this.z ),			
+			v = this.suica.orientation.UP.clone(),
+			w = new THREE.Vector3().crossVectors( u, v );
+			
+		v.crossVectors( w, u );
+		
+		u.normalize( );	
+		v.normalize( );	
+		w.normalize( );	
+			
+		var m = new THREE.Matrix4().makeBasis( u, v, w ),
+			e = new THREE.Euler().setFromRotationMatrix( m, 'YZX' );
+			e.x -= radians( angle );
+			e.reorder( 'YXZ' );
+		
+		this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
+	} // Mesh.focusOnX
+
+
+	focusOnY( target, angle )
+	{
+		target = Suica.parseCenter( target );
+
+		var u = new THREE.Vector3(
+					target[0]-this.x,
+					target[1]-this.y,
+					target[2]-this.z ),			
+			v = this.suica.orientation.UP.clone(),
+			w = new THREE.Vector3().crossVectors( u, v );
+			
+		v.crossVectors( w, u );
+		
+		u.normalize( );	
+		v.normalize( );	
+		w.normalize( );	
+			
+		var m = new THREE.Matrix4().makeBasis( w, u, v ),
+			e = new THREE.Euler().setFromRotationMatrix( m, 'ZXY' );
+			e.y -= radians( angle );
+			e.reorder( 'YXZ' );
+
+		this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
+	} // Mesh.focusOnY
+	
+	
+	focusOnZ( target, angle )
+	{
+		target = Suica.parseCenter( target );
+
+		var u = new THREE.Vector3(
+					target[0]-this.x,
+					target[1]-this.y,
+					target[2]-this.z ),			
+			v = this.suica.orientation.UP.clone(),
+			w = new THREE.Vector3().crossVectors( u, v );
+			
+		v.crossVectors( w, u );
+		
+		u.normalize( );	
+		v.normalize( );	
+		w.normalize( );	
+			
+		var m = new THREE.Matrix4().makeBasis( v, w, u ),
+			e = new THREE.Euler().setFromRotationMatrix( m, 'XYZ' );
+			e.z -= radians( angle );
+			e.reorder( 'YXZ' );
+
+		this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
+	} // Mesh.focusOnZ
+	
+	
 } // class Mesh
 
 

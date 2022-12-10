@@ -44,35 +44,14 @@
 			spaceships.push( template.clone.style({hidden:false, center:[x,y,z]}) );
 	
 	
-		function towardX( focus, angle )
-		{
-			var u = new THREE.Vector3( ...focus ),			
-				v = new THREE.Vector3( 0, 1, 0 ),
-				w = new THREE.Vector3().crossVectors( u, v );
-				
-			v.crossVectors( w, u );
-			u = u.normalize( );	
-			v = v.normalize( );	
-			w = w.normalize( );	
-				
-			var m = new THREE.Matrix4().makeBasis( u, v, w ),
-				e = new THREE.Euler().setFromRotationMatrix( m, 'YZX' );
-				e.x -= radians( angle );
-				e.reorder( 'YXZ' );
-			
-			return [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
-		}
 		
 		function loop( t, dT )
 		{
 			target.center = [10*Math.sin(3*t+1),10*Math.sin(2*t-6),10*Math.sin(3*t+3)]; 
-			//target.y = 20;
+
 			for( var spaceship of spaceships )
 			{
-
-				spaceship.spin = towardX( [target.x-spaceship.x, target.y-spaceship.y, target.z-spaceship.z], 0 );
-
-
+				spaceship.focusOnX( target, 90 );
 			}
 		}
 	</script>
