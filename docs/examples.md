@@ -204,6 +204,8 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/spin.jpg" width="275"></kbd>](../examples/spin.html)
 [<kbd><img src="../examples/snapshots/spin-orientation.jpg" width="275"></kbd>](../examples/spin-orientation.html)
 [<kbd><img src="../examples/snapshots/spin-angles.jpg" width="275"></kbd>](../examples/spin-angles.html)
+[<kbd><img src="../examples/snapshots/focuson.jpg" width="275"></kbd>](../examples/focuson.html)
+[<kbd><img src="../examples/snapshots/focuson-axis.jpg" width="275"></kbd>](../examples/focuson-axis.html)
 
 ## [Material properties](properties.md#material-properties)
 

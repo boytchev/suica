@@ -786,8 +786,8 @@ x = clamp( x, -1, 1 );
 #### random
 ```js
 JS:
-random( 𝑓𝑟𝑜𝑚, 𝑡𝑜 );
-random( [𝑎, 𝑏, 𝑐, ...] );
+random( from, to );
+random( [a, b, c, ...] );
 ```
 
 Function. Generates a pseudo-random floating-point number in a range or picks a random value from an array of values.
@@ -804,7 +804,7 @@ To generate a fixed user-dependent sequence of pseudo-random  values use [`scorm
 #### randomIn
 ```js
 JS:
-randomIn( 𝑜𝑏𝑗𝑒𝑐𝑡 );
+randomIn( object );
 ```
 
 Function. Generates a random point inside an obeject. This function calls the [`randomIn`](properties.md#randomin) method of the object.
