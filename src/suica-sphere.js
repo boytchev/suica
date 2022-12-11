@@ -35,6 +35,19 @@ Sphere = class Sphere extends Mesh
 	} // Sphere.constructor
 
 
+	randomDirection( scale )
+	{
+		var z = random( -1, 1 ),
+			alpha = random( 0, 2*Math.PI ),		
+			r = Math.sqrt( 1 - z**2 );
+
+		return new THREE.Vector3(
+			scale * r * Math.cos( alpha ),
+			scale * r * Math.sin( alpha ),
+			scale * z
+		);
+	}
+	
 	get clone( )
 	{
 		var object = new Sphere( this.suica, this.center, this.size, this.color );
@@ -54,7 +67,7 @@ Sphere = class Sphere extends Mesh
 	get randomIn( )
 	{
 		var r = Math.pow( random(0,1), 1/3 );
-		var v = new THREE.Vector3().randomDirection().multiplyScalar(r/2).applyMatrix4( this.suica.orientation.MATRIX );
+		var v = this.randomDirection(r/2).applyMatrix4( this.suica.orientation.MATRIX );
 		return this.objectPosition( [v.x*this.width, v.y*this.height, v.z*this.depth]  );
 		
 	} // Sphere.randomIn
@@ -63,7 +76,7 @@ Sphere = class Sphere extends Mesh
 
 	get randomOn( )
 	{
-		var v = new THREE.Vector3().randomDirection().multiplyScalar(1/2).applyMatrix4( this.suica.orientation.MATRIX );
+		var v = this.randomDirection(1/2).applyMatrix4( this.suica.orientation.MATRIX );
 		return this.objectPosition( [v.x*this.width, v.y*this.height, v.z*this.depth]  );
 	} // Sphere.randomOn
 	
