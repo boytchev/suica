@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+		<group id="a" size="2" spin="30,40,50,60">
+			<cube size="20,10,6" wireframe color="black">
+		</group>
+		<cube id="b" size="20,10,6" wireframe color="black" spin="40,50,60,30">
+	</suica>
+
+	<script>
+		sphere( a.objectPosition([10,5,3]), 4 );
+		sphere( b.objectPosition([10,-5,3]), 4 );
+	</script>
+</body>
+</html>

@@ -620,41 +620,44 @@ class Mesh
 	{
 		localOffset = Suica.parseCenter( localOffset );
 
-		switch( this.suica.orientation )
+		if( !(this instanceof Group) )
 		{
-			case Suica.ORIENTATIONS.YXZ:
-					localOffset[0] /= this.threejs.scale.y;
-					localOffset[1] /= this.threejs.scale.x;
-					localOffset[2] /= this.threejs.scale.z;
-					break;
-			case Suica.ORIENTATIONS.ZYX:
-					localOffset[0] /= this.threejs.scale.z;
-					localOffset[1] /= this.threejs.scale.y;
-					localOffset[2] /= this.threejs.scale.x;
-					break;
-			case Suica.ORIENTATIONS.XZY:
-					localOffset[0] /= this.threejs.scale.x;
-					localOffset[1] /= this.threejs.scale.z;
-					localOffset[2] /= this.threejs.scale.y;
-					break;
-			case Suica.ORIENTATIONS.ZXY:
-					localOffset[0] /= this.threejs.scale.z;
-					localOffset[1] /= this.threejs.scale.x;
-					localOffset[2] /= this.threejs.scale.y;
-					break;
-			case Suica.ORIENTATIONS.XYZ:
-					localOffset[0] /= this.threejs.scale.x;
-					localOffset[1] /= this.threejs.scale.y;
-					localOffset[2] /= this.threejs.scale.z;
-					break;
-			case Suica.ORIENTATIONS.YZX:
-					localOffset[0] /= this.threejs.scale.y;
-					localOffset[1] /= this.threejs.scale.z;
-					localOffset[2] /= this.threejs.scale.x;
-					break;
-			default: throw 'error: unknown orientation';
+			switch( this.suica.orientation )
+			{
+				case Suica.ORIENTATIONS.YXZ:
+						localOffset[0] /= this.threejs.scale.y;
+						localOffset[1] /= this.threejs.scale.x;
+						localOffset[2] /= this.threejs.scale.z;
+						break;
+				case Suica.ORIENTATIONS.ZYX:
+						localOffset[0] /= this.threejs.scale.z;
+						localOffset[1] /= this.threejs.scale.y;
+						localOffset[2] /= this.threejs.scale.x;
+						break;
+				case Suica.ORIENTATIONS.XZY:
+						localOffset[0] /= this.threejs.scale.x;
+						localOffset[1] /= this.threejs.scale.z;
+						localOffset[2] /= this.threejs.scale.y;
+						break;
+				case Suica.ORIENTATIONS.ZXY:
+						localOffset[0] /= this.threejs.scale.z;
+						localOffset[1] /= this.threejs.scale.x;
+						localOffset[2] /= this.threejs.scale.y;
+						break;
+				case Suica.ORIENTATIONS.XYZ:
+						localOffset[0] /= this.threejs.scale.x;
+						localOffset[1] /= this.threejs.scale.y;
+						localOffset[2] /= this.threejs.scale.z;
+						break;
+				case Suica.ORIENTATIONS.YZX:
+						localOffset[0] /= this.threejs.scale.y;
+						localOffset[1] /= this.threejs.scale.z;
+						localOffset[2] /= this.threejs.scale.x;
+						break;
+				default: throw 'error: unknown orientation';
+			}
 		}
-		
+
 		this.threejs.updateWorldMatrix( true, true );
 		
 		var target = new THREE.Vector3( ...localOffset ),
