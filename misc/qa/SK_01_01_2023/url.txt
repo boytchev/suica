@@ -1,0 +1,1 @@
+https://discourse.threejs.org/t/why-im-getting-unnecessary-space-while-changing-the-three-js-object-position/46387
