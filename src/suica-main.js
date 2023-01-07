@@ -556,6 +556,9 @@ class Suica
 			
 			that.light?.position.set( ...that.viewPoint.from );
 	
+			//the following line is required for smooth animation on old laptops
+			that.camera.updateMatrixWorld();
+
 		} // Suica.adjustViewPoint
 		
 
