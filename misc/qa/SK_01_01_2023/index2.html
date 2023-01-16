@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="suica.js"></script>
+</head>
+
+<body>
+	<button onclick="buttonOne()" style="font-size: 2em; position:fixed; z-index:10;">Button +</button>
+	
+	<suica fullWindow>
+		<orbit distance="50">
+	</suica>
+	
+	<script>
+		var rooms = [
+			model('models/room1.glb'),
+			model('models/room2.glb'),
+			model('models/room3.glb'),
+			model('models/room4.glb'),
+			model('models/room5.glb'),
+			model('models/room6.glb'),
+			model('models/room7.glb'),
+			model('models/room8.glb'),
+		];
+
+		var positions = [
+			[ 0, 0, 0],
+			[ 0, 0, 0],
+			[ 0, 0, 0],
+			[ 0, 0, 0],
+			[ 0, 0, 0],
+			[ 0, 0, 0],
+			[ 0, 0, 0],
+		  ];
+		  
+		function buttonOne( )
+		{
+			for( var i in rooms )
+				rooms[i].center = positions[i];
+			
+			positions.unshift( positions.pop() );
+		}
+		
+		buttonOne( );
+	</script>
+</head>
+
