@@ -235,7 +235,8 @@ class Mesh
 			this._drawing = drawing.clone;
 			
 			this.threejs.material.map = this._drawing.image;
-			this.threejs.material.transparent = true,
+			this.threejs.material.transparent = true;
+			this.threejs.material.side = THREE.TwoPassDoubleSide;
 			this.threejs.material.needsUpdate = true;
 			this.updateImages();
 			return;
@@ -245,6 +246,7 @@ class Mesh
 		{
 			this.threejs.material.map = drawing; // no cloning available
 			this.threejs.material.transparent = true,
+			this.threejs.material.side = THREE.TwoPassDoubleSide;
 			this.threejs.material.needsUpdate = true;
 			this.updateImages();
 			return;
@@ -455,6 +457,7 @@ class Mesh
 		{
 			newMesh.material.map = oldMesh.material.map;
 			newMesh.material.transparent = oldMesh.material.transparent;
+			newMesh.material.side = oldMesh.material.side;
 			newMesh.material.needsUpdate = true;
 		}
 		
