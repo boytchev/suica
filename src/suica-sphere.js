@@ -19,7 +19,6 @@ Sphere = class Sphere extends Mesh
 
 		if( !suica._.solidGeometry.sphere )
 		{
-			console.log(Suica.CIRCLECOUNT)
 			suica._.solidGeometry.sphere = suica.flipNormal( new THREE.SphereGeometry( 0.5, Suica.CIRCLECOUNT, Math.round(Suica.CIRCLECOUNT/2) ).applyMatrix4( suica.orientation.MATRIX ) );
 		}
 		
