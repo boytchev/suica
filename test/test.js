@@ -14,8 +14,11 @@ const CASES_DIR = 'cases/';
 const IMAGES_DIR = 'snapshots/';
 const TEST_TIMEOUT = 3000; // per test, in milliseconds
 const FULL_SIZE = 400;
-const TEST_SIZE = 100;
-const COLOR_DIFF = 0.05;
+const TEST_SIZE = 400;
+const COLOR_DIFF = 0.01;
+
+const TRESHOLT_PERCENTAGE = 98;
+
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
 var timeout = -1;
@@ -26,6 +29,10 @@ var sumMatch = 0;
 var resultReady, targetReady, canvas, testName;
 
 
+var hmCanvas = document.createElement( 'canvas' );
+	hmCanvas.width = TEST_SIZE;
+	hmCanvas.height = TEST_SIZE;
+var heatMap = hmCanvas.getContext( '2d' );
 
 // show string in the log window
 
@@ -188,7 +195,8 @@ var ids = 0;
 
 function testTimeout( )
 {
-	log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
+	log('it is this:<span style="width:165px; display:inline-block;"></span>should be this:<span style="width:125px; display:inline-block;"></span>difference:');
+
 	var a = document.getElementById('result-image').cloneNode();
 	a.style.margin = "0 1em 0 0";
 	a.style.padding = "0";
@@ -205,6 +213,15 @@ function testTimeout( )
 	a.setAttribute('id','');
 	document.getElementById( 'log' ).appendChild( a );
 	
+	a = document.getElementById('target-image').cloneNode();
+	a.setAttribute('id','');
+	a.style.margin = "0 0 0 1em";
+	a.style.padding = "0";
+	a.style.width = "200px";
+	a.style.height = "200px";
+	a.setAttribute('id','');
+	document.getElementById( 'log' ).appendChild( a );
+
 	log('<br>');
 
 	startNextTest();
@@ -226,6 +243,10 @@ function compareImages( )
 	context.drawImage( document.getElementById('target-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
 	var targetPixels = context.getImageData( 0, 0, TEST_SIZE, TEST_SIZE ).data;
 
+	heatMap.fillStyle = 'green';
+	heatMap.fillRect( 0, 0, TEST_SIZE, TEST_SIZE );	
+	var heatmapImage = heatMap.getImageData( 0, 0, TEST_SIZE, TEST_SIZE );
+	var heatmapPixels = heatmapImage.data;
 	var pnts = 0;
 	var totals = 0;
 //	var totalDiff = 0;
@@ -259,7 +280,22 @@ function compareImages( )
 		
 		if( diff/3/255>COLOR_DIFF ) pnts++;
 		
+		var grayscale = (resultPixels[i+0]+resultPixels[i+1]+resultPixels[i+2])/3;
+			grayscale = (4*255+1*grayscale)/5;
+			
+		//var crimson = [220, 20, 60];
+		var k = 5*(diff/3/255 - COLOR_DIFF);
+		if( k<0 ) k=0;
+		if( k>1 ) k=1;
+		k=k*k;
+		
+		heatmapPixels[i+0] = Math.round(grayscale*(1-k)+k*220);
+		heatmapPixels[i+1] = Math.round(grayscale*(1-k)+k*20);
+		heatmapPixels[i+2] = Math.round(grayscale*(1-k)+k*60);
+		
 	}
+
+	heatMap.putImageData( heatmapImage, 0, 0 );
 	
 	//console.log(`::> total diff ${totalDiff}` );
 	
@@ -274,16 +310,16 @@ function compareImages( )
 	//var match = Math.max( 100-100*totalDiff, 0 );
 	logAppend( ` &ndash; match ${match}%` );
 	
-	if( match<99 )
+	if( match<100 )
 	{
 		logAppend( ` [<a target="_blank" href="test.html?S&${testName}">retest</a> |` );
 		logAppend( ` <a target="_blank" href="cases/${testName}.html">rerun</a>]` );
 	}
 	
 	//if( match<90 || pnts>PIXELS_DIFF )
-	if( match<90 || window.location.search.indexOf('?S')==0 )
+	if( match<TRESHOLT_PERCENTAGE || window.location.search.indexOf('?S')==0 )
 	{
-		log('it is this:<span style="width:150px; display:inline-block;"></span>should be this:');
+		log('it is this:<span style="width:165px; display:inline-block;"></span>should be this:<span style="width:125px; display:inline-block;"></span>difference:');
 		var a = document.getElementById('result-image').cloneNode();
 		a.setAttribute('id','');
 		a.style.margin = "0 1em 0 0";
@@ -301,6 +337,20 @@ function compareImages( )
 		a.style.height = "200px";
 		a.setAttribute('id','');
 		document.getElementById( 'log' ).appendChild( a );
+	
+		a = document.createElement( 'canvas' );
+		a.width = 200;
+		a.height = 200;
+		a.setAttribute('id','');
+		a.style.margin = "0 0 0 1em";
+		a.style.padding = "0";
+		a.style.width = "200px";
+		a.style.border = "solid 1px green";
+		a.style.height = "200px";
+		a.setAttribute('id','');
+		document.getElementById( 'log' ).appendChild( a );
+		a.getContext( '2d' ).drawImage( hmCanvas, 0, 0, TEST_SIZE, TEST_SIZE, 0, 0, 200, 200 );
+
 	
 		// log('<br>');
 		// var resultCanvas = document.createElement( 'canvas' );
