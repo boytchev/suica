@@ -1109,7 +1109,7 @@ class Suica
 		this.raycastPointer.x =  2*pixelX/canvas.clientWidth - 1;
 		this.raycastPointer.y = -2*pixelY/canvas.clientHeight + 1;
 	
-		return [pixelX-canvas.clientWidth/2, -pixelY+canvas.clientHeight/2];
+		return [pixelX-canvas.clientWidth/2, -pixelY+canvas.clientHeight/2, 0];
 	}
 	
 
