@@ -1,53 +1,69 @@
-( function () {
+( function () { // ^..^
 
-	class ConvexGeometry extends THREE.BufferGeometry {
+/* ^..^
+import {
+	BufferGeometry,
+	Float32BufferAttribute
+} from 'three';
+*/
 
-		constructor( points = [] ) {
+/* ^..^
+import { ConvexHull } from '../math/ConvexHull.js';
+*/
 
-			super();
 
-			// buffers
+class ConvexGeometry extends THREE.BufferGeometry {
 
-			const vertices = [];
-			const normals = [];
-			if ( THREE.ConvexHull === undefined ) {
+	constructor( points = [] ) {
 
-				console.error( 'THREE.ConvexGeometry: ConvexGeometry relies on THREE.ConvexHull' );
+		super();
 
-			}
+		// buffers
 
-			const convexHull = new THREE.ConvexHull().setFromPoints( points );
+		const vertices = [];
+		const normals = [];
 
-			// generate vertices and normals
+		const convexHull = new THREE.ConvexHull().setFromPoints( points );
 
-			const faces = convexHull.faces;
-			for ( let i = 0; i < faces.length; i ++ ) {
+		// generate vertices and normals
 
-				const face = faces[ i ];
-				let edge = face.edge;
+		const faces = convexHull.faces;
 
-				// we move along a doubly-connected edge list to access all face points (see HalfEdge docs)
+		for ( let i = 0; i < faces.length; i ++ ) {
 
-				do {
+			const face = faces[ i ];
+			let edge = face.edge;
 
-					const point = edge.head().point;
-					vertices.push( point.x, point.y, point.z );
-					normals.push( face.normal.x, face.normal.y, face.normal.z );
-					edge = edge.next;
+			// we move along a doubly-connected edge list to access all face points (see HalfEdge docs)
 
-				} while ( edge !== face.edge );
+			do {
 
-			}
+				const point = edge.head().point;
 
-			// build geometry
+				vertices.push( point.x, point.y, point.z );
+				normals.push( face.normal.x, face.normal.y, face.normal.z );
 
-			this.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-			this.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
+				edge = edge.next;
+
+			} while ( edge !== face.edge );
 
 		}
 
+		// build geometry
+
+		this.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+		this.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
+
 	}
 
-	THREE.ConvexGeometry = ConvexGeometry;
+}
 
-} )();
+/* ^..^
+export { ConvexGeometry };
+*/
+
+
+	THREE.ConvexGeometry = ConvexGeometry; // ^..^
+
+} )(); // ^..^
+

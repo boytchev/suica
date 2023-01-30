@@ -3,7 +3,7 @@
 @ECHO.
 @ECHO Open REBUILD.bat and comment the EXIT command
 @ECHO.
-@ECHO Note that files AnaglyphEffect.js and VRButton.js are changed
+@ECHO Note that file AnaglyphEffect.js is changed
 @ECHO If you execute REBUILD the changes will be reverted
 @ECHO.
 
@@ -11,7 +11,7 @@
 
 @EXIT
 
-@set THREE=D:\Install\Three.js\three.js-master-r147\three.js-master
+@set THREE=D:\Install\Three.js\three.js-master-r149\three.js-master
 
 @copy %THREE%\build\three.min.js .
 @copy %THREE%\examples\js\controls\OrbitControls.js .
@@ -23,6 +23,6 @@
 @copy %THREE%\examples\js\loaders\FontLoader.js .
 @copy %THREE%\examples\js\loaders\GLTFLoader.js .
 @copy %THREE%\examples\js\exporters\GLTFExporter.js .
-@copy %THREE%\examples\jsm\webxr\VRButton.js .
+@copy %THREE%\examples\js\webxr\VRButton.js .
 @copy %THREE%\examples\js\math\ConvexHull.js .
 @pause
