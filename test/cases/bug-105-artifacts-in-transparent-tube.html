@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica>
+		<demo>
+	</suica>
+
+	<script>
+		var points = [
+			[0,0,20.0002, 1],
+			[0,0,20.0001, 25],
+			[0,0,20, 25],
+			[0,0,-20, 25],
+			[0,0,-20.0001, 25],
+			[0,0,-20.0002, 1],
+		];
+			
+		tube( [0,0,0], spline(points), 1, [10,10], 1 );
+		its.threejs.geometry.computeVertexNormals();
+		its.threejs.material = new THREE.MeshPhysicalMaterial({
+			color:'red',
+			side: THREE.DoubleSide,
+			//wireframe: true,
+			transparent: true,
+			opacity: 0.5,
+		});
+
+	</script>
+</body>
+</html>

@@ -2,6 +2,7 @@
 var cases = [ 
 'allobjects', 
 'background', 
+'bug-105-artifacts-in-transparent-tube', 
 'bug-cloning-group-of-group', 
 'bug-cone-cylinder-alignment', 
 'bug-dynamic-line', 
