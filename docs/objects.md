@@ -521,6 +521,7 @@ tube( [0,0,0], [[50,0,0], [-50,0,0]], 5, 2 );
 [<kbd><img src="../examples/snapshots/tube-lathe.jpg" width="300"></kbd>](../examples/tube-lathe.html)
 [<kbd><img src="../examples/snapshots/tube-html.jpg" width="300"></kbd>](../examples/tube-html.html)
 
+*Note:* Avoid using duplicate points defining a tube spline by introducing a slight offset. For example, instead of `[[0,0,0], [1,0,0], [1,0,0]]` use `[[0,0,0], [0.999,0,0], [1,0,0]]`.
 
 Parameter `radius` defines the radius of a tube. It is used in case there is no radius encoded in the spline curve itself. If the spline points are 3D, then the `radius` parameter is used as a constant radius of the whole tube
 
