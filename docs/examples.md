@@ -221,6 +221,7 @@ tag: home userguidecheatsheet github
 [<kbd><img src="../examples/snapshots/vertices-model.jpg" width="275"></kbd>](../examples/vertices-model.html)
 [<kbd><img src="../examples/snapshots/threejs-geometry.jpg" width="275"></kbd>](../examples/threejs-geometry.html)
 [<kbd><img src="../examples/snapshots/threejs-material.jpg" width="275"></kbd>](../examples/threejs-material.html)
+[<kbd><img src="../examples/snapshots/event-intersectdata.jpg" width="275"></kbd>](../examples/event-intersectdata.html)
 
 
 

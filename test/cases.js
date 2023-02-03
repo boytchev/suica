@@ -69,6 +69,7 @@ var cases = [
 'events-find-object', 
 'events-find-objects', 
 'events-find-position', 
+'events-intersectdata', 
 'events-one-time-listener', 
 'events-onload-model', 
 'events-onload-text3d', 
