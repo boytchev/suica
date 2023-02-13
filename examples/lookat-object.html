@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>focusOn</title>
+	<title>Object lookAt</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,8 +18,8 @@
 
 <body>
 
-	<h1>focusOn</h1>
-	<p>Spinning an object to focus on a target.</p>
+	<h1>Object lookAt</h1>
+	<p>Rotating an object towards another object.</p>
 
 	<suica ontime="loop">
 		<orbit>
@@ -43,7 +43,7 @@
 
 			for( var cone of cones )
 			{
-				cone.focusOn( target );
+				cone.lookAt( target );
 			}
 		}
 	</script>

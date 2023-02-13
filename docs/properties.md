@@ -17,7 +17,7 @@ By design Suica attempts to use the same properties for all objects as much as i
 - [Geometrical properties](#geometrical-properties)
 	- <small>[Position](#position): [`center`](#center), [`x`](#x-y-z), [`y`](#x-y-z), [`z`](#x-y-z), [`randomIn`](#randomin), [`randomOn`](#randomon), [`objectPosition`](#objectposition), [`screenPosition`](#screenposition)</small>
 	- <small>[Size](#size): [`size`](#size-1), [`width`](#width-height-depth), [`height`](#width-height-depth), [`depth`](#width-height-depth)</small>
-	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint-spins), [`spinV`](#spinh-spinv-spint-spins), [`spinT`](#spinh-spinv-spint-spins), [`spinS`](#spinh-spinv-spint-spins), [`focusOn`](#focuson)</small>
+	- <small>[Orientation](#orientation): [`spin`](#spin), [`spinH`](#spinh-spinv-spint-spins), [`spinV`](#spinh-spinv-spint-spins), [`spinT`](#spinh-spinv-spint-spins), [`spinS`](#spinh-spinv-spint-spins), [`lookAt`](#lookat)</small>
 - [Material properties](#material-properties)
 	- <small>[Color](#color): [`color`](#color)</small>
 	- <small>[Visibility](#visibility): [`visible`](#visible), [`hidden`](#hidden)</small>
@@ -345,7 +345,7 @@ Angle `spinH` (*H* from *horizontal*) defines horizontal rotation around the glo
 
 <img src="images/spin.png">
 
-Method `focusOn` provides alternative approach to defining the spin.
+Method `lookAt` provides alternative approach to defining the spin.
 
 #### spin
 ```html
@@ -409,26 +409,21 @@ a.spinS = 30;
 
 
 
-#### focusOn
+#### lookAt
 ```js
 JS:
-focusOn( object );
-focusOn( object, spin );
-focusOn( object, spin, axis );
+lookAt( object );
 ```
 
-Method. Sets the `spin` so that a local `axis` points towards a given `object`. The value of `axis` is one of the characters `x`, `y` or `z`. The default axis is the one that points upwards. The value of `spin` is an angle in degrees which addes additional rotation in respecto to the direction of focus. The default value of `spin` is 0.
-
-<img src="images/focuson.png">
+Method. Sets the `spin` so that the up axis points towards a given `object`. 
 
 ```js
 JS:
-b.focus( a );
-c.focus( a, 90, 'x' );
+b.lookAt( a );
 ```
 
-[<kbd><img src="../examples/snapshots/focuson.jpg" width="300"></kbd>](../examples/focuson.html)
-[<kbd><img src="../examples/snapshots/focuson-axis.jpg" width="300"></kbd>](../examples/focuson-axis.html)
+[<kbd><img src="../examples/snapshots/lookat-object.jpg" width="300"></kbd>](../examples/lookat-object.html)
+[<kbd><img src="../examples/snapshots/lookat-model.jpg" width="300"></kbd>](../examples/lookat-model.html)
 
 
 

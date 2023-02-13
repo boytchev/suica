@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+	<script>
+		class vector
+		{
+			static values = [null,null,null];
+			static hashes = [Math.random(),Math.random(),Math.random()];
+			static i = 0;
+			
+			// a=2 b=3
+			//
+			// -1	= a-b
+			// 2 	= a
+			// 3 	= b
+			// 5 	= a+b
+			// 6 	= a*b
+			// 8	= a x b
+			
+			constructor (x,y,z)
+			{
+				if( y === undefined )
+				{
+					console.log('process hash result',x)
+					vector.i = 0;
+					switch( x )
+					{
+						case vector.hashes[0]+vector.hashes[1]:
+							x = vector.values[0].x + vector.values[1].x;
+							y = vector.values[0].y + vector.values[1].y;
+							z = vector.values[0].z + vector.values[1].z;
+							break;
+						case 2*vector.hashes[0]:
+							x = 2*vector.values[0].x;
+							y = 2*vector.values[0].y;
+							z = 2*vector.values[0].z;
+							break;
+						case vector.hashes[0]-vector.hashes[1]: 
+							x = vector.values[0].x - vector.values[1].x;
+							y = vector.values[0].y - vector.values[1].y;
+							z = vector.values[0].z - vector.values[1].z;
+							break;
+						case vector.hashes[0]*vector.hashes[1]:
+							return (
+								vector.values[0].x * vector.values[1].x +
+								vector.values[0].y * vector.values[1].y +
+								vector.values[0].z * vector.values[1].z
+							);
+						case vector.hashes[0]**vector.hashes[1]: 
+							x = vector.values[0].y*vector.values[1].z - vector.values[0].z*vector.values[1].y;
+							y = vector.values[0].z*vector.values[1].x - vector.values[0].x*vector.values[1].z;
+							z = vector.values[0].x*vector.values[1].y - vector.values[0].y*vector.values[1].x;
+							break;
+						case vector.hashes[0]+vector.hashes[1]+vector.hashes[2]:
+							x = vector.values[0].x + vector.values[1].x + vector.values[2].x;
+							y = vector.values[0].y + vector.values[1].y + vector.values[2].y;
+							z = vector.values[0].z + vector.values[1].z + vector.values[2].z;
+							break;
+						
+					}
+				}
+
+				this.x = x;
+				this.y = y;
+				this.z = z;
+			}
+			
+			valueOf( )
+			{
+console.log('i',vector.i, this);
+				vector.values[vector.i] = this;
+				return vector.hashes[vector.i++];
+			}
+		}
+
+
+		a = new vector(1,2,3);
+		b = new vector(5,6,7);
+
+		c = new vector( a+b );
+
+		console.log('z',c.x, c.y, c.z);
+	</script>
+	
+</body>
+</html>

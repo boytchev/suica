@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>focusOn axis</title>
+	<title>Model lookAt</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -18,24 +18,21 @@
 
 <body>
 
-	<h1>focusOn axis</h1>
-	<p>Spinning a 3D model to focus axis on a target.</p>
+	<h1>Model lookAt </h1>
+	<p>Rotating a model towards another object.</p>
 
 	<!-- The model is provided by www.kenney.nl License: Public Domain / CC0
 			https://www.kenney.nl/assets/space-kit
 	-->
 
-	<suica ontime="loop">
+	<suica onTime="loop">
 		<orbit>
-		<sphere id="target" size="2" color="black">
-		<drawing id="dashed" size="16,1">
-			<moveTo point="0,0">
-			<lineTo point="12,0">
-			<stroke color="white">
-		</drawing>
+		<point id="target" size="10">
 		<group id="template" hidden>
-			<line to="50,0,0" color="dimgray" image="dashed" images="20">
-			<model id="d" src="../assets/models/spaceships/craft_miner.glb" size="5" spinH="-90" x="10" z="-10" y="-1">
+			<line from="0,0,0" to="0,40,0" color="gray">
+			<group spinV="90">
+				<model id="d" src="../assets/models/spaceships/craft_miner.glb" size="5" center="-10,-1,-10">
+			</group>
 		</group>
 	</suica>
 
@@ -54,7 +51,7 @@
 
 			for( var spaceship of spaceships )
 			{
-				spaceship.focusOn( target, 500*Math.sin(t), 'x' );
+				spaceship.lookAt( target );
 			}
 		}
 	</script>

@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="suica.js"></script>
+</head>
+
+<body>
+	<button onclick="randomize()" style="font-size: 1.5em; position:fixed; z-index:10;">Randomize</button>
+	
+	<suica fullWindow onTime="loop">
+		<orbit speed="0.1">
+		<oxyz>
+		<div id="label-c" style="position: absolute;">C</div>
+		<div id="label-d" style="position: absolute;">D</div>
+		<div id="label-a" style="position: absolute;">A</div>
+		<div id="label-x" style="position: absolute;">X</div>
+		<div id="label-m" style="position: absolute;">Mid</div>
+	</suica>
+	
+	<script>
+		
+		x = point();
+		x.color = 'royalblue';
+		
+		a = point();
+		a.color = 'crimson';
+		
+		c = point();
+		d = point();
+		
+		m = point();
+		m.size = 4;
+		
+		cd = line(c,d);
+		mx = line(c,d,'royalblue');
+		  
+		ac = new THREE.Vector3();
+		
+		var A = new THREE.Vector3(),
+			C = new THREE.Vector3(),
+			D = new THREE.Vector3(),
+			M = new THREE.Vector3(),
+			X = new THREE.Vector3(),
+			CD = new THREE.Vector3();
+
+		function randomize( )
+		{
+			A.set( random(-30,30), random(-30,30), random(-30,30) );
+			C.set( random(-20,20), random(-20,20), random(-20,20) );
+			D.set( random(-20,20), random(-20,20), random(-20,20) );
+			
+			M.lerpVectors( C, D, 0.5 );
+
+			CD.subVectors( C, D );
+			
+			X.subVectors( C, A ).cross( CD ).cross( CD ).setLength(-CD.length()/2).add( M );
+
+
+			
+			a.center = [A.x, A.y, A.z];
+			c.center = [C.x, C.y, C.z];
+			d.center = [D.x, D.y, D.z];
+			m.center = [M.x, M.y, M.z];
+			x.center = [X.x, X.y, X.z];
+			cd.from = c;
+			cd.to = d;
+			mx.from = m;
+			mx.to = x;
+		}
+		
+		function loop( )
+		{
+			var pos;
+
+			pos = a.screenPosition();
+			element('label-a').style.left = (pos[0]-5)+'px';
+			element('label-a').style.top = (pos[1]-30)+'px';
+
+			pos = c.screenPosition();
+			element('label-c').style.left = (pos[0]-5)+'px';
+			element('label-c').style.top = (pos[1]-30)+'px';
+
+			pos = d.screenPosition();
+			element('label-d').style.left = (pos[0]-5)+'px';
+			element('label-d').style.top = (pos[1]-30)+'px';
+
+			pos = x.screenPosition();
+			element('label-x').style.left = (pos[0]-5)+'px';
+			element('label-x').style.top = (pos[1]-30)+'px';
+
+			pos = m.screenPosition();
+			element('label-m').style.left = (pos[0]-5)+'px';
+			element('label-m').style.top = (pos[1]-30)+'px';
+		}
+		
+		
+		randomize( );
+	</script>
+</head>
+

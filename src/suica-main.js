@@ -1191,7 +1191,7 @@ class Suica
 				for( let object=intersection.object; object; object=object.parent )
 				{
 					suicaObject = object.suicaObject;
-					if( suicaObject ) break;
+					if( scanObjects.indexOf(object) > -1 ) break;
 				}
 			}
 			

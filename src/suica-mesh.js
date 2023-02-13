@@ -730,14 +730,55 @@ class Mesh
 	} // Mesh.vertices
 	
 	
-	focusOn( target, angle=0, axis=this.suica.orientation.NAME[1] )
+	lookAt( to/*, axis=this.suica.orientation.NAME[1]*/ )
 	{
-		target = Suica.parseCenter( target );
+		to = Suica.parseCenter( to );	
+		
+		var obj = new THREE.Object3D();
+		obj.position.copy( this.threejs.position );
+		obj.lookAt( ...to );
+
+		//obj.rotateX( radians(90) );
+		
+		obj.rotation.reorder( 'YXZ' );
+		var sx = degrees(obj.rotation.x),
+			sy = degrees(obj.rotation.y);
+			
+		//console.log( sx.toFixed(2),sy.toFixed(2),sz.toFixed(2) );
+		
+		switch( this.suica.orientation )
+		{
+			case Suica.ORIENTATIONS.YXZ:
+				this.spin = [ 0, -sy, -90-sx, 0 ];
+				break;
+			case Suica.ORIENTATIONS.ZYX:
+				this.spin = [ 90-sy, 90+sx, 90, 0 ];
+				break;
+			case Suica.ORIENTATIONS.XZY:
+				this.spin = [ 90, sy-90, 0+sx, 0 ];
+				break;
+			case Suica.ORIENTATIONS.ZXY:
+				this.spin = [ 90, -sy, sx, 0 ];
+				break;
+			case Suica.ORIENTATIONS.XYZ: 
+				this.spin = [ sy, 90+sx, 180, 0 ];
+				break;
+			case Suica.ORIENTATIONS.YZX:
+				this.spin = [ 0, sy-90, -90-sx, 0 ];
+				break;
+		};
+
+		
+		// spin:XYXZ
+		
+		
+/*		
+		
 
 		var u = new THREE.Vector3(
-					target[0]-this.x,
-					target[1]-this.y,
-					target[2]-this.z ),			
+					to[0]-this.x,
+					to[1]-this.y,
+					to[2]-this.z ),			
 			v = this.suica.orientation.UP.clone(),
 			w = new THREE.Vector3().crossVectors( u, v );
 			
@@ -747,32 +788,76 @@ class Mesh
 		v.normalize( );	
 		w.normalize( );	
 			
-		var m = new THREE.Matrix4(),
-			e = new THREE.Euler();
-	
-		switch( axis )
+			
+		var m = new THREE.Matrix4();
+			m = m.makeBasis( w, u, v );
+		
+		var e = new THREE.Euler();
+
+//UP RIGHT UP FORWARD
+
+		switch( this.suica.orientation )
 		{
-			case 'x':
-			case 'X':	m = m.makeBasis( u, v, w );
-						e = e.setFromRotationMatrix( m, 'YZX' );
-						e.x -= radians( angle );
+			case Suica.ORIENTATIONS.YXZ: // spin:XYXZ
+				e = e.setFromRotationMatrix( m, 'XYZ' );
+				var a = degrees(e.x);
+				var b = degrees(e.y);
+				switch( axis )
+				{
+					case 'x':
+					case 'X':
+						this.spin = [ -a, -b, 0, 0 ];
 						break;
-			case 'y':
-			case 'Y':	m = m.makeBasis( w, u, v );
-						e = e.setFromRotationMatrix( m, 'ZXY' );
-						e.y -= radians( angle );
+					case 'y':
+					case 'Y':
+						this.spin = [ -a, -b, 0, 90 ];
 						break;
-			case 'z':
-			case 'Z':	m = m.makeBasis( v, w, u );
-						e = e.setFromRotationMatrix( m, 'XYZ' );
-						e.z -= radians( angle );
+					case 'z':
+					case 'Z':
+						this.spin = [ -a, 90-b, 180, 0 ];
 						break;
-		}
-
-		e.reorder( 'YXZ' );
-
-		this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
-	} // Mesh.focusOnZ
+				}
+				break;
+			case Suica.ORIENTATIONS.ZYX: // spin:YZYX
+				e = e.setFromRotationMatrix( m, 'YZX' );
+				var a = degrees(e.x);
+				var b = degrees(e.y);
+				axis='z'
+				switch( axis )
+				{
+					case 'x':
+					case 'X':
+						this.spin = [ -b, 0, 0, 90-a ];
+						break;
+					case 'y':
+					case 'Y':
+						this.spin = [ -b, 0, 0, -a ];
+						break;
+					case 'z':
+					case 'Z':
+						this.spin = [ -b, 0, 180, 90-a ];
+						break;
+				}
+				break;
+			case Suica.ORIENTATIONS.XZY:
+				e.reorder( 'ZXY' );
+				this.spin = [ -degrees(e.z), 90-degrees(e.x), 0, degrees(e.y) ];
+				break;
+			case Suica.ORIENTATIONS.ZXY:
+				e.reorder( 'XZY' );
+				this.spin = [ degrees(e.x), 90+degrees(e.z), 0, -90+degrees(e.y) ];
+				break;
+			case Suica.ORIENTATIONS.XYZ: 
+				e.reorder( 'YXZ' );
+				this.spin = [ degrees(e.y), degrees(e.x), 0, degrees(e.z) ];
+				break;
+			case Suica.ORIENTATIONS.YZX:
+				e.reorder( 'ZYX' );
+				this.spin = [ degrees(e.z), degrees(e.y), 0, -90+degrees(e.x) ];
+				break;
+		};
+	*/	
+	} // Mesh.lookAt
 	
 	
 } // class Mesh
