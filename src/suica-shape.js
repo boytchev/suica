@@ -73,7 +73,7 @@ class Shape extends Drawing
 
 	_arc( x, y, r, from, to, cw )
 	{
-		this.shape.arc( x, y, r, from, to, cw );
+		this.shape.absarc( x, y, r, from, to, cw );
 	} // Shape.arc
 
 
