@@ -828,15 +828,24 @@ class HTMLParser
 	// <clone id="..." src="..." center="..." color="..." size="..." spin="...">
 	parseTagCLONE( suica, elem )
 	{
-		var sourceId = elem.getAttribute('src');
-		if( !window[sourceId] )
+		var sourceId, p;
+		
+		if( elem.hasAttribute('src') )
 		{
-			console.error( `error: unknown object name '${sourceId}' in attribute 'src' of tag <clone>` );
-			return;
+			sourceId = elem.getAttribute('src');
+			if( !window[sourceId] )
+			{
+				console.error( `error: unknown object name '${sourceId}' in attribute 'src' of tag <clone>` );
+				return;
+			}
+
+			p = window[sourceId].clone;
 		}
-
-		var p = window[sourceId].clone;
-
+		else
+		{
+			p = its.clone;
+		}
+		
 		if( elem.hasAttribute('center') ) p.center = elem.getAttribute('center');
 		if( elem.hasAttribute('size') ) p.size = Suica.parseSize( elem.getAttribute('size') );
 		if( elem.hasAttribute('spin') ) p.spin = elem.getAttribute('spin');

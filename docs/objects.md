@@ -434,6 +434,8 @@ HTML:
 <clone id="b" src="a">
 ```
 
+If `src` is not provided, the last created object [`its`](properties.md#its) is used.
+
 In JavaScript `clone` is a read-only property. When it is read, it creates a clone of the object.
 ```js
 JS:
