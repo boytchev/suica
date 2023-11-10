@@ -13,7 +13,7 @@ tag: userguide suica objects properties drawings events
 # Table of contents
 
 - [Introduction](#introduction)
-	- <small>[Drawing canvas](#drawing-canvas): [`suica`](#suica), [`background`](#background),  [`orientation`](#orientation), [`proactive`](#proactive)</small>
+	- <small>[Drawing canvas](#drawing-canvas): [`suica`](#suica), [`newSuica`](#newsuica), [`background`](#background),  [`orientation`](#orientation), [`proactive`](#proactive)</small>
 	- <small>[Creating scenes](#creating-scenes)</small>
 	- <small>[Creating animations](#creating-animations)</small>
 - [Viewing 3D](#viewing-3d)
@@ -93,6 +93,24 @@ HTML+CSS:
 The drawing canvas has additional properties, that can be set as HTML attributes of `<suica>`, as standalone HTML tags inside `<suica>...</suica>` or as JavaScript commands in `<script>...</script>`.
 
 As a global variable `suica` references the last created Suica instance. It is used to access the Suica canvas if it has no name.
+
+
+#### newSuica
+```js
+JS:
+newSuica( );
+```
+Command. Creates a new 3D drawing canvas as if a `<suica>` tag is used.
+
+Example of creating а drawing canvas with JavaScript:
+
+```js
+JS:
+newSuica( );
+cube( );
+demo( );
+```
+[<kbd><img src="../examples/snapshots/newsuica.jpg" width="300"></kbd>](../examples/newsuica.html)
 
 
 #### background
