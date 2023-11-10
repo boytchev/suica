@@ -144,6 +144,11 @@ class Suica
 	
 	constructor( suicaTag )
 	{
+		if( suicaTag.getAttribute( 'suica-auto-generated' ) )
+		{
+			return suica;
+		}
+
 		// internal storage
 		this._ = {
 			solidGeometry:{},
@@ -155,6 +160,7 @@ class Suica
 			suicaTag.style.display = 'inline-block';
 		
 		suicaTag.style.boxSizing = 'border-box';
+		suicaTag.setAttribute( 'suica-auto-generated', true );
 
 		if( getComputedStyle(suicaTag).width == 'auto' )
 		{
@@ -289,7 +295,7 @@ class Suica
 	}
 	
 	
-	// create canvas element inside <suica>
+	// create canvas element inside <suica> (if it does not exist)
 	createCanvas()
 	{
 		// calculates size - if size is not defined in CSS,
@@ -300,7 +306,7 @@ class Suica
 		if( this.suicaTag.clientHeight < 1 )
 			this.suicaTag.style.height = (this.suicaTag.getAttribute('height') || (TEST_MODE?400:300)) + 'px';
 
-		// create canvas elements
+		// create canvas element 
 		this.canvas = document.createElement( 'canvas' );
 		this.canvas.width = this.suicaTag.clientWidth;
 		this.canvas.height = this.suicaTag.clientHeight;
@@ -311,7 +317,6 @@ class Suica
 		
 		this.canvas.suicaObject = this;
 		this.suicaTag.appendChild( this.canvas );
-		
 	} // Suica.createCanvas
 	
 
@@ -1406,6 +1411,16 @@ class Suica
 //}
 
 
+window.newSuica = function( )
+{
+	var suicaTag = document.createElement( 'suica' );
+		suicaTag.style = 'border: solid 1m red;';
+		document.body.appendChild( suicaTag );
+		
+	new Suica( suicaTag );
+}
+
+
 window.style = function( object, properties )
 {
 	for( var n in properties ) object[n] = properties[n];
@@ -1735,7 +1750,7 @@ window.splane = function( points=Suica.SPLANE.POINTS, closed, interpolant )
 //
 // idea from https://github.com/jspenguin2017/Snippets/blob/master/onbeforescriptexecute.html
 new MutationObserver( function( mutations )
-	{		
+	{
 		for( var parentElem of mutations )
 		{
 			for( var childElem of parentElem.addedNodes) 

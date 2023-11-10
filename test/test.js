@@ -378,10 +378,10 @@ function compareImages( )
 
 function sendSnapshot( )
 {
-	if( !suica ) return;
+	if( typeof suica == 'undefined' ) return;
 	
 	const DELAY = 0.9;
-	
+
 	var _onTime = suica.ontime;
 
 	suica.ontime = (t, dT)=>{
