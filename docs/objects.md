@@ -857,7 +857,7 @@ construct( 'box-ball' );
 [<kbd><img src="../examples/snapshots/construct-union.jpg" width="300"></kbd>](../examples/construct-union.html)
 [<kbd><img src="../examples/snapshots/construct-subtract.jpg" width="300"></kbd>](../examples/construct-subtract.html)
 [<kbd><img src="../examples/snapshots/construct-intersect.jpg" width="300"></kbd>](../examples/construct-intersect.html)
-[<kbd><img src="../examples/snapshots/construct-expression.jpg" width="300"></kbd>](../examples/construct-local-expression.html)
+[<kbd><img src="../examples/snapshots/construct-expression.jpg" width="300"></kbd>](../examples/construct-expression.html)
 
 Suica CSG uses experimental [CSG library](https://github.com/looeee/threejs-csg) and have some limitations:
 - CSG operations are not fast. Round objects, like spheres, are processed very slow. A general advice is to build offline the object once, save it as GLB file with [`model.save`](#model-save) and then use [`model`](#model) to load it online.
