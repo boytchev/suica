@@ -82497,7 +82497,15 @@ void main() {
 
 		constructor( ) {
 
-			this.api = this.findAPI( window ) || this.findAPI( window.opener );
+			try {
+
+				this.api = this.findAPI( window ) || this.findAPI( window.opener );
+
+			} catch {
+
+				this.api = null;
+
+			}
 
 		} // Scorm.constructor
 
