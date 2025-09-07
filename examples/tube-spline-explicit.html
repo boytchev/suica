@@ -3,16 +3,7 @@
 
 <head>
 	<title>Tube explicit spline</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,29 +17,30 @@
 	</suica>
 
 	<script>
+	
 		var splineCurve = spline(
-			[[-20,-20,-20],
-			[-20,-20, 20],
-			[-20, 20, 20],
-			[-20, 20,-20],
-			[ 20, 20,-20],
-			[ 20, 20, 20],
-			[ 20,-20, 20],
-			[ 20,-20,-20]],
+			[[ -20, -20, -20 ],
+				[ -20, -20, 20 ],
+				[ -20, 20, 20 ],
+				[ -20, 20, -20 ],
+				[ 20, 20, -20 ],
+				[ 20, 20, 20 ],
+				[ 20, -20, 20 ],
+				[ 20, -20, -20 ]],
 			true
 		);
 		
-		function curve(u)
+		function curve( u )
 		{
-			var p = splineCurve(u);
-				p[3] = 0.2+1.5*Math.round(0.5+0.5*Math.cos( 30*Math.PI*u ));
-				
+			var p = splineCurve( u );
+			p[ 3 ] = 0.2+1.5*Math.round( 0.5+0.5*Math.cos( 30*Math.PI*u ) );
+		
 			return p;
 		}
 		
-		tube( [0,0,0], curve, 1, [300,16] );
-
+		tube([ 0, 0, 0 ], curve, 1, [ 300, 16 ]);
 
 	</script>
+	
 </body>
 </html>

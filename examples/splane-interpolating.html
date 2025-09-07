@@ -3,16 +3,7 @@
 
 <head>
 	<title>Splane interpolating</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,21 +17,24 @@
 	</suica>
 
 	<script>
-		square( [0,-10,0], 70, 'black' );
+	
+		square([ 0, -10, 0 ], 70, 'black' );
 		its.wireframe = true;
 		its.spinV = 90;
-				
+		
 		var points = [
-			[[-35,-10,-35], [-10, 0,-35], [10,  0,-35], [35,-10,-35]],
-			[[-35,  0,-10], [-10,20,-10], [10, 20,-10], [35,  0,-10]],
-			[[-35,  0, 10], [-10,20, 10], [10, 20, 10], [35,  0, 10]],
-			[[-35,-10, 35], [-10, 0, 35], [10,  0, 35], [35,-10, 35]]
+			[[ -35, -10, -35 ], [ -10, 0, -35 ], [ 10, 0, -35 ], [ 35, -10, -35 ]],
+			[[ -35, 0, -10 ], [ -10, 20, -10 ], [ 10, 20, -10 ], [ 35, 0, -10 ]],
+			[[ -35, 0, 10 ], [ -10, 20, 10 ], [ 10, 20, 10 ], [ 35, 0, 10 ]],
+			[[ -35, -10, 35 ], [ -10, 0, 35 ], [ 10, 0, 35 ], [ 35, -10, 35 ]]
 		];
 		
-		surface( [0,0,0], splane(points,false,[true,true]), 40, 1, 'linen' );
-		surface( [0,1,0], splane(points,false,[false,true]), 40, 1, 'peachpuff' );
-		surface( [0,2,0], splane(points,false,[true,false]), 40, 1, 'lightsalmon' );
-		surface( [0,3,0], splane(points,false,[false,false]), 40, 1, 'dimgray' );
+		surface([ 0, 0, 0 ], splane( points, false, [ true, true ]), 40, 1, 'linen' );
+		surface([ 0, 1, 0 ], splane( points, false, [ false, true ]), 40, 1, 'peachpuff' );
+		surface([ 0, 2, 0 ], splane( points, false, [ true, false ]), 40, 1, 'lightsalmon' );
+		surface([ 0, 3, 0 ], splane( points, false, [ false, false ]), 40, 1, 'dimgray' );
+		
 	</script>
+	
 </body>
 </html>

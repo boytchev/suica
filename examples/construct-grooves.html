@@ -3,16 +3,7 @@
 
 <head>
 	<title>Construct - grooves</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -25,17 +16,19 @@
 	</suica>
 	
 	<script>
-		var d = cube( [0,0,0], 48, 'linen' );
-		var a = cube( [0,0,0], 50 );
+	
+		var d = cube([ 0, 0, 0 ], 48, 'linen' );
+		var a = cube([ 0, 0, 0 ], 50 );
 		its.threejs.visible = false;
+		
 		var b = [];
 		
 		var expr = 'a';
 
-		for( var i=0; i<10; i++ )
+		for ( var i=0; i<10; i++ )
 		{
-			b.push( cube( [0,random(-10,10),0], [100,100,3] ) );
-			its.spin = [random(0,360),random(0,180),0];
+			b.push( cube([ 0, random( -10, 10 ), 0 ], [ 100, 100, 3 ]) );
+			its.spin = [ random( 0, 360 ), random( 0, 180 ), 0 ];
 			its.threejs.visible = false;
 			expr += `-b[${i}]`;
 		}
@@ -47,8 +40,9 @@
 		
 		function spin( t )
 		{
-			g.spin = [40*t, 30*t, 20*t];
+			g.spin = [ 40*t, 30*t, 20*t ];
 		}
+		
 	</script>
 	
 </body>

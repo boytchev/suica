@@ -3,16 +3,7 @@
 
 <head>
 	<title>Spline of points</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,12 +17,13 @@
 	</suica>
 
 	<script>
+	
 		function flower( u, k, n=2 )
 		{
 			u = n*Math.PI*u;
 			return [
-				Math.cos(u) + Math.cos(k*u),
-				Math.sin(u) - Math.sin(k*u),
+				Math.cos( u ) + Math.cos( k*u ),
+				Math.sin( u ) - Math.sin( k*u ),
 				0
 			];
 		}
@@ -40,23 +32,24 @@
 		{
 			u = 2*Math.PI*u;
 			return [
-				8*Math.pow(Math.abs(Math.cos(u)),2/n)*Math.sign(Math.cos(u)),
-				5*Math.pow(Math.abs(Math.sin(u)),2/n)*Math.sign(Math.sin(u)),
+				8*Math.pow( Math.abs( Math.cos( u ) ), 2/n )*Math.sign( Math.cos( u ) ),
+				5*Math.pow( Math.abs( Math.sin( u ) ), 2/n )*Math.sign( Math.sin( u ) ),
 				0,
-				0.2+0.1*Math.sin(100*u)
+				0.2+0.1*Math.sin( 100*u )
 			];
 		}
 		
-		tube( [-25,12,0], spline(flower,2), 0.05, [300,4], 5, 'black' );
-		tube( [0,12,0], spline(flower,3), 0.05, [300,4], 5, 'black' );
-		tube( [25,12,0], spline(flower,4), 0.05, [300,4], 5, 'black' );
+		tube([ -25, 12, 0 ], spline( flower, 2 ), 0.05, [ 300, 4 ], 5, 'black' );
+		tube([ 0, 12, 0 ], spline( flower, 3 ), 0.05, [ 300, 4 ], 5, 'black' );
+		tube([ 25, 12, 0 ], spline( flower, 4 ), 0.05, [ 300, 4 ], 5, 'black' );
 
-		tube( [-25,-12,0], spline(flower,1.5,4), 0.05, [300,4], 5, 'black' );
-		tube( [0,-12,0], spline(flower,2.5,4), 0.05, [300,4], 5, 'black' );
-		tube( [25,-12,0], spline(flower,-3.5,4), 0.05, [300,4], 5, 'black' );
+		tube([ -25, -12, 0 ], spline( flower, 1.5, 4 ), 0.05, [ 300, 4 ], 5, 'black' );
+		tube([ 0, -12, 0 ], spline( flower, 2.5, 4 ), 0.05, [ 300, 4 ], 5, 'black' );
+		tube([ 25, -12, 0 ], spline( flower, -3.5, 4 ), 0.05, [ 300, 4 ], 5, 'black' );
 
-		tube( [0,0,0], spline(frame,5), 0.05, [400,6], 5, 'lightsalmon' );
+		tube([ 0, 0, 0 ], spline( frame, 5 ), 0.05, [ 400, 6 ], 5, 'lightsalmon' );
 
 	</script>
+	
 </body>
 </html>

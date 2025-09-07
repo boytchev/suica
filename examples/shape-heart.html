@@ -3,16 +3,7 @@
 
 <head>
 	<title>Shape heart</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,21 +17,22 @@
 	</suica>
 	
 	<script>
+	
 		var heart = shape( );
 
 		moveTo( 0, -56 );
-			curveTo( 56, 0, 56, 32 );
-			curveTo( 56, 56, 32, 56 );
-			curveTo( 0, 56, 0, 32 );
-			curveTo( 0, 56, -32, 56 );
-			curveTo( -56, 56, -56, 32 );
-			curveTo( -56, 0, 0, -56 );
+		curveTo( 56, 0, 56, 32 );
+		curveTo( 56, 56, 32, 56 );
+		curveTo( 0, 56, 0, 32 );
+		curveTo( 0, 56, -32, 56 );
+		curveTo( -56, 56, -56, 32 );
+		curveTo( -56, 0, 0, -56 );
 
-		var colors = ['linen', 'peachpuff', 'lightsalmon', 'gray', 'black', 'white'];
+		var colors = [ 'linen', 'peachpuff', 'lightsalmon', 'gray', 'black', 'white' ];
 		
-		for( var v of heart.vertices )
+		for ( var v of heart.vertices )
 		{
-			cylinder( v, [5,50,5], random( colors ) );
+			cylinder( v, [ 5, 50, 5 ], random( colors ) );
 			its.spinV = 90;
 		}
 		

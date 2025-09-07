@@ -3,16 +3,7 @@
 
 <head>
 	<title>Point and spin</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -33,6 +24,7 @@
 	</suica>
 	
 	<script>
+	
 		function pick( event )
 		{
 			this.speed = 200;
@@ -40,16 +32,15 @@
 		
 		function rotate( t, dT )
 		{
-			for( var object of allObjects() )
-			{
-				object.spinH += (object.speed|0)*dT;
-			}
+			for ( var object of allObjects() )
+				object.spinH += ( object.speed|0 )*dT;
 		}
 		
 		function drop( event )
 		{
 			this.speed = 0;
 		}
+		
 	</script>
 </body>
 </html>

@@ -3,16 +3,7 @@
 
 <head>
 	<title>Three.js material</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -32,61 +23,65 @@
 	</suica>
 	
 	<script>
+	
 		a.threejs.material = new THREE.MeshStandardMaterial( {
 			color: 'lightsalmon',
-			metalness: 0.5,
+			metalness: 0.8,
 			roughness: 0.2,
-		});
+		} );
 
-		b.threejs.material = new THREE.MeshPhongMaterial( {
+		b.threejs.material = new THREE.MeshPhysicalMaterial( {
 			color: 'lightsalmon',
-			shininess: 200,
-			normalMap: image('../assets/textures/plate_normal.jpg'),
-		});
+			roughness: 0.2,
+			metalness: 0,
+			normalMap: image( '../assets/textures/plate_normal.jpg' ),
+		} );
+		b.threejs.material.normalMap.colorSpace = THREE.NoColorSpace;
 		b.threejs.material.normalMap.repeat.set( 2/2, 1/2 );
-		b.threejs.material.normalScale.set( 0.4, 0.4 );
 
 		c.threejs.material = new THREE.MeshPhysicalMaterial( {
-				color: 'linen',
-				clearcoat: 1,
-				clearcoatRoughness: 0.3,
-				roughness: 0.1,
-				metalness: 0,
-				thickness: 0.3,
-				transmission: 1,
-				emissiveIntensity: 0.2,
-				emissive: 'lightsalmon',
-				sheen: 1,
-				sheenColor: new THREE.Color( 'crimson' ),
-		});
+			color: 'linen',
+			clearcoat: 1,
+			clearcoatRoughness: 0.3,
+			roughness: 0.1,
+			metalness: 0,
+			thickness: 0.3,
+			transmission: 1,
+			emissiveIntensity: 0.2,
+			emissive: 'lightsalmon',
+			sheen: 1,
+			sheenColor: new THREE.Color( 'crimson' ),
+		} );
 
 
 		d.threejs.material = new THREE.MeshPhysicalMaterial( {
-				color: 'white',
-				clearcoat: 1,
-				clearcoatRoughness: 0,
-				roughness: 0.1,
-				metalness: 0.05,
-				bumpMap: image('../assets/textures/tile.png'),
-				bumpScale: 1,
-				thickness: 0.3,
-				transmission: 1,
-				emissiveIntensity: 0.1,
-				emissive: 'lime',
-				opacity: 1,
-				//transparent: !true
-		});
+			color: 'white',
+			clearcoat: 1,
+			clearcoatRoughness: 0,
+			roughness: 0.1,
+			metalness: 0.05,
+			bumpMap: image( '../assets/textures/tile.png' ),
+			bumpScale: 10,
+			thickness: 0.3,
+			transmission: 1,
+			emissiveIntensity: 0.1,
+			emissive: 'lime',
+			opacity: 1,
+		} );
 		d.threejs.material.bumpMap.repeat.set( 20, 10 );
+		d.threejs.material.bumpMap.colorSpace = THREE.NoColorSpace;
 
 		function spin( t )
 		{
-			c.y = 26*Math.sin(3*t);
-			c.z = 26*Math.cos(3*t);
-			
+			c.y = 26*Math.sin( 3*t );
+			c.z = 26*Math.cos( 3*t );
+		
 			d.y = -c.y;
 			d.z = -c.z;
 			d.spinV = -360*t;
 		}
+		
 	</script>
+	
 </body>
 </html>

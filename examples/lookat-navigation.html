@@ -3,16 +3,7 @@
 
 <head>
 	<title>lookAt navigation</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -29,15 +20,16 @@
 	</suica>
 
 	<script>
+	
 		// an array of tile colors
-		var color = ['linen','peachpuff','lightsalmon', 'dimgray' ];
+		var color = [ 'linen', 'peachpuff', 'lightsalmon', 'dimgray' ];
 		
 		// create floor and ceiling
-		for( x = -80; x<=80; x+=10 )
-		for( z = -40; z<=40; z+=10 )
+		for ( x = -80; x<=80; x+=10 )
+		for ( z = -40; z<=40; z+=10 )
 		{
-			cube( [x,-10,z], [9,0.2,9], random( color ) );
-			cube( [x,10,z], [9,0.2,9], random( color ) );
+			cube([ x, -10, z ], [ 9, 0.2, 9 ], random( color ) );
+			cube([ x, 10, z ], [ 9, 0.2, 9 ], random( color ) );
 		}
 		
 		// calculates point on Lemniscate of Bernoulli
@@ -46,18 +38,20 @@
 		{
 			var sin = Math.sin( t ),
 				cos = Math.cos( t );
-				
-			var x = 55*cos/(1+sin*sin),
+		
+			var x = 55*cos/( 1+sin*sin ),
 				z = x*sin;
-				
-			return [x,0,z];
+		
+			return [ x, 0, z ];
 		}
 
 		// dynamic lookAt
 		function onTime( t )
 		{
-			lookAt( lemniscate(t/2), lemniscate(t/2+0.3) );
+			lookAt( lemniscate( t/2 ), lemniscate( t/2+0.3 ) );
 		}
+		
 	</script>
+	
 </body>
 </html>

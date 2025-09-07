@@ -3,16 +3,7 @@
 
 <head>
 	<title>Text3D - dynamic font</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -27,20 +18,23 @@
 	</suica>
 
 	<script>
-		var letV = 'aeiouy'.split(''),
-			letC = 'bcdfghjklmnpqrstvwxz'.toUpperCase().split(''),	
+	
+		var letV = 'aeiouy'.split( '' ),
+			letC = 'bcdfghjklmnpqrstvwxz'.toUpperCase().split( '' ),
 			flag = true;
 		
-		setInterval( function()
-			{
-				flag = !flag;
-				
-				a.text = random(letC) + random(letV) + Math.round(random(-99,99));
-				a.font = flag
-					? '../assets/fonts/droid/droid_sans_regular.typeface.json'
-					: '../assets/fonts/TypeSETit/Great Vibes_Regular.json';
-				a.color = random( ['peachpuff','lightsalmon','linen','gray'] );
-			}, 1000 );
+		setInterval( function ()
+		{
+			flag = !flag;
+		
+			a.text = random( letC ) + random( letV ) + Math.round( random( -99, 99 ) );
+			a.font = flag
+				? '../assets/fonts/droid/droid_sans_regular.typeface.json'
+				: '../assets/fonts/TypeSETit/Great Vibes_Regular.json';
+			a.color = random([ 'peachpuff', 'lightsalmon', 'linen', 'gray' ]);
+		}, 1000 );
+		
 	</script>
+	
 </body>
 </html>

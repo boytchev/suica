@@ -3,16 +3,7 @@
 
 <head>
 	<title>Its</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,37 +17,38 @@
 	</suica>
 
 	<script>
+	
 		c = drawing( 100, 100, 'white' );
-			arc( 50, 50, 30 );
-			fill( 'white' );
-			stroke( 'black', 10 );
+		arc( 50, 50, 30 );
+		fill( 'white' );
+		stroke( 'black', 10 );
 		b = drawing( 100, 100, 'white' );
-			moveTo( 50, 10 );
-			lineTo( 50, 90 );
-			moveTo( 10, 50 );
-			lineTo( 90, 50 );
-			stroke( 'black', 10 );
+		moveTo( 50, 10 );
+		lineTo( 50, 90 );
+		moveTo( 10, 50 );
+		lineTo( 90, 50 );
+		stroke( 'black', 10 );
 		
 		cube();
-		its.size = [40,30,30];
+		its.size = [ 40, 30, 30 ];
 		its.color = 'white';
 		its.image = c;
 		its.images = 5;
 
 		cube();
-		its.size = [30,40,30];
+		its.size = [ 30, 40, 30 ];
 		its.color = 'black';
 		
 		cube();
-		its.size = [30,30,40];
+		its.size = [ 30, 30, 40 ];
 		its.image = b;
 		its.images = 5;
 
 
-		for( var x=-1; x<=1; x+=2 )
-		for( var y=-1; y<=1; y+=2 )
+		for ( var x=-1; x<=1; x+=2 )
+		for ( var y=-1; y<=1; y+=2 )
 		{
-			for( var z=-1; z<=1; z+=2 )
+			for ( var z=-1; z<=1; z+=2 )
 			{
 				sphere();
 				its.x = 15*x;
@@ -65,22 +57,24 @@
 				its.width = 10;
 				its.color = 'black';
 			}
-			
+		
 			tube();
-			its.curve = [[15*x,15*y,-15],[15*x,15*y,15]];
+			its.curve = [[ 15*x, 15*y, -15 ], [ 15*x, 15*y, 15 ]];
 			its.radius = 5;
 			its.color = 'black';
-			
+	
 			tube();
-			its.curve = [[15*x,-15,15*y],[15*x,15,15*y]];
+			its.curve = [[ 15*x, -15, 15*y ], [ 15*x, 15, 15*y ]];
 			its.radius = 5;
 			its.color = 'black';
-			
+	
 			tube();
-			its.curve = [[-15,15*x,15*y],[15,15*x,15*y]];
+			its.curve = [[ -15, 15*x, 15*y ], [ 15, 15*x, 15*y ]];
 			its.radius = 5;
 			its.color = 'black';
 		}
+		
 	</script>
+	
 </body>
 </html>

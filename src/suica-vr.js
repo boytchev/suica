@@ -1,5 +1,5 @@
 //
-// Suica 2.0 VR, anaglyph and stereo
+// Suica 3.0 VR, anaglyph and stereo
 //
 //
 // createVRButton( renderer )
@@ -15,14 +15,16 @@
 //===================================================
 
 
-function createFSButton( suica )
-{
-	var inFullScreen = false;
-	
+import { AnaglyphEffect as THREEAnaglyphEffect } from 'three/addons/effects/AnaglyphEffect.js';
+import { StereoEffect as THREEStereoEffect } from 'three/addons/effects/StereoEffect.js';
+
+
+function createFSButton( suica ) {
+
 	var button = document.createElement( 'button' );
 
 	button.id = 'suica-fullscreen-button';
-	
+
 	button.style.display = '';
 
 	button.style.cursor = 'pointer';
@@ -46,63 +48,74 @@ function createFSButton( suica )
 
 	button.textContent = requestFullscreen ? 'ENTER FULLSCREEN' : 'FULLSCREEN NOT SUPPORTED';
 
-	button.onpointerenter = function( )
-	{
+	button.onpointerenter = function ( ) {
+
 		button.style.opacity = '1.0';
+
 	};
 
-	button.onpointerleave = function( )
-	{
+	button.onpointerleave = function ( ) {
+
 		button.style.opacity = '0.5';
+
 	};
 
-	if( requestFullscreen )
-	{
-		button.onclick = function( )
-		{
+	if ( requestFullscreen ) {
+
+		button.onclick = function ( ) {
+
 			requestFullscreen.call( suica.suicaTag );
+
 		};
+
 	}
 
-	suica.suicaTag.onfullscreenchange = function( )
-	{
+	suica.suicaTag.onfullscreenchange = function ( ) {
+
 		button.style.display = document.fullscreenElement ? 'none' : '';
-		
+
 		suica.resizeCanvas();
-	}
-	
-	window.addEventListener( 'resize', function()
-	{
+
+	};
+
+	window.addEventListener( 'resize', function () {
+
 		suica.resizeCanvas();
-	});
-	
+
+	} );
+
 	return button;
+
 } // createFSButton
 
 
-class AnaglyphEffect extends THREE.AnaglyphEffect
-{
+class AnaglyphEffect extends THREEAnaglyphEffect {
 
-	constructor( suica, distance )
-	{
+	constructor( suica, distance ) {
+
 		super( suica.renderer, suica.canvas.width, suica.canvas.height );
 
 		this.suica = suica;
 		this.suica.camera.focus = distance;
+
 	} // AnaglyphEffect.constructor
 
 } // class AnaglyphEffect
 
 
-class StereoEffect extends THREE.StereoEffect
-{
+class StereoEffect extends THREEStereoEffect {
 
-	constructor( suica, distance )
-	{
+	constructor( suica, distance ) {
+
 		super( suica.renderer, suica.canvas.width, suica.canvas.height );
-		
+
 		this.suica = suica;
-		
+
 		this.setEyeSeparation( distance );
+
 	} // StereoEffect.constructor
+
 } // class StereoEffect
+
+
+export { createFSButton, StereoEffect, AnaglyphEffect };

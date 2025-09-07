@@ -3,16 +3,7 @@
 
 <head>
 	<title>Point image</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -28,25 +19,24 @@
 	<script>
 
 		var cross = drawing( 32 );
-			moveTo( 0, 0 );
-			lineTo( 32, 32 );
-			moveTo( 0, 32 );
-			lineTo( 32, 0 );
+		moveTo( 0, 0 );
+		lineTo( 32, 32 );
+		moveTo( 0, 32 );
+		lineTo( 32, 0 );
 		stroke( 'black', 5 );
 
 		// number of points
 		const N = 350;
 		
 		// creating all points
-		for( var i=0; i<N; i++ )
+		for ( var i=0; i<N; i++ )
 		{
-			var center = [random(-50,50), random(-30,30), random(-50,50)];
-			
+			var center = [ random( -50, 50 ), random( -30, 30 ), random( -50, 50 ) ];
+		
 			var p = point( center, 10 );
 			p.image = cross;
 		}
-		
-		
+				
 	</script>
 	
 </body>

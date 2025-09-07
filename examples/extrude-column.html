@@ -3,16 +3,7 @@
 
 <head>
 	<title>Extrude - column</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,18 +17,19 @@
 	</suica>
 	
 	<script>
-		var top = cube( [0,21,0], [80, 1, 80] );
-		var bot = cube( [0,-22,0], [80, 1, 80] );
+	
+		var top = cube([ 0, 21, 0 ], [ 80, 1, 80 ]);
+		var bot = cube([ 0, -22, 0 ], [ 80, 1, 80 ]);
 		
 		var s = shape( );
-			arc( 0, 0, 20 );
-			
-		extrude( s, [0,0,0], [1,1,10] );
-			its.y = 5;
-			its.spinV = 90;
-			its.radius = -15;
-			its.count = [20, 6];
-			
+		arc( 0, 0, 20 );
+		
+		extrude( s, [ 0, 0, 0 ], [ 1, 1, 10 ]);
+		its.y = 5;
+		its.spinV = 90;
+		its.radius = -15;
+		its.count = [ 20, 6 ];
+		
 	</script>
 	
 </body>

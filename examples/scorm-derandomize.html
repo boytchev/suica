@@ -3,16 +3,7 @@
 
 <head>
 	<title>SCORM - derandomize</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -24,15 +15,17 @@
 	<suica></suica>
 	
 	<script>
+	
 		demo( 100, 0 );
 
-		for( var y=-25; y<=25; y+=10 )
+		for ( var y=-25; y<=25; y+=10 )
 		{
-			if( y>0 ) scorm.derandomize();
-			
-			for( var x=-50; x<=50; x+=10 )
-				cube( [x,y], 9, random(['linen','peachpuff','lightsalmon','white','gray','black']) );
+			if ( y>0 ) scorm.derandomize();
+		
+			for ( var x=-50; x<=50; x+=10 )
+				cube([ x, y ], 9, random([ 'linen', 'peachpuff', 'lightsalmon', 'white', 'gray', 'black' ]) );
 		}
+		
 	</script>
 	
 </body>

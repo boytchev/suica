@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Cylinder panels</title>
+	<script src="example.js"></script>
+	<script src="suica.js"></script>
+</head>
+
+<body>
+
+	<suica fullwindow>
+		<orbit>
+
+		<drawing id="AB" size="256,256">
+			<lineto point="81,40"> <curveTo m="40,40" point="40,81">
+			<lineto point="40,175"> <curveTo m="40,216" point="81,216">
+			<lineto point="175,216"> <curveTo m="216,216" point="216,175">
+			<lineto point="216,81"> <curveTo m="216,40" point="175,40">
+
+			<fill color="white">
+			<stroke color="black" width="10" closed>
+			<fillText point="75,100" text="AB" color="Black" font="bold 70px Arial">
+		</drawing>
+		
+		<group id="a" onpointerenter="expand" onpointerleave="shrink" color="white">
+			<surface z="-30" curve="8,-8,2;0,-8,0;-8,-8,2|8,8,2;0,8,0;-8,8,2" image="AB">
+		</group>
+	</suica>
+
+	<script>
+
+		for ( var i=1; i<8; i++ )
+		{
+			a.clone.spinH = 45*i;
+			its.color = hsl( 110*i, 100, 50 );
+		}
+
+		function expand( )
+		{
+			this.groupElements[ 0 ].size = 1.2;
+		}
+
+		function shrink( )
+		{
+			this.groupElements[ 0 ].size = 1;
+		}
+		
+	</script>
+
+</body>
+</html>

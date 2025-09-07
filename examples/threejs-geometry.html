@@ -3,16 +3,7 @@
 
 <head>
 	<title>Three.js geometry</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -28,15 +19,18 @@
 	</suica>
 	
 	<script>
+	
 		a.threejs.geometry = new THREE.IcosahedronGeometry( 1, 1 );
-		a.threejs.material = new THREE.MeshStandardMaterial( {metalness:0.4, roughness:0.5, flatShading:true} );
+		a.threejs.material = new THREE.MeshStandardMaterial( { metalness: 0.7, roughness: 0.5, flatShading: true } );
 		
 		var pos = a.threejs.geometry.getAttribute( 'position' );
 
-		for( var i=0; i<pos.count; i++ )
+		for ( var i=0; i<pos.count; i++ )
 		{
-			sphere( [30*pos.getX(i),30*pos.getY(i),30*pos.getZ(i)], 3, random(['linen','peachpuff','lightsalmon','gray','white','black']) );
+			sphere([ 30*pos.getX( i ), 30*pos.getY( i ), 30*pos.getZ( i ) ], 3, random([ 'linen', 'peachpuff', 'lightsalmon', 'gray', 'white', 'black' ]) );
 		}
+		
 	</script>
+	
 </body>
 </html>

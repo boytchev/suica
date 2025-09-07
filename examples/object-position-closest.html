@@ -3,16 +3,7 @@
 
 <head>
 	<title>Closest object position</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -41,30 +32,33 @@
 	</suica>
 
 	<script>
+	
 		var poles = [];
-		for( var i=0; i<4; i++ )
-			poles.push( tube([0,0,0],curve,1,[30,20],1,'black') );
+		for ( var i=0; i<4; i++ )
+			poles.push( tube([ 0, 0, 0 ], curve, 1, [ 30, 20 ], 1, 'black' ) );
 
 		function onTime( t )
 		{
 			a.spinV = 87*t;
 			a.spinT = 61*t;
-			
+		
 			var pos = [];
 
-			for( x=-1; x<=1; x+=2 )
-			for( y=-1; y<=1; y+=2 )
-			for( z=-1; z<=1; z+=2 )
-				pos.push( a.objectPosition( [10*x,10*y,10*z] ) );
+			for ( x=-1; x<=1; x+=2 )
+			for ( y=-1; y<=1; y+=2 )
+			for ( z=-1; z<=1; z+=2 )
+				pos.push( a.objectPosition([ 10*x, 10*y, 10*z ]) );
 
-			pos.sort( (a,b)=>a[1]-b[1] );
-			
-			for( var i=0; i<4; i++ )
+			pos.sort( ( a, b )=>a[ 1 ]-b[ 1 ]);
+		
+			for ( var i=0; i<4; i++ )
 			{
-				poles[i].height = pos[i][1]-(-25);
-				poles[i].center = [pos[i][0],-25,pos[i][2]];
+				poles[ i ].height = pos[ i ][ 1 ]-( -25 );
+				poles[ i ].center = [ pos[ i ][ 0 ], -25, pos[ i ][ 2 ] ];
 			}
 		}
+		
 	</script>
+	
 </body>
 </html>

@@ -3,16 +3,7 @@
 
 <head>
 	<title>Tube</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,29 +17,31 @@
 	</suica>
 
 	<script>
-		function torus(u)
+	
+		function torus( u )
 		{
 			u = 2*Math.PI*u;
 			return [
 				0,
-				20*Math.sin(u),
-				20*Math.cos(u)
+				20*Math.sin( u ),
+				20*Math.cos( u )
 			];
 		}
 		
-		function screw(u)
+		function screw( u )
 		{
 			return [
 				80*u-40,
-				10*Math.sin(60*u),
-				10*Math.cos(60*u)
+				10*Math.sin( 60*u ),
+				10*Math.cos( 60*u )
 			];
 		}
 		
-		tube( [0,0,0], [[50,0,0], [-50,0,0]], 5, 2, 1, 'gray' );
-		tube( [0,0,0], torus, 6, 400, 1, 'linen' );
-		tube( [0,0,0], screw, 2, 400 );
+		tube([ 0, 0, 0 ], [[ 50, 0, 0 ], [ -50, 0, 0 ]], 5, 2, 1, 'gray' );
+		tube([ 0, 0, 0 ], torus, 6, 400, 1, 'linen' );
+		tube([ 0, 0, 0 ], screw, 2, 400 );
 		
 	</script>
+	
 </body>
 </html>

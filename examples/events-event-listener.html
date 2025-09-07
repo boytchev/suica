@@ -3,16 +3,7 @@
 
 <head>
 	<title>Setting event listeners</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -32,7 +23,6 @@
 		<cylinder id="b" x="30" height="20" color="linen" spin="90,-90">
 		
 		<sphere id="c" x="30" color="linen" spin="90,-90">
-		
 	</suica>
 	
 	<script>
@@ -49,12 +39,14 @@
 		
 		function onClick( event )
 		{
-			if( previousObject ) previousObject.color = 'peachpuff';
-			
+			if ( previousObject ) previousObject.color = 'peachpuff';
+		
 			this.color = 'dimgray';
-			
+		
 			previousObject = this;
 		}
+		
 	</script>
+	
 </body>
 </html>

@@ -3,16 +3,7 @@
 
 <head>
 	<title>Drawing heart points</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,15 +17,16 @@
 	</suica>
 	
 	<script>
+	
 		var heart = drawing( 128 );
 
 		moveTo( 64, 8 );
-			curveTo( 120, 64, 120, 96 );
-			curveTo( 120, 120, 96, 120 );
-			curveTo( 64, 120, 64, 96 );
-			curveTo( 64, 120, 32, 120 );
-			curveTo( 8, 120, 8, 96 );
-			curveTo( 8, 64, 64, 8 );
+		curveTo( 120, 64, 120, 96 );
+		curveTo( 120, 120, 96, 120 );
+		curveTo( 64, 120, 64, 96 );
+		curveTo( 64, 120, 32, 120 );
+		curveTo( 8, 120, 8, 96 );
+		curveTo( 8, 64, 64, 8 );
 		fill( 'white' );
 		
 		var colors = [
@@ -47,13 +39,12 @@
 		const N = 200;
 		
 		// creating all points
-		for( var i=0; i<N; i++ )
+		for ( var i=0; i<N; i++ )
 		{
-			var center = [random(-50,50), random(-30,30), random(-50,50)];
-			point( center, random(5,25), random(colors) ).image = heart;
+			var center = [ random( -50, 50 ), random( -30, 30 ), random( -50, 50 ) ];
+			point( center, random( 5, 25 ), random( colors ) ).image = heart;
 		}
-		
-		
+				
 	</script>
 	
 </body>

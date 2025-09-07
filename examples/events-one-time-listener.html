@@ -3,16 +3,7 @@
 
 <head>
 	<title>One-time listener</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -33,17 +24,20 @@
 	</suica>
 
 	<script>
-		for( var x=-50; x<=50; x+=25 )
-		for( var z=-50; z<=50; z+=25 )
-			if( x || z )
-				pawn.clone.style( {center: [x,0,z]} );
+	
+		for ( var x=-50; x<=50; x+=25 )
+		for ( var z=-50; z<=50; z+=25 )
+			if ( x || z )
+				pawn.clone.style( { center: [ x, 0, z ] } );
 
 		function shrink( )
 		{
 			this.color = 'dimgray';
-			this.size = [0.5, 0.5, 0.5];
+			this.size = [ 0.5, 0.5, 0.5 ];
 			this.removeEventListener( 'onclick' );
 		}
+		
 	</script>
+	
 </body>
 </html>

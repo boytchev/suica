@@ -3,16 +3,7 @@
 
 <head>
 	<title>Splane function</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,23 +17,25 @@
 	</suica>
 	
 	<script>
+	
 		function nSine( u, v, n, k )
 		{
-			var x = 55*(u-0.5),
-				z = 55*(v-0.5);
-				
-			var yu = Math.pow(0.5+0.5*Math.sin(9*Math.PI*u),n),
-				yv = Math.pow(0.5+0.5*Math.sin(9*Math.PI*v),n),
-				y = k*Math.pow(yu+yv,1/n);
-			
-			return [x,y,z];
+			var x = 55*( u-0.5 ),
+				z = 55*( v-0.5 );
+		
+			var yu = Math.pow( 0.5+0.5*Math.sin( 9*Math.PI*u ), n ),
+				yv = Math.pow( 0.5+0.5*Math.sin( 9*Math.PI*v ), n ),
+				y = k*Math.pow( yu+yv, 1/n );
+		
+			return [ x, y, z ];
 		}
 		
-		surface( [-30,0, 30], splane(nSine,0.2,0.3), [210,210], 1, 'lightsalmon' ); 
-		surface( [ 30,0,-30], splane(nSine,1,5),     [210,210], 1, 'peachpuff' ); 
-		surface( [-30,0,-30], splane(nSine,15,7),    [210,210], 1, 'linen' ); 
-		surface( [ 30,0, 30], splane(nSine,500,9),   [210,210], 1, 'dimgray' ); 
+		surface([ -30, 0, 30 ], splane( nSine, 0.2, 0.3 ), [ 210, 210 ], 1, 'lightsalmon' );
+		surface([ 30, 0, -30 ], splane( nSine, 1, 5 ), [ 210, 210 ], 1, 'peachpuff' );
+		surface([ -30, 0, -30 ], splane( nSine, 15, 7 ), [ 210, 210 ], 1, 'linen' );
+		surface([ 30, 0, 30 ], splane( nSine, 500, 9 ), [ 210, 210 ], 1, 'dimgray' );
 
 	</script>
+	
 </body>
 </html>

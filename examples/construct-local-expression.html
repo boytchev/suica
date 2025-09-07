@@ -3,16 +3,7 @@
 
 <head>
 	<title>Construct - local expression</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -27,21 +18,24 @@
 	</suica>
 	
 	<script>
-		var a = sphere( [0,0,0], 60, 'lightgray' );
-			a.visible = false;
+	
+		var a = sphere([ 0, 0, 0 ], 60, 'lightgray' );
+		a.visible = false;
 		
 		function jointFrame( )
 		{
-			var b = cube( [0,0,0], [100,40,10], 'dimgray' );
-				b.visible = false;
-				
-			var c = cube( [0,0,0], [40,10,100], 'dimgray' );
-				c.visible = false;
+			var b = cube([ 0, 0, 0 ], [ 100, 40, 10 ], 'dimgray' );
+			b.visible = false;
+		
+			var c = cube([ 0, 0, 0 ], [ 40, 10, 100 ], 'dimgray' );
+			c.visible = false;
 
-			construct( {b:b, c:c, src:'a-b-c'} );
+			construct( { b: b, c: c, src: 'a-b-c' } );
 		}
 		
 		jointFrame( );
+		
 	</script>
+	
 </body>
 </html>

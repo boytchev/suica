@@ -3,16 +3,7 @@
 
 <head>
 	<title>Find object</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -25,21 +16,24 @@
 	</suica>
 	
 	<script>
+	
 		var n = 40,
-			colors = ['peachpuff','lightsalmon','lightgray','white'];
+			colors = [ 'peachpuff', 'lightsalmon', 'lightgray', 'white' ];
 		
-		for( var i=0; i<n; i++ )
+		for ( var i=0; i<n; i++ )
 			cube(
-				[random(-50,50),random(-20,20),random(-50,50)],
-				[40,10,1],
-				random(colors)
-			).style( {spin:[random(0,360),random(0,360),random(0,360)]} )
+				[ random( -50, 50 ), random( -20, 20 ), random( -50, 50 ) ],
+				[ 40, 10, 1 ],
+				random( colors )
+			).style( { spin: [ random( 0, 360 ), random( 0, 360 ), random( 0, 360 ) ] } );
 		
 		function onClick( event )
 		{
 			var object = findObject( event );
-			if( object ) object.color = 'dimgray';
+			if ( object ) object.color = 'dimgray';
 		}
+		
 	</script>
+	
 </body>
 </html>

@@ -1,81 +1,79 @@
 ﻿//
-// Suica 2.0 Capture
-// CC-3.0-SA-NC
+// Suica 3.0 Capture
 //
 //===================================================
 
 
-class Capture
-{
+import * as THREE from 'three';
+import { parseNumber } from './suica-globals.js';
+
+
+class Capture {
+
 	static TIME = 10;
-	static FPS = 30;
-	static SKIPFRAMES = 5;
-	static FORMAT = 'webm';
-	
-	constructor( suica, name, time, fps, format, skipFrames )
-	{
-		if( suica.capturer )
-		{
-			throw 'error: only one active capture is allowed';
-		}
-			
-		time = Suica.parseNumber( time, Capture.TIME );
-		fps = Suica.parseNumber( fps, Capture.FPS );
-		skipFrames = Suica.parseNumber( skipFrames, Capture.SKIPFRAMES );
-		
-		this.options = {
-				format: format || Capture.FORMAT,
-				display: true,
-				name: name || window.location.pathname.split('/').pop().split('#').shift().split('.html').shift(),
-				framerate: fps,
-				workersPath: './',
-			}
-			
-		this.suica = suica;
-		this.framesLeft = Math.round( time * fps );
-		this.skipFrames = THREE.MathUtils.clamp( skipFrames, 0, 1000 );
-		this._capturer = null;
-		
-		this.suica.capturer = this;
+	static SKIPTIME = 1;
+	static FORMAT = 'video/webm; codecs=vp8';
+
+	/* other formats
+video/webm; codecs=vp8 (WebM with VP8 video codec, widely supported)
+video/webm; codecs=vp9 (WebM with VP9, more efficient but less universal)
+video/webm; codecs=h264 (WebM with H.264, less common)
+video/mp4; codecs=h264 (MP4 with H.264, supported in some browsers like Safari)
+video/mp4; codecs=av1 (MP4 with AV1, emerging support in newer browsers)
+video/x-matroska; codecs=avc1 (Matroska container with H.264, rare)
+*/
+
+	constructor( suica, name, time, fps, format, skipTime ) {
+
+		time = parseNumber( time, Capture.TIME );
+		fps = parseNumber( fps, Capture.FPS );
+		skipTime = parseNumber( skipTime, Capture.SKIPTIME );
+		format = format || Capture.FORMAT;
+		name = name || ( window.location.pathname.split( '/' ).pop().split( '#' ).shift().split( '.html' ).shift() + '.'+format.split( ';' )[ 0 ].split( '/' ).pop() );
+
+		time = Math.round( time * 1000 );
+		skipTime = THREE.MathUtils.clamp( skipTime*1000, 1, 10000 );
+
+		var stream = suica.renderer.domElement.captureStream( fps );
+		var recorder = new MediaRecorder( stream, { mimeType: format } );
+		var chunks = [];
+
+		recorder.ondataavailable = ( event ) => {
+
+			chunks.push( event.data );
+
+		};
+
+		recorder.onstop = () => {
+
+			var blob = new Blob( chunks, { type: format.split( ';' )[ 0 ] } );
+			var url = URL.createObjectURL( blob );
+			var a = document.createElement( 'a' );
+			a.href = url;
+			a.download = name;
+			a.click();
+
+		};
+
+		setTimeout( ()=>{
+
+			setTimeout( ()=>{
+
+				console.log( 'Stop recording' );
+				recorder.stop();
+
+			}, time );
+
+			console.log( 'Start recording' );
+			recorder.start();
+
+		}, skipTime );
+
 	} // Capture.constructor
-	
-	
-	capture()
-	{
-		// skip some frame before staring actual recording
-		if( this.skipFrames > 0 )
-		{
-			this.skipFrames--;
-			return;
-		}
 
-		// if capturer is not created, create it now
-		if( !this._capturer )
-		{
-			this._capturer = new CCapture ( this.options );
-			this._capturer.start( );
-		}
-			
-		// capture frame
-		if( this.framesLeft > 0 )
-		{
-			this.framesLeft--;
-			this._capturer.capture( this.suica.canvas );
-			return;
-		}
 
-		// finiliza capturing
-		this._capturer.save( );
-		this._capturer.stop( );
-		this.suica.capturer = null;
-
-		// clear the recording indicator
-		for( var div of document.getElementsByTagName( 'div' ) )
-			if( div.innerHTML.includes('CCapture') )
-				if( div.innerHTML.includes(' | ') )
-						div.remove( );
-					
-	} // Capture.capture
-	
-	
 } // class Capture
+
+
+
+export { Capture };

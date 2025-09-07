@@ -3,16 +3,7 @@
 
 <head>
 	<title>Vertices of a group</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -22,7 +13,7 @@
 	<p>Extracting the vertices of a group object.</p>
 
 	<script>
-		Φ = (1+Math.sqrt(5))/2;
+		Φ = ( 1+Math.sqrt( 5 ) )/2;
 	</script>
 	
 	<suica onTime="onTime">
@@ -38,12 +29,12 @@
 	</suica>
 
 	<script>
-		for( var pnt of pawn.vertices )
+	
+		for ( var pnt of pawn.vertices )
 		{
-			clone.add( point( pnt, 5, random(['black','lightsalmon','white']) ) );
+			clone.add( point( pnt, 5, random([ 'black', 'lightsalmon', 'white' ]) ) );
 		}
-
-		
+	
 		function onTime( t )
 		{
 			pawn.spinH = 50*t;
@@ -56,5 +47,6 @@
 		}
 		
 	</script>
+	
 </body>
 </html>

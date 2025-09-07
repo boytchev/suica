@@ -13,14 +13,17 @@
 
 	<suica>
 		<demo speed="0.3">
-		<model src="../../assets/models/cars/ambulance.glb" x="20" size="10">
-		<model src="../../assets/models/cars/suvLuxury.glb" size="10">
-		<model src="../../assets/models/cars/garbageTruck.glb" x="-20" size="10">
+		<model src="../../assets/models/cars/ambulance.glb" x="20" size="10" spinH="180">
+		<model src="../../assets/models/cars/suvLuxury.glb" size="10" spinH="180">
+		<model src="../../assets/models/cars/garbageTruck.glb" x="-20" size="10" spinH="180">
 	</suica>
 
 	<script>
 		model( '../../assets/models/cars/race.glb', [40,0,0], 10 );
+		its.spinH = 180;
+		
 		model( '../../assets/models/cars/tractor.glb', [-40,0,0], 10 );
+		its.spinH = 180;
 	</script>
 </body>
 </html>

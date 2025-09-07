@@ -3,16 +3,7 @@
 
 <head>
 	<title>Shape in HTML</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -37,14 +28,15 @@
 	</suica>
 	
 	<script>
+	
 		var v1 = s1.vertices,
 			v2 = s2.vertices;
 
-		for( var i in v1 )
+		for ( var i in v1 )
 		{
-			point( v1[i], 2 );
-			point( v2[i], 6 );
-			line( v1[i], v2[i] );
+			point( v1[ i ], 2 );
+			point( v2[ i ], 6 );
+			line( v1[ i ], v2[ i ]);
 		}
 		
 	</script>

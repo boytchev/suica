@@ -3,16 +3,7 @@
 
 <head>
 	<title>Extrude bevel radius</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,27 +17,28 @@
 	</suica>
 	
 	<script>
+	
 		var curvedShape = shape( );
-			moveTo( -20, -20, 10, -20 );
-			curveTo( 20, -20, 20, -10 );
-			lineTo( 20, 20, -10, 20 );
-			curveTo( -20, 20, -20, 10 );
-			lineTo( -20, -20 );
+		moveTo( -20, -20, 10, -20 );
+		curveTo( 20, -20, 20, -10 );
+		lineTo( 20, 20, -10, 20 );
+		curveTo( -20, 20, -20, 10 );
+		lineTo( -20, -20 );
 
 		var circleHole = shape( 3 );
-			arc( 0, 0, 15 );
+		arc( 0, 0, 15 );
 		
-		extrude( [curvedShape, circleHole], [30,0,-5], [0.5,0.5,10] );
-			its.count = [10, 60];
+		extrude([ curvedShape, circleHole ], [ 30, 0, -5 ], [ 0.5, 0.5, 10 ]);
+		its.count = [ 10, 60 ];
 		
-		extrude( [curvedShape, circleHole], [0,0,-5], [0.5,0.5,10] );
-			its.count = [10, 60];
-			its.radius = 2;
-			
-		extrude( [curvedShape, circleHole], [-35,0,-5], [0.5,0.5,10] );
-			its.count = [10, 60];
-			its.radius = 4;
-			
+		extrude([ curvedShape, circleHole ], [ 0, 0, -5 ], [ 0.5, 0.5, 10 ]);
+		its.count = [ 10, 60 ];
+		its.radius = 2;
+		
+		extrude([ curvedShape, circleHole ], [ -35, 0, -5 ], [ 0.5, 0.5, 10 ]);
+		its.count = [ 10, 60 ];
+		its.radius = 4;
+		
 	</script>
 	
 </body>

@@ -3,16 +3,7 @@
 
 <head>
 	<title>Object position</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -31,8 +22,9 @@
 	</suica>
 
 	<script>
+	
 		var lines = [];
-		for( var i=0; i<8; i++ ) lines.push( line() );
+		for ( var i=0; i<8; i++ ) lines.push( line() );
 		
 		function onTime( t )
 		{
@@ -43,18 +35,20 @@
 			b.spinH = 30*Math.cos( 2.7*t );
 			b.spinV = 30*Math.cos( 2.9*t );
 			b.spinT = 30*Math.sin( 2.2*t );
-						
+		
 			var i = 0;
-			
-			for( x=-1; x<=1; x+=2 )
-			for( y=-1; y<=1; y+=2 )
-			for( z=-1; z<=1; z+=2 )
+		
+			for ( x=-1; x<=1; x+=2 )
+			for ( y=-1; y<=1; y+=2 )
+			for ( z=-1; z<=1; z+=2 )
 			{
-				lines[i].from = a.objectPosition( [20*x,20*y,20*z] );
-				lines[i].to   = b.objectPosition( [10*x,10*y,10*z] );
+				lines[ i ].from = a.objectPosition([ 20*x, 20*y, 20*z ]);
+				lines[ i ].to = b.objectPosition([ 10*x, 10*y, 10*z ]);
 				i++;
 			}
 		}
+		
 	</script>
+	
 </body>
 </html>

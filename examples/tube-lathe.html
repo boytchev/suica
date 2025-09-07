@@ -3,16 +3,7 @@
 
 <head>
 	<title>Tube lathe</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,18 +17,21 @@
 	</suica>
 
 	<script>
-		tube( [0,0,0], u=>[ 0,50*u-25,0, Math.exp(3*u) ], 0, [40, 120] );
-		tube( [0,0,0], u=>[ 0,30*u-15,0, 20*Math.abs(u-0.5) ], 0, [40, 120] ).style({color:'linen',x:-35});
-		tube( [0,0,0], u=>[ 0,30*u-15,0, 8*Math.sin(Math.PI*u) ], 0, [40, 120] ).style({color:'peachpuff',x:30});
+	
+		tube([ 0, 0, 0 ], u=>[ 0, 50*u-25, 0, Math.exp( 3*u ) ], 0, [ 40, 120 ]);
+		tube([ 0, 0, 0 ], u=>[ 0, 30*u-15, 0, 20*Math.abs( u-0.5 ) ], 0, [ 40, 120 ]).style( { color: 'linen', x: -35 } );
+		tube([ 0, 0, 0 ], u=>[ 0, 30*u-15, 0, 8*Math.sin( Math.PI*u ) ], 0, [ 40, 120 ]).style( { color: 'peachpuff', x: 30 } );
 		
-		suica.ontime = function( t )
+		suica.ontime = function ( t )
 		{
-			for( var object of allObjects() )
+			for ( var object of allObjects() )
 			{
-				object.spinV = 100*t - 30*Math.sin(200*t*Math.PI/180);
+				object.spinV = 100*t - 30*Math.sin( 200*t*Math.PI/180 );
 				t += 2*Math.PI/3;
 			}
-		}
+		};
+		
 	</script>
+	
 </body>
 </html>

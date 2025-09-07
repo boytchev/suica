@@ -20,17 +20,18 @@
 	<script>
 		a.threejs.material = new THREE.MeshStandardMaterial( {
 			color: 'lightsalmon',
-			metalness: 0.5,
+			metalness: 0.8,
 			roughness: 0.2,
 		});
 
-		b.threejs.material = new THREE.MeshPhongMaterial( {
+		b.threejs.material = new THREE.MeshPhysicalMaterial( {
 			color: 'lightsalmon',
-			shininess: 200,
-			normalMap: image('../../assets/textures/plate_normal.jpg'),
-		});
+			roughness: 0.2,
+			metalness: 0,
+			normalMap: image( '../../assets/textures/plate_normal.jpg' ),
+		} );
+		b.threejs.material.normalMap.colorSpace = THREE.NoColorSpace;
 		b.threejs.material.normalMap.repeat.set( 2/2, 1/2 );
-		b.threejs.material.normalScale.set( 0.4, 0.4 );
 
 		c.threejs.material = new THREE.MeshPhysicalMaterial( {
 				color: 'linen',
@@ -54,7 +55,7 @@
 				roughness: 0.1,
 				metalness: 0.05,
 				bumpMap: image('../../assets/textures/tile.png'),
-				bumpScale: 1,
+				bumpScale: 10,
 				thickness: 0.3,
 				transmission: 1,
 				emissiveIntensity: 0.1,
@@ -63,6 +64,7 @@
 				//transparent: !true
 		});
 		d.threejs.material.bumpMap.repeat.set( 20, 10 );
+		d.threejs.material.bumpMap.colorSpace = THREE.NoColorSpace;
 
 		function spin( t )
 		{

@@ -3,16 +3,7 @@
 
 <head>
 	<title>Drawing &ndash; fillText</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -29,6 +20,7 @@
 	</suica>
 	
 	<script>
+	
 		var pic = drawing( 100, 100, 'gray' );
 		
 		fillText( 5, 7, 'A', 'white', 'bold 7em "Times New Roman"' );
@@ -40,12 +32,12 @@
 		var pic = drawing( 100, 33 );
 		
 		moveTo( 0.5, 1.5 );
-			lineTo( 99.5, 1.5 );
-			lineTo( 99.5, 30.5 );
-			lineTo( 0.5, 30.5 );
-		stroke( 'black', 1, true );	
-		fill( 'white' );	
-				
+		lineTo( 99.5, 1.5 );
+		lineTo( 99.5, 30.5 );
+		lineTo( 0.5, 30.5 );
+		stroke( 'black', 1, true );
+		fill( 'white' );
+		
 		fillText( 28, 9, 'Save it', 'lightsalmon', '16px Arial' );
 		fillText( 5, 7, '🖫', 'black', 'bold 22px WingDings' );
 		
@@ -55,16 +47,17 @@
 		var pic = drawing( 100, 33 );
 		
 		moveTo( 0.5, 1.5 );
-			lineTo( 99.5, 1.5 );
-			lineTo( 99.5, 30.5 );
-			lineTo( 0.5, 30.5 );
-		stroke( 'black', 1, true );	
-		fill( 'white' );	
-				
+		lineTo( 99.5, 1.5 );
+		lineTo( 99.5, 30.5 );
+		lineTo( 0.5, 30.5 );
+		stroke( 'black', 1, true );
+		fill( 'white' );
+		
 		fillText( 33, 9, 'Email it', 'lightsalmon', '16px Arial' );
 		fillText( 5, 7, '🖂', 'black', 'bold 22px WingDings' );
 		
 		b.image = pic;
+		
 	</script>
 	
 </body>

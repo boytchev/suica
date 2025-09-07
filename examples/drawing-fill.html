@@ -3,16 +3,7 @@
 
 <head>
 	<title>Drawing &ndash; fill</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -27,30 +18,31 @@
 	</suica>
 	
 	<script>
+	
 		var pic = drawing( 100, 100, 'lightgray' );
 		
 		moveTo( 50, 50 );
-			lineTo( 0, 0 );
-			lineTo( 0, 100 );
+		lineTo( 0, 0 );
+		lineTo( 0, 100 );
 		fill( 'lightsalmon' );
 		
 		moveTo( 50, 50 );
-			lineTo( 100, 0 );
-			lineTo( 100, 100 );
+		lineTo( 100, 0 );
+		lineTo( 100, 100 );
 		fill( 'peachpuff' );
 		
 		moveTo( 50, 50 );
-			lineTo( 0, 0 );
-			lineTo( 100, 0 );
+		lineTo( 0, 0 );
+		lineTo( 100, 0 );
 		fill( 'dimgray' );
 		
 		moveTo( 50, 50 );
-			lineTo( 0, 100 );
-			lineTo( 100, 100 );
+		lineTo( 0, 100 );
+		lineTo( 100, 100 );
 		fill( 'linen' );
 		
-		
 		a.image = pic;
+		
 	</script>
 	
 </body>

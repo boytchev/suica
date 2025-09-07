@@ -7,7 +7,7 @@
 
 var SUICA_TEST_MODE = 1;
 
-document.write('<script src="../../bin/suica.js"></script> ');
+document.write('<script src="../../dist/suica.min.js"></script> ');
 
 
 const CASES_DIR = 'cases/';
@@ -17,7 +17,7 @@ const FULL_SIZE = 400;
 const TEST_SIZE = 400;
 const COLOR_DIFF = 0.01;
 
-const TRESHOLT_PERCENTAGE = 98;
+const TRESHOLT_PERCENTAGE = 99;
 
 //const PIXELS_DIFF = 0.005 * TEST_SIZE * TEST_SIZE; // 0.5%
 
@@ -32,7 +32,7 @@ var resultReady, targetReady, canvas, testName;
 var hmCanvas = document.createElement( 'canvas' );
 	hmCanvas.width = TEST_SIZE;
 	hmCanvas.height = TEST_SIZE;
-var heatMap = hmCanvas.getContext( '2d' );
+var heatMap = hmCanvas.getContext( '2d', { willReadFrequently: true } );
 
 // show string in the log window
 
@@ -85,8 +85,11 @@ function startTests()
 
 	window.addEventListener( 'message', (event) =>
 	{
-		//console.log('received message');
-		document.getElementById( 'result-image' ).src = event.data;
+		//console.log('received message',event);
+		if( typeof event.data == 'string' )
+		{
+			document.getElementById( 'result-image' ).src = event.data;
+		}
 	}, false);
 
 
@@ -235,7 +238,7 @@ function testTimeout( )
 function compareImages( )
 {
 	console.log('::> comparing');
-	var context = canvas.getContext( '2d' );
+	var context = canvas.getContext( '2d', { willReadFrequently: true } );
 	
 	context.drawImage( document.getElementById('result-image'), 0, 0, FULL_SIZE, FULL_SIZE, 0, 0, TEST_SIZE, TEST_SIZE );
 	var resultPixels = context.getImageData( 0, 0, TEST_SIZE, TEST_SIZE ).data;
@@ -349,7 +352,7 @@ function compareImages( )
 		a.style.height = "200px";
 		a.setAttribute('id','');
 		document.getElementById( 'log' ).appendChild( a );
-		a.getContext( '2d' ).drawImage( hmCanvas, 0, 0, TEST_SIZE, TEST_SIZE, 0, 0, 200, 200 );
+		a.getContext( '2d', { willReadFrequently: true } ).drawImage( hmCanvas, 0, 0, TEST_SIZE, TEST_SIZE, 0, 0, 200, 200 );
 
 	
 		// log('<br>');
@@ -378,7 +381,7 @@ function compareImages( )
 
 function sendSnapshot( )
 {
-	if( typeof suica == 'undefined' ) return;
+	if( !suica ) return;
 	
 	const DELAY = 0.9;
 

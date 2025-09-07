@@ -32,7 +32,7 @@ cd ..\..
 REM Preare SUICA.JS files-----------------------------------
 
 cd src
-copy /b suica-main.js+suica-vr.js+suica-parser.js+suica-drawing.js+suica-shape.js+suica-mesh.js+suica-point.js+suica-line.js+suica-square.js+suica-cube.js+suica-circle.js+suica-sphere.js+suica-cylinder.js+suica-cone.js+suica-group.js+suica-tube.js+suica-surface.js+suica-convex.js+suica-extrude.js+suica-model.js+suica-construct.js+suica-scorm.js+suica-device.js+suica-text3d.js+suica-capture.js __all__
+copy /b suica-main.js+suica-vr.js+suica-parser.js+suica-drawing.js+suica-fmi.js+suica-shape.js+suica-mesh.js+suica-point.js+suica-line.js+suica-square.js+suica-cube.js+suica-circle.js+suica-sphere.js+suica-cylinder.js+suica-cone.js+suica-group.js+suica-tube.js+suica-surface.js+suica-convex.js+suica-extrude.js+suica-model.js+suica-construct.js+suica-scorm.js+suica-device.js+suica-text3d.js+suica-capture.js __all__
 cd ..
 
 
@@ -51,7 +51,7 @@ REM		5. the text EF BB BF collapses into invisible
 REM			characters alternative: the same chars are
 REM			between these quotes:    "﻿"
 
-echo ﻿// Suica 2.0 >bin\suica.js
+echo ﻿// Suica 2.0 >bin\suica.fmi.js
 
 REM Get Suica build number, build time and build date
 
@@ -63,15 +63,13 @@ echo:%SUICA_BUILD%>BUILD.NUMBER
 
 REM Create JavaScript variables for Suica version and date
 
-echo SUICA_VERSION = '2.0.%SUICA_BUILD%'; >>bin\suica.js
-echo SUICA_DATE = '%SUICA_DATE%%SUICA_TIME%'; >>bin\suica.js
+echo SUICA_VERSION = '2.0.%SUICA_BUILD%'; >>bin\suica.fmi.js
+echo SUICA_DATE = '%SUICA_DATE%%SUICA_TIME%'; >>bin\suica.fmi.js
 
 REM Minify Suica code and append it to suica.js
 
 copy /b misc\threejs\__min__+misc\csg\__min__+misc\CCapture\__min__+src\__all__ __all__
-misc\jsmin\jsmin <__all__ >>bin\suica.js
-
-copy bin\suica.js examples
+misc\jsmin\jsmin <__all__ >>bin\suica.fmi.js
 
 
 

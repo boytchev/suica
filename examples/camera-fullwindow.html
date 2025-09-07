@@ -3,16 +3,7 @@
 
 <head>
 	<title>Full window camera</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,16 +17,15 @@
 	</suica>
 	
 	<script>
+
 		demo();
 		
-		for( var x = -10; x<=10; x++ )
-		for( var y = -10; y<=10; y++ )
-		if( Math.round(x*y)%5	 )
-		{
-			cube( [2*x,2*y,0], 2, random(['dimgray','linen','lightsalmon','peachpuff']) );
-		}
-	</script>
+		for ( var x = -10; x<=10; x++ )
+		for ( var y = -10; y<=10; y++ )
+			if ( Math.round( x*y )%5 )
+				cube([ 2*x, 2*y, 0 ], 2, random([ 'dimgray', 'linen', 'lightsalmon', 'peachpuff' ]) );
 
+	</script>
 	
 </body>
 </html>

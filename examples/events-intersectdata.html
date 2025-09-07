@@ -3,16 +3,7 @@
 
 <head>
 	<title>Intersect data</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -29,47 +20,49 @@
 	</suica>
 	
 	<script>
+	
 		var n = 20,
-			colors = ['lightsalmon','linen','lightgray','white'];
+			colors = [ 'lightsalmon', 'linen', 'lightgray', 'white' ];
 		
 		var label = element( 'label' );
 		
 		var plates = [];
-		for( var i=0; i<n; i++ )
+		for ( var i=0; i<n; i++ )
 		{
-			sphere( 
-				[random(-250,250),-100,random(-150,50)],
-				[100,random(160,240)],
-				random(colors)
+			sphere(
+				[ random( -250, 250 ), -100, random( -150, 50 ) ],
+				[ 100, random( 160, 240 ) ],
+				random( colors )
 			);
-			
+		
 			plates.push( its );
 		}
 		
 		function onMove( event )
 		{
 			var obj = findObject( event, plates );
-			if( obj )
+			
+			if ( obj )
 			{
 				var p = obj.intersectData.point;
 				target.visible = true;
-				target.center = [p.x, p.y, p.z];
+				target.center = [ p.x, p.y, p.z ];
 
 				normal.visible = true;
 				normal.from = target.center;
 				normal.to = [
-						p.x + 20*obj.intersectData.face.normal.x,
-						p.y + 20*obj.intersectData.face.normal.y,
-						p.z + 20*obj.intersectData.face.normal.z,
-					];
+					p.x + 20*obj.intersectData.face.normal.x,
+					p.y + 20*obj.intersectData.face.normal.y,
+					p.z + 20*obj.intersectData.face.normal.z,
+				];
 
 				label.style.display = 'block';
 				label.innerHTML = obj.intersectData.distance.toFixed( 1 );
-				
+		
 				invisible.center = normal.to;
 				p = invisible.screenPosition( );
-				label.style.left = (p[0]-20)+'px';
-				label.style.top = (p[1]-20)+'px';
+				label.style.left = ( p[ 0 ]-20 )+'px';
+				label.style.top = ( p[ 1 ]-20 )+'px';	
 			}
 			else
 			{
@@ -79,6 +72,8 @@
 				label.style.display = 'none';
 			}
 		}
+		
 	</script>
+	
 </body>
 </html>

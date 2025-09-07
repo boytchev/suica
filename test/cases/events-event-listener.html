@@ -11,17 +11,19 @@
 		<demo>
 		
 		<!-- setting event listener with tag attributes-->
-		<sphere x="-30" color="linen" click="onClick">
+		<sphere x="-30" color="linen" click="onClick" spin="90,-90">
 		<cylinder x="-10" height="20" color="linen" onClick="onClick" spin="90,-90">
 		
 		<cylinder id="a" x="10" height="20" color="linen" spin="90,-90">
 		<cylinder id="b" x="30" height="20" color="linen" spin="90,-90">
 		
-		<sphere id="c" x="30" color="linen">
+		<sphere id="c" x="30" color="linen" spin="90,-90">
 		
 	</suica>
 	
 	<script>
+		console.warn( 'This test must be run with opened console' );
+		
 		setTimeout( ()=>simulatePointerEvent('click',50,200), 300 );
 		setTimeout( ()=>simulatePointerEvent('click',250,200), 100 );
 

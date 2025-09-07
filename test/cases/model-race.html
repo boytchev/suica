@@ -61,11 +61,11 @@
 			
 			a.center = trackA( t );
 			p = trackA( t-0.01 );
-			a.spin = 180+degrees( Math.atan2( p[0]-a.center[0], p[2]-a.center[2] ) );
+			a.spin = degrees( Math.atan2( p[0]-a.center[0], p[2]-a.center[2] ) );
 			
 			b.center = trackB( 2.3*t );
 			p = trackB( 2.3*t-0.1 );
-			b.spin = 180+degrees( Math.atan2( p[0]-b.center[0], p[2]-b.center[2] ) );
+			b.spin = degrees( Math.atan2( p[0]-b.center[0], p[2]-b.center[2] ) );
 			
 			c.center = trackC( 3.1*t );
 			p = trackC( 3.1*t-0.01 );

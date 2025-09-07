@@ -3,16 +3,7 @@
 
 <head>
 	<title>SCORM</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -38,18 +29,19 @@
 	</suica>
 	
 	<script>
+	
 		result = scorm.api ? 'SCORM API 1.2 is found and initialized' : 'SCORM API 1.2 is not found';
 		
 		panel_1.image = drawing( 1024, 128, 'linen' );
 		panel_1.image.fillText( 10, 80, 'API:', 'black', 'bold 48px Arial' );
 		panel_1.image.fillText( 10, 14, result, 'black', '48px Arial' );
-			
+		
 		result = scorm.studentId ? 'Available, but hidden because of GDPR' : 'Not available';
 
 		panel_2.image = drawing( 1024, 128, 'linen' );
 		panel_2.image.fillText( 10, 80, 'Student Id:', 'black', 'bold 48px Arial' );
 		panel_2.image.fillText( 10, 14, result, 'black', '48px Arial' );
-			
+		
 		result = scorm.studentName ? 'Available, but hidden because of GDPR' : 'Not available';
 
 		panel_3.image = drawing( 1024, 128, 'linen' );
@@ -58,8 +50,9 @@
 		
 		function spin( t )
 		{
-			obj.spin = [50*t, 47*t, 43*t];
+			obj.spin = [ 50*t, 47*t, 43*t ];
 		}
+		
 	</script>
 	
 </body>

@@ -3,16 +3,7 @@
 
 <head>
 	<title>Model race</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -65,27 +56,30 @@
 	</suica>
 
 	<script>
-		var slope = spline( [[20],[100],[20],[0],[20],[100],[20],[0]], true, false);
+	
+		var slope = spline([[ 20 ], [ 100 ], [ 20 ], [ 0 ], [ 20 ], [ 100 ], [ 20 ], [ 0 ]], true, false );
 		
 		function race( t )
 		{
 			t = -t/10;
-			
+		
 			var p;
-			
+		
 			a.center = trackA( t );
 			p = trackA( t-0.01 );
-			a.spin = 180+degrees( Math.atan2( p[0]-a.center[0], p[2]-a.center[2] ) );
-			
+			a.spin = degrees( Math.atan2( p[ 0 ]-a.center[ 0 ], p[ 2 ]-a.center[ 2 ]) );
+		
 			b.center = trackB( 2.3*t );
 			p = trackB( 2.3*t-0.1 );
-			b.spin = 180+degrees( Math.atan2( p[0]-b.center[0], p[2]-b.center[2] ) );
-			
+			b.spin = degrees( Math.atan2( p[ 0 ]-b.center[ 0 ], p[ 2 ]-b.center[ 2 ]) );
+		
 			c.center = trackC( 3.1*t );
 			p = trackC( 3.1*t-0.01 );
-			c.spinH = 90+degrees( Math.atan2( p[0]-c.center[0], p[2]-c.center[2] ) );
-			c.spinV = slope( 3.1*t )[0];
+			c.spinH = 90+degrees( Math.atan2( p[ 0 ]-c.center[ 0 ], p[ 2 ]-c.center[ 2 ]) );
+			c.spinV = slope( 3.1*t )[ 0 ];
 		}
+		
 	</script>
+	
 </body>
 </html>

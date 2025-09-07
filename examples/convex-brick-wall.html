@@ -3,16 +3,7 @@
 
 <head>
 	<title>Convex &ndash; Brick wall</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,39 +17,39 @@
 	</suica>
 
 	<script>
+	
 		var pic = drawing( 64, 64, 'white' );
-		for( var i=0; i<1000; i++ )
+		for ( var i=0; i<1000; i++ )
 		{
-			var x = Math.round(random(0,64));
-			var y = Math.round(random(0,64));
-			moveTo( x,y,x,y+1 );
+			var x = Math.round( random( 0, 64 ) );
+			var y = Math.round( random( 0, 64 ) );
+			moveTo( x, y, x, y+1 );
 			stroke( 'lightgray', 1 );
 		}
 		
 		function brick( x, y )
 		{
 			points = [];
-			for( var i=0; i<140; i++ )
+			for ( var i=0; i<140; i++ )
 			{
-				var p = [random(-10,10), random(-10,10), random(-10,10)];
-				p[random([0,1,2])] = random([-10,10]);
+				var p = [ random( -10, 10 ), random( -10, 10 ), random( -10, 10 ) ];
+				p[ random([ 0, 1, 2 ]) ] = random([ -10, 10 ]);
 				points.push( p );
 			}
-				
-			var obj = convex( points, [1,0.3,random(0.6,0.8)] );
-			its.center = [x,y,0];
-			its.color = hsl( random(5,25), random(30,70), random(20,50) );
+		
+			var obj = convex( points, [ 1, 0.3, random( 0.6, 0.8 ) ]);
+			its.center = [ x, y, 0 ];
+			its.color = hsl( random( 5, 25 ), random( 30, 70 ), random( 20, 50 ) );
 			its.image = pic;
 			its.images = 1/10;
-			
+		
 			return obj;
 		}
 		
+		for ( var x=-60; x<=60; x+=20 )
+		for ( var y=-30; y<=30; y+=6 )
+			brick( x+5/3*( y%12 ), y );
 		
-		for( var x=-60; x<=60; x+=20 )
-		for( var y=-30; y<=30; y+=6 )
-			brick( x+5/3*(y%12), y );
-			
 	</script>
 	
 </body>

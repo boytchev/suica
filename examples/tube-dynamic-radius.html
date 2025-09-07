@@ -3,16 +3,7 @@
 
 <head>
 	<title>Dynamic tube radius</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,23 +17,26 @@
 	</suica>
 
 	<script>
-		function screw(u)
+	
+		function screw( u )
 		{
-			var r = 10+10*Math.cos(6*u-3);
+			var r = 10+10*Math.cos( 6*u-3 );
 
 			return [
 				80*u-40,
-				r*Math.sin(60*u),
-				r*Math.cos(60*u)
+				r*Math.sin( 60*u ),
+				r*Math.cos( 60*u )
 			];
 		}
 		
-		spiral = tube( [0,0,0], screw, 1, 600 );
+		spiral = tube([ 0, 0, 0 ], screw, 1, 600 );
 		
-		suica.ontime = function( t )
+		suica.ontime = function ( t )
 		{
-			spiral.radius = 3+2.8*Math.sin(4*t);
-		}
+			spiral.radius = 3+2.8*Math.sin( 4*t );
+		};
+		
 	</script>
+	
 </body>
 </html>

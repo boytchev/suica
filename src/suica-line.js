@@ -1,131 +1,146 @@
 ﻿//
-// Suica 2.0 Line
-// CC-3.0-SA-NC
+// Suica 3.0 Line
 //
 //===================================================
 
 
-class Line extends Mesh
-{
+import * as THREE from 'three';
+import { Mesh } from './suica-mesh.js';
+import { cloneEvents, parseCenter, parseColor, random } from './suica-globals.js';
+
+
+
+class Line extends Mesh {
+
 	static COLOR = 'black';
-	static TO = [0,30,0];
+	static TO = [ 0, 30, 0 ];
 
 	static solidGeometry;
 
 
-	constructor( suica, center, to, color )
-	{
+	constructor( suica, center, to, color ) {
+
 		suica.parser?.parseTags();
 		suica.debugCall( 'line', center, to, color );
-			
-		if( !Line.solidGeometry )
-		{
+
+		if ( !Line.solidGeometry ) {
+
 			Line.solidGeometry = new THREE.BufferGeometry();
-			Line.solidGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([0, 0, 0, 0, 30, 0]), 3));
-			Line.solidGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 0, 1, 0]), 2));
+			Line.solidGeometry.setAttribute( 'position', new THREE.BufferAttribute( new Float32Array([ 0, 0, 0, 0, 30, 0 ]), 3 ) );
+			Line.solidGeometry.setAttribute( 'uv', new THREE.BufferAttribute( new Float32Array([ 0, 0, 1, 0 ]), 2 ) );
+
 		}
-		
+
 		super( suica,
 			new THREE.LineSegments( Line.solidGeometry.clone(), Mesh.lineMaterial.clone() ),
 			null, // no wireframe
 		);
 
-		this.center = Suica.parseCenter( center );
-		this.to = Suica.parseCenter( to, Line.TO );
-		this.color = Suica.parseColor( color, Line.COLOR);
+		this.center = parseCenter( center );
+		this.to = parseCenter( to, Line.TO );
+		this.color = parseColor( color, Line.COLOR );
 
 	} // Line.constructor
 
 
 
-	get center()
-	{
+	get center() {
+
 		this.suica.parser?.parseTags();
 
 		var pos = this.threejs.geometry.getAttribute( 'position' );
-		return [pos.getX(0), pos.getY(0), pos.getZ(0)];
+		return [ pos.getX( 0 ), pos.getY( 0 ), pos.getZ( 0 ) ];
+
 	}
 
-	set center(center)
-	{
+	set center( center ) {
+
 		this.suica.parser?.parseTags();
 
-		center = Suica.parseCenter( center );
-		
+		center = parseCenter( center );
+
 		var pos = this.threejs.geometry.getAttribute( 'position' );
 		pos.setXYZ( 0, ...center );
 		pos.needsUpdate = true;
+
 	}
 
 
 
 
-	get from()
-	{
+	get from() {
+
 		return this.center;
+
 	}
 
-	set from(from)
-	{
+	set from( from ) {
+
 		this.center = from;
+
 	}
 
 
 
 
-	get to()
-	{
+	get to() {
+
 		this.suica.parser?.parseTags();
 
 		var pos = this.threejs.geometry.getAttribute( 'position' );
-		return [pos.getX(1), pos.getY(1), pos.getZ(1)];
+		return [ pos.getX( 1 ), pos.getY( 1 ), pos.getZ( 1 ) ];
+
 	}
 
-	set to(to)
-	{
+	set to( to ) {
+
 		this.suica.parser?.parseTags();
 
-		to = Suica.parseCenter( to );
-		
+		to = parseCenter( to );
+
 		var pos = this.threejs.geometry.getAttribute( 'position' );
 		pos.setXYZ( 1, ...to );
 		pos.needsUpdate = true;
+
 	}
 
 
 
-	get clone( )
-	{
+	get clone( ) {
+
 		var object = new Line( this.suica, this.from, this.to, this.color );
-		
+
 		object.image = this.image;
 		object.images = this.images;
 		object.visible = this.visible;
 
-		Suica.cloneEvents( object, this );
-		
+		cloneEvents( object, this );
+
 		return object;
-		
+
 	} // Line.clone
-	
-	
-	get randomIn( )
-	{
+
+
+	get randomIn( ) {
+
 		var from = this.from,
 			to = this.to,
 			k = random( 0, 1 );
 
-		return this.objectPosition( [
-			from[0]*(1-k)+k*to[0],
-			from[1]*(1-k)+k*to[1],
-			from[2]*(1-k)+k*to[2],
-		] );
-		
+		return this.objectPosition([
+			from[ 0 ]*( 1-k )+k*to[ 0 ],
+			from[ 1 ]*( 1-k )+k*to[ 1 ],
+			from[ 2 ]*( 1-k )+k*to[ 2 ],
+		]);
+
 	} // Line.randomIn
-	get randomOn( )
-	{
+	get randomOn( ) {
+
 		return this.randomIn;
+
 	}
-	
+
 } // class Line
 
+
+export { Line };

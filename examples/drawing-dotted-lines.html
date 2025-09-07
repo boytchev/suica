@@ -3,16 +3,7 @@
 
 <head>
 	<title>Drawing dotted lines</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -31,40 +22,45 @@
 	<script>
 
 		var dotted = drawing( 128, 1 );
-			for( var i=0; i<128; i+=4 )
-			{
-				moveTo( i, 0 );
-				lineTo( i, 1 );
-			}
+		for ( var i=0; i<128; i+=4 )
+		{
+			moveTo( i, 0 );
+			lineTo( i, 1 );
+		}
+
 		stroke( 'white', 1 );
 
 
 		var dashed = drawing( 128, 1 );
-			for( var i=0; i<128; i+=16 )
-			{
-				moveTo( i, 0 );
-				lineTo( i+12, 0 );
-			}
+		for ( var i=0; i<128; i+=16 )
+		{
+			moveTo( i, 0 );
+			lineTo( i+12, 0 );
+		}
+
 		stroke( 'white', 1 );
 
 
 		var dotDashed = drawing( 128, 1 );
-			for( var i=0; i<128; i+=8 )
-			{
-				moveTo( i+2, 0 );
-				lineTo( i+5, 0 );
-			}
+		for ( var i=0; i<128; i+=8 )
+		{
+			moveTo( i+2, 0 );
+			lineTo( i+5, 0 );
+		}
+
 		stroke( 'lightsalmon', 1 );
-			for( var i=0; i<128; i+=8 )
-			{
-				moveTo( i+7, 0 );
-				lineTo( i+8, 0 );
-			}
+		for ( var i=0; i<128; i+=8 )
+		{
+			moveTo( i+7, 0 );
+			lineTo( i+8, 0 );
+		}
+
 		stroke( 'black', 2 );
 
 		a.image = dashed;
 		b.image = dotted;
 		c.image = dotDashed;
+		
 	</script>
 	
 </body>

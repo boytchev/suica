@@ -28,3 +28,55 @@ p {
 code {
 	font-size: 1.3em;
 }
+
+suica {
+	position: relative;
+}
+
+suica[orientation] {
+	width: 164px;
+	height: 148px;
+}
+
+button.tag {
+	font-family: 'Roboto', sans-serif;
+	position: absolute;
+	padding: 0.5em 1em 0.5em 0.75em;
+	left: 0;
+	top: 0;
+	background: peachpuff;
+	border: solid 1px gray;
+	border-bottom-right-radius: 1em;
+	cursor: pointer
+}
+	
+.tag {
+	font-family: 'Roboto', sans-serif;
+	position: absolute;
+	display: inline-block;
+	padding: 0.2em 0.75em 0.2em 0.25em;
+	left: 0;
+	top: 0;
+	background: peachpuff;
+	border: solid 1px gray;
+	border-bottom-right-radius: 1em;
+	font-size: 80%;
+}
+	
+div#log {
+	width: calc( 100% - 1em );
+	position: absolute;
+	padding: 0.5em;
+	border-bottom: 1px gray dotted;
+}	
+
+.label {
+	width: 1em;
+	height: 1em;
+	background: rgba( 255, 255, 255, 0.3 );
+	border: dotted black 1px;
+	border-radius: 1em;
+	text-align: center;
+	padding: 0.25em;
+	position: absolute;
+}

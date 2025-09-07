@@ -3,16 +3,7 @@
 
 <head>
 	<title>Images</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -22,23 +13,24 @@
 	<p>Drawing copies of images across the surface of an object.</p>
 
 	<script>
+	
 		var pic = drawing( 100, 100, 'white' );
-		{
-			arc( 50, 50, 100 );
-			fill( 'linen' );	
-			arc( 50, 50, 40 );
-			stroke( 'black', 10 );	
-			fill( 'peachpuff' );	
-			arc( 50, 50, 30 );
-			stroke( 'black', 8 );	
-			fill( 'white' );	
-			arc( 50, 50, 20 );
-			stroke( 'black', 6 );	
-			fill( 'lightgray' );	
-			arc( 50, 50, 10 );
-			stroke( 'black', 4 );	
-			fill( 'lightsalmon' );	
-		}
+
+		arc( 50, 50, 100 );
+		fill( 'linen' );
+		arc( 50, 50, 40 );
+		stroke( 'black', 10 );
+		fill( 'peachpuff' );
+		arc( 50, 50, 30 );
+		stroke( 'black', 8 );
+		fill( 'white' );
+		arc( 50, 50, 20 );
+		stroke( 'black', 6 );
+		fill( 'lightgray' );
+		arc( 50, 50, 10 );
+		stroke( 'black', 4 );
+		fill( 'lightsalmon' );
+		
 	</script>
 	
 	<suica>
@@ -47,7 +39,6 @@
 		<cube id="b" color="white" x="0"   image="pic" images="2">
 		<cube id="c" color="white" x="32"  image="pic" images="4">
 	</suica>
-	
 	
 </body>
 </html>

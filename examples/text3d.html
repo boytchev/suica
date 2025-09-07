@@ -3,16 +3,7 @@
 
 <head>
 	<title>Text3D</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -25,9 +16,10 @@
 	</suica>
 
 	<script>
+	
 		a = group(
-			text3d( 'Suica 2.0', '../assets/fonts/droid/droid_sans_regular.typeface.json', [-42,-10,0], [15,15,1], 'black' ),
-			text3d( 'Suica 2.0', '../assets/fonts/droid/droid_sans_regular.typeface.json', [-42,-10,-10], [15,15,10], 'linen' )
+			text3d( 'Suica 3.0', '../assets/fonts/droid/droid_sans_regular.typeface.json', [ -42, -10, 0 ], [ 15, 15, 1 ], 'black' ),
+			text3d( 'Suica 3.0', '../assets/fonts/droid/droid_sans_regular.typeface.json', [ -42, -10, -10 ], [ 15, 15, 10 ], 'linen' )
 		);
 		
 		function spin( t )
@@ -35,6 +27,8 @@
 			a.spinH = 45*Math.sin( 2*t );
 			a.spinV = 30*Math.cos( 2*t );
 		}
+		
 	</script>
+	
 </body>
 </html>

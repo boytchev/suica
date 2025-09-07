@@ -3,16 +3,7 @@
 
 <head>
 	<title>Spline color</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -29,17 +20,19 @@
 	</suica>
 
 	<script>
-		curve = spline( [a.center, b.center, c.center, d.center], true, false );
-		color = spline( [a.color, b.color, c.color, d.color], true, true );
+	
+		curve = spline([ a.center, b.center, c.center, d.center ], true, false );
+		color = spline([ a.color, b.color, c.color, d.color ], true, true );
 		
-		s = circle( [0,0,0], 20, 'lightsalmon' );
+		s = circle([ 0, 0, 0 ], 20, 'lightsalmon' );
 		
-		suica.ontime = function( t )
+		suica.ontime = function ( t )
 		{
-			s.center = curve(t/5);
-			s.color = color(t/5);
-		}
+			s.center = curve( t/5 );
+			s.color = color( t/5 );
+		};
 		
 	</script>
+	
 </body>
 </html>

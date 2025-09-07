@@ -3,16 +3,7 @@
 
 <head>
 	<title>Spline color</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -27,26 +18,27 @@
 	</suica>
 
 	<script>
-		curve = spline( [[-20,-25,0], [-20,14,0], [20,14,0], [20,-25,0]], true, false );
-		size = spline( [[20], [6], [6], [20] ], true, true );
+	
+		curve = spline([[ -20, -25, 0 ], [ -20, 14, 0 ], [ 20, 14, 0 ], [ 20, -25, 0 ]], true, false );
+		size = spline([[ 20 ], [ 6 ], [ 6 ], [ 20 ]], true, true );
 		
 		var s = [
-			circle( [0,0,0], 5, 'lightsalmon' ),
-			circle( [0,0,0], 5, 'lightsalmon' ),
-			circle( [0,0,0], 5, 'lightsalmon' )
+			circle([ 0, 0, 0 ], 5, 'lightsalmon' ),
+			circle([ 0, 0, 0 ], 5, 'lightsalmon' ),
+			circle([ 0, 0, 0 ], 5, 'lightsalmon' )
 		];
-		
-		
-		suica.ontime = function( t )
+			
+		suica.ontime = function ( t )
 		{
-			for( i=0; i<3; i++ )
+			for ( i=0; i<3; i++ )
 			{
-				s[i].center = curve(t/5);
-				s[i].size = size(t/5)[0];
+				s[ i ].center = curve( t/5 );
+				s[ i ].size = size( t/5 )[ 0 ];
 				t += 5/3;
 			}
-		}
+		};
 		
 	</script>
+	
 </body>
 </html>

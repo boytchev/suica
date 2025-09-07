@@ -3,14 +3,6 @@
 
 <head>
 	<title>Events - model onLoad</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
 	<link rel="stylesheet" href="examples.css">
 
 	<script src="suica.js"></script>
@@ -35,40 +27,43 @@
 	</suica>
 
 	<script>
+	
 		var angle = 36;
-		for( var obj of allObjects() )
+		for ( var obj of allObjects() )
 		{
 			angle += 360/5;
-			
-			obj.x = 35*Math.cos( radians(angle) );
-			obj.z = 35*Math.sin( radians(angle) );
-			
+		
+			obj.x = 35*Math.cos( radians( angle ) );
+			obj.z = 35*Math.sin( radians( angle ) );
+		
 			obj.spinH = -angle;
-			obj.spinV = random( -90, 90 );
+			obj.spinV = random( -180, 180 );
 		}
 		
 		function boundingBox( object )
 		{
-			var min = [Infinity,Infinity,Infinity],
-				max = [-Infinity,-Infinity,-Infinity],
-				center = [0,0,0],
-				size = [0,0,0];
-				
-			for( var i=0; i<3; i++ )
+			var min = [ Infinity, Infinity, Infinity ],
+				max = [ -Infinity, -Infinity, -Infinity ],
+				center = [ 0, 0, 0 ],
+				size = [ 0, 0, 0 ];
+		
+			for ( var i=0; i<3; i++ )
 			{
-				for( var v of object.vertices )
+				for ( var v of object.vertices )
 				{
-					min[i] = Math.min( min[i], v[i] );
-					max[i] = Math.max( max[i], v[i] );
+					min[ i ] = Math.min( min[ i ], v[ i ]);
+					max[ i ] = Math.max( max[ i ], v[ i ]);
 				}
-				
-				center[i] = min[i]/2 + max[i]/2;
-				size[i] = max[i]-min[i];
+		
+				center[ i ] = min[ i ]/2 + max[ i ]/2;
+				size[ i ] = max[ i ]-min[ i ];
 			}
-			
+		
 			cube( center, size, 'black' );
 			its.wireframe = true;
 		}
+		
 	</script>
+	
 </body>
 </html>

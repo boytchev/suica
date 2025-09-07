@@ -3,33 +3,7 @@
 
 <head>
 	<title>allObjects</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-
-	<style>
-		suica {
-			position: relative;
-		}
-		
-		button {
-			font-family: 'Roboto', sans-serif;
-			position: absolute;
-			padding: 0.5em 1em 0.5em 0.75em;
-			left: 0;
-			top: 0;
-			background: peachpuff;
-			border: solid 1px gray;
-			border-bottom-right-radius: 1em;
-			cursor: pointer
-		}
-	</style>
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -40,35 +14,36 @@
 
 	<suica>
 		<lookat from="0,0,100">
-		<button onclick="randomize()">Randomize</button>
+		<button class="tag" onclick="randomize()">Randomize</button>
 	</suica>
 
 	<script>
+	
 		var y = -25;
-		while( y<=25 )
+		while ( y<=25 )
 		{
 			var x = -50;
-			while( x<50 )
+			while ( x<50 )
 			{
-				var width = random(10,30);
-				
-				if( x+width>50 ) width = 50-x;
-				
-				prism( 6, [x,y,0], [11,width-1,11], 'linen' ).style({spin:[90,90,30]});
-				
+				var width = random( 10, 30 );
+		
+				if ( x+width>50 ) width = 50-x;
+		
+				prism( 6, [ x, y, 0 ], [ 11, width-1, 11 ], 'linen' ).style( { spin: [ 90, 90, 30 ] } );
+		
 				x += width;
 			}
-			
+		
 			y += 10;
 		}
 		
 		function randomize()
 		{
-			for( var object of allObjects() )
-			{
-				object.color = random( ['dimgray','linen','lightsalmon','peachpuff','gray','white','black'] );
-			}
+			for ( var object of allObjects() )
+				object.color = random([ 'dimgray', 'linen', 'lightsalmon', 'peachpuff', 'gray', 'white', 'black' ]);
 		}
+		
 	</script>
+	
 </body>
 </html>

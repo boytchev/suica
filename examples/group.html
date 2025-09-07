@@ -3,16 +3,7 @@
 
 <head>
 	<title>Group</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,26 +17,28 @@
 	</suica>
 
 	<script>
+	
 		var pawn = group(
-			sphere( [0,25,0], 10, 'dimgray' ),
-			sphere( [0,19,0], [10,2,10], 'dimgray' ),
-			cone( [0,0,0], [12,25], 'dimgray' ),
-			cone( [0,0,0], [20,10], 'dimgray' ),
+			sphere([ 0, 25, 0 ], 10, 'dimgray' ),
+			sphere([ 0, 19, 0 ], [ 10, 2, 10 ], 'dimgray' ),
+			cone([ 0, 0, 0 ], [ 12, 25 ], 'dimgray' ),
+			cone([ 0, 0, 0 ], [ 20, 10 ], 'dimgray' ),
 		);
-		pawn.center = [30,-5,0];
+		pawn.center = [ 30, -5, 0 ];
 		
 		pawn = pawn.clone;
 		pawn.color = 'linen';
-		pawn.center = [-30,-5,0];
+		pawn.center = [ -30, -5, 0 ];
 		
 		pawn = pawn.clone;
 		pawn.color = 'lightcoral';
-		pawn.center = [0,-5,30];
+		pawn.center = [ 0, -5, 30 ];
 		
 		pawn = pawn.clone;
 		pawn.color = 'peachpuff';
-		pawn.center = [0,-5,-30];
+		pawn.center = [ 0, -5, -30 ];
 
 	</script>
+	
 </body>
 </html>

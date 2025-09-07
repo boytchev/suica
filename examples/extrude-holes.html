@@ -3,16 +3,7 @@
 
 <head>
 	<title>Extrude with holes</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,23 +17,24 @@
 	</suica>
 	
 	<script>
+	
 		var curvedShape = shape( );
-			moveTo( -40, -20, 30, -20 );
-			curveTo( 40, -20, 40, -10 );
-			lineTo( 40, 20, -30, 20 );
-			curveTo( -40, 20, -40, 10 );
-			lineTo( -40, -20 );
+		moveTo( -40, -20, 30, -20 );
+		curveTo( 40, -20, 40, -10 );
+		lineTo( 40, 20, -30, 20 );
+		curveTo( -40, 20, -40, 10 );
+		lineTo( -40, -20 );
 
 		var squareHole = shape( );
-			moveTo( -30, -10, -10, -10, -10, 10, -30, 10 );
+		moveTo( -30, -10, -10, -10, -10, 10, -30, 10 );
 
 		var circleHole = shape( 3 );
-			arc( 20, 0, 10 );
+		arc( 20, 0, 10 );
 		
-		extrude( [curvedShape, squareHole, circleHole], [0,0,-5] );
-			its.count = [1, 30];
-			its.depth = 10;
-			
+		extrude([ curvedShape, squareHole, circleHole ], [ 0, 0, -5 ]);
+		its.count = [ 1, 30 ];
+		its.depth = 10;
+		
 	</script>
 	
 </body>

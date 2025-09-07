@@ -3,16 +3,7 @@
 
 <head>
 	<title>Convex &ndash; Platonic solids</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -26,34 +17,37 @@
 	</suica>
 
 	<script>
+	
 		// tetrahedron
-		convex( [[1,1,1], [1,-1,-1], [-1,1,-1], [-1,-1,1]], 10, 'lightsalmon' );
+		convex([[ 1, 1, 1 ], [ 1, -1, -1 ], [ -1, 1, -1 ], [ -1, -1, 1 ]], 10, 'lightsalmon' );
 		its.x = -40;
 		
 		// hexahedron/cube
-		convex( [[1,1,1], [1,1,-1], [1,-1,1], [1,-1,-1], [-1,1,1], [-1,1,-1], [-1,-1,1], [-1,-1,-1]], 10, 'dimgray' );
+		convex([[ 1, 1, 1 ], [ 1, 1, -1 ], [ 1, -1, 1 ], [ 1, -1, -1 ], [ -1, 1, 1 ], [ -1, 1, -1 ], [ -1, -1, 1 ], [ -1, -1, -1 ]], 10, 'dimgray' );
 		
 		// octahedron
-		convex( [[1,0,0], [0,1,0], [0,0,1], [-1,0,0], [0,-1,0], [0,0,-1]], 15, 'peachpuff' );
+		convex([[ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ], [ -1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, -1 ]], 15, 'peachpuff' );
 		its.x = 40;
 		
-		Φ = (1+Math.sqrt(5))/2;
+		Φ = ( 1+Math.sqrt( 5 ) )/2;
 		
 		// dodecahedron
-		convex( [[1,1,1], [1,1,-1], [1,-1,1], [1,-1,-1], [-1,1,1], [-1,1,-1], [-1,-1,1], [-1,-1,-1], [0,1/Φ,Φ], [0,1/Φ,-Φ], [0,-1/Φ,Φ], [0,-1/Φ,-Φ], [1/Φ,Φ,0], [1/Φ,-Φ,0], [-1/Φ,Φ,0], [-1/Φ,-Φ,0], [Φ,0,1/Φ], [-Φ,0,1/Φ], [Φ,0,-1/Φ], [-Φ,0,-1/Φ] ], 8, 'linen' );
+		convex([[ 1, 1, 1 ], [ 1, 1, -1 ], [ 1, -1, 1 ], [ 1, -1, -1 ], [ -1, 1, 1 ], [ -1, 1, -1 ], [ -1, -1, 1 ], [ -1, -1, -1 ], [ 0, 1/Φ, Φ ], [ 0, 1/Φ, -Φ ], [ 0, -1/Φ, Φ ], [ 0, -1/Φ, -Φ ], [ 1/Φ, Φ, 0 ], [ 1/Φ, -Φ, 0 ], [ -1/Φ, Φ, 0 ], [ -1/Φ, -Φ, 0 ], [ Φ, 0, 1/Φ ], [ -Φ, 0, 1/Φ ], [ Φ, 0, -1/Φ ], [ -Φ, 0, -1/Φ ]], 8, 'linen' );
 		its.z = -40;
 		
 		// icosahedron
-		convex( [[0,1,Φ], [0,1,-Φ], [0,-1,Φ], [0,-1,-Φ], [1,Φ,0], [1,-Φ,0], [-1,Φ,0], [-1,-Φ,0], [Φ,0,1], [-Φ,0,1], [Φ,0,-1], [-Φ,0,-1] ], 8, 'lightgray' );
+		convex([[ 0, 1, Φ ], [ 0, 1, -Φ ], [ 0, -1, Φ ], [ 0, -1, -Φ ], [ 1, Φ, 0 ], [ 1, -Φ, 0 ], [ -1, Φ, 0 ], [ -1, -Φ, 0 ], [ Φ, 0, 1 ], [ -Φ, 0, 1 ], [ Φ, 0, -1 ], [ -Φ, 0, -1 ]], 8, 'lightgray' );
 		its.z = 40;
 
 		platonic = allObjects();
 		
 		function spinSolids( t )
 		{
-			for( var i in platonic )
-				platonic[i].spin = [100*t,(110-8*i)*t,(120-5*i)*t];
+			for ( var i in platonic )
+				platonic[ i ].spin = [ 100*t, ( 110-8*i )*t, ( 120-5*i )*t ];
 		}
+		
 	</script>
+	
 </body>
 </html>

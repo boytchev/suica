@@ -3,16 +3,7 @@
 
 <head>
 	<title>Image file</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -28,12 +19,15 @@
 	</suica>
 	
 	<script>
+	
 		a.image = image( 'https://boytchev.github.io/suica/assets/textures/tile.png' );
-		a.images = [9,3];
+		a.images = [ 9, 3 ];
 		
-		var c = sphere( [32,0,0], 30, 'white' );
+		var c = sphere([ 32, 0, 0 ], 30, 'white' );
 		c.image = 'https://boytchev.github.io/suica/assets/textures/blobs.jpg';
-		c.images = [6,2];
+		c.images = [ 6, 2 ];
+		
 	</script>
+	
 </body>
 </html>

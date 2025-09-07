@@ -3,29 +3,7 @@
 
 <head>
 	<title>Screen position &ndash; local coordinates</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
-	<style>
-		.label {
-			width: 1em;
-			height: 1em;
-			background: rgba( 255, 255, 255, 0.3 );
-			border: dotted black 1px;
-			border-radius: 1em;
-			text-align: center;
-			padding: 0.25em;
-			position: absolute;
-		}
-	</style>
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -47,30 +25,33 @@
 	</suica>
 
 	<script>
+	
 		// function to center an element on given position
 		function setPos( label, offset )
 		{
 			var elem = element( label );
-			
+		
 			var pos = p.screenPosition( offset );
-			elem.style.left = (pos[0]-elem.clientWidth/2)+'px';
-			elem.style.top = (pos[1]-elem.clientHeight/2)+'px';
+			elem.style.left = ( pos[ 0 ]-elem.clientWidth/2 )+'px';
+			elem.style.top = ( pos[ 1 ]-elem.clientHeight/2 )+'px';
 		}
 		
 		function onTime( t )
 		{
-			p.spinH = 180*Math.sin(0.4*t);
-			p.spinV = 90*Math.cos(0.7**t);
-			p.spinT = 180*Math.sin(0.2*t);
-			
-			setPos( 'a', [20,0,0] );
-			setPos( 'b', [0,0,20] );
-			setPos( 'c', [-20,0,0] );
-			setPos( 'd', [0,0,-20] );
-			setPos( 'e', [0,40,0] );
-			setPos( 'e1', [0,47,0] );
-			setPos( 'e2', [0,54,0] );
+			p.spinH = 180*Math.sin( 0.4*t );
+			p.spinV = 90*Math.cos( 0.7**t );
+			p.spinT = 180*Math.sin( 0.2*t );
+		
+			setPos( 'a', [ 20, 0, 0 ]);
+			setPos( 'b', [ 0, 0, 20 ]);
+			setPos( 'c', [ -20, 0, 0 ]);
+			setPos( 'd', [ 0, 0, -20 ]);
+			setPos( 'e', [ 0, 40, 0 ]);
+			setPos( 'e1', [ 0, 47, 0 ]);
+			setPos( 'e2', [ 0, 54, 0 ]);
 		}
+		
 	</script>
+	
 </body>
 </html>

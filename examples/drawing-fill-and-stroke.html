@@ -3,16 +3,7 @@
 
 <head>
 	<title>Drawing &ndash; fill and stroke</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -27,28 +18,30 @@
 	</suica>
 	
 	<script>
+	
 		var pic = drawing( 100, 100, 'white' );
 		
 		arc( 50, 50, 100 );
-		fill( 'linen' );	
+		fill( 'linen' );
 		
 		arc( 25, 25, 15 );
-		stroke( 'black', 10 );	
-		fill( 'peachpuff' );	
+		stroke( 'black', 10 );
+		fill( 'peachpuff' );
 		
 		arc( 100-25, 25, 15 );
-		stroke( 'black', 10 );	
-		fill( 'white' );	
+		stroke( 'black', 10 );
+		fill( 'white' );
 		
 		arc( 25, 100-25, 15 );
-		stroke( 'black', 10 );	
-		fill( 'lightgray' );	
-	
+		stroke( 'black', 10 );
+		fill( 'lightgray' );
+
 		arc( 100-25, 100-25, 15 );
-		stroke( 'black', 10 );	
-		fill( 'lightsalmon' );	
+		stroke( 'black', 10 );
+		fill( 'lightsalmon' );
 		
 		a.image = pic;
+		
 	</script>
 	
 </body>

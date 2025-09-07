@@ -3,16 +3,7 @@
 
 <head>
 	<title>WebM video capture</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -32,17 +23,17 @@
 
 		capture( );
 
-		theImage = image("https://boytchev.github.io/suica/assets/textures/tile.png");
+		theImage = image( "https://boytchev.github.io/suica/assets/textures/tile.png" );
 
-		var colors = ['peachpuff','linen','black','white','gray','lightsalmon','lightgray','dimgray'],
-			x = [40,0,-40,-40,-40,0,40,40],
-			z = [40,40,40,0,-40,-40,-40,0];
-			
+		var colors = [ 'peachpuff', 'linen', 'black', 'white', 'gray', 'lightsalmon', 'lightgray', 'dimgray' ],
+			x = [ 40, 0, -40, -40, -40, 0, 40, 40 ],
+			z = [ 40, 40, 40, 0, -40, -40, -40, 0 ];
+		
 		var balls = [];
-		for( var i=0; i<8; i++ )
+		for ( var i=0; i<8; i++ )
 		{
-			var ball = cube( [x[i],0,z[i]], 10, colors[i] );
-			ball.spin = [0,0,0];
+			var ball = cube([ x[ i ], 0, z[ i ] ], 10, colors[ i ]);
+			ball.spin = [ 0, 0, 0 ];
 			ball.image = theImage;
 			ball.flips = 0;
 			balls.push( ball );
@@ -55,34 +46,36 @@
 
 		function loop( t, dT )
 		{
-			for( var i in balls )
+			for ( var i in balls )
 			{
-				var ball = balls[i];
-				
-				var newT = (1+0.3*Math.sin(i))*t+150*i;
-				var oldT = (1+0.3*Math.sin(i))*lastT+150*i;
-				
-				ball.y = -5 + 60*Math.abs(Math.sin(newT));
-				if( Math.sign(Math.sin(newT)) != Math.sign(Math.sin(oldT)) )
+				var ball = balls[ i ];
+		
+				var newT = ( 1+0.3*Math.sin( i ) )*t+150*i;
+				var oldT = ( 1+0.3*Math.sin( i ) )*lastT+150*i;
+		
+				ball.y = -5 + 60*Math.abs( Math.sin( newT ) );
+				if ( Math.sign( Math.sin( newT ) ) != Math.sign( Math.sin( oldT ) ) )
 				{
 					vib = 2;
-					ball.spin[0] = random([0,90,180,270]);
-					ball.flips = random([1,2,3,4,5,6]);
+					ball.spin[ 0 ] = random([ 0, 90, 180, 270 ]);
+					ball.flips = random([ 1, 2, 3, 4, 5, 6 ]);
 				}
-					
-				ball.spin = [ball.spin[0],ball.flips * newT * 90/Math.PI];
+		
+				ball.spin = [ ball.spin[ 0 ], ball.flips * newT * 90/Math.PI ];
 			}
-			
+		
 			floor.y = -10+vib*Math.sin( 30*t );
-			vib = THREE.MathUtils.clamp(vib*(1-3*dT),-2,2);
-			
+			vib = Math.min(Math.max( vib*( 1-3*dT ), -2), 2 );
+		
 			lastT = t;
-			
-			floor.spin = [0,2*vib*Math.sin( 10*t )];
-			
-			var angle = t/6 + Math.sin(t/4);
-			lookAt( [150*Math.cos(angle), 30+30*Math.sin(angle*1.5), 150*Math.sin(angle)] );
+		
+			floor.spin = [ 0, 2*vib*Math.sin( 10*t ) ];
+		
+			var angle = t/6 + Math.sin( t/4 );
+			lookAt([ 150*Math.cos( angle ), 30+30*Math.sin( angle*1.5 ), 150*Math.sin( angle ) ]);
 		}
+		
 	</script>
+	
 </body>
 </html>

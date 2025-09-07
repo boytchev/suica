@@ -3,16 +3,7 @@
 
 <head>
 	<title>Shape and Drawing</title>
-
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="logo.png"/>
-	<link rel="stylesheet" href="examples.css">
-	
+	<script src="example.js"></script>
 	<script src="suica.js"></script>
 </head>
 
@@ -24,50 +15,49 @@
 	<suica></suica>
 	
 	<script>
-//		demo();
 		
 		var pic = drawing( 64, 64, 'lightgray' );
-			moveTo( 22, 32 );
-			curveTo( 2, 62, 32, 42 );
-			curveTo( 62, 62, 42, 32 );
-			curveTo( 62, 2, 32, 22 );
-			curveTo( 2, 2, 22, 32 );
-			fill( 'lightsalmon' );
-			stroke( 'black', 2 );
+		moveTo( 22, 32 );
+		curveTo( 2, 62, 32, 42 );
+		curveTo( 62, 62, 42, 32 );
+		curveTo( 62, 2, 32, 22 );
+		curveTo( 2, 2, 22, 32 );
+		fill( 'lightsalmon' );
+		stroke( 'black', 2 );
 
-		var a = cube( [0,0,0], 10, 'white' );
-			its.image = pic;
-			
+		var a = cube([ 0, 0, 0 ], 10, 'white' );
+		its.image = pic;
+		
 		var path = shape( 150 );
-			moveTo( -15, 0 );
-			curveTo( -45, 45, 0, 15 );
-			curveTo( 45, 45, 15, 0 );
-			curveTo( 45, -45, 0, -15 );
-			curveTo( -45, -45, -15, 0 );
-			
+		moveTo( -15, 0 );
+		curveTo( -45, 45, 0, 15 );
+		curveTo( 45, 45, 15, 0 );
+		curveTo( 45, -45, 0, -15 );
+		curveTo( -45, -45, -15, 0 );
+		
 		var v = path.vertices,
 			n = v.length;
 
-		for( var i = 0; i<n; i++ ) line( v[i], v[(i+1)%n] );
+		for ( var i = 0; i<n; i++ ) line( v[ i ], v[ ( i+1 )%n ]);
 		
 		var cubes = [];
-		for( var i=0; i<10; i++ )
+		for ( var i=0; i<10; i++ )
 		{
 			cubes.push( a.clone );
-			its.center = v[Math.round(i/10*n)];
+			its.center = v[ Math.round( i/10*n ) ];
 		}
 		
 		a.visible = false;
 		
-		suica.ontime = function( t )
+		suica.ontime = function ( t )
 		{
-			for( var i =0; i<10; i++ )
+			for ( var i =0; i<10; i++ )
 			{
-				cubes[i].center = v[Math.round(i/10*n+50*t)%n];
-				cubes[i].spinH = 20*i+200*t;
+				cubes[ i ].center = v[ Math.round( i/10*n+50*t )%n ];
+				cubes[ i ].spinH = 20*i+200*t;
 			}
-			
-		}
+		};
+		
 	</script>
 	
 </body>
