@@ -97705,6 +97705,7 @@ void main() {
 	            polys.push(new Polygon(vertices, objectIndex));
 	        }
 	    } else if (geom.isBufferGeometry) {
+	        /*let vertices, normals, uvs*/
 	        let posattr = geom.attributes.position;
 	        let normalattr = geom.attributes.normal;
 	        let uvattr = geom.attributes.uv;
@@ -97876,6 +97877,7 @@ void main() {
 	            }
 	            geom.setIndex(index);
 	        }
+	        /*g2 = geom;*/
 	    }
 	    return geom;
 	};

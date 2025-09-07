@@ -4,8 +4,8 @@
 
 import*as THREE from "three" //"https://threejs.org/build/three.module.js";
 
-let { BufferGeometry, Vector3, Vector2} = THREE;
-import {CSG, Vertex, Vector, Polygon} from "./csg-lib.js"
+/*let { BufferGeometry, Vector3, Vector2} = THREE;*/
+import {CSG, Vertex, /*Vector,*/ Polygon} from "./csg-lib.js"
 //import {Geometry} from "../three.js-dev/examples/jsm/deprecated/Geometry.js";
 
 CSG.fromGeometry = function(geom,objectIndex) {
@@ -22,7 +22,7 @@ CSG.fromGeometry = function(geom,objectIndex) {
             polys.push(new Polygon(vertices, objectIndex))
         }
     } else if (geom.isBufferGeometry) {
-        let vertices, normals, uvs
+        /*let vertices, normals, uvs*/
         let posattr = geom.attributes.position
         let normalattr = geom.attributes.normal
         let uvattr = geom.attributes.uv
@@ -195,7 +195,7 @@ CSG.toGeometry = function(csg, buffered=true) {
             }
             geom.setIndex(index)
         }
-        g2 = geom;
+        /*g2 = geom;*/
     }
     return geom;
 }
