@@ -1317,9 +1317,7 @@ JS:
 scorm.api
 ```
 
-<!-- markdown-link-check-disable -->
-Property. Interface to SCORM Run-time API. This property defines methods for run-time access to SCORM functions. The functions are listed in [SCORM 1.2 API Signature](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2) and they are `LMSInitialize`, `LMSFinish`, `LMSGetValue`, `LMSSetValue`, `LMSCommit`, `LMSGetLastError` and `LMSGetErrorString`. Details about these functions are available in [Overview of the SCORM Run-Time environment](https://scorm.com/scorm-explained/technical-scorm/run-time/).
-<!-- markdown-link-check-enable -->
+Property. Interface to SCORM Run-time API. This property defines methods for run-time access to SCORM functions. The functions are listed in [SCORM 1.2 API Signature](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2) and they are `LMSInitialize`, `LMSFinish`, `LMSGetValue`, `LMSSetValue`, `LMSCommit`, `LMSGetLastError` and `LMSGetErrorString`. Details about these functions are available in [Overview of the SCORM Run-Time environment](https://scorm.com/scorm-explained/technical-scorm/run-time/) <!-- markdown-link-check-disable-line -->.
 
 Suica always defines `scorm`, but if `scorm.api` is empty, then the SCORM functionality is not available.
 
@@ -1340,7 +1338,7 @@ else
 JS:
 scorm.getValue( name );
 ```
-Function. Retrieves the value of SCORM property `name`. If such property does not exist the return value is an empty string. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2).
+Function. Retrieves the value of SCORM property `name`. If such property does not exist the return value is an empty string. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2).<!-- markdown-link-check-disable-line -->
 
 The following example retrieves the student id, which is stored in SCORM property `cmi.core.student_id`.
 
@@ -1408,7 +1406,7 @@ The next example demonstrates the derandomization effect. The lower three rows o
 HTML:
 <scorm>name</scorm>
 ```
-Tag. Retrieves the value of SCORM property `name` and replaces the content of the `<scorm>` tag. If such property does not exist the content is cleared. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2). Adittionaly, `name` could be `studentId`, `studentName` or `score`.
+Tag. Retrieves the value of SCORM property `name` and replaces the content of the `<scorm>` tag. If such property does not exist the content is cleared. The possible values of `name` are listed in [SCORM 1.2 Data Model](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2). Adittionaly, `name` could be `studentId`, `studentName` or `score`.<!-- markdown-link-check-disable-line -->
 
 The following example retrieves the student id, which is stored in SCORM property `cmi.core.student_id`.
 
