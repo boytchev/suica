@@ -857,18 +857,18 @@ point( randomOn(box) );
 
 ## Video capturing
 
-Suica provided internal mechanism for recording Suica animations into [WebM files](https://en.wikipedia.org/wiki/WebM) or [animated GIFs](https://en.wikipedia.org/wiki/GIF#Animated_GIF). The actual capturing is done by [CCapture.js](https://github.com/spite/ccapture.js). Using JavaScript for video recording has its inherent limitations, so such recording is not appropriate for capturing large video files (the meaning *large* depends on the available system resources).
+Suica provided internal mechanism for recording Suica animations into [WebM files](https://en.wikipedia.org/wiki/WebM) or [MP4](https://en.wikipedia.org/wiki/MP4_file_format). 
 
 #### capture
 ```js
 JS:
-capture( 𝘴𝘳𝘤, 𝘵𝘪𝘮𝘦, 𝘧𝘱𝘴, 𝘧𝘰𝘳𝘮𝘢𝘵, 𝘴𝘬𝘪𝘱𝘵𝘪𝘮𝘦 );
+capture( 𝘴𝘳𝘤, 𝘵𝘪𝘮𝘦, 𝘧𝘱𝘴, 𝘧𝘰𝘳𝘮𝘢𝘵, 𝘴𝘬𝘪𝘱𝘛𝘪𝘮𝘦 );
 ```
 ```html
 HTML:
-<capture src="𝘴𝘳𝘤" time="𝘵𝘪𝘮𝘦" fps="𝘧𝘱𝘴" format="𝘧𝘰𝘳𝘮𝘢𝘵" skipTime="𝘴𝘬𝘪𝘱𝘵𝘪𝘮𝘦">
+<capture src="𝘴𝘳𝘤" time="𝘵𝘪𝘮𝘦" fps="𝘧𝘱𝘴" format="𝘧𝘰𝘳𝘮𝘢𝘵" skipTime="𝘴𝘬𝘪𝘱𝘛𝘪𝘮𝘦">
 ```
-Function. Initiates video capturing. Parameter `src` provides the name of the video file. If `src` is an empty string `''` the name is automatically generated from the name of the HTML file that runs the code. The desired duration of the video is `time` seconds at `fps` frames per seconds. By default, they are set to 10 seconds and 30 fps. When `format` is `webm` then `capture` creates a WebM video file; if it is `mp4` &ndash; a MP4 video file. Parameter `𝘴𝘬𝘪𝘱𝘵𝘪𝘮𝘦` defines the number of seconds to skip before starting capturing. This is used when the scene is not ready at the time of initiating video capture.
+Function. Initiates video capturing. Parameter `src` provides the name of the video file. If `src` is an empty string `''` the name is automatically generated from the name of the HTML file that runs the code. The desired duration of the video is `time` seconds at `fps` frames per seconds. By default, they are set to 10 seconds and 30 fps. When `format` is `webm` then `capture` creates a WebM video file; if it is `mp4` &ndash; a MP4 video file. Parameter `skipTime` defines the number of seconds to skip before starting capturing. This is used when the scene is not ready at the time of initiating video capture.
 
 ```js
 JS:
