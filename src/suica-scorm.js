@@ -11,15 +11,8 @@ class Scorm {
 
 	constructor( ) {
 
-		try {
 
-			this.api = this.findAPI( window ) || this.findAPI( window.opener );
-
-		} catch {
-
-			this.api = null;
-
-		}
+		this.api = this.findAPI( window ) || this.findAPI( window.opener );
 
 	} // Scorm.constructor
 
@@ -41,7 +34,15 @@ class Scorm {
 
 			}
 
-			win = win.parent;
+			try {
+				
+				win = win.parent;
+				
+			} catch {
+
+				return null;
+
+			}
 
 		}
 
