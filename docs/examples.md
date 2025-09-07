@@ -48,7 +48,7 @@ tag: home userguidecheatsheet github
 ## [Video capturing](suica.md#video-capturing)
 
 [<kbd><img src="../examples/snapshots/capture-webm.jpg" width="275"></kbd>](../examples/capture-webm.html)
-[<kbd><img src="../examples/snapshots/capture-gif.jpg" width="275"></kbd>](../examples/capture-gif.html)
+[<kbd><img src="../examples/snapshots/capture-mp4.jpg" width="275"></kbd>](../examples/capture-mp4.html)
 
 
 ## [Questions and answers](suica.md#questions-and-answers)

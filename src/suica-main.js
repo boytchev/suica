@@ -978,6 +978,14 @@ class Suica {
 	} // Suica.construct
 
 
+	capture( ...args ) {
+
+		this.parser?.parseTags();
+		return new Capture( this, ...args );
+
+	} // Suica.capture
+
+
 	text3d( ...args ) {
 
 		this.parser?.parseTags();

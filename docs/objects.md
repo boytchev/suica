@@ -1316,7 +1316,7 @@ Variable. Implements sharable content objects. Suica uses `scorm` to manage comm
 JS:
 scorm.api
 ```
-Property. Interface to SCORM Run-time API. This property defines methods for run-time access to SCORM functions. The functions are listed in [SCORM 1.2 API Signature](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2) and they are `LMSInitialize`, `LMSFinish`, `LMSGetValue`, `LMSSetValue`, `LMSCommit`, `LMSGetLastError` and `LMSGetErrorString`. Details about these functions are available in [Overview of the SCORM Run-Time environment](https://scorm.com/scorm-explained/technical-scorm/run-time/). 
+Property. Interface to SCORM Run-time API. This property defines methods for run-time access to SCORM functions. The functions are listed in [SCORM 1.2 API Signature](https://scorm.com/scorm-explained/technical-scorm/run-time/run-time-reference/#section-2) and they are `LMSInitialize`, `LMSFinish`, `LMSGetValue`, `LMSSetValue`, `LMSCommit`, `LMSGetLastError` and `LMSGetErrorString`. Details about these functions are available in [Overview of the SCORM Run-Time environment](https://scorm.com/scorm-explained/technical-scorm/run-time/). <!-- markdown-link-check-disable-line -->
 
 Suica always defines `scorm`, but if `scorm.api` is empty, then the SCORM functionality is not available.
 

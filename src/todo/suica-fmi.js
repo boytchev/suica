@@ -53,7 +53,7 @@ window.onSuicaCreated = function ( suica ) {
 
 	}
 
-	id = '#' + id;
+	//id = '#' + id;
 
 	//function random( a, b ) {
 	//
