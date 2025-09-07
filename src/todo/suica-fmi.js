@@ -55,14 +55,14 @@ window.onSuicaCreated = function ( suica ) {
 
 	id = '#' + id;
 
-	function random( a, b ) {
+	//function random( a, b ) {
+	//
+	//	id += 'x';
+	//	return cyrb53( id )%( b-a+1 ) + a;
+	//
+	//}
 
-		id += 'x';
-		return cyrb53( id )%( b-a+1 ) + a;
-
-	}
-
-	var elem = element( 'buttons' );
+	elem = element( 'buttons' );
 	if ( elem ) elem.style = 'text-align: center; padding: 0; position: absolute; top: 1px; left: 0; width: 100%; z-index: 1000;';
 
 	for ( let elem of document.querySelectorAll( 'button' ) ) {

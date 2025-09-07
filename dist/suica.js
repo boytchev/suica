@@ -97790,6 +97790,7 @@ void main() {
 	CSG.toGeometry = function(csg, buffered=true) {
 	    let ps = csg.polygons;
 	    let geom;
+	    /*let g2;*/
 	    if(!buffered) //Old geometry path...
 	    {
 	        geom = new Geometry();
