@@ -35,9 +35,9 @@ class Scorm {
 			}
 
 			try {
-				
+
 				win = win.parent;
-				
+
 			} catch {
 
 				return null;

@@ -23,6 +23,6 @@
   },
   "dependencies": {
     "ccapture.js": "^1.1.0",
-    "three": "^0.179.0"
+    "three": "^0.180.0"
   }
 }
