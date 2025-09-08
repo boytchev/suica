@@ -857,7 +857,7 @@ point( randomOn(box) );
 
 ## Video capturing
 
-Suica provided internal mechanism for recording Suica animations into [WebM files](https://en.wikipedia.org/wiki/WebM) or [MP4](https://en.wikipedia.org/wiki/MP4_file_format). 
+Suica provided internal mechanism for recording Suica animations into [WebM](https://en.wikipedia.org/wiki/WebM) or [MP4](https://en.wikipedia.org/wiki/MP4_file_format) files. 
 
 #### capture
 ```js
