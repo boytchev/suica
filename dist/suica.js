@@ -1,4 +1,4 @@
-// suica v3.0.0
+// suica v3.0.1
 
 
 
@@ -82146,7 +82146,7 @@ void main() {
 
 			localOffset = parseCenter( localOffset );
 
-			if ( !( this instanceof Group$1 ) ) {
+			if ( !( this.threejs instanceof Group$1 ) ) {
 
 				switch ( this.suica.orientation ) {
 
@@ -82185,6 +82185,7 @@ void main() {
 				}
 
 			}
+
 
 			this.threejs.updateWorldMatrix( true, true );
 
@@ -98089,7 +98090,7 @@ void main() {
 
 	const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
-	const SUICA_VERSION = '3.0';
+	const SUICA_VERSION = '3.0.1';
 
 
 	// show suica version

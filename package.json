@@ -1,6 +1,6 @@
 {
-  "name": "suica-dev",
-  "version": "3.0.0",
+  "name": "suica",
+  "version": "3.0.1",
   "main": "suica.js",
   "scripts": {
     "build": "rollup -c",

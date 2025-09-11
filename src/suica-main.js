@@ -37,7 +37,7 @@ import { Construct } from './suica-construct.js';
 const DEBUG_CALLS = false;
 const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
-const SUICA_VERSION = '3.0';
+const SUICA_VERSION = '3.0.1';
 
 
 // show suica version

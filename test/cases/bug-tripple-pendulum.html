@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<script src="../test.js"></script>
+</head>
+
+<body>
+	<suica fullWindow onTime="loop">
+		<orbit altitude="0" minPolarAngle="1.57" maxPolarAngle="1.57">
+		
+		<group id="pendulum1" y="45">
+			<sphere y="-40" size="15,15,4" color="black">
+			<sphere y="-40" size="14,14,5" color="white">
+			<sphere y="-40" size="13.2,13.2,6" color="orange">
+			<cylinder y="-40" size="1,40" color="gray">
+		</group>
+		
+		<clone id="pendulum2" src="pendulum1" size="0.6">
+		<clone id="pendulum3" src="pendulum1" size="0.36">
+	</suica>
+	
+	<script>
+		function loop( t, dT )
+		{
+			pendulum1.spinS = 50*Math.cos( 2*t );
+			
+			pendulum2.center = pendulum1.objectPosition( [0, -40, 0] );
+			pendulum2.spinS = 80*Math.cos( 2*t-0.5 );
+			
+			pendulum3.center = pendulum2.objectPosition( [0, -40, 0] );
+			pendulum3.spinS = 110*Math.cos( 2*t-1.0 );
+		}
+	</script>	
+</body>
+</html>

@@ -690,7 +690,7 @@ class Mesh {
 
 		localOffset = parseCenter( localOffset );
 
-		if ( !( this instanceof THREE.Group ) ) {
+		if ( !( this.threejs instanceof THREE.Group ) ) {
 
 			switch ( this.suica.orientation ) {
 
@@ -729,6 +729,7 @@ class Mesh {
 			}
 
 		}
+
 
 		this.threejs.updateWorldMatrix( true, true );
 

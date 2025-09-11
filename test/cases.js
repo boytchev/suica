@@ -8,6 +8,7 @@ var cases = [
 'bug-dynamic-line', 
 'bug-object-position-scale', 
 'bug-scaled-dashed-lines', 
+'bug-tripple-pendulum', 
 'camera-anaglyph', 
 'camera-fullscreen', 
 'camera-fullwindow', 
