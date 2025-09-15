@@ -1,4 +1,4 @@
-// suica v3.0.1
+// suica v3.0.2
 
 
 
@@ -98090,7 +98090,7 @@ void main() {
 
 	const TEST_MODE = typeof SUICA_TEST_MODE !== 'undefined';
 
-	const SUICA_VERSION = '3.0.1';
+	const SUICA_VERSION = '3.0.2';
 
 
 	// show suica version
@@ -98417,6 +98417,8 @@ c(")(")		 Suica ${SUICA_VERSION}
 			} );
 
 			this.renderer.outputColorSpace = SRGBColorSpace;
+			this.renderer.toneMapping = LinearToneMapping;
+			this.renderer.toneMappingExposure = 1;
 
 			// renderer with effects; if set, it is used instead of the normal renderer
 			this.uberRenderer = null;
@@ -98479,6 +98481,7 @@ c(")(")		 Suica ${SUICA_VERSION}
 
 			// default light
 			this.light = new DirectionalLight( 'white', 0.9*Math.PI );
+			this.light.frustumCulled = false;
 			this.light.position.set( 0, 0, 10 );
 			this.light.decay = 0;
 			//		this.light.angle = Math.PI/2;
@@ -98606,7 +98609,7 @@ c(")(")		 Suica ${SUICA_VERSION}
 				if ( that.renderer.xr.isPresenting ) {
 
 					that.camera.up.set( 0, 1, 0 );
-					that.camera.position.set( 0, 0, 0 );
+					that.camera.position.set( 0, 0, 0.001 );
 					that.camera.lookAt( 1, 0, 0 );
 
 					that.vrCamera.up.set( ...up );
