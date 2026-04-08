@@ -28,7 +28,7 @@
   },
   "overrides": {
     "minimatch": "^10.2.4",
-    "serialize-javascript": "^7.0.4",
+    "serialize-javascript": "^7.0.5",
     "flatted": "^3.4.2"
   }
 }
